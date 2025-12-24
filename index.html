@@ -25,6 +25,18 @@
 
 <style>
 
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: var(--header-height);
+}
+
+h1, h2, h3 {
+  text-shadow: 0 0 3px var(--color-accent-medium);
+}
+
 /* CSS Variables for easy color management */
 :root {
 --color-background-dark: #000000; /* Black background (Terminal look) */
@@ -478,11 +490,81 @@ font-size: 1.2em;
 }
 }
 
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 255, 255, 0.15);
+  border: 2px solid var(--color-foreground-light);
+  color: var(--color-foreground-light);
+  padding: 12px 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  border-radius: 50%;
+}
+
+#backToTop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#backToTop:hover {
+  background: var(--color-foreground-light);
+  color: var(--color-background-dark);
+}
+
+#terminal {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid var(--color-accent-medium);
+  padding: 20px;
+  font-family: var(--font-retro);
+}
+
+#terminal-output {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#terminal-output div {
+  margin-bottom: 5px;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-input-line span {
+  margin-right: 8px;
+}
+
+#terminalInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-foreground-light);
+  font-family: var(--font-retro);
+  font-size: 1.1em;
+  outline: none;
+}
+
 </style>
 
 </head>
 
 <body>
+
+<button id="backToTop" title="Return to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<canvas id="matrixCanvas"></canvas>
 
 <header id="main-header">
 
@@ -951,6 +1033,22 @@ font-size: 1.2em;
 </section>
 
 </main>
+
+<section id="terminal-section">
+  <h2 class="section-title"><i class="fas fa-terminal"></i> System Console</h2>
+
+  <div id="terminal">
+    <div id="terminal-output">
+      <div>EDEN OS v1.0 — Secure Channel Established</div>
+      <div>Type <strong>help</strong> to view available commands.</div>
+    </div>
+    <div class="terminal-input-line">
+      <span>&gt;</span>
+      <input id="terminalInput" autocomplete="off" />
+    </div>
+  </div>
+</section>
+
 <footer id="main-footer">
 <div class="footer-links">
 <a href="#about">Overview</a> |
@@ -1005,6 +1103,154 @@ font-size: 1.2em;
 </div>
 
 <script>
+
+/* ===============================
+   TERMINAL ENGINE
+================================ */
+const terminalInput = document.getElementById("terminalInput");
+const terminalOutput = document.getElementById("terminal-output");
+
+function printToTerminal(text) {
+  const line = document.createElement("div");
+  line.innerHTML = text;
+  terminalOutput.appendChild(line);
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+/* ===============================
+   BOOT SEQUENCE
+================================ */
+document.body.style.overflow = "hidden";
+
+const BOOT_LINES = [
+  "EDEN OS v3.7 — Initialising...",
+  "Loading encrypted memory blocks...",
+  "Verifying integrity...",
+  "Authenticating public access...",
+  "Routing secure channels...",
+  "Terminal ready."
+];
+
+let bootIndex = 0;
+
+function bootSystem() {
+  if (bootIndex < BOOT_LINES.length) {
+    printToTerminal(BOOT_LINES[bootIndex]);
+    bootIndex++;
+    setTimeout(bootSystem, 600);
+  } else {
+    document.body.style.overflow = "auto";
+    SYSTEM.booted = true;
+    terminalInput.disabled = false;
+    printToTerminal("<span style='color:#00ff99'>System online.</span>");
+  }
+}
+
+/* ===============================
+   SYSTEM STATE
+================================ */
+const SYSTEM = {
+  accessLevel: "public", // public | tier3 | admin
+  authenticated: false,
+  booted: false,
+  lastCommand: null
+};
+
+const backToTopBtn = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 600) {
+    backToTopBtn.classList.add("visible");
+  } else {
+    backToTopBtn.classList.remove("visible");
+  }
+});
+
+backToTopBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* ===============================
+   COMMAND REGISTRY
+================================ */
+const COMMANDS = {
+  help() {
+    printToTerminal("Available commands:");
+    printToTerminal("help");
+    printToTerminal("status");
+    printToTerminal("unlock tier3");
+    printToTerminal("open vision | careers | security");
+    printToTerminal("scan operatives");
+    printToTerminal("matrix on | off");
+    printToTerminal("glitch hero");
+    printToTerminal("clear");
+  },
+
+  status() {
+    printToTerminal(`Booted: ${SYSTEM.booted}`);
+    printToTerminal(`Access Level: ${SYSTEM.accessLevel}`);
+  },
+
+  unlock(arg) {
+    if (arg === "tier3") {
+      SYSTEM.accessLevel = "tier3";
+      SYSTEM.authenticated = true;
+      document.body.classList.add("tier3");
+      printToTerminal("<span style='color:#00ff99'>Tier 3 access granted.</span>");
+    } else {
+      printToTerminal("Invalid access key.");
+    }
+  },
+
+  open(arg) {
+    const map = {
+      vision: "visionModal",
+      careers: "careersModal",
+      security: "securityModal"
+    };
+    if (map[arg]) openModal(map[arg]);
+    else printToTerminal("Unknown target.");
+  },
+
+  scan(arg) {
+    if (arg === "operatives") {
+      scrollToSection("board");
+      printToTerminal("Scanning operatives...");
+    }
+  },
+
+  matrix(arg) {
+    if (arg === "on") startMatrix();
+    if (arg === "off") stopMatrix();
+  },
+
+  glitch(arg) {
+    if (arg === "hero") glitchText(document.querySelector(".hero-title"));
+  },
+
+  clear() {
+    terminalOutput.innerHTML = "";
+  }
+};
+
+terminalInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    const input = terminalInput.value.trim().toLowerCase();
+    terminalInput.value = "";
+
+    printToTerminal(`> ${input}`);
+
+    const parts = input.split(" ");
+    const cmd = parts[0];
+    const arg = parts[1];
+
+    if (COMMANDS[cmd]) {
+      COMMANDS[cmd](arg);
+    } else {
+      printToTerminal("Command not recognized. Type <strong>help</strong>.");
+    }
+  }
+});
 
 // Set the current year for the footer copyright
 document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -1069,7 +1315,6 @@ scrollToSection(href.substring(1));
 });
 }
 });
-
 
 // --- 4. TYPING ANIMATION (Retro Terminal Effect) ---
 /**
@@ -1152,10 +1397,89 @@ window.addEventListener('scroll', checkElementVisibility);
 // Placeholder for Firestore/Security checks
 console.log('Security Protocol: Core Operatives Portal Initialised.');
 console.log('Backend Check: Firestore (Simulated) Connection Status: ONLINE.');
+
+terminalInput.disabled = true;
+bootSystem();
+
 }
 
 // Execute the initialization function when the document is fully loaded
 document.addEventListener('DOMContentLoaded', initializePortal);
+
+/* ===============================
+   MATRIX ENGINE
+================================ */
+const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+let matrixInterval = null;
+
+function resizeMatrix() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeMatrix();
+window.addEventListener("resize", resizeMatrix);
+
+const chars = "01EDENΣΔλ";
+let drops = [];
+
+function startMatrix() {
+  canvas.style.position = "fixed";
+  canvas.style.top = 0;
+  canvas.style.left = 0;
+  canvas.style.zIndex = -1;
+
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  drops = Array(Math.floor(columns)).fill(1);
+
+  matrixInterval = setInterval(() => {
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ffff";
+    ctx.font = fontSize + "px monospace";
+
+    drops.forEach((y, i) => {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, y * fontSize);
+      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    });
+  }, 33);
+
+  printToTerminal("Matrix stream engaged.");
+}
+
+function stopMatrix() {
+  clearInterval(matrixInterval);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  printToTerminal("Matrix stream disengaged.");
+}
+
+/* ===============================
+   GLITCH TEXT
+================================ */
+function glitchText(element) {
+  const original = element.textContent;
+  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  let i = 0;
+
+  const interval = setInterval(() => {
+    element.textContent = original
+      .split("")
+      .map((c, idx) =>
+        idx < i ? original[idx] : chars[Math.floor(Math.random() * chars.length)]
+      )
+      .join("");
+
+    if (i >= original.length) {
+      clearInterval(interval);
+      element.textContent = original;
+    }
+    i += 1 / 3;
+  }, 30);
+}
 
 </script>
 
