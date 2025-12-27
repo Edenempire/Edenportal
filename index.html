@@ -23,6 +23,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<link rel="icon" type="image/png" href=eden.jpg">
+
 <style>
 
 html {
@@ -149,6 +151,13 @@ font-size: 1.2em;
 border: 1px solid var(--color-foreground-light);
 background-color: rgba(0, 255, 255, 0.1);
 text-decoration: none;
+}
+
+#system-clock {
+font-family: var(--font-retro);
+font-size: 1em;
+color: var(--color-text-body);
+opacity: 0.7;
 }
 
 /* --- MAIN CONTENT & SECTION STYLES --- */
@@ -569,10 +578,10 @@ font-size: 1.2em;
 <header id="main-header">
 
 <div class="header-logo">
-
-<span class="logo-text">EDEN</span>
-
+<img src="eden.jpg" style="height:70px; filter: drop-shadow(0 0 10px cyan);">
 </div>
+
+<div id="system-clock"></div>
 
 <nav class="nav-links">
 <a href="#about"><i class="fas fa-satellite-dish"></i> Overview</a>
@@ -1480,6 +1489,16 @@ function glitchText(element) {
     i += 1 / 3;
   }, 30);
 }
+
+function updateClock() {
+const now = new Date();
+const formatted =
+now.toLocaleDateString() + " | " +
+now.toLocaleTimeString();
+document.getElementById("system-clock").textContent = formatted;
+}
+setInterval(updateClock, 1000);
+updateClock();
 
 </script>
 
