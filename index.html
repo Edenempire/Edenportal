@@ -604,23 +604,6 @@ font-size: 1.2em;
   <i class="fas fa-arrow-up"></i>
 </button>
 
-  <!-- 🌦 Real-Time Weather Panel -->
-<div id="weatherPanel" style="
-  position: fixed;
-  top: 105px;
-  right: 30px;
-  background: rgba(0, 0, 0, 0.65);
-  color: #00ffff;
-  padding: 15px 20px;
-  border: 2px solid #00aaaa;
-  font-family: var(--font-retro);
-  font-size: 1.1em;
-  z-index: 400;
-  border-radius: 8px;
-">
-  ⛅ Weather: <span id="weatherTemp">Loading...</span>°C
-</div>
-
 <canvas id="matrixCanvas"></canvas>
 
 <header id="main-header">
@@ -1125,6 +1108,17 @@ font-size: 1.2em;
 &copy; <span id="current-year"></span> Eden Empire. All rights reserved. CIPC Registered. <br>
 <i class="fas fa-globe-africa"></i> Private Company. Global Reach. The Best of Tier 3.
 </p>
+
+  <div style="
+  margin-top: 15px;
+  color: #00ffff;
+  font-family: var(--font-retro);
+  font-size: 1em;
+  opacity: 0.85;
+">
+  ⛅ South Africa Weather: <span id="weatherTemp">Loading...</span>°C
+</div>
+
 </footer>
 
 <div id="securityModal" class="modal">
