@@ -1,1 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+<head>
+  
+<meta charset="UTF-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<title>E.S.S | Eden Soccer Sundays</title>
+  
+<meta name="description" content="Eden Empire - Eden Soccer Sundays. Access past, current and upcoming seasons.">
+  
+<meta name="author" content="Eden Core Team">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="eden.jpg">
+
+<style>
+:root {
+  --color-background-dark: #000000;
+  --color-foreground-light: #00FFFF;
+  --color-accent-medium: #00AAAA;
+  --color-text-body: #BBFFFF;
+  --font-retro: 'VT323', monospace;
+  --font-modern: 'Electrolize', sans-serif;
+  --transition-speed: 0.4s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all var(--transition-speed) ease-in-out;
+}
+
+body {
+  font-family: var(--font-retro);
+  background-color: var(--color-background-dark);
+  color: var(--color-foreground-light);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-modern);
+  text-shadow: 0 0 5px var(--color-accent-medium);
+  color: var(--color-foreground-light);
+}
+
+a {
+  color: var(--color-foreground-light);
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: var(--color-text-body);
+  text-shadow: 0 0 10px var(--color-foreground-light);
+}
+
+/* --- Header --- */
+header {
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--color-accent-medium);
+  background-color: rgba(0,0,0,0.95);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+.header-logo {
+  font-size: 2.5em;
+  font-family: var(--font-modern);
+  letter-spacing: 4px;
+  color: var(--color-foreground-light);
+  text-shadow: 0 0 10px var(--color-accent-medium);
+}
+
+/* --- Main Container --- */
+main {
+  padding-top: 120px;
+}
+
+/* --- Hero Section --- */
+#hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px;
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('placeholder-binary-bg.gif') center/cover no-repeat;
+}
+
+.hero-title {
+  font-size: 4em;
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease forwards;
+}
+.hero-subtitle {
+  font-size: 1.8em;
+  color: var(--color-text-body);
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* --- Seasons Grid --- */
+.season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  padding: 50px;
+}
+
+.season-card {
+  background-color: rgba(0,255,255,0.05);
+  border: 2px solid var(--color-accent-medium);
+  border-radius: 15px;
+  text-align: center;
+  padding: 30px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+.season-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--color-foreground-light);
+}
+.season-card i {
+  font-size: 5em;
+  margin-bottom: 20px;
+  color: var(--color-foreground-light);
+}
+.season-card h3 {
+  font-size: 2em;
+  margin-bottom: 15px;
+}
+.season-card p {
+  font-size: 1em;
+  color: var(--color-text-body);
+}
+
+/* --- Footer --- */
+footer {
+  padding: 40px 50px;
+  border-top: 2px solid var(--color-accent-medium);
+  text-align: center;
+  font-size: 1.1em;
+  color: var(--color-text-body);
+}
+
+/* --- Back To Top --- */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0,255,255,0.15);
+  border: 2px solid var(--color-foreground-light);
+  color: var(--color-foreground-light);
+  padding: 12px 15px;
+  font-size: 1.2em;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+#backToTop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#backToTop:hover {
+  background: var(--color-foreground-light);
+  color: var(--color-background-dark);
+}
+
+/* --- Responsive --- */
+@media (max-width:768px){
+  .season-grid { padding: 20px; gap:20px; }
+  .hero-title { font-size:3em; letter-spacing:5px;}
+  .hero-subtitle { font-size:1.2em; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Back To Top Button -->
+<button id="backToTop" title="Return to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<header>
+  <div class="header-logo"><i class="fas fa-futbol"></i> Eden Empire</div>
+</header>
+
+<main>
+
+<section id="hero">
+  <h1 class="hero-title">E.S.S | Eden Soccer Sundays</h1>
+  <h2 class="hero-subtitle">select a season to access</h2>
+</section>
+
+<section class="season-grid">
+  <div class="season-card" onclick="goToSeason('ess2025.html')">
+    <i class="fas fa-calendar-alt"></i>
+    <h3>2025 Season</h3>
+    <p>view the full schedule, results, and statistics for the 2025 season.</p>
+  </div>
+
+  <div class="season-card" onclick="goToSeason('ess2026.html')">
+    <i class="fas fa-calendar-check"></i>
+    <h3>2026 Season</h3>
+    <p>upcoming 2026 season.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  &copy; <span id="current-year"></span> Eden Empire. All rights reserved. CIPC Registered. 
+</footer>
+
+<script>
+// Back To Top button
+const backToTopBtn = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+  if(window.scrollY > 500){
+    backToTopBtn.classList.add("visible");
+  } else {
+    backToTopBtn.classList.remove("visible");
+  }
+});
+backToTopBtn.addEventListener("click", () => {
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+// Set current year
+document.getElementById('current-year').textContent = new Date().getFullYear();
+
+// Navigate to season page safely
+function goToSeason(url){
+  if(url){
+    window.location.href = url;
+  } else {
+    alert("Season page is unavailable.");
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
 
