@@ -381,7 +381,6 @@ background-color: var(--color-accent-medium);
 color: var(--color-foreground-light);
 }
 
-
 /* --- FOOTER STYLES --- */
 #main-footer {
 padding: 40px 50px;
@@ -574,6 +573,27 @@ font-size: 1.2em;
   }
 }
 
+  .header-logo img {
+  height: 100%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+    #weatherPanel {
+  pointer-events: none;
+}
+
+  @media (max-width: 768px) {
+  #weatherPanel {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.95em;
+    padding: 10px 14px;
+    opacity: 0.85;
+  }
+}
+
 </style>
 
 </head>
@@ -595,7 +615,7 @@ font-size: 1.2em;
   border: 2px solid #00aaaa;
   font-family: var(--font-retro);
   font-size: 1.1em;
-  z-index: 600;
+  z-index: 400;
   border-radius: 8px;
 ">
   ⛅ Weather: <span id="weatherTemp">Loading...</span>°C
@@ -605,7 +625,7 @@ font-size: 1.2em;
 
 <header id="main-header">
 
-<div class="header-logo">
+<div class="header-logo" style="display:flex; align-items:center;">
 <img 
   src="eden.jpg" 
   id="responsiveLogo"
@@ -676,7 +696,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: no one</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Spearheading the vision and direction of the Eden Empire.</p>
 </div>
 
@@ -702,7 +722,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Hoss</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Driving the daily execution of the Empire's vision.</p>
 </div>
 
@@ -728,7 +748,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -754,7 +774,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Guardian of financial stability and precise capital allocation.</p>
 </div>
 
@@ -780,7 +800,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Perfectionist of internal processes and efficiency.</p>
 </div>
 
@@ -806,7 +826,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Spearheading all technological and digital initiatives.</p>
 </div>
 
@@ -832,7 +852,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -858,7 +878,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Frost</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -887,7 +907,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Hoss, Joy & Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -913,7 +933,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Junior</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">TBA...</p>
 </div>
 
@@ -939,7 +959,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">Architecting robust and error-free computer programs.</p>
 </div>
 
@@ -962,7 +982,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
 <p style="margin-top: 10px;">The key to our proprietary Soccer Sundays league and its' data.</p>
 </div>
 </div>
@@ -1554,6 +1574,17 @@ document.getElementById("system-clock").textContent = formatted;
 }
 setInterval(updateClock, 1000);
 updateClock();
+
+  let weatherTimeout;
+window.addEventListener("scroll", () => {
+  const panel = document.getElementById("weatherPanel");
+  panel.style.opacity = "0.3";
+
+  clearTimeout(weatherTimeout);
+  weatherTimeout = setTimeout(() => {
+    panel.style.opacity = "1";
+  }, 600);
+});
 
 </script>
 
