@@ -1,17 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  
 <head>
+  
 <meta charset="UTF-8" />
+  
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>EDEN OS | 24/7 Operative Console</title>
+  
+<title>24/7 operative console</title>
+  
 <meta name="description" content="Eden Empire 24/7 Operative Console — Departmental access for active shifts." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
+  
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&display=swap" rel="stylesheet" />
+  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
+  
 :root{
 --bg:#000000;
 --fg:#00ffff;
@@ -143,21 +153,26 @@ background:rgba(0,0,0,.95)
 header{flex-direction:column;height:auto;padding:20px}
 main{padding-top:140px}
 }
+  
 </style>
+  
 </head>
+  
 <body>
 
 <header>
-<h1>EDEN OS :: 24/7</h1>
+<h1>24/7 operation :: Tier 3</h1>
 <div id="clock"></div>
 </header>
 
 <main>
 
 <section>
-<h2 class="section-title"><i class="fas fa-power-off"></i> Shift Activation Console</h2>
+  
+<h2 class="section-title"><i class="fas fa-power-off"></i> shift activation console</h2>
 
 <div id="statusBar">
+  
 <div class="status-box"><strong>SYSTEM</strong><span class="ok">ONLINE</span></div>
 <div class="status-box"><strong>ACCESS</strong><span class="ok">OPERATIVE</span></div>
 <div class="status-box"><strong>SECURITY</strong><span class="ok">STABLE</span></div>
@@ -165,7 +180,7 @@ main{padding-top:140px}
 </div>
 
 <p style="text-align:center;font-size:1.3em;max-width:900px;margin:0 auto 60px">
-This console is the **daily operational gateway** of the Eden Empire. Every operative must report here at the beginning of their shift. Select your department below to be transported to your live operational environment.
+this console is the daily operational gateway of the Eden Empire. every operative must report here at the beginning of their shift. select your department below to be transported to your live operational environment.
 </p>
 
 <div class="grid">
@@ -235,7 +250,7 @@ This console is the **daily operational gateway** of the Eden Empire. Every oper
 
 <div class="card">
 <i class="fas fa-futbol"></i>
-<h3>E.S.S. Operations</h3>
+<h3>E.S.S. operations</h3>
 <p>League management, data, scheduling</p>
 <button onclick="go('departments/ess.html')">ENTER</button>
 </div>
@@ -244,15 +259,20 @@ This console is the **daily operational gateway** of the Eden Empire. Every oper
 </section>
 
 <section>
-<h2 class="section-title"><i class="fas fa-terminal"></i> Operative Terminal</h2>
+<h2 class="section-title"><i class="fas fa-terminal"></i> operative terminal</h2>
 
 <div id="terminal">
+  
 <div id="terminal-output">
-<div>EDEN OS 24/7 — Operative session initialised.</div>
-<div>Type <strong>help</strong> for commands.</div>
+  
+<div>24/7 operation — operative session initialised.</div>
+  
+<div>type <strong>help</strong> for commands.</div>
+  
 </div>
+  
 <div id="terminal-input">
-<span>&gt;</span>
+  <span>&gt;</span>
 <input id="cmd" autocomplete="off" />
 </div>
 </div>
@@ -261,8 +281,9 @@ This console is the **daily operational gateway** of the Eden Empire. Every oper
 </main>
 
 <footer>
-<p>&copy; <span id="year"></span> Eden Empire — Internal Operations Only</p>
-<p style="opacity:.7">Unauthorized access is prohibited.</p>
+  
+<p>&copy; <span id="year"></span> Eden Empire — internal operations only</p>
+<p style="opacity:.7">unauthorized access is prohibited.</p>
 </footer>
 
 <script>
@@ -301,3 +322,11 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
