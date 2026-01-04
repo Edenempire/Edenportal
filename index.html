@@ -563,6 +563,17 @@ font-size: 1.2em;
   outline: none;
 }
 
+  /* 🌐 Logo responsiveness */
+#responsiveLogo {
+  max-height: 80px;
+}
+
+@media (max-width: 768px) {
+  #responsiveLogo {
+    max-height: 60px;
+  }
+}
+
 </style>
 
 </head>
@@ -573,12 +584,38 @@ font-size: 1.2em;
   <i class="fas fa-arrow-up"></i>
 </button>
 
+  <!-- 🌦 Real-Time Weather Panel -->
+<div id="weatherPanel" style="
+  position: fixed;
+  top: 105px;
+  right: 30px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #00ffff;
+  padding: 15px 20px;
+  border: 2px solid #00aaaa;
+  font-family: var(--font-retro);
+  font-size: 1.1em;
+  z-index: 600;
+  border-radius: 8px;
+">
+  ⛅ Weather: <span id="weatherTemp">Loading...</span>°C
+</div>
+
 <canvas id="matrixCanvas"></canvas>
 
 <header id="main-header">
 
 <div class="header-logo">
-<img src="eden.jpg" style="height:70px; filter: drop-shadow(0 0 10px cyan);">
+<img 
+  src="eden.jpg" 
+  id="responsiveLogo"
+  alt="Eden Empire Logo"
+  style="
+    max-height: 80px;
+    width: auto;
+    max-width: 100%;
+    filter: drop-shadow(0 0 10px cyan);
+    transition: all 0.3s ease;">
 </div>
 
 <div id="system-clock"></div>
@@ -639,7 +676,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: no one</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Spearheading the vision and direction of the Eden Empire.</p>
 </div>
 
@@ -665,7 +702,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Hoss</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Driving the daily execution of the Empire's vision.</p>
 </div>
 
@@ -691,7 +728,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -717,7 +754,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Guardian of financial stability and precise capital allocation.</p>
 </div>
 
@@ -743,7 +780,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Perfectionist of internal processes and efficiency.</p>
 </div>
 
@@ -769,7 +806,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Spearheading all technological and digital initiatives.</p>
 </div>
 
@@ -795,7 +832,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Joy</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -821,7 +858,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Frost</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -850,7 +887,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Hoss, Joy & Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">--</p>
 </div>
 
@@ -876,7 +913,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Junior</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">TBA...</p>
 </div>
 
@@ -902,7 +939,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">Architecting robust and error-free computer programs.</p>
 </div>
 
@@ -925,7 +962,7 @@ font-size: 1.2em;
 <span class="profile-status">Reports to: Xolisa</span>
 <br>
 <br>
-<span class="profile-status">Daily Operation: <a href="#">gain access</a></span>
+<span class="profile-status">Daily Operation: <a href="twentyfourseven. html">gain access</a></span>
 <p style="margin-top: 10px;">The key to our proprietary Soccer Sundays league and its' data.</p>
 </div>
 </div>
@@ -1110,6 +1147,24 @@ font-size: 1.2em;
 <p style="margin-top: 15px;">We operate as a cohesive unit of **Tier 3 Operatives**, dedicated to foundational growth, ethical practice, and unparalleled success across all subsidiaries. Our mission is divinely inspired, ensuring longevity and purity in all ventures.</p>
 </div>
 </div>
+
+  <script>
+// Real weather fetch using Open-Meteo
+// Using Johannesburg coords (latitude: -26.2041, longitude: 28.0473)
+fetch('https://api.open-meteo.com/v1/forecast?latitude=-26.2041&longitude=28.0473&current_weather=true&temperature_unit=celsius')
+  .then(res => res.json())
+  .then(data => {
+    if (data.current_weather) {
+      document.getElementById('weatherTemp').textContent = data.current_weather.temperature;
+    } else {
+      document.getElementById('weatherTemp').textContent = 'N/A';
+    }
+  })
+  .catch(err => {
+    console.error('Weather error:', err);
+    document.getElementById('weatherTemp').textContent = 'Error';
+  });
+</script>
 
 <script>
 
