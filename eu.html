@@ -1,1 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eternal University | Tier 3 Advanced Doctrine</title>
+<meta name="description" content="Eternal University (EU) — Tier 3 Advanced Eternal Computer Science, Health Sciences, Aerospace & Space Force Doctrine for SANDF Operatives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" href="eden.jpg">
 
+<style>
+:root{
+  --bg:#000000;
+  --fg:#00ffff;
+  --accent:#00aaaa;
+  --soft:#bbffff;
+  --danger:#ff5555;
+  --ok:#00ff99;
+  --font-mono:'VT323',monospace;
+  --font-tech:'Orbitron',sans-serif;
+  --header-h:96px;
+}
+*{margin:0;padding:0;box-sizing:border-box;transition:all .35s ease}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-mono);
+  overflow-x:hidden;
+}
+
+/* scanlines */
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:999;
+  background:
+   linear-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,.25) 50%),
+   linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:100% 4px,4px 100%;opacity:.12;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--font-tech);
+  text-shadow:0 0 8px var(--accent);
+}
+a{color:var(--fg);text-decoration:none}
+a:hover{text-shadow:0 0 10px var(--fg)}
+
+header{
+  position:fixed;top:0;left:0;width:100%;height:var(--header-h);
+  background:rgba(0,0,0,.95);
+  border-bottom:2px solid var(--accent);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;z-index:500;
+}
+header img{height:60px;filter:drop-shadow(0 0 10px cyan)}
+nav a{margin-left:20px;text-transform:uppercase;font-size:1.1em}
+
+main{padding-top:var(--header-h)}
+section{padding:120px 60px;border-bottom:1px dashed var(--accent)}
+.section-title{
+  text-align:center;font-size:3.5em;margin-bottom:60px;
+  text-transform:uppercase;
+}
+
+/* HERO */
+#hero{
+  min-height:95vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.85)),url('binary.gif') center/cover;
+}
+#hero h1{font-size:5em;letter-spacing:10px}
+#hero h2{margin-top:20px;color:var(--soft)}
+.hero-console{
+  margin-top:40px;padding:30px;border:2px solid var(--fg);
+  width:90%;max-width:900px;background:rgba(0,0,0,.8)
+}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px}
+.card{
+  background:rgba(0,255,255,.05);
+  border:2px solid var(--accent);
+  padding:25px;border-radius:12px;
+  box-shadow:0 0 20px rgba(0,255,255,.25)
+}
+.card:hover{transform:scale(1.05);box-shadow:0 0 35px var(--fg)}
+
+.badge{display:inline-block;padding:6px 12px;border:1px solid var(--fg);margin:5px 0}
+
+/* TERMINAL */
+#terminal{max-width:1000px;margin:0 auto;border:2px solid var(--accent);padding:20px;background:#000}
+#termOut{max-height:320px;overflow-y:auto}
+#termIn{width:100%;background:none;border:none;color:var(--fg);font-family:var(--font-mono);font-size:1.2em}
+
+footer{padding:50px;text-align:center;border-top:2px solid var(--accent)}
+
+@media(max-width:768px){
+  section{padding:80px 20px}
+  #hero h1{font-size:3em}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="eden.jpg" alt="EU Logo">
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#faculties">Faculties</a>
+    <a href="#sandf">SANDF Doctrine</a>
+    <a href="#admission">Admission</a>
+    <a href="#console">Console</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="hero">
+  <h1>ETERNAL UNIVERSITY</h1>
+  <h2>Tier 3 Advanced Eternal Doctrine</h2>
+  <div class="hero-console">
+    <p>Designation: EU-01</p>
+    <p>Status: ACTIVE — Military & Civilian Hybrid Institution</p>
+    <p>Clearance Required: Tier 3+</p>
+    <p>Affiliation: EDEN EMPIRE | SANDF | SPACE FORCE</p>
+  </div>
+</section>
+
+<section id="overview">
+  <h2 class="section-title">Foundational Mandate</h2>
+  <p>Eternal University (EU) is a <strong>Tier 3 Advanced Eternal Computer Science University</strong> designed to produce operatives, engineers, pilots, medics, strategists, and architects of reality itself. EU is not public. EU is not ordinary. EU is <strong>doctrine</strong>.</p>
+  <p>EU serves as the <strong>exclusive educational pipeline</strong> for advanced SANDF operatives, including QRF units, Space Force candidates, cyber-warfare architects, and future Tier 1 pilots authorised to operate fighter jets.</p>
+</section>
+
+<section id="faculties">
+  <h2 class="section-title">Primary Faculties</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Faculty of Eternal Computer Science</h3>
+      <span class="badge">CORE</span>
+      <p>Quantum-inspired computing, secure systems, military AI, battlefield algorithms, autonomous warfare logic, cryptographic doctrine, Eden OS architecture.</p>
+      <ul>
+        <li>Tiered Cyber Warfare</li>
+        <li>Black-Box Systems Engineering</li>
+        <li>Sentinel AI Oversight</li>
+        <li>Space-borne Networks</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Faculty of Health & Combat Medicine</h3>
+      <span class="badge">SANDF QRF</span>
+      <p>Rapid trauma response, combat surgery, neural resilience, field pharmacology, mental hardening.</p>
+      <ul>
+        <li>QRF Tactical Medicine</li>
+        <li>Neuro-cognitive Fortification</li>
+        <li>Zero-Delay Extraction Care</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Faculty of Aerospace & Fighter Doctrine</h3>
+      <span class="badge">RESTRICTED</span>
+      <p>The <strong>only pathway</strong> to a SANDF pilot license. Includes jet systems, dogfight algorithms, orbital mechanics.</p>
+      <ul>
+        <li>Commercial Pilot License (EU-CPL)</li>
+        <li>Fighter Jet Transition</li>
+        <li>Tier 1 Flight Readiness</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Faculty of Space Force Operations</h3>
+      <span class="badge">SPACE</span>
+      <p>Orbital command, satellite warfare, off-world logistics, zero-gravity engineering.</p>
+      <ul>
+        <li>Orbital Defense Systems</li>
+        <li>Space-based AI Control</li>
+        <li>Extraterrestrial Logistics</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="sandf">
+  <h2 class="section-title">SANDF Integration</h2>
+  <p>All SANDF advanced learning pipelines converge at EU. This includes:</p>
+  <ul>
+    <li>QRF Health & Medical Doctrine</li>
+    <li>Cyber Defense & Counter-Offense</li>
+    <li>Space Force Officer Education</li>
+    <li>Tier 1 Pilot Ascension</li>
+  </ul>
+  <p>EU graduates do not apply to SANDF roles — they are <strong>assigned</strong>.</p>
+</section>
+
+<section id="admission">
+  <h2 class="section-title">Admission Protocol</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Tier 3 Entry</h3>
+      <p>Invitation-only. Psychological, physical, spiritual, and cognitive screening.</p>
+    </div>
+    <div class="card">
+      <h3>Tier 2 Advancement</h3>
+      <p>Live-fire simulations, AI co-processing exams, ethical endurance tests.</p>
+    </div>
+    <div class="card">
+      <h3>Tier 1 Ascension</h3>
+      <p>Classified. Records sealed. Identity partially redacted.</p>
+    </div>
+  </div>
+</section>
+
+<section id="console">
+  <h2 class="section-title">EU System Console</h2>
+  <div id="terminal">
+    <div id="termOut">
+      <div>EU-OS v9.1 Initialised</div>
+      <div>Type <strong>help</strong></div>
+    </div>
+    <input id="termIn" placeholder=">" autocomplete="off">
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> Eternal University — Eden Empire</p>
+  <p>Tier 3 Doctrine | SANDF | Space Force</p>
+</footer>
+
+<script>
+const out=document.getElementById('termOut');
+const input=document.getElementById('termIn');
+function log(t){const d=document.createElement('div');d.innerHTML=t;out.appendChild(d);out.scrollTop=out.scrollHeight}
+const cmds={
+ help(){log('Commands: help | status | faculties | sandf | clear')},
+ status(){log('EU STATUS: OPERATIONAL | CLEARANCE: PUBLIC')},
+ faculties(){log('Loaded faculties. Scroll to view.')},
+ sandf(){log('SANDF integration confirmed.')},
+ clear(){out.innerHTML=''}
+};
+input.addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  const v=input.value.trim().toLowerCase();input.value='';log('&gt; '+v);
+  cmds[v]?cmds[v]():log('Unknown command');
+ }
+});
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+
+</body>
+</html>
