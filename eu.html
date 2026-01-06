@@ -1,356 +1,403 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-  
 <meta charset="UTF-8" />
-  
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-<title>Eternal University (EU) — Tier 3 operative grid</title>
-<meta name="description" content="Eternal University (EU) — Eternal Tier 3 operative University | CPL | SAAF | SAHMS" />
+<title>Eternal University (EU) — EDEN-OS | Militarized Operative Grid</title>
+<meta name="description" content="Eternal University (EU) — EDEN-OS Militarized Tier 3 Operative Interface" />
 <link rel="icon" type="image/png" href="eden.jpg" />
-  
 <link rel="preconnect" href="https://fonts.googleapis.com">
-  
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=VT323&display=swap" rel="stylesheet">
-  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-  
+/*************************************************
+ EDEN-OS CORE VARIABLES
+*************************************************/
 :root{
-  --bg:#010304;
-  --panel:#07161c;
-  --panel-soft:#0b222c;
-  --fg:#9ffcff;
-  --accent:#00ffff;
-  --accent-soft:#00bcbc;
-  --warn:#ff6666;
-  --ok:#00ff9c;
-  --gold:#ffd700;
-  --font-tech:'Orbitron',sans-serif;
-  --font-mono:'VT323',monospace;
+ --bg:#00060a;
+ --panel:#07161c;
+ --panel-soft:#0b222c;
+ --fg:#9ffcff;
+ --accent:#00ffff;
+ --accent-soft:#00bcbc;
+ --warn:#ff4d4d;
+ --ok:#00ff9c;
+ --gold:#ffd700;
+ --danger:#ff0033;
+ --font-tech:'Orbitron',sans-serif;
+ --font-mono:'VT323',monospace;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html,body{height:100%;scroll-behavior:smooth}
 body{
-  background:radial-gradient(circle at top,#042029,#000);
-  color:var(--fg);
-  font-family:var(--font-mono);
-  overflow-x:hidden;
+ background:
+ radial-gradient(circle at top,#052a35 0%,#000 55%),
+ linear-gradient(#000,#020b10);
+ color:var(--fg);
+ font-family:var(--font-mono);
+ overflow-x:hidden;
 }
 
-/* CRT + SCAN */
+/*************************************************
+ CRT / MIL-SPEC DISPLAY LAYER
+*************************************************/
 body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background:
-    linear-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,.25) 50%),
-    radial-gradient(circle at center,rgba(0,255,255,.05),transparent 60%);
-  background-size:100% 4px,100% 100%;opacity:.18;
+ content:"";
+ position:fixed;inset:0;pointer-events:none;z-index:9999;
+ background:
+ linear-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 50%),
+ radial-gradient(circle at center,rgba(0,255,255,.06),transparent 60%);
+ background-size:100% 3px,100% 100%;
+ opacity:.22;
 }
 
-h1,h2,h3,h4{font-family:var(--font-tech);text-shadow:0 0 14px var(--accent)}
+h1,h2,h3,h4{font-family:var(--font-tech);text-shadow:0 0 16px var(--accent)}
 
+/*************************************************
+ HEADER / COMMAND BAR
+*************************************************/
 header{
-  position:fixed;top:0;left:0;width:100%;z-index:1000;
-  background:rgba(0,0,0,.92);backdrop-filter:blur(8px);
-  border-bottom:2px solid var(--accent);
+ position:fixed;top:0;left:0;width:100%;z-index:1000;
+ background:rgba(0,0,0,.94);
+ backdrop-filter:blur(10px);
+ border-bottom:2px solid var(--accent);
 }
 .header-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 22px;flex-wrap:wrap
+ display:flex;align-items:center;justify-content:space-between;
+ padding:14px 22px;gap:16px;flex-wrap:wrap
 }
-.logo-wrap{background:#fff;padding:6px 10px;border-radius:10px;display:flex;align-items:center}
-.logo-wrap img{height:48px}
-nav{display:flex;flex-wrap:wrap;gap:12px}
-nav a{color:var(--fg);text-decoration:none;text-transform:uppercase;padding:8px 12px;border:1px solid transparent}
+.logo-wrap{
+ background:#fff;padding:6px 10px;border-radius:10px;
+ display:flex;align-items:center
+}
+.logo-wrap img{height:46px}
+nav{display:flex;flex-wrap:wrap;gap:10px}
+nav a{
+ color:var(--fg);text-decoration:none;text-transform:uppercase;
+ padding:8px 12px;border:1px solid transparent;font-size:.95em
+}
 nav a:hover{border-color:var(--accent);box-shadow:0 0 12px var(--accent)}
-.status-bar{display:flex;gap:18px;font-size:1.1em;align-items:center}
+.status-bar{display:flex;gap:16px;font-size:1.05em;align-items:center}
+.status-pill{padding:4px 8px;border:1px solid var(--accent-soft)}
 
+/*************************************************
+ LAYOUT
+*************************************************/
 main{padding-top:120px}
 section{padding:90px 24px;border-bottom:1px dashed var(--accent-soft)}
 
-.hero{min-height:95vh;display:grid;place-items:center;text-align:center}
-.hero-box{max-width:1200px;border:2px solid var(--accent);padding:46px;background:rgba(0,0,0,.8)}
-.hero h1{font-size:clamp(2.8rem,6vw,5.4rem);letter-spacing:10px}
-.hero p{font-size:1.5em;margin-top:18px}
+/*************************************************
+ HERO — PERFECT FIT RESPONSIVE
+*************************************************/
+.hero{
+ min-height:100dvh;
+ display:grid;place-items:center;
+ padding:140px 16px 80px;
+}
+.hero-box{
+ width:100%;
+ max-width:min(1200px,100%);
+ min-height:clamp(420px,80vh,760px);
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ gap:18px;
+ text-align:center;
+ border:2px solid var(--accent);
+ background:
+ linear-gradient(180deg,rgba(0,0,0,.85),rgba(0,0,0,.95)),
+ radial-gradient(circle at center,rgba(0,255,255,.08),transparent 60%);
+ padding:clamp(22px,5vw,56px);
+}
+.hero h1{
+ font-size:clamp(2.4rem,6vw,5.2rem);
+ letter-spacing:clamp(4px,1.4vw,10px);
+}
+.hero p{font-size:clamp(1.1rem,2.2vw,1.6rem)}
 
+/*************************************************
+ GRID / CARDS
+*************************************************/
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
 .card{
-  background:linear-gradient(180deg,var(--panel),#02090c);
-  border:2px solid var(--accent-soft);
-  padding:26px;border-radius:18px;position:relative
+ background:linear-gradient(180deg,var(--panel),#02090c);
+ border:2px solid var(--accent-soft);
+ padding:26px;border-radius:18px;position:relative
 }
-.card:hover{transform:scale(1.04);box-shadow:0 0 30px var(--accent)}
+.card::after{
+ content:"";position:absolute;inset:0;border-radius:18px;
+ box-shadow:inset 0 0 0 1px rgba(0,255,255,.12);pointer-events:none
+}
+.card:hover{transform:scale(1.035);box-shadow:0 0 28px var(--accent)}
 .badge{display:inline-block;margin:8px 0;padding:6px 12px;border:1px solid var(--accent);border-radius:8px}
 
-.timeline li{margin-bottom:14px}
-
-/* TABLE */
+/*************************************************
+ TABLES
+*************************************************/
 table{width:100%;border-collapse:collapse}
 th,td{border:1px solid var(--accent-soft);padding:10px;text-align:left}
 th{background:var(--panel-soft)}
 
-/* NOTEPAD */
-#notepad textarea{
-  width:100%;min-height:320px;background:#000;color:var(--fg);
-  border:2px solid var(--accent);padding:16px;font-size:1.2em
+/*************************************************
+ CONTROLS
+*************************************************/
+.btn{
+ background:#000;color:var(--fg);
+ border:1px solid var(--accent);
+ padding:8px 14px;cursor:pointer
+}
+.btn:hover{box-shadow:0 0 10px var(--accent)}
+input,textarea{
+ width:100%;background:#000;color:var(--fg);
+ border:2px solid var(--accent);padding:12px;
+ font-family:var(--font-mono);font-size:1.1em
 }
 
-/* TERMINAL */
+/*************************************************
+ TERMINAL
+*************************************************/
 #terminal{border:2px solid var(--accent);padding:18px;background:#000}
-#termOut{max-height:320px;overflow-y:auto}
-#termIn{width:100%;background:none;border:none;color:var(--fg);font-size:1.2em}
-
-/* CONTROLS */
-.btn{background:#000;color:var(--fg);border:1px solid var(--accent);padding:8px 14px;cursor:pointer}
-.btn:hover{box-shadow:0 0 10px var(--accent)}
+#termOut{max-height:340px;overflow-y:auto}
+#termIn{background:none;border:none;color:var(--fg);font-size:1.2em;width:100%}
 
 footer{padding:50px;text-align:center}
 
 @media(max-width:768px){
-  nav{justify-content:center}
-  .status-bar{width:100%;justify-content:center;margin-top:10px}
+ nav{justify-content:center}
+ .status-bar{width:100%;justify-content:center}
 }
-  
 </style>
-  
 </head>
-  
 <body>
 
 <header>
-  
-  <div class="header-inner">
-    <div class="logo-wrap"><img src="eden.jpg" alt="EU"></div>
-    <nav>
-      <a href="#mandate">Mandate</a>
-      <a href="#classes">Classes</a>
-      <a href="#schedule">Schedule</a>
-      <a href="#courses">Courses</a>
-      <a href="#tools">Tools</a>
-      <a href="#notepad">Notepad</a>
-      <a href="#console">Console</a>
-    </nav>
-    <div class="status-bar">
-      <div id="ukTime">UK TIME --:--:--</div>
-      <div id="shift">SHIFT OFFLINE</div>
-    </div>
+ <div class="header-inner">
+  <div class="logo-wrap"><img src="eden.jpg" alt="EU"></div>
+  <nav>
+   <a href="#mandate">Mandate</a>
+   <a href="#classes">Classes</a>
+   <a href="#doctrine">Doctrine</a>
+   <a href="#schedule">Shift</a>
+   <a href="#courses">Tracks</a>
+   <a href="#arsenal">Arsenal</a>
+   <a href="#tools">Tools</a>
+   <a href="#notepad">Intel</a>
+   <a href="#console">Console</a>
+  </nav>
+  <div class="status-bar">
+   <div id="ukTime" class="status-pill"></div>
+   <div id="shift" class="status-pill"></div>
+   <div id="clearance" class="status-pill"></div>
+   <div id="threat" class="status-pill"></div>
   </div>
+ </div>
 </header>
 
 <main>
 
 <section class="hero">
-  <div class="hero-box">
-    <h1>ETERNAL UNIVERSITY</h1>
-    <p>Tier 3 operative • Eternal student Doctrine</p>
-    <p>current primary campus: <strong>cci</strong></p>
-    <p>legacy study: united airlines <span style="color:var(--warn)">OBSOLETE (STUDY ONLY)</span></p>
-    <p>Main Objective: <strong>SAAF Fighter Pilot via Computer Science + CPL</strong></p>
-  </div>
+ <div class="hero-box">
+  <h1>ETERNAL UNIVERSITY</h1>
+  <p>EDEN-OS • Militarized Eternal Student Doctrine</p>
+  <p>Primary Campus: <strong>CCI South Africa</strong></p>
+  <p>Legacy Pipelines: <span style="color:var(--warn)">DEPRECATED (ANALYSIS ONLY)</span></p>
+  <p>Operational Objective:</p>
+  <p><strong>SAAF FIGHTER PILOT • COMPUTER SCIENCE • SANDF MEDICAL • COMMAND</strong></p>
+ </div>
 </section>
 
 <section id="mandate">
 <h2>Institutional Mandate</h2>
-<p>Eternal University (EU) is not a civilian institution. It is an eternal, recursive, intelligence-driven university where <strong>everyone remains a student forever</strong>. Knowledge never ends. Rank never removes learning.</p>
-<p>EU replaces obsolete Western pipelines. The united states is deprecated. Compatibility exists only for historical analysis.</p>
-<p>EU exists to produce pilots, doctors, engineers, commanders, and cybernetic strategists simultaneously — in a single continuous shift.</p>
+<p>Eternal University (EU) operates as a closed-loop military-intelligence university. There is no graduation. There is no civilian exit. Learning is continuous and rank enforces responsibility, not immunity.</p>
+<p>EDEN-OS replaces obsolete Western academic pipelines. Compatibility exists solely for reverse engineering and historical extraction.</p>
 </section>
 
 <section id="classes">
-<h2>Student Class Architecture (D → A)</h2>
+<h2>Student Class Architecture</h2>
 <div class="grid">
-  <div class="card">
-    <h3>Class D — Targeted Operatives</h3>
-    <p>Pinpointed studies. Legacy systems. Airline analysis. Data extraction.</p>
-    <span class="badge">ENTRY VECTOR</span>
-  </div>
-  <div class="card">
-    <h3>Class C — Overseers</h3>
-    <p>Managers of Class D. Schedule enforcement. Output validation.</p>
-    <span class="badge">CONTROL LAYER</span>
-  </div>
-  <div class="card">
-    <h3>Class B — Executive Students</h3>
-    <p>Governance of EU. CEOs, Directors, Strategic Architects.</p>
-    <span class="badge">EXEC STUDENT</span>
-  </div>
-  <div class="card">
-    <h3>Class A — Desktop Support (Elite)</h3>
-    <p>Core students governing <strong>all computer power</strong> at EU.</p>
-    <span class="badge" style="color:var(--gold)">CORE AUTHORITY</span>
-  </div>
+ <div class="card"><h3>Class D — Operatives</h3><p>Targeted study cells. Legacy system analysis. Data extraction.</p><span class="badge">ENTRY VECTOR</span></div>
+ <div class="card"><h3>Class C — Controllers</h3><p>Oversight of D-cells. Output validation. Schedule enforcement.</p><span class="badge">CONTROL LAYER</span></div>
+ <div class="card"><h3>Class B — Executive Students</h3><p>EU governance. Strategic architecture. Resource authority.</p><span class="badge">EXECUTIVE</span></div>
+ <div class="card"><h3>Class A — Core Authority</h3><p>Compute ownership. EDEN-OS command. System override.</p><span class="badge" style="color:var(--gold)">ABSOLUTE</span></div>
 </div>
 </section>
 
-<section id="schedule">
-<h2>EU Night Shift Doctrine (22:00 → 08:00)</h2>
-<ul class="timeline">
-  <li>20:30 — Pack 2 lunchboxes + small water bottle</li>
-  <li>20:45 — Gear check: lanyard, access card, locker keys, lock</li>
-  <li>21:00 — Dress Tier 3 attire (athletic, smart, jacket ready)</li>
-  <li>21:15 — Gateway Theatre, Umhlanga (mental alignment & logistics)</li>
-  <li>21:30 — Depart Gateway → EU Campus</li>
-  <li>21:30 — Mandatory arrival (30 mins pre-shift)</li>
-  <li>22:00 — Login to <strong>EDEN PORTAL</strong> (Shift Start)</li>
-  <li>22:00–05:00 — Continuous Focus (No breaks)</li>
-  <li>05:00 — Break 1 (15 min)</li>
-  <li>05:15 — Resume Operations</li>
-  <li>05:45 — Lunch (30 min)</li>
-  <li>06:15 — Resume Operations</li>
-  <li>06:45 — Final Break (15 min)</li>
-  <li>07:00–08:00 — Final Hour (NO BREAKS)</li>
+<section id="doctrine">
+<h2>Military Doctrine Alignment</h2>
+<ul>
+ <li>SANDF / SAAF operational compatibility</li>
+ <li>UK & RU alliance doctrine (read-only strategic layer)</li>
+ <li>No US dependency. Deprecated standards only.</li>
+ <li>24/7 readiness model with night-shift primacy</li>
 </ul>
 </section>
 
+<section id="schedule">
+<h2>Night Shift Doctrine (22:00 → 08:00)</h2>
+<table>
+ <tr><th>Phase</th><th>Directive</th></tr>
+ <tr><td>22:00–05:00</td><td>Continuous focus — zero breaks</td></tr>
+ <tr><td>05:00</td><td>15 min recovery</td></tr>
+ <tr><td>05:15–05:45</td><td>Operations resume</td></tr>
+ <tr><td>05:45</td><td>30 min meal</td></tr>
+ <tr><td>06:15–08:00</td><td>Final operations — no interruption</td></tr>
+</table>
+</section>
+
 <section id="courses">
-<h2>Courses & Hyper-Modules</h2>
+<h2>Integrated Tracks</h2>
 <div class="grid">
-  <div class="card">
-    <h3>CPL & SAAF Fighter Track</h3>
-    <ul>
-      <li>Commercial Pilot License (EU Integrated)</li>
-      <li>Jet Physics & High-G Cognition</li>
-      <li>Radar, BVR, Dogfight Mathematics</li>
-      <li>SAAF Fighter Transition</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3>Computer Science (Eternal)</h3>
-    <ul>
-      <li>Quantum-Resilient OS Design</li>
-      <li>Military AI Orchestration</li>
-      <li>Cyber-Offensive Toolchains</li>
-      <li>Desktop Support Core Authority</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3>SAHMS / SANDF QRF Medicine</h3>
-    <ul>
-      <li>Emergency Trauma Surgery</li>
-      <li>Battlefield Diagnostics</li>
-      <li>Combat Pharmacology</li>
-      <li>Doctor-Level Certification</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3>Command & Strategy</h3>
-    <ul>
-      <li>Executive Warfare Economics</li>
-      <li>Operational Psychology</li>
-      <li>Alliance Doctrine (UK / RU)</li>
-    </ul>
-  </div>
+ <div class="card"><h3>CPL / SAAF Fighter</h3><ul><li>Jet Physics</li><li>Radar & BVR</li><li>High-G Cognition</li></ul></div>
+ <div class="card"><h3>Computer Science</h3><ul><li>OS & Kernel Design</li><li>Cyber-Offensive Toolchains</li><li>AI Orchestration</li></ul></div>
+ <div class="card"><h3>SANDF Medicine</h3><ul><li>Combat Trauma</li><li>Battlefield Diagnostics</li><li>Pharmacology</li></ul></div>
+ <div class="card"><h3>Command & Strategy</h3><ul><li>Operational Psychology</li><li>Warfare Economics</li><li>Alliance Doctrine</li></ul></div>
+</div>
+</section>
+
+<section id="arsenal">
+<h2>Operative Arsenal (Simulation)</h2>
+<div class="grid">
+ <div class="card"><h3>Threat Board</h3><p>Regional readiness status.</p><button class="btn" onclick="setThreat()">Cycle Threat</button></div>
+ <div class="card"><h3>Reaction Test</h3><p>Measures cognitive latency.</p><button class="btn" onclick="reactionTest()">Initiate</button><div id="reactOut"></div></div>
+ <div class="card"><h3>Comms Discipline</h3><p>Message compression drills.</p><button class="btn" onclick="alert('DRILL STARTED')">Start Drill</button></div>
+ <div class="card"><h3>Fatigue Monitor</h3><p>Manual degradation flag.</p><button class="btn" onclick="flagFatigue()">Flag Fatigue</button></div>
 </div>
 </section>
 
 <section id="tools">
-<h2>Operative Tools & Automations</h2>
+<h2>Operative Tools</h2>
 <div class="grid">
-  <div class="card">
-    <h3>Average Calculator</h3>
-    <input id="avgInput" placeholder="Enter numbers comma separated" />
-    <button class="btn" onclick="calcAvg()">Compute</button>
-    <div id="avgOut"></div>
-  </div>
-  <div class="card">
-    <h3>Shift Automation</h3>
-    <p>Auto-detects shift phase and locks distractions.</p>
-    <button class="btn" onclick="lockFocus()">Engage Focus Lock</button>
-  </div>
-  <div class="card">
-    <h3>Course Progress Tracker</h3>
-    <p>Persistent module completion tracking.</p>
-    <button class="btn" onclick="saveProgress()">Save Progress</button>
-  </div>
-  <div class="card">
-    <h3>Health Monitor</h3>
-    <p>Hydration & fatigue reminders.</p>
-    <button class="btn" onclick="hydrate()">Hydration Check</button>
-  </div>
+ <div class="card"><h3>Average Calculator</h3><input id="avgInput" placeholder="Comma separated"><button class="btn" onclick="calcAvg()">Compute</button><div id="avgOut"></div></div>
+ <div class="card"><h3>Focus Lock</h3><button class="btn" onclick="lockFocus()">Engage</button></div>
+ <div class="card"><h3>Progress Logger</h3><button class="btn" onclick="saveProgress()">Commit</button></div>
+ <div class="card"><h3>Hydration</h3><button class="btn" onclick="hydrate()">Check</button></div>
 </div>
 </section>
 
 <section id="notepad">
-<h2>Operative Notepad (Encrypted Local)</h2>
-<textarea id="pad" placeholder="Local encrypted notes..."></textarea>
+<h2>Encrypted Intelligence Notepad</h2>
+<textarea id="pad" placeholder="AES-GCM encrypted local intelligence..."></textarea>
 </section>
 
 <section id="console">
-<h2>EU System Console</h2>
+<h2>EDEN-OS Command Console</h2>
 <div id="terminal">
-  <div id="termOut"><div>EU-OS ONLINE</div></div>
-  <input id="termIn" placeholder=">" />
+ <div id="termOut">EDEN-OS ONLINE — AWAITING COMMAND</div>
+ <input id="termIn" placeholder=">" />
 </div>
 </section>
 
 </main>
 
 <footer>
-<p>&copy; <span id="year"></span> Eternal University — Eternal Student Doctrine</p>
+<p>&copy; <span id="year"></span> Eternal University — EDEN-OS</p>
 </footer>
 
 <script>
-  
-/* TIME */
+/******************** TIME ********************/
 setInterval(()=>{
-  const t=new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/London'});
-  document.getElementById('ukTime').textContent='UK '+t;
+ document.getElementById('ukTime').textContent='UK '+new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/London'});
 },1000);
 
-/* SHIFT STATUS */
+/******************** SHIFT ********************/
 function updateShift(){
-  const h=new Date().getHours();
-  const s=document.getElementById('shift');
-  s.textContent=(h>=22||h<8)?'SHIFT ACTIVE':'SHIFT STANDBY';
+ const h=new Date().getHours();
+ document.getElementById('shift').textContent=(h>=22||h<8)?'SHIFT ACTIVE':'SHIFT STANDBY';
 }
 setInterval(updateShift,60000);updateShift();
 
-/* NOTEPAD */
-const pad=document.getElementById('pad');
-pad.value=localStorage.getItem('eu_pad')||'';
-pad.addEventListener('input',()=>localStorage.setItem('eu_pad',pad.value));
+/******************** CLEARANCE ********************/
+const clearance=localStorage.getItem('eu_clearance')||'CLASS D';
+document.getElementById('clearance').textContent=clearance;
 
-/* AVERAGE */
-function calcAvg(){
-  const nums=document.getElementById('avgInput').value.split(',').map(n=>+n).filter(n=>!isNaN(n));
-  const avg=nums.reduce((a,b)=>a+b,0)/(nums.length||1);
-  document.getElementById('avgOut').textContent='AVERAGE: '+avg.toFixed(2);
+/******************** THREAT ********************/
+let threatLevel=localStorage.getItem('eu_threat')||'GREEN';
+function renderThreat(){
+ const t=document.getElementById('threat');
+ t.textContent='THREAT '+threatLevel;
+ t.style.borderColor=threatLevel==='RED'?'var(--danger)':threatLevel==='AMBER'?'var(--warn)':'var(--ok)';
 }
+function setThreat(){
+ threatLevel=threatLevel==='GREEN'?'AMBER':threatLevel==='AMBER'?'RED':'GREEN';
+ localStorage.setItem('eu_threat',threatLevel);renderThreat();
+}
+renderThreat();
 
-/* AUTOMATIONS */
-function lockFocus(){alert('FOCUS LOCK ENGAGED — DISTRACTIONS DISABLED')}
-function saveProgress(){localStorage.setItem('eu_progress','SAVED');alert('PROGRESS SAVED')}
+/******************** ENCRYPTED NOTEPAD ********************/
+const pad=document.getElementById('pad');
+async function getKey(){
+ let k=localStorage.getItem('eu_key');
+ if(!k){const key=crypto.getRandomValues(new Uint8Array(32));localStorage.setItem('eu_key',btoa(String.fromCharCode(...key)));k=localStorage.getItem('eu_key')}
+ return crypto.subtle.importKey('raw',Uint8Array.from(atob(k),c=>c.charCodeAt(0)),'AES-GCM',false,['encrypt','decrypt']);
+}
+async function encrypt(t){
+ const iv=crypto.getRandomValues(new Uint8Array(12));
+ const key=await getKey();
+ const enc=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(t));
+ return btoa(String.fromCharCode(...iv))+'.'+btoa(String.fromCharCode(...new Uint8Array(enc)));
+}
+async function decrypt(d){
+ if(!d)return'';
+ const [iv,data]=d.split('.');
+ const key=await getKey();
+ const dec=await crypto.subtle.decrypt({name:'AES-GCM',iv:Uint8Array.from(atob(iv),c=>c.charCodeAt(0))},key,Uint8Array.from(atob(data),c=>c.charCodeAt(0)));
+ return new TextDecoder().decode(dec);
+}
+(async()=>{pad.value=await decrypt(localStorage.getItem('eu_pad_enc'))})();
+pad.addEventListener('input',async()=>localStorage.setItem('eu_pad_enc',await encrypt(pad.value)));
+
+/******************** TOOLS ********************/
+function calcAvg(){
+ const n=document.getElementById('avgInput').value.split(',').map(x=>+x).filter(x=>!isNaN(x));
+ document.getElementById('avgOut').textContent='AVERAGE '+((n.reduce((a,b)=>a+b,0))/(n.length||1)).toFixed(2);
+}
+function lockFocus(){document.body.requestFullscreen?.();alert('FOCUS LOCK ENGAGED')}
+function saveProgress(){localStorage.setItem('eu_progress',new Date().toISOString());alert('PROGRESS COMMITTED')}
 function hydrate(){alert('HYDRATION CHECK — DRINK WATER')}
+function flagFatigue(){alert('FATIGUE FLAGGED — ADJUST OUTPUT')}
 
-/* TERMINAL */
+/******************** REACTION TEST ********************/
+let rtStart;
+function reactionTest(){
+ document.getElementById('reactOut').textContent='WAIT...';
+ setTimeout(()=>{rtStart=performance.now();document.getElementById('reactOut').textContent='CLICK NOW';},Math.random()*3000+1500);
+}
+document.addEventListener('click',()=>{
+ if(rtStart){const t=performance.now()-rtStart;document.getElementById('reactOut').textContent='REACTION '+Math.round(t)+' ms';rtStart=null;}
+});
+
+/******************** TERMINAL ********************/
 const out=document.getElementById('termOut');
 const input=document.getElementById('termIn');
-function log(t){const d=document.createElement('div');d.innerHTML=t;out.appendChild(d);out.scrollTop=out.scrollHeight}
+const log=t=>{out.innerHTML+=`<div>${t}</div>`;out.scrollTop=out.scrollHeight};
 const cmds={
-  help(){log('help | status | clear | focus | progress')},
-  status(){log('EU STATUS: OPERATIONAL | CCI SA')},
-  focus(){lockFocus()},
-  progress(){log(localStorage.getItem('eu_progress')||'NO DATA')},
-  clear(){out.innerHTML=''}
+ help:()=>log('help | status | clearance | threat | clear'),
+ status:()=>log('EDEN-OS OPERATIONAL | CCI SA'),
+ clearance:()=>log(clearance),
+ threat:()=>log(threatLevel),
+ clear:()=>out.innerHTML=''
 };
-input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value.trim();input.value='';log('&gt; '+v);cmds[v]?cmds[v]():log('UNKNOWN COMMAND')}});
+input.addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  const v=input.value.trim();input.value='';log('&gt; '+v);
+  cmds[v]?cmds[v]():log('UNKNOWN COMMAND');
+ }
+});
 
+/******************** YEAR ********************/
 document.getElementById('year').textContent=new Date().getFullYear();
-  
 </script>
-  
+
 </body>
-  
-</html>
+       </html>
 
 
 
 
 
 
+       
