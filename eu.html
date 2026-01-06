@@ -8,10 +8,8 @@
   
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-<title>EU (Eternal University)</title>
-  
-<meta name="description" content="Eternal University (EU) — Tier 3 operative University." />
-  
+<title>Eternal University (EU) — Tier 3 operative grid</title>
+<meta name="description" content="Eternal University (EU) — Eternal Tier 3 operative University | CPL | SAAF | SAHMS" />
 <link rel="icon" type="image/png" href="eden.jpg" />
   
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,98 +23,94 @@
 <style>
   
 :root{
-  --bg:#020404;
-  --panel:#071014;
+  --bg:#010304;
+  --panel:#07161c;
+  --panel-soft:#0b222c;
   --fg:#9ffcff;
   --accent:#00ffff;
   --accent-soft:#00bcbc;
   --warn:#ff6666;
   --ok:#00ff9c;
+  --gold:#ffd700;
   --font-tech:'Orbitron',sans-serif;
   --font-mono:'VT323',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  background:radial-gradient(circle at top,#03161b,#000);
+  background:radial-gradient(circle at top,#042029,#000);
   color:var(--fg);
   font-family:var(--font-mono);
   overflow-x:hidden;
 }
 
-/* CRT overlay */
+/* CRT + SCAN */
 body::after{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background:linear-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,.28) 50%);
-  background-size:100% 4px;opacity:.12;
+  background:
+    linear-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,.25) 50%),
+    radial-gradient(circle at center,rgba(0,255,255,.05),transparent 60%);
+  background-size:100% 4px,100% 100%;opacity:.18;
 }
 
-h1,h2,h3,h4{font-family:var(--font-tech);text-shadow:0 0 12px var(--accent)}
+h1,h2,h3,h4{font-family:var(--font-tech);text-shadow:0 0 14px var(--accent)}
 
-/* HEADER */
 header{
   position:fixed;top:0;left:0;width:100%;z-index:1000;
-  background:rgba(0,0,0,.92);backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.92);backdrop-filter:blur(8px);
   border-bottom:2px solid var(--accent);
 }
 .header-inner{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 22px;flex-wrap:wrap
 }
-.logo-wrap{
-  background:#fff;padding:6px 10px;border-radius:8px;display:flex;align-items:center
-}
+.logo-wrap{background:#fff;padding:6px 10px;border-radius:10px;display:flex;align-items:center}
 .logo-wrap img{height:48px}
-
-nav{
-  display:flex;flex-wrap:wrap;gap:12px
-}
-nav a{
-  color:var(--fg);text-decoration:none;text-transform:uppercase;
-  padding:8px 12px;border:1px solid transparent
-}
-nav a:hover{border-color:var(--accent);box-shadow:0 0 10px var(--accent)}
-
-.status-bar{
-  display:flex;gap:20px;font-size:1.1em;align-items:center
-}
+nav{display:flex;flex-wrap:wrap;gap:12px}
+nav a{color:var(--fg);text-decoration:none;text-transform:uppercase;padding:8px 12px;border:1px solid transparent}
+nav a:hover{border-color:var(--accent);box-shadow:0 0 12px var(--accent)}
+.status-bar{display:flex;gap:18px;font-size:1.1em;align-items:center}
 
 main{padding-top:120px}
-section{padding:80px 24px;border-bottom:1px dashed var(--accent-soft)}
+section{padding:90px 24px;border-bottom:1px dashed var(--accent-soft)}
 
-.hero{
-  min-height:90vh;display:grid;place-items:center;text-align:center
-}
-.hero-box{
-  max-width:1100px;border:2px solid var(--accent);padding:40px;
-  background:rgba(0,0,0,.75)
-}
-.hero h1{font-size:clamp(2.5rem,6vw,5rem);letter-spacing:8px}
-.hero p{font-size:1.4em;margin-top:20px}
+.hero{min-height:95vh;display:grid;place-items:center;text-align:center}
+.hero-box{max-width:1200px;border:2px solid var(--accent);padding:46px;background:rgba(0,0,0,.8)}
+.hero h1{font-size:clamp(2.8rem,6vw,5.4rem);letter-spacing:10px}
+.hero p{font-size:1.5em;margin-top:18px}
 
-.grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
 .card{
-  background:var(--panel);border:2px solid var(--accent-soft);
-  padding:24px;border-radius:14px
+  background:linear-gradient(180deg,var(--panel),#02090c);
+  border:2px solid var(--accent-soft);
+  padding:26px;border-radius:18px;position:relative
 }
-.card:hover{transform:scale(1.04);box-shadow:0 0 28px var(--accent)}
+.card:hover{transform:scale(1.04);box-shadow:0 0 30px var(--accent)}
+.badge{display:inline-block;margin:8px 0;padding:6px 12px;border:1px solid var(--accent);border-radius:8px}
 
-.badge{display:inline-block;margin:6px 0;padding:6px 10px;border:1px solid var(--accent)}
+.timeline li{margin-bottom:14px}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--accent-soft);padding:10px;text-align:left}
+th{background:var(--panel-soft)}
 
 /* NOTEPAD */
 #notepad textarea{
-  width:100%;min-height:260px;background:#000;color:var(--fg);
-  border:2px solid var(--accent);padding:14px;font-size:1.2em
+  width:100%;min-height:320px;background:#000;color:var(--fg);
+  border:2px solid var(--accent);padding:16px;font-size:1.2em
 }
 
 /* TERMINAL */
-#terminal{border:2px solid var(--accent);padding:16px;background:#000}
-#termOut{max-height:300px;overflow-y:auto}
+#terminal{border:2px solid var(--accent);padding:18px;background:#000}
+#termOut{max-height:320px;overflow-y:auto}
 #termIn{width:100%;background:none;border:none;color:var(--fg);font-size:1.2em}
 
-footer{padding:40px;text-align:center}
+/* CONTROLS */
+.btn{background:#000;color:var(--fg);border:1px solid var(--accent);padding:8px 14px;cursor:pointer}
+.btn:hover{box-shadow:0 0 10px var(--accent)}
+
+footer{padding:50px;text-align:center}
 
 @media(max-width:768px){
   nav{justify-content:center}
@@ -132,11 +126,11 @@ footer{padding:40px;text-align:center}
 <header>
   
   <div class="header-inner">
-    <div class="logo-wrap"><img src="eden.jpg" alt="Eternal University Logo"></div>
+    <div class="logo-wrap"><img src="eden.jpg" alt="EU"></div>
     <nav>
       <a href="#mandate">Mandate</a>
-      <a href="#campus">Campuses</a>
-      <a href="#tiers">Tiers</a>
+      <a href="#classes">Classes</a>
+      <a href="#schedule">Schedule</a>
       <a href="#courses">Courses</a>
       <a href="#tools">Tools</a>
       <a href="#notepad">Notepad</a>
@@ -144,7 +138,7 @@ footer{padding:40px;text-align:center}
     </nav>
     <div class="status-bar">
       <div id="ukTime">UK TIME --:--:--</div>
-      <div id="ukWeather">LONDON WX: --</div>
+      <div id="shift">SHIFT OFFLINE</div>
     </div>
   </div>
 </header>
@@ -154,108 +148,143 @@ footer{padding:40px;text-align:center}
 <section class="hero">
   <div class="hero-box">
     <h1>ETERNAL UNIVERSITY</h1>
-    <p>Tier 3 Operative University</p>
+    <p>Tier 3 operative • Eternal student Doctrine</p>
     <p>current primary campus: <strong>cci</strong></p>
-    <p>study: united airlines — <span style="color:var(--warn)">OBSOLETE / JUST A STUDY ONLY</span></p>
-    <p>Pending studies: <strong> A UK campaign</strong></p>
+    <p>legacy study: united airlines <span style="color:var(--warn)">OBSOLETE (STUDY ONLY)</span></p>
+    <p>Main Objective: <strong>SAAF Fighter Pilot via Computer Science + CPL</strong></p>
   </div>
 </section>
 
 <section id="mandate">
 <h2>Institutional Mandate</h2>
-<p>Eternal University is an advanced, public-yet private, non-civilian institution created exclusively for <strong>Tier 3 operatives</strong>. Admission is only possible after successful completion of a Tier 4 soldier mission. EU exists to replace obsolete western academic and aviation pipelines.</p>
-<p>The United States is deprecated. EU maintains legacy compatibility only while global restructuring completes.</p>
+<p>Eternal University (EU) is not a civilian institution. It is an eternal, recursive, intelligence-driven university where <strong>everyone remains a student forever</strong>. Knowledge never ends. Rank never removes learning.</p>
+<p>EU replaces obsolete Western pipelines. The united states is deprecated. Compatibility exists only for historical analysis.</p>
+<p>EU exists to produce pilots, doctors, engineers, commanders, and cybernetic strategists simultaneously — in a single continuous shift.</p>
 </section>
 
-<section id="campus">
-<h2>Campus Doctrine</h2>
+<section id="classes">
+<h2>Student Class Architecture (D → A)</h2>
 <div class="grid">
   <div class="card">
-    <h3>cci</h3>
-    <span class="badge">PRIMARY</span>
-    <p>Command, cybernetics, aerospace theory, health sciences, pilot cognition.</p>
+    <h3>Class D — Targeted Operatives</h3>
+    <p>Pinpointed studies. Legacy systems. Airline analysis. Data extraction.</p>
+    <span class="badge">ENTRY VECTOR</span>
   </div>
   <div class="card">
-    <h3>United Kingdom Nodes</h3>
-    <span class="badge">ACTIVE</span>
-    <p>Live UK campaigns, London command synchronization, Space Force theory.</p>
+    <h3>Class C — Overseers</h3>
+    <p>Managers of Class D. Schedule enforcement. Output validation.</p>
+    <span class="badge">CONTROL LAYER</span>
   </div>
   <div class="card">
-    <h3>Russian Allied Systems</h3>
-    <span class="badge">ALLIED</span>
-    <p>Cold-environment operations, orbital resilience, heavy systems engineering.</p>
+    <h3>Class B — Executive Students</h3>
+    <p>Governance of EU. CEOs, Directors, Strategic Architects.</p>
+    <span class="badge">EXEC STUDENT</span>
+  </div>
+  <div class="card">
+    <h3>Class A — Desktop Support (Elite)</h3>
+    <p>Core students governing <strong>all computer power</strong> at EU.</p>
+    <span class="badge" style="color:var(--gold)">CORE AUTHORITY</span>
   </div>
 </div>
 </section>
 
-<section id="tiers">
-<h2>Operative Tier Progression</h2>
-<div class="grid">
-  <div class="card"><h3>Tier 4</h3><p>Soldier Mission Qualification. Field survival, loyalty validation.</p></div>
-  <div class="card"><h3>Tier 3</h3><p>EU Entry. Advanced education, pilot foundations, cyber doctrine.</p></div>
-  <div class="card"><h3>Tier 2</h3><p>Strategic operations, live command authority.</p></div>
-  <div class="card"><h3>Tier 1</h3><p>Special Operations. Jet command. Identity redaction.</p></div>
-</div>
+<section id="schedule">
+<h2>EU Night Shift Doctrine (22:00 → 08:00)</h2>
+<ul class="timeline">
+  <li>20:30 — Pack 2 lunchboxes + small water bottle</li>
+  <li>20:45 — Gear check: lanyard, access card, locker keys, lock</li>
+  <li>21:00 — Dress Tier 3 attire (athletic, smart, jacket ready)</li>
+  <li>21:15 — Gateway Theatre, Umhlanga (mental alignment & logistics)</li>
+  <li>21:30 — Depart Gateway → EU Campus</li>
+  <li>21:30 — Mandatory arrival (30 mins pre-shift)</li>
+  <li>22:00 — Login to <strong>EDEN PORTAL</strong> (Shift Start)</li>
+  <li>22:00–05:00 — Continuous Focus (No breaks)</li>
+  <li>05:00 — Break 1 (15 min)</li>
+  <li>05:15 — Resume Operations</li>
+  <li>05:45 — Lunch (30 min)</li>
+  <li>06:15 — Resume Operations</li>
+  <li>06:45 — Final Break (15 min)</li>
+  <li>07:00–08:00 — Final Hour (NO BREAKS)</li>
+</ul>
 </section>
 
 <section id="courses">
-<h2>Advanced Courses & Modules</h2>
+<h2>Courses & Hyper-Modules</h2>
 <div class="grid">
   <div class="card">
-    <h3>Eternal Computer Science</h3>
+    <h3>CPL & SAAF Fighter Track</h3>
     <ul>
-      <li>Quantum-Resilient Systems</li>
-      <li>Battlefield AI Orchestration</li>
-      <li>Cyber-Offensive Architectures</li>
-      <li>Space-Based Network Control</li>
+      <li>Commercial Pilot License (EU Integrated)</li>
+      <li>Jet Physics & High-G Cognition</li>
+      <li>Radar, BVR, Dogfight Mathematics</li>
+      <li>SAAF Fighter Transition</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Health & QRF Medicine</h3>
+    <h3>Computer Science (Eternal)</h3>
     <ul>
-      <li>Trauma Zero-Delay Response</li>
-      <li>Neural Stress Hardening</li>
+      <li>Quantum-Resilient OS Design</li>
+      <li>Military AI Orchestration</li>
+      <li>Cyber-Offensive Toolchains</li>
+      <li>Desktop Support Core Authority</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>SAHMS / SANDF QRF Medicine</h3>
+    <ul>
+      <li>Emergency Trauma Surgery</li>
+      <li>Battlefield Diagnostics</li>
       <li>Combat Pharmacology</li>
+      <li>Doctor-Level Certification</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Pilot & Aerospace Track</h3>
+    <h3>Command & Strategy</h3>
     <ul>
-      <li>EU Commercial Pilot License</li>
-      <li>Jet Transition Doctrine</li>
-      <li>Tier 1 Fighter Readiness</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3>Space Force</h3>
-    <ul>
-      <li>Orbital Defense</li>
-      <li>Satellite Warfare</li>
-      <li>Zero-G Engineering</li>
+      <li>Executive Warfare Economics</li>
+      <li>Operational Psychology</li>
+      <li>Alliance Doctrine (UK / RU)</li>
     </ul>
   </div>
 </div>
 </section>
 
 <section id="tools">
-<h2>Operative Tools</h2>
+<h2>Operative Tools & Automations</h2>
 <div class="grid">
-  <div class="card">Encrypted Notepad</div>
-  <div class="card">Doctrine Terminal</div>
-  <div class="card">Time & Weather Sync</div>
-  <div class="card">Clearance-Gated Modules</div>
+  <div class="card">
+    <h3>Average Calculator</h3>
+    <input id="avgInput" placeholder="Enter numbers comma separated" />
+    <button class="btn" onclick="calcAvg()">Compute</button>
+    <div id="avgOut"></div>
+  </div>
+  <div class="card">
+    <h3>Shift Automation</h3>
+    <p>Auto-detects shift phase and locks distractions.</p>
+    <button class="btn" onclick="lockFocus()">Engage Focus Lock</button>
+  </div>
+  <div class="card">
+    <h3>Course Progress Tracker</h3>
+    <p>Persistent module completion tracking.</p>
+    <button class="btn" onclick="saveProgress()">Save Progress</button>
+  </div>
+  <div class="card">
+    <h3>Health Monitor</h3>
+    <p>Hydration & fatigue reminders.</p>
+    <button class="btn" onclick="hydrate()">Hydration Check</button>
+  </div>
 </div>
 </section>
 
 <section id="notepad">
-<h2>operative notepade (Local)</h2>
+<h2>Operative Notepad (Encrypted Local)</h2>
 <textarea id="pad" placeholder="Local encrypted notes..."></textarea>
 </section>
 
 <section id="console">
 <h2>EU System Console</h2>
 <div id="terminal">
-  <div id="termOut"><divown>EU-OS ONLINE</div></div>
+  <div id="termOut"><div>EU-OS ONLINE</div></div>
   <input id="termIn" placeholder=">" />
 </div>
 </section>
@@ -263,41 +292,62 @@ footer{padding:40px;text-align:center}
 </main>
 
 <footer>
-<p>&copy; <span id="year"></span> Eternal University.</p>
+<p>&copy; <span id="year"></span> Eternal University — Eternal Student Doctrine</p>
 </footer>
 
 <script>
-/* UK TIME */
+  
+/* TIME */
 setInterval(()=>{
   const t=new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/London'});
-  document.getElementById('ukTime').textContent='UK TIME '+t;
+  document.getElementById('ukTime').textContent='UK '+t;
 },1000);
 
-/* UK WEATHER (Open-Meteo, no key) */
-fetch('https://api.open-meteo.com/v1/forecast?latitude=51.5074&longitude=-0.1278&current_weather=true')
-.then(r=>r.json()).then(d=>{
-  const w=d.current_weather;
-  document.getElementById('ukWeather').textContent=`LONDON ${w.temperature}°C ${w.windspeed}km/h`;
-});
+/* SHIFT STATUS */
+function updateShift(){
+  const h=new Date().getHours();
+  const s=document.getElementById('shift');
+  s.textContent=(h>=22||h<8)?'SHIFT ACTIVE':'SHIFT STANDBY';
+}
+setInterval(updateShift,60000);updateShift();
 
 /* NOTEPAD */
 const pad=document.getElementById('pad');
 pad.value=localStorage.getItem('eu_pad')||'';
 pad.addEventListener('input',()=>localStorage.setItem('eu_pad',pad.value));
 
+/* AVERAGE */
+function calcAvg(){
+  const nums=document.getElementById('avgInput').value.split(',').map(n=>+n).filter(n=>!isNaN(n));
+  const avg=nums.reduce((a,b)=>a+b,0)/(nums.length||1);
+  document.getElementById('avgOut').textContent='AVERAGE: '+avg.toFixed(2);
+}
+
+/* AUTOMATIONS */
+function lockFocus(){alert('FOCUS LOCK ENGAGED — DISTRACTIONS DISABLED')}
+function saveProgress(){localStorage.setItem('eu_progress','SAVED');alert('PROGRESS SAVED')}
+function hydrate(){alert('HYDRATION CHECK — DRINK WATER')}
+
 /* TERMINAL */
 const out=document.getElementById('termOut');
 const input=document.getElementById('termIn');
 function log(t){const d=document.createElement('div');d.innerHTML=t;out.appendChild(d);out.scrollTop=out.scrollHeight}
-const cmds={help(){log('help | status | clear')},status(){log('EU STATUS: OPERATIONAL | CCI SA')},clear(){out.innerHTML=''}};
-input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value.trim();input.value='';log('&gt; '+v);cmds[v]?cmds[v]():log('UNKNOWN')}});
+const cmds={
+  help(){log('help | status | clear | focus | progress')},
+  status(){log('EU STATUS: OPERATIONAL | CCI SA')},
+  focus(){lockFocus()},
+  progress(){log(localStorage.getItem('eu_progress')||'NO DATA')},
+  clear(){out.innerHTML=''}
+};
+input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value.trim();input.value='';log('&gt; '+v);cmds[v]?cmds[v]():log('UNKNOWN COMMAND')}});
 
 document.getElementById('year').textContent=new Date().getFullYear();
+  
 </script>
-
+  
 </body>
+  
 </html>
-
 
 
 
