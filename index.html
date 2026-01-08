@@ -610,22 +610,34 @@ font-size: 1.2em;
 
 <div class="header-logo" style="display:flex; align-items:center;">
 <img 
-  src="eden.jpg" 
+  src="eden.jpg"
   id="responsiveLogo"
   alt="Eden Empire logo"
   style="
-    max-height: 80px;
-    width: auto;
-    max-width: 100%;
-    background: transparent;
-    mix-blend-mode: screen;
+    height: 72px;
+    width: 72px;
+    object-fit: cover;
+
+    /* CORE SHAPE */
+    border-radius: 50%;
+    background: #000;
+
+    /* INSIGNIA FRAME */
+    border: 2px solid rgba(0,255,255,0.9);
+    box-shadow:
+      0 0 10px rgba(0,255,255,0.6),
+      inset 0 0 8px rgba(0,255,255,0.35);
+
+    /* IMAGE CORRECTION */
     filter:
-      brightness(1.1)
-      contrast(1.4)
-      saturate(1.3)
-      drop-shadow(0 0 8px #00ffff)
-      drop-shadow(0 0 16px rgba(0,255,255,0.6));
-    transition: all 0.3s ease;">
+      contrast(1.35)
+      saturate(1.25)
+      brightness(1.05);
+
+    /* SMOOTH OPERATION */
+    transition: all 0.35s ease;
+  ">
+
 </div>
 
 <div id="system-clock"></div>
