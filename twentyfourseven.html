@@ -6,158 +6,284 @@
   
 <meta charset="UTF-8" />
   
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-<title>24/7 operative console</title>
-  
-<meta name="description" content="Eden Empire 24/7 Operative Console — Departmental access for active shifts." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
+<title>24/7 operative command</title>
+
+<meta name="description" content="Eden Empire operative console." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
   
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&display=swap" rel="stylesheet">
   
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&display=swap" rel="stylesheet" />
-  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-  
+/* =====================================================
+   ROOT + RESET
+===================================================== */
 :root{
---bg:#000000;
+--bg:#000;
 --fg:#00ffff;
---fg-soft:#bbffff;
+--soft:#aaffff;
 --accent:#00aaaa;
---danger:#ff4444;
+--danger:#ff3355;
+--warn:#ffaa00;
 --ok:#00ff99;
---font-retro:'VT323', monospace;
---font-ui:'Electrolize', sans-serif;
---header-h:90px;
+
+--font-ui:'Electrolize',sans-serif;
+--font-mono:'VT323',monospace;
+
+--header-h:80px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;transition:all .3s ease}
+*{
+box-sizing:border-box;
+margin:0;padding:0;
+-webkit-tap-highlight-color:transparent;
+}
 
-html,body{height:100%}
-body{
-background:var(--bg);
-color:var(--fg);
-font-family:var(--font-retro);
+html,body{
+height:100%;
+background:#000;
 overflow-x:hidden;
 }
 
-/* SCANLINE */
-body::before{
-content:'';
-position:fixed;inset:0;
-pointer-events:none;
-background:linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,.3) 50%);
-background-size:100% 4px;
-opacity:.12;
-z-index:999;
+/* =====================================================
+   GLOBAL EFFECTS
+===================================================== */
+body{
+font-family:var(--font-mono);
+color:var(--fg);
 }
 
-/* HEADER */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,.35) 50%);
+background-size:100% 4px;
+opacity:.14;
+z-index:9999;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
 header{
-position:fixed;top:0;left:0;width:100%;height:var(--header-h);
-background:rgba(0,0,0,.95);
+position:fixed;
+top:0;left:0;width:100%;
+height:var(--header-h);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 30px;
+background:rgba(0,0,0,.96);
 border-bottom:2px solid var(--accent);
-display:flex;align-items:center;justify-content:space-between;
-padding:0 40px;z-index:500;
+z-index:1000;
 }
 
 header h1{
 font-family:var(--font-ui);
-letter-spacing:6px;
+letter-spacing:5px;
 text-shadow:0 0 15px var(--fg);
+font-size:1.2em;
 }
 
-#clock{font-size:1.1em;color:var(--fg-soft)}
+#clock{
+color:var(--soft);
+font-size:1.05em;
+}
 
-/* MAIN */
-main{padding-top:var(--header-h)}
+/* =====================================================
+   HERO
+===================================================== */
+#hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:120px 20px 60px;
+border-bottom:2px solid var(--accent);
+}
 
-section{padding:80px 40px;border-bottom:1px dashed var(--accent)}
+#hero-inner{
+width:100%;
+max-width:1200px;
+border:2px solid var(--accent);
+padding:50px 30px;
+text-align:center;
+background:rgba(0,255,255,.04);
+box-shadow:0 0 80px rgba(0,255,255,.35);
+animation:pulse 4s infinite alternate;
+}
+
+@keyframes pulse{
+from{box-shadow:0 0 40px rgba(0,255,255,.2)}
+to{box-shadow:0 0 90px rgba(0,255,255,.55)}
+}
+
+#hero h2{
+font-family:var(--font-ui);
+font-size:clamp(2em,6vw,3.8em);
+letter-spacing:6px;
+margin-bottom:25px;
+}
+
+#hero p{
+max-width:900px;
+margin:0 auto 40px;
+font-size:1.3em;
+color:var(--soft);
+}
+
+/* =====================================================
+   DEPARTMENTS
+===================================================== */
+section{
+padding:80px 40px;
+}
 
 .section-title{
-font-family:var(--font-ui);
-font-size:2.8em;
-margin-bottom:40px;
 text-align:center;
-text-shadow:0 0 10px var(--accent)
+font-family:var(--font-ui);
+font-size:2.6em;
+margin-bottom:60px;
 }
 
-/* STATUS BAR */
-#statusBar{
-display:flex;justify-content:space-around;flex-wrap:wrap;
-border:2px solid var(--accent);
-padding:20px;margin-bottom:60px;
-}
-
-.status-box{text-align:center}
-.status-box span{display:block;margin-top:5px}
-.ok{color:var(--ok)}
-.warn{color:var(--danger)}
-
-/* DEPARTMENTS GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px
+gap:30px;
 }
 
 .card{
 border:2px solid var(--accent);
-padding:30px;text-align:center;
+padding:30px;
+text-align:center;
 background:rgba(0,255,255,.05);
-box-shadow:0 0 20px rgba(0,255,255,.25);
+box-shadow:0 0 25px rgba(0,255,255,.25);
+transition:.35s;
 }
 
-.card:hover{transform:scale(1.05);box-shadow:0 0 30px var(--fg)}
+.card:hover{
+transform:scale(1.06);
+box-shadow:0 0 50px var(--fg);
+}
 
-.card i{font-size:3em;margin-bottom:15px}
-.card h3{font-family:var(--font-ui);margin-bottom:10px}
+.card i{
+font-size:3em;
+margin-bottom:15px;
+}
 
-.card p{color:var(--fg-soft);font-size:1.1em}
+.card h3{
+font-family:var(--font-ui);
+margin-bottom:10px;
+}
 
 .card button{
-margin-top:20px;padding:12px 25px;
+margin-top:20px;
+padding:12px 30px;
 border:2px solid var(--fg);
-background:transparent;color:var(--fg);
-font-family:var(--font-ui);cursor:pointer
+background:transparent;
+color:var(--fg);
+font-family:var(--font-ui);
+cursor:pointer;
 }
 
-.card button:hover{background:var(--fg);color:#000}
+.card button:hover{
+background:var(--fg);
+color:#000;
+}
 
-/* TERMINAL */
-#terminal{
-margin-top:80px;
+/* =====================================================
+   SECURE LOGIN OVERLAY
+===================================================== */
+#authOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.97);
+z-index:5000;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+#authBox{
+width:100%;
+max-width:520px;
 border:2px solid var(--accent);
-padding:20px;max-width:900px;margin-inline:auto;
-background:rgba(0,0,0,.85)
+padding:40px 30px;
+background:#000;
+box-shadow:0 0 60px rgba(0,255,255,.5);
+text-align:center;
+animation:authIn .4s ease;
 }
 
-#terminal-output{max-height:260px;overflow-y:auto;margin-bottom:10px}
-#terminal-output div{margin-bottom:6px}
-
-#terminal-input{display:flex;align-items:center}
-#terminal-input span{margin-right:8px}
-#cmd{flex:1;background:transparent;border:none;color:var(--fg);font-family:var(--font-retro);font-size:1.1em;outline:none}
-
-/* FOOTER */
-footer{
-padding:40px;text-align:center;
-border-top:2px solid var(--accent);
-background:rgba(0,0,0,.95)
+@keyframes authIn{
+from{opacity:0;transform:scale(.9)}
+to{opacity:1;transform:scale(1)}
 }
 
+#authBox h3{
+font-family:var(--font-ui);
+letter-spacing:4px;
+margin-bottom:20px;
+}
+
+#authBox p{
+color:var(--soft);
+margin-bottom:25px;
+}
+
+#codeInput{
+width:100%;
+padding:15px;
+background:#000;
+border:2px solid var(--accent);
+color:var(--fg);
+font-family:var(--font-mono);
+font-size:1.2em;
+letter-spacing:6px;
+text-align:center;
+outline:none;
+}
+
+#authStatus{
+margin-top:20px;
+min-height:24px;
+}
+
+.loader{
+width:40px;height:40px;
+border:4px solid rgba(0,255,255,.2);
+border-top:4px solid var(--fg);
+border-radius:50%;
+margin:20px auto;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* =====================================================
+   MOBILE
+===================================================== */
 @media(max-width:768px){
-header{flex-direction:column;height:auto;padding:20px}
-main{padding-top:140px}
+header{
+flex-direction:column;
+height:auto;
+padding:15px;
 }
-  
+section{padding:60px 20px}
+}
 </style>
-  
 </head>
-  
+
 <body>
 
 <header>
@@ -165,165 +291,136 @@ main{padding-top:140px}
 <div id="clock"></div>
 </header>
 
-<main>
+<section id="hero">
+<div id="hero-inner">
+<h2>OERATIVE CONSOLE</h2>
+<p>
+This system governs all Eden Empire operations.
+</p>
+</div>
+</section>
 
 <section>
-  
-<h2 class="section-title"><i class="fas fa-power-off"></i> shift activation console</h2>
-
-<div id="statusBar">
-  
-<div class="status-box"><strong>SYSTEM</strong><span class="ok">ONLINE</span></div>
-<div class="status-box"><strong>ACCESS</strong><span class="ok">OPERATIVE</span></div>
-<div class="status-box"><strong>SECURITY</strong><span class="ok">STABLE</span></div>
-<div class="status-box"><strong>TIME MODE</strong><span>24/7</span></div>
-</div>
-
-<p style="text-align:center;font-size:1.3em;max-width:900px;margin:0 auto 60px">
-this console is the daily operational gateway of the Eden Empire. every operative must report here at the beginning of their shift. select your department below to be transported to your live operational environment.
-</p>
+<h2 class="section-title">DEPARTMENTAL ACCESS</h2>
 
 <div class="grid">
-
-<div class="card">
-<i class="fas fa-lightbulb"></i>
-<h3>Executive & Innovation</h3>
-<p>Founder, Chairman, Strategic Vision, R&D</p>
-<button onclick="go('departments/executive.html')">ENTER</button>
-</div>
-
 <div class="card">
 <i class="fas fa-chess-king"></i>
-<h3>Executive Command (CEO)</h3>
-<p>Global oversight, daily directives, alignment</p>
-<button onclick="go('departments/ceo.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-truck"></i>
-<h3>Supply Chain & Logistics</h3>
-<p>Procurement, delivery, distribution, assets</p>
-<button onclick="go('departments/supply-chain.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-coins"></i>
-<h3>Finance & Compliance</h3>
-<p>Accounting, payroll, compliance, audits</p>
-<button onclick="go('departments/finance.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-cogs"></i>
-<h3>Operations</h3>
-<p>Process control, internal efficiency</p>
-<button onclick="go('departments/operations.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-microchip"></i>
-<h3>Technology & Engineering</h3>
-<p>Infrastructure, systems, development</p>
-<button onclick="go('departments/technology.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-bullhorn"></i>
-<h3>Branding & Marketing</h3>
-<p>Public image, campaigns, identity</p>
-<button onclick="go('departments/marketing.html')">ENTER</button>
+<h3>Executive command</h3>
+<button onclick="requestAccess('ceo','departments/ceo.html')">ENTER</button>
 </div>
 
 <div class="card">
 <i class="fas fa-shield-halved"></i>
-<h3>Security Division</h3>
-<p>Private security, risk, protection</p>
-<button onclick="go('departments/security.html')">ENTER</button>
+<h3>Compliance</h3>
+<button onclick="requestAccess('security','departments/legal.html')">ENTER</button>
 </div>
 
 <div class="card">
-<i class="fas fa-scale-balanced"></i>
-<h3>Legal & Policy</h3>
-<p>Law, governance, political interfaces</p>
-<button onclick="go('departments/legal.html')">ENTER</button>
-</div>
-
-<div class="card">
-<i class="fas fa-futbol"></i>
-<h3>E.S.S. operations</h3>
-<p>League management, data, scheduling</p>
-<button onclick="go('departments/ess.html')">ENTER</button>
-</div>
-
-</div>
-</section>
-
-<section>
-<h2 class="section-title"><i class="fas fa-terminal"></i> operative terminal</h2>
-
-<div id="terminal">
-  
-<div id="terminal-output">
-  
-<div>24/7 operation — operative session initialised.</div>
-  
-<div>type <strong>help</strong> for commands.</div>
-  
-</div>
-  
-<div id="terminal-input">
-  <span>&gt;</span>
-<input id="cmd" autocomplete="off" />
+<i class="fas fa-microchip"></i>
+<h3>Computer Science</h3>
+<button onclick="requestAccess('tech','departments/compsci.html')">ENTER</button>
 </div>
 </div>
 </section>
 
-</main>
+<!-- AUTH OVERLAY -->
+<div id="authOverlay">
+<div id="authBox">
+<h3>SECURE ACCESS REQUIRED</h3>
+<p id="authDept"></p>
 
-<footer>
-  
-<p>&copy; <span id="year"></span> Eden Empire — internal operations only</p>
-<p style="opacity:.7">unauthorized access is prohibited.</p>
-</footer>
+<input id="codeInput" placeholder="DAILY ACCESS CODE" maxlength="12" />
+<div id="authStatus"></div>
+</div>
+</div>
 
 <script>
-/* CLOCK */
-function clock(){
+/* =====================================================
+   CLOCK
+===================================================== */
+const clockEl=document.getElementById('clock');
+setInterval(()=>{
 const d=new Date();
-document.getElementById('clock').textContent=d.toLocaleDateString()+" | "+d.toLocaleTimeString();
+clockEl.textContent=d.toLocaleDateString()+" | "+d.toLocaleTimeString();
+},1000);
+
+/* =====================================================
+   SECURITY CORE
+===================================================== */
+let TARGET_PATH=null;
+let TARGET_DEPT=null;
+let ATTEMPTS=0;
+const MAX_ATTEMPTS=3;
+const LOCK_TIME=5*60*1000;
+
+function isLocked(){
+const t=localStorage.getItem('eden_lock');
+return t && Date.now()<t;
 }
-setInterval(clock,1000);clock();
 
-/* NAV */
-function go(path){window.location.href=path}
+function lockSystem(){
+localStorage.setItem('eden_lock',Date.now()+LOCK_TIME);
+}
 
-/* TERMINAL */
-const out=document.getElementById('terminal-output');
-const cmd=document.getElementById('cmd');
-function log(t){const d=document.createElement('div');d.innerHTML=t;out.appendChild(d);out.scrollTop=out.scrollHeight}
-
-const COMMANDS={
-help(){log('Commands: help, status, clear, time')},
-status(){log('ACCESS: OPERATIVE | MODE: 24/7')},
-time(){log(new Date().toString())},
-clear(){out.innerHTML=''}
+/* =====================================================
+   MOCK FIRESTORE (DAILY CODES)
+   === CTO CHANGES THESE DAILY ===
+===================================================== */
+const DAILY_CODES={
+ceo:"EDEN-CEO-247",
+security:"EDEN-SEC-247",
+tech:"EDEN-TECH-247"
 };
 
-cmd.addEventListener('keydown',e=>{
-if(e.key==='Enter'){
-const v=cmd.value.trim().toLowerCase();cmd.value='';
-log('&gt; '+v);
-if(COMMANDS[v]) COMMANDS[v](); else log('Unknown command');
-}}
-);
+/* =====================================================
+   ACCESS REQUEST
+===================================================== */
+function requestAccess(dept,path){
+if(isLocked()){
+alert("SYSTEM LOCKED. WAIT.");
+return;
+}
+TARGET_DEPT=dept;
+TARGET_PATH=path;
+document.getElementById('authDept').textContent="DEPARTMENT: "+dept.toUpperCase();
+document.getElementById('authOverlay').style.display="flex";
+document.getElementById('codeInput').value='';
+document.getElementById('authStatus').innerHTML='';
+}
 
-document.getElementById('year').textContent=new Date().getFullYear();
+/* =====================================================
+   AUTH LOGIC
+===================================================== */
+document.getElementById('codeInput').addEventListener('keydown',e=>{
+if(e.key==="Enter")verify();
+});
+
+function verify(){
+const status=document.getElementById('authStatus');
+const input=document.getElementById('codeInput').value.trim();
+
+status.innerHTML='<div class="loader"></div>';
+
+setTimeout(()=>{
+if(input===DAILY_CODES[TARGET_DEPT]){
+status.innerHTML='<span style="color:var(--ok)">ACCESS GRANTED</span>';
+setTimeout(()=>location.href=TARGET_PATH,800);
+}else{
+ATTEMPTS++;
+status.innerHTML='<span style="color:var(--danger)">ACCESS DENIED</span>';
+if(ATTEMPTS>=MAX_ATTEMPTS){
+lockSystem();
+status.innerHTML='<span style="color:var(--danger)">SYSTEM LOCKED</span>';
+setTimeout(()=>location.reload(),1500);
+}
+}
+},1200);
+}
 </script>
 
 </body>
 </html>
-
-
 
 
 
