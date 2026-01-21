@@ -305,7 +305,7 @@ This system governs all Eden Empire operations.
 
 <div class="grid">
 <div class="card">
-<i class="fas fa-brain"></i>
+<i class="fas fa-mind"></i>
 <h3>Innovations (Thato Morake only)</h3>
 <button onclick="requestAccess('cio','departments/innovations.html')">ENTER</button>
 </div>
@@ -323,9 +323,9 @@ This system governs all Eden Empire operations.
 </div>
 
 <div class="card">
-<i class="fas fa-tactical"></i>
+<i class="fas fa-chart"></i>
 <h3>Operations (Queener only)</h3>
-<button onclick="requestAccess('ceo','departments/operations.html')">ENTER</button>
+<button onclick="requestAccess('operations','departments/operations.html')">ENTER</button>
 </div>
 
 <div class="card">
@@ -335,17 +335,24 @@ This system governs all Eden Empire operations.
 </div>
 
 <div class="card">
+<i class="fas fa-design"></i>
+<h3>Branding (CBO & SMD)</h3>
+<button onclick="requestAccess('branding','departments/branding.html')">ENTER</button>
+</div>
+
+<div class="card">
 <i class="fas fa-shield-halved"></i>
 <h3>Compliance (Olama Khayyim only)</h3>
 <button onclick="requestAccess('security','departments/legal.html')">ENTER</button>
-  </div>
+</div>
+  
 </div>
 </section>
 
 <!-- AUTH OVERLAY -->
 <div id="authOverlay">
 <div id="authBox">
-<h3>SECURE ACCESS REQUIRED</h3>
+<h3>SECURE ACCESS NEEDED</h3>
 <p id="authDept"></p>
 
 <input id="codeInput" placeholder="access code please" maxlength="12" />
