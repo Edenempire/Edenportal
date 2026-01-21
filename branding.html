@@ -1,1 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDEN :: Branding Command</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* =====================================================
+   THEME — HYBRID ELITE
+===================================================== */
+:root{
+  --bg:#0b0d10;
+  --panel:#11141a;
+  --soft:#1a1f2a;
+  --fg:#f4f6f8;
+  --muted:#a5acb8;
+  --gold:#c9a24d;
+  --gold-soft:rgba(201,162,77,.2);
+  --danger:#ff4d5a;
+  --ok:#38d996;
+
+  --font-ui:'Inter',sans-serif;
+  --font-display:'Playfair Display',serif;
+
+  --header-h:90px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--fg)}
+body{font-family:var(--font-ui);overflow-x:hidden}
+
+/* =====================================================
+   HEADER
+===================================================== */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:var(--header-h);
+  background:rgba(11,13,16,.95);
+  border-bottom:1px solid var(--gold-soft);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  z-index:100;
+}
+
+header h1{
+  font-family:var(--font-display);
+  letter-spacing:2px;
+  font-size:1.4em;
+}
+
+header nav button{
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--fg);
+  padding:10px 18px;
+  margin-left:10px;
+  cursor:pointer;
+}
+
+header nav button:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+main{
+  padding-top:calc(var(--header-h) + 30px);
+  padding-bottom:120px;
+}
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+.section{
+  max-width:1400px;
+  margin:40px auto;
+  background:var(--panel);
+  border:1px solid var(--gold-soft);
+  padding:50px;
+}
+
+.section h2{
+  font-family:var(--font-display);
+  font-size:2em;
+  margin-bottom:15px;
+}
+
+.section p.guide{
+  color:var(--muted);
+  max-width:900px;
+  margin-bottom:30px;
+  line-height:1.7;
+}
+
+/* =====================================================
+   ROLE AUTH
+===================================================== */
+#roleAuth{
+  display:flex;
+  gap:15px;
+  max-width:500px;
+}
+
+#roleAuth input{
+  flex:1;
+  padding:14px;
+  background:#000;
+  border:1px solid var(--gold);
+  color:var(--fg);
+  font-size:1em;
+  text-align:center;
+}
+
+#roleAuth button{
+  padding:14px 22px;
+  border:none;
+  background:var(--gold);
+  font-weight:600;
+  cursor:pointer;
+}
+
+#roleStatus{margin-top:15px}
+
+/* =====================================================
+   GRID
+===================================================== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+.card{
+  background:var(--soft);
+  border:1px solid var(--gold-soft);
+  padding:30px;
+}
+
+.card h3{
+  font-family:var(--font-display);
+  margin-bottom:10px;
+}
+
+.card textarea,
+.card input{
+  width:100%;
+  background:#000;
+  border:1px solid var(--gold-soft);
+  color:var(--fg);
+  padding:12px;
+  margin-top:10px;
+}
+
+.card button{
+  margin-top:15px;
+  padding:10px 18px;
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--fg);
+  cursor:pointer;
+}
+
+.card button:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer{
+  border-top:1px solid var(--gold-soft);
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.9em;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media(max-width:768px){
+  header{padding:0 20px}
+  .section{padding:30px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>EDEN — Branding Command</h1>
+  <nav>
+    <button onclick="location.href='../index.html'">Home</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ROLE AUTH -->
+<section class="section">
+  <h2>Department Access</h2>
+  <p class="guide">
+    Access to branding operations is role-based.  
+    The Chief Brand Officer governs strategy.  
+    The Senior Marketing Director executes approved initiatives.
+  </p>
+
+  <div id="roleAuth">
+    <input id="roleCode" placeholder="Access Code">
+    <button onclick="unlockRole()">Enter</button>
+  </div>
+  <div id="roleStatus"></div>
+</section>
+
+<!-- CBO -->
+<section class="section" id="cboSection" style="display:none">
+  <h2>Chief Brand Officer — Strategic Command</h2>
+  <p class="guide">
+    Define and approve EDEN’s brand direction.  
+    All initiatives flow downward from this layer.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Daily Brand Directive</h3>
+      <textarea id="cboDirective"></textarea>
+      <button onclick="saveCBO()">Save Directive</button>
+    </div>
+
+    <div class="card">
+      <h3>Brand Pillars</h3>
+      <textarea id="cboPillars"></textarea>
+      <button onclick="saveCBO()">Update Pillars</button>
+    </div>
+  </div>
+</section>
+
+<!-- SMD -->
+<section class="section" id="smdSection" style="display:none">
+  <h2>Senior Marketing Director — Campaign Execution</h2>
+  <p class="guide">
+    Execute campaigns aligned with CBO directives.  
+    Creativity is encouraged within approved boundaries.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Active Campaign</h3>
+      <input id="campaignName" placeholder="Campaign Name">
+      <textarea id="campaignNotes"></textarea>
+      <button onclick="saveCampaign()">Save Campaign</button>
+    </div>
+
+    <div class="card">
+      <h3>Visual Messaging</h3>
+      <textarea id="visualNotes"></textarea>
+      <button onclick="saveCampaign()">Save Visual Notes</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  EDEN Branding Division — Confidential · Authority Through Clarity
+</footer>
+
+<script>
+/* =====================================================
+   DOM BINDINGS
+===================================================== */
+const roleCode=document.getElementById("roleCode");
+const roleStatus=document.getElementById("roleStatus");
+const cboSection=document.getElementById("cboSection");
+const smdSection=document.getElementById("smdSection");
+
+const cboDirective=document.getElementById("cboDirective");
+const cboPillars=document.getElementById("cboPillars");
+
+const campaignName=document.getElementById("campaignName");
+const campaignNotes=document.getElementById("campaignNotes");
+const visualNotes=document.getElementById("visualNotes");
+
+/* =====================================================
+   ACCESS CODES (SIMULATED)
+===================================================== */
+const CBO_CODE="EDEN-CBO-247";
+const SMD_CODE="EDEN-SMD-247";
+
+/* =====================================================
+   ROLE UNLOCK
+===================================================== */
+function unlockRole(){
+  const code=roleCode.value.trim();
+
+  if(code===CBO_CODE){
+    cboSection.style.display="block";
+    smdSection.style.display="none";
+    roleStatus.textContent="CBO ACCESS GRANTED";
+    loadCBO();
+  }else if(code===SMD_CODE){
+    smdSection.style.display="block";
+    cboSection.style.display="none";
+    roleStatus.textContent="SMD ACCESS GRANTED";
+    loadCampaign();
+  }else{
+    roleStatus.textContent="ACCESS DENIED";
+  }
+}
+
+/* =====================================================
+   CBO CRUD
+===================================================== */
+function saveCBO(){
+  localStorage.setItem("cboDirective",cboDirective.value);
+  localStorage.setItem("cboPillars",cboPillars.value);
+  alert("CBO data saved");
+}
+
+function loadCBO(){
+  cboDirective.value=localStorage.getItem("cboDirective")||"";
+  cboPillars.value=localStorage.getItem("cboPillars")||"";
+}
+
+/* =====================================================
+   SMD CRUD
+===================================================== */
+function saveCampaign(){
+  localStorage.setItem("campaignName",campaignName.value);
+  localStorage.setItem("campaignNotes",campaignNotes.value);
+  localStorage.setItem("visualNotes",visualNotes.value);
+  alert("Campaign saved");
+}
+
+function loadCampaign(){
+  campaignName.value=localStorage.getItem("campaignName")||"";
+  campaignNotes.value=localStorage.getItem("campaignNotes")||"";
+  visualNotes.value=localStorage.getItem("visualNotes")||"";
+}
+</script>
+
+</body>
+</html>
