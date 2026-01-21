@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>EDEN :: COMPUTER SCIENCE COMMAND</title>
+<meta name="description" content="EDEN Computer Science Operations Floor">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="icon" href="data:image/svg+xml,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+<text y='0.9em' font-size='90'>🧠</text>
+</svg>">
+
+<style>
+/* =====================================================
+   ROOT
+===================================================== */
+:root{
+  --bg:#020406;
+  --fg:#00ffcc;
+  --soft:#9ffff0;
+  --accent:#00aaff;
+  --ok:#00ff99;
+  --warn:#ffaa00;
+  --danger:#ff3355;
+
+  --panel:#06161f;
+  --panel-soft:#0b2a33;
+
+  --font-ui:'Electrolize',sans-serif;
+  --font-mono:'VT323',monospace;
+}
+
+/* =====================================================
+   RESET
+===================================================== */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--fg)}
+body{font-family:var(--font-mono);overflow-x:hidden}
+
+/* =====================================================
+   MATRIX BACKGROUND
+===================================================== */
+#matrix{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  opacity:.25;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 30px;
+  background:rgba(2,6,10,.98);
+  border-bottom:2px solid var(--accent);
+  z-index:1000;
+}
+
+header h1{
+  font-family:var(--font-ui);
+  letter-spacing:4px;
+  font-size:1.15em;
+}
+
+header nav{
+  display:flex;
+  gap:18px;
+}
+
+header button{
+  padding:8px 16px;
+  border:2px solid var(--fg);
+  background:transparent;
+  color:var(--fg);
+  font-family:var(--font-ui);
+  cursor:pointer;
+}
+
+header button:hover{
+  background:var(--fg);
+  color:#000;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+main{
+  position:relative;
+  z-index:1;
+  padding:130px 40px 120px;
+}
+
+/* =====================================================
+   PANELS
+===================================================== */
+.panel{
+  background:linear-gradient(180deg,var(--panel-soft),#020b10);
+  border:2px solid var(--accent);
+  padding:40px;
+  margin-bottom:80px;
+  box-shadow:0 0 50px rgba(0,255,255,.25);
+}
+
+.panel h2{
+  font-family:var(--font-ui);
+  letter-spacing:3px;
+  margin-bottom:10px;
+}
+
+.panel p.guide{
+  color:var(--soft);
+  margin-bottom:30px;
+  line-height:1.6;
+}
+
+/* =====================================================
+   CTO PANEL
+===================================================== */
+#ctoPanel.locked{
+  filter:blur(4px);
+  pointer-events:none;
+}
+
+#ctoUnlock{
+  display:flex;
+  gap:10px;
+  margin-bottom:30px;
+}
+
+#ctoUnlock input{
+  flex:1;
+  padding:12px;
+  background:#000;
+  border:2px solid var(--accent);
+  color:var(--fg);
+  font-family:var(--font-mono);
+}
+
+#ctoUnlock button{
+  padding:12px 20px;
+  border:2px solid var(--fg);
+  background:transparent;
+  color:var(--fg);
+  cursor:pointer;
+}
+
+#ctoUnlock button:hover{
+  background:var(--fg);
+  color:#000;
+}
+
+/* =====================================================
+   LISTS
+===================================================== */
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.item{
+  border:1px solid var(--accent);
+  padding:14px;
+  background:#000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.item strong{font-family:var(--font-ui)}
+
+.item button{
+  margin-left:10px;
+  padding:6px 10px;
+  border:1px solid var(--fg);
+  background:transparent;
+  color:var(--fg);
+  cursor:pointer;
+}
+
+/* =====================================================
+   EDITORS
+===================================================== */
+.editor-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
+}
+
+.editor{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.editor textarea{
+  min-height:200px;
+  background:#000;
+  color:var(--fg);
+  border:2px solid var(--accent);
+  font-family:monospace;
+  padding:10px;
+}
+
+.editor iframe{
+  background:#fff;
+  min-height:200px;
+  border:2px solid var(--accent);
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer{
+  position:fixed;
+  bottom:0;left:0;width:100%;
+  padding:12px 20px;
+  background:rgba(2,6,10,.98);
+  border-top:2px solid var(--accent);
+  text-align:center;
+  font-size:.95em;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+@media(max-width:768px){
+  main{padding:130px 20px 140px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header>
+  <h1>EDEN :: COMPUTER SCIENCE</h1>
+  <nav>
+    <button onclick="goHome()">HOME</button>
+    <button onclick="location.reload()">REFRESH</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- CTO -->
+<section class="panel">
+<h2>CTO COMMAND</h2>
+<p class="guide">
+CTO ONLY. This section defines the daily Computer Science operation that
+drives revenue for EDEN. Full CRUD. Requires validation PIN.
+</p>
+
+<div id="ctoUnlock">
+  <input id="ctoPin" placeholder="CTO PIN">
+  <button onclick="unlockCTO()">UNLOCK</button>
+</div>
+
+<div id="ctoPanel" class="locked">
+  <input id="ctoTask" placeholder="New Daily Operation">
+  <button onclick="addCtoTask()">ADD OPERATION</button>
+
+  <div class="list" id="ctoList"></div>
+</div>
+</section>
+
+<!-- SSD -->
+<section class="panel">
+<h2>SENIOR SOFTWARE DEVELOPERS</h2>
+<p class="guide">
+SSDs implement algorithms received externally. They do not author core logic.
+Each developer has an independent workspace with live preview.
+</p>
+
+<div class="editor-grid" id="devGrid"></div>
+</section>
+
+</main>
+
+<footer>
+EDEN CONGLOMERATE · COMPUTER SCIENCE DEPARTMENT · ALL ACTIONS LOGGED
+</footer>
+
+<script>
+/* =====================================================
+   HOME
+===================================================== */
+function goHome(){
+  location.href="../index.html";
+}
+
+/* =====================================================
+   CTO LOGIC
+===================================================== */
+const CTO_PIN="12345";
+const ctoPanel=document.getElementById("ctoPanel");
+const ctoList=document.getElementById("ctoList");
+const ctoTask=document.getElementById("ctoTask");
+
+function unlockCTO(){
+  if(document.getElementById("ctoPin").value===CTO_PIN){
+    ctoPanel.classList.remove("locked");
+  }else{
+    alert("INVALID PIN");
+  }
+}
+
+function loadCto(){
+  const data=JSON.parse(localStorage.getItem("ctoOps")||"[]");
+  ctoList.innerHTML="";
+  data.forEach((t,i)=>{
+    const d=document.createElement("div");
+    d.className="item";
+    d.innerHTML=`<strong>${t}</strong>
+      <span>
+        <button onclick="editCto(${i})">EDIT</button>
+        <button onclick="delCto(${i})">DEL</button>
+      </span>`;
+    ctoList.appendChild(d);
+  });
+}
+
+function addCtoTask(){
+  if(!ctoTask.value.trim())return;
+  const data=JSON.parse(localStorage.getItem("ctoOps")||"[]");
+  data.push(ctoTask.value);
+  localStorage.setItem("ctoOps",JSON.stringify(data));
+  ctoTask.value="";
+  loadCto();
+}
+
+function editCto(i){
+  const data=JSON.parse(localStorage.getItem("ctoOps"));
+  const v=prompt("Edit Operation",data[i]);
+  if(v!==null){
+    data[i]=v;
+    localStorage.setItem("ctoOps",JSON.stringify(data));
+    loadCto();
+  }
+}
+
+function delCto(i){
+  const data=JSON.parse(localStorage.getItem("ctoOps"));
+  data.splice(i,1);
+  localStorage.setItem("ctoOps",JSON.stringify(data));
+  loadCto();
+}
+
+loadCto();
+
+/* =====================================================
+   SSD WORKSPACES
+===================================================== */
+const devGrid=document.getElementById("devGrid");
+const DEV_COUNT=3;
+
+for(let i=1;i<=DEV_COUNT;i++){
+  const box=document.createElement("div");
+  box.className="editor";
+  box.innerHTML=`
+    <h3>Developer ${i}</h3>
+    <textarea id="code${i}"></textarea>
+    <button onclick="run(${i})">RUN</button>
+    <iframe id="out${i}"></iframe>
+  `;
+  devGrid.appendChild(box);
+
+  const saved=localStorage.getItem("dev"+i);
+  if(saved)document.getElementById("code"+i).value=saved;
+}
+
+function run(i){
+  const code=document.getElementById("code"+i).value;
+  localStorage.setItem("dev"+i,code);
+  document.getElementById("out"+i).srcdoc=code;
+}
+
+/* =====================================================
+   MATRIX
+===================================================== */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+let w,h;
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener("resize",resize);
+resize();
+
+const chars="01";
+let drops=Array(Math.floor(w/20)).fill(0);
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,.05)";
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle="#00ffcc";
+  ctx.font="16px monospace";
+  drops.forEach((y,i)=>{
+    const text=chars[Math.floor(Math.random()*2)];
+    ctx.fillText(text,i*20,y);
+    if(y>h&&Math.random()>.975)drops[i]=0;
+    drops[i]+=20;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>
