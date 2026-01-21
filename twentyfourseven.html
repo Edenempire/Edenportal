@@ -305,22 +305,40 @@ This system governs all Eden Empire operations.
 
 <div class="grid">
 <div class="card">
+<i class="fas fa-brain"></i>
+<h3>Innovations (Thato Morake only)</h3>
+<button onclick="requestAccess('cio','departments/innovations.html')">ENTER</button>
+</div>
+
+<div class="card">
 <i class="fas fa-chess-king"></i>
-<h3>Executive command</h3>
+<h3>Executive command (CEO only)</h3>
 <button onclick="requestAccess('ceo','departments/ceo.html')">ENTER</button>
 </div>
 
 <div class="card">
-<i class="fas fa-shield-halved"></i>
-<h3>Compliance</h3>
-<button onclick="requestAccess('security','departments/legal.html')">ENTER</button>
+<i class="fas fa-truck"></i>
+<h3>Supply Chain (Frost & Vuyo only)</h3>
+<button onclick="requestAccess('sc','departments/supplychain.html')">ENTER</button>
+</div>
+
+<div class="card">
+<i class="fas fa-tactical"></i>
+<h3>Operations (Queener only)</h3>
+<button onclick="requestAccess('ceo','departments/operations.html')">ENTER</button>
 </div>
 
 <div class="card">
 <i class="fas fa-microchip"></i>
-<h3>Computer Science</h3>
+<h3>Computer Science (CTO & Senior Software Developers only)</h3>
 <button onclick="requestAccess('tech','departments/compsci.html')">ENTER</button>
 </div>
+
+<div class="card">
+<i class="fas fa-shield-halved"></i>
+<h3>Compliance (Olama Khayyim only)</h3>
+<button onclick="requestAccess('security','departments/legal.html')">ENTER</button>
+  </div>
 </div>
 </section>
 
@@ -330,7 +348,7 @@ This system governs all Eden Empire operations.
 <h3>SECURE ACCESS REQUIRED</h3>
 <p id="authDept"></p>
 
-<input id="codeInput" placeholder="DAILY ACCESS CODE" maxlength="12" />
+<input id="codeInput" placeholder="access code please" maxlength="12" />
 <div id="authStatus"></div>
 </div>
 </div>
