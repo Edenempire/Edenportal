@@ -109,29 +109,114 @@ from { background-position: 0 0; }
 to { background-position: 0 100%; }
 }
 
-/* --- HEADER STYLES --- */
-#main-header {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: var(--header-height);
-background-color: rgba(0, 0, 0, 0.95); /* Semi-transparent black */
-border-bottom: 2px solid var(--color-accent-medium);
-z-index: 500;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 50px;
-box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+:root {
+  --header-height: clamp(72px, 10vh, 96px);
 }
 
-.header-logo {
-font-size: 4em; /* Big and bold */
-font-family: var(--font-modern);
-letter-spacing: 5px;
-font-weight: 900;
-animation: textGlow 1.5s infinite alternate;
+/* ===== HEADER CORE ===== */
+#main-header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 600;
+  background: rgba(0, 0, 0, 0.95);
+  border-bottom: 2px solid var(--color-accent-medium);
+  padding-top: env(safe-area-inset-top);
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: var(--header-height);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+/* ===== BRAND ===== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: clamp(44px, 6vw, 64px);
+  height: clamp(44px, 6vw, 64px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,255,255,0.9);
+  box-shadow: 0 0 10px rgba(0,255,255,0.6);
+}
+
+.brand-name {
+  font-family: var(--font-modern);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  letter-spacing: 4px;
+}
+
+/* ===== CLOCK ===== */
+.system-clock {
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+/* ===== NAV ===== */
+.nav-links {
+  display: flex;
+  gap: 18px;
+}
+
+.nav-links a {
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: 6px 10px;
+}
+
+/* ===== MOBILE TOGGLE ===== */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-foreground-light);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* ===== MOBILE MODE ===== */
+@media (max-width: 900px) {
+  .header-inner {
+    grid-template-columns: auto auto;
+  }
+
+  .system-clock {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: block;
+    justify-self: end;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(var(--header-height) + env(safe-area-inset-top));
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: #000;
+    border-bottom: 2px solid var(--color-accent-medium);
+    padding: 20px;
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
 }
 
 @keyframes textGlow {
@@ -607,51 +692,28 @@ font-size: 1.2em;
 <canvas id="matrixCanvas"></canvas>
 
 <header id="main-header">
+  <div class="header-inner">
 
-<div class="header-logo" style="display:flex; align-items:center;">
-<img 
-  src="eden.jpg"
-  id="responsiveLogo"
-  alt="Eden Empire logo"
-  style="
-    height: 72px;
-    width: 72px;
-    object-fit: cover;
+    <div class="brand">
+      <img src="eden.jpg" alt="Eden Empire logo" class="brand-logo" />
+      <span class="brand-name">EDEN</span>
+    </div>
 
-    /* CORE SHAPE */
-    border-radius: 50%;
-    background: #000;
+    <div id="system-clock" class="system-clock"></div>
 
-    /* INSIGNIA FRAME */
-    border: 2px solid rgba(0,255,255,0.9);
-    box-shadow:
-      0 0 10px rgba(0,255,255,0.6),
-      inset 0 0 8px rgba(0,255,255,0.35);
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
 
-    /* IMAGE CORRECTION */
-    filter:
-      contrast(1.35)
-      saturate(1.25)
-      brightness(1.05);
+    <nav class="nav-links">
+      <a href="#about">Overview</a>
+      <a href="#board">Operatives</a>
+      <a href="#subsidiaries">Branches</a>
+      <a href="#careers" onclick="openModal('careersModal')">Join</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-    /* SMOOTH OPERATION */
-    transition: all 0.35s ease;
-  "
->
-
-</div>
-
-  <br>
-
-<div id="system-clock"></div>
-
-<nav class="nav-links">
-<a href="#about"><i class="fas fa-satellite-dish"></i> Overview</a>
-<a href="#board"><i class="fas fa-user-secret"></i> Operatives</a>
-<a href="#subsidiaries"><i class="fas fa-sitemap"></i> The Branches</a>
-<a href="#careers" onclick="openModal('careersModal')"><i class="fas fa-briefcase"></i> Join Us</a>
-<a href="#contact"><i class="fas fa-terminal"></i> Contact</a>
-</nav>
+  </div>
 </header>
 
 <main>
@@ -1604,6 +1666,38 @@ window.addEventListener("scroll", () => {
 
 </script>
 
+<script>
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".nav-links");
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("open");
+  });
+</script>
+
 </body>
 
   </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
