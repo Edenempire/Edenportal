@@ -1,25 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="en">
-      
 <head>
-      
     <meta charset="UTF-8">
-      
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      
     <title>EDEN :: TIER-3 ULTIMATE COMMAND</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-      
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-          
         :root {
             --bg: #010204;
             --fg: #00fff7;
@@ -28,162 +20,225 @@
             --ok: #00ff99;
             --warn: #ffaa00;
             --danger: #ff3355;
-            --panel: rgba(7, 24, 34, 0.85);
+            --panel: rgba(7, 24, 34, 0.9);
             --panel-border: rgba(0, 255, 247, 0.3);
             --font-ui: 'Electrolize', sans-serif;
             --font-header: 'Orbitron', sans-serif;
             --font-mono: 'VT323', monospace;
             --header-h: 80px;
-            --transition-speed: 0.6s;
         }
 
-        /* RESET & BASE */
+        /* -----------------------------------------------------
+           GLOBAL & SMOOTH TRANSITIONS
+        ----------------------------------------------------- */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        html, body { height: 100%; background: var(--bg); color: var(--fg); overflow-x: hidden; scroll-behavior: smooth; }
-        body { font-family: var(--font-mono); opacity: 0; transition: opacity 1.5s ease-in; }
+        
+        html, body { 
+            height: 100%; 
+            background: var(--bg); 
+            color: var(--fg); 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: var(--font-mono); 
+            opacity: 0; 
+            transition: opacity 2s ease-in-out; 
+        }
+        
         body.loaded { opacity: 1; }
 
-        /* SCANLINE EFFECT */
+        /* CRT/SCANLINE OVERLAY */
         body::before {
             content: ""; position: fixed; inset: 0; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 247, 0.03) 3px);
+            background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 247, 0.02) 3px);
             z-index: 10001;
         }
 
-        .glow { text-shadow: 0 0 10px var(--fg), 0 0 20px rgba(0, 255, 255, 0.3); }
+        .glow { text-shadow: 0 0 12px var(--fg), 0 0 25px rgba(0, 255, 255, 0.4); }
 
-        /* HEADER & NAV */
+        /* -----------------------------------------------------
+           HEADER & NAVIGATION
+        ----------------------------------------------------- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; background: rgba(0, 0, 0, 0.9);
-            border-bottom: 1px solid var(--accent); z-index: 1000;
-            backdrop-filter: blur(10px);
+            padding: 0 5%; background: rgba(0, 0, 0, 0.95);
+            border-bottom: 2px solid var(--accent); z-index: 1000;
+            backdrop-filter: blur(15px);
         }
 
-        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .nav-left { display: flex; align-items: center; gap: clamp(10px, 2vw, 30px); }
+        
         .home-btn {
             background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            padding: 8px 15px; cursor: pointer; font-family: var(--font-ui); font-size: 0.8rem;
-            transition: 0.3s; text-transform: uppercase;
+            padding: 10px 18px; cursor: pointer; font-family: var(--font-ui); font-size: 0.75rem;
+            transition: 0.4s; text-transform: uppercase; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .home-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
+        .home-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        header h1 { font-family: var(--font-header); letter-spacing: 3px; font-size: 1.2rem; }
+        header h1 { 
+            font-family: var(--font-header); 
+            letter-spacing: 4px; 
+            font-size: clamp(0.9rem, 2vw, 1.3rem); 
+        }
 
-        #hud-right { display: flex; gap: 30px; align-items: center; }
+        #hud-right { display: flex; gap: clamp(10px, 3vw, 40px); align-items: center; }
+        
         #sysStatus { 
-            font-family: var(--font-ui); font-size: 0.9rem; padding: 4px 10px; 
-            border-radius: 4px; transition: all 0.5s ease;
+            font-family: var(--font-ui); font-size: 0.8rem; padding: 5px 12px; 
+            border-radius: 2px; transition: all 0.5s ease;
+            white-space: nowrap;
         }
-        .status-green { color: var(--ok); border: 1px solid var(--ok); box-shadow: inset 0 0 5px var(--ok); }
+        .status-green { color: var(--ok); border: 1px solid var(--ok); box-shadow: inset 0 0 8px rgba(0, 255, 153, 0.2); }
         .status-warn { color: var(--warn); border: 1px solid var(--warn); }
-        .status-danger { color: var(--danger); border: 1px solid var(--danger); animation: pulse-red 1s infinite alternate; }
+        .status-danger { color: var(--danger); border: 1px solid var(--danger); animation: pulse-red 0.8s infinite alternate; }
 
-        @keyframes pulse-red { from { opacity: 1; } to { opacity: 0.5; } }
+        @keyframes pulse-red { from { opacity: 1; } to { opacity: 0.4; } }
 
-        /* BOOT SEQUENCE */
+        /* -----------------------------------------------------
+           BOOT SEQUENCE
+        ----------------------------------------------------- */
         #boot {
             position: fixed; inset: 0; background: #000; z-index: 10002;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             font-family: var(--font-mono); font-size: 1.5rem; color: var(--fg);
+            transition: opacity 1s ease;
         }
-        #boot .loading-bar { width: 300px; height: 2px; background: #111; margin-top: 20px; position: relative; overflow: hidden; }
-        #boot .loading-bar::after {
+        .loading-text { margin-bottom: 20px; letter-spacing: 5px; }
+        .loading-bar { width: 280px; height: 3px; background: #111; position: relative; overflow: hidden; }
+        .loading-bar::after {
             content: ""; position: absolute; left: -100%; width: 100%; height: 100%;
-            background: var(--fg); animation: progress 2s forwards;
+            background: var(--fg); animation: progress 1.8s cubic-bezier(.47,0,.74,.71) forwards;
         }
         @keyframes progress { to { left: 0; } }
 
-        /* SNOW - BLIZZARD LEVEL */
-        #snow { position: fixed; inset: 0; z-index: 1; pointer-events: none; filter: blur(1px); }
+        /* -----------------------------------------------------
+           HIGH-LEVEL BLIZZARD
+        ----------------------------------------------------- */
+        #snow { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.6; }
 
-        /* MAIN */
+        /* -----------------------------------------------------
+           HERO & CONTENT
+        ----------------------------------------------------- */
         main { position: relative; z-index: 2; padding-top: var(--header-h); }
 
         #hero {
-            min-height: 80vh; display: flex; align-items: center; justify-content: center;
-            transform: translateY(30px); opacity: 0; transition: all 1s ease-out 0.5s;
+            min-height: 85vh; display: flex; align-items: center; justify-content: center;
+            padding: 40px 20px;
         }
-        body.loaded #hero { transform: translateY(0); opacity: 1; }
 
         #hero-inner {
-            max-width: 1000px; width: 90%; background: var(--panel);
-            border: 1px solid var(--panel-border); padding: 80px; text-align: center;
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            max-width: 1100px; width: 100%; background: var(--panel);
+            border: 1px solid var(--panel-border); padding: clamp(40px, 8vw, 100px); 
+            text-align: center; position: relative;
+            box-shadow: 0 0 80px rgba(0,0,0,0.8);
+            transform: scale(0.9); opacity: 0;
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
+        body.loaded #hero-inner { transform: scale(1); opacity: 1; }
 
-        /* CARDS */
         .section-title {
-            text-align: center; font-family: var(--font-header); font-size: 2.5rem;
-            margin: 50px 0; letter-spacing: 10px;
+            text-align: center; font-family: var(--font-header); 
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin: 80px 0 50px; letter-spacing: clamp(5px, 2vw, 15px);
+            text-transform: uppercase;
         }
 
+        /* -----------------------------------------------------
+           GRID & DEPARTMENT CARDS
+        ----------------------------------------------------- */
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 0 50px 100px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; padding: 0 5% 120px;
         }
 
         .card {
-            background: rgba(10, 20, 30, 0.7); border: 1px solid var(--panel-border);
-            padding: 40px 20px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer; position: relative;
+            background: rgba(10, 25, 35, 0.8); border: 1px solid var(--panel-border);
+            padding: 50px 30px; text-align: center; 
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer; position: relative; overflow: hidden;
         }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--fg));
+            transition: 0.5s;
+        }
+        .card:hover::before { left: 100%; }
+        
         .card:hover {
-            background: rgba(0, 255, 247, 0.05); transform: translateY(-10px);
-            border-color: var(--fg); box-shadow: 0 10px 30px rgba(0, 255, 247, 0.2);
+            background: rgba(0, 255, 247, 0.08); 
+            transform: translateY(-15px);
+            border-color: var(--fg); 
+            box-shadow: 0 20px 40px rgba(0, 255, 247, 0.15);
         }
-        .card i { font-size: 3rem; margin-bottom: 20px; color: var(--accent); transition: 0.3s; }
-        .card:hover i { transform: scale(1.2); color: var(--fg); }
 
-        .card h3 { font-family: var(--font-ui); font-size: 1.4rem; margin-bottom: 10px; letter-spacing: 2px; }
-        .card p { font-size: 0.9rem; color: var(--soft); opacity: 0.7; }
+        .card i { font-size: 3.5rem; margin-bottom: 25px; color: var(--accent); transition: 0.5s; }
+        .card:hover i { transform: rotateY(180deg); color: var(--fg); }
+
+        .card h3 { font-family: var(--font-ui); font-size: 1.5rem; margin-bottom: 12px; letter-spacing: 2px; }
+        .card p { font-family: var(--font-mono); font-size: 1.1rem; color: var(--soft); opacity: 0.8; }
 
         .enter-btn {
-            margin-top: 25px; padding: 10px 30px; background: transparent;
+            margin-top: 30px; padding: 12px 35px; background: transparent;
             border: 1px solid var(--fg); color: var(--fg); font-family: var(--font-ui);
-            cursor: pointer; transition: 0.3s; font-weight: bold;
+            cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px;
         }
-        .enter-btn:hover { background: var(--fg); color: #000; }
+        .enter-btn:hover { background: var(--fg); color: #000; box-shadow: 0 0 15px var(--fg); }
 
-        /* AUTH MODAL */
+        /* -----------------------------------------------------
+           AUTH OVERLAY (MODAL)
+        ----------------------------------------------------- */
         #authOverlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
             z-index: 5000; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px); padding: 20px;
         }
         #authBox {
-            width: 450px; padding: 50px; background: #050a10;
-            border: 1px solid var(--fg); text-align: center;
-            box-shadow: 0 0 100px rgba(0, 255, 247, 0.2);
+            width: 100%; max-width: 500px; padding: clamp(30px, 5vw, 60px); 
+            background: #050a0f; border: 1px solid var(--fg); text-align: center;
+            box-shadow: 0 0 120px rgba(0, 255, 247, 0.15);
         }
+        #authDept { margin: 15px 0; color: var(--accent); font-family: var(--font-ui); font-size: 0.9rem; }
+        
         #codeInput {
-            width: 100%; padding: 15px; background: #000; border: 1px solid var(--accent);
-            color: var(--fg); font-family: var(--font-mono); font-size: 1.5rem;
-            text-align: center; letter-spacing: 5px; margin: 20px 0;
+            width: 100%; padding: 18px; background: #000; border: 1px solid var(--accent);
+            color: var(--fg); font-family: var(--font-mono); font-size: 1.8rem;
+            text-align: center; letter-spacing: 8px; margin: 25px 0;
+            transition: 0.3s;
+        }
+        #codeInput:focus { border-color: var(--fg); box-shadow: 0 0 15px rgba(0,255,247,0.3); }
+
+        #authStatus { height: 25px; margin-bottom: 20px; font-weight: bold; font-size: 1.1rem; }
+
+        /* -----------------------------------------------------
+           MOBILE OPTIMIZATIONS
+        ----------------------------------------------------- */
+        @media(max-width: 600px) {
+            header { height: auto; padding: 15px; flex-direction: column; gap: 15px; }
+            .grid { grid-template-columns: 1fr; padding: 20px; }
+            #hero-inner { padding: 40px 20px; }
+            .home-btn { width: 100%; justify-content: center; }
         }
 
-        /* ADDITIONAL UI ELEMENTS */
-        #data-stream {
-            position: fixed; bottom: 10px; left: 10px; font-size: 0.7rem; color: var(--accent);
-            opacity: 0.5; pointer-events: none; z-index: 100;
+        /* -----------------------------------------------------
+           DATA DECORATION
+        ----------------------------------------------------- */
+        #data-footer {
+            position: fixed; bottom: 0; width: 100%; padding: 10px 20px;
+            background: rgba(0,0,0,0.8); border-top: 1px solid rgba(0,255,247,0.1);
+            display: flex; justify-content: space-between; font-size: 0.7rem;
+            color: var(--accent); z-index: 100; pointer-events: none;
         }
-
-        /* RESPONSIVE */
-        @media(max-width: 768px) {
-            header { height: auto; padding: 20px; flex-direction: column; gap: 10px; }
-            .grid { padding: 20px; }
-        }
-          
     </style>
-      
 </head>
-      
 <body>
 
 <div id="boot">
-    <div class="glow">INITIALIZING 24/7 OPERATION...</div>
+    <div class="loading-text glow">INITIALIZING SECURE LINK...</div>
     <div class="loading-bar"></div>
 </div>
 
@@ -191,8 +246,8 @@
 
 <header>
     <div class="nav-left">
-        <button class="home-btn" onclick="window.scrollTo(0,0)"><i class="fas fa-home"></i> Home</button>
-        <h1 class="glow">EDEN // COMMAND CENTER</h1>
+        <button class="home-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Reset System</button>
+        <h1 class="glow">EDEN :: OPERATIVE COMMAND</h1>
     </div>
     <div id="hud-right">
         <div id="sysStatus" class="status-green">STATUS: OPTIMAL</div>
@@ -203,9 +258,13 @@
 <main>
     <section id="hero">
         <div id="hero-inner">
-            <h2 class="glow" style="font-size: 4rem; font-family: 'Orbitron';">CENTRAL HUB</h2>
-            <p style="letter-spacing: 5px; margin-top: 10px;">TIER-3 OPERATIVE CLEARANCE REQUIRED</p>
-            <div style="margin-top: 40px; font-style: italic; color: var(--accent);">system online. monitoring active.</div>
+            <h2 class="glow" style="font-size: clamp(2rem, 8vw, 5rem); font-family: 'Orbitron';">CENTRAL HUB</h2>
+            <p style="letter-spacing: clamp(2px, 1vw, 8px); margin-top: 20px; font-size: 1.2rem;">
+                RESTRICTED AREA: TIER-3 OPERATIVES ONLY
+            </p>
+            <div style="margin-top: 50px; opacity: 0.6; font-family: var(--font-ui); font-size: 0.8rem;">
+                <i class="fas fa-shield-halved"></i> BIOMETRIC LOGGING ENABLED
+            </div>
         </div>
     </section>
 
@@ -216,51 +275,61 @@
 
 <div id="authOverlay">
     <div id="authBox">
-        <h3 id="authTitle" class="glow">SECURE ACCESS</h3>
-        <p id="authDept" style="margin-top: 10px; color: var(--accent);"></p>
-        <input type="password" id="codeInput" autocomplete="off" placeholder="****">
-        <div id="authStatus" style="height: 20px; margin-bottom: 20px;"></div>
-        <div style="display: flex; gap: 10px;">
-            <button class="enter-btn" style="flex:1" onclick="closeAuth()">CANCEL</button>
+        <h3 id="authTitle" class="glow" style="font-family: 'Orbitron';">SECURE ACCESS</h3>
+        <p id="authDept"></p>
+        <input type="password" id="codeInput" autocomplete="off" placeholder="••••">
+        <div id="authStatus"></div>
+        <div style="display: flex; gap: 15px;">
+            <button class="enter-btn" style="flex:1" onclick="closeAuth()">ABORT</button>
             <button class="enter-btn" style="flex:1; background: var(--fg); color: #000;" onclick="verify()">AUTHORIZE</button>
         </div>
     </div>
 </div>
 
-<div id="data-stream"></div>
+<div id="data-footer">
+    <span>LATENCY: 14ms</span>
+    <span>ENCRYPTION: AES-256</span>
+    <span id="coord-display">COORD: 0.00, 0.00</span>
+</div>
 
 <script>
 /* =====================================================
-   CORE CONFIGURATION
+   CENTRAL COMMAND CONFIGURATION
 ===================================================== */
 const DEPARTMENTS = [
-    { id: 'ceo', name: 'Executive', icon: 'fa-chess-king', code: 'EDEN-CEO-2026', path: 'ceo.html' },
-    { id: 'cio', name: 'Innovations', icon: 'fa-lightbulb', code: 'EDEN-CIO-2026', path: 'innovations.html' },
-    { id: 'tech', name: 'Cyber Security', icon: 'fa-microchip', code: 'EDEN-TECH-2026', path: 'tech.html' },
-    { id: 'ops', name: 'Operations', icon: 'fa-gears', code: 'EDEN-OPS-2026', path: 'ops.html' },
-    { id: 'brand', name: 'Branding', icon: 'fa-eye', code: 'EDEN-BRAND-2026', path: 'branding.html' },
-    { id: 'sc', name: 'Supply Chain', icon: 'fa-truck-fast', code: 'EDEN-SC-2026', path: 'supply.html' }
+    { id: 'ceo', name: 'Executive', icon: 'fa-chess-king', code: 'CEO-99', file: 'ceo.html' },
+    { id: 'cio', name: 'Innovations', icon: 'fa-brain', code: 'CIO-88', file: 'innovations.html' },
+    { id: 'tech', name: 'CompSci / Tech', icon: 'fa-microchip', code: 'TECH-77', file: 'compsci.html' },
+    { id: 'ops', name: 'Operations', icon: 'fa-gears', code: 'OPS-66', file: 'operations.html' },
+    { id: 'brand', name: 'Branding', icon: 'fa-palette', code: 'BRAND-55', file: 'branding.html' },
+    { id: 'sc', name: 'Supply Chain', icon: 'fa-truck-fast', code: 'SC-44', file: 'supplychain.html' },
+    { id: 'sec', name: 'Compliance', icon: 'fa-shield-halved', code: 'SEC-33', file: 'legal.html' }
 ];
 
 let activeDept = null;
 
 /* =====================================================
-   INITIALIZATION & BOOT
+   INITIALIZATION
 ===================================================== */
 window.addEventListener('load', () => {
+    // Force top on reload
+    window.scrollTo(0,0);
+    
     setTimeout(() => {
-        document.getElementById('boot').style.display = 'none';
+        const boot = document.getElementById('boot');
+        boot.style.opacity = '0';
+        setTimeout(() => boot.style.display = 'none', 1000);
+        
         document.body.classList.add('loaded');
         initSnow();
         renderDepts();
         startClock();
-        randomStatusUpdate();
-        generateDataStream();
-    }, 2200);
+        initDynamicUI();
+    }, 2000);
 });
 
 /* =====================================================
-   DEPARTMENT RENDERING
+   CORE ENGINE
 ===================================================== */
 function renderDepts() {
     const grid = document.getElementById('deptGrid');
@@ -268,21 +337,22 @@ function renderDepts() {
         <div class="card" onclick="openAuth('${dept.id}')">
             <i class="fas ${dept.icon}"></i>
             <h3>${dept.name}</h3>
-            <p>Access Level: Tier-3</p>
+            <p>Access Level: Operative</p>
             <button class="enter-btn">ENTER</button>
         </div>
     `).join('');
 }
 
-/* =====================================================
-   AUTH LOGIC (FIXED & SMOOTH)
-===================================================== */
 function openAuth(id) {
     activeDept = DEPARTMENTS.find(d => d.id === id);
-    document.getElementById('authDept').textContent = `ESTABLISHING CONNECTION TO: ${activeDept.name.toUpperCase()}`;
-    document.getElementById('authOverlay').style.display = 'flex';
-    document.getElementById('codeInput').value = '';
-    document.getElementById('codeInput').focus();
+    const overlay = document.getElementById('authOverlay');
+    const input = document.getElementById('codeInput');
+    
+    document.getElementById('authDept').textContent = `ESTABLISHING UPLINK TO: ${activeDept.name.toUpperCase()}`;
+    overlay.style.display = 'flex';
+    input.value = '';
+    document.getElementById('authStatus').textContent = '';
+    setTimeout(() => input.focus(), 100);
 }
 
 function closeAuth() {
@@ -294,63 +364,80 @@ function verify() {
     const input = document.getElementById('codeInput').value;
     const status = document.getElementById('authStatus');
 
+    if (!activeDept) return;
+
     if (input === activeDept.code) {
         status.style.color = 'var(--ok)';
         status.textContent = "ACCESS GRANTED. REDIRECTING...";
-        updateSystemStatus('GRANTED', 'green');
+        updateStatusDisplay('AUTHORIZED', 'green');
+        
+        // SUCCESS TRANSITION
         setTimeout(() => {
-            // In a real scenario, location.href = activeDept.path;
-            alert(`Redirecting to ${activeDept.name} terminal...`);
-            closeAuth();
-        }, 1500);
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                // REDIRECT TO FOLDER: departments/[filename]
+                window.location.href = `departments/${activeDept.file}`;
+            }, 800);
+        }, 1000);
     } else {
         status.style.color = 'var(--danger)';
-        status.textContent = "INVALID ACCESS CODE";
-        updateSystemStatus('BREACH ATTEMPT', 'danger');
-        document.getElementById('authBox').animate([
-            { transform: 'translateX(-10px)' },
-            { transform: 'translateX(10px)' }
-        ], { duration: 100, iterations: 5 });
+        status.textContent = "ACCESS DENIED :: INVALID CREDENTIALS";
+        updateStatusDisplay('BREACH ALERT', 'danger');
+        
+        // SHAKE EFFECT
+        const box = document.getElementById('authBox');
+        box.animate([
+            { transform: 'translateX(-15px)' },
+            { transform: 'translateX(15px)' },
+            { transform: 'translateX(0)' }
+        ], { duration: 150, iterations: 3 });
     }
 }
 
-// Global Enter Key Listener
+/* =====================================================
+   UI LOGIC & INPUTS
+===================================================== */
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        if (document.getElementById('authOverlay').style.display === 'flex') {
-            verify();
-        }
+        const isAuthOpen = document.getElementById('authOverlay').style.display === 'flex';
+        if (isAuthOpen) verify();
     }
     if (e.key === 'Escape') closeAuth();
 });
 
-/* =====================================================
-   DYNAMIC SYSTEM STATUS
-===================================================== */
-function updateSystemStatus(text, type) {
+function updateStatusDisplay(text, type) {
     const el = document.getElementById('sysStatus');
-    el.className = ''; 
-    el.classList.add(`status-${type}`);
+    el.className = `status-${type}`;
     el.textContent = `STATUS: ${text}`;
 }
 
-function randomStatusUpdate() {
-    const statuses = [
-        {t: 'OPTIMAL', s: 'green'},
-        {t: 'ENCRYPTED', s: 'green'},
-        {t: 'SCANNING', s: 'warn'},
-        {t: 'STABLE', s: 'green'}
-    ];
+function startClock() {
+    const clock = document.getElementById('clock');
     setInterval(() => {
-        if (document.getElementById('authOverlay').style.display !== 'flex') {
-            const pick = statuses[Math.floor(Math.random() * statuses.length)];
-            updateSystemStatus(pick.t, pick.s);
+        const d = new Date();
+        clock.textContent = d.getHours().toString().padStart(2,'0') + ":" + 
+                            d.getMinutes().toString().padStart(2,'0') + ":" + 
+                            d.getSeconds().toString().padStart(2,'0');
+    }, 1000);
+}
+
+function initDynamicUI() {
+    // Mouse Tracker for bottom bar
+    document.addEventListener('mousemove', (e) => {
+        document.getElementById('coord-display').textContent = `COORD: ${e.clientX}, ${e.clientY}`;
+    });
+
+    // Random Status Jitter
+    setInterval(() => {
+        if (Math.random() > 0.8) {
+            updateStatusDisplay('ENCRYPTING', 'warn');
+            setTimeout(() => updateStatusDisplay('OPTIMAL', 'green'), 2000);
         }
-    }, 10000);
+    }, 15000);
 }
 
 /* =====================================================
-   SNOW ANIMATION (ULTRA LEVEL)
+   BLIZZARD ANIMATION (SNOW)
 ===================================================== */
 function initSnow() {
     const canvas = document.getElementById('snow');
@@ -358,37 +445,37 @@ function initSnow() {
     let w = canvas.width = window.innerWidth;
     let h = canvas.height = window.innerHeight;
     
-    // Increased particle count for "Highest Level"
-    const particles = Array.from({ length: 250 }, () => ({
+    // Blizzard Intensity
+    const flakes = Array.from({ length: 300 }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        r: Math.random() * 3 + 1,
-        d: Math.random() * 1,
-        v: Math.random() * 3 + 1 // Speed
+        r: Math.random() * 2 + 1,
+        speed: Math.random() * 4 + 2,
+        drift: Math.random() * 1 - 0.5
     }));
 
     function draw() {
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.fillStyle = "rgba(0, 255, 247, 0.4)";
         ctx.beginPath();
-        for (let p of particles) {
-            ctx.moveTo(p.x, p.y);
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
-        }
+        flakes.forEach(f => {
+            ctx.moveTo(f.x, f.y);
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        });
         ctx.fill();
-        move();
+        update();
         requestAnimationFrame(draw);
     }
 
-    function move() {
-        for (let p of particles) {
-            p.y += p.v;
-            p.x += Math.sin(p.d) * 1;
-            if (p.y > h) {
-                p.y = -10;
-                p.x = Math.random() * w;
+    function update() {
+        flakes.forEach(f => {
+            f.y += f.speed;
+            f.x += f.drift;
+            if (f.y > h) {
+                f.y = -10;
+                f.x = Math.random() * w;
             }
-        }
+        });
     }
 
     window.addEventListener('resize', () => {
@@ -398,30 +485,9 @@ function initSnow() {
     draw();
 }
 
-/* =====================================================
-   UTILITIES
-===================================================== */
-function startClock() {
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('clock').textContent = now.toLocaleTimeString();
-    }, 1000);
-}
-
-function generateDataStream() {
-    const stream = document.getElementById('data-stream');
-    setInterval(() => {
-        const data = Math.random().toString(36).substring(2, 15);
-        stream.innerHTML = `UP-LINK: ${data} | TRACE: ACTIVE | PKT_LOSS: 0%`;
-    }, 500);
-}
-
-// Anti-Context Menu
+// Security: Disable Right Click
 document.addEventListener('contextmenu', e => e.preventDefault());
 </script>
 
 </body>
-              </html>
-
-
-              
+</html>
