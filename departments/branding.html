@@ -1,357 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EDEN :: Branding Command</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDEN :: BRANDING COMMAND V3.0</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #c9a24d;
+            --gold-dim: rgba(201, 162, 77, 0.2);
+            --bg: #050608;
+            --panel: #0d1117;
+            --accent: #161b22;
+            --text: #e6edf3;
+            --danger: #f85149;
+            --success: #3fb950;
+            --header-h: 80px;
+        }
 
-<style>
-/* =====================================================
-   THEME — HYBRID ELITE
-===================================================== */
-:root{
-  --bg:#0b0d10;
-  --panel:#11141a;
-  --soft:#1a1f2a;
-  --fg:#f4f6f8;
-  --muted:#a5acb8;
-  --gold:#c9a24d;
-  --gold-soft:rgba(201,162,77,.2);
-  --danger:#ff4d5a;
-  --ok:#38d996;
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--gold) #000; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        .eden-font { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
-  --font-ui:'Inter',sans-serif;
-  --font-display:'Playfair Display',serif;
+        /* --- ADVANCED UI ELEMENTS --- */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
+        .glitch { font-size: 2em; color: var(--gold); position: relative; }
+        
+        header { 
+            position: fixed; top: 0; width: 100%; height: var(--header-h); 
+            background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gold-dim); display: flex; align-items: center;
+            justify-content: space-between; padding: 0 40px; z-index: 1000;
+        }
 
-  --header-h:90px;
-}
+        .nav-controls { position: fixed; right: 25px; bottom: 100px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        .nav-btn { 
+            width: 45px; height: 45px; border-radius: 5px; background: var(--panel); 
+            border: 1px solid var(--gold); color: var(--gold); cursor: pointer; transition: 0.3s;
+        }
+        .nav-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold); }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--fg)}
-body{font-family:var(--font-ui);overflow-x:hidden}
+        /* --- OPERATIONAL SECTIONS --- */
+        main { margin-top: var(--header-h); padding: 20px; min-height: 100vh; }
+        .section-container { max-width: 1600px; margin: 0 auto; display: none; animation: slideIn 0.5s ease-out; }
+        
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-/* =====================================================
-   HEADER
-===================================================== */
-header{
-  position:fixed;
-  top:0;left:0;right:0;
-  height:var(--header-h);
-  background:rgba(11,13,16,.95);
-  border-bottom:1px solid var(--gold-soft);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 40px;
-  z-index:100;
-}
+        .dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .card { 
+            background: var(--panel); border: 1px solid var(--accent); padding: 25px; 
+            border-radius: 4px; position: relative; overflow: hidden;
+        }
+        .card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold-dim); }
+        .card:hover::before { background: var(--gold); transition: 0.5s; }
 
-header h1{
-  font-family:var(--font-display);
-  letter-spacing:2px;
-  font-size:1.4em;
-}
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-4 { grid-column: span 4; }
+        .span-6 { grid-column: span 6; }
 
-header nav button{
-  background:transparent;
-  border:1px solid var(--gold);
-  color:var(--fg);
-  padding:10px 18px;
-  margin-left:10px;
-  cursor:pointer;
-}
+        /* --- FORM ELEMENTS --- */
+        textarea, input, select { 
+            width: 100%; background: #000; border: 1px solid var(--accent); 
+            color: var(--gold); padding: 15px; font-family: 'JetBrains Mono'; margin: 10px 0;
+            resize: vertical; outline: none;
+        }
+        textarea:focus { border-color: var(--gold); }
+        .action-btn { 
+            padding: 12px 25px; background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); font-family: 'Orbitron'; cursor: pointer; transition: 0.3s;
+        }
+        .action-btn:hover { background: var(--gold); color: #000; }
 
-header nav button:hover{
-  background:var(--gold);
-  color:#000;
-}
+        /* --- SPECIAL TOOLS --- */
+        #mediaCanvas { width: 100%; background: #111; border: 1px dashed var(--gold-dim); cursor: crosshair; }
+        .yt-frame { width: 100%; aspect-ratio: 16/9; border: none; background: #000; }
+        .status-pill { padding: 4px 12px; background: #000; border: 1px solid var(--gold); font-size: 0.7em; border-radius: 20px; }
+        
+        #auth-gate { 
+            position: fixed; inset: 0; background: var(--bg); z-index: 5000;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-/* =====================================================
-   MAIN
-===================================================== */
-main{
-  padding-top:calc(var(--header-h) + 30px);
-  padding-bottom:120px;
-}
-
-/* =====================================================
-   SECTIONS
-===================================================== */
-.section{
-  max-width:1400px;
-  margin:40px auto;
-  background:var(--panel);
-  border:1px solid var(--gold-soft);
-  padding:50px;
-}
-
-.section h2{
-  font-family:var(--font-display);
-  font-size:2em;
-  margin-bottom:15px;
-}
-
-.section p.guide{
-  color:var(--muted);
-  max-width:900px;
-  margin-bottom:30px;
-  line-height:1.7;
-}
-
-/* =====================================================
-   ROLE AUTH
-===================================================== */
-#roleAuth{
-  display:flex;
-  gap:15px;
-  max-width:500px;
-}
-
-#roleAuth input{
-  flex:1;
-  padding:14px;
-  background:#000;
-  border:1px solid var(--gold);
-  color:var(--fg);
-  font-size:1em;
-  text-align:center;
-}
-
-#roleAuth button{
-  padding:14px 22px;
-  border:none;
-  background:var(--gold);
-  font-weight:600;
-  cursor:pointer;
-}
-
-#roleStatus{margin-top:15px}
-
-/* =====================================================
-   GRID
-===================================================== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:30px;
-}
-
-/* =====================================================
-   CARD
-===================================================== */
-.card{
-  background:var(--soft);
-  border:1px solid var(--gold-soft);
-  padding:30px;
-}
-
-.card h3{
-  font-family:var(--font-display);
-  margin-bottom:10px;
-}
-
-.card textarea,
-.card input{
-  width:100%;
-  background:#000;
-  border:1px solid var(--gold-soft);
-  color:var(--fg);
-  padding:12px;
-  margin-top:10px;
-}
-
-.card button{
-  margin-top:15px;
-  padding:10px 18px;
-  background:transparent;
-  border:1px solid var(--gold);
-  color:var(--fg);
-  cursor:pointer;
-}
-
-.card button:hover{
-  background:var(--gold);
-  color:#000;
-}
-
-/* =====================================================
-   FOOTER
-===================================================== */
-footer{
-  border-top:1px solid var(--gold-soft);
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
-  font-size:.9em;
-}
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-@media(max-width:768px){
-  header{padding:0 20px}
-  .section{padding:30px}
-}
-</style>
+        .user-flow-diag { font-size: 0.8em; color: var(--gold); border: 1px solid var(--gold-dim); padding: 10px; background: #000; margin-bottom: 20px; }
+    </style>
 </head>
-
 <body>
 
-<header>
-  <h1>EDEN — Branding Command</h1>
-  <nav>
-    <button onclick="location.href='../index.html'">Home</button>
-  </nav>
-</header>
-
-<main>
-
-<!-- ROLE AUTH -->
-<section class="section">
-  <h2>Department Access</h2>
-  <p class="guide">
-    Access to branding operations is role-based.  
-    The Chief Brand Officer governs strategy.  
-    The Senior Marketing Director executes approved initiatives.
-  </p>
-
-  <div id="roleAuth">
-    <input id="roleCode" placeholder="Access Code">
-    <button onclick="unlockRole()">Enter</button>
-  </div>
-  <div id="roleStatus"></div>
-</section>
-
-<!-- CBO -->
-<section class="section" id="cboSection" style="display:none">
-  <h2>Chief Brand Officer — Strategic Command</h2>
-  <p class="guide">
-    Define and approve EDEN’s brand direction.  
-    All initiatives flow downward from this layer.
-  </p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Daily Brand Directive</h3>
-      <textarea id="cboDirective"></textarea>
-      <button onclick="saveCBO()">Save Directive</button>
+    <div id="loader">
+        <div class="glitch eden-font">EDEN :: TIER 3</div>
+        <div style="width: 250px; height: 1px; background: #222; margin-top: 20px; position: relative;">
+            <div id="load-progress" style="position: absolute; width: 0%; height: 100%; background: var(--gold);"></div>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>Brand Pillars</h3>
-      <textarea id="cboPillars"></textarea>
-      <button onclick="saveCBO()">Update Pillars</button>
-    </div>
-  </div>
-</section>
-
-<!-- SMD -->
-<section class="section" id="smdSection" style="display:none">
-  <h2>Senior Marketing Director — Campaign Execution</h2>
-  <p class="guide">
-    Execute campaigns aligned with CBO directives.  
-    Creativity is encouraged within approved boundaries.
-  </p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Active Campaign</h3>
-      <input id="campaignName" placeholder="Campaign Name">
-      <textarea id="campaignNotes"></textarea>
-      <button onclick="saveCampaign()">Save Campaign</button>
+    <div id="auth-gate">
+        <div class="card" style="width: 400px; text-align: center;">
+            <h2 class="eden-font">Identify</h2>
+            <p style="color: #666; margin-bottom: 20px;">Enter Department Security Cipher</p>
+            <input type="password" id="cipher-input" placeholder="CIPHER KEY">
+            <button class="action-btn" style="width: 100%" onclick="authenticate()">INITIALIZE</button>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>Visual Messaging</h3>
-      <textarea id="visualNotes"></textarea>
-      <button onclick="saveCampaign()">Save Visual Notes</button>
+    <header>
+        <div class="eden-font">EDEN COMMAND <span id="dept-label" style="color: var(--gold);">:: PENDING</span></div>
+        <div id="shift-status" class="mono" style="font-size: 0.8em;">
+            SHIFT TIME: <span id="timer" class="danger">--:--:--</span>
+        </div>
+        <div id="live-weather" class="mono" style="font-size: 0.8em; color: var(--gold);">SCANNING ATMOSPHERE...</div>
+    </header>
+
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="window.scrollTo(0,0)"><i class="fas fa-angle-double-up"></i></button>
+        <button class="nav-btn" onclick="scrollToMid()"><i class="fas fa-crosshairs"></i></button>
+        <button class="nav-btn" onclick="window.scrollTo(0,document.body.scrollHeight)"><i class="fas fa-angle-double-down"></i></button>
     </div>
-  </div>
-</section>
 
-</main>
+    <main>
+        <section id="cbo-env" class="section-container">
+            <div class="dashboard-grid">
+                <div class="card span-12">
+                    <h2 class="eden-font">Directives & Global Vision</h2>
+                    <div class="user-flow-diag">CBO FLOW: Vision Input → Hierarchy Validation → SMD Distribution</div>
+                    <textarea id="cbo-vision" placeholder="Enter Daily Strategic Mission..." rows="5" oninput="persist('cbo-vision')"></textarea>
+                    <div id="preview-vision" style="padding: 15px; background: #050505; font-size: 0.9em; border-left: 2px solid var(--gold);">Live Vision Preview Active...</div>
+                </div>
 
-<footer>
-  EDEN Branding Division — Confidential · Authority Through Clarity
-</footer>
+                <div class="card span-8">
+                    <h2 class="eden-font">Design Terminal</h2>
+                    <input type="file" id="asset-upload" onchange="processImage(event)">
+                    <canvas id="mediaCanvas"></canvas>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="action-btn" onclick="applyFilter('grayscale(100%)')">EDEN NOIR</button>
+                        <button class="action-btn" onclick="applyFilter('sepia(1) contrast(1.2)')">EDEN GOLD</button>
+                        <button class="action-btn" onclick="resetCanvas()">RESET</button>
+                        <button class="action-btn" onclick="downloadAsset()">DOWNLOAD ASSET</button>
+                    </div>
+                </div>
 
-<script>
-/* =====================================================
-   DOM BINDINGS
-===================================================== */
-const roleCode=document.getElementById("roleCode");
-const roleStatus=document.getElementById("roleStatus");
-const cboSection=document.getElementById("cboSection");
-const smdSection=document.getElementById("smdSection");
+                <div class="card span-4">
+                    <h2 class="eden-font">Media Transcoder</h2>
+                    <p class="mono" style="font-size: 0.7em;">Lossless Conversion Engine</p>
+                    <select id="convert-format">
+                        <option value="image/webp">WEBP (Web Ready)</option>
+                        <option value="image/png">PNG (Lossless)</option>
+                        <option value="image/jpeg">JPEG (Performance)</option>
+                    </select>
+                    <div id="transcode-status">Ready for processing.</div>
+                </div>
 
-const cboDirective=document.getElementById("cboDirective");
-const cboPillars=document.getElementById("cboPillars");
+                <div class="card span-12">
+                    <h2 class="eden-font">Corporate Encouragement</h2>
+                    <blockquote id="quote-display" style="font-style: italic; font-size: 1.2em; color: var(--gold);">"The strength of the pack is the wolf, and the strength of the wolf is the pack."</blockquote>
+                </div>
+            </div>
+        </section>
 
-const campaignName=document.getElementById("campaignName");
-const campaignNotes=document.getElementById("campaignNotes");
-const visualNotes=document.getElementById("visualNotes");
+        <section id="smd-env" class="section-container">
+            <div class="dashboard-grid">
+                <div class="card span-12">
+                    <h2 class="eden-font">Saturation Hub (YouTube)</h2>
+                    <div class="user-flow-diag">SMD FLOW: Asset Injection → Audience Saturation → Sentiment Analysis</div>
+                    <div class="dashboard-grid">
+                        <div class="span-8">
+                            <iframe class="yt-frame" id="yt-player" src="https://www.youtube.com/embed/videoseries?list=PL_Xv4ADyT8oVp9lV-jH5A0kYpB5M_5k-m" allowfullscreen></iframe>
+                        </div>
+                        <div class="span-4">
+                            <h3 class="eden-font" style="font-size: 0.8em;">Injection Tools</h3>
+                            <input type="text" id="yt-vid-id" placeholder="VIDEO_ID">
+                            <button class="action-btn" style="width: 100%;" onclick="injectVideo()">INJECT TO CENTER</button>
+                            <div class="card" style="margin-top: 10px; background: #000;">
+                                <p class="mono" style="font-size: 0.7em;">LIVE STATS:</p>
+                                <div style="color: var(--success);">CTR: 8.4%</div>
+                                <div style="color: var(--gold);">CONVERSION: 12%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-/* =====================================================
-   ACCESS CODES (SIMULATED)
-===================================================== */
-const CBO_CODE="EDEN-CBO-247";
-const SMD_CODE="EDEN-SMD-247";
+                <div class="card span-6">
+                    <h2 class="eden-font">Social Deployment</h2>
+                    <textarea id="marketing-copy" placeholder="Enter Tactical Copy..." rows="6" oninput="persist('marketing-copy')"></textarea>
+                    <button class="action-btn" onclick="deployCopy()">DEPLOY TO CHANNELS</button>
+                </div>
 
-/* =====================================================
-   ROLE UNLOCK
-===================================================== */
-function unlockRole(){
-  const code=roleCode.value.trim();
+                <div class="card span-6">
+                    <h2 class="eden-font">Operational Ambience</h2>
+                    <div class="mono" style="margin-bottom: 10px;">Select Track:</div>
+                    <audio id="eden-player" controls style="width: 100%; filter: invert(1);">
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  if(code===CBO_CODE){
-    cboSection.style.display="block";
-    smdSection.style.display="none";
-    roleStatus.textContent="CBO ACCESS GRANTED";
-    loadCBO();
-  }else if(code===SMD_CODE){
-    smdSection.style.display="block";
-    cboSection.style.display="none";
-    roleStatus.textContent="SMD ACCESS GRANTED";
-    loadCampaign();
-  }else{
-    roleStatus.textContent="ACCESS DENIED";
-  }
-}
+    <footer style="padding: 40px; text-align: center; border-top: 1px solid var(--gold-dim); margin-top: 50px;">
+        <div class="eden-font" style="font-size: 0.7em;">Eden Conglomerate :: Branding Division</div>
+        <div class="mono" style="font-size: 0.5em; color: #444; margin-top: 10px;">SECURE PORTAL 0xED-B1 :: SHIFT TRACKING ACTIVE</div>
+    </footer>
 
-/* =====================================================
-   CBO CRUD
-===================================================== */
-function saveCBO(){
-  localStorage.setItem("cboDirective",cboDirective.value);
-  localStorage.setItem("cboPillars",cboPillars.value);
-  alert("CBO data saved");
-}
+    <script>
+        // --- CONSTANTS & SECURITY ---
+        const KEYS = { CBO: "EDEN-CBO-99", SMD: "EDEN-SMD-88" };
+        const STATE = { role: null, shiftEnd: null };
+        const canvas = document.getElementById('mediaCanvas');
+        const ctx = canvas.getContext('2d');
 
-function loadCBO(){
-  cboDirective.value=localStorage.getItem("cboDirective")||"";
-  cboPillars.value=localStorage.getItem("cboPillars")||"";
-}
+        // --- AUTHENTICATION ---
+        function authenticate() {
+            const val = document.getElementById('cipher-input').value;
+            if (val === KEYS.CBO) login('cbo');
+            else if (val === KEYS.SMD) login('smd');
+            else alert("SECURITY BREACH DETECTED: INVALID CIPHER");
+        }
 
-/* =====================================================
-   SMD CRUD
-===================================================== */
-function saveCampaign(){
-  localStorage.setItem("campaignName",campaignName.value);
-  localStorage.setItem("campaignNotes",campaignNotes.value);
-  localStorage.setItem("visualNotes",visualNotes.value);
-  alert("Campaign saved");
-}
+        function login(role) {
+            STATE.role = role;
+            document.getElementById('auth-gate').style.display = 'none';
+            document.getElementById(`${role}-env`).style.display = 'block';
+            document.getElementById('dept-label').innerText = `:: ${role.toUpperCase()} OPS`;
+            
+            // Set 8-hour shift from login
+            STATE.shiftEnd = Date.now() + (8 * 60 * 60 * 1000);
+            localStorage.setItem('EDEN_SHIFT', STATE.shiftEnd);
+            
+            initializeDashboard();
+        }
 
-function loadCampaign(){
-  campaignName.value=localStorage.getItem("campaignName")||"";
-  campaignNotes.value=localStorage.getItem("campaignNotes")||"";
-  visualNotes.value=localStorage.getItem("visualNotes")||"";
-}
-</script>
+        // --- INITIALIZATION ---
+        function initializeDashboard() {
+            startTimer();
+            getRealWeather();
+            loadPersistedData();
+            
+            // Loader Animation
+            let p = 0;
+            const bar = document.getElementById('load-progress');
+            const interval = setInterval(() => {
+                p += 5;
+                bar.style.width = p + "%";
+                if (p >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('loader').style.opacity = '0';
+                    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+                }
+            }, 50);
+        }
 
+        // --- REAL-TIME WEATHER ---
+        async function getRealWeather() {
+            try {
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                    const data = await res.json();
+                    document.getElementById('live-weather').innerText = `HQ: ${data.current_weather.temperature}°C // WIND: ${data.current_weather.windspeed}km/h`;
+                });
+            } catch (e) {
+                document.getElementById('live-weather').innerText = "HQ WEATHER: OFFLINE";
+            }
+        }
+
+        // --- SHIFT TIMER ---
+        function startTimer() {
+            setInterval(() => {
+                const now = Date.now();
+                const diff = STATE.shiftEnd - now;
+                if (diff <= 0) {
+                    alert("SHIFT ENDED. LOGGING OUT.");
+                    location.reload();
+                }
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('timer').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        // --- CBO TOOLS: DESIGN & PERSISTENCE ---
+        function processImage(e) {
+            const reader = new FileReader();
+            reader.onload = function(event){
+                const img = new Image();
+                img.onload = function(){
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function applyFilter(filter) {
+            ctx.filter = filter;
+            const img = new Image();
+            img.src = canvas.toDataURL();
+            img.onload = () => ctx.drawImage(img, 0, 0);
+        }
+
+        function downloadAsset() {
+            const link = document.createElement('a');
+            link.download = `EDEN_ASSET_${Date.now()}.webp`;
+            link.href = canvas.toDataURL('image/webp');
+            link.click();
+        }
+
+        // --- SMD TOOLS ---
+        function injectVideo() {
+            const id = document.getElementById('yt-vid-id').value;
+            if(id) document.getElementById('yt-player').src = `https://www.youtube.com/embed/${id}`;
+        }
+
+        // --- UTILS ---
+        function persist(id) {
+            const val = document.getElementById(id).value;
+            localStorage.setItem(`EDEN_DATA_${id}`, val);
+            if(id === 'cbo-vision') {
+                document.getElementById('preview-vision').innerHTML = `<strong>BROADCAST:</strong> ${val.replace(/\n/g, '<br>')}`;
+            }
+        }
+
+        function loadPersistedData() {
+            const ids = ['cbo-vision', 'marketing-copy'];
+            ids.forEach(id => {
+                const saved = localStorage.getItem(`EDEN_DATA_${id}`);
+                if(saved) {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        el.value = saved;
+                        el.dispatchEvent(new Event('input'));
+                    }
+                }
+            });
+        }
+
+        function scrollToMid() { window.scrollTo(0, document.body.scrollHeight / 2); }
+    </script>
 </body>
 </html>
