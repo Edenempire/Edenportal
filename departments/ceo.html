@@ -1,186 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EDEN :: Executive Command</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDEN :: SOVEREIGN COMMAND [JOYSON]</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Electrolize&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #020305;
+            --panel-deep: #080a0f;
+            --panel-lite: #12161f;
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.4);
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --danger: #ff2b40;
+            --success: #00ffa3;
+            --text: #e0e6ed;
+            --text-dim: #6b7c93;
+            --border: 1px solid rgba(0, 242, 255, 0.1);
+            --font-main: 'Electrolize', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --font-ceo: 'Playfair Display', serif;
+        }
 
-<style>
-:root{
-  --bg:#0b0c10;
-  --panel:#11141a;
-  --fg:#e8ffff;
-  --muted:#88bcbc;
-  --accent:#00e5ff;
-  --accent-soft:rgba(0,229,255,.15);
-  --gold:#c9a24d;
-  --danger:#ff4d5a;
-  --ok:#38d996;
+        /* RESET & GLOBAL */
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-main); 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
+        }
 
-  --font-ui:'Electrolize',sans-serif;
-  --font-mono:'VT323',monospace;
-  --header-h:90px;
-}
+        /* ADVANCED ANIMATED BACKGROUND */
+        #neural-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at 50% 50%, #0a111a 0%, #020305 100%);
+            opacity: 0.6;
+        }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--fg);font-family:var(--font-mono);}
-body{overflow-x:hidden}
+        /* HEADER HUD */
+        header {
+            position: fixed; top: 0; width: 100%; height: 90px;
+            background: rgba(2, 3, 5, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--gold-glow);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 50px; z-index: 1000;
+        }
 
-/* Header */
-header{
-  position:fixed;top:0;left:0;right:0;height:var(--header-h);
-  background:rgba(10,12,16,.95);border-bottom:1px solid var(--accent-soft);
-  display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:100;
-}
-header h1{font-family:var(--font-ui);font-size:1.5em;letter-spacing:2px;}
-header nav button{
-  background:transparent;border:1px solid var(--accent);color:var(--fg);
-  padding:10px 18px;cursor:pointer;margin-left:10px;
-}
-header nav button:hover{background:var(--accent);color:#000}
+        .ceo-identity { display: flex; align-items: center; gap: 20px; }
+        .ceo-avatar { 
+            width: 50px; height: 50px; border: 2px solid var(--gold); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-ceo); font-weight: bold; color: var(--gold);
+        }
 
-/* Main */
-main{padding-top:calc(var(--header-h) + 30px);padding-bottom:120px;}
-.section{max-width:1400px;margin:40px auto;background:var(--panel);border:1px solid var(--accent-soft);padding:50px;transition:all .35s;}
-.section h2{font-family:var(--font-ui);font-size:2em;margin-bottom:15px;}
-.section p.guide{color:var(--muted);margin-bottom:25px;line-height:1.6;}
+        .status-pill {
+            background: rgba(0, 255, 163, 0.1); color: var(--success);
+            padding: 5px 15px; border-radius: 20px; font-size: 0.7rem;
+            letter-spacing: 1px; border: 1px solid var(--success);
+        }
 
-/* Role Auth */
-#roleAuth{display:flex;gap:15px;max-width:500px;margin-bottom:20px;}
-#roleAuth input{flex:1;padding:14px;background:#000;border:1px solid var(--accent);color:var(--fg);text-align:center;}
-#roleAuth button{padding:14px 22px;background:var(--accent);border:none;cursor:pointer;font-weight:600;}
-#roleStatus{margin-top:15px}
+        /* MAIN LAYOUT */
+        main { padding: 130px 40px 100px; max-width: 1900px; margin: 0 auto; }
 
-/* Grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+        .grid-master {
+            display: grid; grid-template-columns: repeat(12, 1fr); gap: 30px;
+        }
 
-/* Cards */
-.card{background:var(--bg);border:1px solid var(--accent-soft);padding:25px;transition:.35s;}
-.card h3{margin-bottom:10px;}
-.card p,input,select,textarea{width:100%;padding:12px;background:#000;border:1px solid var(--accent-soft);color:var(--fg);margin-top:10px;}
-.card button{margin-top:12px;padding:10px 18px;border:1px solid var(--accent);background:transparent;color:var(--fg);cursor:pointer;}
-.card button:hover{background:var(--accent);color:#000}
+        /* COMPONENTS */
+        .glass-panel {
+            background: var(--panel-deep); border: var(--border);
+            border-radius: 4px; padding: 35px; position: relative;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .glass-panel:hover { border-color: var(--accent); box-shadow: 0 0 30px rgba(0, 242, 255, 0.05); }
 
-/* Status Badge */
-.status{
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:6px;
-  font-size:.85em;
-  margin-top:5px;
-}
-.status.low{background:#2ecc71;color:#000;}
-.status.medium{background:#f1c40f;color:#000;}
-.status.high{background:#e74c3c;color:#fff;}
+        .col-12 { grid-column: span 12; }
+        .col-8 { grid-column: span 8; }
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
 
-/* Footer */
-footer{border-top:1px solid var(--accent-soft);padding:30px;text-align:center;color:var(--muted);font-size:.9em;}
+        /* CEO DOCUMENT SYSTEM */
+        .doc-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 15px;
+        }
+        .doc-editor {
+            background: #fff; color: #111; padding: 60px; min-height: 800px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1); font-family: 'Playfair Display', serif;
+            line-height: 1.8; font-size: 1.1rem; outline: none; overflow-y: auto;
+        }
 
-/* Animations */
-.fadeIn{animation:fadeIn 1s ease forwards;opacity:0;}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@media(max-width:768px){header{padding:0 20px}.section{padding:30px}}
-</style>
+        /* BOARD OF DIRECTORS UPLINK */
+        .bod-uplink { background: linear-gradient(135deg, #080a0f 0%, #1a1f2b 100%); }
+        .chat-stream { height: 300px; overflow-y: auto; padding: 15px; background: #000; border: 1px solid #222; font-family: var(--font-code); }
+        .msg { margin-bottom: 15px; font-size: 0.85rem; }
+        .msg.board { color: var(--gold); }
+        .msg.ceo { color: var(--accent); }
+
+        /* BUTTONS & INPUTS */
+        .btn-gold {
+            background: var(--gold); color: #000; border: none; padding: 12px 25px;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-gold:hover { background: #fff; box-shadow: 0 0 20px var(--gold-glow); }
+
+        .btn-outline {
+            background: transparent; border: 1px solid var(--accent); color: var(--accent);
+            padding: 10px 20px; cursor: pointer; text-transform: uppercase; font-size: 0.7rem;
+        }
+        .btn-outline:hover { background: var(--accent); color: #000; }
+
+        textarea, input {
+            width: 100%; background: #000; border: 1px solid #222;
+            color: var(--text); padding: 15px; font-family: var(--font-code);
+        }
+
+        /* NOTEPAD TABS */
+        .tab-system { display: flex; gap: 2px; margin-bottom: -1px; }
+        .tab { 
+            padding: 10px 20px; background: #111; border: var(--border); 
+            cursor: pointer; font-size: 0.8rem; color: var(--text-dim);
+        }
+        .tab.active { background: var(--panel-deep); color: var(--accent); border-bottom: none; }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020305; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        /* MUSIC HUD ADVANCED */
+        .music-player {
+            position: fixed; bottom: 40px; left: 40px; width: 300px;
+            background: rgba(8, 10, 15, 0.9); border: 1px solid var(--gold);
+            padding: 20px; border-radius: 8px; z-index: 1001;
+        }
+
+        /* RESPONSIVE CONTROL */
+        @media (max-width: 1400px) { .col-8, .col-4 { grid-column: span 12; } }
+        @media (max-width: 768px) {
+            header { padding: 0 20px; height: 70px; }
+            .doc-editor { padding: 30px; }
+            .grid-master { gap: 15px; }
+        }
+    </style>
 </head>
+<body onload="bootSystem()">
 
-<body>
-<header>
-<h1>EDEN :: Executive Command</h1>
-<nav>
-  <button onclick="location.href='../index.html'">Home</button>
-</nav>
-</header>
+    <div id="neural-bg"></div>
 
-<main>
-<section class="section">
-<h2>Access Control</h2>
-<p class="guide">CEO only. Enter your access code to unlock the executive dashboard.</p>
-<div id="roleAuth">
-  <input id="roleCode" placeholder="Access Code">
-  <button onclick="unlockCEO()">Enter</button>
-</div>
-<div id="roleStatus"></div>
-</section>
+    <div id="boot-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <h1 style="font-family:'Orbitron'; color:var(--gold); letter-spacing:15px; font-size:3rem;">EDEN</h1>
+        <div id="boot-log" style="font-family:var(--font-code); color:var(--success); margin-top:30px; font-size:0.8rem;">INITIALIZING SOVEREIGN PROTOCOLS...</div>
+    </div>
 
-<section class="section fadeIn" id="dashboardSection" style="display:none">
-<h2>Executive Dashboard</h2>
-<p class="guide">Monitor departments, approve operations, view KPIs, and track all Eden divisions.</p>
+    <header>
+        <div class="ceo-identity">
+            <div class="ceo-avatar">J</div>
+            <div>
+                <div style="font-family:'Orbitron'; font-size:1.1rem; letter-spacing:2px;">JOYSON</div>
+                <div class="status-pill">AUTHENTICATED: CEO / SOVEREIGN</div>
+            </div>
+        </div>
 
-<div class="grid" id="deptGrid"></div>
-</section>
-</main>
+        <div style="text-align:center;">
+            <div id="clock" style="font-family:var(--font-code); font-size:1.4rem; color:var(--accent);">00:00:00</div>
+            <div style="font-size:0.6rem; letter-spacing:3px; color:var(--gold);">GLOBAL OPERATION TIME</div>
+        </div>
 
-<footer>
-EDEN Executive Division — Strategic Command · Confidential
-</footer>
+        <div class="nav-tools">
+            <button class="btn-outline" onclick="location.href='../index.html'">Portal Home</button>
+            <button class="btn-gold" style="margin-left:20px;" onclick="emergencyLock()">Lock System</button>
+        </div>
+    </header>
 
-<script>
-const roleCode=document.getElementById("roleCode");
-const roleStatus=document.getElementById("roleStatus");
-const dashboardSection=document.getElementById("dashboardSection");
-const deptGrid=document.getElementById("deptGrid");
+    <main id="main-content" style="display:none;">
+        
+        <div class="grid-master">
+            
+            <div class="glass-panel col-4 bod-uplink">
+                <h3 style="color:var(--gold); margin-bottom:20px;"><i class="fa-solid fa-tower-broadcast"></i> BOARD UPLINK [ENCRYPTED]</h3>
+                <div class="chat-stream" id="bod-stream">
+                    <div class="msg board">[BOARD]: Joyson, we require the Q1 Computer Science audit by end of shift.</div>
+                    <div class="msg board">[BOARD]: Economic projections for Eden Innovations are looking positive.</div>
+                </div>
+                <div style="margin-top:15px; display:flex;">
+                    <input type="text" id="bod-input" placeholder="Secure response to Board...">
+                    <button class="btn-gold" onclick="sendToBoard()" style="padding:0 15px;"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
 
-const CEO_CODE="EDEN-CEO-247";
+            <div class="glass-panel col-8">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2><i class="fa-solid fa-stamp"></i> Operational Approval Queue</h2>
+                    <span id="queue-count" style="color:var(--danger);">3 PENDING OPERATIONS</span>
+                </div>
+                <div id="approval-stack" style="margin-top:25px;">
+                    </div>
+            </div>
 
-/* Departments (simulated) */
-let departments = JSON.parse(localStorage.getItem("edenDepartments") || "[]");
-if(departments.length===0){
-  departments=[
-    {id:1,name:"Computer Science",pending:5,completed:10,status:"active"},
-    {id:2,name:"Supply Chain",pending:2,completed:8,status:"active"},
-    {id:3,name:"Branding",pending:1,completed:4,status:"active"},
-    {id:4,name:"Operations",pending:3,completed:6,status:"active"},
-    {id:5,name:"Innovations",pending:0,completed:2,status:"active"},
-    {id:6,name:"Security",pending:0,completed:1,status:"active"}
-  ];
-  localStorage.setItem("edenDepartments",JSON.stringify(departments));
-}
+            <div class="glass-panel col-12">
+                <div class="doc-header">
+                    <h2><i class="fa-solid fa-file-signature"></i> Legal & Contract Framework</h2>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-outline" onclick="saveDocument()">Save to Local Cloud</button>
+                        <button class="btn-gold" onclick="exportContract()">Execute Contract</button>
+                    </div>
+                </div>
+                <div class="doc-editor" contenteditable="true" id="main-editor">
+                    <h1 style="text-align:center;">EDEN MASTER CHARTER</h1>
+                    <p style="text-align:center; font-style:italic;">CONFIDENTIAL - CEO EYES ONLY</p>
+                    <hr style="margin:40px 0; border:0; border-top:1px solid #ddd;">
+                    <h3>SECTION I: SOVEREIGNTY</h3>
+                    <p>This document formalizes the operational hierarchy within EDEN. CEO Joyson holds total approval authority over all subsidiary output including but not limited to Branding, Computer Science, and Security sectors.</p>
+                    <br>
+                    <h3>SECTION II: SUBSIDIARY OVERSIGHT</h3>
+                    <p>[Drafting Area: Enter new contract terms for subsidiary heads here...]</p>
+                </div>
+            </div>
 
-/* Unlock CEO */
-function unlockCEO(){
-  if(roleCode.value.trim()===CEO_CODE){
-    dashboardSection.style.display="block";
-    roleStatus.textContent="ACCESS GRANTED";
-    renderDepartments();
-  } else {
-    roleStatus.textContent="ACCESS DENIED";
-  }
-}
+            <div class="glass-panel col-8">
+                <div class="tab-system" id="note-tabs">
+                    <div class="tab active" onclick="switchNote(1)">Board Minutes</div>
+                    <div class="tab" onclick="switchNote(2)">M&A Strategy</div>
+                    <div class="tab" onclick="switchNote(3)">Audit Logs</div>
+                    <div class="tab" onclick="switchNote(4)">Private Journal</div>
+                </div>
+                <textarea id="ceo-notepad" style="height:400px; border-top:none;"></textarea>
+                <div style="margin-top:10px; color:var(--text-dim); font-size:0.7rem;">SYSTEM AUTO-SYNC: ACTIVE</div>
+            </div>
 
-/* Render Departments */
-function renderDepartments(){
-  deptGrid.innerHTML="";
-  departments.forEach(d=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.innerHTML=`
-      <h3>${d.name}</h3>
-      <p>Pending Tasks: ${d.pending}</p>
-      <p>Completed Tasks: ${d.completed}</p>
-      <p>Status: <span class="status ${d.status==='active'?'high':'low'}">${d.status.toUpperCase()}</span></p>
-      <button onclick="approveDept(${d.id})">Approve</button>
-      <button onclick="rejectDept(${d.id})">Reject</button>
-    `;
-    deptGrid.appendChild(div);
-  });
-}
+            <div class="glass-panel col-4">
+                <h3><i class="fa-solid fa-chart-line"></i> Ecosystem Health</h3>
+                <div style="margin-top:20px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <span>Subsidiary Stability</span>
+                        <span style="color:var(--success);">98.4%</span>
+                    </div>
+                    <div style="width:100%; height:4px; background:#222; margin-bottom:20px;">
+                        <div style="width:98.4%; height:100%; background:var(--success);"></div>
+                    </div>
 
-function approveDept(id){
-  const dept=departments.find(d=>d.id===id);
-  if(dept){dept.status="active";saveDepartments()}
-}
-function rejectDept(id){
-  const dept=departments.find(d=>d.id===id);
-  if(dept){dept.status="inactive";saveDepartments()}
-}
-function saveDepartments(){
-  localStorage.setItem("edenDepartments",JSON.stringify(departments));
-  renderDepartments();
-}
-</script>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <span>Resource Liquidity</span>
+                        <span style="color:var(--gold);">82.1%</span>
+                    </div>
+                    <div style="width:100%; height:4px; background:#222; margin-bottom:20px;">
+                        <div style="width:82.1%; height:100%; background:var(--gold);"></div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #333; margin:20px 0;">
+                    <div id="weather-data" style="font-family:var(--font-code);">
+                        <p>LOC: GENEVA HQ</p>
+                        <p>TEMP: 14°C / HUMID: 45%</p>
+                        <p>WIND: 12km/h SE</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="music-player">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <span style="font-size:0.7rem; color:var(--gold); letter-spacing:2px;">EXECUTIVE AMBIENCE</span>
+            <i class="fa-solid fa-volume-high" style="font-size:0.8rem;"></i>
+        </div>
+        <div style="display:flex; align-items:center; gap:15px;">
+            <button class="btn-outline" style="border-radius:50%; width:40px; height:40px; padding:0;" onclick="toggleAudio()">
+                <i class="fa-solid fa-play" id="play-icon"></i>
+            </button>
+            <marquee style="font-size:0.8rem; color:var(--accent); font-family:var(--font-code);">EDEN_CONGLOMERATE_CORE_VIBE.MP3 — PLAYING NOW</marquee>
+        </div>
+    </div>
+
+    <div style="position:fixed; bottom:40px; right:40px; display:flex; flex-direction:column; gap:10px; z-index:1001;">
+        <button class="btn-outline" style="width:50px; height:50px; border-radius:50%;" onclick="window.scrollTo(0,0)"><i class="fa-solid fa-arrow-up"></i></button>
+        <button class="btn-outline" style="width:50px; height:50px; border-radius:50%;" onclick="window.scrollTo(0, document.body.scrollHeight/2)"><i class="fa-solid fa-minus"></i></button>
+        <button class="btn-outline" style="width:50px; height:50px; border-radius:50%;" onclick="window.scrollTo(0, document.body.scrollHeight)"><i class="fa-solid fa-arrow-down"></i></button>
+    </div>
+
+    <script>
+        // CORE STATE
+        let activeNote = 1;
+        const notes = { 1: "", 2: "", 3: "", 4: "" };
+        const pendingOps = [
+            { id: 'CS-881', dept: 'Computer Science', task: 'Deploy Neural Firewall', status: 'Pending' },
+            { id: 'MK-202', dept: 'Branding', task: 'Approve Global Rebrand Visuals', status: 'Pending' },
+            { id: 'SC-440', dept: 'Supply Chain', task: 'Authorize New Hardware Acquisition', status: 'Pending' }
+        ];
+
+        // BOOT SEQUENCE
+        function bootSystem() {
+            const logs = [
+                "Establishing Board Uplink...",
+                "Loading Joyson's Executive Documents...",
+                "Syncing Subsidiary Operations...",
+                "Bypassing Standard Firewalls...",
+                "Sovereign Access Granted."
+            ];
+            let i = 0;
+            const logEl = document.getElementById('boot-log');
+            
+            const interval = setInterval(() => {
+                if(i < logs.length) {
+                    logEl.innerText = logs[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('boot-overlay').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('boot-overlay').style.display = 'none';
+                        document.getElementById('main-content').style.display = 'block';
+                        startClock();
+                        renderApprovals();
+                        loadCEOData();
+                    }, 500);
+                }
+            }, 600);
+        }
+
+        // CLOCK LOGIC
+        function startClock() {
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+            }, 1000);
+        }
+
+        // APPROVAL SYSTEM
+        function renderApprovals() {
+            const container = document.getElementById('approval-stack');
+            container.innerHTML = pendingOps.map(op => `
+                <div class="glass-panel" style="margin-bottom:15px; background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; align-items:center;" id="op-${op.id}">
+                    <div>
+                        <span style="color:var(--gold); font-size:0.7rem;">[${op.id}]</span>
+                        <strong style="margin:0 15px;">${op.dept}</strong>
+                        <span style="color:var(--text-dim);">${op.task}</span>
+                    </div>
+                    <div>
+                        <button class="btn-outline" onclick="processOp('${op.id}', 'REJECTED')" style="border-color:var(--danger); color:var(--danger); margin-right:10px;">Veto</button>
+                        <button class="btn-outline" onclick="processOp('${op.id}', 'APPROVED')" style="border-color:var(--success); color:var(--success);">Approve</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('queue-count').innerText = `${pendingOps.length} PENDING OPERATIONS`;
+        }
+
+        function processOp(id, status) {
+            const el = document.getElementById(`op-${id}`);
+            el.innerHTML = `<span style="color:${status === 'APPROVED' ? 'var(--success)' : 'var(--danger)'}; letter-spacing:5px;">MISSION ${status} - REPORTING TO BOARD</span>`;
+            const idx = pendingOps.findIndex(o => o.id === id);
+            if (idx > -1) pendingOps.splice(idx, 1);
+            setTimeout(() => {
+                el.style.display = 'none';
+                document.getElementById('queue-count').innerText = `${pendingOps.length} PENDING OPERATIONS`;
+            }, 2000);
+        }
+
+        // NOTEPAD SYSTEM
+        function switchNote(n) {
+            notes[activeNote] = document.getElementById('ceo-notepad').value;
+            activeNote = n;
+            document.querySelectorAll('.tab').forEach((t, i) => {
+                t.classList.toggle('active', i + 1 === n);
+            });
+            document.getElementById('ceo-notepad').value = notes[n];
+        }
+
+        // UPLINK
+        function sendToBoard() {
+            const input = document.getElementById('bod-input');
+            if(!input.value) return;
+            const stream = document.getElementById('bod-stream');
+            stream.innerHTML += `<div class="msg ceo">[JOYSON]: ${input.value}</div>`;
+            input.value = "";
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        // DATA PERSISTENCE
+        function saveDocument() {
+            const data = {
+                editor: document.getElementById('main-editor').innerHTML,
+                notes: notes
+            };
+            localStorage.setItem('EDEN_SOVEREIGN_DATA', JSON.stringify(data));
+            alert("ENCRYPTED STORAGE UPDATED.");
+        }
+
+        function loadCEOData() {
+            const saved = localStorage.getItem('EDEN_SOVEREIGN_DATA');
+            if(saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('main-editor').innerHTML = data.editor;
+                Object.assign(notes, data.notes);
+                document.getElementById('ceo-notepad').value = notes[1];
+            }
+        }
+
+        function exportContract() {
+            window.print();
+        }
+
+        function emergencyLock() {
+            location.reload();
+        }
+    </script>
 </body>
-</html>
+                      </html>
