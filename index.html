@@ -4,1700 +4,966 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Eden portal</title>
-
-<meta name="description" content="Welcome to the Eden portal, a global conglomerate of legal entities.">
-
-<meta name="keywords" content="Eden Empire, Conglomerate, CIPC, South Africa, operatives, Parables & Platters, E.S.S, Thato Morake, Olama Khayyim, Arnold Khumalo, MaSiya, Global, Private Security, Real Estate, Farming, Transportation">
-
-<meta name="author" content="Eden Core Team">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<link rel="icon" type="image/png" href="eden.jpg">
-
-<style>
-
-html {
-  scroll-behavior: smooth;
-}
-
-section {
-  scroll-margin-top: var(--header-height);
-}
-
-h1, h2, h3 {
-  text-shadow: 0 0 3px var(--color-accent-medium);
-}
-
-/* CSS Variables for easy color management */
-:root {
---color-background-dark: #000000; /* Black background (Terminal look) */
---color-foreground-light: #00FFFF; /* Cyan/Light Blue foreground (Retro feel) */
---color-accent-medium: #00AAAA; /* A slightly darker cyan for contrast */
---color-text-body: #BBFFFF; /* Slightly lighter blue for body text */
---font-retro: 'VT323', monospace;
---font-modern: 'Electrolize', sans-serif;
---header-height: 100px;
---transition-speed: 0.5s;
-}
-
-/* --- GLOBAL RESET & BASE STYLES --- */
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-/* Smooth transitions for all elements */
-transition: all var(--transition-speed) ease-in-out;
-}
-
-body {
-font-family: var(--font-retro);
-background-color: var(--color-background-dark);
-color: var(--color-foreground-light);
-line-height: 1.6;
-overflow-x: hidden; /* Prevent horizontal scroll from animations */
-scroll-behavior: smooth;
-}
-
-h1, h2, h3, h4, h5, h6 {
-font-family: var(--font-modern);
-color: var(--color-foreground-light);
-text-shadow: 0 0 5px var(--color-accent-medium); /* Glow effect */
-}
-
-a {
-color: var(--color-foreground-light);
-text-decoration: none;
-cursor: pointer;
-}
-
-a:hover {
-color: var(--color-text-body);
-text-decoration: underline;
-text-shadow: 0 0 10px var(--color-foreground-light);
-}
-
-/* --- ANIMATION: SCANLINE OVERLAY (Retro Terminal Effect) --- */
-body::before {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-pointer-events: none;
-background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-z-index: 1000; /* Ensure it's on top of everything */
-background-size: 100% 4px, 4px 100%;
-opacity: 0.1;
-animation: scanline var(--transition-speed) infinite linear alternate;
-}
-
-@keyframes scanline {
-from { background-position: 0 0; }
-to { background-position: 0 100%; }
-}
-
-:root {
-  --header-height: clamp(72px, 10vh, 96px);
-}
-
-/* ===== HEADER CORE ===== */
-#main-header {
-  position: fixed;
-  top: 0;
-  inset-inline: 0;
-  z-index: 600;
-  background: rgba(0, 0, 0, 0.95);
-  border-bottom: 2px solid var(--color-accent-medium);
-  padding-top: env(safe-area-inset-top);
-}
-
-.header-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  height: var(--header-height);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 24px;
-  padding: 0 24px;
-}
-
-/* ===== BRAND ===== */
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-logo {
-  width: clamp(44px, 6vw, 64px);
-  height: clamp(44px, 6vw, 64px);
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(0,255,255,0.9);
-  box-shadow: 0 0 10px rgba(0,255,255,0.6);
-}
-
-.brand-name {
-  font-family: var(--font-modern);
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  letter-spacing: 4px;
-}
-
-/* ===== CLOCK ===== */
-.system-clock {
-  text-align: center;
-  font-size: 0.95rem;
-  opacity: 0.75;
-  white-space: nowrap;
-}
-
-/* ===== NAV ===== */
-.nav-links {
-  display: flex;
-  gap: 18px;
-}
-
-.nav-links a {
-  font-size: 1rem;
-  text-transform: uppercase;
-  padding: 6px 10px;
-}
-
-/* ===== MOBILE TOGGLE ===== */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--color-foreground-light);
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-
-/* ===== MOBILE MODE ===== */
-@media (max-width: 900px) {
-  .header-inner {
-    grid-template-columns: auto auto;
-  }
-
-  .system-clock {
-    display: none;
-  }
-
-  .nav-toggle {
-    display: block;
-    justify-self: end;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: calc(var(--header-height) + env(safe-area-inset-top));
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background: #000;
-    border-bottom: 2px solid var(--color-accent-medium);
-    padding: 20px;
-    display: none;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-}
-
-@keyframes textGlow {
-from { text-shadow: 0 0 10px var(--color-foreground-light), 0 0 20px var(--color-accent-medium); }
-to { text-shadow: 0 0 15px var(--color-text-body), 0 0 30px var(--color-foreground-light); }
-}
-
-.nav-links a {
-margin-left: 20px;
-padding: 8px 15px;
-border: 1px solid transparent;
-text-transform: uppercase;
-font-size: 1.2em;
-}
-
-.nav-links a:hover {
-border: 1px solid var(--color-foreground-light);
-background-color: rgba(0, 255, 255, 0.1);
-text-decoration: none;
-}
-
-#system-clock {
-font-family: var(--font-retro);
-font-size: 1em;
-color: var(--color-text-body);
-opacity: 0.7;
-}
-
-/* --- MAIN CONTENT & SECTION STYLES --- */
-main {
-padding-top: var(--header-height); /* Space for fixed header */
-}
-
-section {
-padding: 100px 50px;
-min-height: 80vh;
-border-bottom: 1px dashed var(--color-accent-medium);
-}
-
-section:last-child {
-border-bottom: none;
-}
-
-.section-title {
-font-size: 3em;
-text-align: center;
-margin-bottom: 50px;
-text-transform: uppercase;
-border-bottom: 2px solid var(--color-foreground-light);
-display: inline-block;
-padding-bottom: 10px;
-width: auto;
-margin-left: auto;
-margin-right: auto;
-display: block;
-}
-
-/* --- HERO SECTION ANIMATION --- */
-#hero {
-position: relative;
-min-height: 90vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-overflow: hidden;
-background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('placeholder-binary-bg.gif') no-repeat center center/cover;
-/* Placeholder for a binary code animated background */
-}
-
-.hero-title {
-font-size: 5em;
-margin-bottom: 20px;
-text-transform: uppercase;
-letter-spacing: 10px;
-animation: fadeInDown 1.5s ease-out;
-}
-
-.hero-subtitle {
-font-size: 1.8em;
-color: var(--color-text-body);
-animation: fadeInUp 1.5s ease-out 0.5s backwards;
-}
-
-/* Typing animation for the subtitle */
-.typing-effect::after {
-content: '_';
-opacity: 1;
-animation: blink 1s infinite;
-}
-
-@keyframes blink {
-50% { opacity: 0; }
-}
-
-/* --- CORE MEMBERS SECTION --- */
-.profile-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-gap: 40px;
-padding: 20px;
-}
-
-.profile-card {
-background-color: rgba(0, 255, 255, 0.05);
-border: 2px solid var(--color-accent-medium);
-padding: 20px;
-text-align: center;
-border-radius: 10px;
-box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-transform: scale(1);
-transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.profile-card:hover {
-transform: scale(1.05);
-box-shadow: 0 0 25px var(--color-foreground-light);
-}
-
-.profile-image {
-width: 150px;
-height: 150px;
-border-radius: 50%;
-object-fit: cover;
-border: 4px solid var(--color-foreground-light);
-margin-bottom: 15px;
-animation: pulse 2s infinite alternate;
-}
-
-@keyframes pulse {
-from { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4); }
-to { box-shadow: 0 0 0 20px rgba(0, 255, 255, 0); }
-}
-
-.profile-name {
-font-size: 1.8em;
-margin-bottom: 5px;
-color: var(--color-foreground-light);
-text-transform: uppercase;
-}
-
-.profile-role {
-font-family: var(--font-retro);
-font-size: 1.1em;
-color: var(--color-accent-medium);
-margin-bottom: 15px;
-display: block;
-}
-
-.profile-status {
-font-style: italic;
-color: var(--color-text-body);
-font-size: 0.9em;
-}
-
-/* --- BUTTON & ACTION STYLES (User Friendliness) --- */
-.cta-button {
-display: inline-block;
-padding: 15px 30px;
-background-color: transparent;
-color: var(--color-foreground-light);
-border: 2px solid var(--color-foreground-light);
-text-transform: uppercase;
-font-family: var(--font-modern);
-font-size: 1.1em;
-cursor: pointer;
-margin: 10px;
-position: relative;
-overflow: hidden;
-z-index: 1;
-}
-
-.cta-button::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-width: 0%;
-height: 100%;
-background-color: var(--color-accent-medium);
-transition: width var(--transition-speed) ease-in-out;
-z-index: -1;
-}
-
-.cta-button:hover::before {
-width: 100%;
-}
-
-.cta-button:hover {
-color: var(--color-background-dark);
-text-shadow: none;
-}
-
-/* --- FORM STYLES (Formspree) --- */
-#contact form {
-max-width: 600px;
-margin: 0 auto;
-padding: 30px;
-border: 1px solid var(--color-accent-medium);
-background-color: rgba(0, 255, 255, 0.03);
-border-radius: 5px;
-}
-
-#contact label {
-display: block;
-margin-bottom: 5px;
-font-family: var(--font-retro);
-color: var(--color-text-body);
-}
-
-#contact input[type="text"],
-#contact input[type="email"],
-#contact textarea {
-width: 100%;
-padding: 10px;
-margin-bottom: 20px;
-background-color: rgba(0, 0, 0, 0.7);
-border: 1px solid var(--color-accent-medium);
-color: var(--color-foreground-light);
-font-family: var(--font-retro);
-font-size: 1em;
-outline: none;
-}
-
-#contact input[type="text"]:focus,
-#contact input[type="email"]:focus,
-#contact textarea:focus {
-border-color: var(--color-foreground-light);
-box-shadow: 0 0 8px var(--color-foreground-light);
-}
-
-.submit-button {
-width: 100%;
-padding: 15px;
-background-color: var(--color-foreground-light);
-color: var(--color-background-dark);
-border: none;
-cursor: pointer;
-text-transform: uppercase;
-font-family: var(--font-modern);
-font-weight: bold;
-}
-
-.submit-button:hover {
-background-color: var(--color-accent-medium);
-color: var(--color-foreground-light);
-}
-
-/* --- FOOTER STYLES --- */
-#main-footer {
-padding: 40px 50px;
-background-color: rgba(0, 0, 0, 0.95);
-border-top: 2px solid var(--color-accent-medium);
-text-align: center;
-font-size: 1.1em;
-}
-
-.footer-links {
-margin: 15px 0;
-}
-
-.footer-links a {
-margin: 0 15px;
-font-size: 1.1em;
-}
-
-.footer-copy {
-color: var(--color-text-body);
-font-family: var(--font-retro);
-}
-
-/* --- POPUP/MODAL STYLES (for dynamic content) --- */
-.modal {
-display: none; /* Hidden by default */
-position: fixed;
-z-index: 1000;
-left: 0;
-top: 0;
-width: 100%;
-height: 100%;
-overflow: auto;
-background-color: rgba(0, 0, 0, 0.8); /* Darkened background */
-}
-
-.modal-content {
-background-color: var(--color-background-dark);
-margin: 10% auto; /* 10% from the top and centered */
-padding: 30px;
-border: 3px solid var(--color-foreground-light);
-width: 80%;
-max-width: 700px;
-position: relative;
-animation: modalOpen 0.5s;
-}
-
-@keyframes modalOpen {
-from { opacity: 0; transform: translateY(-50px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.close-button {
-color: var(--color-foreground-light);
-float: right;
-font-size: 28px;
-font-weight: bold;
-}
-
-.close-button:hover,
-.close-button:focus {
-color: var(--color-accent-medium);
-text-decoration: none;
-cursor: pointer;
-}
-
-/* --- UTILITY & ANIMATION CLASSES (for JavaScript) --- */
-.hidden {
-opacity: 0;
-transform: translateY(20px);
-transition: opacity 1s ease-out, transform 1s ease-out;
-}
-
-.visible {
-opacity: 1;
-transform: translateY(0);
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-#main-header {
-flex-direction: column;
-height: auto;
-padding: 10px 20px;
-}
-
-.header-logo {
-font-size: 3em;
-}
-
-.nav-links {
-margin-top: 10px;
-}
-
-.nav-links a {
-margin: 5px 10px;
-padding: 5px 10px;
-font-size: 1em;
-}
-
-main {
-padding-top: 150px; /* Adjust for stacked header */
-}
-
-section {
-padding: 50px 20px;
-}
-
-.hero-title {
-font-size: 3em;
-}
-
-.hero-subtitle {
-font-size: 1.2em;
-}
-}
-
-#backToTop {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: rgba(0, 255, 255, 0.15);
-  border: 2px solid var(--color-foreground-light);
-  color: var(--color-foreground-light);
-  padding: 12px 15px;
-  font-size: 1.2em;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 999;
-  border-radius: 50%;
-}
-
-#backToTop.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#backToTop:hover {
-  background: var(--color-foreground-light);
-  color: var(--color-background-dark);
-}
-
-#terminal {
-  max-width: 900px;
-  margin: 0 auto;
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid var(--color-accent-medium);
-  padding: 20px;
-  font-family: var(--font-retro);
-}
-
-#terminal-output {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-#terminal-output div {
-  margin-bottom: 5px;
-}
-
-.terminal-input-line {
-  display: flex;
-  align-items: center;
-}
-
-.terminal-input-line span {
-  margin-right: 8px;
-}
-
-#terminalInput {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--color-foreground-light);
-  font-family: var(--font-retro);
-  font-size: 1.1em;
-  outline: none;
-}
-
-  /* 🌐 Logo responsiveness */
-#responsiveLogo {
-  max-height: 80px;
-}
-
-@media (max-width: 768px) {
-  #responsiveLogo {
-    max-height: 60px;
-  }
-}
-
-.header-logo img {
-  height: 100%;
-  max-height: 80%;
-  object-fit: contain;
-}
-
-#weatherPanel {
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  #weatherPanel {
-    top: auto;
-    bottom: 20px;
-    right: 20px;
-    font-size: 0.95em;
-    padding: 10px 14px;
-    opacity: 0.85;
-  }
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Eden stealth CV-1</title>
+
+    <meta name="description" content="Official Eden portal - Operator unit - Universal Tier 1 Conglomerate.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+
+        :root {
+
+            --cyan: #00ffff;
+            --cyan-dim: rgba(0, 255, 255, 0.15);
+            --cyan-glow: 0 0 15px rgba(0, 255, 255, 0.5);
+            --bg-black: #050505;
+            --panel-bg: rgba(0, 10, 10, 0.85);
+            --font-tactical: 'Orbitron', sans-serif;
+            --font-body: 'Electrolize', sans-serif;
+            --font-mono: 'VT323', monospace;
+            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            --header-h: 90px;
+
+        }
+
+        /* --- ALPHA BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        
+        body {
+
+            background-color: var(--bg-black);
+            color: var(--cyan);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+
+        }
+
+        /* Tactical Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+        /* --- HUD OVERLAYS --- */
+        #matrixCanvas {
+
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+            opacity: 0.25;
+            filter: blur(1px);
+
+        }
+
+        .scanlines {
+
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 1000;
+            pointer-events: none;
+
+        }
+
+        /* --- ADVANCED HEADER --- */
+        #main-header {
+
+            position: fixed;
+            top: 0; width: 100%;
+            height: var(--header-h);
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid var(--cyan);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+
+        }
+
+        .header-container {
+
+            width: 95%;
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 30px;
+
+        }
+
+        .brand-unit {
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+
+        }
+
+        .logo-frame {
+
+            position: relative;
+            width: 60px; height: 60px;
+
+        }
+
+        .logo-img {
+
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            padding: 3px;
+            box-shadow: var(--cyan-glow);
+
+        }
+
+        .logo-ring {
+
+            position: absolute;
+            top: -5px; left: -5px; width: 70px; height: 70px;
+            border: 1px dashed var(--cyan);
+            border-radius: 50%;
+            animation: spin 8s linear infinite;
+
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .brand-text h1 {
+
+            font-family: var(--font-tactical);
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+
+        }
+
+        .brand-text span {
+
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            opacity: 0.7;
+
+        }
+
+        /* Navigation System */
+        .nav-system { display: flex; gap: 15px; justify-content: center; }
+        .nav-link {
+            text-transform: uppercase;
+            font-family: var(--font-tactical);
+            font-size: 0.8rem;
+            padding: 10px 15px;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--cyan);
+        }
+
+        .nav-link:hover {
+          
+            border: 1px solid var(--cyan);
+            background: var(--cyan-dim);
+            text-shadow: var(--cyan-glow);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+
+        }
+
+        .clock-hub {
+
+            text-align: right;
+            font-family: var(--font-mono);
+            background: rgba(0, 255, 255, 0.05);
+            padding: 8px 15px;
+            border-left: 3px solid var(--cyan);
+
+        }
+
+        /* --- HERO: OPERATOR UNIT --- */
+        #hero {
+
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.08) 0%, transparent 70%);
+
+        }
+
+        .hero-title {
+
+            font-family: var(--font-tactical);
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 30px var(--cyan);
+
+        }
+
+        .hero-subtitle {
+
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--cyan);
+            letter-spacing: 5px;
+            height: 1.6em;
+            text-transform: uppercase;
+
+        }
+
+        .cta-group {
+
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+
+        }
+
+        .btn-tactical {
+
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 15px 40px;
+            font-family: var(--font-tactical);
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+
+        }
+
+        .btn-tactical::before {
+
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--cyan);
+            transition: var(--transition);
+            z-index: -1;
+
+        }
+
+        .btn-tactical:hover { color: #000; box-shadow: var(--cyan-glow); }
+        .btn-tactical:hover::before { left: 0; }
+
+        /* --- SECTIONS: THE FOUNDATION --- */
+        section {
+
+            padding: 100px 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+
+        }
+
+        section.revealed { opacity: 1; transform: translateY(0); }
+
+        .section-header {
+
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+        }
+
+        .section-title {
+
+            font-family: var(--font-tactical);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .separator { height: 2px; flex-grow: 1; background: var(--cyan-dim); }
+
+        /* --- OPERATIVES GRID: STEALTH CV-1 --- */
+        .operative-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+
+        }
+
+        .op-card {
+
+            background: var(--panel-bg);
+            border: 1px solid var(--cyan-dim);
+            padding: 0;
+            position: relative;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+
+        }
+
+        .op-card:hover {
+
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+            transform: translateY(-5px);
+
+        }
+
+        .op-header {
+
+            padding: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px solid var(--cyan-dim);
+
+        }
+
+        .op-img {
+
+            width: 100px; height: 100px;
+            border: 2px solid var(--cyan);
+            padding: 5px;
+            background: #000;
+
+        }
+
+        .op-info h3 { font-family: var(--font-tactical); color: #fff; }
+        .op-info span { color: var(--cyan); font-family: var(--font-mono); font-size: 0.9rem; }
+
+        .op-stats {
+
+            padding: 20px 30px;
+            background: rgba(0, 255, 255, 0.02);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+
+        }
+
+        .stat-line { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dotted rgba(0, 255, 255, 0.2); }
+        .tier-1 { color: #ff0055; font-weight: bold; }
+
+        /* --- BRANCHES: SUBSIDIARIES --- */
+        .branch-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+
+        }
+
+        .branch-card {
+
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--cyan-dim);
+            text-align: center;
+            transition: var(--transition);
+
+        }
+
+        .branch-card:hover {
+
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+
+        }
+
+        .branch-card i { font-size: 3rem; margin-bottom: 20px; color: var(--cyan); }
+        .branch-card h3 { font-family: var(--font-tactical); margin-bottom: 15px; }
+
+        /* --- TERMINAL COMMAND CENTER --- */
+        #terminal-wrap {
+
+            background: #000;
+            border: 2px solid var(--cyan);
+            border-radius: 5px;
+            margin-top: 50px;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+
+        }
+
+        #terminal-output {
+
+            height: 300px;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+
+        }
+
+        .terminal-input-row { display: flex; align-items: center; gap: 10px; }
+        #term-input {
+
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            outline: none;
+
+        }
+
+        /* --- FOOTER: APEX --- */
+        #main-footer {
+
+            border-top: 2px solid var(--cyan);
+            padding: 60px 5%;
+            background: #000;
+            text-align: center;
+            margin-top: 100px;
+
+        }
+
+        .footer-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+
+        }
+
+        .weather-panel {
+
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 4px;
+            display: inline-block;
+
+        }
+
+        /* --- NAVIGATION CONTROLS --- */
+        .hud-nav {
+
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 3000;
+
+        }
+
+        .hud-btn {
+
+            width: 50px; height: 50px;
+            background: #000;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+
+        }
+
+        .hud-btn:hover { background: var(--cyan); color: #000; }
+
+        /* --- MOBILE REFINEMENT --- */
+        @media (max-width: 900px) {
+
+            .nav-system { display: none; }
+            .header-container { grid-template-columns: 1fr auto; }
+            .hero-title { letter-spacing: 10px; }
+            .op-card { clip-path: none; border-radius: 10px; }
+
+        }
+
+        /* --- MODAL SYSTEM --- */
+        .modal-overlay {
+
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+        }
+
+        .modal-body {
+
+            background: var(--bg-black);
+            border: 2px solid var(--cyan);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+
+        }
+
+        .close-modal {
+
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<button id="backToTop" title="Return to top">
-  <i class="fas fa-arrow-up"></i>
-</button>
+    <div class="scanlines"></div>
+    <canvas id="matrixCanvas"></canvas>
 
-<canvas id="matrixCanvas"></canvas>
-
-<header id="main-header">
-  <div class="header-inner">
-
-    <div class="brand">
-      <img src="eden.jpg" alt="Eden Empire logo" class="brand-logo" />
-      <span class="brand-name">T-3</span>
+    <div class="hud-nav">
+        <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-angle-double-up"></i></button>
+        <button class="hud-btn" onclick="scrollToSection('board')"><i class="fas fa-crosshairs"></i></button>
+        <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"><i class="fas fa-angle-double-down"></i></button>
     </div>
 
-    <div id="system-clock" class="system-clock"></div>
+    <header id="main-header">
+        <div class="header-container">
+            <a href="javascript:location.reload()" class="brand-unit">
+                <div class="logo-frame">
+                    <img src="Edenlogo.png" alt="Eden" class="logo-img">
+                    <div class="logo-ring"></div>
+                </div>
+                <div class="brand-text">
+                    <h1>Tier 1</h1>
+                </div>
+            </a>
 
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
+            <nav class="nav-system">
+                <a href="#about" class="nav-link">Direct Action: CV-7</a>
+                <a href="#board" class="nav-link">Team profile</a>
+                <a href="#subsidiaries" class="nav-link">Branches</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
 
-    <nav class="nav-links">
-      <a href="#about">Overview</a>
-      <a href="#board">Operatives</a>
-      <a href="#subsidiaries">Branches</a>
-      <a href="#careers" onclick="openModal('careersModal')">Join</a>
-      <a href="#contact">Contact</a>
-    </nav>
+            <div class="clock-hub" id="sys-clock">00:00:00</div>
+        </div>
+    </header>
 
-  </div>
-</header>
+    <main>
+        <section id="hero" style="opacity: 1; transform: none;">
+            <div style="font-family: var(--font-mono); margin-bottom: 10px;">[ ACCESS GRANTED: PUBLIC ENTRANCE ]</div>
+            <h1 class="hero-title">Eden stealth CV-1</h1>
+            <div class="hero-subtitle typing-effect" style="text-align: center;" data-text="Under the Best Operator unit in the entire universe."></div>
+            
+            <div class="cta-group">
+                <button class="btn-tactical" onclick="scrollToSection('about')">Engage Protocol</button>
+                <button class="btn-tactical" onclick="openModal('visionModal')">Read Manifest</button>
+            </div>
+        </section>
 
-<main>
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">The Foundation</h2>
+                <div class="separator"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+                <div style="line-height: 2;">
+                    <p style="font-size: 1.4rem; color: #fff;"><strong>First and foremost, we Direct Action For God.</strong></p>
+                    <p>The Operator Team name <strong>Eden stealth CV-1</strong> was given to us by God—our Most High, signifying the beginning, foundation, and source @ Direct Actioning. We stand for the Defense of HQ, and the Re-private of our Great Land, South Africa.</p>
+                </div>
+            </div>
+        </section>
 
-<section id="hero">
-<h1 class="hero-title" data-animate="fadeInDown">Eden Empire</h1>
-<h2 class="hero-subtitle typing-effect" data-text="Tier 3 operatives | 24/7 operation"></h2>
-<p class="hero-text">Welcome. Security protocols initiated.</p>
-<p class="hero-text">We function 24 hours a day/7 days a week.</p>
-<div style="margin-top: 40px;">
-<button class="cta-button" onclick="scrollToSection('about')">Engage Protocol <i class="fas fa-arrow-down"></i></button>
-<button class="cta-button" onclick="openModal('securityModal')">Security Status <i class="fas fa-shield-alt"></i></button>
-</div>
-</section>
+        <section id="board">
+            <div class="section-header">
+                <h2 class="section-title">Eden Stealth CV-1</h2>
+                <div class="separator"></div>
+                <i class="fas fa-crosshairs" style="font-size: 2rem;"></i>
+            </div>
 
-<section id="about" class="hidden">
-<h2 class="section-title" data-animate="slideInLeft"><i class="fas fa-book-bible"></i> The Foundation: Eden</h2>
-<p><strong>First and foremost, we represent God.</strong> The name <strong>Eden</strong> is derived from the Bible, signifying the <strong>beginning, the foundation, and the source</strong> of everything on planet earth and the universe. We stand for <strong>good, purity, success, growth, truth, and honour.</strong></p>
-<br>
-<p>Eden is a <strong>conglomerate of the first of its kind</strong>, registered under the <strong>CIPC (Companies and Intellectual Property Commission)</strong>, with all entities being fully <strong>legal and legit</strong> as per South African national law. We are global, dynamic, and powerful, hitting all fronts with the singular goal of becoming the <strong>Number 1 company in the entire world</strong>.</p>
-<p style="margin-top: 30px;">Our reservation is <strong>Tier 3</strong>. Our operation is precise.</p>
-<div style="text-align: center; margin-top: 50px;">
-<button class="cta-button" onclick="openModal('visionModal')">read manifest <i class="fas fa-scroll"></i></button>
-</div>
-</section>
+            <div class="operative-grid">
+                <div class="op-card">
+                    <div class="op-header">
+                        <img src="hoss.png" class="op-img" alt="Morake">
+                        <div class="op-info">
+                            <h3>Thato 'Hoss' Morake</h3>
+                            <span>01. COMMANDER-IN-CHIEF (THE PRESIDENT)</span>
+                        </div>
+                    </div>
+                    <div class="op-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Founder / Chairman</span></div>
+                        <div class="stat-line"><span>LEVEL:</span><span class="tier-1">TIER 1 (APEX)</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>03 OCTOBER 2002(Blessedistheman.)</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>17:00pm - 01:00am</span></div> 
+                    </div>
+                </div>
 
-<section id="board" class="hidden">
-<h2 class="section-title" data-animate="slideInRight"><i class="fas fa-users-cog"></i> The Core operatives & Board</h2>
+                <div class="op-card">
+                    <div class="op-header">
+                        <img src="joy.jpg" class="op-img" alt="Joyson">
+                        <div class="op-info">
+                            <h3>Joyson</h3>
+                            <span>02. CEO</span>
+                        </div>
+                    </div>
+                    <div class="op-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Executive</span></div>
+                        <div class="stat-line"><span>LEVEL:</span><span>Tier 1 Bodyguard</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>10:00am - 16:00pm</span></div>
+                    </div>
+                </div>
 
-<div class="profile-grid">
-<div class="profile-card" data-animate="zoomIn">
-<img src="hoss.png" alt="Profile Picture of Thato Morake" class="profile-image">
-<h3 class="profile-name">01. Thato 'Hoss' Morake</h3>
-<strong class="profile-role">Chief Innovations Officer; Chairman of the Board; Founder</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: 03 October 2002 - Age 23(Blessed is the man.)</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained...</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 17:00pm to 01:00am</span>
-<br>
-<br>
-<span class="profile-status">Reports to: no one</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Spearheading the vision and direction of the Eden Empire.</p>
-</div>
+                <div class="op-card">
+                    <div class="op-header">
+                        <img src="morpheus.jpg" class="op-img" alt="Khayyim">
+                        <div class="op-info">
+                            <h3>Olama Khayyim</h3>
+                            <span>03. COMPLIANCE OFFICER & ALGORITHMIST</span>
+                        </div>
+                    </div>
+                    <div class="op-stats">
+                      <div class="stat-line"><span>ROLE:</span><span>National Law / security</span></div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="joy.jpg" alt="Profile Picture of Joyson" class="profile-image">
-<h3 class="profile-name">02. Joyson</h3>
-<strong class="profile-role">Chief Executive Officer (CEO)</strong>
-<span class="profile-status">Tier 3 Operative | Strategic Command</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: n/a</span>
-<br>
-<br>
-<span class="profile-status">Contact: n/a</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 08:00am to 16:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Hoss</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Driving the daily execution of the Empire's vision.</p>
-</div>
+                        <div class="stat-line"><span>LEVEL:</span><span class="tier-1">Lt. General special Operator SANDF Airforce - Tier 1</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>22 October 1999</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>10:00am - 16:00pm</span></div>
+                    </div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="frost.jpg" alt="Profile Picture of Arnold Khumalo" class="profile-image">
-<h3 class="profile-name">03. Arnold 'Tobin Frost' Khumalo</h3>
-<strong class="profile-role">Chief Supply Chain Officer (CSCO) & Part of the Board (The Board is the Mind.)</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: 19 September 2001 - Age 24(Born to be an operative.)</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: code 10</span>
-<br>
-<br>
-<span class="profile-status">contact: 067 110 0101 (phone calls; sms; whatsapp)</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 12:00pm to 20:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Joy</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">--</p>
-</div>
+                <div class="op-card">
+                    <div class="op-header">
+                        <img src="frost.jpg" class="op-img" alt="Frost">
+                        <div class="op-info">
+                            <h3>Arnold 'Tobin Frost' Khumalo</h3>
+                            <span>03. CSCO</span>
+                        </div>
+                    </div>
+                    <div class="op-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Routes / Artillery</span></div>
+                        <div class="stat-line"><span>LEVEL:</span><span>Tier 3 operative</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>12:00pm - 20:00pm</span></div>
+                    </div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="masiya.webp" alt="Profile Picture of MaSiya" class="profile-image">
-<h3 class="profile-name">04. MaSiya</h3>
-<strong class="profile-role">Chief Finance Officer (CFO) & Part of the Board (The Board is the Mind.)</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained...</span>
-<br>
-<br>
-<span class="profile-status">Contact: 082 646 4265</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 10:00am to 18:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Joy</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Guardian of financial stability and precise capital allocation.</p>
-</div>
+                <div class="op-card">
+                    <div class="op-header">
+                        <img src="xan.jpg" class="op-img" alt="Xolisa">
+                        <div class="op-info">
+                            <h3>Xolisa (Xan)</h3>
+                            <span>05. CTO</span>
+                        </div>
+                    </div>
+                    <div class="op-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Computer Science</span></div>
+                        <div class="stat-line"><span>LEVEL:</span><span>Tier 3 operative</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>17:00pm - 22:00pm</span></div>
+                    </div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="queener.jpeg" alt="Profile Picture of Queener" class="profile-image">
-<h3 class="profile-name">05. Queener</h3>
-<strong class="profile-role">Chief Operations Officer (COO)</strong>
-<span class="profile-status">Tier 3 Operative | Operational Excellence</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained</span>
-<br>
-<br>
-<span class="profile-status">Contact: n/a</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 17:00pm to 01:00am</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Joy</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Perfectionist of internal processes and efficiency.</p>
-</div>
+                </div>
+            </div>
+        </section>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="xan.jpg" alt="Profile Picture of Xolisa" class="profile-image">
-<h3 class="profile-name">06. Xolisa</h3>
-<strong class="profile-role">Chief Technology Officer (CTO)</strong>
-<span class="profile-status">Tier 3 Operative | Infrastructure Architect</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: n/a</span>
-<br>
-<br>
-<span class="profile-status">Contact: 084 621 9809</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Friday - Sunday | 17:00pm to 22:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Joy</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Spearheading all technological and digital initiatives.</p>
-</div>
+        <section id="subsidiaries">
+            <div class="section-header">
+                <h2 class="section-title">Branches of the Tree of Life</h2>
+                <div class="separator"></div>
+            </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="junior.jpg" alt="Profile Picture of Xolisa" class="profile-image">
-<h3 class="profile-name">07. Junior</h3>
-<strong class="profile-role">Chief Brand Officer (CBO)</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained</span>
-<br>
-<br>
-<span class="profile-status">Contact: 071 829 3554</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 08:00am to 16:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Joy</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">--</p>
-</div>
+            <div class="branch-grid">
+                <div class="branch-card" onclick="window.open('https://tinyurl.com/parablesandplatters')">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Parables & Platters</h3>
+                    <p>Sector: Global Food Services</p>
+                    <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="vuyo.webp" alt="Profile Picture of Vuyo" class="profile-image">
-<h3 class="profile-name">08. Vuyo</h3>
-<strong class="profile-role">Chief Logistics Officer (CLO)</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained</span>
-<br>
-<br>
-<span class="profile-status">Contact: not available</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Friday - Sunday | 17:00pm to 22:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Frost</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">--</p>
-</div>
+                <div class="branch-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Stainless Steel</h3>
+                    <p>Sector: Private Security</p>
+                    <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="morpheus.jpg" alt="Profile Picture of Olama Khayyim" class="profile-image">
-<h3 class="profile-name">09. Olama Khayyim</h3>
-<strong class="profile-role">Compliance Officer & Algorithmist</strong>
-<span class="profile-status">Tier 1 Operator | --</span>
-<br>
-<br>
-<span class="profile-status">Born: 22 October 1999 - Age 26(For the proud. For the brave.)</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained...</span>
-<br>
-<br>
-<span class="profile-status">Pilot's License: not yet obtained - currently studying under the...</span>
-<br>
-<br>
-<span class="profile-status">Contact: 067 660 7194 (phone calls; sms & signal) | instagram.com/olamakhayyim</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Saturday | 08:00am to 16:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Hoss, Joy & Xolisa</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">--</p>
-</div>
+                <div class="branch-card">
+                    <i class="fas fa-shuttle-van"></i>
+                    <h3>HopCo Transportation</h3>
+                    <p>Sector: Tactical Logistics</p>
+                    <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="sphe.png" alt="Profile Picture of Vuyo" class="profile-image">
-<h3 class="profile-name">10. S'phe</h3>
-<strong class="profile-role">Senior Marketing Director (SMD)</strong>
-<span class="profile-status">Tier 3 Operative | --</span>
-<br>
-<br>
-<span class="profile-status">Born: 05 March 2006</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained</span>
-<br>
-<br>
-<span class="profile-status">Contact: 075 354 9985</span>
-<br>
-<br>
-<span class="profile-status">Shift: n/a</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Junior</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">TBA...</p>
-</div>
+                <div class="branch-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Green Pastures</h3>
+                    <p>Sector: Advanced Agriculture</p>
+                    <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                </div>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="bigbo.jpg" alt="Profile Picture of Bayanda" class="profile-image">
-<h3 class="profile-name">11. Big Bo</h3>
-<strong class="profile-role">Senior Software Developer</strong>
-<span class="profile-status">Tier 3 Operative | Code Perfectionist</span>
-<br>
-<br>
-<span class="profile-status">Born: -- -- -- - --</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: not yet obtained</span>
-<br>
-<br>
-<span class="profile-status">Contact: 061 465 5748(whatsapp & signal only)</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Friday - Sunday | 17:00pm to 22:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Xolisa</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">Architecting robust and error-free computer programs.</p>
-</div>
+                <div class="branch-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Lawk National</h3>
+                    <p>Sector: Law & Government</p>
+                    <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="btn-tactical" onclick="window.open('essmain.html')">Access E.S.S. Portal <i class="fas fa-external-link-alt"></i></button>
+            </div>
+        </section>
 
-<div class="profile-card" data-animate="zoomIn">
-<img src="lerato.jpg" alt="Profile Picture of Lerato Morake" class="profile-image">
-<h3 class="profile-name">12. Lerato Morake</h3>
-<strong class="profile-role">Algorithmist</strong>
-<span class="profile-status">E.S.S. | Gate Entry Authority</span>
-<br>
-<br>
-<span class="profile-status">Born: **purposefully omitted.**</span>
-<br>
-<br>
-<span class="profile-status">Driver's License: for what?</span>
-<br>
-<br>
-<span class="profile-status">Shift: Monday to Friday - Sunday | 17:00pm to 22:00pm</span>
-<br>
-<br>
-<span class="profile-status">Reports to: Xolisa</span>
-<br>
-<br>
-<span class="profile-status">Daily Operation: <a href="twentyfourseven.html">gain access</a></span>
-<p style="margin-top: 10px;">The key to our proprietary Soccer Sundays league and its' data.</p>
-</div>
-</div>
-<div style="text-align: center; margin-top: 50px;">
-<button class="cta-button" onclick="openModal('boardProtocolModal')">View Operative Protocols <i class="fas fa-lock"></i></button>
-</div>
-</section>
+        <section id="terminal-section">
+            <div class="section-header">
+                <h2 class="section-title">Terminal</h2>
+                <div class="separator"></div>
+            </div>
 
-<section id="subsidiaries" class="hidden">
-<h2 class="section-title" data-animate="slideInLeft"><i class="fas fa-industry"></i> The Branches of the Tree of Life</h2>
-<p class="text-center" style="margin-bottom: 40px;">Eden governs a multitude of <strong>legal entities</strong> that form the foundation of our global dominance. Everything is built on integrity, and robust legal standing.</p>
+            <div id="terminal-wrap">
+                <div id="terminal-output">
+                    <div>[ Eden stealth CV-1 portal INITIALIZING ]</div>
+                    <div>[ ENCRYPTION: running ]</div>
+                    <br>
+                    <div>type 'help' for commands...</div>
+                </div>
+                <div class="terminal-input-row">
+                    <span>EDEN@OP_UNIT:~$</span>
+                    <input type="text" id="term-input" spellcheck="false" autocomplete="off" autofocus>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<!-- add logos for every branch. -->
+    <footer id="main-footer">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">Eden stealth CV-1</h4>
+            </div>
+            <div>
+                <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">QUICK LINKS</h4>
+                <a href="javascript:void(0)" onclick="openModal('legalModal')" style="color: inherit; display: block;">Documents</a>
+                <a href="twentyfourseven.html" style="text-decoration: none;">CV-7</a>
+            </div>
+            <div class="weather-panel">
+                <div style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 10px;">LIVE WEATHER // CAPE TOWN</div>
+                <div id="weather-temp" style="font-size: 2rem; font-family: var(--font-tactical);">--°C</div>
+                <div id="weather-desc" style="font-family: var(--font-mono);">SYNCING...</div>
+            </div>
+        </div>
+        
+        <p style="font-family: var(--font-mono); opacity: 0.5; margin-top: 40px;">
+            &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
+        </p>
+    </footer>
 
-<div class="subsidiary-grid profile-grid">
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-utensils fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">Parables & Platters</h3>
-<strong class="profile-role">Feeding the soul. (food)</strong>
-<br>
-<strong class="profile-role">contact: 063 473 2453 (phone calls & whatsapp business) | parablesandplatters@gmail.com ; parablesandplatters@outlook.com | instagram.com/parablesandplatters</strong>
-<p class="profile-status">Nourishing the soul with mouth-watering meals.</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-shield-alt fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">Stainless Steel Private Security</h3>
-<strong class="profile-role">Tier 3 security solutions</strong>
-<br>
-<strong class="profile-role">contact: n/a</strong>
-<p class="profile-status">--</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-truck-moving fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">Hop Co Transportation</h3>
-<strong class="profile-role">--</strong>
-<br>
-<strong class="profile-role">contact: n/a (whatsapp business only.)</strong>
-<p class="profile-status">--</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-building fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">Mount Sinai Real Estate</h3>
-<strong class="profile-role">Prime Property Acquisition & Development</strong>
-<br>
-<strong class="profile-role">contact: n/a</strong>
-<p class="profile-status">Foundations built on the highest ground.</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-seedling fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">Green Pastures Farming</h3>
-<strong class="profile-role">Sustainable Agriculture</strong>
-<br>
-<strong class="profile-role">contact: n/a</strong>
-<p class="profile-status">Cultivating growth, providing pure sustenance.</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-  <i class="fas fa-balance-scale fa-3x" style="color: var(--color-foreground-light);"></i>
-  <h3 class="profile-name" style="margin-top: 15px;">Lawk National</h3>
-  <strong class="profile-role">National Law & Politics</strong>
-  <br>
-  <strong class="profile-role">contact: 083 655 2865</strong>
-  <p class="profile-status">--</p>
-</div>
-
-<div class="profile-card" data-animate="zoomIn">
-<i class="fas fa-futbol fa-3x" style="color: var(--color-foreground-light);"></i>
-<h3 class="profile-name" style="margin-top: 15px;">E.S.S. (Eden Soccer Sundays)</h3>
-<strong class="profile-role">Proprietary Sports League</strong>
-<p class="profile-status">Our very own, highly dynamic, and exclusive league.</p>
-</div>
-</div>
-
-<div style="text-align: center; margin-top: 50px;">
-<button class="cta-button" onclick="window.open('essmain.html', '_blank')">Access E.S.S. webpage <i class="fas fa-external-link-alt"></i></button>
-</div>
-</section>
-
-<section id="careers" class="hidden">
-<h2 class="section-title" data-animate="slideInRight"><i class="fas fa-users-class"></i> Future Recruitment Initiative</h2>
-<p class="text-center" style="font-size: 1.5em; color: var(--color-text-body);">The Eden Empire is currently establishing its core operational structure.</p>
-<h3 class="text-center" style="font-size: 2.5em; color: var(--color-foreground-light); margin-top: 20px; animation: textGlow 1.5s infinite alternate;">EMPLOYEES WILL JOIN US MARCH, 2026</h3>
-<p class="text-center" style="margin-top: 20px;">We will commence hiring and expansion in **2026**. Prepare to submit your applications. We are seeking the best of the best—individuals of truth, honour, optimism, radiance, and unyielding dedication.</p>
-<div style="text-align: center; margin-top: 50px;">
-<button class="cta-button" onclick="openModal('careersModal')">Recruitment Protocols <i class="fas fa-hourglass-start"></i></button>
-</div>
-</section>
-
-<section id="contact" class="hidden">
-<h2 class="section-title" data-animate="slideInLeft"><i class="fas fa-link"></i> Gate Entry Protocol</h2>
-<p class="text-center" style="margin-bottom: 30px;">For inquiries (confidential | non-confidential) or partnership proposals, etc. please utilize the secure terminal below. This is your formal gate entry to the Eden Empire.</p>
-
-<form action="https://formspree.io/f/your-formspree-hash" method="POST" data-animate="zoomIn">
-<label for="name"><i class="fas fa-user"></i> name/company/organisation:</label>
-<input type="text" id="name" name="name" required>
-
-<label for="email"><i class="fas fa-at"></i> secure channel (email):</label>
-<input type="email" id="email" name="email" required>
-
-<label for="subject"><i class="fas fa-code-branch"></i> inquiry subject (protocol):</label>
-<input type="text" id="subject" name="subject" required>
-
-<label for="message"><i class="fas fa-keyboard"></i> message/transmission:</label>
-<textarea id="message" name="Message" rows="8" required></textarea>
-
-<input type="text" name="_gotcha" style="display:none" />
-
-<button type="submit" class="submit-button cta-button">Initiate Transmission <i class="fas fa-paper-plane"></i></button>
-</form>
-</section>
-
-</main>
-
-<section id="terminal-section">
-  <h2 class="section-title"><i class="fas fa-terminal"></i> System Console</h2>
-
-  <div id="terminal">
-    <div id="terminal-output">
-      <div>EDEN OS v1.0 — Secure Channel Established</div>
-      <div>Type <strong>help</strong> to view available commands.</div>
+    <div class="modal-overlay" id="visionModal">
+        <div class="modal-body">
+            <span class="close-modal" onclick="closeModal('visionModal')">&times;</span>
+            <h2 class="section-title">ES-CV-1 MANIFEST</h2>
+            <div style="margin-top: 30px; line-height: 1.8; font-size: 1.1rem;">
+                <p><strong>Direct Action code: CV-7</strong></p>
+            </div>
+        </div>
     </div>
-    <div class="terminal-input-line">
-      <span>&gt;</span>
-      <input id="terminalInput" autocomplete="off" />
-    </div>
-  </div>
-</section>
-
-<footer id="main-footer">
-<div class="footer-links">
-<a href="#about">Overview</a> |
-<a href="#board">Operatives</a> |
-<a href="#" onclick="openModal('legalModal')">Legal Documentation <i class="fas fa-file-contract"></i></a>
-</div>
-<p class="footer-copy">
-&copy; <span id="current-year"></span> Eden Empire. All rights reserved. CIPC Registered. <br>
-<i class="fas fa-globe-africa"></i> Private Company. Global Reach. The Best of Tier 3. 24/7 Operation.
-</p>
-  <a href="eu.html">EU</a>
-
-  <div style="
-  margin-top: 15px;
-  color: #00ffff;
-  font-family: var(--font-retro);
-  font-size: 1em;
-  opacity: 0.85;
-">
-  ⛅ current live weather: <span id="weatherTemp">Loading...</span>°C
-</div>
-
-</footer>
-
-<div id="securityModal" class="modal">
-<div class="modal-content">
-<span class="close-button" onclick="closeModal('securityModal')">&times;</span>
-<h3 style="color: var(--color-foreground-light);">Security Protocol Active</h3>
-<p>Access Level: Public (Customer/Interest) Gate Entry.</p>
-<p>Data Encryption: High (HTTPS required for full domain security).</p>
-<p>Backend Status: Online (Simulated Firestore Connection).</p>
-<p style="margin-top: 15px; color: var(--color-text-body);">System operating at **Optimal Efficiency**. No glitches detected.</p>
-</div>
-</div>
-
-<div id="careersModal" class="modal">
-<div class="modal-content">
-<span class="close-button" onclick="closeModal('careersModal')">&times;</span>
-<h3 style="color: var(--color-foreground-light);">Recruitment Status: Phase I</h3>
-<p>Hiring Commencement Date: **2026**.</p>
-<p>Current Focus: Internal core team only (Tier 3 Operatives).</p>
-<p style="margin-top: 15px;">Please check back for the 2026 portal opening to submit your credentials to the Empire.</p>
-<button class="cta-button" onclick="closeModal('careersModal')">Acknowledge</button>
-</div>
-</div>
-
-<div id="legalModal" class="modal">
-<div class="modal-content">
-<span class="close-button" onclick="closeModal('legalModal')">&times;</span>
-<h3 style="color: var(--color-foreground-light);">Legal Documentation Protocols</h3>
-<p>All subsidiary companies are legal entities registered under the CIPC.</p>
-<p style="margin-top: 15px; color: #FF6347;">Unauthorized disclosure of legal documents is strictly prohibited.</p>
-</div>
-</div>
-
-<div id="visionModal" class="modal">
-<div class="modal-content">
-<span class="close-button" onclick="closeModal('visionModal')">&times;</span>
-<h3 style="color: var(--color-foreground-light);">The Eden manifest: Global Success</h3>
-<p>Our vision is to establish the Eden Empire as the global benchmark for operational excellence.</p>
-<p style="margin-top: 15px;">We operate as a cohesive unit of Tier 3 operatives, dedicated to foundational growth, ethical practice, and unparalleled success across all subsidiaries. Our mission is divinely inspired, ensuring longevity and purity in all ventures.</p>
-</div>
-</div>
-
-  <script>
-// Real weather fetch using Open-Meteo
-// Using Johannesburg coords (latitude: -26.2041, longitude: 28.0473)
-fetch('https://api.open-meteo.com/v1/forecast?latitude=-26.2041&longitude=28.0473&current_weather=true&temperature_unit=celsius')
-  .then(res => res.json())
-  .then(data => {
-    if (data.current_weather) {
-      document.getElementById('weatherTemp').textContent = data.current_weather.temperature;
-    } else {
-      document.getElementById('weatherTemp').textContent = 'N/A';
-    }
-  })
-  .catch(err => {
-    console.error('Weather error:', err);
-    document.getElementById('weatherTemp').textContent = 'Error';
-  });
-</script>
-
-<script>
-
-/* ===============================
-   TERMINAL ENGINE
-================================ */
-const terminalInput = document.getElementById("terminalInput");
-const terminalOutput = document.getElementById("terminal-output");
-
-function printToTerminal(text) {
-  const line = document.createElement("div");
-  line.innerHTML = text;
-  terminalOutput.appendChild(line);
-  terminalOutput.scrollTop = terminalOutput.scrollHeight;
-}
-
-/* ===============================
-   BOOT SEQUENCE
-================================ */
-document.body.style.overflow = "hidden";
-
-const BOOT_LINES = [
-  "EDEN OS v3.7 — Initialising...",
-  "Loading encrypted memory blocks...",
-  "Verifying integrity...",
-  "Authenticating public access...",
-  "Routing secure channels...",
-  "Terminal ready."
-];
-
-let bootIndex = 0;
-
-function bootSystem() {
-  if (bootIndex < BOOT_LINES.length) {
-    printToTerminal(BOOT_LINES[bootIndex]);
-    bootIndex++;
-    setTimeout(bootSystem, 600);
-  } else {
-    document.body.style.overflow = "auto";
-    SYSTEM.booted = true;
-    terminalInput.disabled = false;
-    printToTerminal("<span style='color:#00ff99'>System online.</span>");
-  }
-}
-
-/* ===============================
-   SYSTEM STATE
-================================ */
-const SYSTEM = {
-  accessLevel: "public", // public | tier3 | admin
-  authenticated: false,
-  booted: false,
-  lastCommand: null
-};
-
-const backToTopBtn = document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 600) {
-    backToTopBtn.classList.add("visible");
-  } else {
-    backToTopBtn.classList.remove("visible");
-  }
-});
-
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* ===============================
-   COMMAND REGISTRY
-================================ */
-const COMMANDS = {
-  help() {
-    printToTerminal("Available commands:");
-    printToTerminal("help");
-    printToTerminal("status");
-    printToTerminal("unlock tier3");
-    printToTerminal("open vision | careers | security");
-    printToTerminal("scan operatives");
-    printToTerminal("matrix on | off");
-    printToTerminal("glitch hero");
-    printToTerminal("clear");
-  },
-
-  status() {
-    printToTerminal(`Booted: ${SYSTEM.booted}`);
-    printToTerminal(`Access Level: ${SYSTEM.accessLevel}`);
-  },
-
-  unlock(arg) {
-    if (arg === "tier3") {
-      SYSTEM.accessLevel = "tier3";
-      SYSTEM.authenticated = true;
-      document.body.classList.add("tier3");
-      printToTerminal("<span style='color:#00ff99'>Tier 3 access granted.</span>");
-    } else {
-      printToTerminal("Invalid access key.");
-    }
-  },
-
-  open(arg) {
-    const map = {
-      vision: "visionModal",
-      careers: "careersModal",
-      security: "securityModal"
-    };
-    if (map[arg]) openModal(map[arg]);
-    else printToTerminal("Unknown target.");
-  },
-
-  scan(arg) {
-    if (arg === "operatives") {
-      scrollToSection("board");
-      printToTerminal("Scanning operatives...");
-    }
-  },
-
-  matrix(arg) {
-    if (arg === "on") startMatrix();
-    if (arg === "off") stopMatrix();
-  },
-
-  glitch(arg) {
-    if (arg === "hero") glitchText(document.querySelector(".hero-title"));
-  },
-
-  clear() {
-    terminalOutput.innerHTML = "";
-  }
-};
-
-terminalInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    const input = terminalInput.value.trim().toLowerCase();
-    terminalInput.value = "";
-
-    printToTerminal(`> ${input}`);
-
-    const parts = input.split(" ");
-    const cmd = parts[0];
-    const arg = parts[1];
-
-    if (COMMANDS[cmd]) {
-      COMMANDS[cmd](arg);
-    } else {
-      printToTerminal("Command not recognized. Type <strong>help</strong>.");
-    }
-  }
-});
-
-// Set the current year for the footer copyright
-document.getElementById('current-year').textContent = new Date().getFullYear();
-
-// --- 1. CORE VARIABLES AND UTILITIES ---
-const DURATION = 100; // ms per character for typing effect
-const SCROLL_ANIMATION_OFFSET = 150; // Pixels from bottom of viewport to trigger animation
-const HEADER = document.getElementById('main-header');
-
-// --- 2. MODAL FUNCTIONS (Popups) ---
-/**
-* Opens a specified modal window.
-* @param {string} modalId - The ID of the modal to open.
-*/
-function openModal(modalId) {
-const modal = document.getElementById(modalId);
-if (modal) {
-modal.style.display = 'block';
-// Add event listener to close modal on outside click (user friendly)
-modal.onclick = (event) => {
-if (event.target === modal) {
-closeModal(modalId);
-}
-};
-}
-}
-
-/**
-* Closes a specified modal window.
-* @param {string} modalId - The ID of the modal to close.
-*/
-function closeModal(modalId) {
-const modal = document.getElementById(modalId);
-if (modal) {
-modal.style.display = 'none';
-modal.onclick = null; // Clean up the event listener
-}
-}
-
-// --- 3. SMOOTH SCROLL FUNCTION ---
-/**
-* Smoothly scrolls to a target section when a link is clicked.
-* @param {string} sectionId - The ID of the section to scroll to.
-*/
-function scrollToSection(sectionId) {
-const targetElement = document.getElementById(sectionId);
-if (targetElement) {
-window.scrollTo({
-top: targetElement.offsetTop - HEADER.offsetHeight, // Account for fixed header height
-behavior: 'smooth'
-});
-}
-}
-
-// Attach smooth scroll to all nav links (except those that open a modal)
-document.querySelectorAll('.nav-links a').forEach(anchor => {
-const href = anchor.getAttribute('href');
-if (href && href.startsWith('#') && href !== '#careers') {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-scrollToSection(href.substring(1));
-});
-}
-});
-
-// --- 4. TYPING ANIMATION (Retro Terminal Effect) ---
-/**
-* Implements a typewriter effect on the hero subtitle.
-*/
-function typeWriterEffect() {
-const subtitle = document.querySelector('.typing-effect');
-if (!subtitle) return;
-
-const text = subtitle.getAttribute('data-text');
-let i = 0;
-subtitle.textContent = ''; // Clear existing text
-
-const typingInterval = setInterval(() => {
-if (i < text.length) {
-subtitle.textContent += text.charAt(i);
-i++;
-} else {
-clearInterval(typingInterval);
-}
-}, DURATION);
-}
-
-// --- 5. SCROLL-BASED ANIMATION (Flow and Transition) ---
-/**
-* Handles the visibility check for elements to trigger CSS transitions on scroll.
-* This creates a smooth flow between sections.
-*/
-function checkElementVisibility() {
-const elements = document.querySelectorAll('.hidden');
-const elementToAnimate = document.querySelectorAll('[data-animate]');
-
-// Check for section visibility
-elements.forEach(el => {
-const rect = el.getBoundingClientRect();
-// Check if the element is within the visible area (with offset)
-if (rect.top < window.innerHeight - SCROLL_ANIMATION_OFFSET) {
-el.classList.remove('hidden');
-el.classList.add('visible');
-}
-});
-
-// Placeholder for data-animate elements (more complex animations)
-elementToAnimate.forEach(el => {
-// Future logic for more distinct animations like slideInLeft, zoomIn etc.
-// For now, we'll let the .hidden/.visible classes handle the default fade/slide.
-const rect = el.getBoundingClientRect();
-if (rect.top < window.innerHeight - SCROLL_ANIMATION_OFFSET) {
-el.style.opacity = 1; // Simple fade in
-}
-});
-}
-
-// --- 6. ERROR HANDLING / WINDOW RESIZE OPTIMIZATION ---
-/**
-* Optimizes and re-checks element positions on window resize.
-*/
-let resizeTimeout;
-window.addEventListener('resize', () => {
-clearTimeout(resizeTimeout);
-resizeTimeout = setTimeout(() => {
-// Re-run visibility check to adjust for new viewport size
-checkElementVisibility();
-console.log('Optimisation: Layout re-checked after resize.');
-}, 250); // Debounce resize event
-});
-
-// --- 7. INITIALISATION FUNCTION ---
-/**
-* The primary function to set up all JavaScript logic upon page load.
-*/
-function initializePortal() {
-// Initial animation setup
-checkElementVisibility();
-// Start the typing sequence
-typeWriterEffect();
-// Attach scroll event listener for continuous animation flow
-window.addEventListener('scroll', checkElementVisibility);
-
-// Placeholder for Firestore/Security checks
-console.log('Security Protocol: Core Operatives Portal Initialised.');
-console.log('Backend Check: Firestore (Simulated) Connection Status: ONLINE.');
-
-terminalInput.disabled = true;
-bootSystem();
-
-}
-
-// Execute the initialization function when the document is fully loaded
-document.addEventListener('DOMContentLoaded', initializePortal);
-
-/* ===============================
-   MATRIX ENGINE
-================================ */
-const canvas = document.getElementById("matrixCanvas");
-const ctx = canvas.getContext("2d");
-let matrixInterval = null;
-
-function resizeMatrix() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeMatrix();
-window.addEventListener("resize", resizeMatrix);
-
-const chars = "01EDENΣΔλ";
-let drops = [];
-
-function startMatrix() {
-  canvas.style.position = "fixed";
-  canvas.style.top = 0;
-  canvas.style.left = 0;
-  canvas.style.zIndex = -1;
-
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  drops = Array(Math.floor(columns)).fill(1);
-
-  matrixInterval = setInterval(() => {
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#00ffff";
-    ctx.font = fontSize + "px monospace";
-
-    drops.forEach((y, i) => {
-      const text = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(text, i * fontSize, y * fontSize);
-      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
-    });
-  }, 33);
-
-  printToTerminal("Matrix stream engaged.");
-}
-
-function stopMatrix() {
-  clearInterval(matrixInterval);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  printToTerminal("Matrix stream disengaged.");
-}
-
-/* ===============================
-   GLITCH TEXT
-================================ */
-function glitchText(element) {
-  const original = element.textContent;
-  const chars = "!<>-_\\/[]{}—=+*^?#________";
-  let i = 0;
-
-  const interval = setInterval(() => {
-    element.textContent = original
-      .split("")
-      .map((c, idx) =>
-        idx < i ? original[idx] : chars[Math.floor(Math.random() * chars.length)]
-      )
-      .join("");
-
-    if (i >= original.length) {
-      clearInterval(interval);
-      element.textContent = original;
-    }
-    i += 1 / 3;
-  }, 30);
-}
-
-function updateClock() {
-const now = new Date();
-const formatted =
-now.toLocaleDateString() + " | " +
-now.toLocaleTimeString();
-document.getElementById("system-clock").textContent = formatted;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-  let weatherTimeout;
-window.addEventListener("scroll", () => {
-  const panel = document.getElementById("weatherPanel");
-  panel.style.opacity = "0.3";
-
-  clearTimeout(weatherTimeout);
-  weatherTimeout = setTimeout(() => {
-    panel.style.opacity = "1";
-  }, 600);
-});
-
-</script>
-
-<script>
-  const toggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector(".nav-links");
-
-  toggle.addEventListener("click", () => {
-    nav.classList.toggle("open");
-  });
-</script>
 
+    <script>
+
+        /* ===============================
+           CORE ENGINE
+        ================================ */
+        const sysTime = document.getElementById('sys-clock');
+        const yearSpan = document.getElementById('year');
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('terminal-output');
+
+        // Clock System
+        function updateClock() {
+            const now = new Date();
+            sysTime.innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+        yearSpan.innerText = new Date().getFullYear();
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            window.scrollTo({
+                top: el.offsetTop - 90,
+                behavior: 'smooth'
+            });
+        }
+
+        // Modal Controls
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+        /* ===============================
+           TERMINAL LOGIC
+        ================================ */
+        function printToTerm(text, color = "inherit") {
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.innerHTML = `> ${text}`;
+            termOutput.appendChild(div);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const val = termInput.value.toLowerCase().trim();
+                termInput.value = '';
+                
+                if (val === 'help') {
+                    printToTerm('Available: matrix on | matrix off | clear | status | scan ops | open manifesto');
+                } else if (val === 'matrix on') {
+                    startMatrix();
+                    printToTerm('Matrix Engine Initialized.', 'var(--cyan)');
+                } else if (val === 'matrix off') {
+                    stopMatrix();
+                    printToTerm('Matrix Engine Terminated.', '#ff0055');
+                } else if (val === 'clear') {
+                    termOutput.innerHTML = '';
+                } else if (val === 'status') {
+                    printToTerm('UNIT: CV-7 | STATUS: STEALTH | ACCESS: TIER 1');
+                } else if (val === 'scan ops') {
+                    scrollToSection('board');
+                    printToTerm('Scanning Operators...');
+                } else if (val === 'open manifesto') {
+                    openModal('visionModal');
+                } else {
+                    printToTerm(`Command '${val}' not recognized. Type 'help'.`, '#ff0055');
+                }
+            }
+        });
+
+        /* ===============================
+           MATRIX ENGINE
+        ================================ */
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+        let matrixInterval = null;
+        let drops = [];
+        const chars = "01EDENCV7ΣΔ";
+
+        function startMatrix() {
+            if (matrixInterval) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const columns = canvas.width / 18;
+            drops = Array(Math.floor(columns)).fill(1);
+            
+            matrixInterval = setInterval(() => {
+                ctx.fillStyle = "rgba(0,0,0,0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#00ffff";
+                ctx.font = "18px monospace";
+                
+                drops.forEach((y, i) => {
+                    const txt = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(txt, i * 18, y * 18);
+                    if (y * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                });
+            }, 35);
+        }
+
+        function stopMatrix() {
+            clearInterval(matrixInterval);
+            matrixInterval = null;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        /* ===============================
+           WEATHER ENGINE
+        ================================ */
+        async function fetchWeather() {
+            try {
+                // Johannesburg Coords
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-26.20&longitude=28.04&current_weather=true');
+                const data = await res.json();
+                document.getElementById('weather-temp').innerText = `${Math.round(data.current_weather.temperature)}°C`;
+                document.getElementById('weather-desc').innerText = "TEAM READY // CLEAR SKIES";
+            } catch (e) {
+                document.getElementById('weather-temp').innerText = "OFFLINE";
+            }
+        }
+        fetchWeather();
+
+        /* ===============================
+           TYPEWRITER EFFECT
+        ================================ */
+        function initTypewriter() {
+            const el = document.querySelector('.typing-effect');
+            const text = el.getAttribute('data-text');
+            let i = 0;
+            el.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 80);
+                }
+            }
+            type();
+        }
+
+        // Initialization
+        window.onload = () => {
+            initTypewriter();
+            startMatrix(); // Start matrix by default for high visual impact
+            console.log("Eden stealth CV-1: Tier 1 active.");
+        };
+
+    </script>
 </body>
+</html>
 
-  </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- ADVANCE THIS SINGLE INDEX.HTML VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG, AND THOROUGH, AND FULL. ENSURE PAGE STARTS AT HEADER. ADVANCE THE HEADER TO CATER FOR LITERALLY EACH AND EVERY SCREEN SIZE OUT THERE. I WANT THE DOCUMENTS OPTION ON QUICK LINKS TO BE A FULL POP-UP VIEW WITHIN THE BROWSER OF .PDF DOCUMENTS THAT I WILL LINK MYSELF... THERE MUST ALSO BE A DOWNLOAD OPTION FOR THESE DOCUMENTS AS WELL - EITHER AS SINGLE FILES OR ZIPPED UP. I REALLY LIKE THE LOGO. I LIKE THE STYLING, AND BUTTONS... THIS PORTAL IS VERY DOPE. EXCEPTIONAL. AND PRECISE. ON THE FOOTER, ALSO ADD LINK TO THIS (<a href="twentyfourseven.html">CV-7</a>) | JUST GO ALL OUT ON THIS PORTAL. FIX ALL BUGS AND ISSUES AND PROBLEMS. I WANT 100% EXCEPTIONAL PERFORMANCE. I WANT OPTIMIZATION. I WANT AUTOMATION. I WANT ERROR HANDLING FOR EVERY CASE AND SCENARIO POSSIBLE. I WANT ROBUSTNESS. I WANT EXPERTISE. I WANT ACTUAL LOGOS FOR EACH BRANCH, RATHER THAN THE ICONS - I'LL LINK THE IMAGES MYSELF. I WANT TOP PERFORMANCE AND SMOOTHNESS. SCROLLING SMOOTHNESS. I WANT SMOOTH FLOW AND TRANSISION. I WANT EXCEPTIONAL LOGIC. I WANT TOP-NOTCH FUNCTIONALITY. ONLY MAKE THE TERMINAL ONLY FOR THE MATRIX EFFECT - UPON LANDING ON PORTAL, THE EFFECT MUST ALREADY BE PRECEDENT - USER CAN SWITCH IT OFF THEMSELVES IN THE TERMINAL. DON'T SKIP NOTHING WHEN YOU GIVE ME BACK THE FULLY FULL FULL LONG UPDATED CODE... I DON'T WANNA HAVE TO DO ANYTHING MYSELF. MAKE THE MATRIX EFFECT ONLY 1'S AND 0'S. SMOOTHLY TRANSITION TO HAMBURGER MENU FOR MOBILE DEVICES. THIS IS TIER 1 SPECIAL OPS LEVEL. OPTIMIZE EVERYTHING FOR LITERALLY EACH AND EVERY SCREEN SIZE. PLEASE FEEL FREE TO ADD MORE FEATURES, AND OPTIONS, AND, BUTTONS, AND CLICKS OF YOUR OWN. GO ALL OUT. FULL FINAL ADVANCED BOSS MODE. CATER THE WEATHER AND TIME FOR CAPE TOWN ONLY. -->
