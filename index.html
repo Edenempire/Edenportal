@@ -210,6 +210,14 @@
 
         }
 
+        /* --- HERO SAFE OFFSET SYSTEM --- */
+        #hero {
+            min-height: calc(100vh - var(--header-h));
+            padding-top: calc(var(--header-h) + clamp(40px, 6vh, 80px));
+            padding-bottom: clamp(40px, 6vh, 80px);
+            box-sizing: border-box;
+        }
+
         .hero-title {
 
             font-family: var(--font-tactical);
@@ -310,7 +318,7 @@
         .separator { height: 2px; flex-grow: 1; background: var(--cyan-dim); }
 
         /* --- OPERATIVES GRID: STEALTH CV-1 --- */
-        .operative-grid {
+        .Operator-grid {
 
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -318,7 +326,7 @@
 
         }
 
-        .op-card {
+        .ops-card {
 
             background: var(--panel-bg);
             border: 1px solid var(--cyan-dim);
@@ -329,7 +337,7 @@
 
         }
 
-        .op-card:hover {
+        .ops-card:hover {
 
             border-color: var(--cyan);
             box-shadow: var(--cyan-glow);
@@ -337,7 +345,7 @@
 
         }
 
-        .op-header {
+        .ops-header {
 
             padding: 30px;
             display: flex;
@@ -347,7 +355,7 @@
 
         }
 
-        .op-img {
+        .ops-img {
 
             width: 100px; height: 100px;
             border: 2px solid var(--cyan);
@@ -356,10 +364,10 @@
 
         }
 
-        .op-info h3 { font-family: var(--font-tactical); color: #fff; }
+        .ops-info h3 { font-family: var(--font-tactical); color: #fff; }
         .op-info span { color: var(--cyan); font-family: var(--font-mono); font-size: 0.9rem; }
 
-        .op-stats {
+        .ops-stats {
 
             padding: 20px 30px;
             background: rgba(0, 255, 255, 0.02);
@@ -557,7 +565,7 @@
         <div class="header-container">
             <a href="javascript:location.reload()" class="brand-unit">
                 <div class="logo-frame">
-                    <img src="Edenlogo.png" alt="Eden" class="logo-img">
+                    <img src="logo.png" alt="Eden" class="logo-img">
                     <div class="logo-ring"></div>
                 </div>
                 <div class="brand-text">
@@ -608,16 +616,16 @@
                 <i class="fas fa-crosshairs" style="font-size: 2rem;"></i>
             </div>
 
-            <div class="operative-grid">
-                <div class="op-card">
-                    <div class="op-header">
-                        <img src="hoss.png" class="op-img" alt="Morake">
-                        <div class="op-info">
+            <div class="Operator-grid">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="hoss.png" class="ops-img" alt="Morake">
+                        <div class="ops-info">
                             <h3>Thato 'Hoss' Morake</h3>
                             <span>01. COMMANDER-IN-CHIEF (THE PRESIDENT)</span>
                         </div>
                     </div>
-                    <div class="op-stats">
+                    <div class="ops-stats">
                         <div class="stat-line"><span>ROLE:</span><span>Founder / Chairman</span></div>
                         <div class="stat-line"><span>LEVEL:</span><span class="tier-1">TIER 1 (APEX)</span></div>
                         <div class="stat-line"><span>BORN:</span><span>03 OCTOBER 2002(Blessedistheman.)</span></div>
@@ -625,15 +633,15 @@
                     </div>
                 </div>
 
-                <div class="op-card">
-                    <div class="op-header">
-                        <img src="joy.jpg" class="op-img" alt="Joyson">
-                        <div class="op-info">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="joy.jpg" class="ops-img" alt="Joyson">
+                        <div class="ops-info">
                             <h3>Joyson</h3>
                             <span>02. CEO</span>
                         </div>
                     </div>
-                    <div class="op-stats">
+                    <div class="ops-stats">
                         <div class="stat-line"><span>ROLE:</span><span>Executive</span></div>
                         <div class="stat-line"><span>LEVEL:</span><span>Tier 1 Bodyguard</span></div>
                         <div class="stat-line"><span>BORN:</span><span>--</span></div>
@@ -641,15 +649,15 @@
                     </div>
                 </div>
 
-                <div class="op-card">
-                    <div class="op-header">
-                        <img src="morpheus.jpg" class="op-img" alt="Khayyim">
-                        <div class="op-info">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="morpheus.jpg" class="ops-img" alt="Khayyim">
+                        <div class="ops-info">
                             <h3>Olama Khayyim</h3>
                             <span>03. COMPLIANCE OFFICER & ALGORITHMIST</span>
                         </div>
                     </div>
-                    <div class="op-stats">
+                    <div class="ops-stats">
                       <div class="stat-line"><span>ROLE:</span><span>National Law / security</span></div>
 
                         <div class="stat-line"><span>LEVEL:</span><span class="tier-1">Lt. General special Operator SANDF Airforce - Tier 1</span></div>
@@ -658,15 +666,15 @@
                     </div>
                 </div>
 
-                <div class="op-card">
-                    <div class="op-header">
-                        <img src="frost.jpg" class="op-img" alt="Frost">
-                        <div class="op-info">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="frost.jpg" class="ops-img" alt="Frost">
+                        <div class="ops-info">
                             <h3>Arnold 'Tobin Frost' Khumalo</h3>
                             <span>03. CSCO</span>
                         </div>
                     </div>
-                    <div class="op-stats">
+                    <div class="ops-stats">
                         <div class="stat-line"><span>ROLE:</span><span>Routes / Artillery</span></div>
                         <div class="stat-line"><span>LEVEL:</span><span>Tier 3 operative</span></div>
                         <div class="stat-line"><span>BORN:</span><span>--</span></div>
@@ -674,22 +682,20 @@
                     </div>
                 </div>
 
-                <div class="op-card">
-                    <div class="op-header">
-                        <img src="xan.jpg" class="op-img" alt="Xolisa">
-                        <div class="op-info">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="xan.jpg" class="ops-img" alt="Xolisa">
+                        <div class="ops-info">
                             <h3>Xolisa (Xan)</h3>
                             <span>05. CTO</span>
                         </div>
                     </div>
-                    <div class="op-stats">
+                    <div class="ops-stats">
                         <div class="stat-line"><span>ROLE:</span><span>Computer Science</span></div>
                         <div class="stat-line"><span>LEVEL:</span><span>Tier 3 operative</span></div>
                         <div class="stat-line"><span>BORN:</span><span>--</span></div>
                         <div class="stat-line"><span>SHIFT:</span><span>17:00pm - 22:00pm</span></div>
                     </div>
-                </div>
-
                 </div>
             </div>
         </section>
@@ -771,7 +777,7 @@
             <div>
                 <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">QUICK LINKS</h4>
                 <a href="javascript:void(0)" onclick="openModal('legalModal')" style="color: inherit; display: block;">Documents</a>
-                <a href="twentyfourseven.html" style="text-decoration: none;">CV-7</a>
+                <a href="direct_action.html" style="text-decoration: none;">CV-7</a>
             </div>
             <div class="weather-panel">
                 <div style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 10px;">LIVE WEATHER // CAPE TOWN</div>
@@ -962,8 +968,13 @@
             console.log("Eden stealth CV-1: Tier 1 active.");
         };
 
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stopMatrix();
+            else startMatrix();
+        });
+
+
     </script>
 </body>
 </html>
 
-<!-- ADVANCE THIS SINGLE INDEX.HTML VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG, AND THOROUGH, AND FULL. ENSURE PAGE STARTS AT HEADER. ADVANCE THE HEADER TO CATER FOR LITERALLY EACH AND EVERY SCREEN SIZE OUT THERE. I WANT THE DOCUMENTS OPTION ON QUICK LINKS TO BE A FULL POP-UP VIEW WITHIN THE BROWSER OF .PDF DOCUMENTS THAT I WILL LINK MYSELF... THERE MUST ALSO BE A DOWNLOAD OPTION FOR THESE DOCUMENTS AS WELL - EITHER AS SINGLE FILES OR ZIPPED UP. I REALLY LIKE THE LOGO. I LIKE THE STYLING, AND BUTTONS... THIS PORTAL IS VERY DOPE. EXCEPTIONAL. AND PRECISE. ON THE FOOTER, ALSO ADD LINK TO THIS (<a href="twentyfourseven.html">CV-7</a>) | JUST GO ALL OUT ON THIS PORTAL. FIX ALL BUGS AND ISSUES AND PROBLEMS. I WANT 100% EXCEPTIONAL PERFORMANCE. I WANT OPTIMIZATION. I WANT AUTOMATION. I WANT ERROR HANDLING FOR EVERY CASE AND SCENARIO POSSIBLE. I WANT ROBUSTNESS. I WANT EXPERTISE. I WANT ACTUAL LOGOS FOR EACH BRANCH, RATHER THAN THE ICONS - I'LL LINK THE IMAGES MYSELF. I WANT TOP PERFORMANCE AND SMOOTHNESS. SCROLLING SMOOTHNESS. I WANT SMOOTH FLOW AND TRANSISION. I WANT EXCEPTIONAL LOGIC. I WANT TOP-NOTCH FUNCTIONALITY. ONLY MAKE THE TERMINAL ONLY FOR THE MATRIX EFFECT - UPON LANDING ON PORTAL, THE EFFECT MUST ALREADY BE PRECEDENT - USER CAN SWITCH IT OFF THEMSELVES IN THE TERMINAL. DON'T SKIP NOTHING WHEN YOU GIVE ME BACK THE FULLY FULL FULL LONG UPDATED CODE... I DON'T WANNA HAVE TO DO ANYTHING MYSELF. MAKE THE MATRIX EFFECT ONLY 1'S AND 0'S. SMOOTHLY TRANSITION TO HAMBURGER MENU FOR MOBILE DEVICES. THIS IS TIER 1 SPECIAL OPS LEVEL. OPTIMIZE EVERYTHING FOR LITERALLY EACH AND EVERY SCREEN SIZE. PLEASE FEEL FREE TO ADD MORE FEATURES, AND OPTIONS, AND, BUTTONS, AND CLICKS OF YOUR OWN. GO ALL OUT. FULL FINAL ADVANCED BOSS MODE. CATER THE WEATHER AND TIME FOR CAPE TOWN ONLY. -->
