@@ -408,6 +408,60 @@
         .branch-card i { font-size: 3rem; margin-bottom: 20px; color: var(--cyan); }
         .branch-card h3 { font-family: var(--font-tactical); margin-bottom: 15px; }
 
+        /* ===============================
+        BRANCH LOGO SYSTEM
+        ================================ */
+
+        .branch-logo-frame {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+            border: 1px solid var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,255,255,0.03);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .branch-logo {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            filter: brightness(0.9) contrast(1.1);
+            transition: var(--transition);
+        }
+
+        /* Hover power-up */
+        .branch-card:hover .branch-logo-frame {
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+            background: rgba(0,255,255,0.08);
+        }
+
+        .branch-card:hover .branch-logo {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+
+        /* Scan line animation */
+        .logo-scan {
+            position: absolute;
+            width: 100%;
+            height: 40%;
+            top: -50%;
+            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.3), transparent);
+            animation: scanMove 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanMove {
+            0% { top: -50%; }
+            100% { top: 120%; }
+        }
+
         /* --- TERMINAL COMMAND CENTER --- */
         #terminal-wrap {
 
@@ -510,6 +564,13 @@
             .hero-title { letter-spacing: 10px; }
             .op-card { clip-path: none; border-radius: 10px; }
 
+            .branch-logo-frame {
+
+                width: 90px;
+                height: 90px;
+
+            }
+
         }
 
         /* --- MODAL SYSTEM --- */
@@ -543,6 +604,93 @@
             top: 20px; right: 20px;
             font-size: 2rem;
             cursor: pointer;
+
+        }
+
+        /* ===============================
+            DOCUMENT VAULT RESPONSIVE SYSTEM
+           ================================ */
+
+        .docs-layout {
+
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 25px;
+            align-items: start;
+
+        }
+
+        #docViewer {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--cyan);
+            background: #000;
+        }
+
+        /* Control panel column */
+        .docs-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* TABLETS */
+        @media (max-width: 1100px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+            }
+
+            #docViewer {
+                height: 500px;
+            }
+
+            .docs-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .docs-controls .btn-tactical {
+                flex: 1 1 45%;
+                min-width: 140px;
+            }
+        }
+
+        /* PHONES */
+        @media (max-width: 600px) {
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            #docViewer {
+                height: 380px;
+            }
+
+            .docs-controls {
+                flex-direction: column;
+            }
+
+            .docs-controls .btn-tactical {
+                width: 100%;
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .branch-logo-frame {
+
+                width: 75px;
+                height: 75px;
+
+            }
 
         }
 
@@ -671,7 +819,7 @@
                         <img src="frost.jpg" class="ops-img" alt="Frost">
                         <div class="ops-info">
                             <h3>Arnold 'Tobin Frost' Khumalo</h3>
-                            <span>03. CSCO</span>
+                            <span>04. CSCO</span>
                         </div>
                     </div>
                     <div class="ops-stats">
@@ -708,35 +856,54 @@
 
             <div class="branch-grid">
                 <div class="branch-card" onclick="window.open('https://tinyurl.com/parablesandplatters')">
-                    <i class="fas fa-utensils"></i>
+                    <div class="branch-logo-frame">
+                    <img src="images/parables.png" alt="Parables & Platters" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
                     <h3>Parables & Platters</h3>
-                    <p>Sector: Global Food Services</p>
+                    <p>Sector: Food</p>
                     <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>via:</span><span>whatsapp (063 473 2453)</span></div>
                 </div>
 
                 <div class="branch-card">
-                    <i class="fas fa-user-shield"></i>
+                    <div class="branch-logo-frame">
+                    <img src="images/logo.png" alt="Stainless Steel" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
                     <h3>Stainless Steel</h3>
                     <p>Sector: Private Security</p>
                     <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>via:</span><a href="ss.html"><span title="click">es-cv-1</span></a></div>
                 </div>
 
                 <div class="branch-card">
-                    <i class="fas fa-shuttle-van"></i>
+                    <div class="branch-logo-frame">
+                    <img src="images/logo.png" alt="HopCo Transportation" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
                     <h3>HopCo Transportation</h3>
                     <p>Sector: Tactical Logistics</p>
                     <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>via:</span><a href="https://hopco.co.za"><span title="click">hopco.com</span></a></div>
                 </div>
 
                 <div class="branch-card">
-                    <i class="fas fa-seedling"></i>
+                    <div class="branch-logo-frame">
+                    <img src="images/logo.png" alt="Green Pastures" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
                     <h3>Green Pastures</h3>
                     <p>Sector: Advanced Agriculture</p>
                     <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>call:</span><span title="click">masiya (082 646 4265)</span></div>
                 </div>
 
                 <div class="branch-card">
-                    <i class="fas fa-balance-scale"></i>
+                    <div class="branch-logo-frame">
+                    <img src="images/logo.png" alt="Lawk National" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
                     <h3>Lawk National</h3>
                     <p>Sector: Law & Government</p>
                     <div class="stat-line" style="margin-top:15px"><span>Status:</span><span class="tier-1">ACTIVE</span></div>
@@ -775,10 +942,15 @@
                 <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">Eden stealth CV-1</h4>
             </div>
             <div>
+
                 <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">QUICK LINKS</h4>
-                <a href="javascript:void(0)" onclick="openModal('legalModal')" style="color: inherit; display: block;">Documents</a>
-                <a href="direct_action.html" style="text-decoration: none;">CV-7</a>
+
+                <button class="btn-tactical" onclick="openDocsHub()" style="width:100%;">DOCUMENTS</button>
+
+                <a href="direct_action.html" id="cv7-link" style="text-decoration: none;"><CV-7></CV-7></a>
+
             </div>
+
             <div class="weather-panel">
                 <div style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 10px;">LIVE WEATHER // CAPE TOWN</div>
                 <div id="weather-temp" style="font-size: 2rem; font-family: var(--font-tactical);">--°C</div>
@@ -800,6 +972,9 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <script>
 
@@ -857,10 +1032,21 @@
         }
 
         termInput.addEventListener('keydown', (e) => {
+
             if (e.key === 'Enter') {
-                const val = termInput.value.toLowerCase().trim();
+                const raw = termInput.value.trim();     // keep original
+                const val = raw.toLowerCase();          // system parsing
                 termInput.value = '';
-                
+
+                // 🔒 SECRET COMMAND — DO NOT LIST
+                if (raw === '1.') {
+                    printToTerm('Access key accepted...', 'var(--cyan)');
+                    setTimeout(() => {
+                        document.getElementById('cv7-link').click();
+                    }, 600);
+                    return;
+                }
+
                 if (val === 'help') {
                     printToTerm('Available: matrix on | matrix off | clear | status | scan ops | open manifesto');
                 } else if (val === 'matrix on') {
@@ -879,7 +1065,7 @@
                 } else if (val === 'open manifesto') {
                     openModal('visionModal');
                 } else {
-                    printToTerm(`Command '${val}' not recognized. Type 'help'.`, '#ff0055');
+                    printToTerm(`Command '${raw}' not recognized. Type 'help'.`, '#ff0055');
                 }
             }
         });
@@ -930,14 +1116,21 @@
            WEATHER ENGINE
         ================================ */
         async function fetchWeather() {
+
             try {
-                // Johannesburg Coords
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-26.20&longitude=28.04&current_weather=true');
+                // Cape Town Coordinates
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.92&longitude=18.42&current_weather=true');
                 const data = await res.json();
-                document.getElementById('weather-temp').innerText = `${Math.round(data.current_weather.temperature)}°C`;
-                document.getElementById('weather-desc').innerText = "TEAM READY // CLEAR SKIES";
+
+                const temp = Math.round(data.current_weather.temperature);
+                const wind = data.current_weather.windspeed;
+
+                document.getElementById('weather-temp').innerText = `${temp}°C`;
+                document.getElementById('weather-desc').innerText = `CAPE TOWN AIRFORCE BASE // WIND ${wind} km/h`;
+
             } catch (e) {
                 document.getElementById('weather-temp').innerText = "OFFLINE";
+                document.getElementById('weather-desc').innerText = "WEATHER LINK LOST";
             }
         }
         fetchWeather();
@@ -973,8 +1166,97 @@
             else startMatrix();
         });
 
+        /* ===============================
+            DOCUMENT HUB SYSTEM
+           ================================ */
+
+            let currentDoc = null;
+            const docs = {
+                1: "documents/1.pdf",
+                2: "documents/2.pdf",
+                3: "documents/3.pdf",
+                4: "documents/4.pdf",
+                5: "documents/5.pdf"
+            };
+
+            function openDocsHub() {
+                document.getElementById("docsModal").style.display = "flex";
+                loadDoc(1); // auto-load first doc
+            }
+
+            function closeDocsHub() {
+                document.getElementById("docsModal").style.display = "none";
+                document.getElementById("docViewer").src = "";
+            }
+
+            function loadDoc(num) {
+                currentDoc = docs[num];
+                document.getElementById("docViewer").src = currentDoc;
+            }
+
+            function downloadCurrentDoc() {
+                if (!currentDoc) return;
+                const link = document.createElement("a");
+                link.href = currentDoc;
+                link.download = currentDoc;
+                link.click();
+            }
+
+            async function downloadAllDocs() {
+                const zip = new JSZip();
+
+                for (const key in docs) {
+                    const fileName = docs[key];
+                    const response = await fetch(fileName);
+                    const blob = await response.blob();
+                    zip.file(fileName, blob);
+                }
+
+                zip.generateAsync({ type: "blob" }).then(function(content) {
+                    saveAs(content, "docs.zip");
+                });
+            }
 
     </script>
+
+    <div class="modal-overlay" id="docsModal">
+
+        <div class="modal-body" style="max-width: 1000px;">
+            <span class="close-modal" onclick="closeDocsHub()">&times;</span>
+
+            <h2 class="section-title">Company Documents Vault</h2>
+
+            <div class="docs-layout">
+
+            <!-- PDF VIEWER -->
+            <iframe id="docViewer" src="" style="width:100%; height:600px; border:1px solid var(--cyan); background:#000;"></iframe>
+
+            <!-- CONTROLS -->
+            <div class="docs-controls">
+                
+                <button class="btn-tactical" onclick="loadDoc(1)">Open 1.pdf</button>
+                <button class="btn-tactical" onclick="loadDoc(2)">Open 2.pdf</button>
+                <button class="btn-tactical" onclick="loadDoc(3)">Open 3.pdf</button>
+                <button class="btn-tactical" onclick="loadDoc(4)">Open 4.pdf</button>
+                <button class="btn-tactical" onclick="loadDoc(5)">Open 5.pdf</button>
+
+                <div class="separator"></div>
+
+                <button class="btn-tactical" onclick="downloadCurrentDoc()">Download Current</button>
+                <button class="btn-tactical" onclick="downloadAllDocs()">Download ALL (ZIP)</button>
+
+            </div>
+            </div>
+
+        </div>
+        </div>
+
 </body>
+
 </html>
+
+
+
+
+
 
