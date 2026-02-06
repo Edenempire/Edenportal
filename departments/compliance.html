@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en">
+   
+<head>
+   
+<meta charset="UTF-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   
+<title>Compliance</title>
+
+<!-- FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+   
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+   
+/* =====================================================
+   EDEN BLACK OPS VARIABLES
+===================================================== */
+:root{
+--bg:#00040a;
+--panel:#050d16;
+--line:#00cfff;
+--soft:#7fdfff;
+--ok:#00ff9c;
+--warn:#ffaa00;
+--danger:#ff3355;
+--font-ui:'Electrolize',sans-serif;
+--font-head:'Orbitron',sans-serif;
+--font-mono:'VT323',monospace;
+--radius:14px;
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--soft);font-family:var(--font-mono);scroll-behavior:smooth}
+
+/* CRT ICE OVERLAY */
+body::before{
+content:"";position:fixed;inset:0;pointer-events:none;
+background:repeating-linear-gradient(to bottom,transparent,transparent 2px,rgba(0,200,255,.02) 3px);
+z-index:9999;
+}
+
+/* =====================================================
+   GLOBAL LAYOUT
+===================================================== */
+#boot{
+position:fixed;inset:0;background:#000;z-index:10000;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+font-size:1.4rem;color:var(--line);letter-spacing:4px
+}
+#boot .bar{width:300px;height:3px;background:#022;overflow:hidden;margin-top:20px}
+#boot .bar::after{
+content:"";display:block;width:100%;height:100%;background:var(--line);
+animation:load 2s forwards
+}
+@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+header{
+position:fixed;top:0;width:100%;z-index:2000;
+display:flex;justify-content:space-between;align-items:center;
+padding:20px;background:rgba(0,0,0,.9);border-bottom:1px solid var(--line)
+}
+header h1{font-family:var(--font-head);letter-spacing:4px;font-size:1rem}
+header span{font-size:.8rem;color:var(--ok)}
+
+main{padding-top:100px;padding-bottom:120px}
+
+/* =====================================================
+   GRID CORE
+===================================================== */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+padding:0 5%
+}
+.panel{
+background:var(--panel);
+border:1px solid rgba(0,200,255,.3);
+border-radius:var(--radius);
+padding:30px;
+position:relative;
+overflow:hidden;
+transition:.4s
+}
+.panel:hover{box-shadow:0 0 40px rgba(0,200,255,.15)}
+
+/* =====================================================
+   TITLES
+===================================================== */
+.panel h2{
+font-family:var(--font-head);
+letter-spacing:3px;
+margin-bottom:15px;
+font-size:1.2rem;
+color:var(--line)
+}
+
+/* =====================================================
+   DIRECT ACTION CV-7
+===================================================== */
+#directAction{
+border:2px solid var(--danger);
+box-shadow:0 0 60px rgba(255,50,80,.25)
+}
+#target{
+font-size:2.5rem;
+text-align:center;
+margin:20px 0;
+color:var(--danger)
+}
+#fireBtn{
+width:100%;
+padding:18px;
+background:transparent;
+border:2px solid var(--danger);
+color:var(--danger);
+font-family:var(--font-head);
+letter-spacing:4px;
+cursor:pointer;
+transition:.3s
+}
+#fireBtn:hover{
+background:var(--danger);
+color:#000;
+box-shadow:0 0 30px var(--danger)
+}
+
+/* =====================================================
+   NOTEPADS
+===================================================== */
+textarea{
+width:100%;min-height:200px;
+background:#000;border:1px solid var(--line);
+color:var(--soft);padding:15px;
+font-family:var(--font-mono);font-size:1.1rem;
+resize:vertical
+}
+
+/* =====================================================
+   EDITORS
+===================================================== */
+.editor{
+display:flex;flex-direction:column;gap:10px
+}
+iframe{
+width:100%;height:200px;
+border:1px solid var(--line);
+background:#000
+}
+
+/* =====================================================
+   CHECKLIST
+===================================================== */
+.checklist label{
+display:flex;gap:10px;margin-bottom:10px;cursor:pointer
+}
+.checklist input{accent-color:var(--line)}
+
+/* =====================================================
+   FOOT HUD
+===================================================== */
+footer{
+position:fixed;bottom:0;width:100%;
+background:rgba(0,0,0,.9);
+border-top:1px solid rgba(0,200,255,.2);
+display:flex;justify-content:space-between;
+padding:10px 20px;font-size:.7rem
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media(max-width:600px){
+header{flex-direction:column;gap:10px}
+}
+   
+</style>
+   
+</head>
+
+<body>
+
+<div id="boot">
+COMPLIANCE NODE<br>INITIALIZING...
+<div class="bar"></div>
+</div>
+
+<header>
+<h1>COMPLIANCE</h1>
+<span>CV-7 DIRECT ACTION ENVIRONMENT</span>
+</header>
+
+<main>
+
+<section class="grid">
+
+<!-- DIRECT ACTION -->
+<div class="panel" id="directAction">
+<h2>CV-7 :: DIRECT ACTION</h2>
+<div id="target">TARGET: MONEY</div>
+<button id="fireBtn">EXECUTION — 1 SHOT, 1 KILL</button>
+<div id="daStatus"></div>
+</div>
+
+<!-- NOTEPAD -->
+<div class="panel">
+<h2>TACTICAL NOTEPAD</h2>
+<textarea id="note1" placeholder="Operator notes..."></textarea>
+</div>
+
+<!-- HTML EDITOR -->
+<div class="panel">
+<h2>HTML SANDBOX</h2>
+<div class="editor">
+<textarea id="htmlCode"><h1 style="color:#00cfff">ES-CV-1</h1></textarea>
+<button onclick="renderHTML()">RENDER</button>
+<iframe id="htmlPreview"></iframe>
+</div>
+</div>
+
+<!-- JS EDITOR -->
+<div class="panel">
+<h2>JS</h2>
+<div class="editor">
+<textarea id="jsCode">console.log("ES-CV-1 ACTIVE");</textarea>
+<button onclick="runJS()">RUN</button>
+</div>
+</div>
+   
+<div class="panel">
+<h2>LAWK NATIONAL COMPLIANCE CHECKLIST</h2>
+<div class="checklist">
+<label><input type="checkbox"> taxi associations are NOT legal entities</label>
+<label><input type="checkbox"> illegal drug dealings</label>
+<label><input type="checkbox"> illegal businesses</label>
+</div>
+</div>
+
+</section>
+</main>
+
+<footer>
+<span>Team: Eden stealth CV-1</span>
+</footer>
+
+<script>
+   
+/* =====================================================
+   BOOT
+===================================================== */
+window.onload=()=>{
+setTimeout(()=>{
+document.getElementById('boot').style.display='none'
+},2200)
+}
+
+/* =====================================================
+   LOCAL STORAGE CORE
+===================================================== */
+const note=document.getElementById('note1')
+note.value=localStorage.getItem('eden_note')||''
+note.oninput=()=>localStorage.setItem('eden_note',note.value)
+
+/* =====================================================
+   DIRECT ACTION LOGIC
+===================================================== */
+document.getElementById('fireBtn').onclick=()=>{
+const s=document.getElementById('daStatus')
+s.style.color='var(--danger)'
+s.textContent='TARGET NEUTRALIZED. MONEY DESTROYED.'
+}
+
+/* =====================================================
+   HTML SANDBOX
+===================================================== */
+function renderHTML(){
+try{
+document.getElementById('htmlPreview').srcdoc=
+document.getElementById('htmlCode').value
+}catch(e){alert('HTML ERROR')}
+}
+
+/* =====================================================
+   JS EXEC
+===================================================== */
+function runJS(){
+try{
+new Function(document.getElementById('jsCode').value)()
+}catch(e){alert('JS ERROR: '+e.message)}
+}
+
+/* =====================================================
+   FIRESTORE PLACEHOLDER
+===================================================== */
+/*
+firebase.initializeApp({...})
+firebase.firestore()
+*/
+
+</script>
+   
+</body>
+   
+</html>
+
+
+
+
+
+
