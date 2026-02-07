@@ -199,7 +199,7 @@
         }
 
         .mission-btn::before {
-            content: "LOCKED";
+            /* content: "LOCKED"; */
             position: absolute;
             right: 10px;
             bottom: 5px;
@@ -210,7 +210,7 @@
 
         .mission-btn:hover {
             background: var(--neon);
-            color: #000;
+            color: green;
             box-shadow: 0 0 20px var(--neon-dim);
             transform: translateX(10px);
         }
@@ -329,10 +329,6 @@
         </div>
     </div>
     
-    <div style="text-align: right; font-family: 'Share Tech Mono';">
-        <div id="clock">00:00:00</div>
-        <div style="font-size: 0.6rem; color: var(--militant-red);">OPERATOR: EDEN</div>
-    </div>
 </header>
 
 <main>
@@ -359,13 +355,11 @@
             <h3 style="font-family: Orbitron; font-size: 0.8rem; border-bottom: 1px solid var(--border); padding-bottom: 5px;">MISSION DATABASE</h3>
             
             <div class="mission-btn active" onclick="launchMission('ess2025.html')">
-                <h4 style="font-family: Orbitron;">OP: SEASON 2025</h4>
-                <p style="font-size: 0.7rem; opacity: 0.7;">Historical Archives & League Intel</p>
+                <h4 style="font-family: Orbitron;" title="click.">OP: E.S.S 2025</h4>
             </div>
 
             <div class="mission-btn" onclick="launchMission('ess2026.html')">
-                <h4 style="font-family: Orbitron;">OP: SEASON 2026</h4>
-                <p style="font-size: 0.7rem; opacity: 0.7;">Starts March 01st</p>
+                <h4 style="font-family: Orbitron;" title="click.">OP: E.S.S 2026</h4>
             </div>
 
             <div class="mission-btn locked">
@@ -385,11 +379,11 @@
 
     // 1. BOOT SEQUENCE
     const bootLines = [
-        "Initializing Tactical Kernel...",
-        "Establishing Satellite Link...",
+        "Initializing...",
+        "Establishing SSL Link...",
         "Bypassing Firewalls...",
-        "Loading Sniper Optics...",
-        "SYSTEM READY. WELCOME OPERATOR EDEN."
+        "Loading Optics...",
+        "SYSTEM READY. WELCOME!"
     ];
     let lineIdx = 0;
     const bootText = document.getElementById('boot-text');
@@ -516,6 +510,9 @@
 </body>
 
 </html>
+
+<!-- move logo for mobile a little bit to the left -->
+ <!-- center the header -->
 
 
 
