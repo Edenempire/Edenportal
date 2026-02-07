@@ -414,6 +414,7 @@
         ================================ */
 
         .branch-logo-frame {
+
             position: relative;
             width: 120px;
             height: 120px;
@@ -425,6 +426,7 @@
             background: rgba(0,255,255,0.03);
             overflow: hidden;
             transition: var(--transition);
+
         }
 
         .branch-logo {
@@ -1043,7 +1045,7 @@
 
                 // 🔒 SECRET COMMAND — DO NOT LIST
                 if (raw === '1.') {
-                    printToTerm('Access key accepted...', 'var(--cyan)');
+                    printToTerm('access key accepted...', 'var(--cyan)');
                     setTimeout(() => {
                         document.getElementById('cv7-link').click();
                     }, 600);

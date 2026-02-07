@@ -311,7 +311,7 @@
 <main>
     <section id="hero">
         <div id="hero-inner">
-            <h2 class="glow" style="font-size: clamp(2rem, 8vw, 5rem); font-family: 'Orbitron';">01000011 01000101 01001110 01010100</h2>
+            <h2 class="glow" style="font-size: clamp(2rem, 8vw, 5rem); font-family: 'Orbitron';">01000011 01010110 00101101 00110111</h2>
         </div>
     </section>
 
@@ -334,9 +334,9 @@
 </div>
 
 <div id="data-footer">
-    <span>LATENCY: 14ms</span>
-    <span>ENCRYPTION: AES-256</span>
-    <span id="coord-display">COORD: 0.00, 0.00</span>
+    <span>Operator: Eden</span>
+    <span>Team: ES-CV-1</span>
+    <span id="coord-display">REGIMENT: SAAF</span>
 </div>
 
 <script>
@@ -345,10 +345,10 @@
 ===================================================== */
 const DEPARTMENTS = [
 
-    { id: 'ceo', name: 'Executive', icon: 'fa-chess-king', code: 'CEO-99', file: 'ceo.html' },
-    { id: 'tech', name: 'Computer Science', icon: 'fa-microchip', code: 'TECH-77', file: 'compsci.html' },
-    { id: 'sc', name: 'Supply Chain', icon: 'fa-truck-fast', code: 'SC-44', file: 'scl.html' },
-    { id: 'sec', name: 'Compliance', icon: 'fa-shield-halved', code: 'LAW-33', file: 'compliance.html' }
+    { id: 'ceo', name: '01. Executive', icon: 'fa-chess-king', code: 'CEO-02', file: 'ceo.html' },
+    { id: 'sc', name: '02. Supply Chain', icon: 'fa-truck-fast', code: 'SC-T3', file: 'scl.html' },
+    { id: 'tech', name: '03. Computer Science', icon: 'fa-microchip', code: 'TECH-77', file: 'compsci.html' },
+    { id: 'sec', name: '04. Compliance', icon: 'fa-shield-halved', code: 'LAW-33', file: 'compliance.html' }
 
 ];
 
@@ -427,7 +427,7 @@ function verify() {
         }, 1000);
     } else {
         status.style.color = 'var(--danger)';
-        status.textContent = "ACCESS DENIED :: INVALID CREDENTIALS";
+        status.textContent = "ACCESS DENIED :: INVALID ACCESS CODE";
         updateStatusDisplay('BREACH ALERT', 'danger');
         
         // SHAKE EFFECT
