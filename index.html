@@ -1343,21 +1343,19 @@
                 showInstallButton();
             });
 
-function showInstallButton() {
-    const btn = document.createElement("button");
-    btn.innerText = "Install System App";
-    btn.className = "btn-tactical";
-    btn.onclick = installApp;
-    document.querySelector("#main-footer").appendChild(btn);
-}
+            function showInstallButton() {
+                const btn = document.createElement("button");
+                btn.innerText = "Install System App";
+                btn.className = "btn-tactical";
+                btn.onclick = installApp;
+                document.querySelector("#main-footer").appendChild(btn);
+            }
 
-function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => deferredPrompt = null);
-}
-
-
+            function installApp() {
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => deferredPrompt = null);
+            }
 
     </script>
 
