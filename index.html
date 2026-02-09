@@ -22,6 +22,13 @@
 
     <link rel="icon" type="image/png" href="logo.png">
 
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
     <style>
 
         :root {
@@ -85,14 +92,16 @@
         #main-header {
 
             position: fixed;
-            top: 0; width: 100%;
+            top: 0;
+            width: 100%;
             height: var(--header-h);
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0,0,0,0.9);
             border-bottom: 2px solid var(--cyan);
             backdrop-filter: blur(10px);
             z-index: 2000;
             display: flex;
             align-items: center;
+            position: fixed;
 
         }
 
@@ -211,25 +220,53 @@
         }
 
         /* --- HERO SAFE OFFSET SYSTEM --- */
+        /* ===============================
+            HERO SAFE ZONE SYSTEM (NO CLASH)
+            ================================ */
+
         #hero {
-            min-height: calc(110vh - var(--header-h));
-            padding-top: calc(var(--header-h) + clamp(40px, 6vh, 100px));
-            padding-bottom: clamp(40px, 6vh, 80px);
+
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /* HERO MUST NEVER COLLIDE WITH HEADER */
+            min-height: 100svh; /* dynamic viewport for mobile browsers */
+            padding-top: calc(var(--header-h) + clamp(50px, 8vh, 120px));
+            padding-bottom: clamp(60px, 10vh, 140px);
+            padding-left: 20px;
+            padding-right: 20px;
+
+            text-align: center;
             box-sizing: border-box;
+            overflow: hidden;
+
+            background: radial-gradient(circle at center, rgba(0,255,255,0.06), transparent 65%);
+
         }
 
         .hero-title {
 
             font-family: var(--font-tactical);
-            font-size: clamp(3rem, 10vw, 8rem);
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 20px;
-            margin-top: 50px;
-            margin-bottom: 20px;
             text-align: center;
-            color: #fff;
-            text-shadow: 0 0 30px var(--cyan);
+
+            font-size: clamp(2.8rem, 8vw, 6.5rem);
+            letter-spacing: clamp(4px, 1.2vw, 14px);
+            line-height: 1.1;
+
+            color: #ffffff;
+
+            /* Clean tactical glow */
+            text-shadow:
+                0 0 4px rgba(0,255,255,0.5),
+                0 0 10px rgba(0,255,255,0.25);
+
+            margin: 0 0 25px 0;
+            max-width: 95%;
 
         }
 
@@ -560,21 +597,36 @@
         .hud-btn:hover { background: var(--cyan); color: #000; }
 
         /* --- MOBILE REFINEMENT --- */
-        @media (max-width: 900px) {
+@media (max-width: 900px) {
+    .nav-system {
+        position: fixed;
+        top: var(--header-h);
+        right: -100%;
+        width: 260px;
+        height: calc(100svh - var(--header-h));
+        background: #000;
+        flex-direction: column;
+        padding: 30px;
+        gap: 20px;
+        transition: right 0.35s ease;
+        border-left: 2px solid var(--cyan);
+        overflow-y: auto;
+        z-index: 3000;
+    }
 
-            .nav-system { display: none; }
-            .header-container { grid-template-columns: 1fr auto; }
-            .hero-title { letter-spacing: 10px; }
-            .op-card { clip-path: none; border-radius: 10px; }
+    .nav-system.open {
+        right: 0;
+    }
 
-            .branch-logo-frame {
+    .clock-hub {
+        display: none;
+    }
 
-                width: 90px;
-                height: 90px;
+    #hamburger {
+        display: block;
+    }
+}
 
-            }
-
-        }
 
         /* --- MODAL SYSTEM --- */
         .modal-overlay {
@@ -697,6 +749,52 @@
 
         }
 
+        #hamburger {
+
+            display: none;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: var(--cyan);
+            cursor: pointer;
+            z-index: 3001;
+
+        }
+
+        @media (max-width: 900px) {
+            .nav-system {
+                position: fixed;
+                top: var(--header-h);
+                right: -100%;
+                width: 260px;
+                height: calc(100svh - var(--header-h));
+                background: #000;
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+                transition: right 0.35s ease;
+                border-left: 2px solid var(--cyan);
+                overflow-y: auto;
+                z-index: 3000;
+            }
+
+            .nav-system.open {
+                right: 0;
+            }
+
+            .clock-hub {
+                display: none;
+            }
+
+            #hamburger {
+                display: block;
+            }
+        }
+
     </style>
 
 </head>
@@ -722,6 +820,8 @@
                 <div class="brand-text">
                     <h1>Tier 1</h1>
                 </div>
+                <button id="hamburger" type="button" aria-label="Menu"></button>
+
             </a>
 
             <nav class="nav-system">
@@ -883,7 +983,7 @@
 
                 <div class="branch-card">
                     <div class="branch-logo-frame">
-                    <img src="images/logo.png" alt="HopCo Transportation" class="branch-logo">
+                    <img src="images/hopco.jpg" alt="HopCo Transportation" class="branch-logo">
                     <div class="logo-scan"></div>
                     </div>
                     <h3>HopCo Transportation</h3>
@@ -1221,6 +1321,43 @@
                     saveAs(content, "docs.zip");
                 });
             }
+
+            const hamburger = document.getElementById("hamburger");
+            const nav = document.querySelector(".nav-system");
+
+            hamburger.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nav.classList.toggle("open");
+            });
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
+
+            let deferredPrompt;
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showInstallButton();
+            });
+
+function showInstallButton() {
+    const btn = document.createElement("button");
+    btn.innerText = "Install System App";
+    btn.className = "btn-tactical";
+    btn.onclick = installApp;
+    document.querySelector("#main-footer").appendChild(btn);
+}
+
+function installApp() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => deferredPrompt = null);
+}
+
+
 
     </script>
 
