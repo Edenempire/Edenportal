@@ -1,415 +1,177 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMPLIANCE</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>Compliance</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=VT323&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <link rel="icon" type="image/png" href="logo.png">
-
-    <style>
-
-        :root {
-            --bg: #000000;
-            --panel: #0a0a0a;
-            --line: #00cfff;
-            --danger: #ff0000;
-            --ok: #00ff41;
-            --warn: #ffcc00;
-            --font-ui: 'Orbitron', sans-serif;
-            --font-tactical: 'Electrolize', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
-            --laser: #ff0000;
-        }
-
-        /* SNIPER OPTICS CURSOR */
-        * { cursor: none !important; margin: 0; padding: 0; box-sizing: border-box; }
-        #laser-pointer {
-            position: fixed; width: 20px; height: 20px; border: 1px solid var(--danger);
-            border-radius: 50%; pointer-events: none; z-index: 99999;
-            transform: translate(-50%, -50%); box-shadow: 0 0 10px var(--danger);
-        }
-        #laser-pointer::after {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 2px; height: 2px;
-            background: var(--danger); transform: translate(-50%, -50%);
-        }
-
-        body {
-            background-color: var(--bg); color: var(--line);
-            font-family: var(--font-tactical); overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* BACKGROUND SNIPER OVERLAY */
-        .optic-overlay {
-            position: fixed; inset: 0; pointer-events: none; z-index: 1000;
-            background: 
-                radial-gradient(circle, transparent 30%, rgba(0,0,0,0.8) 70%),
-                repeating-linear-gradient(rgba(18, 16, 16, 0) 0, rgba(0, 0, 0, 0.2) 50%, rgba(18, 16, 16, 0) 100%),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01));
-            background-size: 100% 100%, 100% 4px, 100% 100%;
-        }
-
-        .sniper-crosshair {
-            position: fixed; top: 50%; left: 50%; width: 80vw; height: 1px;
-            background: rgba(255,0,0,0.2); transform: translate(-50%, -50%);
-            pointer-events: none; z-index: 999;
-        }
-        .sniper-crosshair.vert { width: 1px; height: 80vh; }
-
-        /* LOADING SCREEN */
-        #boot {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: var(--font-ui); color: var(--danger);
-        }
-        .loading-bar { width: 200px; height: 2px; background: #200; margin-top: 20px; overflow: hidden; }
-        .loading-progress { width: 100%; height: 100%; background: var(--danger); animation: load 2.5s ease-in-out; }
-        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
-
-        /* HEADER */
-        header {
-            padding: 20px 40px; border-bottom: 2px solid var(--danger);
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1500;
-        }
-        .header-title h1 { font-size: 1.5rem; letter-spacing: 8px; color: var(--danger); text-shadow: 0 0 10px var(--danger); }
-        .header-title p { font-size: 0.7rem; color: #fff; opacity: 0.6; }
-
-        .shift-controls button {
-            background: transparent; border: 1px solid var(--line); color: var(--line);
-            padding: 8px 15px; font-family: var(--font-ui); cursor: pointer; margin-left: 10px;
-        }
-        .shift-controls .start-btn { border-color: var(--ok); color: var(--ok); }
-        .shift-controls .end-btn { border-color: var(--danger); color: var(--danger); }
-
-        /* GRID SYSTEM */
-        main { padding: 40px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .section-header { grid-column: span 12; border-left: 4px solid var(--danger); padding-left: 15px; margin: 20px 0; }
-        .section-header h2 { font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 3px; }
-
-        .panel {
-            background: var(--panel); border: 1px solid #1a1a1a; padding: 20px;
-            position: relative; transition: 0.3s;
-        }
-        .panel:hover { border-color: var(--danger); }
-
-        /* DIRECT ACTION CV-7 */
-        .cv7-box { grid-column: span 4; border: 2px solid var(--danger); background: rgba(255,0,0,0.05); }
-        .target-display { text-align: center; padding: 20px; }
-        .target-display h3 { font-size: 2.5rem; color: var(--danger); font-family: var(--font-ui); }
-        .money-tracker { font-size: 1.5rem; color: var(--ok); margin-top: 10px; font-family: 'VT323'; }
-        
-        .fire-btn {
-            width: 100%; padding: 20px; background: var(--danger); border: none;
-            color: #fff; font-family: var(--font-ui); font-weight: 900; letter-spacing: 5px;
-            cursor: pointer; transition: 0.2s;
-        }
-        .fire-btn:active { transform: scale(0.98); background: #b00; }
-
-        /* TACTICAL NOTEPAD & TOOLS */
-        .notepad-container { grid-column: span 4; }
-        textarea {
-            width: 100%; height: 250px; background: #000; color: var(--ok);
-            border: 1px solid #333; padding: 10px; font-family: var(--font-code);
-            resize: none; outline: none; border-radius: 4px;
-        }
-        .notepad-tools { display: flex; gap: 5px; margin-top: 5px; }
-        .notepad-tools button { flex: 1; font-size: 0.6rem; padding: 5px; background: #111; border: 1px solid #333; color: #777; }
-
-        /* ADVANCED CALCULATOR */
-        .calc-box { grid-column: span 4; }
-        .calc-screen {
-            width: 100%; height: 60px; background: #000; border: 1px solid var(--line);
-            text-align: right; padding: 10px; font-size: 1.5rem; color: var(--line); margin-bottom: 10px;
-        }
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .calc-grid button { padding: 15px; background: #111; border: 1px solid #222; color: #fff; font-family: var(--font-ui); }
-
-        /* CHECKLIST */
-        .checklist-item {
-            display: flex; align-items: center; gap: 10px; padding: 10px;
-            border-bottom: 1px solid #1a1a1a; transition: 0.3s;
-        }
-        .checklist-item:hover { background: rgba(0, 207, 255, 0.05); }
-        .checklist-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--danger); }
-
-        /* ALGORITHM EDITORS */
-        .editor-container { grid-column: span 6; display: flex; flex-direction: column; gap: 10px; }
-        .preview-pane { width: 100%; height: 300px; background: white; border: 2px solid var(--line); }
-
-        /* FOOTER & PERMANENT STAMP */
-        footer {
-            margin-top: 50px; padding: 40px; border-top: 1px solid #222;
-            display: flex; justify-content: space-between; align-items: flex-end;
-        }
-        .sa-flag {
-            position: fixed; bottom: 20px; left: 20px; width: 60px; height: 40px;
-            background: linear-gradient(to bottom, #e03c31 33.3%, #ffffff 33.3%, #ffffff 66.6%, #001489 66.6%);
-            border: 1px solid rgba(255,255,255,0.2); z-index: 2000; border-radius: 3px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-        .sa-flag::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 50%;
-            background: #007a4d; clip-path: polygon(0 0, 100% 50%, 0 100%);
-        }
-
-        .bible-verse { font-style: italic; color: var(--warn); font-family: 'serif'; font-size: 1.1rem; }
-
-        /* RESPONSIVE PRECISION */
-        @media (max-width: 1200px) { .cv7-box, .notepad-container, .calc-box, .editor-container { grid-column: span 12; } }
-
-    </style>
-
+<style>
+:root{
+--bg:#000;
+--panel:#0b0b0b;
+--line:#00cfff;
+--ok:#00ff41;
+--danger:#ff0033;
+--warn:#ffd000;
+--text:#d6faff;
+--font-ui:'Orbitron',sans-serif;
+--font-tac:'Electrolize',sans-serif;
+--font-code:'JetBrains Mono',monospace;
+}
+.theme-alt{
+--bg:#061b00;
+--panel:#0e2a00;
+--line:#aaff00;
+--ok:#00ff88;
+--danger:#ffea00;
+--text:#eaffd0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-tac);overflow-x:hidden}
+header{text-align:center;padding:25px;border-bottom:2px solid var(--danger);position:sticky;top:0;background:#000;z-index:1000}
+header h1{font-family:var(--font-ui);letter-spacing:8px;color:var(--danger)}
+main{padding:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.panel{background:var(--panel);border:1px solid #111;padding:18px;position:relative}
+h2.section-title{grid-column:1/-1;border-left:5px solid var(--danger);padding-left:10px;font-family:var(--font-ui)}
+textarea,input,button{font-family:var(--font-code);background:#000;color:var(--ok);border:1px solid #222;padding:8px;width:100%}
+button{cursor:pointer}
+footer{margin-top:50px;padding:40px;border-top:1px solid #111;display:flex;justify-content:space-between;flex-wrap:wrap}
+.sa-flag{position:fixed;bottom:15px;left:15px;width:55px;height:35px;background:linear-gradient(#e03c31 33%,#fff 33%,#fff 66%,#001489 66%);border:1px solid #fff3}
+.sa-flag::before{content:'';position:absolute;width:50%;height:100%;background:#007a4d;clip-path:polygon(0 0,100% 50%,0 100%)}
+</style>
 </head>
 
 <body>
 
-    <div id="laser-pointer"></div>
-    <div class="optic-overlay"></div>
-    <div class="sniper-crosshair"></div>
-    <div class="sniper-crosshair vert"></div>
+<header>
+<h1>COMPLIANCE</h1>
+<p>CV-7 DIRECT ACTION SYSTEM</p>
+<button onclick="toggleTheme()">THEME</button>
+<div id="clock"></div>
+</header>
 
-    <div id="boot">
-        <p>Complying....</p>
-        <div class="loading-bar"><div class="loading-progress"></div></div>
-    </div>
+<main>
 
-    <header>
-        <div class="header-title">
-            <h1>COMPLIANCE</h1>
-            <p>CV-7 DIRECT ACTION ENVIRONMENT</p>
-        </div>
-        
-        <div class="shift-controls">
-            <button class="start-btn" onclick="tacticalSound()">START SHIFT</button>
-            <br>
-            <br>
-            <button class="end-btn" onclick="tacticalSound()">END SHIFT</button>
-        </div>
-    </header>
+<h2 class="section-title">FINANCIAL TARGET ENGINE</h2>
+<div class="panel">
+Monthly Target: R <input id="goal" value="5000">
+Current Total: R <span id="current">0</span>
+Progress: <span id="progress">0%</span>
+<button onclick="addIncome()">ADD R100</button>
+</div>
 
-    <main>
-        <div class="section-header">
-            <h2>CV-7 :: Direct Action</h2>
-        </div>
+<h2 class="section-title">CHECKLIST OPS</h2>
+<div class="panel">
+<div id="tasks"></div>
+<input id="taskInput">
+<button onclick="addTask()">ADD TASK</button>
+</div>
 
-        <div class="panel cv7-box">
-            <div class="target-display">
-                <h3>TARGET: MONEY (R5000 must be inside Parables & Platters' capitec business bank account monthly, up 'til the 3rd of October)</h3>
-                <div class="money-tracker">currently: R <span id="money-val">50.00 (not good)</span></div>
-            </div>
-            <button class="fire-btn" onclick="executeShot()">1 SHOT, 1 KILL</button>
-        </div>
+<h2 class="section-title">TACTICAL NOTE SYSTEM</h2>
+<div class="panel">
+<textarea id="note1"></textarea>
+<button onclick="saveNote(1)">SAVE</button>
+</div>
 
-        <div class="panel notepad-container">
-            <h3>TACTICAL NOTEPAD</h3>
-            <br>
-            <textarea id="note-alpha" oninput="saveData('note-alpha', this.value)" placeholder="Type..."></textarea>
-            <div class="notepad-tools">
-                <button onclick="clearNote('note-alpha')">PURGE</button>
-                <button>ENCRYPT</button>
-                <button>X-TRANSFER</button>
-            </div>
-        </div>
+<div class="panel">
+<textarea id="note2"></textarea>
+<button onclick="saveNote(2)">SAVE</button>
+</div>
 
-        <div class="panel notepad-container">
-            <h3>TACTICAL NOTEPAD 2</h3>
-            <br>
-            <textarea id="note-beta" oninput="saveData('note-beta', this.value)" placeholder="Type..."></textarea>
-            <div class="notepad-tools">
-                <button onclick="clearNote('note-beta')">PURGE</button>
-                <button>LOCK</button>
-            </div>
-        </div>
+<h2 class="section-title">AI COMMAND CONSOLE</h2>
+<div class="panel">
+<input id="aiInput" placeholder="Enter command...">
+<div id="aiOutput"></div>
+</div>
 
-        <div class="panel calc-box">
-            <h3>CALCULATOR</h3>
-            <br>
-            <div class="calc-screen" id="calc-display">0</div>
-            <div class="calc-grid">
-                <button onclick="calcIn('7')">7</button><button onclick="calcIn('8')">8</button><button onclick="calcIn('9')">9</button><button onclick="calcIn('/')">/</button>
-                <button onclick="calcIn('4')">4</button><button onclick="calcIn('5')">5</button><button onclick="calcIn('6')">6</button><button onclick="calcIn('*')">*</button>
-                <button onclick="calcIn('1')">1</button><button onclick="calcIn('2')">2</button><button onclick="calcIn('3')">3</button><button onclick="calcIn('-')">-</button>
-                <button onclick="calcIn('0')">0</button><button onclick="calcIn('.')">.</button><button onclick="calcClear()">C</button><button onclick="calcIn('+')">+</button>
-                <button style="grid-column: span 4; background: var(--line); color: #000;" onclick="calcEqual()">EXECUTE</button>
-            </div>
-        </div>
+<h2 class="section-title">DATA CONTROL</h2>
+<div class="panel">
+<button onclick="backup()">BACKUP DATA</button>
+<button onclick="resetSystem()">RESET SYSTEM</button>
+<div id="log"></div>
+</div>
 
-        <div class="section-header">
-            <h2>LAWK NATIONAL</h2>
-        </div>
+</main>
 
-        <div class="panel notepad-container">
-         <h3>LAWK</h3>
-            <div id="cipc-list">
-                <div class="checklist-item"><input type="checkbox"> <label>the taxi association</label></div>
-                <div class="checklist-item"><input type="checkbox"> <label>illegal drugs</label></div>
-                <div class="checklist-item"><input type="checkbox"> <label>cci offensive</label></div>
-            </div>
-            <br>
-            <h3>CIPC COMPLIANCE</h3>
-            <div id="cipc-list">
-                <div class="checklist-item"><input type="checkbox"> <label>Annual Return Submission</label></div>
-                <div class="checklist-item"><input type="checkbox"> <label>Director Amendments</label></div>
-                <div class="checklist-item"><input type="checkbox"> <label>B-BBEE Certificate Flow</label></div>
-                <div class="checklist-item"><input type="checkbox"> <label>MOI Verification</label></div>
-            </div>
-        </div>
+<footer>
+<div>Psalms 27:1</div>
+<div>© EDEN SYSTEMS</div>
+</footer>
+<div class="sa-flag"></div>
 
-        <div class="section-header">
-            <h2>ALGORITHMIST WORKSPACE</h2>
-        </div>
+<audio id="shot" src="https://www.soundjay.com/mechanical/gun-shot-01.mp3"></audio>
 
-        <div class="panel editor-container">
-            <h3>LIVE HTML RENDERER 01</h3>
-            <textarea id="html-1" oninput="render('html-1', 'prev-1')" placeholder="Write HTML/CSS here..."></textarea>
-            <iframe id="prev-1" class="preview-pane"></iframe>
-        </div>
+<script>
+/* CLOCK */
+setInterval(()=>clock.innerText=new Date().toLocaleTimeString(),1000)
 
-        <div class="panel editor-container">
-            <h3>LIVE HTML RENDERER 02</h3>
-            <textarea id="html-2" oninput="render('html-2', 'prev-2')" placeholder="Write HTML/CSS here..."></textarea>
-            <iframe id="prev-2" class="preview-pane"></iframe>
-        </div>
+/* THEME */
+function toggleTheme(){document.body.classList.toggle('theme-alt')}
 
-        <div class="panel notepad-container" style="grid-column: span 12;">
-            <h3>BLACK SITE FILE UPLINK</h3>
-            <input type="file" id="file-up" style="margin-bottom: 10px; color: var(--line);">
-            <textarea placeholder="File metadata and analysis..."></textarea>
-        </div>
+/* AUDIO */
+document.addEventListener('click',()=>{shot.currentTime=0;shot.play().catch(()=>{})})
 
-    </main>
+/* FINANCIAL SYSTEM */
+let total=Number(localStorage.total||0)
+function updateFinance(){
+current.innerText=total
+let g=Number(goal.value)
+progress.innerText=Math.min(100,((total/g)*100).toFixed(1))+"%"
+localStorage.total=total
+}
+function addIncome(){total+=100;updateFinance()}
+goal.oninput=updateFinance
+updateFinance()
 
-    <div style="padding: 20px; background: #050505; border: 1px dashed var(--line); margin: 40px; text-align: center;">
-        <h4 style="font-family: var(--font-ui); color: var(--ok);">REAL-TIME AI CHAT</h4>
-        <input type="text" placeholder="Query..." style="width: 80%; padding: 10px; background: #000; border: 1px solid var(--ok); color: #fff; margin-top: 10px;">
-    </div>
+/* CHECKLIST */
+let tasksData=JSON.parse(localStorage.tasks||"[]")
+function renderTasks(){
+tasks.innerHTML=""
+tasksData.forEach((t,i)=>{
+let div=document.createElement('div')
+div.innerHTML=`<input type=checkbox ${t.done?'checked':''}> ${t.text}`
+div.querySelector('input').onchange=()=>{tasksData[i].done=!tasksData[i].done;saveTasks()}
+tasks.appendChild(div)
+})
+}
+function addTask(){tasksData.push({text:taskInput.value,done:false});taskInput.value="";saveTasks()}
+function saveTasks(){localStorage.tasks=JSON.stringify(tasksData);renderTasks()}
+renderTasks()
 
-    <footer>
-        <div class="bible-verse">"The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?" — Psalms 27:1</div>
-        <div style="text-align: right;">
-            <p>© 2026 EDEN CONGLOMERATE</p>
-        </div>
-    </footer>
+/* NOTES */
+function saveNote(n){
+let val=btoa(document.getElementById("note"+n).value)
+localStorage["note"+n]=val
+}
+note1.value=atob(localStorage.note1||"")
+note2.value=atob(localStorage.note2||"")
 
-    <audio id="gunshot" src="https://www.soundjay.com/mechanical/gun-shot-01.mp3"></audio>
+/* AI SIM */
+aiInput.onkeydown=e=>{
+if(e.key==="Enter"){
+let cmd=aiInput.value.toLowerCase()
+let r="UNKNOWN"
+if(cmd.includes("status")) r="SYSTEM GREEN"
+if(cmd.includes("finance")) r="R"+total
+aiOutput.innerText=r
+aiInput.value=""
+}
+}
 
-    <script>
-        // BOOT SEQUENCE
-        window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('boot').style.opacity = '0';
-                setTimeout(() => document.getElementById('boot').style.display = 'none', 500);
-            }, 2500);
-            loadAllData();
-            updateClock();
-            setInterval(updateClock, 1000);
-        };
-
-        // SNIPER CURSOR
-        const laser = document.getElementById('laser-pointer');
-        document.addEventListener('mousemove', (e) => {
-            laser.style.left = e.clientX + 'px';
-            laser.style.top = e.clientY + 'px';
-        });
-
-        // AUDIO ENGINE
-        function tacticalSound() {
-            const sound = document.getElementById('gunshot');
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log("Audio requires user interaction first"));
-        }
-
-        document.querySelectorAll('button, input, textarea').forEach(el => {
-            el.addEventListener('mousedown', tacticalSound);
-        });
-
-        // LOCAL STORAGE ENGINE
-        function saveData(id, val) {
-            localStorage.setItem('cv7_' + id, val);
-        }
-
-        function loadAllData() {
-            const inputs = ['note-alpha', 'note-beta', 'html-1', 'html-2'];
-            inputs.forEach(id => {
-                const val = localStorage.getItem('cv7_' + id);
-                if(val) {
-                    document.getElementById(id).value = val;
-                    if(id.includes('html')) render(id, id === 'html-1' ? 'prev-1' : 'prev-2');
-                }
-            });
-        }
-
-        function clearNote(id) {
-            document.getElementById(id).value = '';
-            saveData(id, '');
-        }
-
-        // CALCULATOR LOGIC
-        let calcVal = "";
-        function calcIn(v) { calcVal += v; document.getElementById('calc-display').innerText = calcVal; }
-        function calcClear() { calcVal = ""; document.getElementById('calc-display').innerText = "0"; }
-        function calcEqual() {
-            try {
-                calcVal = eval(calcVal).toString();
-                document.getElementById('calc-display').innerText = calcVal;
-            } catch(e) { document.getElementById('calc-display').innerText = "ERR"; calcVal = ""; }
-        }
-
-        // RENDER ENGINE
-        function render(textId, frameId) {
-            const code = document.getElementById(textId).value;
-            const frame = document.getElementById(frameId);
-            frame.srcdoc = code;
-        }
-
-        // CLOCK
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('local-clock').innerText = now.toLocaleTimeString('en-ZA');
-        }
-
-        // DIRECT ACTION EXECUTION
-        function executeShot() {
-            tacticalSound();
-            const btn = document.querySelector('.fire-btn');
-            btn.innerText = "TARGET NEUTRALIZED";
-            btn.style.background = "var(--ok)";
-            setTimeout(() => {
-                btn.innerText = "1 SHOT, 1 KILL";
-                btn.style.background = "var(--danger)";
-            }, 2000);
-        }
-    </script>
-
+/* DATA CONTROL */
+function backup(){
+let data=JSON.stringify(localStorage)
+navigator.clipboard.writeText(data)
+log.innerText="DATA COPIED"
+}
+function resetSystem(){
+if(confirm("RESET?")){
+localStorage.clear()
+location.reload()
+}
+}
+</script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
