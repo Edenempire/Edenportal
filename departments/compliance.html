@@ -1,13 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMPLIANCE</title>
+
+<title>Compliance</title>
+
 <link rel="icon" href="logo.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
 --bg:#000;
 --panel:#0b0b0b;
@@ -40,36 +48,36 @@ button{cursor:pointer}
 footer{margin-top:50px;padding:40px;border-top:1px solid #111;display:flex;justify-content:space-between;flex-wrap:wrap}
 .sa-flag{position:fixed;bottom:15px;left:15px;width:55px;height:35px;background:linear-gradient(#e03c31 33%,#fff 33%,#fff 66%,#001489 66%);border:1px solid #fff3}
 .sa-flag::before{content:'';position:absolute;width:50%;height:100%;background:#007a4d;clip-path:polygon(0 0,100% 50%,0 100%)}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h1>COMPLIANCE</h1>
-<p>CV-7 DIRECT ACTION SYSTEM</p>
+<h1>Compliance CV-7</h1>
 <button onclick="toggleTheme()">THEME</button>
-<div id="clock"></div>
 </header>
 
 <main>
 
-<h2 class="section-title">FINANCIAL TARGET ENGINE</h2>
+<h2 class="section-title">CV-7</h2>
 <div class="panel">
-Monthly Target: R <input id="goal" value="5000">
-Current Total: R <span id="current">0</span>
-Progress: <span id="progress">0%</span>
-<button onclick="addIncome()">ADD R100</button>
-</div>
+Target: money <input id="goal" value="5000">
+<br>
+<br>
+Execution: Parables & Platters
+<br>
+<br>
+Current Total: R100
 
-<h2 class="section-title">CHECKLIST OPS</h2>
 <div class="panel">
 <div id="tasks"></div>
 <input id="taskInput">
-<button onclick="addTask()">ADD TASK</button>
+<button onclick="addTask()">ADD SITUATION</button>
 </div>
 
-<h2 class="section-title">TACTICAL NOTE SYSTEM</h2>
 <div class="panel">
 <textarea id="note1"></textarea>
 <button onclick="saveNote(1)">SAVE</button>
@@ -97,13 +105,14 @@ Progress: <span id="progress">0%</span>
 
 <footer>
 <div>Psalms 27:1</div>
-<div>© EDEN SYSTEMS</div>
+<div>© EDEN</div>
 </footer>
 <div class="sa-flag"></div>
 
 <audio id="shot" src="https://www.soundjay.com/mechanical/gun-shot-01.mp3"></audio>
 
 <script>
+
 /* CLOCK */
 setInterval(()=>clock.innerText=new Date().toLocaleTimeString(),1000)
 
@@ -172,6 +181,18 @@ localStorage.clear()
 location.reload()
 }
 }
+
 </script>
+
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
