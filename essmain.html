@@ -67,16 +67,27 @@
         /* ADVANCED HEADER */
         header {
             position: fixed;
-            top: 0; width: 100%;
+            top: 0;
+            width: 100%;
             height: 80px;
+
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;   /* 🔥 THIS pushes everything left */
             align-items: center;
-            padding: 0 50px;
+
+            padding: 0 30px;               /* optional tighter spacing */
+            
             background: rgba(0, 10, 15, 0.95);
             border-bottom: 2px solid var(--neon);
             box-shadow: 0 0 20px var(--neon-dim);
             z-index: 1100;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
         }
 
         /* SPHERE LOGO EVOLUTION */
@@ -178,6 +189,11 @@
             background: #000;
             position: relative;
             border: 1px solid var(--neon-dim);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
         }
 
         /* MISSION SELECTORS */
@@ -288,6 +304,18 @@
             animation: load 2s forwards;
         }
 
+        .simple-footer {
+            margin-top: 60px;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Share Tech Mono';
+            font-size: 0.8rem;
+            background: rgba(0, 10, 15, 0.9);
+            border-top: 1px solid var(--border);
+            color: var(--neon);
+            opacity: 0.8;
+        }
+
         @keyframes load {
             to { width: 100%; }
         }
@@ -297,6 +325,33 @@
             .tactical-display { grid-template-columns: 1fr; }
             .mission-sidebar { order: 2; }
             .data-stream { display: none; }
+        }
+
+        .quick-controls {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 2000;
+        }
+
+        .quick-controls button {
+            background: rgba(0, 20, 30, 0.9);
+            border: 1px solid var(--neon);
+            color: var(--neon);
+            padding: 8px 12px;
+            font-family: 'Share Tech Mono';
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quick-controls button:hover {
+            background: var(--neon);
+            color: #000;
         }
 
     </style>
@@ -319,15 +374,18 @@
 </div>
 
 <header>
+    <a href="index.html" class="home-link">
     <div style="display: flex; align-items: center;">
         <div class="logo-sphere">
             <img src="images/esslogo.png" alt="E.S.S CORE" onerror="this.src='https://via.placeholder.com/150/00f7ff/000000?text=ESS'">
         </div>
         <div class="header-title-wrap">
             <div class="header-title">E.S.S COMMAND</div>
-            <div class="status-tag">Eden Soccer Sundays</div>
         </div>
     </div>
+
+    </div>
+</a>
     
 </header>
 
@@ -343,12 +401,7 @@
                 <div id="player"></div>
             </div>
 
-            <div class="control-grid">
-                <button class="t-btn" onclick="controlPlayer('play')">ENGAGE FEED</button>
-                <button class="t-btn" onclick="controlPlayer('pause')">HALT FEED</button>
-                <button class="t-btn" onclick="toggleMute()">COMM SILENCE</button>
-                <button class="t-btn" onclick="reloadLive()">REFRESH SAT</button>
-            </div>
+            
         </section>
 
         <aside class="mission-sidebar">
@@ -407,24 +460,26 @@
 
     var player;
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            height: '100%',
-            width: '100%',
-            // Replace with your specific Video ID or Playlist
-            videoId: 'GuSKsCXCNP8', 
-            playerVars: {
-                'autoplay': 1,
-                'controls': 0,
-                'modestbranding': 1,
-                'rel': 0,
-                'showinfo': 0,
-                'loop': 1
-            },
-            events: {
-                'onReady': onPlayerReady
-            }
-        });
-    }
+    player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        playerVars: {
+            listType: 'playlist',
+            list: 'PL0p6zu3zMrEMP3N5ZmJN9v1S99yQv_j0u', // your playlist ID
+            autoplay: 1,
+            controls: 1,
+            modestbranding: 1,
+            rel: 0,
+            loop: 1,
+            fs: 1,
+            disablekb: 0,
+        },
+        events: {
+            'onReady': onPlayerReady
+        }
+    });
+}
+
 
     function onPlayerReady(event) {
         event.target.mute();
@@ -505,14 +560,41 @@
         setTimeout(() => { window.location.href = url; }, 500);
     }
 
+    function scrollToTop() {
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToMiddle() {
+        window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
+    }
+
+    function scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function refreshPage() {
+        location.reload();
+    }
+
 </script>
+
+<div class="quick-controls">
+    <button onclick="scrollToTop()">TOP</button>
+    <button onclick="scrollToMiddle()">MID</button>
+    <button onclick="scrollToBottom()">DOWN</button>
+    <button onclick="refreshPage()">⟳</button>
+</div>
+
+<footer class="simple-footer">
+    © 2026 Eden Soccer Sundays
+</footer>
 
 </body>
 
 </html>
 
-<!-- move logo for mobile a little bit to the left -->
- <!-- center the header -->
+
 
 
 

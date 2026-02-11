@@ -627,7 +627,6 @@
     }
 }
 
-
         /* --- MODAL SYSTEM --- */
         .modal-overlay {
 
@@ -823,7 +822,6 @@
                 <button id="hamburger" type="button" aria-label="Menu">
                     <i class="fas fa-bars"></i>
                 </button>
-
 
             </a>
 
@@ -1069,6 +1067,7 @@
         <p style="font-family: var(--font-mono); opacity: 0.5; margin-top: 40px;">
             &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
         </p>
+        <br>
     </footer>
 
     <div class="modal-overlay" id="visionModal">
@@ -1348,7 +1347,7 @@
 
             function showInstallButton() {
                 const btn = document.createElement("button");
-                btn.innerText = "Install System App";
+                btn.innerText = "Install Mobile App";
                 btn.className = "btn-tactical";
                 btn.onclick = installApp;
                 document.querySelector("#main-footer").appendChild(btn);
