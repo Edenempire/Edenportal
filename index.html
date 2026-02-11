@@ -52,6 +52,7 @@
         
         body {
 
+            background: radial-gradient(circle at top, #0a0f14, #000000 70%);
             background-color: var(--bg-black);
             color: var(--cyan);
             font-family: var(--font-body);
@@ -67,13 +68,11 @@
 
         /* --- HUD OVERLAYS --- */
         #matrixCanvas {
-
             position: fixed;
             top: 0; left: 0;
             z-index: -1;
-            opacity: 0.25;
-            filter: blur(1px);
-
+            opacity: 0.65;   /* was 0.25 — too faint */
+            filter: none;    /* blur was washing text away */
         }
 
         .scanlines {
@@ -794,14 +793,51 @@
             }
         }
 
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #rsaFlag {
+            position: fixed;
+            bottom: 18px;
+            left: 18px;
+            width: 90px;
+            height: auto;
+            z-index: 2500;
+            border-radius: 4px;
+            opacity: 0.9;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: none; /* doesn't block buttons */
+        }
+
+        /* Subtle hover life */
+        #rsaFlag:hover {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* Mobile size */
+        @media (max-width: 600px) {
+            #rsaFlag {
+                width: 65px;
+                bottom: 12px;
+                right: 12px;
+            }
+        }
+
     </style>
 
 </head>
 
 <body>
-
+    <canvas id="snowCanvas"></canvas>
     <div class="scanlines"></div>
-    <canvas id="matrixCanvas"></canvas>
 
     <div class="hud-nav">
         <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-angle-double-up"></i></button>
@@ -1167,46 +1203,81 @@
         });
 
         /* ===============================
-           MATRIX ENGINE
-        ================================ */
-        const canvas = document.getElementById("matrixCanvas");
-        const ctx = canvas.getContext("2d");
-        let matrixInterval = null;
-        let drops = [];
-        const chars = "01EDENCV7ΣΔ";
+   CINEMATIC SNOW ENGINE
+================================ */
 
-        function startMatrix() {
-            if (matrixInterval) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            const columns = canvas.width / 18;
-            drops = Array(Math.floor(columns)).fill(1);
-            
-            matrixInterval = setInterval(() => {
-                ctx.fillStyle = "rgba(0,0,0,0.05)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#00ffff";
-                ctx.font = "18px monospace";
-                
-                drops.forEach((y, i) => {
-                    const txt = chars[Math.floor(Math.random() * chars.length)];
-                    ctx.fillText(txt, i * 18, y * 18);
-                    if (y * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                    drops[i]++;
-                });
-            }, 35);
+const snowCanvas = document.getElementById("snowCanvas");
+const ctx = snowCanvas.getContext("2d");
+
+let snowflakes = [];
+let snowCount = window.innerWidth < 768 ? 80 : 140;
+
+function resizeSnow() {
+    snowCanvas.width = window.innerWidth;
+    snowCanvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeSnow);
+resizeSnow();
+
+class Snowflake {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.x = Math.random() * snowCanvas.width;
+        this.y = Math.random() * -snowCanvas.height;
+        this.radius = Math.random() * 2.2 + 0.5;
+        this.speedY = Math.random() * 0.6 + 0.3;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.opacity = Math.random() * 0.5 + 0.3;
+    }
+
+    update() {
+        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2;
+
+        if (this.y > snowCanvas.height) {
+            this.reset();
+            this.y = 0;
         }
+    }
 
-        function stopMatrix() {
-            clearInterval(matrixInterval);
-            matrixInterval = null;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+        ctx.fill();
+    }
+}
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+function createSnow() {
+    snowflakes = [];
+    for (let i = 0; i < snowCount; i++) {
+        snowflakes.push(new Snowflake());
+    }
+}
+
+function animateSnow() {
+    ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+
+    snowflakes.forEach(flake => {
+        flake.update();
+        flake.draw();
+    });
+
+    requestAnimationFrame(animateSnow);
+}
+
+createSnow();
+animateSnow();
+
+/* Pause when tab inactive (performance boost) */
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(animateSnow);
+});
+
+
 
         /* ===============================
            WEATHER ENGINE
@@ -1381,6 +1452,8 @@
 
         </div>
         </div>
+
+        <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag">
 
 </body>
 
