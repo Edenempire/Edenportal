@@ -596,35 +596,35 @@
         .hud-btn:hover { background: var(--cyan); color: #000; }
 
         /* --- MOBILE REFINEMENT --- */
-@media (max-width: 900px) {
-    .nav-system {
-        position: fixed;
-        top: var(--header-h);
-        right: -100%;
-        width: 260px;
-        height: calc(100svh - var(--header-h));
-        background: #000;
-        flex-direction: column;
-        padding: 30px;
-        gap: 20px;
-        transition: right 0.35s ease;
-        border-left: 2px solid var(--cyan);
-        overflow-y: auto;
-        z-index: 3000;
-    }
+        @media (max-width: 900px) {
+            .nav-system {
+                position: fixed;
+                top: var(--header-h);
+                right: -100%;
+                width: 260px;
+                height: calc(100svh - var(--header-h));
+                background: #000;
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+                transition: right 0.35s ease;
+                border-left: 2px solid var(--cyan);
+                overflow-y: auto;
+                z-index: 3000;
+            }
 
-    .nav-system.open {
-        right: 0;
-    }
+            .nav-system.open {
+                right: 0;
+            }
 
-    .clock-hub {
-        display: none;
-    }
+            .clock-hub {
+                display: none;
+            }
 
-    #hamburger {
-        display: block;
-    }
-}
+            #hamburger {
+                display: block;
+            }
+        }
 
         /* --- MODAL SYSTEM --- */
         .modal-overlay {
@@ -806,7 +806,8 @@
         #rsaFlag {
             position: fixed;
             bottom: 18px;
-            left: 18px;
+            left: 28px;
+            margin-bottom: 18px;
             width: 90px;
             height: auto;
             z-index: 2500;

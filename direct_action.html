@@ -70,7 +70,9 @@
             z-index: 10001;
         }
 
-        .glow { text-shadow: 0 0 12px var(--fg), 0 0 25px rgba(0, 255, 255, 0.4); }
+        .glow {
+            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4), 0 0 12px rgba(0, 255, 255, 0.2);
+        }
 
         /* -----------------------------------------------------
            HEADER & NAVIGATION
@@ -139,95 +141,133 @@
         }
         @keyframes progress { to { left: 0; } }
 
-        /* -----------------------------------------------------
-           HIGH-LEVEL BLIZZARD
-        ----------------------------------------------------- */
-        #snow { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.6; }
-
-        /* -----------------------------------------------------
-           HERO & CONTENT
-        ----------------------------------------------------- */
-        main { position: relative; z-index: 2; padding-top: var(--header-h); }
+        /* HERO & CONTENT */
+        main { 
+            position: relative; 
+            z-index: 1; 
+            padding-top: var(--header-h); 
+            background: var(--bg); 
+        }
 
         #hero {
-
-            min-height: 85vh; display: flex; align-items: center; justify-content: center;
+            min-height: 80vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
             padding: 40px 20px;
-
+            position: relative;
+            z-index: 1;
         }
 
         #hero-inner {
-
-            max-width: 1100px; width: 100%; background: var(--panel);
-            border: 1px solid var(--panel-border); padding: clamp(40px, 8vw, 100px); 
-            text-align: center; position: relative;
-            box-shadow: 0 0 80px rgba(0,0,0,0.8);
-            transform: scale(0.9); opacity: 0;
+            max-width: 1100px; 
+            width: 100%; 
+            background: rgba(10, 25, 35, 0.85); /* icy panel */
+            border: 1px solid rgba(0, 255, 247, 0.15);
+            border-radius: 6px;
+            padding: clamp(40px, 8vw, 100px);
+            text-align: center; 
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 255, 247, 0.2); /* subtle icy glow */
+            transform: scale(0.95); 
+            opacity: 0;
             transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-
         }
-        body.loaded #hero-inner { transform: scale(1); opacity: 1; }
+        body.loaded #hero-inner { 
+            transform: scale(1); 
+            opacity: 1; 
+        }
 
+        #hero-inner h2 {
+            font-family: var(--font-header);
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: var(--fg);
+            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4), 0 0 12px rgba(0, 255, 255, 0.2); /* icy subtle glow */
+        }
+
+        /* DEPARTMENTS TITLE */
         .section-title {
-
-            text-align: center; font-family: var(--font-header); 
+            text-align: center; 
+            font-family: var(--font-header);
             font-size: clamp(1.8rem, 5vw, 3rem);
-            margin: 80px 0 50px; letter-spacing: clamp(5px, 2vw, 15px);
+            margin: 80px 0 50px; 
+            letter-spacing: clamp(5px, 2vw, 15px);
             text-transform: uppercase;
-
+            color: var(--soft);
+            text-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
         }
 
-        /* -----------------------------------------------------
-           GRID & DEPARTMENT CARDS
-        ----------------------------------------------------- */
+        /* GRID & DEPARTMENT CARDS */
         .grid {
-
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; padding: 0 5% 120px;
-
+            gap: 30px; 
+            padding: 0 5% 120px;
+            position: relative; /* ensures visible above hero */
+            z-index: 2;
         }
 
         .card {
-
-            background: rgba(10, 25, 35, 0.8); border: 1px solid var(--panel-border);
-            padding: 50px 30px; text-align: center; 
+            background: rgba(10, 25, 35, 0.85); 
+            border: 1px solid rgba(0, 255, 247, 0.15);
+            padding: 50px 30px; 
+            text-align: center; 
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer; position: relative; overflow: hidden;
-
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 247, 0.15);
         }
-        .card::before {
 
-            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--fg));
-            transition: 0.5s;
-
-        }
-        .card:hover::before { left: 100%; }
-        
         .card:hover {
-
-            background: rgba(0, 255, 247, 0.08); 
-            transform: translateY(-15px);
-            border-color: var(--fg); 
-            box-shadow: 0 20px 40px rgba(0, 255, 247, 0.15);
-
+            transform: translateY(-10px);
+            border-color: var(--fg);
+            box-shadow: 0 15px 30px rgba(0, 255, 247, 0.25);
+        }
+                .card i {
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            color: var(--accent); 
+            transition: 0.4s;
         }
 
-        .card i { font-size: 3.5rem; margin-bottom: 25px; color: var(--accent); transition: 0.5s; }
-        .card:hover i { transform: rotateY(180deg); color: var(--fg); }
+        .card:hover i { 
+            transform: rotateY(180deg); 
+            color: var(--fg); 
+        }
 
-        .card h3 { font-family: var(--font-ui); font-size: 1.5rem; margin-bottom: 12px; letter-spacing: 2px; }
-        .card p { font-family: var(--font-mono); font-size: 1.1rem; color: var(--soft); opacity: 0.8; }
+        .card h3 {
+            font-family: var(--font-ui); 
+            font-size: 1.4rem; 
+            margin-bottom: 10px; 
+            letter-spacing: 2px; 
+            color: var(--fg);
+        }
+
+        .card p {
+            font-family: var(--font-mono); 
+            font-size: 1rem; 
+            color: var(--soft); 
+            opacity: 0.85;
+        }
 
         .enter-btn {
-
-            margin-top: 30px; padding: 12px 35px; background: transparent;
-            border: 1px solid var(--fg); color: var(--fg); font-family: var(--font-ui);
-            cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 2px;
-
+            margin-top: 20px; 
+            padding: 10px 30px; 
+            background: transparent;
+            border: 1px solid var(--fg); 
+            color: var(--fg); 
+            font-family: var(--font-ui);
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-weight: bold; 
+            letter-spacing: 2px;
         }
-        .enter-btn:hover { background: var(--fg); color: #000; box-shadow: 0 0 15px var(--fg); }
+                .enter-btn:hover { 
+            background: var(--fg); 
+            color: #000; 
+            box-shadow: 0 0 15px rgba(0, 255, 247, 0.25); 
+        }
 
         /* -----------------------------------------------------
            AUTH OVERLAY (MODAL)
@@ -295,29 +335,23 @@
     <div class="loading-bar"></div>
 </div>
 
-<canvas id="snow"></canvas>
-
 <header>
-    <div class="nav-left">
-        <button class="home-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Reset configuration</button>
+    <a href="index.html" title="back to home." style="text-decoration: none; color: var(--cyan)"><div class="nav-left">
         <h1 class="glow">CV-7 (Direct Action.)</h1>
-    </div>
-    <div id="hud-right">
-        <div id="sysStatus" class="status-green">STATUS: OPTIMAL</div>
-        <div id="clock">00:00:00</div>
-    </div>
+    </div></a>
 </header>
 
 <main>
     <section id="hero">
         <div id="hero-inner">
-            <h2 class="glow" style="font-size: clamp(2rem, 8vw, 5rem); font-family: 'Orbitron';">01000011 01010110 00101101 00110111</h2>
+            <h2>01000011 01010110 00101101 00110111</h2>
         </div>
     </section>
 
-    <h2 class="section-title glow">DEPARTMENTS</h2>
+    <h2 class="section-title">DEPARTMENTS</h2>
     <div class="grid" id="deptGrid">
-        </div>
+        <!-- departments rendered by JS -->
+    </div>
 </main>
 
 <div id="authOverlay">
@@ -358,7 +392,6 @@ let activeDept = null;
    INITIALIZATION
 ===================================================== */
 window.addEventListener('load', () => {
-    // Force top on reload
     window.scrollTo(0,0);
     
     setTimeout(() => {
@@ -367,8 +400,7 @@ window.addEventListener('load', () => {
         setTimeout(() => boot.style.display = 'none', 1000);
         
         document.body.classList.add('loaded');
-        initSnow();
-        renderDepts();
+        renderDepts();  // must stay
         startClock();
         initDynamicUI();
     }, 2000);
@@ -480,56 +512,6 @@ function initDynamicUI() {
             setTimeout(() => updateStatusDisplay('OPTIMAL', 'green'), 2000);
         }
     }, 15000);
-}
-
-/* =====================================================
-   BLIZZARD ANIMATION (SNOW)
-===================================================== */
-function initSnow() {
-    const canvas = document.getElementById('snow');
-    const ctx = canvas.getContext('2d');
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
-    
-    // Blizzard Intensity
-    const flakes = Array.from({ length: 300 }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 2 + 1,
-        speed: Math.random() * 4 + 2,
-        drift: Math.random() * 1 - 0.5
-    }));
-
-    function draw() {
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "rgba(0, 255, 247, 0.4)";
-        ctx.beginPath();
-        flakes.forEach(f => {
-            ctx.moveTo(f.x, f.y);
-            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-        });
-        ctx.fill();
-        update();
-        requestAnimationFrame(draw);
-    }
-
-    function update() {
-        flakes.forEach(f => {
-            f.y += f.speed;
-            f.x += f.drift;
-            if (f.y > h) {
-                f.y = -10;
-                f.x = Math.random() * w;
-            }
-        });
-    }
-
-    window.addEventListener('resize', () => {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-    });
-    draw();
-
 }
 
 // Security: Disable Right Click
