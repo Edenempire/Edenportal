@@ -1,6 +1,6 @@
 {
   "name": "Eden stealth CV-1",
-  "short_name": "Eden CV-1",
+  "short_name": "Eden",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
