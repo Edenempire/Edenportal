@@ -25,7 +25,8 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
 
-    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="logo.png">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
@@ -65,15 +66,6 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
-
-        /* --- HUD OVERLAYS --- */
-        #matrixCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            z-index: -1;
-            opacity: 0.65;   /* was 0.25 — too faint */
-            filter: none;    /* blur was washing text away */
-        }
 
         .scanlines {
 
@@ -194,34 +186,6 @@
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
 
         }
-
-        .clock-hub {
-
-            text-align: right;
-            font-family: var(--font-mono);
-            background: rgba(0, 255, 255, 0.05);
-            padding: 8px 15px;
-            border-left: 3px solid var(--cyan);
-
-        }
-
-        /* --- HERO: OPERATOR UNIT --- */
-        #hero {
-
-            height: 110vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.08) 0%, transparent 70%);
-
-        }
-
-        /* --- HERO SAFE OFFSET SYSTEM --- */
-        /* ===============================
-            HERO SAFE ZONE SYSTEM (NO CLASH)
-            ================================ */
 
         #hero {
 
@@ -597,29 +561,6 @@
 
         /* --- MOBILE REFINEMENT --- */
         @media (max-width: 900px) {
-            .nav-system {
-                position: fixed;
-                top: var(--header-h);
-                right: -100%;
-                width: 260px;
-                height: calc(100svh - var(--header-h));
-                background: #000;
-                flex-direction: column;
-                padding: 30px;
-                gap: 20px;
-                transition: right 0.35s ease;
-                border-left: 2px solid var(--cyan);
-                overflow-y: auto;
-                z-index: 3000;
-            }
-
-            .nav-system.open {
-                right: 0;
-            }
-
-            .clock-hub {
-                display: none;
-            }
 
             #hamburger {
                 display: block;
@@ -764,29 +705,6 @@
         }
 
         @media (max-width: 900px) {
-            .nav-system {
-                position: fixed;
-                top: var(--header-h);
-                right: -100%;
-                width: 260px;
-                height: calc(100svh - var(--header-h));
-                background: #000;
-                flex-direction: column;
-                padding: 30px;
-                gap: 20px;
-                transition: right 0.35s ease;
-                border-left: 2px solid var(--cyan);
-                overflow-y: auto;
-                z-index: 3000;
-            }
-
-            .nav-system.open {
-                right: 0;
-            }
-
-            .clock-hub {
-                display: none;
-            }
 
             #hamburger {
                 display: block;
@@ -832,6 +750,74 @@
             }
         }
 
+        /* ===============================
+   GLOBAL HAMBURGER NAV SYSTEM
+   (ALL SCREEN SIZES)
+================================ */
+
+/* Hide default horizontal layout */
+.nav-system {
+    position: fixed;
+    top: var(--header-h);
+    right: -320px;
+    width: 300px;
+    height: calc(100svh - var(--header-h));
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    padding: 40px 30px;
+    gap: 25px;
+    transition: right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    border-left: 2px solid var(--cyan);
+    overflow-y: auto;
+    z-index: 4000;
+    box-shadow: -10px 0 30px rgba(0,255,255,0.15);
+}
+
+/* When open */
+.nav-system.open {
+    right: 0;
+}
+
+/* Always show hamburger */
+#hamburger {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem;
+    background: none;
+    padding: 8px 12px;
+    color: var(--cyan);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#hamburger:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: var(--cyan-glow);
+}
+
+/* Optional backdrop overlay */
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 3500;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
     </style>
 
 </head>
@@ -840,11 +826,30 @@
     <canvas id="snowCanvas"></canvas>
     <div class="scanlines"></div>
 
-    <div class="hud-nav">
-        <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-angle-double-up"></i></button>
-        <button class="hud-btn" onclick="scrollToSection('board')"><i class="fas fa-crosshairs"></i></button>
-        <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"><i class="fas fa-angle-double-down"></i></button>
-    </div>
+<div class="hud-nav">
+
+    <!-- INTERNAL REFRESH -->
+    <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- TOP -->
+    <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-up"></i>
+    </button>
+
+    <!-- MIDDLE -->
+    <button class="hud-btn" onclick="scrollToSection('board')">
+        <i class="fas fa-crosshairs"></i>
+    </button>
+
+    <!-- BOTTOM -->
+    <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-down"></i>
+    </button>
+
+</div>
+
 
     <header id="main-header">
         <div class="header-container">
@@ -868,12 +873,16 @@
                 <a href="essmain.html" class="nav-link">E.S.S</a>
             </nav>
 
-            <div class="clock-hub" id="sys-clock">00:00:00</div>
         </div>
     </header>
 
     <main>
         <section id="hero" style="opacity: 1; transform: none;">
+
+            <div id="offline-banner" style="display:none;position:fixed;top:90px;width:100%;background:#ff0055;color:#fff;text-align:center;padding:5px;z-index:5000;">
+            You are offline. Homepage is fully available.
+            </div>
+            
             <div style="font-family: var(--font-mono); margin-bottom: 10px;">[ ACCESS GRANTED: PUBLIC ENTRANCE ]</div>
             <h1 class="hero-title">Eden stealth CV-1</h1>
             <div class="hero-subtitle typing-effect" style="text-align: center;" data-text="Under the Best Operator unit in the entire universe."></div>
@@ -1057,7 +1066,7 @@
                 </div>
                 <div class="terminal-input-row">
                     <span>EDEN@OP_UNIT:~$</span>
-                    <input type="text" id="term-input" spellcheck="false" autocomplete="off" autofocus>
+                    <input type="text" id="term-input" spellcheck="false" autocomplete="off">
                 </div>
             </div>
         </section>
@@ -1077,9 +1086,7 @@
                 <br>
                 <br>
 
-                <button class="btn-tactical" onclick="https://oldgamesdownload.com/file/62627-2/" style="width:100%;">Conflict: Vietnam (PC)</button>
-
-                <a href="direct_action.html" id="cv7-link" style="text-decoration: none;"><CV-7></CV-7></a>
+                <button class="btn-tactical" style="width:100%;"><a href="https://oldgamesdownload.com/file/62627-2/" style="text-decoration: none; color: var(--cyan);">Conflict: Vietnam (PC)</a></button>
 
             </div>
 
@@ -1089,7 +1096,20 @@
                 <div id="weather-desc" style="font-family: var(--font-mono);">SYNCING...</div>
             </div>
         </div>
-        
+
+        <div style="margin-top:30px;">
+            
+            <div id="sys-clock" style="
+                font-family: var(--font-tactical);
+                font-size: 2rem;
+                letter-spacing: 3px;
+                margin-top: 5px;
+                text-shadow: var(--cyan-glow);
+            ">
+                --:--:--
+            </div>
+        </div>
+
         <p style="font-family: var(--font-mono); opacity: 0.5; margin-top: 40px;">
             &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
         </p>
@@ -1112,21 +1132,27 @@
     <script>
 
         /* ===============================
+        FORCE PAGE TO LOAD FROM TOP
+        ================================ */
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener("load", () => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto"
+            });
+        });
+
+        /* ===============================
            CORE ENGINE
         ================================ */
         const sysTime = document.getElementById('sys-clock');
         const yearSpan = document.getElementById('year');
         const termInput = document.getElementById('term-input');
         const termOutput = document.getElementById('terminal-output');
-
-        // Clock System
-        function updateClock() {
-            const now = new Date();
-            sysTime.innerText = now.toLocaleTimeString('en-GB', { hour12: false });
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-        yearSpan.innerText = new Date().getFullYear();
 
         // Smooth Scroll
         function scrollToSection(id) {
@@ -1181,13 +1207,7 @@
                 }
 
                 if (val === 'help') {
-                    printToTerm('Available: matrix on | matrix off | clear | status | scan ops | open manifesto');
-                } else if (val === 'matrix on') {
-                    startMatrix();
-                    printToTerm('Matrix Engine Initialized.', 'var(--cyan)');
-                } else if (val === 'matrix off') {
-                    stopMatrix();
-                    printToTerm('Matrix Engine Terminated.', '#ff0055');
+                    printToTerm('Available: clear | status | scan ops | open manifesto');
                 } else if (val === 'clear') {
                     termOutput.innerHTML = '';
                 } else if (val === 'status') {
@@ -1214,8 +1234,12 @@ let snowflakes = [];
 let snowCount = window.innerWidth < 768 ? 80 : 140;
 
 function resizeSnow() {
-    snowCanvas.width = window.innerWidth;
-    snowCanvas.height = window.innerHeight;
+    const scale = window.devicePixelRatio || 1;
+    snowCanvas.width = window.innerWidth * scale;
+    snowCanvas.height = window.innerHeight * scale;
+    snowCanvas.style.width = window.innerWidth + "px";
+    snowCanvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
 }
 window.addEventListener("resize", resizeSnow);
 resizeSnow();
@@ -1259,6 +1283,8 @@ function createSnow() {
     }
 }
 
+let snowAnimationId;
+
 function animateSnow() {
     ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
 
@@ -1267,18 +1293,20 @@ function animateSnow() {
         flake.draw();
     });
 
-    requestAnimationFrame(animateSnow);
+    snowAnimationId = requestAnimationFrame(animateSnow);
 }
 
 createSnow();
 animateSnow();
 
-/* Pause when tab inactive (performance boost) */
+/* Proper pause/resume */
 document.addEventListener("visibilitychange", () => {
-    if (document.hidden) cancelAnimationFrame(animateSnow);
+    if (document.hidden) {
+        cancelAnimationFrame(snowAnimationId);
+    } else {
+        animateSnow();
+    }
 });
-
-
 
         /* ===============================
            WEATHER ENGINE
@@ -1303,6 +1331,59 @@ document.addEventListener("visibilitychange", () => {
         }
         fetchWeather();
 
+        // 
+
+/* ===============================
+   CAPE TOWN LOCKED SYSTEM CLOCK
+================================ */
+
+function updateClockCapeTown() {
+
+    const now = new Date();
+
+    // STRICTLY Cape Town timezone
+    const timeOptions = {
+        timeZone: 'Africa/Johannesburg',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+
+    const dateOptions = {
+        timeZone: 'Africa/Johannesburg',
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+    };
+
+    const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
+    const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
+
+    const clockEl = document.getElementById('sys-clock');
+
+    if (clockEl) {
+        clockEl.innerHTML = `
+            ${timeString}
+            <div style="
+                font-size:0.8rem;
+                font-family: var(--font-mono);
+                opacity:0.7;
+                margin-top:4px;
+            ">
+                ${dateString} // CAPE TOWN, SOUTH AFRICA
+            </div>
+        `;
+    }
+}
+
+/* Run immediately */
+updateClockCapeTown();
+
+/* Update every second */
+setInterval(updateClockCapeTown, 1000);
+
         /* ===============================
            TYPEWRITER EFFECT
         ================================ */
@@ -1325,14 +1406,8 @@ document.addEventListener("visibilitychange", () => {
         // Initialization
         window.onload = () => {
             initTypewriter();
-            startMatrix(); // Start matrix by default for high visual impact
             console.log("Eden stealth CV-1: Tier 1 active.");
         };
-
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) stopMatrix();
-            else startMatrix();
-        });
 
         /* ===============================
             DOCUMENT HUB SYSTEM
@@ -1393,6 +1468,60 @@ document.addEventListener("visibilitychange", () => {
                 e.stopPropagation();
                 nav.classList.toggle("open");
             });
+
+            // 
+
+            /* ===============================
+   INTERNAL REFRESH ENGINE
+================================ */
+
+function internalRefresh() {
+
+    console.log("Internal refresh initiated...");
+
+    /* 1 — Scroll to top instantly */
+    window.scrollTo({ top: 0, behavior: "auto" });
+
+    /* 2 — Reset terminal */
+    termOutput.innerHTML = `
+        <div>[ Eden stealth CV-1 portal REINITIALIZING ]</div>
+        <div>[ ENCRYPTION: running ]</div>
+        <br>
+        <div>type 'help' for commands...</div>
+    `;
+
+    /* 3 — Restart snow engine */
+    cancelAnimationFrame(snowAnimationId);
+    createSnow();
+    animateSnow();
+
+    /* 4 — Restart typewriter */
+    const el = document.querySelector('.typing-effect');
+    if (el) {
+        el.innerHTML = '';
+        initTypewriter();
+    }
+
+    /* 5 — Re-fetch weather */
+    fetchWeather();
+
+    /* 6 — Close navigation panel */
+    nav.classList.remove("open");
+
+    /* 7 — Close any open modals */
+    document.querySelectorAll(".modal-overlay").forEach(modal => {
+        modal.style.display = "none";
+    });
+
+    /* 8 — Reset section animations */
+    document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("revealed");
+        observer.observe(sec);
+    });
+
+}
+
+// 
 
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js');
@@ -1455,6 +1584,13 @@ document.addEventListener("visibilitychange", () => {
         </div>
 
         <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag">
+
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <script>
+        window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
+        window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
+        </script>
 
 </body>
 
