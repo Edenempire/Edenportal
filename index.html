@@ -1908,229 +1908,58 @@ function toggleTheme(){
 
 <script>
 
-/* =========================================================
-   EDEN STEALTH — ELITE INSTALL CONTROLLER v5.0
-   NEVER FAILS. NEVER HIDES BUTTON.
-========================================================= */
-
-let deferredPrompt = null;
-let installState = "unknown";
-
-const installBtn = document.getElementById("installBtn");
-
-
-/* =========================================================
-   DETECT INSTALL STATE — MOST IMPORTANT
-========================================================= */
-
-function detectInstallState(){
-
-    try{
-
-        // Android / Chrome / Edge
-        if(window.matchMedia('(display-mode: standalone)').matches){
-
-            installState = "installed";
-
-        }
-
-        // iOS Safari
-        else if(window.navigator.standalone === true){
-
-            installState = "installed";
-
-        }
-
-        else{
-
-            installState = "browser";
-
-        }
-
-    }
-    catch(e){
-
-        console.error("Install detection error", e);
-
-        installState = "unknown";
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE BUTTON VISUAL STATE
-========================================================= */
-
-function updateInstallButton(){
-
-    detectInstallState();
-
-
-    if(installState === "installed"){
-
-        installBtn.innerText = "OPEN MOBILE APP";
-
-        installBtn.onclick = ()=>{
-
-            alert("App already installed.\nLaunch from your home screen.");
-
-        };
-
-    }
-
-
-    else if(deferredPrompt){
-
-        installBtn.innerText = "INSTALL MOBILE APP";
-
-        installBtn.onclick = installApp;
-
-    }
-
-
-    else{
-
-        installBtn.innerText = "INSTALL GUIDE";
-
-        installBtn.onclick = showInstallGuide;
-
-    }
-
-}
-
-
-
-/* =========================================================
-   INSTALL PROCESS
-========================================================= */
-
-async function installApp(){
-
-    try{
-
-        if(!deferredPrompt){
-
-            showInstallGuide();
-            return;
-
-        }
-
-        deferredPrompt.prompt();
-
-        const result = await deferredPrompt.userChoice;
-
-        if(result.outcome === "accepted"){
-
-            console.log("INSTALL SUCCESS");
-
-        }
-        else{
-
-            console.log("INSTALL CANCELLED");
-
-        }
-
-        deferredPrompt = null;
-
-        setTimeout(updateInstallButton, 1000);
-
-    }
-    catch(e){
-
-        console.error("INSTALL FAILED", e);
-
-        alert("Install failed. Use install guide.");
-
-    }
-
-}
-
-
-
-/* =========================================================
-   INSTALL GUIDE (ALWAYS AVAILABLE FALLBACK)
-========================================================= */
-
-function showInstallGuide(){
-
-    alert(
-
-`INSTALL GUIDE:
-
-ANDROID / CHROME:
-Menu ⋮ → Install App
-
-
-IPHONE / SAFARI:
-Share → Add to Home Screen
-
-
-PC:
-Address bar → Install icon`
-
-    );
-
-}
-
-
-
-/* =========================================================
-   BEFORE INSTALL PROMPT CAPTURE
-========================================================= */
-
-window.addEventListener("beforeinstallprompt", (e)=>{
-
-    console.log("INSTALL AVAILABLE");
-
-    e.preventDefault();
-
-    deferredPrompt = e;
-
-    updateInstallButton();
-
+// ===============================
+// PWA INSTALL BUTTON - ALWAYS VISIBLE
+// ===============================
+
+const installBtn = document.getElementById('installBtn');
+let deferredPrompt;
+
+// Listen for beforeinstallprompt event
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Prevent the automatic prompt
+    deferredPrompt = e; // Save the event for later
 });
 
+// Handle button click
+installBtn.addEventListener('click', async () => {
+    try {
+        if (deferredPrompt) {
+            // Show the install prompt
+            deferredPrompt.prompt();
 
+            // Wait for user choice
+            const choiceResult = await deferredPrompt.userChoice;
+            console.log('User response to install prompt:', choiceResult.outcome);
 
-/* =========================================================
-   APP INSTALLED EVENT
-========================================================= */
+            // Clear the saved prompt
+            deferredPrompt = null;
 
-window.addEventListener("appinstalled", ()=>{
-
-    console.log("APP INSTALLED SUCCESS");
-
-    deferredPrompt = null;
-
-    updateInstallButton();
-
+            if (choiceResult.outcome === 'accepted') {
+                alert('App installation accepted! Enjoy your offline access.');
+            } else {
+                alert('App installation dismissed. You can try again anytime.');
+            }
+        } else if (window.matchMedia('(display-mode: standalone)').matches) {
+            // Already installed
+            alert('The app is already installed on your device!');
+        } else {
+            // No prompt available (e.g., iOS Safari)
+            alert('Installation is not available on this device/browser. Follow manual install instructions if needed.');
+        }
+    } catch (err) {
+        console.error('Install error:', err);
+        alert('An error occurred while trying to install the app. Please try again.');
+    }
 });
 
-
-
-/* =========================================================
-   SAFE INIT — NEVER FAIL
-========================================================= */
-
-window.addEventListener("load", ()=>{
-
-    updateInstallButton();
-
+// Optional: detect if app is installed after any method
+window.addEventListener('appinstalled', () => {
+    console.log('PWA successfully installed!');
+    // Do NOT hide the button; it remains visible
 });
-
-
-/* =========================================================
-   EXTRA — CHECK EVERY 5 SECONDS
-   Guarantees button never breaks
-========================================================= */
-
-setInterval(updateInstallButton, 5000);
-
 
 </script>
-
 
 </body>
 
