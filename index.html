@@ -1907,59 +1907,61 @@ function toggleTheme(){
 </script>
 
 <script>
+/* ===============================
+   PWA INSTALL SYSTEM — ALWAYS SHOW BUTTON
+================================ */
 
-// ===============================
-// PWA INSTALL BUTTON - ALWAYS VISIBLE
-// ===============================
+let deferredPrompt = null;
+const installBtn = document.getElementById("installBtn");
 
-const installBtn = document.getElementById('installBtn');
-let deferredPrompt;
-
-// Listen for beforeinstallprompt event
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); // Prevent the automatic prompt
-    deferredPrompt = e; // Save the event for later
+/* Capture install availability */
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); // Required
+    deferredPrompt = e;
+    console.log("Install prompt ready");
 });
 
-// Handle button click
-installBtn.addEventListener('click', async () => {
-    try {
-        if (deferredPrompt) {
-            // Show the install prompt
-            deferredPrompt.prompt();
+/* Button click */
+installBtn.addEventListener("click", async () => {
 
-            // Wait for user choice
-            const choiceResult = await deferredPrompt.userChoice;
-            console.log('User response to install prompt:', choiceResult.outcome);
+    // If install is available → trigger it
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
 
-            // Clear the saved prompt
-            deferredPrompt = null;
+        const { outcome } = await deferredPrompt.userChoice;
 
-            if (choiceResult.outcome === 'accepted') {
-                alert('App installation accepted! Enjoy your offline access.');
-            } else {
-                alert('App installation dismissed. You can try again anytime.');
-            }
-        } else if (window.matchMedia('(display-mode: standalone)').matches) {
-            // Already installed
-            alert('The app is already installed on your device!');
+        console.log("Install outcome:", outcome);
+
+        if (outcome === "accepted") {
+            console.log("User installed the app");
         } else {
-            // No prompt available (e.g., iOS Safari)
-            alert('Installation is not available on this device/browser. Follow manual install instructions if needed.');
+            console.log("User dismissed install");
         }
-    } catch (err) {
-        console.error('Install error:', err);
-        alert('An error occurred while trying to install the app. Please try again.');
+
+        deferredPrompt = null;
+        return;
     }
+
+    // If not installable yet
+    alert("Install not available yet.\n\nMake sure:\n- You are using Chrome or Edge\n- The site is HTTPS\n- You have not already installed the app");
 });
 
-// Optional: detect if app is installed after any method
-window.addEventListener('appinstalled', () => {
-    console.log('PWA successfully installed!');
-    // Do NOT hide the button; it remains visible
+/* If already installed */
+window.addEventListener("appinstalled", () => {
+    alert("App successfully installed!");
 });
-
 </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log("Service Worker Registered"))
+        .catch(err => console.log("SW failed:", err));
+    });
+}
+</script>
+
 
 </body>
 
