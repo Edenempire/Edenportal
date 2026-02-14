@@ -1381,7 +1381,7 @@
 
         <div class="container">
             <h1>Install Our App</h1>
-            <button id="installBtn">Install App</button>
+            <button id="installBtn" style="display:none;">Install App</button>
         </div>
 
     </footer>
@@ -1905,55 +1905,57 @@ setInterval(updateClockCapeTown, 1000);
 
                 })();
 
-// INSTALL MOBILE APP
+            // INSTALL MOBILE APP
 
 let deferredPrompt;
+
 const installBtn = document.getElementById('installBtn');
 
+// Listen for the PWA install prompt event
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block';
+    // Prevent Chrome from showing the default prompt immediately
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Show your install button now that prompt is available
+    installBtn.style.display = 'block';
 });
 
+// Handle button click
 installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log('User response to install:', outcome);
-  deferredPrompt = null;
-  installBtn.style.display = 'none';
+    if (!deferredPrompt) return; // Safety check
+
+    // Show the install prompt
+    deferredPrompt.prompt();
+
+    // Wait for the user's choice
+    const { outcome } = await deferredPrompt.userChoice;
+
+    console.log('User response to PWA install:', outcome);
+
+    // Optionally hide the button after installation
+    if (outcome === 'accepted') {
+        installBtn.style.display = 'none';
+    }
+
+    // Clear the deferredPrompt variable
+    deferredPrompt = null;
 });
 
-// OFFLINE FUNCTIONALITY
 
-function updateOnlineStatus() {
-  const banner = document.getElementById('offline-banner');
-  if (!navigator.onLine) {
-    banner.style.display = 'block';
-  } else {
-    banner.style.display = 'none';
-  }
-}
+            </script>
 
-window.addEventListener('online', updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
+            <script>
+            if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch(err => console.log('SW registration failed:', err));
+            }
+            </script>
 
-updateOnlineStatus(); // initial check
+            </body>
 
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('Service Worker Registered'))
-    .catch(err => console.log('SW registration failed:', err));
-}
-</script>
-
-</body>
-
-</html>
+            </html>
 
 
 
