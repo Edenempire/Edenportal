@@ -1867,79 +1867,116 @@ setInterval(updateClockCapeTown, 1000);
 
             <script>
 
-/* ===============================
-THEME SYSTEM
-=============================== */
+            /* ===============================
+            THEME SYSTEM
+            =============================== */
 
-function toggleTheme(){
+            function toggleTheme(){
 
-    document.body.classList.toggle("green-yellow");
+                document.body.classList.toggle("green-yellow");
 
-    /* SAVE PREFERENCE */
+                /* SAVE PREFERENCE */
 
-    if(document.body.classList.contains("green-yellow")){
+                if(document.body.classList.contains("green-yellow")){
 
-        localStorage.setItem("edenTheme","green-yellow");
+                    localStorage.setItem("edenTheme","green-yellow");
 
-    }
-    else{
+                }
+                else{
 
-        localStorage.setItem("edenTheme","default");
+                    localStorage.setItem("edenTheme","default");
 
-    }
+                }
 
-}
+            }
 
 
-/* LOAD SAVED THEME */
+            /* LOAD SAVED THEME */
 
-(function(){
+            (function(){
 
-    const savedTheme = localStorage.getItem("edenTheme");
+                const savedTheme = localStorage.getItem("edenTheme");
 
-    if(savedTheme === "green-yellow"){
+                if(savedTheme === "green-yellow"){
 
-        document.body.classList.add("green-yellow");
+                    document.body.classList.add("green-yellow");
 
-    }
+                }
 
-})();
+                })();
 
 // INSTALL MOBILE APP
 
+// ===============================
+// PWA INSTALL HANDLER
+// ===============================
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
+
+// Hide button by default
 installBtn.style.display = 'none';
 
 // Listen for the beforeinstallprompt event
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Prevent automatic prompt
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block';
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Show the install button
+    installBtn.style.display = 'inline-block';
 });
 
-// Handle button click
+// Click handler for the install button
 installBtn.addEventListener('click', async () => {
-  if (deferredPrompt) {
+    if (!deferredPrompt) return;
+
+    // Show the install prompt
     deferredPrompt.prompt();
-    const choiceResult = await deferredPrompt.userChoice;
-    if (choiceResult.outcome === 'accepted') {
-      console.log('User accepted the A2HS prompt');
+
+    // Wait for the user response
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+        console.log('User accepted the PWA install prompt');
     } else {
-      console.log('User dismissed the A2HS prompt');
+        console.log('User dismissed the PWA install prompt');
     }
+
+    // Reset the deferred prompt
     deferredPrompt = null;
+
+    // Hide the button after installation attempt
     installBtn.style.display = 'none';
-  }
 });
 
-// Register service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log('Service Worker registered'))
-    .catch((err) => console.error('Service Worker registration failed:', err));
+// Optional: detect if already installed
+window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed');
+    installBtn.style.display = 'none';
+});
+
+// ===============================
+// iOS SUPPORT (manual instructions)
+// ===============================
+const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+
+if (isIos && !isInStandaloneMode) {
+    installBtn.style.display = 'inline-block';
+    installBtn.textContent = 'Tap here → Add to Home Screen';
+    installBtn.addEventListener('click', () => {
+        alert('To install this app on iOS: tap the Share button in Safari, then "Add to Home Screen"');
+    });
 }
 
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('Service Worker Registered'))
+    .catch((err) => console.log('SW registration failed:', err));
+}
 </script>
 
 </body>
