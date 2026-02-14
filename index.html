@@ -1378,6 +1378,11 @@
             &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
         </p>
         <br>
+
+        <button id="installBtn" class="btn-tactical">
+            INSTALL MOBILE APP
+        </button>
+
     </footer>
 
     <div class="modal-overlay" id="visionModal">
@@ -1806,32 +1811,6 @@ function internalRefresh() {
 
 // 
 
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js');
-            }
-
-            let deferredPrompt;
-
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                showInstallButton();
-            });
-
-            function showInstallButton() {
-                const btn = document.createElement("button");
-                btn.innerText = "Install Mobile App";
-                btn.className = "btn-tactical";
-                btn.onclick = installApp;
-                document.querySelector("#main-footer").appendChild(btn);
-            }
-
-            function installApp() {
-                if (!deferredPrompt) return;
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => deferredPrompt = null);
-            }
-
     </script>
 
     <div class="modal-overlay" id="docsModal">
@@ -1926,6 +1905,232 @@ function toggleTheme(){
 })();
 
 </script>
+
+<script>
+
+/* =========================================================
+   EDEN STEALTH — ELITE INSTALL CONTROLLER v5.0
+   NEVER FAILS. NEVER HIDES BUTTON.
+========================================================= */
+
+let deferredPrompt = null;
+let installState = "unknown";
+
+const installBtn = document.getElementById("installBtn");
+
+
+/* =========================================================
+   DETECT INSTALL STATE — MOST IMPORTANT
+========================================================= */
+
+function detectInstallState(){
+
+    try{
+
+        // Android / Chrome / Edge
+        if(window.matchMedia('(display-mode: standalone)').matches){
+
+            installState = "installed";
+
+        }
+
+        // iOS Safari
+        else if(window.navigator.standalone === true){
+
+            installState = "installed";
+
+        }
+
+        else{
+
+            installState = "browser";
+
+        }
+
+    }
+    catch(e){
+
+        console.error("Install detection error", e);
+
+        installState = "unknown";
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE BUTTON VISUAL STATE
+========================================================= */
+
+function updateInstallButton(){
+
+    detectInstallState();
+
+
+    if(installState === "installed"){
+
+        installBtn.innerText = "OPEN MOBILE APP";
+
+        installBtn.onclick = ()=>{
+
+            alert("App already installed.\nLaunch from your home screen.");
+
+        };
+
+    }
+
+
+    else if(deferredPrompt){
+
+        installBtn.innerText = "INSTALL MOBILE APP";
+
+        installBtn.onclick = installApp;
+
+    }
+
+
+    else{
+
+        installBtn.innerText = "INSTALL GUIDE";
+
+        installBtn.onclick = showInstallGuide;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   INSTALL PROCESS
+========================================================= */
+
+async function installApp(){
+
+    try{
+
+        if(!deferredPrompt){
+
+            showInstallGuide();
+            return;
+
+        }
+
+        deferredPrompt.prompt();
+
+        const result = await deferredPrompt.userChoice;
+
+        if(result.outcome === "accepted"){
+
+            console.log("INSTALL SUCCESS");
+
+        }
+        else{
+
+            console.log("INSTALL CANCELLED");
+
+        }
+
+        deferredPrompt = null;
+
+        setTimeout(updateInstallButton, 1000);
+
+    }
+    catch(e){
+
+        console.error("INSTALL FAILED", e);
+
+        alert("Install failed. Use install guide.");
+
+    }
+
+}
+
+
+
+/* =========================================================
+   INSTALL GUIDE (ALWAYS AVAILABLE FALLBACK)
+========================================================= */
+
+function showInstallGuide(){
+
+    alert(
+
+`INSTALL GUIDE:
+
+ANDROID / CHROME:
+Menu ⋮ → Install App
+
+
+IPHONE / SAFARI:
+Share → Add to Home Screen
+
+
+PC:
+Address bar → Install icon`
+
+    );
+
+}
+
+
+
+/* =========================================================
+   BEFORE INSTALL PROMPT CAPTURE
+========================================================= */
+
+window.addEventListener("beforeinstallprompt", (e)=>{
+
+    console.log("INSTALL AVAILABLE");
+
+    e.preventDefault();
+
+    deferredPrompt = e;
+
+    updateInstallButton();
+
+});
+
+
+
+/* =========================================================
+   APP INSTALLED EVENT
+========================================================= */
+
+window.addEventListener("appinstalled", ()=>{
+
+    console.log("APP INSTALLED SUCCESS");
+
+    deferredPrompt = null;
+
+    updateInstallButton();
+
+});
+
+
+
+/* =========================================================
+   SAFE INIT — NEVER FAIL
+========================================================= */
+
+window.addEventListener("load", ()=>{
+
+    updateInstallButton();
+
+});
+
+
+/* =========================================================
+   EXTRA — CHECK EVERY 5 SECONDS
+   Guarantees button never breaks
+========================================================= */
+
+setInterval(updateInstallButton, 5000);
+
+
+</script>
+
 
 </body>
 
