@@ -22,7 +22,7 @@
 
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
 
     <link rel="apple-touch-icon" sizes="192x192" href="logo.png">
@@ -1379,9 +1379,10 @@
         </p>
         <br>
 
-        <button id="installBtn" class="btn-tactical">
-            INSTALL MOBILE APP
-        </button>
+        <div class="container">
+            <h1>Install Our App</h1>
+            <button id="installBtn">Install App</button>
+        </div>
 
     </footer>
 
@@ -1512,57 +1513,57 @@
         });
 
         /* ===============================
-   CINEMATIC SNOW ENGINE
-================================ */
+        CINEMATIC SNOW ENGINE
+        ================================ */
 
-const snowCanvas = document.getElementById("snowCanvas");
-const ctx = snowCanvas.getContext("2d");
+            const snowCanvas = document.getElementById("snowCanvas");
+            const ctx = snowCanvas.getContext("2d");
 
-let snowflakes = [];
-let snowCount = window.innerWidth < 768 ? 80 : 140;
+            let snowflakes = [];
+            let snowCount = window.innerWidth < 768 ? 80 : 140;
 
-function resizeSnow() {
-    const scale = window.devicePixelRatio || 1;
-    snowCanvas.width = window.innerWidth * scale;
-    snowCanvas.height = window.innerHeight * scale;
-    snowCanvas.style.width = window.innerWidth + "px";
-    snowCanvas.style.height = window.innerHeight + "px";
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-}
-window.addEventListener("resize", resizeSnow);
-resizeSnow();
+        function resizeSnow() {
+            const scale = window.devicePixelRatio || 1;
+            snowCanvas.width = window.innerWidth * scale;
+            snowCanvas.height = window.innerHeight * scale;
+            snowCanvas.style.width = window.innerWidth + "px";
+            snowCanvas.style.height = window.innerHeight + "px";
+            ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
+        window.addEventListener("resize", resizeSnow);
+        resizeSnow();
 
-class Snowflake {
-    constructor() {
-        this.reset();
-    }
+        class Snowflake {
+            constructor() {
+                this.reset();
+            }
 
-    reset() {
-        this.x = Math.random() * snowCanvas.width;
-        this.y = Math.random() * -snowCanvas.height;
-        this.radius = Math.random() * 2.2 + 0.5;
-        this.speedY = Math.random() * 0.6 + 0.3;
-        this.speedX = Math.random() * 0.4 - 0.2;
-        this.opacity = Math.random() * 0.5 + 0.3;
-    }
+        reset() {
+            this.x = Math.random() * snowCanvas.width;
+            this.y = Math.random() * -snowCanvas.height;
+            this.radius = Math.random() * 2.2 + 0.5;
+            this.speedY = Math.random() * 0.6 + 0.3;
+            this.speedX = Math.random() * 0.4 - 0.2;
+            this.opacity = Math.random() * 0.5 + 0.3;
+        }
 
-    update() {
-        this.y += this.speedY;
-        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2;
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2;
 
-        if (this.y > snowCanvas.height) {
-            this.reset();
-            this.y = 0;
+            if (this.y > snowCanvas.height) {
+                this.reset();
+                this.y = 0;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+            ctx.fill();
         }
     }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
-        ctx.fill();
-    }
-}
 
         function createSnow() {
             snowflakes = [];
@@ -1760,54 +1761,54 @@ setInterval(updateClockCapeTown, 1000);
             // 
 
             /* ===============================
-   INTERNAL REFRESH ENGINE
-================================ */
+            INTERNAL REFRESH ENGINE
+            ================================ */
 
-function internalRefresh() {
+            function internalRefresh() {
 
-    console.log("Internal refresh initiated...");
+                console.log("Internal refresh initiated...");
 
-    /* 1 — Scroll to top instantly */
-    window.scrollTo({ top: 0, behavior: "auto" });
+                /* 1 — Scroll to top instantly */
+                window.scrollTo({ top: 0, behavior: "auto" });
 
-    /* 2 — Reset terminal */
-    termOutput.innerHTML = `
-        <div>[ Eden stealth CV-1 portal REINITIALIZING ]</div>
-        <div>[ ENCRYPTION: running ]</div>
-        <br>
-        <div>type 'help' for commands...</div>
-    `;
+                /* 2 — Reset terminal */
+                termOutput.innerHTML = `
+                    <div>[ Eden stealth CV-1 portal REINITIALIZING ]</div>
+                    <div>[ ENCRYPTION: running ]</div>
+                    <br>
+                    <div>type 'help' for commands...</div>
+                `;
 
-    /* 3 — Restart snow engine */
-    cancelAnimationFrame(snowAnimationId);
-    createSnow();
-    animateSnow();
+                /* 3 — Restart snow engine */
+                cancelAnimationFrame(snowAnimationId);
+                createSnow();
+                animateSnow();
 
-    /* 4 — Restart typewriter */
-    const el = document.querySelector('.typing-effect');
-    if (el) {
-        el.innerHTML = '';
-        initTypewriter();
-    }
+                /* 4 — Restart typewriter */
+                const el = document.querySelector('.typing-effect');
+                if (el) {
+                    el.innerHTML = '';
+                    initTypewriter();
+                }
 
-    /* 5 — Re-fetch weather */
-    fetchWeather();
+                /* 5 — Re-fetch weather */
+                fetchWeather();
 
-    /* 6 — Close navigation panel */
-    nav.classList.remove("open");
+                /* 6 — Close navigation panel */
+                nav.classList.remove("open");
 
-    /* 7 — Close any open modals */
-    document.querySelectorAll(".modal-overlay").forEach(modal => {
-        modal.style.display = "none";
-    });
+                /* 7 — Close any open modals */
+                document.querySelectorAll(".modal-overlay").forEach(modal => {
+                    modal.style.display = "none";
+                });
 
-    /* 8 — Reset section animations */
-    document.querySelectorAll("section").forEach(sec => {
-        sec.classList.remove("revealed");
-        observer.observe(sec);
-    });
+                /* 8 — Reset section animations */
+                document.querySelectorAll("section").forEach(sec => {
+                    sec.classList.remove("revealed");
+                    observer.observe(sec);
+                });
 
-}
+            }
 
 // 
 
@@ -1904,64 +1905,42 @@ function toggleTheme(){
 
 })();
 
-</script>
+// INSTALL MOBILE APP
 
-<script>
-/* ===============================
-   PWA INSTALL SYSTEM — ALWAYS SHOW BUTTON
-================================ */
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+installBtn.style.display = 'none';
 
-let deferredPrompt = null;
-const installBtn = document.getElementById("installBtn");
-
-/* Capture install availability */
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault(); // Required
-    deferredPrompt = e;
-    console.log("Install prompt ready");
+// Listen for the beforeinstallprompt event
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // Prevent automatic prompt
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-block';
 });
 
-/* Button click */
-installBtn.addEventListener("click", async () => {
-
-    // If install is available → trigger it
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-
-        const { outcome } = await deferredPrompt.userChoice;
-
-        console.log("Install outcome:", outcome);
-
-        if (outcome === "accepted") {
-            console.log("User installed the app");
-        } else {
-            console.log("User dismissed install");
-        }
-
-        deferredPrompt = null;
-        return;
+// Handle button click
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+    } else {
+      console.log('User dismissed the A2HS prompt');
     }
-
-    // If not installable yet
-    alert("Install not available yet.\n\nMake sure:\n- You are using Chrome or Edge\n- The site is HTTPS\n- You have not already installed the app");
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+  }
 });
 
-/* If already installed */
-window.addEventListener("appinstalled", () => {
-    alert("App successfully installed!");
-});
-</script>
-
-<script>
+// Register service worker
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log("Service Worker Registered"))
-        .catch(err => console.log("SW failed:", err));
-    });
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('Service Worker registered'))
+    .catch((err) => console.error('Service Worker registration failed:', err));
 }
-</script>
 
+</script>
 
 </body>
 
