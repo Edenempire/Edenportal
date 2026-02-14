@@ -2,7 +2,7 @@
   "name": "Eden Stealth CV-1",
   "short_name": "Eden",
   "description": "Operator Unit Team Portal",
-  "start_url": "/index.html?v=1.0.0",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
