@@ -1,7 +1,7 @@
 {
   "name": "Eden Stealth CV-1",
   "short_name": "ES-CV-1",
-  "start_url": "/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

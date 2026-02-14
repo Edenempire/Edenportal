@@ -704,6 +704,7 @@
 
         /* TABLETS */
         @media (max-width: 1100px) {
+        
             .docs-layout {
                 grid-template-columns: 1fr;
             }
@@ -722,6 +723,7 @@
                 flex: 1 1 45%;
                 min-width: 140px;
             }
+            
         }
 
         /* PHONES */
@@ -748,6 +750,7 @@
             .section-title {
                 font-size: 1.4rem;
             }
+            
         }
 
         @media (max-width: 500px) {
@@ -782,9 +785,11 @@
             #hamburger {
                 display: block;
             }
+            
         }
 
         #snowCanvas {
+        
             position: fixed;
             top: 0;
             left: 0;
@@ -792,9 +797,11 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
+            
         }
 
         #rsaFlag {
+        
             position: fixed;
             bottom: 18px;
             left: 28px;
@@ -806,6 +813,7 @@
             opacity: 0.9;
             transition: transform 0.3s ease, opacity 0.3s ease;
             pointer-events: none; /* doesn't block buttons */
+            
         }
 
         /* Subtle hover life */
@@ -830,6 +838,7 @@
 
         /* Hide default horizontal layout */
         .nav-system {
+        
             position: fixed;
             top: var(--header-h);
             right: -320px;
@@ -845,15 +854,19 @@
             overflow-y: auto;
             z-index: 4000;
             box-shadow: -10px 0 30px rgba(0,255,255,0.15);
+            
         }
 
         /* When open */
         .nav-system.open {
+        
             right: 0;
+            
         }
 
         /* Always show hamburger */
         #hamburger {
+        
             display: block;
             position: absolute;
             right: 30px;
@@ -865,16 +878,20 @@
             color: var(--cyan);
             cursor: pointer;
             transition: var(--transition);
+            
         }
 
         #hamburger:hover {
+        
             background: var(--cyan);
             color: #000;
             box-shadow: var(--cyan-glow);
+            
         }
 
         /* Optional backdrop overlay */
         .nav-overlay {
+        
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.6);
@@ -883,11 +900,14 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
             z-index: 3500;
+            
         }
 
         .nav-overlay.active {
+        
             opacity: 1;
             pointer-events: auto;
+            
         }
 
         /* ============================
@@ -975,7 +995,6 @@
 
         }
 
-
         .splash-version{
 
         margin-top:10px;
@@ -988,7 +1007,6 @@
 
         }
 
-
         .loader{
 
         width:250px;
@@ -999,7 +1017,6 @@
         overflow:hidden;
 
         }
-
 
         .bar{
 
@@ -1013,7 +1030,6 @@
 
         }
 
-
         @keyframes loading{
 
         to{
@@ -1023,7 +1039,6 @@
         }
 
         }
-
 
         .loading-text{
 
@@ -1035,7 +1050,6 @@
 
         }
 
-
         @keyframes blink{
 
         50%{
@@ -1043,6 +1057,119 @@
         opacity:0.3;
 
         }
+
+        }
+
+        /* =====================================
+           PWA INSTALL BUTTON — ELITE VERSION
+           ===================================== */
+
+        #installBtn {
+
+            display: none;
+
+            background: transparent;
+
+            border: 2px solid var(--cyan);
+
+            color: var(--cyan);
+
+            padding: 15px 38px;
+
+            font-family: var(--font-tactical);
+
+            font-size: 0.9rem;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: var(--transition);
+
+        }
+
+        /* scanning glow line */
+        #installBtn::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(0,255,255,0.4),
+                transparent
+            );
+
+            transition: 0.6s;
+
+        }
+
+
+        /* hover */
+        #installBtn:hover {
+
+            color: #000;
+
+            background: var(--cyan);
+
+            box-shadow:
+            0 0 15px var(--cyan),
+            inset 0 0 10px rgba(0,255,255,0.5);
+
+        }
+
+
+        #installBtn:hover::before {
+
+            left: 100%;
+
+        }
+
+
+        /* CLICK */
+        #installBtn:active {
+
+            transform: scale(0.96);
+
+        }
+
+
+        /* INSTALLING STATE */
+        #installBtn.installing {
+
+            border-color: orange;
+
+            color: orange;
+
+            box-shadow: 0 0 15px orange;
+
+        }
+
+
+        /* INSTALLED STATE */
+        #installBtn.installed {
+
+            border-color: lime;
+
+            color: lime;
+
+            box-shadow: 0 0 20px lime;
 
         }
 
@@ -1106,7 +1233,6 @@
 
 </div>
 
-
     <header id="main-header">
         <div class="header-container">
             <a href="javascript:location.reload()" class="brand-unit">
@@ -1127,6 +1253,7 @@
                 <a href="#board" class="nav-link">Team profile</a>
                 <a href="#subsidiaries" class="nav-link">Branches</a>
                 <a href="essmain.html" class="nav-link">E.S.S</a>
+                <a href="our_story.html" class="nav-link">Our Story</a>
             </nav>
 
         </div>
@@ -1253,7 +1380,7 @@
 
                 <div class="ops-card">
                     <div class="ops-header">
-                        <img src="images/.jpg" class="ops-img" alt="Bayanda">
+                        <img src="images/bayanda.jpg" class="ops-img" alt="Bayanda">
                         <div class="ops-info">
                             <h3>Bayanda</h3>
                             <span>11. SENIOR SOFTWARE DEVELOPER</span>
@@ -1283,7 +1410,7 @@
                     <img src="images/parables.png" alt="Parables & Platters" class="branch-logo">
                     <div class="logo-scan"></div>
                     </div>
-                    <h3>Parables & Platters</h3>
+                    <h3>01. Parables & Platters</h3>
                     <p>Sector: Food</p>
                     <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">ACTIVE</span></div>
                     <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="pp.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
@@ -1294,9 +1421,31 @@
                     <img src="images/hopco.jpg" alt="HopCo Transportation" class="branch-logo">
                     <div class="logo-scan"></div>
                     </div>
-                    <h3>HopCo Transportation</h3>
+                    <h3>02. HopCo Transportation</h3>
                     <p>Sector: Tactical Transportation</p>
                     <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/ss.png" alt="Stainless Steel" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>03. Stainless Steel</h3>
+                    <p>Sector: Private Security</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">N/A</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/lawk.png" alt="Lawk National" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>04. Lawk National</h3>
+                    <p>Sector: Law</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">N/A</span></div>
                     <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
                 </div>
 
@@ -1349,6 +1498,11 @@
 
                 <button class="btn-tactical" style="width:100%;"><a href="eu.html" style="text-decoration: none; color: var(--cyan);">EU (ETERNAL UNIVERSITY)</a></button>
 
+                <br>
+                <br>
+
+                <button class="btn-tactical" style="width:100%;"><a href="kjv.html" style="text-decoration: none; color: var(--cyan);">KJV Holy Bible</a></button>
+
             </div>
 
             <div class="weather-panel">
@@ -1379,10 +1533,9 @@
         </p>
         <br>
 
-        <div class="container">
-            <h1>Install Our App</h1>
-            <button id="installBtn" style="display:none;">Install App</button>
-        </div>
+        <button id="installBtn">
+        INSTALL SYSTEM
+        </button>
 
     </footer>
 
@@ -1622,56 +1775,56 @@
 
         // 
 
-/* ===============================
-   CAPE TOWN LOCKED SYSTEM CLOCK
-================================ */
+        /* ===============================
+        CAPE TOWN LOCKED SYSTEM CLOCK
+        ================================ */
 
-function updateClockCapeTown() {
+        function updateClockCapeTown() {
 
-    const now = new Date();
+            const now = new Date();
 
-    // STRICTLY Cape Town timezone
-    const timeOptions = {
-        timeZone: 'Africa/Johannesburg',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
+            // STRICTLY Cape Town timezone
+            const timeOptions = {
+                timeZone: 'Africa/Johannesburg',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
 
-    const dateOptions = {
-        timeZone: 'Africa/Johannesburg',
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: '2-digit'
-    };
+            const dateOptions = {
+                timeZone: 'Africa/Johannesburg',
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit'
+            };
 
-    const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
-    const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
+            const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
+            const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
 
-    const clockEl = document.getElementById('sys-clock');
+            const clockEl = document.getElementById('sys-clock');
 
-    if (clockEl) {
-        clockEl.innerHTML = `
-            ${timeString}
-            <div style="
-                font-size:0.8rem;
-                font-family: var(--font-mono);
-                opacity:0.7;
-                margin-top:4px;
-            ">
-                ${dateString} // CAPE TOWN, SOUTH AFRICA
-            </div>
-        `;
-    }
-}
+            if (clockEl) {
+                clockEl.innerHTML = `
+                    ${timeString}
+                    <div style="
+                        font-size:0.8rem;
+                        font-family: var(--font-mono);
+                        opacity:0.7;
+                        margin-top:4px;
+                    ">
+                        ${dateString} // CAPE TOWN, SOUTH AFRICA
+                    </div>
+                `;
+            }
+        }
 
-/* Run immediately */
-updateClockCapeTown();
+        /* Run immediately */
+        updateClockCapeTown();
 
-/* Update every second */
-setInterval(updateClockCapeTown, 1000);
+        /* Update every second */
+        setInterval(updateClockCapeTown, 1000);
 
         /* ===============================
            TYPEWRITER EFFECT
@@ -1697,57 +1850,6 @@ setInterval(updateClockCapeTown, 1000);
             initTypewriter();
             console.log("Eden stealth CV-1: Tier 1 active.");
         };
-
-        /* ===============================
-            DOCUMENT HUB SYSTEM
-           ================================ */
-
-            let currentDoc = null;
-            const docs = {
-                1: "documents/1.pdf",
-                2: "documents/2.pdf",
-                3: "documents/3.pdf",
-                4: "documents/4.pdf",
-                5: "documents/5.pdf"
-            };
-
-            function openDocsHub() {
-                document.getElementById("docsModal").style.display = "flex";
-                loadDoc(1); // auto-load first doc
-            }
-
-            function closeDocsHub() {
-                document.getElementById("docsModal").style.display = "none";
-                document.getElementById("docViewer").src = "";
-            }
-
-            function loadDoc(num) {
-                currentDoc = docs[num];
-                document.getElementById("docViewer").src = currentDoc;
-            }
-
-            function downloadCurrentDoc() {
-                if (!currentDoc) return;
-                const link = document.createElement("a");
-                link.href = currentDoc;
-                link.download = currentDoc;
-                link.click();
-            }
-
-            async function downloadAllDocs() {
-                const zip = new JSZip();
-
-                for (const key in docs) {
-                    const fileName = docs[key];
-                    const response = await fetch(fileName);
-                    const blob = await response.blob();
-                    zip.file(fileName, blob);
-                }
-
-                zip.generateAsync({ type: "blob" }).then(function(content) {
-                    saveAs(content, "docs.zip");
-                });
-            }
 
             const hamburger = document.getElementById("hamburger");
             const nav = document.querySelector(".nav-system");
@@ -1812,65 +1914,162 @@ setInterval(updateClockCapeTown, 1000);
 
 // 
 
-// ===============================
-// PWA INSTALL PROMPT HANDLER
-// ===============================
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
+/* =========================================
+   EDEN STEALTH CV-1 — FULL PWA INSTALL CORE
+   ========================================= */
 
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'block';
-});
+let deferredPrompt = null;
 
-installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    installBtn.style.display = 'none';
+window.addEventListener("DOMContentLoaded", () => {
+
+    const installBtn = document.getElementById("installBtn");
+
+    if (!installBtn) {
+        console.warn("Install button not found");
+        return;
+    }
+
+
+    /* ===============================
+       INITIAL STATE
+       =============================== */
+
+    installBtn.style.display = "none";
+
+
+
+    /* ===============================
+       SERVICE WORKER REGISTER
+       =============================== */
+
+    if ("serviceWorker" in navigator) {
+
+        navigator.serviceWorker.register("sw.js")
+
+        .then(() => {
+
+            console.log("Service Worker Registered");
+
+        })
+
+        .catch(err => {
+
+            console.error("Service Worker Failed:", err);
+
+        });
+
+    }
+
+    /* ===============================
+       CHECK IF ALREADY INSTALLED
+       =============================== */
+
+    if (
+
+        window.matchMedia("(display-mode: standalone)").matches ||
+
+        window.navigator.standalone === true
+
+    ) {
+
+        console.log("App already installed");
+
+        installBtn.style.display = "none";
+
+        return;
+
+    }
+
+    /* ===============================
+       INSTALL AVAILABLE EVENT
+       =============================== */
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+
+        console.log("Install prompt available");
+
+        e.preventDefault();
+
+        deferredPrompt = e;
+
+        installBtn.style.display = "inline-block";
+
+    });
+
+    /* ===============================
+       INSTALL BUTTON CLICK
+       =============================== */
+
+    installBtn.addEventListener("click", async () => {
+
+        if (!deferredPrompt) {
+
+            console.log("Install prompt not ready");
+
+            return;
+
+        }
+
+        installBtn.innerText = "INSTALLING...";
+        installBtn.classList.add("installing");
+
+        deferredPrompt.prompt();
+
+        const { outcome } = await deferredPrompt.userChoice;
+
+
+        if (outcome === "accepted") {
+
+            console.log("User accepted install");
+
+            installBtn.innerText = "INSTALLED";
+
+        }
+
+        else {
+
+            console.log("User cancelled install");
+
+            installBtn.innerText = "INSTALL APP";
+
+        }
+
+
+        deferredPrompt = null;
+
+        installBtn.style.display = "none";
+
+    });
+
+    /* ===============================
+       INSTALL SUCCESS EVENT
+       =============================== */
+
+    window.addEventListener("appinstalled", () => {
+
+        console.log("PWA INSTALLED SUCCESSFULLY");
+
+        deferredPrompt = null;
+
+        installBtn.innerText = "INSTALLED";
+        installBtn.classList.remove("installing");
+        installBtn.classList.add("installed");
+
+        installBtn.style.display = "none";
+
+    });
+
+
 });
 
     </script>
-
-    <div class="modal-overlay" id="docsModal">
-
-        <div class="modal-body" style="max-width: 1000px;">
-            <span class="close-modal" onclick="closeDocsHub()">&times;</span>
-
-            <h2 class="section-title">Company Documents Vault</h2>
-
-            <div class="docs-layout">
-
-            <!-- PDF VIEWER -->
-            <iframe id="docViewer" src="" style="width:100%; height:600px; border:1px solid var(--cyan); background:#000;"></iframe>
-
-            <!-- CONTROLS -->
-            <div class="docs-controls">
-                
-                <button class="btn-tactical" onclick="loadDoc(1)">Open 1.pdf</button>
-                <button class="btn-tactical" onclick="loadDoc(2)">Open 2.pdf</button>
-                <button class="btn-tactical" onclick="loadDoc(3)">Open 3.pdf</button>
-                <button class="btn-tactical" onclick="loadDoc(4)">Open 4.pdf</button>
-                <button class="btn-tactical" onclick="loadDoc(5)">Open 5.pdf</button>
-
-                <div class="separator"></div>
-
-                <button class="btn-tactical" onclick="downloadCurrentDoc()">Download Current</button>
-                <button class="btn-tactical" onclick="downloadAllDocs()">Download ALL (ZIP)</button>
-
-            </div>
-            </div>
-
-        </div>
-        </div>
 
         <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag">
 
         <div class="nav-overlay" id="navOverlay"></div>
 
         <script>
+
         window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
         window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
 
@@ -1922,16 +2121,24 @@ installBtn.addEventListener('click', async () => {
             </script>
 
             <script>
+
             if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
                 .then(() => console.log('Service Worker Registered'))
                 .catch(err => console.log('SW registration failed:', err));
             }
+            
             </script>
 
             </body>
 
             </html>
+            
+            
+            
+            
+            
+            
 
 
 
