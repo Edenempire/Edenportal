@@ -1,523 +1,433 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>Direct Action: CV-7</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <title>Direct Action: CV-7</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="icon" href="logo.png">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
 
-    <link rel="icon" type="image/png" href="logo.png">
+/* =====================================================
+   TIER 1 ROOT SYSTEM
+===================================================== */
 
-    <style>
+:root{
+--bg:#020409;
+--panel:#071821;
+--accent:#00f0ff;
+--soft:#77faff;
+--ok:#00ff99;
+--warn:#ffaa00;
+--danger:#ff3355;
+--mono:'VT323',monospace;
+--ui:'Electrolize',sans-serif;
+--header:'Orbitron',sans-serif;
+--header-h:80px;
+}
 
-        :root {
+/* =====================================================
+   GLOBAL CONTROL
+===================================================== */
 
-            --bg: #010204;
-            --fg: #00fff7;
-            --soft: #88ffff;
-            --accent: #00aaff;
-            --ok: #00ff99;
-            --warn: #ffaa00;
-            --danger: #ff3355;
-            --panel: rgba(7, 24, 34, 0.9);
-            --panel-border: rgba(0, 255, 247, 0.3);
-            --font-ui: 'Electrolize', sans-serif;
-            --font-header: 'Orbitron', sans-serif;
-            --font-mono: 'VT323', monospace;
-            --header-h: 80px;
+*{margin:0;padding:0;box-sizing:border-box}
 
-        }
+html,body{
+height:100%;
+background:var(--bg);
+color:var(--accent);
+font-family:var(--mono);
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
 
-        /* -----------------------------------------------------
-           GLOBAL & SMOOTH TRANSITIONS
-        ----------------------------------------------------- */
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        
-        html, body { 
+/* MATRIX BACKGROUND */
+#matrixCanvas{
+position:fixed;
+inset:0;
+z-index:0;
+opacity:.18;
+}
 
-            height: 100%; 
-            background: var(--bg); 
-            color: var(--fg); 
-            overflow-x: hidden; 
-            scroll-behavior: smooth;
+/* CRT overlay */
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background:repeating-linear-gradient(
+to bottom,
+transparent,
+transparent 2px,
+rgba(0,255,255,.02) 3px
+);
+pointer-events:none;
+z-index:9999;
+}
 
-        }
+/* =====================================================
+   HEADER
+===================================================== */
 
-        body { 
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:var(--header-h);
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.95);
+border-bottom:1px solid var(--accent);
+z-index:1000;
+backdrop-filter:blur(12px);
+}
 
-            font-family: var(--font-mono); 
-            opacity: 0; 
-            transition: opacity 2s ease-in-out; 
+header h1{
+font-family:var(--header);
+letter-spacing:4px;
+font-size:clamp(.9rem,2vw,1.3rem);
+text-shadow:0 0 10px var(--accent);
+}
 
-        }
-        
-        body.loaded { opacity: 1; }
+/* =====================================================
+   HERO
+===================================================== */
 
-        /* CRT/SCANLINE OVERLAY */
-        body::before {
-            content: ""; position: fixed; inset: 0; pointer-events: none;
-            background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 247, 0.02) 3px);
-            z-index: 10001;
-        }
+main{
+position:relative;
+z-index:2;
+padding-top:var(--header-h);
+}
 
-        .glow {
-            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4), 0 0 12px rgba(0, 255, 255, 0.2);
-        }
+#hero{
+min-height:75vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:60px 20px;
+}
 
-        /* -----------------------------------------------------
-           HEADER & NAVIGATION
-        ----------------------------------------------------- */
-        header {
+#hero-inner{
+background:rgba(5,20,28,.9);
+border:1px solid rgba(0,255,255,.15);
+padding:clamp(40px,6vw,100px);
+text-align:center;
+box-shadow:0 0 60px rgba(0,255,255,.1);
+animation:fadeUp 1.5s ease forwards;
+}
 
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; background: rgba(0, 0, 0, 0.95);
-            border-bottom: 2px solid var(--accent); z-index: 1000;
-            backdrop-filter: blur(15px);
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
 
-        }
+#hero-inner h2{
+font-family:var(--header);
+font-size:clamp(2rem,7vw,4rem);
+letter-spacing:6px;
+}
 
-        .nav-left { display: flex; align-items: center; gap: clamp(10px, 2vw, 30px); }
-        
-        .home-btn {
+/* =====================================================
+   DEPARTMENTS
+===================================================== */
 
-            background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            padding: 10px 18px; cursor: pointer; font-family: var(--font-ui); font-size: 0.75rem;
-            transition: 0.4s; text-transform: uppercase; letter-spacing: 1px;
-            display: flex; align-items: center; gap: 8px;
+.section-title{
+text-align:center;
+font-family:var(--header);
+letter-spacing:10px;
+margin:60px 0 40px;
+font-size:clamp(1.5rem,4vw,2.5rem);
+}
 
-        }
-        .home-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
+padding:0 6% 120px;
+}
 
-        header h1 { 
+.card{
+position:relative;
+background:rgba(7,24,33,.85);
+border:1px solid rgba(0,255,255,.1);
+padding:50px 30px;
+text-align:center;
+transition:.4s cubic-bezier(.19,1,.22,1);
+cursor:pointer;
+overflow:hidden;
+}
 
-            font-family: var(--font-header); 
-            letter-spacing: 4px; 
-            font-size: clamp(0.9rem, 2vw, 1.3rem); 
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(0,255,255,.1),
+transparent
+);
+transition:.8s;
+}
 
-        }
+.card:hover::before{left:100%}
 
-        #hud-right { display: flex; gap: clamp(10px, 3vw, 40px); align-items: center; }
-        
-        #sysStatus { 
+.card:hover{
+transform:translateY(-10px);
+border-color:var(--accent);
+box-shadow:0 15px 40px rgba(0,255,255,.2);
+}
 
-            font-family: var(--font-ui); font-size: 0.8rem; padding: 5px 12px; 
-            border-radius: 2px; transition: all 0.5s ease;
-            white-space: nowrap;
+.card i{
+font-size:2.8rem;
+margin-bottom:20px;
+}
 
-        }
-        .status-green { color: var(--ok); border: 1px solid var(--ok); box-shadow: inset 0 0 8px rgba(0, 255, 153, 0.2); }
-        .status-warn { color: var(--warn); border: 1px solid var(--warn); }
-        .status-danger { color: var(--danger); border: 1px solid var(--danger); animation: pulse-red 0.8s infinite alternate; }
+.enter-btn{
+margin-top:20px;
+padding:10px 25px;
+background:transparent;
+border:1px solid var(--accent);
+color:var(--accent);
+cursor:pointer;
+font-family:var(--ui);
+letter-spacing:2px;
+transition:.3s;
+}
 
-        @keyframes pulse-red { from { opacity: 1; } to { opacity: 0.4; } }
+.enter-btn:hover{
+background:var(--accent);
+color:#000;
+}
 
-        /* -----------------------------------------------------
-           BOOT SEQUENCE
-        ----------------------------------------------------- */
-        #boot {
+/* =====================================================
+   AUTH MODAL
+===================================================== */
 
-            position: fixed; inset: 0; background: #000; z-index: 10002;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: var(--font-mono); font-size: 1.5rem; color: var(--fg);
-            transition: opacity 1s ease;
+#authOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.97);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:2000;
+}
 
-        }
-        .loading-text { margin-bottom: 20px; letter-spacing: 5px; }
-        .loading-bar { width: 280px; height: 3px; background: #111; position: relative; overflow: hidden; }
-        .loading-bar::after {
-            content: ""; position: absolute; left: -100%; width: 100%; height: 100%;
-            background: var(--fg); animation: progress 1.8s cubic-bezier(.47,0,.74,.71) forwards;
-        }
-        @keyframes progress { to { left: 0; } }
+#authBox{
+background:#040b10;
+border:1px solid var(--accent);
+padding:60px 40px;
+max-width:500px;
+width:95%;
+text-align:center;
+box-shadow:0 0 80px rgba(0,255,255,.2);
+}
 
-        /* HERO & CONTENT */
-        main { 
-            position: relative; 
-            z-index: 1; 
-            padding-top: var(--header-h); 
-            background: var(--bg); 
-        }
+#codeInput{
+width:100%;
+padding:18px;
+background:#000;
+border:1px solid var(--accent);
+color:var(--accent);
+text-align:center;
+letter-spacing:6px;
+font-size:1.5rem;
+margin:25px 0;
+}
 
-        #hero {
-            min-height: 80vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 1;
-        }
+/* =====================================================
+   FOOTER
+===================================================== */
 
-        #hero-inner {
-            max-width: 1100px; 
-            width: 100%; 
-            background: rgba(10, 25, 35, 0.85); /* icy panel */
-            border: 1px solid rgba(0, 255, 247, 0.15);
-            border-radius: 6px;
-            padding: clamp(40px, 8vw, 100px);
-            text-align: center; 
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 255, 247, 0.2); /* subtle icy glow */
-            transform: scale(0.95); 
-            opacity: 0;
-            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        body.loaded #hero-inner { 
-            transform: scale(1); 
-            opacity: 1; 
-        }
+#data-footer{
+position:fixed;
+bottom:0;
+width:100%;
+background:rgba(0,0,0,.9);
+border-top:1px solid rgba(0,255,255,.1);
+padding:8px 20px;
+display:flex;
+justify-content:space-between;
+font-size:.75rem;
+z-index:100;
+}
 
-        #hero-inner h2 {
-            font-family: var(--font-header);
-            font-size: clamp(2rem, 8vw, 5rem);
-            color: var(--fg);
-            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4), 0 0 12px rgba(0, 255, 255, 0.2); /* icy subtle glow */
-        }
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+header{height:auto;padding:20px}
+}
 
-        /* DEPARTMENTS TITLE */
-        .section-title {
-            text-align: center; 
-            font-family: var(--font-header);
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            margin: 80px 0 50px; 
-            letter-spacing: clamp(5px, 2vw, 15px);
-            text-transform: uppercase;
-            color: var(--soft);
-            text-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
-        }
-
-        /* GRID & DEPARTMENT CARDS */
-        .grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; 
-            padding: 0 5% 120px;
-            position: relative; /* ensures visible above hero */
-            z-index: 2;
-        }
-
-        .card {
-            background: rgba(10, 25, 35, 0.85); 
-            border: 1px solid rgba(0, 255, 247, 0.15);
-            padding: 50px 30px; 
-            text-align: center; 
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer; 
-            position: relative; 
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 255, 247, 0.15);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--fg);
-            box-shadow: 0 15px 30px rgba(0, 255, 247, 0.25);
-        }
-                .card i {
-            font-size: 3rem; 
-            margin-bottom: 20px; 
-            color: var(--accent); 
-            transition: 0.4s;
-        }
-
-        .card:hover i { 
-            transform: rotateY(180deg); 
-            color: var(--fg); 
-        }
-
-        .card h3 {
-            font-family: var(--font-ui); 
-            font-size: 1.4rem; 
-            margin-bottom: 10px; 
-            letter-spacing: 2px; 
-            color: var(--fg);
-        }
-
-        .card p {
-            font-family: var(--font-mono); 
-            font-size: 1rem; 
-            color: var(--soft); 
-            opacity: 0.85;
-        }
-
-        .enter-btn {
-            margin-top: 20px; 
-            padding: 10px 30px; 
-            background: transparent;
-            border: 1px solid var(--fg); 
-            color: var(--fg); 
-            font-family: var(--font-ui);
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-weight: bold; 
-            letter-spacing: 2px;
-        }
-                .enter-btn:hover { 
-            background: var(--fg); 
-            color: #000; 
-            box-shadow: 0 0 15px rgba(0, 255, 247, 0.25); 
-        }
-
-        /* -----------------------------------------------------
-           AUTH OVERLAY (MODAL)
-        ----------------------------------------------------- */
-        #authOverlay {
-
-            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            z-index: 5000; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); padding: 20px;
-
-        }
-        #authBox {
-
-            width: 100%; max-width: 500px; padding: clamp(30px, 5vw, 60px); 
-            background: #050a0f; border: 1px solid var(--fg); text-align: center;
-            box-shadow: 0 0 120px rgba(0, 255, 247, 0.15);
-
-        }
-        #authDept { margin: 15px 0; color: var(--accent); font-family: var(--font-ui); font-size: 0.9rem; }
-        
-        #codeInput {
-
-            width: 100%; padding: 18px; background: #000; border: 1px solid var(--accent);
-            color: var(--fg); font-family: var(--font-mono); font-size: 1.8rem;
-            text-align: center; letter-spacing: 8px; margin: 25px 0;
-            transition: 0.3s;
-
-        }
-        #codeInput:focus { border-color: var(--fg); box-shadow: 0 0 15px rgba(0,255,247,0.3); }
-
-        #authStatus { height: 25px; margin-bottom: 20px; font-weight: bold; font-size: 1.1rem; }
-
-        /* -----------------------------------------------------
-           MOBILE OPTIMIZATIONS
-        ----------------------------------------------------- */
-        @media(max-width: 600px) {
-
-            header { height: auto; padding: 15px; flex-direction: column; gap: 15px; }
-            .grid { grid-template-columns: 1fr; padding: 20px; }
-            #hero-inner { padding: 40px 20px; }
-            .home-btn { width: 100%; justify-content: center; }
-
-        }
-
-        /* -----------------------------------------------------
-           DATA DECORATION
-        ----------------------------------------------------- */
-        #data-footer {
-
-            position: fixed; bottom: 0; width: 100%; padding: 10px 20px;
-            background: rgba(0,0,0,0.8); border-top: 1px solid rgba(0,255,247,0.1);
-            display: flex; justify-content: space-between; font-size: 0.7rem;
-            color: var(--accent); z-index: 100; pointer-events: none;
-
-        }
-
-    </style>
-
+</style>
 </head>
-
 <body>
 
-<div id="boot">
-    <div class="loading-text glow">INITIALIZING SECURE LINK...</div>
-    <div class="loading-bar"></div>
-</div>
+<canvas id="matrixCanvas"></canvas>
 
 <header>
-    <a href="index.html" title="back to home." style="text-decoration: none; color: var(--cyan)"><div class="nav-left">
-        <h1 class="glow">CV-7 (Direct Action.)</h1>
-    </div></a>
+<h1>CV-7 DIRECT ACTION</h1>
 </header>
 
 <main>
-    <section id="hero">
-        <div id="hero-inner">
-            <h2>01000011 01010110 00101101 00110111</h2>
-        </div>
-    </section>
 
-    <h2 class="section-title">DEPARTMENTS</h2>
-    <div class="grid" id="deptGrid">
-        <!-- departments rendered by JS -->
-    </div>
+<section id="hero">
+<div id="hero-inner">
+<h2>01000011 01010110 00101101 00110111</h2>
+</div>
+</section>
+
+<h2 class="section-title">DEPARTMENTS</h2>
+<div class="grid" id="deptGrid"></div>
+
 </main>
 
 <div id="authOverlay">
-    <div id="authBox">
-        <h3 id="authTitle" class="glow" style="font-family: 'Orbitron';">SECURE ACCESS</h3>
-        <p id="authDept"></p>
-        <input type="password" id="codeInput" autocomplete="off" placeholder="••••">
-        <div id="authStatus"></div>
-        <div style="display: flex; gap: 15px;">
-            <button class="enter-btn" style="flex:1" onclick="closeAuth()">ABORT</button>
-            <button class="enter-btn" style="flex:1; background: var(--fg); color: #000;" onclick="verify()">AUTHORIZE</button>
-        </div>
-    </div>
+<div id="authBox">
+<h3 style="font-family:Orbitron">SECURE ACCESS</h3>
+<p id="authDept"></p>
+<input type="password" id="codeInput" placeholder="••••">
+<div id="authStatus"></div>
+<button class="enter-btn" onclick="verify()">AUTHORIZE</button>
+<button class="enter-btn" onclick="closeAuth()">ABORT</button>
+</div>
 </div>
 
 <div id="data-footer">
-    <span>Operator: Eden</span>
-    <span>Team: ES-CV-1</span>
-    <span id="coord-display">REGIMENT: SAAF</span>
+<span>Operator: Eden</span>
+<span>Team: ES-CV-1</span>
+<span id="coord-display">REGIMENT: SAAF</span>
 </div>
 
 <script>
+
 /* =====================================================
-   CENTRAL COMMAND CONFIGURATION
+   MATRIX RAIN (BINARY ONLY)
 ===================================================== */
-const DEPARTMENTS = [
 
-    { id: 'ceo', name: '01. Executive', icon: 'fa-chess-king', code: 'CEO-02', file: 'ceo.html' },
-    { id: 'sc', name: '02. Supply Chain', icon: 'fa-truck-fast', code: 'SC-T3', file: 'scl.html' },
-    { id: 'tech', name: '03. Computer Science', icon: 'fa-microchip', code: 'TECH-77', file: 'compsci.html' },
-    { id: 'sec', name: '04. Compliance', icon: 'fa-shield-halved', code: 'LAW-33', file: 'compliance.html' }
+const canvas=document.getElementById("matrixCanvas");
+const ctx=canvas.getContext("2d");
 
+let width,height;
+function resize(){
+width=canvas.width=window.innerWidth;
+height=canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+const letters="01";
+const fontSize=18;
+let columns=Math.floor(width/fontSize);
+let drops=Array(columns).fill(1);
+
+function drawMatrix(){
+ctx.fillStyle="rgba(2,4,9,.15)";
+ctx.fillRect(0,0,width,height);
+
+ctx.fillStyle="#00f0ff";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+const text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>height&&Math.random()>0.975){
+drops[i]=0;
+}
+drops[i]++;
+}
+}
+
+setInterval(drawMatrix,80);
+
+/* =====================================================
+   DEPARTMENT ENGINE
+===================================================== */
+
+const DEPARTMENTS=[
+{id:'ceo',name:'01. Executive',icon:'fa-chess-king',code:'CEO-02',file:'ceo.html'},
+{id:'sc',name:'02. Supply Chain',icon:'fa-truck-fast',code:'SC-T3',file:'scl.html'},
+{id:'tech',name:'03. Computer Science',icon:'fa-microchip',code:'TECH-77',file:'compsci.html'},
+{id:'sec',name:'04. Compliance',icon:'fa-shield-halved',code:'LAW-33',file:'compliance.html'}
 ];
 
-let activeDept = null;
+let activeDept=null;
+
+function renderDepts(){
+const grid=document.getElementById("deptGrid");
+grid.innerHTML=DEPARTMENTS.map(d=>`
+<div class="card" onclick="openAuth('${d.id}')">
+<i class="fas ${d.icon}"></i>
+<h3>${d.name}</h3>
+<p>Access Level: Eden</p>
+<button class="enter-btn">ENTER</button>
+</div>
+`).join("");
+}
+renderDepts();
+
+function openAuth(id){
+activeDept=DEPARTMENTS.find(d=>d.id===id);
+document.getElementById("authDept").innerText="UPLINK TO: "+activeDept.name;
+document.getElementById("authOverlay").style.display="flex";
+document.getElementById("codeInput").value="";
+}
+
+function closeAuth(){
+document.getElementById("authOverlay").style.display="none";
+activeDept=null;
+}
+
+function verify(){
+if(!activeDept)return;
+const val=document.getElementById("codeInput").value;
+const status=document.getElementById("authStatus");
+
+if(val===activeDept.code){
+status.style.color="var(--ok)";
+status.innerText="ACCESS GRANTED";
+setTimeout(()=>{
+document.body.style.opacity="0";
+setTimeout(()=>{
+window.location.href="departments/"+activeDept.file;
+},700);
+},800);
+}else{
+status.style.color="var(--danger)";
+status.innerText="ACCESS DENIED";
+document.getElementById("authBox").animate(
+[{transform:"translateX(-10px)"},{transform:"translateX(10px)"},{transform:"translateX(0)"}],
+{duration:200,iterations:3}
+);
+}
+}
 
 /* =====================================================
-   INITIALIZATION
+   SECURITY HARDENING
 ===================================================== */
-window.addEventListener('load', () => {
-    window.scrollTo(0,0);
-    
-    setTimeout(() => {
-        const boot = document.getElementById('boot');
-        boot.style.opacity = '0';
-        setTimeout(() => boot.style.display = 'none', 1000);
-        
-        document.body.classList.add('loaded');
-        renderDepts();  // must stay
-        startClock();
-        initDynamicUI();
-    }, 2000);
+
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape")closeAuth();
+if(e.key==="Enter" && document.getElementById("authOverlay").style.display==="flex")verify();
 });
 
-/* =====================================================
-   CORE ENGINE
-===================================================== */
-function renderDepts() {
-    const grid = document.getElementById('deptGrid');
-    grid.innerHTML = DEPARTMENTS.map(dept => `
-        <div class="card" onclick="openAuth('${dept.id}')">
-            <i class="fas ${dept.icon}"></i>
-            <h3>${dept.name}</h3>
-            <p>Access Level: Eden</p>
-            <button class="enter-btn">ENTER</button>
-        </div>
-    `).join('');
-}
-
-function openAuth(id) {
-    activeDept = DEPARTMENTS.find(d => d.id === id);
-    const overlay = document.getElementById('authOverlay');
-    const input = document.getElementById('codeInput');
-    
-    document.getElementById('authDept').textContent = `ESTABLISHING UPLINK TO: ${activeDept.name.toUpperCase()}`;
-    overlay.style.display = 'flex';
-    input.value = '';
-    document.getElementById('authStatus').textContent = '';
-    setTimeout(() => input.focus(), 100);
-}
-
-function closeAuth() {
-    document.getElementById('authOverlay').style.display = 'none';
-    activeDept = null;
-}
-
-function verify() {
-    const input = document.getElementById('codeInput').value;
-    const status = document.getElementById('authStatus');
-
-    if (!activeDept) return;
-
-    if (input === activeDept.code) {
-        status.style.color = 'var(--ok)';
-        status.textContent = "ACCESS GRANTED. REDIRECTING...";
-        updateStatusDisplay('AUTHORIZED', 'green');
-        
-        // SUCCESS TRANSITION
-        setTimeout(() => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                // REDIRECT TO FOLDER: departments/[filename]
-                window.location.href = `departments/${activeDept.file}`;
-            }, 800);
-        }, 1000);
-    } else {
-        status.style.color = 'var(--danger)';
-        status.textContent = "ACCESS DENIED :: INVALID ACCESS CODE";
-        updateStatusDisplay('BREACH ALERT', 'danger');
-        
-        // SHAKE EFFECT
-        const box = document.getElementById('authBox');
-        box.animate([
-            { transform: 'translateX(-15px)' },
-            { transform: 'translateX(15px)' },
-            { transform: 'translateX(0)' }
-        ], { duration: 150, iterations: 3 });
-    }
-}
-
-/* =====================================================
-   UI LOGIC & INPUTS
-===================================================== */
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        const isAuthOpen = document.getElementById('authOverlay').style.display === 'flex';
-        if (isAuthOpen) verify();
-    }
-    if (e.key === 'Escape') closeAuth();
+/* Mouse coordinate HUD */
+document.addEventListener("mousemove",e=>{
+document.getElementById("coord-display").innerText=
+"COORD: "+e.clientX+" , "+e.clientY;
 });
 
-function updateStatusDisplay(text, type) {
-    const el = document.getElementById('sysStatus');
-    el.className = `status-${type}`;
-    el.textContent = `STATUS: ${text}`;
-}
-
-function startClock() {
-    const clock = document.getElementById('clock');
-    setInterval(() => {
-        const d = new Date();
-        clock.textContent = d.getHours().toString().padStart(2,'0') + ":" + 
-                            d.getMinutes().toString().padStart(2,'0') + ":" + 
-                            d.getSeconds().toString().padStart(2,'0');
-    }, 1000);
-}
-
-function initDynamicUI() {
-    // Mouse Tracker for bottom bar
-    document.addEventListener('mousemove', (e) => {
-        document.getElementById('coord-display').textContent = `COORD: ${e.clientX}, ${e.clientY}`;
-    });
-
-    // Random Status Jitter
-    setInterval(() => {
-        if (Math.random() > 0.8) {
-            updateStatusDisplay('ENCRYPTING', 'warn');
-            setTimeout(() => updateStatusDisplay('OPTIMAL', 'green'), 2000);
-        }
-    }, 15000);
-}
-
-// Security: Disable Right Click
-document.addEventListener('contextmenu', e => e.preventDefault());
 </script>
-
 </body>
-
 </html>

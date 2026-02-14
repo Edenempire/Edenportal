@@ -47,6 +47,79 @@
 
         }
 
+        /*  */
+
+        /* ===============================
+        THEME: GREEN-YELLOW MODE
+        =============================== */
+
+        body.green-yellow {
+
+            --cyan: #d4ff00;
+            --cyan-dim: rgba(212, 255, 0, 0.18);
+            --cyan-glow: 0 0 18px rgba(212, 255, 0, 0.6);
+
+            --bg-black: #0b0f00;
+
+            --panel-bg: rgba(20, 30, 0, 0.88);
+
+        }
+
+        /* optional: smoother transition */
+        body,
+        .ops-card,
+        .branch-card,
+        #main-header,
+        #main-footer {
+
+            transition:
+            background 0.4s ease,
+            color 0.4s ease,
+            border-color 0.4s ease,
+            box-shadow 0.4s ease;
+
+        }
+
+        /* ===============================
+        FOOTER THEME BUTTON
+        =============================== */
+
+        .theme-toggle {
+
+            margin-top: 25px;
+
+            background: transparent;
+
+            border: 1px solid var(--cyan);
+
+            color: var(--cyan);
+
+            padding: 12px 28px;
+
+            font-family: var(--font-tactical);
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            transition: var(--transition);
+
+        }
+
+        .theme-toggle:hover {
+
+            background: var(--cyan);
+
+            color: #000;
+
+            box-shadow: var(--cyan-glow);
+
+        }
+
+        /*  */
+
         /* --- ALPHA BASE STYLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -751,82 +824,265 @@
         }
 
         /* ===============================
-   GLOBAL HAMBURGER NAV SYSTEM
-   (ALL SCREEN SIZES)
-================================ */
+        GLOBAL HAMBURGER NAV SYSTEM
+        (ALL SCREEN SIZES)
+        ================================ */
 
-/* Hide default horizontal layout */
-.nav-system {
-    position: fixed;
-    top: var(--header-h);
-    right: -320px;
-    width: 300px;
-    height: calc(100svh - var(--header-h));
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(12px);
-    flex-direction: column;
-    padding: 40px 30px;
-    gap: 25px;
-    transition: right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    border-left: 2px solid var(--cyan);
-    overflow-y: auto;
-    z-index: 4000;
-    box-shadow: -10px 0 30px rgba(0,255,255,0.15);
-}
+        /* Hide default horizontal layout */
+        .nav-system {
+            position: fixed;
+            top: var(--header-h);
+            right: -320px;
+            width: 300px;
+            height: calc(100svh - var(--header-h));
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(12px);
+            flex-direction: column;
+            padding: 40px 30px;
+            gap: 25px;
+            transition: right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            border-left: 2px solid var(--cyan);
+            overflow-y: auto;
+            z-index: 4000;
+            box-shadow: -10px 0 30px rgba(0,255,255,0.15);
+        }
 
-/* When open */
-.nav-system.open {
-    right: 0;
-}
+        /* When open */
+        .nav-system.open {
+            right: 0;
+        }
 
-/* Always show hamburger */
-#hamburger {
-    display: block;
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.8rem;
-    background: none;
-    padding: 8px 12px;
-    color: var(--cyan);
-    cursor: pointer;
-    transition: var(--transition);
-}
+        /* Always show hamburger */
+        #hamburger {
+            display: block;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+            background: none;
+            padding: 8px 12px;
+            color: var(--cyan);
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-#hamburger:hover {
-    background: var(--cyan);
-    color: #000;
-    box-shadow: var(--cyan-glow);
-}
+        #hamburger:hover {
+            background: var(--cyan);
+            color: #000;
+            box-shadow: var(--cyan-glow);
+        }
 
-/* Optional backdrop overlay */
-.nav-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 3500;
-}
+        /* Optional backdrop overlay */
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 3500;
+        }
 
-.nav-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+        .nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
+        /* ============================
+        ELITE SPLASH SCREEN
+        ============================ */
+
+        #eliteSplash{
+
+        position:fixed;
+        inset:0;
+        background:#000;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:999999;
+
+        animation: splashFade 1s ease 4s forwards;
+
+        }
+
+        @keyframes splashFade{
+
+        to{
+
+        opacity:0;
+        visibility:hidden;
+
+        }
+
+        }
+
+
+        .splash-core{
+
+        text-align:center;
+        color:#00ffff;
+
+        }
+
+
+        .splash-logo{
+
+        width:140px;
+        height:140px;
+
+        border-radius:50%;
+
+        border:3px solid cyan;
+
+        box-shadow:0 0 40px cyan;
+
+        animation: pulse 2s infinite;
+
+        }
+
+
+        @keyframes pulse{
+
+        0%{
+
+        box-shadow:0 0 20px cyan;
+
+        }
+
+        50%{
+
+        box-shadow:0 0 60px cyan;
+
+        }
+
+        100%{
+
+        box-shadow:0 0 20px cyan;
+
+        }
+
+        }
+
+
+        .splash-title{
+
+        font-family:Orbitron;
+        margin-top:20px;
+        letter-spacing:6px;
+
+        }
+
+
+        .splash-version{
+
+        margin-top:10px;
+
+        opacity:0.7;
+
+        font-family:VT323;
+
+        font-size:22px;
+
+        }
+
+
+        .loader{
+
+        width:250px;
+        height:4px;
+        background:#111;
+        margin-top:30px;
+
+        overflow:hidden;
+
+        }
+
+
+        .bar{
+
+        height:100%;
+
+        background:cyan;
+
+        width:0;
+
+        animation: loading 5s linear forwards;
+
+        }
+
+
+        @keyframes loading{
+
+        to{
+
+        width:100%;
+
+        }
+
+        }
+
+
+        .loading-text{
+
+        margin-top:15px;
+
+        font-family:VT323;
+
+        animation: blink 1s infinite;
+
+        }
+
+
+        @keyframes blink{
+
+        50%{
+
+        opacity:0.3;
+
+        }
+
+        }
 
     </style>
 
 </head>
 
 <body>
+
+    <!-- ELITE SPLASH SCREEN -->
+    <div id="eliteSplash">
+
+        <div class="splash-core">
+
+            <img src="logo.png" class="splash-logo">
+
+            <h1 class="splash-title">
+                Eden stealth CV-1
+            </h1>
+
+            <div class="splash-version">
+                Version 1.0.0
+            </div>
+
+            <div class="loader">
+                <div class="bar"></div>
+            </div>
+
+            <div class="loading-text">
+                INITIALIZING OPERATING SYSTEM...
+            </div>
+
+        </div>
+
+    </div>
+
     <canvas id="snowCanvas"></canvas>
     <div class="scanlines"></div>
 
-<div class="hud-nav">
+    <div class="hud-nav">
 
     <!-- INTERNAL REFRESH -->
     <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
@@ -1088,6 +1344,11 @@
 
                 <button class="btn-tactical" style="width:100%;"><a href="https://oldgamesdownload.com/file/62627-2/" style="text-decoration: none; color: var(--cyan);">Conflict: Vietnam (PC)</a></button>
 
+                <br>
+                <br>
+
+                <button class="btn-tactical" style="width:100%;"><a href="eu.html" style="text-decoration: none; color: var(--cyan);">EU (ETERNAL UNIVERSITY)</a></button>
+
             </div>
 
             <div class="weather-panel">
@@ -1109,6 +1370,9 @@
                 --:--:--
             </div>
         </div>
+
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
 
         <p style="font-family: var(--font-mono); opacity: 0.5; margin-top: 40px;">
             &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
@@ -1197,12 +1461,31 @@
                 const val = raw.toLowerCase();          // system parsing
                 termInput.value = '';
 
-                // 🔒 SECRET COMMAND — DO NOT LIST
+                // 🔒 ULTRA COVERT INTERNAL COMMAND (NOT LISTED)
                 if (raw === '1.') {
-                    printToTerm('access key accepted...', 'var(--cyan)');
+
+                    printToTerm('PASSING BIOMETRIC...', 'var(--cyan)');
+
+                    // Create loading animation
+                    let dots = 0;
+                    const loadingLine = document.createElement('div');
+                    loadingLine.style.color = 'var(--cyan)';
+                    loadingLine.innerHTML = '> AUTHENTICATING';
+                    termOutput.appendChild(loadingLine);
+                    termOutput.scrollTop = termOutput.scrollHeight;
+
+                    const loadingInterval = setInterval(() => {
+                        dots = (dots + 1) % 4;
+                        loadingLine.innerHTML = '> AUTHENTICATING' + '.'.repeat(dots);
+                        termOutput.scrollTop = termOutput.scrollHeight;
+                    }, 400);
+
+                    // After delay → redirect
                     setTimeout(() => {
-                        document.getElementById('cv7-link').click();
-                    }, 600);
+                        clearInterval(loadingInterval);
+                        window.location.href = "direct_action.html";
+                    }, 2200);
+
                     return;
                 }
 
@@ -1276,37 +1559,37 @@ class Snowflake {
     }
 }
 
-function createSnow() {
-    snowflakes = [];
-    for (let i = 0; i < snowCount; i++) {
-        snowflakes.push(new Snowflake());
-    }
-}
+        function createSnow() {
+            snowflakes = [];
+            for (let i = 0; i < snowCount; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
 
-let snowAnimationId;
+        let snowAnimationId;
 
-function animateSnow() {
-    ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+        function animateSnow() {
+            ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
 
-    snowflakes.forEach(flake => {
-        flake.update();
-        flake.draw();
-    });
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
 
-    snowAnimationId = requestAnimationFrame(animateSnow);
-}
+            snowAnimationId = requestAnimationFrame(animateSnow);
+        }
 
-createSnow();
-animateSnow();
-
-/* Proper pause/resume */
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-        cancelAnimationFrame(snowAnimationId);
-    } else {
+        createSnow();
         animateSnow();
-    }
-});
+
+        /* Proper pause/resume */
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                cancelAnimationFrame(snowAnimationId);
+            } else {
+                animateSnow();
+            }
+        });
 
         /* ===============================
            WEATHER ENGINE
@@ -1591,6 +1874,58 @@ function internalRefresh() {
         window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
         window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
         </script>
+
+        <script>
+
+            setTimeout(()=>{
+
+            document.getElementById("eliteSplash").remove();
+
+            },5000);
+
+            </script>
+
+            <script>
+
+/* ===============================
+THEME SYSTEM
+=============================== */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("green-yellow");
+
+    /* SAVE PREFERENCE */
+
+    if(document.body.classList.contains("green-yellow")){
+
+        localStorage.setItem("edenTheme","green-yellow");
+
+    }
+    else{
+
+        localStorage.setItem("edenTheme","default");
+
+    }
+
+}
+
+
+/* LOAD SAVED THEME */
+
+(function(){
+
+    const savedTheme = localStorage.getItem("edenTheme");
+
+    if(savedTheme === "green-yellow"){
+
+        document.body.classList.add("green-yellow");
+
+    }
+
+})();
+
+</script>
 
 </body>
 

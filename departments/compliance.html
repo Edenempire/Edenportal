@@ -8,185 +8,703 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compliance</title>
+<title>Compliance CV-7</title>
 
-<link rel="icon" href="logo.png">
+<link rel="icon" type="image/png" href="logo.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
 
+/* ===========================
+ROOT
+=========================== */
+
 :root{
+
 --bg:#000;
---panel:#0b0b0b;
---line:#00cfff;
---ok:#00ff41;
---danger:#ff0033;
---warn:#ffd000;
---text:#d6faff;
---font-ui:'Orbitron',sans-serif;
---font-tac:'Electrolize',sans-serif;
---font-code:'JetBrains Mono',monospace;
+--panel:#050505;
+--red:#ff0033;
+--green:#00ff41;
+--text:#ff0033;
+
+--font1:'Orbitron',sans-serif;
+--font2:'JetBrains Mono',monospace;
+
 }
-.theme-alt{
---bg:#061b00;
---panel:#0e2a00;
---line:#aaff00;
---ok:#00ff88;
---danger:#ffea00;
---text:#eaffd0;
+
+/* ===========================
+BASE
+=========================== */
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:var(--font-tac);overflow-x:hidden}
-header{text-align:center;padding:25px;border-bottom:2px solid var(--danger);position:sticky;top:0;background:#000;z-index:1000}
-header h1{font-family:var(--font-ui);letter-spacing:8px;color:var(--danger)}
-main{padding:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
-.panel{background:var(--panel);border:1px solid #111;padding:18px;position:relative}
-h2.section-title{grid-column:1/-1;border-left:5px solid var(--danger);padding-left:10px;font-family:var(--font-ui)}
-textarea,input,button{font-family:var(--font-code);background:#000;color:var(--ok);border:1px solid #222;padding:8px;width:100%}
-button{cursor:pointer}
-footer{margin-top:50px;padding:40px;border-top:1px solid #111;display:flex;justify-content:space-between;flex-wrap:wrap}
-.sa-flag{position:fixed;bottom:15px;left:15px;width:55px;height:35px;background:linear-gradient(#e03c31 33%,#fff 33%,#fff 66%,#001489 66%);border:1px solid #fff3}
-.sa-flag::before{content:'';position:absolute;width:50%;height:100%;background:#007a4d;clip-path:polygon(0 0,100% 50%,0 100%)}
+
+body{
+
+background:#000;
+color:var(--red);
+font-family:var(--font2);
+overflow-x:hidden;
+
+}
+
+/* ===========================
+HEADER
+=========================== */
+
+header{
+
+position:sticky;
+top:0;
+background:#000;
+padding:20px;
+text-align:center;
+border-bottom:1px solid var(--red);
+z-index:1000;
+
+}
+
+header h1{
+
+font-family:var(--font1);
+letter-spacing:6px;
+
+}
+
+/* ===========================
+MAIN
+=========================== */
+
+main{
+
+padding:20px;
+max-width:1400px;
+margin:auto;
+
+}
+
+/* ===========================
+SECTION
+=========================== */
+
+.section{
+
+margin-bottom:40px;
+border:1px solid #111;
+padding:20px;
+background:#050505;
+
+}
+
+.section h2{
+
+margin-bottom:15px;
+font-family:var(--font1);
+
+}
+
+/* ===========================
+PANELS
+=========================== */
+
+.panel{
+
+margin-top:15px;
+
+}
+
+/* ===========================
+INPUTS
+=========================== */
+
+textarea,
+input{
+
+width:100%;
+background:#000;
+border:1px solid #111;
+color:var(--green);
+padding:10px;
+margin-bottom:10px;
+font-family:var(--font2);
+
+}
+
+textarea{
+
+min-height:120px;
+
+}
+
+/* ===========================
+BUTTONS
+=========================== */
+
+button{
+
+padding:10px;
+margin-top:5px;
+margin-right:5px;
+border:none;
+cursor:pointer;
+font-family:var(--font2);
+
+}
+
+.save{
+
+background:#222;
+color:#fff;
+
+}
+
+.send{
+
+background:var(--green);
+color:#000;
+font-weight:bold;
+
+}
+
+.delete{
+
+background:#500;
+color:#fff;
+
+}
+
+/* ===========================
+OUTPUT
+=========================== */
+
+.output{
+
+margin-top:15px;
+padding:10px;
+border:1px solid var(--green);
+min-height:40px;
+color:var(--green);
+
+}
+
+/* ===========================
+CHECKLIST
+=========================== */
+
+.task{
+
+display:flex;
+gap:10px;
+margin-bottom:5px;
+
+}
+
+.task input[type=text]{
+
+flex:1;
+
+}
+
+/* ===========================
+FOOTER
+=========================== */
+
+footer{
+
+padding:30px;
+text-align:center;
+border-top:1px solid var(--red);
+margin-top:50px;
+
+}
+
+/* ===========================
+LOADING
+=========================== */
+
+.loading{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+
+}
+
+.loading.show{
+
+display:flex;
+
+}
+
+.loader{
+
+border:3px solid #111;
+border-top:3px solid var(--green);
+width:40px;
+height:40px;
+border-radius:50%;
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{transform:rotate(360deg)}
+
+}
+
+/* ===========================
+TOAST
+=========================== */
+
+.toast{
+
+position:fixed;
+bottom:20px;
+right:20px;
+background:#000;
+border:1px solid var(--green);
+padding:10px;
+display:none;
+color:var(--green);
+
+}
+
+.toast.show{
+
+display:block;
+
+}
+
+/* ===========================
+GLITCH BACKGROUND
+=========================== */
+
+canvas{
+
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+
+}
 
 </style>
-
 </head>
-
 <body>
 
+<canvas id="glitch"></canvas>
+
 <header>
-<h1>Compliance CV-7</h1>
-<button onclick="toggleTheme()">THEME</button>
+
+<h1><a href="/index.html" style="text-decoration: none; color: #ff0033;" title="back to home...">COMPLIANCE CV-7</a></h1>
+
 </header>
+
+<div class="loading" id="loading">
+<div class="loader"></div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <main>
 
-<h2 class="section-title">CV-7</h2>
-<div class="panel">
-Target: money <input id="goal" value="5000">
-<br>
-<br>
-Execution: Parables & Platters
-<br>
-<br>
-Current Total: R100
+<!-- SECTION 1 -->
 
-<div class="panel">
+<div class="section">
+
+<h2>SECTION 1 — TARGET</h2>
+
+<textarea id="s1_input"></textarea>
+
+<button class="save" onclick="save(1)">SAVE</button>
+
+<button class="send" onclick="send(1)">SEND</button>
+
+<div class="output" id="s1_output"></div>
+
+</div>
+
+
+<!-- SECTION 2 -->
+
+<div class="section">
+
+<h2>SECTION 2 — CHECKLIST</h2>
+
 <div id="tasks"></div>
+
 <input id="taskInput">
-<button onclick="addTask()">ADD SITUATION</button>
+
+<button class="save" onclick="addTask()">ADD</button>
+
+<button class="send" onclick="sendTasks()">SEND</button>
+
+<div class="output" id="s2_output"></div>
+
 </div>
 
-<div class="panel">
-<textarea id="note1"></textarea>
-<button onclick="saveNote(1)">SAVE</button>
+
+<!-- SECTION 3 -->
+
+<!-- We're gonna be uploading here -->
+
+<div class="section">
+
+<h2>SECTION 3 — INTEL LOG</h2>
+
+<textarea id="s3_input"></textarea>
+
+<button class="save" onclick="save(3)">SAVE</button>
+
+<button class="send" onclick="send(3)">SEND</button>
+
+<div class="output" id="s3_output"></div>
+
 </div>
 
-<div class="panel">
-<textarea id="note2"></textarea>
-<button onclick="saveNote(2)">SAVE</button>
+
+<!-- SECTION 4 -->
+
+<div class="section">
+
+<h2>SECTION 4 — n/a</h2>
+
+<textarea id="s4_input"></textarea>
+
+<button class="save" onclick="save(4)">SAVE</button>
+
+<button class="send" onclick="send(4)">SEND</button>
+
+<div class="output" id="s4_output"></div>
+
 </div>
 
-<h2 class="section-title">AI COMMAND CONSOLE</h2>
-<div class="panel">
-<input id="aiInput" placeholder="Enter command...">
-<div id="aiOutput"></div>
+
+<!-- SECTION 5 -->
+
+<div class="section">
+
+<h2>SECTION 5 — n/a</h2>
+
+<textarea id="s5_input"></textarea>
+
+<button class="save" onclick="save(5)">SAVE</button>
+
+<button class="send" onclick="send(5)">SEND</button>
+
+<div class="output" id="s5_output"></div>
+
 </div>
 
-<h2 class="section-title">DATA CONTROL</h2>
-<div class="panel">
-<button onclick="backup()">BACKUP DATA</button>
-<button onclick="resetSystem()">RESET SYSTEM</button>
-<div id="log"></div>
+
+<!-- SECTION 6 -->
+
+<div class="section">
+
+<h2>SECTION 6 — n/a</h2>
+
+<textarea id="s6_input"></textarea>
+
+<button class="save" onclick="save(6)">SAVE</button>
+
+<button class="send" onclick="send(6)">SEND</button>
+
+<div class="output" id="s6_output"></div>
+
 </div>
+
+
+<!-- SECTION 7 -->
+
+<div class="section">
+
+<h2>SECTION 7 — ZAMA MDLULI (AI)</h2>
+
+<input id="ai_input">
+
+<button class="send" onclick="ai()">SEND</button>
+
+<div class="output" id="ai_output"></div>
+
+</div>
+
 
 </main>
 
 <footer>
-<div>Psalms 27:1</div>
-<div>© EDEN</div>
-</footer>
-<div class="sa-flag"></div>
 
-<audio id="shot" src="https://www.soundjay.com/mechanical/gun-shot-01.mp3"></audio>
+"The Lord is my light and my salvation; whom shall I fear?" — Psalm 27:1 KJV
+
+</footer>
+
 
 <script>
 
-/* CLOCK */
-setInterval(()=>clock.innerText=new Date().toLocaleTimeString(),1000)
+/* ===========================
+DATABASE
+=========================== */
 
-/* THEME */
-function toggleTheme(){document.body.classList.toggle('theme-alt')}
+let DB = JSON.parse(localStorage.DB || "{}");
 
-/* AUDIO */
-document.addEventListener('click',()=>{shot.currentTime=0;shot.play().catch(()=>{})})
+/* ===========================
+SAVE
+=========================== */
 
-/* FINANCIAL SYSTEM */
-let total=Number(localStorage.total||0)
-function updateFinance(){
-current.innerText=total
-let g=Number(goal.value)
-progress.innerText=Math.min(100,((total/g)*100).toFixed(1))+"%"
-localStorage.total=total
+function save(id){
+
+DB["s"+id] = document.getElementById("s"+id+"_input").value;
+
+persist();
+
+toast("Saved");
+
 }
-function addIncome(){total+=100;updateFinance()}
-goal.oninput=updateFinance
-updateFinance()
 
-/* CHECKLIST */
-let tasksData=JSON.parse(localStorage.tasks||"[]")
+/* ===========================
+SEND
+=========================== */
+
+function send(id){
+
+load(true);
+
+setTimeout(()=>{
+
+DB["s"+id+"_output"] = DB["s"+id];
+
+persist();
+
+document.getElementById("s"+id+"_output").innerText = DB["s"+id];
+
+load(false);
+
+toast("Sent");
+
+},800);
+
+}
+
+/* ===========================
+TASKS CRUD
+=========================== */
+
+let tasks = DB.tasks || [];
+
 function renderTasks(){
-tasks.innerHTML=""
-tasksData.forEach((t,i)=>{
-let div=document.createElement('div')
-div.innerHTML=`<input type=checkbox ${t.done?'checked':''}> ${t.text}`
-div.querySelector('input').onchange=()=>{tasksData[i].done=!tasksData[i].done;saveTasks()}
-tasks.appendChild(div)
-})
-}
-function addTask(){tasksData.push({text:taskInput.value,done:false});taskInput.value="";saveTasks()}
-function saveTasks(){localStorage.tasks=JSON.stringify(tasksData);renderTasks()}
-renderTasks()
 
-/* NOTES */
-function saveNote(n){
-let val=btoa(document.getElementById("note"+n).value)
-localStorage["note"+n]=val
-}
-note1.value=atob(localStorage.note1||"")
-note2.value=atob(localStorage.note2||"")
+tasksDiv.innerHTML="";
 
-/* AI SIM */
-aiInput.onkeydown=e=>{
-if(e.key==="Enter"){
-let cmd=aiInput.value.toLowerCase()
-let r="UNKNOWN"
-if(cmd.includes("status")) r="SYSTEM GREEN"
-if(cmd.includes("finance")) r="R"+total
-aiOutput.innerText=r
-aiInput.value=""
-}
+tasks.forEach((t,i)=>{
+
+let div=document.createElement("div");
+
+div.className="task";
+
+div.innerHTML=`
+
+<input value="${t}">
+
+<button onclick="delTask(${i})">X</button>
+
+`;
+
+tasksDiv.appendChild(div);
+
+});
+
 }
 
-/* DATA CONTROL */
-function backup(){
-let data=JSON.stringify(localStorage)
-navigator.clipboard.writeText(data)
-log.innerText="DATA COPIED"
+function addTask(){
+
+tasks.push(taskInput.value);
+
+persist();
+
+renderTasks();
+
 }
-function resetSystem(){
-if(confirm("RESET?")){
-localStorage.clear()
-location.reload()
+
+function delTask(i){
+
+tasks.splice(i,1);
+
+persist();
+
+renderTasks();
+
 }
+
+function sendTasks(){
+
+DB.tasks_output = tasks;
+
+persist();
+
+s2_output.innerText = JSON.stringify(tasks,null,2);
+
+toast("Checklist Sent");
+
 }
+
+/* ===========================
+AI
+=========================== */
+
+function ai(){
+
+let cmd=ai_input.value;
+
+let res="UNKNOWN";
+
+if(cmd.includes("status")) res="ALL SYSTEMS READY";
+
+ai_output.innerText=res;
+
+}
+
+/* ===========================
+AUTO SAVE
+=========================== */
+
+setInterval(()=>{
+
+document.querySelectorAll("textarea").forEach((t,i)=>{
+
+DB["s"+(i+1)] = t.value;
+
+});
+
+persist();
+
+},2000);
+
+/* ===========================
+LOAD
+=========================== */
+
+function load(show){
+
+loading.classList.toggle("show",show);
+
+}
+
+/* ===========================
+PERSIST
+=========================== */
+
+function persist(){
+
+DB.tasks=tasks;
+
+localStorage.DB = JSON.stringify(DB);
+
+}
+
+/* ===========================
+TOAST
+=========================== */
+
+function toast(msg){
+
+toast.innerText=msg;
+
+toast.classList.add("show");
+
+setTimeout(()=>toast.classList.remove("show"),2000);
+
+}
+
+/* ===========================
+INIT
+=========================== */
+
+function init(){
+
+for(let i=1;i<=6;i++){
+
+if(DB["s"+i]){
+
+document.getElementById("s"+i+"_input").value = DB["s"+i];
+
+}
+
+if(DB["s"+i+"_output"]){
+
+document.getElementById("s"+i+"_output").innerText = DB["s"+i+"_output"];
+
+}
+
+}
+
+renderTasks();
+
+}
+
+init();
+
+/* ===========================
+GLITCH
+=========================== */
+
+let c=document.getElementById("glitch");
+let ctx=c.getContext("2d");
+
+function resize(){
+
+c.width=innerWidth;
+c.height=innerHeight;
+
+}
+
+resize();
+
+window.onresize=resize;
+
+function glitch(){
+
+ctx.clearRect(0,0,c.width,c.height);
+
+for(let i=0;i<5;i++){
+
+ctx.fillStyle="#003300";
+
+ctx.fillRect(
+
+Math.random()*c.width,
+Math.random()*c.height,
+Math.random()*2,
+Math.random()*40
+
+);
+
+}
+
+requestAnimationFrame(glitch);
+
+}
+
+glitch();
 
 </script>
 
 </body>
-
 </html>
+
+
+
+
 
 
 
