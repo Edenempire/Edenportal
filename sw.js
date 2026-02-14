@@ -1,41 +1,34 @@
-const CACHE_NAME = 'eden-cv1-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/logo.png',
-  '/logo.png',
-  '/logo.png',
-  '/style.css',  // if any external CSS
-  '/script.js',  // if you separate JS
-  '/images/hoss.png',
-  '/images/joy.jpg',
-  '/images/frost.jpg',
-  '/images/xan.jpg',
-  '/images/morpheus.jpg',
-  '/images/.jpg', // double-check this filename
-  '/images/parables.png',
-  '/images/hopco.jpg'
+const CACHE_NAME = "eden-cv1-v3";
+const FILES_TO_CACHE = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/script.js",
+  "/logo.png"
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
+self.addEventListener("activate", e => {
+  e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => key !== CACHE_NAME ? caches.delete(key) : null))
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
+      )
     )
   );
-  self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then(resp => resp || fetch(event.request))
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request)
+      .then(response => response || fetch(e.request))
   );
 });

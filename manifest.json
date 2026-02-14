@@ -1,20 +1,19 @@
 {
-  "name": "Eden stealth CV-1",
-  "short_name": "Eden",
-  "description": "Operator Unit Team Portal",
-  "start_url": "/index.html",
+  "name": "Eden Stealth CV-1",
+  "short_name": "ES-CV-1",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#000000",
-  "theme_color": "#00ffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
