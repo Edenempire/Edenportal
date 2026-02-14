@@ -1907,75 +1907,47 @@ setInterval(updateClockCapeTown, 1000);
 
 // INSTALL MOBILE APP
 
-// ===============================
-// PWA INSTALL HANDLER
-// ===============================
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
-// Hide button by default
-installBtn.style.display = 'none';
-
-// Listen for the beforeinstallprompt event
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent the mini-infobar from appearing on mobile
-    e.preventDefault();
-    deferredPrompt = e;
-
-    // Show the install button
-    installBtn.style.display = 'inline-block';
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-block';
 });
 
-// Click handler for the install button
 installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-
-    // Show the install prompt
-    deferredPrompt.prompt();
-
-    // Wait for the user response
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === 'accepted') {
-        console.log('User accepted the PWA install prompt');
-    } else {
-        console.log('User dismissed the PWA install prompt');
-    }
-
-    // Reset the deferred prompt
-    deferredPrompt = null;
-
-    // Hide the button after installation attempt
-    installBtn.style.display = 'none';
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log('User response to install:', outcome);
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
 });
 
-// Optional: detect if already installed
-window.addEventListener('appinstalled', () => {
-    console.log('PWA was installed');
-    installBtn.style.display = 'none';
-});
+// OFFLINE FUNCTIONALITY
 
-// ===============================
-// iOS SUPPORT (manual instructions)
-// ===============================
-const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
-
-if (isIos && !isInStandaloneMode) {
-    installBtn.style.display = 'inline-block';
-    installBtn.textContent = 'Tap here → Add to Home Screen';
-    installBtn.addEventListener('click', () => {
-        alert('To install this app on iOS: tap the Share button in Safari, then "Add to Home Screen"');
-    });
+function updateOnlineStatus() {
+  const banner = document.getElementById('offline-banner');
+  if (!navigator.onLine) {
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
 }
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+updateOnlineStatus(); // initial check
 
 </script>
 
 <script>
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker.register('/sw.js')
     .then(() => console.log('Service Worker Registered'))
-    .catch((err) => console.log('SW registration failed:', err));
+    .catch(err => console.log('SW registration failed:', err));
 }
 </script>
 
