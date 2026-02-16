@@ -548,465 +548,289 @@ z-index:-1;
 
 </footer>
 
+  <script>
 
-<script>
+/* =========================================
+   CV7 FULL STATE ENGINE — INFINITE LOOP
+========================================= */
 
-/* ===========================
-DATABASE
-=========================== */
+const STORAGE_KEY = "CV7_MASTER_DB_V1";
 
-let DB = JSON.parse(localStorage.DB || "{}");
+/* ================================
+   MASTER DATABASE
+================================ */
 
-/* ===========================
-SAVE
-=========================== */
+let DB = loadDB();
 
-function save(id){
+/* ================================
+   SAFE LOAD
+================================ */
 
-DB["s"+id] = document.getElementById("s"+id+"_input").value;
-
-persist();
-
-toast("Saved");
-
+function loadDB(){
+    try{
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || createEmptyDB();
+    }catch(e){
+        console.warn("DB Corrupted. Rebuilding.");
+        return createEmptyDB();
+    }
 }
 
-/* ===========================
-SEND
-=========================== */
-
-function send(id){
-
-load(true);
-
-setTimeout(()=>{
-
-DB["s"+id+"_output"] = DB["s"+id];
-
-persist();
-
-document.getElementById("s"+id+"_output").innerText = DB["s"+id];
-
-load(false);
-
-toast("Sent");
-
-},800);
-
-}
-
-  /* SECTION 3 */
-
-  let db;
-
-const request = indexedDB.open("CV7_INTEL_DB", 1);
-
-request.onupgradeneeded = e => {
-  db = e.target.result;
-  db.createObjectStore("files", { keyPath: "id" });
-};
-
-request.onsuccess = e => {
-  db = e.target.result;
-  loadFiles();
-};
-
-  function uploadFiles(){
-
-  const files = fileInput.files;
-  if(!files.length) return;
-
-  if(files.length > 7){
-    alert("Max 7 files at once.");
-    return;
-  }
-
-  showLoader();
-
-  const tx = db.transaction("files", "readwrite");
-  const store = tx.objectStore("files");
-
-  Array.from(files).forEach(file => {
-
-    const reader = new FileReader();
-
-    reader.onload = function(){
-
-      const entry = {
-        id: crypto.randomUUID(),
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        data: reader.result,
-        note: fileNote.value,
-        created: Date.now()
-      };
-
-      store.add(entry);
+function createEmptyDB(){
+    return {
+        sections:{},
+        outputs:{},
+        tasks:[],
+        ai:{input:"",output:""},
+        scroll:0,
+        version:1,
+        lastSaved:Date.now()
     };
-
-    reader.readAsDataURL(file);
-  });
-
-  tx.oncomplete = () => {
-    fileInput.value = "";
-    fileNote.value = "";
-    hideLoader();
-    loadFiles();
-    toast("Files Uploaded");
-  };
-
 }
 
-  function loadFiles(){
+/* ================================
+   GLOBAL PERSIST
+================================ */
 
-  intelLog.innerHTML = "";
+function persist(){
+    DB.lastSaved = Date.now();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+}
 
-  const tx = db.transaction("files", "readonly");
-  const store = tx.objectStore("files");
-  const request = store.getAll();
+/* ================================
+   AUTO SAVE LOOP (EVERY 1 SECOND)
+================================ */
 
-  request.onsuccess = () => {
+setInterval(()=>{
+    captureAll();
+    persist();
+},1000);
 
-    const files = request.result.sort((a,b)=>b.created-a.created);
+/* ================================
+   CAPTURE EVERYTHING
+================================ */
 
-    files.forEach(file => {
-      intelLog.appendChild(createFileCard(file));
+function captureAll(){
+
+    document.querySelectorAll("textarea").forEach(t=>{
+        DB.sections[t.id] = t.value;
     });
 
-  };
+    document.querySelectorAll(".output").forEach(o=>{
+        DB.outputs[o.id] = o.innerText;
+    });
+
+    DB.ai.input = ai_input.value;
+    DB.ai.output = ai_output.innerText;
+
+    DB.scroll = window.scrollY;
 }
 
-  function createFileCard(file){
+/* ================================
+   RESTORE EVERYTHING
+================================ */
 
-  const div = document.createElement("div");
-  div.className = "file-card";
+function restoreAll(){
 
-  let preview = "";
+    Object.keys(DB.sections).forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.value = DB.sections[id];
+    });
 
-  if(file.type.startsWith("image")){
-    preview = `<img src="${file.data}">`;
-  }
-  else if(file.type.startsWith("video")){
-    preview = `<video controls src="${file.data}"></video>`;
-  }
-  else if(file.type.startsWith("audio")){
-    preview = `<audio controls src="${file.data}"></audio>`;
-  }
-  else{
-    preview = `<a href="${file.data}" download="${file.name}">
-                 DOWNLOAD FILE
-               </a>`;
-  }
+    Object.keys(DB.outputs).forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.innerText = DB.outputs[id];
+    });
 
-  div.innerHTML = `
-    <h4>${file.name}</h4>
-    <div class="preview">${preview}</div>
-    <p class="note">${file.note || ""}</p>
-    <button onclick="deleteFile('${file.id}')" class="delete">DELETE</button>
-  `;
+    ai_input.value = DB.ai.input || "";
+    ai_output.innerText = DB.ai.output || "";
 
-  return div;
+    setTimeout(()=>{
+        window.scrollTo(0, DB.scroll || 0);
+    },200);
 }
 
-  function deleteFile(id){
+/* ================================
+   SAVE BUTTON
+================================ */
 
-  showLoader();
-
-  const tx = db.transaction("files", "readwrite");
-  const store = tx.objectStore("files");
-
-  store.delete(id);
-
-  tx.oncomplete = ()=>{
-    hideLoader();
-    loadFiles();
-    toast("Deleted");
-  };
+function save(id){
+    captureAll();
+    persist();
+    toast("Saved");
 }
 
-/* ===========================
-TASKS CRUD
-=========================== */
+/* ================================
+   SEND BUTTON
+================================ */
+
+function send(id){
+    showLoader();
+    setTimeout(()=>{
+        const input = document.getElementById("s"+id+"_input");
+        const output = document.getElementById("s"+id+"_output");
+        output.innerText = input.value;
+        captureAll();
+        persist();
+        hideLoader();
+        toast("Sent");
+    },500);
+}
+
+/* ================================
+   TASK SYSTEM (FULL PERSIST)
+================================ */
 
 let tasks = DB.tasks || [];
 
-function persist(){
-  DB.tasks = tasks;
-  localStorage.DB = JSON.stringify(DB);
-}
-
-/* ======================
-ADD TASK
-====================== */
-
 function addTask(){
-
-  const value = taskInput.value.trim();
-  if(!value) return;
-
-  showLoader();
-
-  setTimeout(()=>{
+    const value = taskInput.value.trim();
+    if(!value) return;
 
     tasks.unshift({
-      id: crypto.randomUUID(),
-      text: value,
-      completed: false,
-      created: Date.now()
+        id: crypto.randomUUID(),
+        text:value,
+        completed:false,
+        created:Date.now()
     });
 
+    DB.tasks = tasks;
     persist();
     renderTasks();
-    taskInput.value = "";
-    hideLoader();
-    toast("Task Added");
-
-  },300);
+    taskInput.value="";
 }
-
-/* ======================
-RENDER
-====================== */
 
 function renderTasks(){
+    activeTasks.innerHTML="";
+    completedTasks.innerHTML="";
 
-  activeTasks.innerHTML = "";
-  completedTasks.innerHTML = "";
-
-  const active = tasks.filter(t=>!t.completed);
-  const done = tasks.filter(t=>t.completed);
-
-  active.forEach(t=>activeTasks.appendChild(createTaskElement(t)));
-  done.forEach(t=>completedTasks.appendChild(createTaskElement(t)));
-
+    tasks.forEach(t=>{
+        const el = createTaskElement(t);
+        if(t.completed) completedTasks.appendChild(el);
+        else activeTasks.appendChild(el);
+    });
 }
-
-/* ======================
-CREATE TASK NODE
-====================== */
-
-function createTaskElement(task){
-
-  const div = document.createElement("div");
-  div.className = "task-item";
-  div.dataset.id = task.id;
-
-  div.innerHTML = `
-    <input type="checkbox"
-      ${task.completed ? "checked" : ""}
-      onchange="toggleTask('${task.id}')">
-
-    <span class="task-text ${task.completed ? "checked" : ""}">
-      ${task.text}
-    </span>
-
-    <button onclick="editTask('${task.id}')">✎</button>
-    <button onclick="deleteTask('${task.id}')" class="delete">X</button>
-  `;
-
-  return div;
-}
-
-/* ======================
-TOGGLE
-====================== */
 
 function toggleTask(id){
-
-  showLoader();
-
-  setTimeout(()=>{
-
-    const task = tasks.find(t=>t.id===id);
-    task.completed = !task.completed;
-
+    const t = tasks.find(x=>x.id===id);
+    t.completed=!t.completed;
+    DB.tasks=tasks;
     persist();
-    animateMove(id);
     renderTasks();
-    hideLoader();
-
-  },250);
 }
-
-/* ======================
-DELETE
-====================== */
 
 function deleteTask(id){
-
-  showLoader();
-
-  setTimeout(()=>{
-
     tasks = tasks.filter(t=>t.id!==id);
+    DB.tasks=tasks;
     persist();
     renderTasks();
-    hideLoader();
-    toast("Deleted");
-
-  },250);
 }
-
-/* ======================
-EDIT
-====================== */
 
 function editTask(id){
-
-  const task = tasks.find(t=>t.id===id);
-  const newText = prompt("Edit task:", task.text);
-  if(newText === null) return;
-
-  task.text = newText.trim();
-  persist();
-  renderTasks();
+    const t = tasks.find(x=>x.id===id);
+    const txt = prompt("Edit:",t.text);
+    if(txt===null) return;
+    t.text = txt.trim();
+    DB.tasks=tasks;
+    persist();
+    renderTasks();
 }
 
-/* ===========================
-AI
-=========================== */
+function createTaskElement(task){
+    const div=document.createElement("div");
+    div.className="task-item";
+    div.innerHTML=`
+        <input type="checkbox" ${task.completed?"checked":""}
+            onchange="toggleTask('${task.id}')">
+        <span class="task-text ${task.completed?"checked":""}">
+            ${task.text}
+        </span>
+        <button onclick="editTask('${task.id}')">✎</button>
+        <button onclick="deleteTask('${task.id}')" class="delete">X</button>
+    `;
+    return div;
+}
+
+/* ================================
+   AI PERSISTENT
+================================ */
 
 function ai(){
+    const cmd = ai_input.value;
+    let res = "UNKNOWN";
 
-let cmd=ai_input.value;
+    if(cmd.toLowerCase().includes("status"))
+        res="ALL SYSTEMS READY";
 
-let res="UNKNOWN";
-
-if(cmd.includes("status")) res="ALL SYSTEMS READY";
-
-ai_output.innerText=res;
-
+    ai_output.innerText=res;
+    captureAll();
+    persist();
 }
 
-/* ===========================
-AUTO SAVE
-=========================== */
-
-setInterval(()=>{
-
-document.querySelectorAll("textarea").forEach((t,i)=>{
-
-DB["s"+(i+1)] = t.value;
-
-});
-
-persist();
-
-},2000);
-
-/* ===========================
-LOAD
-=========================== */
-
-function load(show){
-
-loading.classList.toggle("show",show);
-
-}
-
-/* ===========================
-PERSIST
-=========================== */
-
-function persist(){
-
-DB.tasks=tasks;
-
-localStorage.DB = JSON.stringify(DB);
-
-}
-
-/* ===========================
-TOAST
-=========================== */
+/* ================================
+   TOAST
+================================ */
 
 function toast(msg){
-
-toast.innerText=msg;
-
-toast.classList.add("show");
-
-setTimeout(()=>toast.classList.remove("show"),2000);
-
+    const t=document.getElementById("toast");
+    t.innerText=msg;
+    t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),2000);
 }
 
-/* ===========================
-INIT
-=========================== */
+/* ================================
+   LOADER
+================================ */
 
-  function init(){
-
-  tasks = DB.tasks || [];
-  renderTasks();
-
+function showLoader(){
+    loading.classList.add("show");
+}
+function hideLoader(){
+    loading.classList.remove("show");
 }
 
-/* ===========================
-GLITCH
-=========================== */
+/* ================================
+   INIT
+================================ */
+
+window.onload=()=>{
+    restoreAll();
+    renderTasks();
+    glitch();
+};
+
+/* ================================
+   GLITCH LOOP
+================================ */
 
 let c=document.getElementById("glitch");
 let ctx=c.getContext("2d");
 
 function resize(){
-
-c.width=innerWidth;
-c.height=innerHeight;
-
+    c.width=innerWidth;
+    c.height=innerHeight;
 }
-
 resize();
-
 window.onresize=resize;
 
 function glitch(){
-
-ctx.clearRect(0,0,c.width,c.height);
-
-for(let i=0;i<5;i++){
-
-ctx.fillStyle="#003300";
-
-ctx.fillRect(
-
-Math.random()*c.width,
-Math.random()*c.height,
-Math.random()*2,
-Math.random()*40
-
-);
-
-}
-
-requestAnimationFrame(glitch);
-
-}
-
-glitch();
-
-  function animateMove(id){
-  const el = document.querySelector(`[data-id="${id}"]`);
-  if(!el) return;
-
-  el.style.transform = "scale(.95)";
-  setTimeout(()=>{
-    el.style.transform = "scale(1)";
-  },150);
-}
-
-  function showLoader(){
-  loading.classList.add("show");
-}
-
-function hideLoader(){
-  loading.classList.remove("show");
+    ctx.clearRect(0,0,c.width,c.height);
+    for(let i=0;i<5;i++){
+        ctx.fillStyle="#003300";
+        ctx.fillRect(
+            Math.random()*c.width,
+            Math.random()*c.height,
+            Math.random()*2,
+            Math.random()*40
+        );
+    }
+    requestAnimationFrame(glitch);
 }
 
 </script>
 
 </body>
 </html>
+
 
 
 
