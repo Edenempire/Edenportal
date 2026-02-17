@@ -1,4 +1,4 @@
-const CACHE_NAME = "eden-cv1-v3";
+const CACHE_NAME = "es-cv-1-v1.0.0";
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
