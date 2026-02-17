@@ -548,288 +548,312 @@ z-index:-1;
 
 </footer>
 
-  <script>
+  <script type="module">
 
-/* =========================================
-   CV7 FULL STATE ENGINE — INFINITE LOOP
-========================================= */
+/* =====================================================
+   FIREBASE INITIALIZATION
+===================================================== */
 
-const STORAGE_KEY = "CV7_MASTER_DB_V1";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import {
+  getFirestore,
+  doc, setDoc, getDoc, updateDoc, deleteDoc,
+  collection, addDoc, onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-/* ================================
-   MASTER DATABASE
-================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyCD2-b7h5lbfjybVWH1_b6Caii0ZFdnMYM",
+  authDomain: "eden-15b5e.firebaseapp.com",
+  projectId: "eden-15b5e",
+  storageBucket: "eden-15b5e.firebasestorage.app",
+  messagingSenderId: "527375997812",
+  appId: "1:527375997812:web:bf8bb59ebd243131d3ea21"
+};
 
-let DB = loadDB();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-/* ================================
-   SAFE LOAD
-================================ */
+/* =====================================================
+   LOCAL BACKUP SYSTEM
+===================================================== */
 
-function loadDB(){
-    try{
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || createEmptyDB();
-    }catch(e){
-        console.warn("DB Corrupted. Rebuilding.");
-        return createEmptyDB();
-    }
+const BACKUP_KEY = "CV7_FIRESTORE_BACKUP";
+
+function backup(data){
+  localStorage.setItem(BACKUP_KEY, JSON.stringify(data));
 }
 
-function createEmptyDB(){
-    return {
-        sections:{},
-        outputs:{},
-        tasks:[],
-        ai:{input:"",output:""},
-        scroll:0,
-        version:1,
-        lastSaved:Date.now()
-    };
+function loadBackup(){
+  try{
+    return JSON.parse(localStorage.getItem(BACKUP_KEY)) || {};
+  }catch{
+    return {};
+  }
 }
 
-/* ================================
-   GLOBAL PERSIST
-================================ */
+/* =====================================================
+   COLLECTION REFERENCES
+===================================================== */
 
-function persist(){
-    DB.lastSaved = Date.now();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
-}
+const sectionsCol = collection(db, "compliance_sections");
+const outputsCol  = collection(db, "compliance_outputs");
+const tasksCol    = collection(db, "compliance_tasks");
+const intelCol    = collection(db, "compliance_intel");
+const metaDoc     = doc(db, "compliance_meta", "system");
+const aiDoc       = doc(db, "compliance_meta", "ai");
 
-/* ================================
-   AUTO SAVE LOOP (EVERY 1 SECOND)
-================================ */
+/* =====================================================
+   SECTIONS CRUD
+===================================================== */
 
-setInterval(()=>{
-    captureAll();
-    persist();
-},1000);
+window.save = async function(id){
+  const textarea = document.getElementById("s"+id+"_input");
+  const content = textarea.value;
 
-/* ================================
-   CAPTURE EVERYTHING
-================================ */
+  await setDoc(doc(db,"compliance_sections","s"+id),{
+    content,
+    updated: serverTimestamp()
+  });
 
-function captureAll(){
+  mirrorBackup();
+  toast("Section Saved");
+};
 
-    document.querySelectorAll("textarea").forEach(t=>{
-        DB.sections[t.id] = t.value;
+function loadSections(){
+  onSnapshot(sectionsCol,(snap)=>{
+    snap.forEach(d=>{
+      const el = document.getElementById(d.id+"_input");
+      if(el) el.value = d.data().content;
     });
+    mirrorBackup();
+  });
+}
 
-    document.querySelectorAll(".output").forEach(o=>{
-        DB.outputs[o.id] = o.innerText;
+/* =====================================================
+   OUTPUTS CRUD
+===================================================== */
+
+window.send = async function(id){
+  const input = document.getElementById("s"+id+"_input").value;
+  const output = document.getElementById("s"+id+"_output");
+
+  output.innerText = input;
+
+  await setDoc(doc(db,"compliance_outputs","s"+id+"_output"),{
+    content:input,
+    updated: serverTimestamp()
+  });
+
+  mirrorBackup();
+  toast("Sent");
+};
+
+function loadOutputs(){
+  onSnapshot(outputsCol,(snap)=>{
+    snap.forEach(d=>{
+      const el = document.getElementById(d.id);
+      if(el) el.innerText = d.data().content;
     });
-
-    DB.ai.input = ai_input.value;
-    DB.ai.output = ai_output.innerText;
-
-    DB.scroll = window.scrollY;
+  });
 }
 
-/* ================================
-   RESTORE EVERYTHING
-================================ */
+/* =====================================================
+   TASKS CRUD
+===================================================== */
 
-function restoreAll(){
+window.addTask = async function(){
+  const value = taskInput.value.trim();
+  if(!value) return;
 
-    Object.keys(DB.sections).forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) el.value = DB.sections[id];
+  await addDoc(tasksCol,{
+    text:value,
+    completed:false,
+    created: serverTimestamp()
+  });
+
+  taskInput.value="";
+};
+
+function renderTask(id,data){
+  const div=document.createElement("div");
+  div.className="task-item";
+
+  div.innerHTML=`
+    <input type="checkbox" ${data.completed?"checked":""}>
+    <span class="task-text ${data.completed?"checked":""}">
+      ${data.text}
+    </span>
+    <button>✎</button>
+    <button class="delete">X</button>
+  `;
+
+  div.querySelector("input").onchange = async ()=>{
+    await updateDoc(doc(db,"compliance_tasks",id),{
+      completed:!data.completed
     });
+  };
 
-    Object.keys(DB.outputs).forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) el.innerText = DB.outputs[id];
+  div.querySelector("button").onclick = async ()=>{
+    const newText = prompt("Edit:",data.text);
+    if(!newText) return;
+    await updateDoc(doc(db,"compliance_tasks",id),{
+      text:newText
     });
+  };
 
-    ai_input.value = DB.ai.input || "";
-    ai_output.innerText = DB.ai.output || "";
+  div.querySelector(".delete").onclick = async ()=>{
+    await deleteDoc(doc(db,"compliance_tasks",id));
+  };
 
-    setTimeout(()=>{
-        window.scrollTo(0, DB.scroll || 0);
-    },200);
+  return div;
 }
 
-/* ================================
-   SAVE BUTTON
-================================ */
-
-function save(id){
-    captureAll();
-    persist();
-    toast("Saved");
-}
-
-/* ================================
-   SEND BUTTON
-================================ */
-
-function send(id){
-    showLoader();
-    setTimeout(()=>{
-        const input = document.getElementById("s"+id+"_input");
-        const output = document.getElementById("s"+id+"_output");
-        output.innerText = input.value;
-        captureAll();
-        persist();
-        hideLoader();
-        toast("Sent");
-    },500);
-}
-
-/* ================================
-   TASK SYSTEM (FULL PERSIST)
-================================ */
-
-let tasks = DB.tasks || [];
-
-function addTask(){
-    const value = taskInput.value.trim();
-    if(!value) return;
-
-    tasks.unshift({
-        id: crypto.randomUUID(),
-        text:value,
-        completed:false,
-        created:Date.now()
-    });
-
-    DB.tasks = tasks;
-    persist();
-    renderTasks();
-    taskInput.value="";
-}
-
-function renderTasks(){
+function loadTasks(){
+  onSnapshot(tasksCol,(snap)=>{
     activeTasks.innerHTML="";
     completedTasks.innerHTML="";
 
-    tasks.forEach(t=>{
-        const el = createTaskElement(t);
-        if(t.completed) completedTasks.appendChild(el);
-        else activeTasks.appendChild(el);
+    snap.forEach(d=>{
+      const el = renderTask(d.id,d.data());
+      if(d.data().completed)
+        completedTasks.appendChild(el);
+      else
+        activeTasks.appendChild(el);
     });
+  });
 }
 
-function toggleTask(id){
-    const t = tasks.find(x=>x.id===id);
-    t.completed=!t.completed;
-    DB.tasks=tasks;
-    persist();
-    renderTasks();
-}
+/* =====================================================
+   INTEL CRUD (METADATA)
+===================================================== */
 
-function deleteTask(id){
-    tasks = tasks.filter(t=>t.id!==id);
-    DB.tasks=tasks;
-    persist();
-    renderTasks();
-}
+window.uploadFiles = async function(){
+  const files = fileInput.files;
+  if(!files.length) return;
 
-function editTask(id){
-    const t = tasks.find(x=>x.id===id);
-    const txt = prompt("Edit:",t.text);
-    if(txt===null) return;
-    t.text = txt.trim();
-    DB.tasks=tasks;
-    persist();
-    renderTasks();
-}
+  for(let f of files){
+    await addDoc(intelCol,{
+      name:f.name,
+      type:f.type,
+      note:fileNote.value || "",
+      created:serverTimestamp()
+    });
+  }
 
-function createTaskElement(task){
-    const div=document.createElement("div");
-    div.className="task-item";
-    div.innerHTML=`
-        <input type="checkbox" ${task.completed?"checked":""}
-            onchange="toggleTask('${task.id}')">
-        <span class="task-text ${task.completed?"checked":""}">
-            ${task.text}
-        </span>
-        <button onclick="editTask('${task.id}')">✎</button>
-        <button onclick="deleteTask('${task.id}')" class="delete">X</button>
-    `;
-    return div;
-}
-
-/* ================================
-   AI PERSISTENT
-================================ */
-
-function ai(){
-    const cmd = ai_input.value;
-    let res = "UNKNOWN";
-
-    if(cmd.toLowerCase().includes("status"))
-        res="ALL SYSTEMS READY";
-
-    ai_output.innerText=res;
-    captureAll();
-    persist();
-}
-
-/* ================================
-   TOAST
-================================ */
-
-function toast(msg){
-    const t=document.getElementById("toast");
-    t.innerText=msg;
-    t.classList.add("show");
-    setTimeout(()=>t.classList.remove("show"),2000);
-}
-
-/* ================================
-   LOADER
-================================ */
-
-function showLoader(){
-    loading.classList.add("show");
-}
-function hideLoader(){
-    loading.classList.remove("show");
-}
-
-/* ================================
-   INIT
-================================ */
-
-window.onload=()=>{
-    restoreAll();
-    renderTasks();
-    glitch();
+  fileInput.value="";
+  fileNote.value="";
 };
 
-/* ================================
-   GLITCH LOOP
-================================ */
-
-let c=document.getElementById("glitch");
-let ctx=c.getContext("2d");
-
-function resize(){
-    c.width=innerWidth;
-    c.height=innerHeight;
+function loadIntel(){
+  onSnapshot(intelCol,(snap)=>{
+    intelLog.innerHTML="";
+    snap.forEach(d=>{
+      const div=document.createElement("div");
+      div.className="file-card";
+      div.innerHTML=`
+        <strong>${d.data().name}</strong>
+        <p>${d.data().note || ""}</p>
+        <button class="delete">DELETE</button>
+      `;
+      div.querySelector(".delete").onclick = async ()=>{
+        await deleteDoc(doc(db,"compliance_intel",d.id));
+      };
+      intelLog.appendChild(div);
+    });
+  });
 }
-resize();
-window.onresize=resize;
 
-function glitch(){
-    ctx.clearRect(0,0,c.width,c.height);
-    for(let i=0;i<5;i++){
-        ctx.fillStyle="#003300";
-        ctx.fillRect(
-            Math.random()*c.width,
-            Math.random()*c.height,
-            Math.random()*2,
-            Math.random()*40
-        );
-    }
-    requestAnimationFrame(glitch);
+/* =====================================================
+   AI CRUD
+===================================================== */
+
+window.ai = async function(){
+  const cmd = ai_input.value;
+  let res="UNKNOWN";
+
+  if(cmd.toLowerCase().includes("status"))
+    res="ALL SYSTEMS READY";
+
+  await setDoc(aiDoc,{
+    input:cmd,
+    output:res,
+    updated:serverTimestamp()
+  });
+};
+
+function loadAI(){
+  onSnapshot(aiDoc,(snap)=>{
+    if(!snap.exists()) return;
+    ai_input.value = snap.data().input || "";
+    ai_output.innerText = snap.data().output || "";
+  });
 }
+
+/* =====================================================
+   SYSTEM META (SCROLL + VERSION)
+===================================================== */
+
+window.addEventListener("scroll", async ()=>{
+  await setDoc(metaDoc,{
+    scroll:window.scrollY,
+    updated:serverTimestamp()
+  },{merge:true});
+});
+
+function loadMeta(){
+  onSnapshot(metaDoc,(snap)=>{
+    if(!snap.exists()) return;
+    setTimeout(()=>{
+      window.scrollTo(0,snap.data().scroll || 0);
+    },200);
+  });
+}
+
+/* =====================================================
+   BACKUP MIRROR
+===================================================== */
+
+async function mirrorBackup(){
+  const snapshot = {
+    sections:[],
+    outputs:[],
+    tasks:[]
+  };
+
+  const sSnap = await getDoc(metaDoc);
+  snapshot.meta = sSnap.exists()?sSnap.data():{};
+
+  backup(snapshot);
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.innerText=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+
+loadSections();
+loadOutputs();
+loadTasks();
+loadIntel();
+loadAI();
+loadMeta();
 
 </script>
 
 </body>
 </html>
+
 
 
 
