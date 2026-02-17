@@ -2062,7 +2062,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     </script>
 
-        <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag">
+        <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag" style="cursor:pointer;">
 
         <div class="nav-overlay" id="navOverlay"></div>
 
@@ -2127,6 +2127,93 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             
             </script>
+
+    <script>
+
+/* =========================================
+   EDEN AUDIO CONTROL SYSTEM
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const bgTrack = document.getElementById("bgTrack");
+    const anthemTrack = document.getElementById("anthemTrack");
+    const rsaFlag = document.getElementById("rsaFlag");
+
+    let anthemPlaying = false;
+
+    /* ===============================
+       AUTOPLAY BACKGROUND (SAFE)
+    =============================== */
+
+    function startBackground() {
+
+        bgTrack.volume = 0.35; // productive subtle level
+        bgTrack.play().catch(() => {
+            // Autoplay blocked until interaction
+            console.log("Autoplay blocked. Waiting for interaction.");
+        });
+
+    }
+
+    startBackground();
+
+    // If browser blocks autoplay, start on first user interaction
+    document.addEventListener("click", function initAudioOnce() {
+        startBackground();
+        document.removeEventListener("click", initAudioOnce);
+    });
+
+    /* ===============================
+       FLAG TOGGLE SYSTEM
+    =============================== */
+
+    rsaFlag.addEventListener("click", () => {
+
+        if (!anthemPlaying) {
+
+            // Pause background
+            bgTrack.pause();
+
+            // Play anthem
+            anthemTrack.currentTime = 0;
+            anthemTrack.volume = 0.8;
+            anthemTrack.play();
+
+            anthemPlaying = true;
+
+        } else {
+
+            // Pause anthem
+            anthemTrack.pause();
+
+            // Resume background
+            bgTrack.play();
+
+            anthemPlaying = false;
+        }
+
+    });
+
+    /* ===============================
+       WHEN ANTHEM ENDS
+       Background resumes automatically
+    =============================== */
+
+    anthemTrack.addEventListener("ended", () => {
+        anthemPlaying = false;
+        bgTrack.play();
+    });
+
+});
+
+</script>
+
+    <!-- ===============================
+     AUDIO ENGINE
+================================ -->
+<audio id="bgTrack" src="background.mp3" loop></audio>
+<audio id="anthemTrack" src="National_Anthem_RSA.mp3"></audio>
 
             </body>
 
