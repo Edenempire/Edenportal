@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#000;
+  --text:#ff0033;
+  --accent:#00ff41;
+  --panel:#050505;
+  --font1:'Orbitron',sans-serif;
+  --font2:'JetBrains Mono',monospace;
+}
+
+body {
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font2);
+  line-height:1.6;
+}
+
+header {
+  text-align:center;
+  padding:40px 20px;
+  border-bottom:1px solid var(--accent);
+}
+
+header h1 {
+  font-family:var(--font1);
+  letter-spacing:4px;
+}
+
+main {
+  max-width:900px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.section {
+  background:var(--panel);
+  padding:20px;
+  margin-bottom:20px;
+  border-left:5px solid var(--accent);
+  border-radius:4px;
+}
+
+.section h2 {
+  font-family:var(--font1);
+  margin-bottom:10px;
+}
+
+.section p {
+  margin-bottom:10px;
+}
+
+.timeline {
+  list-style:none;
+  padding-left:0;
+}
+
+.timeline li {
+  margin-bottom:20px;
+  border-left:3px solid var(--accent);
+  padding-left:15px;
+  position:relative;
+}
+
+.timeline li::before {
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:0;
+  width:14px;
+  height:14px;
+  background:var(--accent);
+  border-radius:50%;
+}
+
+footer {
+  text-align:center;
+  padding:30px;
+  border-top:1px solid var(--accent);
+  margin-top:50px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Our Story</h1>
+  <p>From humble beginnings to the vision we live today.</p>
+</header>
+
+<main>
+
+  <div class="section">
+    <h2>The Beginning</h2>
+    <p>It all started in a small garage, where our founders dreamed of creating something meaningful. With nothing but ideas and determination, the journey began.</p>
+  </div>
+
+  <div class="section">
+    <h2>First Milestones</h2>
+    <ul class="timeline">
+      <li><strong>2018:</strong> Company founded.</li>
+      <li><strong>2019:</strong> First product launched.</li>
+      <li><strong>2020:</strong> Expanded to international clients.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Growth & Vision</h2>
+    <p>Our team grew, our goals expanded, and our vision became clearer. We focused on innovation, community, and building a legacy for the future.</p>
+  </div>
+
+  <div class="section">
+    <h2>Today</h2>
+    <p>Today, we continue to push boundaries, deliver quality, and live by the values that started this journey. Our story is ongoing, and every team member contributes to the next chapter.</p>
+  </div>
+
+</main>
+
+<footer>
+  "Innovation is the heartbeat of our story."
+</footer>
+
+</body>
+</html>
