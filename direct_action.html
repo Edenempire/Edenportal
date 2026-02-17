@@ -397,10 +397,10 @@ if(val===activeDept.code){
 status.style.color="var(--ok)";
 status.innerText="ACCESS GRANTED";
 setTimeout(()=>{
-document.body.style.opacity="0";
-setTimeout(()=>{
-window.location.href=activeDept.file;
-},700);
+    document.body.style.opacity="0";
+    setTimeout(()=>{
+        window.location.href = activeDept.file;
+    },700);
 },800);
 }else{
 status.style.color="var(--danger)";
