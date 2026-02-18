@@ -1532,7 +1532,7 @@
         <br>
 
         <button id="installBtn">
-        INSTALL SYSTEM
+        INSTALL OUR MOBILE APP
         </button>
 
     </footer>
@@ -1910,8 +1910,6 @@
 
             }
 
-// 
-
 /* =========================================
    EDEN STEALTH CV-1 — FULL PWA INSTALL CORE
    ========================================= */
@@ -2130,90 +2128,71 @@ window.addEventListener("DOMContentLoaded", () => {
 
     <script>
 
-/* =========================================
-   EDEN AUDIO CONTROL SYSTEM
-   ========================================= */
+<script>
 
-document.addEventListener("DOMContentLoaded", () => {
+const flag = document.getElementById("rsaFlag");
 
-    const bgTrack = document.getElementById("bgTrack");
-    const anthemTrack = document.getElementById("anthemTrack");
-    const rsaFlag = document.getElementById("rsaFlag");
+const anthem = document.getElementById("anthemAudio");
 
-    let anthemPlaying = false;
+const bg = document.getElementById("bgAudio");
 
-    /* ===============================
-       AUTOPLAY BACKGROUND (SAFE)
-    =============================== */
+let anthemPlaying = false;
 
-    function startBackground() {
+flag.addEventListener("click", () => {
 
-        bgTrack.volume = 0.35; // productive subtle level
-        bgTrack.play().catch(() => {
-            // Autoplay blocked until interaction
-            console.log("Autoplay blocked. Waiting for interaction.");
-        });
+    if(!anthemPlaying){
+
+        // PLAY ANTHEM
+        anthem.play();
+
+        // PAUSE BACKGROUND
+        bg.pause();
+
+        flag.classList.add("playing");
+
+        anthemPlaying = true;
+
+    }else{
+
+        // PAUSE ANTHEM
+        anthem.pause();
+
+        // RESUME BACKGROUND
+        bg.play();
+
+        flag.classList.remove("playing");
+
+        anthemPlaying = false;
 
     }
 
-    startBackground();
+});
 
-    // If browser blocks autoplay, start on first user interaction
-    document.addEventListener("click", function initAudioOnce() {
-        startBackground();
-        document.removeEventListener("click", initAudioOnce);
-    });
+// ALSO handle anthem ending naturally
 
-    /* ===============================
-       FLAG TOGGLE SYSTEM
-    =============================== */
+anthem.addEventListener("ended", () => {
 
-    rsaFlag.addEventListener("click", () => {
+    bg.play();
 
-        if (!anthemPlaying) {
+    flag.classList.remove("playing");
 
-            // Pause background
-            bgTrack.pause();
-
-            // Play anthem
-            anthemTrack.currentTime = 0;
-            anthemTrack.volume = 0.8;
-            anthemTrack.play();
-
-            anthemPlaying = true;
-
-        } else {
-
-            // Pause anthem
-            anthemTrack.pause();
-
-            // Resume background
-            bgTrack.play();
-
-            anthemPlaying = false;
-        }
-
-    });
-
-    /* ===============================
-       WHEN ANTHEM ENDS
-       Background resumes automatically
-    =============================== */
-
-    anthemTrack.addEventListener("ended", () => {
-        anthemPlaying = false;
-        bgTrack.play();
-    });
+    anthemPlaying = false;
 
 });
 
 </script>
 
-    <!-- ===============================
-     AUDIO ENGINE
-================================ -->
-<audio id="bgTrack" src="background.mp3" loop></audio>
-<audio id="anthemTrack" src="National_Anthem_RSA.mp3"></audio>
+</script>
+
+<!-- BACKGROUND TRACK -->
+<audio id="bgAudio" autoplay loop>
+    <source src="background.mp3" type="audio/mpeg">
+</audio>
+
+<!-- NATIONAL ANTHEM -->
+<audio id="anthemAudio">
+    <source src="National_Anthem_RSA.mp3" type="audio/mpeg">
+</audio>
 
             </body>
 
