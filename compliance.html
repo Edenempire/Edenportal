@@ -550,309 +550,521 @@ z-index:-1;
 
   <script type="module">
 
-/* =====================================================
-   FIREBASE INITIALIZATION
-===================================================== */
+/* =========================================================
+CV-7 ENTERPRISE CORE
+LOCAL SAVE + CLOUD SEND + FULL RECOVERY + FULL FLOW
+========================================================= */
+
+
+/* =========================================================
+FIREBASE IMPORTS
+========================================================= */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+
 import {
-  getFirestore,
-  doc, setDoc, getDoc, updateDoc, deleteDoc,
-  collection, addDoc, onSnapshot,
-  serverTimestamp
+
+getFirestore,
+doc,
+setDoc,
+getDoc,
+onSnapshot,
+collection,
+addDoc,
+deleteDoc,
+updateDoc,
+serverTimestamp
+
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
+
+/* =========================================================
+CONFIG
+========================================================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCD2-b7h5lbfjybVWH1_b6Caii0ZFdnMYM",
-  authDomain: "eden-15b5e.firebaseapp.com",
-  projectId: "eden-15b5e",
-  storageBucket: "eden-15b5e.firebasestorage.app",
-  messagingSenderId: "527375997812",
-  appId: "1:527375997812:web:bf8bb59ebd243131d3ea21"
+
+apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+authDomain: "eden-4a8d3.firebaseapp.com",
+projectId: "eden-4a8d3",
+storageBucket: "eden-4a8d3.firebasestorage.app",
+messagingSenderId: "421147129483",
+appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+
 };
+
+
+/* =========================================================
+INITIALIZE
+========================================================= */
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
-/* =====================================================
-   LOCAL BACKUP SYSTEM
-===================================================== */
 
-const BACKUP_KEY = "CV7_FIRESTORE_BACKUP";
+/* =========================================================
+GLOBAL SAFE SYSTEM
+========================================================= */
 
-function backup(data){
-  localStorage.setItem(BACKUP_KEY, JSON.stringify(data));
+const LOCAL_KEY = "CV7_LOCAL";
+
+const loading = document.getElementById("loading");
+
+const toastBox = document.getElementById("toast");
+
+
+/* =========================================================
+LOADING SYSTEM
+========================================================= */
+
+function showLoading(){
+
+loading.classList.add("show");
+
 }
 
-function loadBackup(){
-  try{
-    return JSON.parse(localStorage.getItem(BACKUP_KEY)) || {};
-  }catch{
-    return {};
-  }
+function hideLoading(){
+
+loading.classList.remove("show");
+
 }
 
-/* =====================================================
-   COLLECTION REFERENCES
-===================================================== */
 
-const sectionsCol = collection(db, "compliance_sections");
-const outputsCol  = collection(db, "compliance_outputs");
-const tasksCol    = collection(db, "compliance_tasks");
-const intelCol    = collection(db, "compliance_intel");
-const metaDoc     = doc(db, "compliance_meta", "system");
-const aiDoc       = doc(db, "compliance_meta", "ai");
-
-/* =====================================================
-   SECTIONS CRUD
-===================================================== */
-
-window.save = async function(id){
-  const textarea = document.getElementById("s"+id+"_input");
-  const content = textarea.value;
-
-  await setDoc(doc(db,"compliance_sections","s"+id),{
-    content,
-    updated: serverTimestamp()
-  });
-
-  mirrorBackup();
-  toast("Section Saved");
-};
-
-function loadSections(){
-  onSnapshot(sectionsCol,(snap)=>{
-    snap.forEach(d=>{
-      const el = document.getElementById(d.id+"_input");
-      if(el) el.value = d.data().content;
-    });
-    mirrorBackup();
-  });
-}
-
-/* =====================================================
-   OUTPUTS CRUD
-===================================================== */
-
-window.send = async function(id){
-  const input = document.getElementById("s"+id+"_input").value;
-  const output = document.getElementById("s"+id+"_output");
-
-  output.innerText = input;
-
-  await setDoc(doc(db,"compliance_outputs","s"+id+"_output"),{
-    content:input,
-    updated: serverTimestamp()
-  });
-
-  mirrorBackup();
-  toast("Sent");
-};
-
-function loadOutputs(){
-  onSnapshot(outputsCol,(snap)=>{
-    snap.forEach(d=>{
-      const el = document.getElementById(d.id);
-      if(el) el.innerText = d.data().content;
-    });
-  });
-}
-
-/* =====================================================
-   TASKS CRUD
-===================================================== */
-
-window.addTask = async function(){
-  const value = taskInput.value.trim();
-  if(!value) return;
-
-  await addDoc(tasksCol,{
-    text:value,
-    completed:false,
-    created: serverTimestamp()
-  });
-
-  taskInput.value="";
-};
-
-function renderTask(id,data){
-  const div=document.createElement("div");
-  div.className="task-item";
-
-  div.innerHTML=`
-    <input type="checkbox" ${data.completed?"checked":""}>
-    <span class="task-text ${data.completed?"checked":""}">
-      ${data.text}
-    </span>
-    <button>✎</button>
-    <button class="delete">X</button>
-  `;
-
-  div.querySelector("input").onchange = async ()=>{
-    await updateDoc(doc(db,"compliance_tasks",id),{
-      completed:!data.completed
-    });
-  };
-
-  div.querySelector("button").onclick = async ()=>{
-    const newText = prompt("Edit:",data.text);
-    if(!newText) return;
-    await updateDoc(doc(db,"compliance_tasks",id),{
-      text:newText
-    });
-  };
-
-  div.querySelector(".delete").onclick = async ()=>{
-    await deleteDoc(doc(db,"compliance_tasks",id));
-  };
-
-  return div;
-}
-
-function loadTasks(){
-  onSnapshot(tasksCol,(snap)=>{
-    activeTasks.innerHTML="";
-    completedTasks.innerHTML="";
-
-    snap.forEach(d=>{
-      const el = renderTask(d.id,d.data());
-      if(d.data().completed)
-        completedTasks.appendChild(el);
-      else
-        activeTasks.appendChild(el);
-    });
-  });
-}
-
-/* =====================================================
-   INTEL CRUD (METADATA)
-===================================================== */
-
-window.uploadFiles = async function(){
-  const files = fileInput.files;
-  if(!files.length) return;
-
-  for(let f of files){
-    await addDoc(intelCol,{
-      name:f.name,
-      type:f.type,
-      note:fileNote.value || "",
-      created:serverTimestamp()
-    });
-  }
-
-  fileInput.value="";
-  fileNote.value="";
-};
-
-function loadIntel(){
-  onSnapshot(intelCol,(snap)=>{
-    intelLog.innerHTML="";
-    snap.forEach(d=>{
-      const div=document.createElement("div");
-      div.className="file-card";
-      div.innerHTML=`
-        <strong>${d.data().name}</strong>
-        <p>${d.data().note || ""}</p>
-        <button class="delete">DELETE</button>
-      `;
-      div.querySelector(".delete").onclick = async ()=>{
-        await deleteDoc(doc(db,"compliance_intel",d.id));
-      };
-      intelLog.appendChild(div);
-    });
-  });
-}
-
-/* =====================================================
-   AI CRUD
-===================================================== */
-
-window.ai = async function(){
-  const cmd = ai_input.value;
-  let res="UNKNOWN";
-
-  if(cmd.toLowerCase().includes("status"))
-    res="ALL SYSTEMS READY";
-
-  await setDoc(aiDoc,{
-    input:cmd,
-    output:res,
-    updated:serverTimestamp()
-  });
-};
-
-function loadAI(){
-  onSnapshot(aiDoc,(snap)=>{
-    if(!snap.exists()) return;
-    ai_input.value = snap.data().input || "";
-    ai_output.innerText = snap.data().output || "";
-  });
-}
-
-/* =====================================================
-   SYSTEM META (SCROLL + VERSION)
-===================================================== */
-
-window.addEventListener("scroll", async ()=>{
-  await setDoc(metaDoc,{
-    scroll:window.scrollY,
-    updated:serverTimestamp()
-  },{merge:true});
-});
-
-function loadMeta(){
-  onSnapshot(metaDoc,(snap)=>{
-    if(!snap.exists()) return;
-    setTimeout(()=>{
-      window.scrollTo(0,snap.data().scroll || 0);
-    },200);
-  });
-}
-
-/* =====================================================
-   BACKUP MIRROR
-===================================================== */
-
-async function mirrorBackup(){
-  const snapshot = {
-    sections:[],
-    outputs:[],
-    tasks:[]
-  };
-
-  const sSnap = await getDoc(metaDoc);
-  snapshot.meta = sSnap.exists()?sSnap.data():{};
-
-  backup(snapshot);
-}
-
-/* =====================================================
-   TOAST
-===================================================== */
+/* =========================================================
+TOAST SYSTEM
+========================================================= */
 
 function toast(msg){
-  const t=document.getElementById("toast");
-  t.innerText=msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2000);
+
+toastBox.innerText = msg;
+
+toastBox.classList.add("show");
+
+setTimeout(()=>{
+
+toastBox.classList.remove("show");
+
+},3000);
+
 }
 
-/* =====================================================
-   INIT
-===================================================== */
+
+/* =========================================================
+LOCAL STORAGE ENGINE
+========================================================= */
+
+function getLocal(){
+
+try{
+
+return JSON.parse(localStorage.getItem(LOCAL_KEY)) || {};
+
+}catch{
+
+return {};
+
+}
+
+}
+
+
+function saveLocal(data){
+
+localStorage.setItem(LOCAL_KEY,JSON.stringify(data));
+
+}
+
+
+function saveLocalSection(id,value){
+
+let data = getLocal();
+
+data["s"+id] = value;
+
+saveLocal(data);
+
+}
+
+
+function loadLocalSection(id){
+
+let data = getLocal();
+
+return data["s"+id] || "";
+
+}
+
+
+/* =========================================================
+SECTION SAVE (LOCAL)
+========================================================= */
+
+window.save = async function(id){
+
+try{
+
+showLoading();
+
+let value = document.getElementById("s"+id+"_input").value;
+
+saveLocalSection(id,value);
+
+toast("Saved Locally");
+
+}catch(e){
+
+toast("Local Save Error");
+
+console.error(e);
+
+}
+
+hideLoading();
+
+};
+
+
+/* =========================================================
+SECTION SEND (CLOUD)
+========================================================= */
+
+window.send = async function(id){
+
+showLoading();
+
+try{
+
+let value = document.getElementById("s"+id+"_input").value;
+
+await setDoc(doc(db,"cv7_sections","s"+id),{
+
+content:value,
+
+time:serverTimestamp()
+
+});
+
+document.getElementById("s"+id+"_output").innerText=value;
+
+toast("Sent To Cloud");
+
+}catch(e){
+
+toast("Cloud Send Failed");
+
+console.error(e);
+
+}
+
+hideLoading();
+
+};
+
+
+/* =========================================================
+LOAD SECTIONS CLOUD FIRST LOCAL BACKUP SECOND
+========================================================= */
+
+async function loadSections(){
+
+showLoading();
+
+try{
+
+for(let i=1;i<=6;i++){
+
+let ref = doc(db,"cv7_sections","s"+i);
+
+let snap = await getDoc(ref);
+
+if(snap.exists()){
+
+let value = snap.data().content;
+
+document.getElementById("s"+i+"_input").value=value;
+
+document.getElementById("s"+i+"_output").innerText=value;
+
+saveLocalSection(i,value);
+
+}else{
+
+document.getElementById("s"+i+"_input").value=loadLocalSection(i);
+
+}
+
+}
+
+}catch(e){
+
+toast("Cloud Load Failed");
+
+console.error(e);
+
+}
+
+hideLoading();
+
+}
+
+
+/* =========================================================
+TASK SYSTEM CLOUD
+========================================================= */
+
+const taskCol = collection(db,"cv7_tasks");
+
+window.addTask = async function(){
+
+let input=document.getElementById("taskInput");
+
+if(!input.value)return;
+
+showLoading();
+
+try{
+
+await addDoc(taskCol,{
+
+text:input.value,
+
+done:false,
+
+time:serverTimestamp()
+
+});
+
+input.value="";
+
+toast("Task Added");
+
+}catch(e){
+
+toast("Task Add Failed");
+
+console.error(e);
+
+}
+
+hideLoading();
+
+};
+
+
+function renderTask(id,data){
+
+let div=document.createElement("div");
+
+div.className="task-item";
+
+div.innerHTML=`
+
+<input type="checkbox" ${data.done?"checked":""}>
+
+<span>${data.text}</span>
+
+<button>X</button>
+
+`;
+
+
+div.querySelector("input").onchange=async()=>{
+
+await updateDoc(doc(db,"cv7_tasks",id),{
+
+done:!data.done
+
+});
+
+};
+
+
+div.querySelector("button").onclick=async()=>{
+
+await deleteDoc(doc(db,"cv7_tasks",id));
+
+};
+
+
+return div;
+
+}
+
+
+function loadTasks(){
+
+onSnapshot(taskCol,(snap)=>{
+
+activeTasks.innerHTML="";
+
+completedTasks.innerHTML="";
+
+snap.forEach(docu=>{
+
+let el=renderTask(docu.id,docu.data());
+
+if(docu.data().done)
+
+completedTasks.appendChild(el);
+
+else
+
+activeTasks.appendChild(el);
+
+});
+
+});
+
+}
+
+
+/* =========================================================
+FILE SYSTEM LOCAL ONLY WITH PREVIEW
+========================================================= */
+
+window.uploadFiles=function(){
+
+let files=fileInput.files;
+
+if(!files.length)return;
+
+let store=getLocal();
+
+if(!store.files)store.files=[];
+
+Array.from(files).forEach(file=>{
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+store.files.push({
+
+name:file.name,
+
+type:file.type,
+
+data:reader.result,
+
+note:fileNote.value
+
+});
+
+saveLocal(store);
+
+loadFiles();
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+};
+
+
+function loadFiles(){
+
+intelLog.innerHTML="";
+
+let store=getLocal();
+
+if(!store.files)return;
+
+store.files.forEach((f,i)=>{
+
+let div=document.createElement("div");
+
+div.className="file-card";
+
+let preview="";
+
+if(f.type.startsWith("image"))
+
+preview=`<img src="${f.data}">`;
+
+else if(f.type.startsWith("video"))
+
+preview=`<video controls src="${f.data}"></video>`;
+
+else if(f.type.startsWith("audio"))
+
+preview=`<audio controls src="${f.data}"></audio>`;
+
+div.innerHTML=`
+
+${preview}
+
+<p>${f.name}</p>
+
+<p>${f.note}</p>
+
+<button onclick="deleteFile(${i})">Delete</button>
+
+`;
+
+intelLog.appendChild(div);
+
+});
+
+}
+
+
+window.deleteFile=function(i){
+
+let store=getLocal();
+
+store.files.splice(i,1);
+
+saveLocal(store);
+
+loadFiles();
+
+};
+
+
+/* =========================================================
+AUTO SAVE
+========================================================= */
+
+setInterval(()=>{
+
+for(let i=1;i<=6;i++){
+
+saveLocalSection(i,document.getElementById("s"+i+"_input").value);
+
+}
+
+},5000);
+
+
+/* =========================================================
+NETWORK DETECTION
+========================================================= */
+
+window.addEventListener("offline",()=>toast("Offline"));
+
+window.addEventListener("online",()=>toast("Online Sync Ready"));
+
+
+/* =========================================================
+INIT
+========================================================= */
 
 loadSections();
-loadOutputs();
+
 loadTasks();
-loadIntel();
-loadAI();
-loadMeta();
+
+loadFiles();
+
+toast("CV7 READY");
 
 </script>
-
+  
 </body>
 </html>
+
 
 
 
