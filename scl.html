@@ -3,257 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supply Chain CV-7</title>
-
-<link rel="icon" href="logo.png">
+<title>SUPPLY CHAIN CV-5</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
 
-/* =====================================================
-ROOT VARIABLES
-===================================================== */
+/* =========================================
+ROOT
+========================================= */
 
 :root{
 
 --bg:#000;
 --panel:#050505;
---accent:#00ff41;
---accentSoft:#00ff4122;
---danger:#ff0033;
---text:#00ff41;
+--red:#ff0033;
+--redSoft:#ff003322;
+--text:#ff0033;
 
 --fontDisplay:'Orbitron',sans-serif;
 --fontMono:'JetBrains Mono',monospace;
 
---speed:0.3s;
-
 }
 
-/* =====================================================
+/* =========================================
 BASE
-===================================================== */
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-scroll-behavior:smooth;
-}
+========================================= */
 
 body{
 
 background:var(--bg);
 color:var(--text);
 font-family:var(--fontMono);
-
-}
-
-/* =====================================================
-HEADER
-===================================================== */
-
-header{
-
-position:sticky;
-top:0;
-z-index:999;
-
-background:#000;
-border-bottom:1px solid var(--accent);
-
-padding:20px;
-
-text-align:center;
-
-}
-
-header h1{
-
-font-family:var(--fontDisplay);
-letter-spacing:6px;
-
-}
-
-header a{
-
-text-decoration:none;
-color:var(--accent);
-
-}
-
-/* =====================================================
-RIGHT NAVIGATION
-===================================================== */
-
-.quickNav{
-
-position:fixed;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-z-index:999;
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-}
-
-.quickNav button{
-
-background:#000;
-border:1px solid var(--accent);
-color:var(--accent);
-
-padding:10px;
-cursor:pointer;
-
-}
-
-.quickNav button:hover{
-
-background:var(--accent);
-color:#000;
-
-}
-
-/* =====================================================
-SECTIONS
-===================================================== */
-
-main{
-
-max-width:1400px;
-margin:auto;
-padding:20px;
+margin:0;
 
 }
 
 .section{
 
-border:1px solid var(--accentSoft);
+border:1px solid var(--redSoft);
+padding:20px;
+margin:30px;
 
 background:var(--panel);
 
-padding:20px;
-margin-bottom:40px;
-
-position:relative;
-
 }
 
-.section::before{
-
-content:"SUPPLY CHAIN MODULE";
-position:absolute;
-top:-10px;
-left:10px;
-font-size:10px;
-background:#000;
-padding:2px 6px;
-color:var(--accent);
-
-}
-
-.section h2{
+h2{
 
 font-family:var(--fontDisplay);
-margin-bottom:20px;
 
 }
 
-/* =====================================================
-DUAL PANEL WORKSPACE
-===================================================== */
-
-.workspace{
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-
-}
-
-/* =====================================================
-INPUT
-===================================================== */
-
-input,textarea{
+textarea,input{
 
 width:100%;
 background:#000;
-border:1px solid var(--accentSoft);
-color:var(--accent);
+color:var(--text);
+border:1px solid var(--redSoft);
 padding:10px;
+margin-bottom:10px;
 
 }
-
-textarea{
-
-min-height:120px;
-
-}
-
-/* =====================================================
-BUTTONS
-===================================================== */
 
 button{
 
 background:#000;
-border:1px solid var(--accent);
-color:var(--accent);
+color:var(--text);
+border:1px solid var(--text);
 padding:10px;
 cursor:pointer;
-
-transition:var(--speed);
+margin:3px;
 
 }
 
 button:hover{
 
-background:var(--accent);
+background:var(--text);
 color:#000;
 
 }
 
 .send{
 
-background:var(--accent);
+background:var(--text);
 color:#000;
+font-weight:bold;
+font-size:16px;
 
 }
-
-/* =====================================================
-OUTPUT
-===================================================== */
 
 .output{
 
-border:1px solid var(--accentSoft);
+border:1px solid var(--redSoft);
 padding:10px;
 margin-top:10px;
-min-height:40px;
 
 }
 
-/* =====================================================
-MESSAGE BOARD
-===================================================== */
-
-.msg{
-
-border:1px solid var(--accentSoft);
-padding:10px;
-margin-bottom:10px;
-
-}
-
-/* =====================================================
-LOADING
-===================================================== */
+/* LOADING */
 
 .loading{
 
@@ -262,30 +110,19 @@ width:100%;
 height:100%;
 background:#000;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 z-index:9999;
-
-opacity:1;
-transition:1s;
-
-}
-
-.loading.hide{
-
-opacity:0;
-pointer-events:none;
 
 }
 
 .loader{
 
-border:3px solid #111;
-border-top:3px solid var(--accent);
+border:4px solid #111;
+border-top:4px solid var(--text);
+border-radius:50%;
 width:60px;
 height:60px;
-border-radius:50%;
-
 animation:spin 1s linear infinite;
 
 }
@@ -293,29 +130,6 @@ animation:spin 1s linear infinite;
 @keyframes spin{
 
 100%{transform:rotate(360deg)}
-
-}
-
-/* =====================================================
-FOOTER
-===================================================== */
-
-footer{
-
-text-align:center;
-padding:40px;
-border-top:1px solid var(--accent);
-
-font-family:var(--fontDisplay);
-
-animation:pulse 4s infinite;
-
-}
-
-@keyframes pulse{
-
-0%,100%{opacity:1}
-50%{opacity:0.5}
 
 }
 
@@ -331,89 +145,121 @@ animation:pulse 4s infinite;
 </div>
 
 
-<header>
-
-<h1>
-
-<a href="/index.html">
-
-SUPPLY CHAIN CV-7
-
-</a>
-
-</h1>
-
-</header>
+<h1 style="text-align:center;font-family:Orbitron">SUPPLY CHAIN CV-5</h1>
 
 
-<div class="quickNav">
-
-<button onclick="scrollToTop()">TOP</button>
-
-<button onclick="scrollToMiddle()">MID</button>
-
-<button onclick="scrollToBottom()">BOT</button>
-
-</div>
-
-
-<main id="mainContent">
-
-
-<!-- TARGET -->
+<!-- =========================================
+SECTION 1 NOTEPAD
+========================================= -->
 
 <div class="section">
 
-<h2>TARGET OPERATIONS</h2>
+<h2>SECTION 1 — NOTEPAD CONTROL</h2>
 
-<div class="workspace">
+<textarea id="note"></textarea>
 
-<div>
+<button onclick="clearNote()">CLEAR</button>
 
-<textarea id="s1_input"></textarea>
+<button onclick="copyNote()">COPY</button>
 
-<button onclick="save(1)">SAVE</button>
+<button onclick="saveNote()">SAVE</button>
 
-<button class="send" onclick="send(1)">SEND</button>
+<button class="send" onclick="sendNote()">SEND</button>
 
-</div>
-
-<div id="s1_output" class="output"></div>
-
-</div>
+<div id="noteOutput" class="output"></div>
 
 </div>
 
 
-<!-- TEAM BOARD -->
+<!-- =========================================
+SECTION 2 MESSAGE BOARD
+========================================= -->
 
 <div class="section">
 
-<h2>TEAM MESSAGE BOARD</h2>
+<h2>SECTION 2 — TEAM BOARD</h2>
 
-<input id="codename" placeholder="Operator Codename">
+<input id="codename" placeholder="Codename">
 
-<textarea id="message"></textarea>
+<textarea id="msg"></textarea>
 
-<button class="send" onclick="postMessage()">SEND</button>
+<button onclick="clearMsg()">CLEAR</button>
+
+<button onclick="saveMsg()">SAVE</button>
+
+<button class="send" onclick="sendMsg()">SEND</button>
 
 <div id="board"></div>
 
 </div>
 
 
-<footer>
+<!-- =========================================
+SECTION 3 CHECKLIST
+========================================= -->
 
-"The Lord is my light and my salvation; whom shall I fear?" — Psalm 27:1 KJV
+<div class="section">
 
-</footer>
+<h2>SECTION 3 — CHECKLIST</h2>
+
+<input id="checkInput">
+
+<button onclick="saveCheck()">SAVE</button>
+
+<button class="send" onclick="sendCheck()">SEND</button>
+
+<div id="checklist"></div>
+
+</div>
 
 
-</main>
+<!-- =========================================
+SECTION 4 CALCULATOR
+========================================= -->
+
+<div class="section">
+
+<h2>SECTION 4 — CALCULATOR</h2>
+
+<input id="calcInput">
+
+<button onclick="calc()">CALCULATE</button>
+
+<button onclick="saveCalc()">SAVE</button>
+
+<button class="send" onclick="sendCalc()">SEND</button>
+
+<div id="calcOutput"></div>
+
+</div>
+
+
+<!-- =========================================
+SECTION 5 AI
+========================================= -->
+
+<div class="section">
+
+<h2>SECTION 5 — AI TERMINAL</h2>
+
+<textarea id="aiInput"></textarea>
+
+<button onclick="saveAI()">SAVE</button>
+
+<button class="send" onclick="sendAI()">SEND</button>
+
+<div id="aiOutput"></div>
+
+</div>
+
 
 
 <script type="module">
 
+
+/* =========================================
+FIREBASE
+========================================= */
 
 import { initializeApp }
 
@@ -425,8 +271,8 @@ getFirestore,
 doc,
 setDoc,
 getDoc,
-collection,
 addDoc,
+collection,
 onSnapshot,
 deleteDoc,
 updateDoc,
@@ -443,7 +289,7 @@ const firebaseConfig = {
 apiKey:"AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
 authDomain:"eden-4a8d3.firebaseapp.com",
 projectId:"eden-4a8d3",
-storageBucket:"eden-4a8d3.firebasestorage.app",
+storageBucket:"eden-4a8d3.appspot.com",
 messagingSenderId:"421147129483",
 appId:"1:421147129483:web:9495dfb813fe6195f2c68e"
 
@@ -451,144 +297,98 @@ appId:"1:421147129483:web:9495dfb813fe6195f2c68e"
 
 
 
-const app = initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-
-
-/* =====================================================
-LOADING ENGINE
-===================================================== */
-
-window.addEventListener("load",()=>{
-
-setTimeout(()=>{
-
-loading.classList.add("hide");
-
-},800);
-
-});
-
-
-/* =====================================================
-LOCAL STORAGE
-===================================================== */
-
-const LOCAL="SUPPLYCHAIN";
-
-function saveLocal(id,value){
-
-let data=JSON.parse(localStorage.getItem(LOCAL)||"{}");
-
-data[id]=value;
-
-localStorage.setItem(LOCAL,JSON.stringify(data));
-
-}
-
-
-function loadLocal(id){
-
-let data=JSON.parse(localStorage.getItem(LOCAL)||"{}");
-
-return data[id]||"";
-
-}
+const db=getFirestore(app);
 
 
 
-/* =====================================================
-SAVE
-===================================================== */
+/* =========================================
+LOADING
+========================================= */
 
-window.save=async function(id){
+window.onload=()=>{
 
-let value=document.getElementById("s"+id+"_input").value;
-
-saveLocal(id,value);
+loading.style.display="none";
 
 };
 
 
 
-/* =====================================================
-SEND CLOUD
-===================================================== */
+/* =========================================
+SECTION 1 NOTEPAD FULL CRUD
+========================================= */
 
-window.send=async function(id){
+async function saveNote(){
 
-let value=document.getElementById("s"+id+"_input").value;
+localStorage.note=note.value;
 
-await setDoc(doc(db,"supplychain_sections","s"+id),{
+}
 
-content:value,
+async function sendNote(){
+
+await setDoc(doc(db,"notes","main"),{
+
+text:note.value,
 time:serverTimestamp()
 
 });
 
-};
+}
 
+async function loadNote(){
 
+let snap=await getDoc(doc(db,"notes","main"));
 
-/* =====================================================
-LOAD
-===================================================== */
-
-async function load(){
-
-let snap=await getDoc(doc(db,"supplychain_sections","s1"));
-
-if(snap.exists()){
-
-s1_input.value=snap.data().content;
+if(snap.exists()) note.value=snap.data().text;
 
 }
 
-else{
+loadNote();
 
-s1_input.value=loadLocal(1);
+function clearNote(){note.value=""}
+
+function copyNote(){
+
+navigator.clipboard.writeText(note.value);
 
 }
 
+
+
+/* =========================================
+SECTION 2 MESSAGE BOARD FULL CRUD
+========================================= */
+
+const boardRef=collection(db,"board");
+
+function saveMsg(){
+
+localStorage.msg=msg.value;
+
 }
 
-load();
+async function sendMsg(){
 
-
-
-/* =====================================================
-TEAM MESSAGE BOARD
-===================================================== */
-
-const boardCol=collection(db,"supplychain_board");
-
-
-window.postMessage=async function(){
-
-await addDoc(boardCol,{
+await addDoc(boardRef,{
 
 name:codename.value,
-text:message.value,
+text:msg.value,
 time:serverTimestamp()
 
 });
 
-};
+}
 
-
-
-onSnapshot(boardCol,(snap)=>{
+onSnapshot(boardRef,snap=>{
 
 board.innerHTML="";
 
-snap.forEach(docu=>{
+snap.forEach(d=>{
 
-let data=docu.data();
+let data=d.data();
 
 let div=document.createElement("div");
-
-div.className="msg";
 
 div.innerHTML=`
 
@@ -596,9 +396,9 @@ div.innerHTML=`
 
 <p>${data.text}</p>
 
-<button onclick="deleteMsg('${docu.id}')">Delete</button>
+<button onclick="deleteMsg('${d.id}')">DELETE</button>
 
-<button onclick="editMsg('${docu.id}','${data.text}')">Edit</button>
+<button onclick="editMsg('${d.id}','${data.text}')">EDIT</button>
 
 `;
 
@@ -609,43 +409,151 @@ board.appendChild(div);
 });
 
 
-window.deleteMsg=async function(id){
+window.deleteMsg=async id=>{
 
-await deleteDoc(doc(db,"supplychain_board",id));
+await deleteDoc(doc(db,"board",id));
 
-};
+}
 
+window.editMsg=async(id,old)=>{
 
-window.editMsg=async function(id,old){
+let text=prompt("Edit",old);
 
-let text=prompt("Edit Message",old);
-
-if(!text)return;
-
-await updateDoc(doc(db,"supplychain_board",id),{
+await updateDoc(doc(db,"board",id),{
 
 text:text
 
 });
 
-};
+}
 
 
 
-/* =====================================================
-NAVIGATION
-===================================================== */
+/* =========================================
+SECTION 3 CHECKLIST
+========================================= */
 
-window.scrollToTop=()=>window.scrollTo(0,0);
+const checkRef=collection(db,"check");
 
-window.scrollToMiddle=()=>window.scrollTo(0,document.body.scrollHeight/2);
+function saveCheck(){
 
-window.scrollToBottom=()=>window.scrollTo(0,document.body.scrollHeight);
+localStorage.check=checkInput.value;
+
+}
+
+async function sendCheck(){
+
+await addDoc(checkRef,{
+
+text:checkInput.value,
+done:false
+
+});
+
+}
+
+onSnapshot(checkRef,snap=>{
+
+checklist.innerHTML="";
+
+snap.forEach(d=>{
+
+let data=d.data();
+
+let div=document.createElement("div");
+
+div.innerHTML=`
+
+<input type="checkbox"
+
+${data.done?"checked":""}
+
+onclick="toggleCheck('${d.id}',${data.done})">
+
+${data.text}
+
+<button onclick="deleteCheck('${d.id}')">DEL</button>
+
+`;
+
+checklist.appendChild(div);
+
+});
+
+});
+
+
+window.toggleCheck=async(id,done)=>{
+
+await updateDoc(doc(db,"check",id),{
+
+done:!done
+
+});
+
+}
+
+window.deleteCheck=async id=>{
+
+await deleteDoc(doc(db,"check",id));
+
+}
+
+
+
+/* =========================================
+SECTION 4 CALCULATOR
+========================================= */
+
+function calc(){
+
+calcOutput.innerHTML=eval(calcInput.value);
+
+}
+
+function saveCalc(){
+
+localStorage.calc=calcInput.value;
+
+}
+
+async function sendCalc(){
+
+await addDoc(collection(db,"calc"),{
+
+expression:calcInput.value
+
+});
+
+}
+
+
+
+/* =========================================
+SECTION 5 AI
+========================================= */
+
+function saveAI(){
+
+localStorage.ai=aiInput.value;
+
+}
+
+async function sendAI(){
+
+await addDoc(collection(db,"ai"),{
+
+text:aiInput.value
+
+});
+
+aiOutput.innerHTML="AI STORED";
+
+}
 
 
 
 </script>
-
 
 </body>
 </html>
