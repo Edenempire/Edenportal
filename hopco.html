@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EDEN | HOPCO Transportation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#02040a;
+color:white;
+}
+
+header{
+background:#000814;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #00f0ff;
+}
+
+.eden{
+font-size:26px;
+font-weight:700;
+letter-spacing:2px;
+}
+
+.hopco{
+font-size:14px;
+color:#00f0ff;
+margin-top:5px;
+}
+
+.container{
+padding:20px;
+}
+
+.card{
+background:#000c1f;
+padding:15px;
+border-radius:12px;
+border:1px solid #00f0ff33;
+}
+
+label{
+font-size:13px;
+opacity:0.8;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:12px;
+border-radius:8px;
+border:none;
+background:#001633;
+color:white;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+background:#00f0ff;
+color:black;
+font-size:16px;
+}
+
+button:hover{
+background:#00c4cc;
+}
+
+.status{
+margin-top:20px;
+background:#001633;
+padding:15px;
+border-radius:12px;
+display:none;
+}
+
+.highlight{
+color:#00f0ff;
+font-weight:bold;
+}
+
+.price{
+font-size:22px;
+color:#00ff88;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+<body>
+
+
+<header>
+
+<div class="eden">
+
+EDEN
+
+</div>
+
+<div class="hopco">
+
+HOPCO Transportation Division
+
+</div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<div class="card">
+
+<label>Pickup Location</label>
+
+<input id="pickup" placeholder="Enter pickup">
+
+
+<label>Destination</label>
+
+<input id="dropoff" placeholder="Enter destination">
+
+
+<label>Your Name</label>
+
+<input id="name" placeholder="Full name">
+
+
+<label>Phone</label>
+
+<input id="phone" placeholder="Phone number">
+
+
+<button onclick="bookRide()">
+
+Request HOPCO Ride
+
+</button>
+
+
+</div>
+
+
+
+<div class="status" id="status">
+
+Driver: <span class="highlight" id="driver"></span><br>
+
+Vehicle: <span id="vehicle"></span><br>
+
+ETA: <span id="eta"></span>
+
+<div class="price" id="price"></div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+const EDEN_HOPCO_DRIVERS=[
+
+{name:"EDEN-01",vehicle:"VW Polo"},
+
+{name:"EDEN-02",vehicle:"Toyota Starlet"},
+
+{name:"EDEN-03",vehicle:"Hyundai Grand i10"},
+
+{name:"EDEN-04",vehicle:"Suzuki Swift"}
+
+];
+
+
+
+function bookRide(){
+
+
+let pickup=pickup.value;
+let dropoff=dropoff.value;
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+
+
+if(!pickup||!dropoff||!name||!phone){
+
+alert("Complete all fields");
+
+return;
+
+}
+
+
+let driver=EDEN_HOPCO_DRIVERS[Math.floor(Math.random()*EDEN_HOPCO_DRIVERS.length)];
+
+let fare=Math.floor(Math.random()*70)+50;
+
+let eta=Math.floor(Math.random()*8)+2;
+
+
+document.getElementById("driver").innerText=driver.name;
+
+document.getElementById("vehicle").innerText=driver.vehicle;
+
+document.getElementById("eta").innerText=eta+" minutes";
+
+document.getElementById("price").innerText="Fare: R"+fare;
+
+document.getElementById("status").style.display="block";
+
+
+
+let ride={
+
+division:"EDEN HOPCO",
+
+pickup,
+
+dropoff,
+
+name,
+
+phone,
+
+driver:driver.name,
+
+vehicle:driver.vehicle,
+
+fare
+
+};
+
+
+console.log("EDEN HOPCO RIDE:",ride);
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>
