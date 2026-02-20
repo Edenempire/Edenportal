@@ -3,270 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPPLY CHAIN CV-5</title>
+<title>SUPPLY CHAIN CV-5 — GOD MODE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
 
-/* =========================================
+/* =====================================================
 ROOT
-========================================= */
+===================================================== */
 
 :root{
-
 --bg:#000;
 --panel:#050505;
 --red:#ff0033;
 --redSoft:#ff003322;
 --text:#ff0033;
-
+--green:#00ff88;
+--yellow:#ffaa00;
 --fontDisplay:'Orbitron',sans-serif;
 --fontMono:'JetBrains Mono',monospace;
-
 }
 
-/* =========================================
+/* =====================================================
 BASE
-========================================= */
+===================================================== */
 
 body{
-
 background:var(--bg);
 color:var(--text);
 font-family:var(--fontMono);
 margin:0;
+}
 
+h1{
+text-align:center;
+font-family:var(--fontDisplay);
+margin-top:20px;
 }
 
 .section{
-
 border:1px solid var(--redSoft);
 padding:20px;
 margin:30px;
-
 background:var(--panel);
-
-}
-
-h2{
-
-font-family:var(--fontDisplay);
-
+position:relative;
 }
 
 textarea,input{
-
 width:100%;
 background:#000;
 color:var(--text);
 border:1px solid var(--redSoft);
 padding:10px;
 margin-bottom:10px;
-
 }
 
 button{
-
 background:#000;
 color:var(--text);
 border:1px solid var(--text);
 padding:10px;
 cursor:pointer;
 margin:3px;
-
 }
 
 button:hover{
-
 background:var(--text);
 color:#000;
-
 }
 
 .send{
-
 background:var(--text);
 color:#000;
 font-weight:bold;
-font-size:16px;
-
 }
 
 .output{
-
 border:1px solid var(--redSoft);
 padding:10px;
 margin-top:10px;
-
 }
 
-/* LOADING */
+/* =====================================================
+LOADING SYSTEM
+===================================================== */
 
-.loading{
-
+.overlay{
 position:fixed;
 width:100%;
 height:100%;
-background:#000;
+background:#000000dd;
 display:flex;
 justify-content:center;
 align-items:center;
 z-index:9999;
-
 }
 
 .loader{
-
 border:4px solid #111;
 border-top:4px solid var(--text);
 border-radius:50%;
 width:60px;
 height:60px;
 animation:spin 1s linear infinite;
-
 }
 
 @keyframes spin{
-
 100%{transform:rotate(360deg)}
+}
 
+/* =====================================================
+TOAST
+===================================================== */
+
+.toast{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#111;
+border:1px solid var(--redSoft);
+padding:15px;
+color:var(--text);
+z-index:10000;
+}
+
+.view-counter{
+position:absolute;
+top:10px;
+right:10px;
+font-size:12px;
+color:var(--yellow);
+}
+
+.done{
+color:var(--green);
+text-decoration:line-through;
 }
 
 </style>
-
 </head>
-
 <body>
 
-
-<div class="loading" id="loading">
+<div id="overlay" class="overlay">
 <div class="loader"></div>
 </div>
 
+<h1>SUPPLY CHAIN CV-5 — TIER 1</h1>
 
-<h1 style="text-align:center;font-family:Orbitron">SUPPLY CHAIN CV-5</h1>
-
-
-<!-- =========================================
-SECTION 1 NOTEPAD
-========================================= -->
+<!-- ================= SECTION 1 ================= -->
 
 <div class="section">
-
-<h2>SECTION 1 — NOTEPAD CONTROL</h2>
-
+<div class="view-counter" id="viewNote">Views: 0</div>
+<h2>SECTION 1 — NOTEPAD</h2>
 <textarea id="note"></textarea>
-
-<button onclick="clearNote()">CLEAR</button>
-
-<button onclick="copyNote()">COPY</button>
-
-<button onclick="saveNote()">SAVE</button>
-
-<button class="send" onclick="sendNote()">SEND</button>
-
+<button id="noteClear">CLEAR</button>
+<button id="noteCopy">COPY</button>
+<button id="noteSave">SAVE</button>
+<button class="send" id="noteSend">SEND</button>
 <div id="noteOutput" class="output"></div>
-
 </div>
 
-
-<!-- =========================================
-SECTION 2 MESSAGE BOARD
-========================================= -->
+<!-- ================= SECTION 2 ================= -->
 
 <div class="section">
-
+<div class="view-counter" id="viewBoard">Views: 0</div>
 <h2>SECTION 2 — TEAM BOARD</h2>
-
 <input id="codename" placeholder="Codename">
-
 <textarea id="msg"></textarea>
-
-<button onclick="clearMsg()">CLEAR</button>
-
-<button onclick="saveMsg()">SAVE</button>
-
-<button class="send" onclick="sendMsg()">SEND</button>
-
+<button id="msgClear">CLEAR</button>
+<button id="msgSave">SAVE</button>
+<button class="send" id="msgSend">SEND</button>
 <div id="board"></div>
-
 </div>
 
-
-<!-- =========================================
-SECTION 3 CHECKLIST
-========================================= -->
+<!-- ================= SECTION 3 ================= -->
 
 <div class="section">
-
+<div class="view-counter" id="viewCheck">Views: 0</div>
 <h2>SECTION 3 — CHECKLIST</h2>
-
 <input id="checkInput">
-
-<button onclick="saveCheck()">SAVE</button>
-
-<button class="send" onclick="sendCheck()">SEND</button>
-
+<button id="checkSave">SAVE</button>
+<button class="send" id="checkSend">SEND</button>
 <div id="checklist"></div>
-
 </div>
 
-
-<!-- =========================================
-SECTION 4 CALCULATOR
-========================================= -->
+<!-- ================= SECTION 4 ================= -->
 
 <div class="section">
-
+<div class="view-counter" id="viewCalc">Views: 0</div>
 <h2>SECTION 4 — CALCULATOR</h2>
-
 <input id="calcInput">
-
-<button onclick="calc()">CALCULATE</button>
-
-<button onclick="saveCalc()">SAVE</button>
-
-<button class="send" onclick="sendCalc()">SEND</button>
-
-<div id="calcOutput"></div>
-
+<button id="calcBtn">CALCULATE</button>
+<button id="calcSave">SAVE</button>
+<button class="send" id="calcSend">SEND</button>
+<div id="calcOutput" class="output"></div>
 </div>
 
-
-<!-- =========================================
-SECTION 5 AI
-========================================= -->
+<!-- ================= SECTION 5 ================= -->
 
 <div class="section">
-
+<div class="view-counter" id="viewAI">Views: 0</div>
 <h2>SECTION 5 — AI TERMINAL</h2>
-
 <textarea id="aiInput"></textarea>
-
-<button onclick="saveAI()">SAVE</button>
-
-<button class="send" onclick="sendAI()">SEND</button>
-
-<div id="aiOutput"></div>
-
+<button id="aiSave">SAVE</button>
+<button class="send" id="aiSend">SEND</button>
+<div id="aiOutput" class="output"></div>
 </div>
-
-
 
 <script type="module">
 
+/* =====================================================
+FIREBASE INIT
+===================================================== */
 
-/* =========================================
-FIREBASE
-========================================= */
-
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
-
 getFirestore,
 doc,
 setDoc,
@@ -276,284 +228,234 @@ collection,
 onSnapshot,
 deleteDoc,
 updateDoc,
-serverTimestamp
-
-}
-
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-
+serverTimestamp,
+increment
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey:"AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-authDomain:"eden-4a8d3.firebaseapp.com",
-projectId:"eden-4a8d3",
-storageBucket:"eden-4a8d3.appspot.com",
-messagingSenderId:"421147129483",
-appId:"1:421147129483:web:9495dfb813fe6195f2c68e"
-
+apiKey:"YOUR_API_KEY",
+authDomain:"YOUR_AUTH_DOMAIN",
+projectId:"YOUR_PROJECT_ID",
+storageBucket:"YOUR_BUCKET",
+messagingSenderId:"YOUR_SENDER_ID",
+appId:"YOUR_APP_ID"
 };
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
+/* =====================================================
+GLOBAL UTILITIES
+===================================================== */
 
-const app=initializeApp(firebaseConfig);
+const overlay = document.getElementById("overlay");
 
-const db=getFirestore(app);
+function showLoader(){ overlay.style.display="flex"; }
+function hideLoader(){ overlay.style.display="none"; }
 
-
-
-/* =========================================
-LOADING
-========================================= */
-
-window.onload=()=>{
-
-loading.style.display="none";
-
-};
-
-
-
-/* =========================================
-SECTION 1 NOTEPAD FULL CRUD
-========================================= */
-
-async function saveNote(){
-
-localStorage.note=note.value;
-
+function toast(message){
+const t=document.createElement("div");
+t.className="toast";
+t.innerText=message;
+document.body.appendChild(t);
+setTimeout(()=>t.remove(),3000);
 }
 
-async function sendNote(){
+async function incrementView(section){
+await setDoc(doc(db,"views",section),{count:increment(1)},{merge:true});
+}
 
+async function listenView(section,el){
+onSnapshot(doc(db,"views",section),(snap)=>{
+if(snap.exists()){
+el.innerText="Views: "+snap.data().count;
+}
+});
+}
+
+/* =====================================================
+SAFE CALCULATOR (NO EVAL)
+===================================================== */
+
+function safeCalculate(expression){
+try{
+if(!/^[0-9+\-*/(). ]+$/.test(expression)) throw "Invalid characters";
+return Function('"use strict";return ('+expression+')')();
+}catch{
+return "Error";
+}
+}
+
+/* =====================================================
+SECTION 1 NOTEPAD
+===================================================== */
+
+await incrementView("note");
+listenView("note",viewNote);
+
+noteClear.onclick=()=>note.value="";
+noteCopy.onclick=()=>navigator.clipboard.writeText(note.value);
+
+noteSave.onclick=()=>localStorage.setItem("note",note.value);
+
+noteSend.onclick=async()=>{
+try{
+showLoader();
 await setDoc(doc(db,"notes","main"),{
-
 text:note.value,
 time:serverTimestamp()
+});
+toast("Note synced.");
+}catch(e){toast("Error saving note");}
+finally{hideLoader();}
+};
 
+onSnapshot(doc(db,"notes","main"),(snap)=>{
+if(snap.exists()){
+note.value=snap.data().text;
+}
 });
 
-}
+/* =====================================================
+SECTION 2 BOARD
+===================================================== */
 
-async function loadNote(){
-
-let snap=await getDoc(doc(db,"notes","main"));
-
-if(snap.exists()) note.value=snap.data().text;
-
-}
-
-loadNote();
-
-function clearNote(){note.value=""}
-
-function copyNote(){
-
-navigator.clipboard.writeText(note.value);
-
-}
-
-
-
-/* =========================================
-SECTION 2 MESSAGE BOARD FULL CRUD
-========================================= */
+await incrementView("board");
+listenView("board",viewBoard);
 
 const boardRef=collection(db,"board");
 
-function saveMsg(){
+msgClear.onclick=()=>msg.value="";
+msgSave.onclick=()=>localStorage.setItem("msg",msg.value);
 
-localStorage.msg=msg.value;
-
-}
-
-async function sendMsg(){
-
+msgSend.onclick=async()=>{
+try{
+showLoader();
 await addDoc(boardRef,{
-
-name:codename.value,
+name:codename.value||"Anonymous",
 text:msg.value,
 time:serverTimestamp()
-
 });
+msg.value="";
+toast("Message sent.");
+}catch{toast("Error sending.");}
+finally{hideLoader();}
+};
 
-}
-
-onSnapshot(boardRef,snap=>{
-
+onSnapshot(boardRef,(snap)=>{
 board.innerHTML="";
-
 snap.forEach(d=>{
-
-let data=d.data();
-
-let div=document.createElement("div");
-
+const data=d.data();
+const div=document.createElement("div");
 div.innerHTML=`
-
 <b>${data.name}</b>
-
 <p>${data.text}</p>
-
-<button onclick="deleteMsg('${d.id}')">DELETE</button>
-
-<button onclick="editMsg('${d.id}','${data.text}')">EDIT</button>
-
+<button data-id="${d.id}" class="edit">EDIT</button>
+<button data-id="${d.id}" class="delete">DELETE</button>
 `;
-
 board.appendChild(div);
-
+});
 });
 
-});
-
-
-window.deleteMsg=async id=>{
-
-await deleteDoc(doc(db,"board",id));
-
+board.addEventListener("click",async(e)=>{
+if(e.target.classList.contains("delete")){
+await deleteDoc(doc(db,"board",e.target.dataset.id));
 }
-
-window.editMsg=async(id,old)=>{
-
-let text=prompt("Edit",old);
-
-await updateDoc(doc(db,"board",id),{
-
-text:text
-
+if(e.target.classList.contains("edit")){
+const newText=prompt("Edit message");
+if(newText){
+await updateDoc(doc(db,"board",e.target.dataset.id),{text:newText});
+}
+}
 });
 
-}
-
-
-
-/* =========================================
+/* =====================================================
 SECTION 3 CHECKLIST
-========================================= */
+===================================================== */
+
+await incrementView("check");
+listenView("check",viewCheck);
 
 const checkRef=collection(db,"check");
 
-function saveCheck(){
+checkSave.onclick=()=>localStorage.setItem("check",checkInput.value);
 
-localStorage.check=checkInput.value;
-
-}
-
-async function sendCheck(){
-
+checkSend.onclick=async()=>{
 await addDoc(checkRef,{
-
 text:checkInput.value,
-done:false
-
+done:false,
+time:serverTimestamp()
 });
+checkInput.value="";
+};
 
-}
-
-onSnapshot(checkRef,snap=>{
-
+onSnapshot(checkRef,(snap)=>{
 checklist.innerHTML="";
-
 snap.forEach(d=>{
-
-let data=d.data();
-
-let div=document.createElement("div");
-
+const data=d.data();
+const div=document.createElement("div");
 div.innerHTML=`
-
-<input type="checkbox"
-
-${data.done?"checked":""}
-
-onclick="toggleCheck('${d.id}',${data.done})">
-
-${data.text}
-
-<button onclick="deleteCheck('${d.id}')">DEL</button>
-
+<span class="${data.done?'done':''}">${data.text}</span>
+<button data-id="${d.id}" class="toggle">TOGGLE</button>
+<button data-id="${d.id}" class="del">DEL</button>
 `;
-
 checklist.appendChild(div);
-
+});
 });
 
-});
-
-
-window.toggleCheck=async(id,done)=>{
-
-await updateDoc(doc(db,"check",id),{
-
-done:!done
-
-});
-
+checklist.addEventListener("click",async(e)=>{
+if(e.target.classList.contains("toggle")){
+const ref=doc(db,"check",e.target.dataset.id);
+const snap=await getDoc(ref);
+await updateDoc(ref,{done:!snap.data().done});
 }
-
-window.deleteCheck=async id=>{
-
-await deleteDoc(doc(db,"check",id));
-
+if(e.target.classList.contains("del")){
+await deleteDoc(doc(db,"check",e.target.dataset.id));
 }
+});
 
-
-
-/* =========================================
+/* =====================================================
 SECTION 4 CALCULATOR
-========================================= */
+===================================================== */
 
-function calc(){
+await incrementView("calc");
+listenView("calc",viewCalc);
 
-calcOutput.innerHTML=eval(calcInput.value);
+calcBtn.onclick=()=>{
+calcOutput.innerText=safeCalculate(calcInput.value);
+};
 
-}
+calcSave.onclick=()=>localStorage.setItem("calc",calcInput.value);
 
-function saveCalc(){
-
-localStorage.calc=calcInput.value;
-
-}
-
-async function sendCalc(){
-
+calcSend.onclick=async()=>{
 await addDoc(collection(db,"calc"),{
-
-expression:calcInput.value
-
+expression:calcInput.value,
+result:safeCalculate(calcInput.value),
+time:serverTimestamp()
 });
+toast("Calculation stored.");
+};
 
-}
+/* =====================================================
+SECTION 5 AI TERMINAL
+===================================================== */
 
+await incrementView("ai");
+listenView("ai",viewAI);
 
+aiSave.onclick=()=>localStorage.setItem("ai",aiInput.value);
 
-/* =========================================
-SECTION 5 AI
-========================================= */
-
-function saveAI(){
-
-localStorage.ai=aiInput.value;
-
-}
-
-async function sendAI(){
-
+aiSend.onclick=async()=>{
 await addDoc(collection(db,"ai"),{
-
-text:aiInput.value
-
+prompt:aiInput.value,
+time:serverTimestamp()
 });
+aiOutput.innerText="Stored in Firestore.";
+};
 
-aiOutput.innerHTML="AI STORED";
-
-}
-
-
+hideLoader();
 
 </script>
 
 </body>
-</html>
+  </html>
