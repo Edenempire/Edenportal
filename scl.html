@@ -3,109 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPPLY CHAIN CV-5 — GOD MODE</title>
+<title>SUPPLY CHAIN CV-5</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* =====================================================
-ROOT
+ROOT SYSTEM VARIABLES
 ===================================================== */
-
 :root{
---bg:#000;
+--bg:#000000;
 --panel:#050505;
+--panelSoft:#0b0b0b;
 --red:#ff0033;
---redSoft:#ff003322;
---text:#ff0033;
+--redGlow:#ff003355;
 --green:#00ff88;
 --yellow:#ffaa00;
+--blue:#00c3ff;
+--white:#e6e6e6;
 --fontDisplay:'Orbitron',sans-serif;
 --fontMono:'JetBrains Mono',monospace;
+--radius:10px;
+--transition:0.25s cubic-bezier(.4,0,.2,1);
+scroll-behavior:smooth;
 }
 
 /* =====================================================
-BASE
+GLOBAL BASE
 ===================================================== */
-
-body{
-background:var(--bg);
-color:var(--text);
-font-family:var(--fontMono);
-margin:0;
+*{
+box-sizing:border-box;
 }
 
-h1{
+body{
+margin:0;
+background:var(--bg);
+color:var(--red);
+font-family:var(--fontMono);
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* Animated Background */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%, var(--redGlow), transparent 40%),
+radial-gradient(circle at 80% 80%, var(--redGlow), transparent 40%),
+linear-gradient(180deg,#000,#050505);
+animation:bgPulse 6s ease-in-out infinite alternate;
+z-index:-1;
+}
+
+@keyframes bgPulse{
+0%{filter:brightness(0.8)}
+100%{filter:brightness(1.1)}
+}
+
+/* =====================================================
+HEADER
+===================================================== */
+header{
 text-align:center;
+padding:40px 20px 20px;
+}
+
+header h1{
 font-family:var(--fontDisplay);
-margin-top:20px;
+font-size:clamp(24px,5vw,48px);
+letter-spacing:4px;
+margin:0;
+text-shadow:0 0 15px var(--red);
+animation:fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(-20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* =====================================================
+SECTION WRAPPER
+===================================================== */
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:60px;
 }
 
 .section{
-border:1px solid var(--redSoft);
-padding:20px;
-margin:30px;
 background:var(--panel);
+border:1px solid var(--redGlow);
+border-radius:var(--radius);
+padding:30px;
 position:relative;
+transition:var(--transition);
+animation:sectionFade 1s ease forwards;
 }
 
-textarea,input{
+.section:hover{
+box-shadow:0 0 25px var(--redGlow);
+}
+
+@keyframes sectionFade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.section h2{
+margin-top:0;
+font-family:var(--fontDisplay);
+letter-spacing:2px;
+}
+
+/* =====================================================
+INPUTS
+===================================================== */
+input, textarea{
 width:100%;
 background:#000;
-color:var(--text);
-border:1px solid var(--redSoft);
-padding:10px;
+border:1px solid var(--redGlow);
+color:var(--red);
+padding:14px;
+margin-bottom:15px;
+border-radius:6px;
+transition:var(--transition);
+font-family:var(--fontMono);
+}
+
+input:focus, textarea:focus{
+outline:none;
+box-shadow:0 0 12px var(--redGlow);
+}
+
+/* =====================================================
+BUTTONS
+===================================================== */
+.button-row{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
 margin-bottom:10px;
 }
 
 button{
+padding:12px 18px;
+border-radius:6px;
+border:1px solid var(--red);
 background:#000;
-color:var(--text);
-border:1px solid var(--text);
-padding:10px;
+color:var(--red);
 cursor:pointer;
-margin:3px;
+font-weight:bold;
+transition:var(--transition);
 }
 
 button:hover{
-background:var(--text);
+background:var(--red);
+color:#000;
+box-shadow:0 0 15px var(--red);
+transform:translateY(-2px);
+}
+
+.save{
+border-color:var(--blue);
+color:var(--blue);
+}
+
+.save:hover{
+background:var(--blue);
+color:#000;
+box-shadow:0 0 15px var(--blue);
+}
+
+.fire{
+background:var(--red);
 color:#000;
 }
 
-.send{
-background:var(--text);
-color:#000;
-font-weight:bold;
+.export{
+border-color:var(--green);
+color:var(--green);
 }
 
-.output{
-border:1px solid var(--redSoft);
-padding:10px;
-margin-top:10px;
+.export:hover{
+background:var(--green);
+color:#000;
 }
 
 /* =====================================================
-LOADING SYSTEM
+OUTPUT CARDS
 ===================================================== */
+.card{
+border:1px solid var(--redGlow);
+padding:15px;
+border-radius:6px;
+margin-bottom:12px;
+background:var(--panelSoft);
+animation:cardIn 0.5s ease forwards;
+}
 
-.overlay{
+@keyframes cardIn{
+from{opacity:0;transform:translateX(-10px)}
+to{opacity:1;transform:translateX(0)}
+}
+
+.card small{
+color:var(--yellow);
+}
+
+/* =====================================================
+STATUS
+===================================================== */
+.status{
+position:absolute;
+top:20px;
+right:25px;
+font-size:12px;
+color:var(--yellow);
+}
+
+/* =====================================================
+LOADER
+===================================================== */
+.global-loader{
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
 background:#000000dd;
 display:flex;
 justify-content:center;
 align-items:center;
 z-index:9999;
+display:none;
 }
 
-.loader{
-border:4px solid #111;
-border-top:4px solid var(--text);
+.spinner{
+width:70px;
+height:70px;
+border:5px solid #111;
+border-top:5px solid var(--red);
 border-radius:50%;
-width:60px;
-height:60px;
 animation:spin 1s linear infinite;
 }
 
@@ -114,131 +256,162 @@ animation:spin 1s linear infinite;
 }
 
 /* =====================================================
-TOAST
+FOOTER
 ===================================================== */
-
-.toast{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#111;
-border:1px solid var(--redSoft);
-padding:15px;
-color:var(--text);
-z-index:10000;
+footer{
+text-align:center;
+padding:40px 20px;
+border-top:1px solid var(--redGlow);
+margin-top:60px;
+font-size:14px;
+color:var(--white);
+background:#000;
 }
 
-.view-counter{
-position:absolute;
-top:10px;
-right:10px;
-font-size:12px;
-color:var(--yellow);
-}
-
-.done{
+footer span{
 color:var(--green);
-text-decoration:line-through;
+font-weight:bold;
+}
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+@media(max-width:768px){
+.section{
+padding:20px;
+}
+.button-row{
+flex-direction:column;
+}
 }
 
 </style>
 </head>
 <body>
 
-<div id="overlay" class="overlay">
-<div class="loader"></div>
+<div class="global-loader" id="loader"><div class="spinner"></div></div>
+
+<header>
+<h1>SUPPLY CHAIN CV-5</h1>
+</header>
+
+<div class="container">
+
+<!-- =====================================================
+SECTION 1 — NOTEPAD
+===================================================== -->
+<div class="section">
+<div class="status" id="statusNote">Initializing...</div>
+<h2>SECTION 1 — STRATEGIC NOTEPAD</h2>
+
+<textarea id="noteInput" rows="6" placeholder="Operational notes..."></textarea>
+
+<div class="button-row">
+<button class="save" id="noteSave">SAVE</button>
+<button class="export" id="noteExport">EXPORT .TXT</button>
+<button class="fire" id="noteFire">FIRE</button>
 </div>
 
-<h1>SUPPLY CHAIN CV-5 — TIER 1</h1>
-
-<!-- ================= SECTION 1 ================= -->
-
-<div class="section">
-<div class="view-counter" id="viewNote">Views: 0</div>
-<h2>SECTION 1 — NOTEPAD</h2>
-<textarea id="note"></textarea>
-<button id="noteClear">CLEAR</button>
-<button id="noteCopy">COPY</button>
-<button id="noteSave">SAVE</button>
-<button class="send" id="noteSend">SEND</button>
-<div id="noteOutput" class="output"></div>
+<div id="noteView"></div>
 </div>
 
-<!-- ================= SECTION 2 ================= -->
-
+<!-- =====================================================
+SECTION 2 — TEAM BOARD
+===================================================== -->
 <div class="section">
-<div class="view-counter" id="viewBoard">Views: 0</div>
-<h2>SECTION 2 — TEAM BOARD</h2>
-<input id="codename" placeholder="Codename">
-<textarea id="msg"></textarea>
-<button id="msgClear">CLEAR</button>
-<button id="msgSave">SAVE</button>
-<button class="send" id="msgSend">SEND</button>
-<div id="board"></div>
+<div class="status" id="statusBoard">Connecting...</div>
+<h2>SECTION 2 — TEAM MESSAGE BOARD</h2>
+
+<input id="boardName" placeholder="Operator Codename">
+<textarea id="boardMessage" rows="4" placeholder="Transmit message..."></textarea>
+
+<div class="button-row">
+<button class="save" id="boardSave">SAVE</button>
+<button class="export" id="boardExport">EXPORT .TXT</button>
+<button class="fire" id="boardFire">FIRE</button>
 </div>
 
-<!-- ================= SECTION 3 ================= -->
-
-<div class="section">
-<div class="view-counter" id="viewCheck">Views: 0</div>
-<h2>SECTION 3 — CHECKLIST</h2>
-<input id="checkInput">
-<button id="checkSave">SAVE</button>
-<button class="send" id="checkSend">SEND</button>
-<div id="checklist"></div>
+<div id="boardView"></div>
 </div>
 
-<!-- ================= SECTION 4 ================= -->
-
+<!-- =====================================================
+SECTION 3 — CHECKLIST
+===================================================== -->
 <div class="section">
-<div class="view-counter" id="viewCalc">Views: 0</div>
-<h2>SECTION 4 — CALCULATOR</h2>
-<input id="calcInput">
-<button id="calcBtn">CALCULATE</button>
-<button id="calcSave">SAVE</button>
-<button class="send" id="calcSend">SEND</button>
-<div id="calcOutput" class="output"></div>
+<div class="status" id="statusCheck">Connecting...</div>
+<h2>SECTION 3 — MISSION CHECKLIST</h2>
+
+<input id="checkInput" placeholder="Mission Task">
+
+<div class="button-row">
+<button class="save" id="checkSave">SAVE</button>
+<button class="export" id="checkExport">EXPORT .TXT</button>
+<button class="fire" id="checkFire">FIRE</button>
 </div>
 
-<!-- ================= SECTION 5 ================= -->
+<div id="checkView"></div>
+</div>
 
+<!-- =====================================================
+SECTION 4 — FILE INTEL LOG (LOCAL ONLY)
+===================================================== -->
 <div class="section">
-<div class="view-counter" id="viewAI">Views: 0</div>
+<div class="status">LOCAL STORAGE ONLY</div>
+<h2>SECTION 4 — FILE INTEL LOG</h2>
+
+<input type="file" id="fileInput" multiple>
+
+<div class="button-row">
+<button class="save" id="fileSave">SAVE</button>
+<button class="export" id="fileExport">EXPORT .TXT</button>
+</div>
+
+<div id="fileView"></div>
+</div>
+
+<!-- =====================================================
+SECTION 5 — AI TERMINAL
+===================================================== -->
+<div class="section">
+<div class="status" id="statusAI">Ready</div>
 <h2>SECTION 5 — AI TERMINAL</h2>
-<textarea id="aiInput"></textarea>
-<button id="aiSave">SAVE</button>
-<button class="send" id="aiSend">SEND</button>
-<div id="aiOutput" class="output"></div>
+
+<textarea id="aiInput" rows="5" placeholder="Enter directive..."></textarea>
+
+<div class="button-row">
+<button class="save" id="aiSave">SAVE</button>
+<button class="export" id="aiExport">EXPORT .TXT</button>
+<button class="fire" id="aiFire">FIRE</button>
 </div>
+
+<div id="aiView"></div>
+</div>
+
+</div>
+
+<footer>
+<span>"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest." — Joshua 1:9 (KJV)</span>
+</footer>
 
 <script type="module">
 
 /* =====================================================
-FIREBASE INIT
+FIREBASE CONFIG (SAME AS PROVIDED)
 ===================================================== */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
 getFirestore,
-doc,
-setDoc,
-getDoc,
-addDoc,
-collection,
-onSnapshot,
-deleteDoc,
-updateDoc,
-serverTimestamp,
-increment
+doc,setDoc,getDoc,addDoc,collection,
+onSnapshot,deleteDoc,updateDoc,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey:"YOUR_API_KEY",
-authDomain:"YOUR_AUTH_DOMAIN",
-projectId:"YOUR_PROJECT_ID",
-storageBucket:"YOUR_BUCKET",
-messagingSenderId:"YOUR_SENDER_ID",
-appId:"YOUR_APP_ID"
+apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+authDomain: "eden-4a8d3.firebaseapp.com",
+projectId: "eden-4a8d3",
+storageBucket: "eden-4a8d3.firebasestorage.app",
+messagingSenderId: "421147129483",
+appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -247,140 +420,118 @@ const db = getFirestore(app);
 /* =====================================================
 GLOBAL UTILITIES
 ===================================================== */
+const loader=document.getElementById("loader");
+const LS_KEY="CV5_LOCAL_BACKUP";
 
-const overlay = document.getElementById("overlay");
+function showLoader(){loader.style.display="flex";}
+function hideLoader(){loader.style.display="none";}
 
-function showLoader(){ overlay.style.display="flex"; }
-function hideLoader(){ overlay.style.display="none"; }
-
-function toast(message){
-const t=document.createElement("div");
-t.className="toast";
-t.innerText=message;
-document.body.appendChild(t);
-setTimeout(()=>t.remove(),3000);
+function saveLocal(section,data){
+const store=JSON.parse(localStorage.getItem(LS_KEY)||"{}");
+store[section]=data;
+localStorage.setItem(LS_KEY,JSON.stringify(store));
 }
 
-async function incrementView(section){
-await setDoc(doc(db,"views",section),{count:increment(1)},{merge:true});
+function loadLocal(section){
+const store=JSON.parse(localStorage.getItem(LS_KEY)||"{}");
+return store[section];
 }
 
-async function listenView(section,el){
-onSnapshot(doc(db,"views",section),(snap)=>{
-if(snap.exists()){
-el.innerText="Views: "+snap.data().count;
-}
-});
-}
-
-/* =====================================================
-SAFE CALCULATOR (NO EVAL)
-===================================================== */
-
-function safeCalculate(expression){
-try{
-if(!/^[0-9+\-*/(). ]+$/.test(expression)) throw "Invalid characters";
-return Function('"use strict";return ('+expression+')')();
-}catch{
-return "Error";
-}
+function exportTXT(filename,content){
+const blob=new Blob([content],{type:"text/plain"});
+const a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download=filename;
+a.click();
 }
 
 /* =====================================================
-SECTION 1 NOTEPAD
+SECTION 1 — NOTEPAD FIREBASE + LOCAL
 ===================================================== */
+const noteRef=doc(db,"notes","main");
 
-await incrementView("note");
-listenView("note",viewNote);
-
-noteClear.onclick=()=>note.value="";
-noteCopy.onclick=()=>navigator.clipboard.writeText(note.value);
-
-noteSave.onclick=()=>localStorage.setItem("note",note.value);
-
-noteSend.onclick=async()=>{
-try{
-showLoader();
-await setDoc(doc(db,"notes","main"),{
-text:note.value,
-time:serverTimestamp()
-});
-toast("Note synced.");
-}catch(e){toast("Error saving note");}
-finally{hideLoader();}
+noteSave.onclick=()=>{
+saveLocal("note",noteInput.value);
+statusNote.innerText="Saved Local";
 };
 
-onSnapshot(doc(db,"notes","main"),(snap)=>{
+noteExport.onclick=()=>{
+exportTXT("CV5_Notepad.txt",noteInput.value);
+};
+
+noteFire.onclick=async()=>{
+showLoader();
+await setDoc(noteRef,{text:noteInput.value,time:serverTimestamp()});
+hideLoader();
+statusNote.innerText="Synced";
+};
+
+onSnapshot(noteRef,(snap)=>{
 if(snap.exists()){
-note.value=snap.data().text;
+noteView.innerHTML=`<div class="card">${snap.data().text}</div>`;
 }
 });
 
 /* =====================================================
-SECTION 2 BOARD
+SECTION 2 — ADVANCED BOARD
 ===================================================== */
-
-await incrementView("board");
-listenView("board",viewBoard);
-
 const boardRef=collection(db,"board");
 
-msgClear.onclick=()=>msg.value="";
-msgSave.onclick=()=>localStorage.setItem("msg",msg.value);
-
-msgSend.onclick=async()=>{
-try{
+boardFire.onclick=async()=>{
+if(!boardMessage.value.trim())return;
 showLoader();
 await addDoc(boardRef,{
-name:codename.value||"Anonymous",
-text:msg.value,
+name:boardName.value||"Anonymous",
+text:boardMessage.value,
 time:serverTimestamp()
 });
-msg.value="";
-toast("Message sent.");
-}catch{toast("Error sending.");}
-finally{hideLoader();}
+boardMessage.value="";
+hideLoader();
+};
+
+boardExport.onclick=()=>{
+let content="";
+document.querySelectorAll("#boardView .card").forEach(c=>{
+content+=c.innerText+"\n\n";
+});
+exportTXT("CV5_TeamBoard.txt",content);
 };
 
 onSnapshot(boardRef,(snap)=>{
-board.innerHTML="";
-snap.forEach(d=>{
-const data=d.data();
-const div=document.createElement("div");
-div.innerHTML=`
-<b>${data.name}</b>
-<p>${data.text}</p>
-<button data-id="${d.id}" class="edit">EDIT</button>
-<button data-id="${d.id}" class="delete">DELETE</button>
+boardView.innerHTML="";
+snap.forEach(docSnap=>{
+const d=docSnap.data();
+const date=d.time?.toDate()?.toLocaleString()||"Pending...";
+boardView.innerHTML+=`
+<div class="card">
+<b>${d.name}</b><br>
+<small>${date}</small>
+<p>${d.text}</p>
+<button onclick="deleteBoard('${docSnap.id}')">DELETE</button>
+<button onclick="editBoard('${docSnap.id}')">EDIT</button>
+</div>
 `;
-board.appendChild(div);
 });
 });
 
-board.addEventListener("click",async(e)=>{
-if(e.target.classList.contains("delete")){
-await deleteDoc(doc(db,"board",e.target.dataset.id));
-}
-if(e.target.classList.contains("edit")){
-const newText=prompt("Edit message");
+window.deleteBoard=async(id)=>{
+await deleteDoc(doc(db,"board",id));
+};
+
+window.editBoard=async(id)=>{
+const newText=prompt("Edit message:");
 if(newText){
-await updateDoc(doc(db,"board",e.target.dataset.id),{text:newText});
+await updateDoc(doc(db,"board",id),{text:newText});
 }
-}
-});
+};
 
 /* =====================================================
-SECTION 3 CHECKLIST
+SECTION 3 — CHECKLIST FULL CRUD
 ===================================================== */
+const checkRef=collection(db,"checklist");
 
-await incrementView("check");
-listenView("check",viewCheck);
-
-const checkRef=collection(db,"check");
-
-checkSave.onclick=()=>localStorage.setItem("check",checkInput.value);
-
-checkSend.onclick=async()=>{
+checkFire.onclick=async()=>{
+if(!checkInput.value.trim())return;
 await addDoc(checkRef,{
 text:checkInput.value,
 done:false,
@@ -389,73 +540,116 @@ time:serverTimestamp()
 checkInput.value="";
 };
 
+checkExport.onclick=()=>{
+let content="";
+document.querySelectorAll("#checkView .card").forEach(c=>{
+content+=c.innerText+"\n";
+});
+exportTXT("CV5_Checklist.txt",content);
+};
+
 onSnapshot(checkRef,(snap)=>{
-checklist.innerHTML="";
-snap.forEach(d=>{
-const data=d.data();
-const div=document.createElement("div");
-div.innerHTML=`
-<span class="${data.done?'done':''}">${data.text}</span>
-<button data-id="${d.id}" class="toggle">TOGGLE</button>
-<button data-id="${d.id}" class="del">DEL</button>
+checkView.innerHTML="";
+snap.forEach(docSnap=>{
+const d=docSnap.data();
+checkView.innerHTML+=`
+<div class="card">
+<span style="text-decoration:${d.done?'line-through':'none'}">${d.text}</span>
+<button onclick="toggleCheck('${docSnap.id}',${d.done})">TOGGLE</button>
+<button onclick="deleteCheck('${docSnap.id}')">DELETE</button>
+</div>
 `;
-checklist.appendChild(div);
 });
 });
 
-checklist.addEventListener("click",async(e)=>{
-if(e.target.classList.contains("toggle")){
-const ref=doc(db,"check",e.target.dataset.id);
-const snap=await getDoc(ref);
-await updateDoc(ref,{done:!snap.data().done});
-}
-if(e.target.classList.contains("del")){
-await deleteDoc(doc(db,"check",e.target.dataset.id));
-}
-});
-
-/* =====================================================
-SECTION 4 CALCULATOR
-===================================================== */
-
-await incrementView("calc");
-listenView("calc",viewCalc);
-
-calcBtn.onclick=()=>{
-calcOutput.innerText=safeCalculate(calcInput.value);
+window.toggleCheck=async(id,done)=>{
+await updateDoc(doc(db,"checklist",id),{done:!done});
 };
 
-calcSave.onclick=()=>localStorage.setItem("calc",calcInput.value);
-
-calcSend.onclick=async()=>{
-await addDoc(collection(db,"calc"),{
-expression:calcInput.value,
-result:safeCalculate(calcInput.value),
-time:serverTimestamp()
-});
-toast("Calculation stored.");
+window.deleteCheck=async(id)=>{
+await deleteDoc(doc(db,"checklist",id));
 };
 
 /* =====================================================
-SECTION 5 AI TERMINAL
+SECTION 4 — FILE INTEL LOG (LOCAL ONLY)
 ===================================================== */
+fileSave.onclick=()=>{
+const files=[...fileInput.files].map(f=>({
+name:f.name,
+size:f.size,
+type:f.type
+}));
+saveLocal("files",files);
+renderFiles();
+};
 
-await incrementView("ai");
-listenView("ai",viewAI);
+fileExport.onclick=()=>{
+const files=loadLocal("files")||[];
+let content="";
+files.forEach(f=>{
+content+=`${f.name} | ${f.type} | ${f.size} bytes\n`;
+});
+exportTXT("CV5_FileIntel.txt",content);
+};
 
-aiSave.onclick=()=>localStorage.setItem("ai",aiInput.value);
+function renderFiles(){
+const files=loadLocal("files")||[];
+fileView.innerHTML="";
+files.forEach(f=>{
+fileView.innerHTML+=`
+<div class="card">
+<b>${f.name}</b><br>
+Type: ${f.type}<br>
+Size: ${f.size} bytes
+</div>
+`;
+});
+}
 
-aiSend.onclick=async()=>{
-await addDoc(collection(db,"ai"),{
+renderFiles();
+
+/* =====================================================
+SECTION 5 — AI TERMINAL
+===================================================== */
+const aiRef=collection(db,"ai");
+
+aiFire.onclick=async()=>{
+showLoader();
+await addDoc(aiRef,{
 prompt:aiInput.value,
 time:serverTimestamp()
 });
-aiOutput.innerText="Stored in Firestore.";
+aiInput.value="";
+hideLoader();
 };
 
-hideLoader();
+aiExport.onclick=()=>{
+let content="";
+document.querySelectorAll("#aiView .card").forEach(c=>{
+content+=c.innerText+"\n\n";
+});
+exportTXT("CV5_AI_Log.txt",content);
+};
+
+onSnapshot(aiRef,(snap)=>{
+aiView.innerHTML="";
+snap.forEach(docSnap=>{
+const d=docSnap.data();
+const date=d.time?.toDate()?.toLocaleString()||"Pending";
+aiView.innerHTML+=`
+<div class="card">
+<small>${date}</small>
+<p>${d.prompt}</p>
+<button onclick="deleteAI('${docSnap.id}')">DELETE</button>
+</div>
+`;
+});
+});
+
+window.deleteAI=async(id)=>{
+await deleteDoc(doc(db,"ai",id));
+};
 
 </script>
-
 </body>
   </html>
