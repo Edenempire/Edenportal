@@ -1,136 +1,192 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Supply Chain CV-7</title>
 
-<link rel="icon" type="image/png" href="logo.png">
+<link rel="icon" href="logo.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===========================
-ROOT
-=========================== */
+/* =====================================================
+ROOT VARIABLES
+===================================================== */
 
 :root{
 
 --bg:#000;
 --panel:#050505;
---red:#ff0033;
---green:#00ff41;
---text:#ff0033;
+--accent:#00ff41;
+--accentSoft:#00ff4122;
+--danger:#ff0033;
+--text:#00ff41;
 
---font1:'Orbitron',sans-serif;
---font2:'JetBrains Mono',monospace;
+--fontDisplay:'Orbitron',sans-serif;
+--fontMono:'JetBrains Mono',monospace;
+
+--speed:0.3s;
 
 }
 
-/* ===========================
+/* =====================================================
 BASE
-=========================== */
+===================================================== */
 
 *{
 box-sizing:border-box;
 margin:0;
 padding:0;
+scroll-behavior:smooth;
 }
 
 body{
 
-background:#000;
-color:var(--red);
-font-family:var(--font2);
-overflow-x:hidden;
+background:var(--bg);
+color:var(--text);
+font-family:var(--fontMono);
 
 }
 
-/* ===========================
+/* =====================================================
 HEADER
-=========================== */
+===================================================== */
 
 header{
 
 position:sticky;
 top:0;
+z-index:999;
+
 background:#000;
+border-bottom:1px solid var(--accent);
+
 padding:20px;
+
 text-align:center;
-border-bottom:1px solid var(--red);
-z-index:1000;
 
 }
 
 header h1{
 
-font-family:var(--font1);
+font-family:var(--fontDisplay);
 letter-spacing:6px;
 
 }
 
-/* ===========================
-MAIN
-=========================== */
+header a{
 
-main{
-
-padding:20px;
-max-width:1400px;
-margin:auto;
+text-decoration:none;
+color:var(--accent);
 
 }
 
-/* ===========================
-SECTION
-=========================== */
+/* =====================================================
+RIGHT NAVIGATION
+===================================================== */
+
+.quickNav{
+
+position:fixed;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+z-index:999;
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+}
+
+.quickNav button{
+
+background:#000;
+border:1px solid var(--accent);
+color:var(--accent);
+
+padding:10px;
+cursor:pointer;
+
+}
+
+.quickNav button:hover{
+
+background:var(--accent);
+color:#000;
+
+}
+
+/* =====================================================
+SECTIONS
+===================================================== */
+
+main{
+
+max-width:1400px;
+margin:auto;
+padding:20px;
+
+}
 
 .section{
 
-margin-bottom:40px;
-border:1px solid #111;
+border:1px solid var(--accentSoft);
+
+background:var(--panel);
+
 padding:20px;
-background:#050505;
+margin-bottom:40px;
+
+position:relative;
+
+}
+
+.section::before{
+
+content:"SUPPLY CHAIN MODULE";
+position:absolute;
+top:-10px;
+left:10px;
+font-size:10px;
+background:#000;
+padding:2px 6px;
+color:var(--accent);
 
 }
 
 .section h2{
 
-margin-bottom:15px;
-font-family:var(--font1);
+font-family:var(--fontDisplay);
+margin-bottom:20px;
 
 }
 
-/* ===========================
-PANELS
-=========================== */
+/* =====================================================
+DUAL PANEL WORKSPACE
+===================================================== */
 
-.panel{
+.workspace{
 
-margin-top:15px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
 
 }
 
-/* ===========================
-INPUTS
-=========================== */
+/* =====================================================
+INPUT
+===================================================== */
 
-textarea,
-input{
+input,textarea{
 
 width:100%;
 background:#000;
-border:1px solid #111;
-color:var(--green);
+border:1px solid var(--accentSoft);
+color:var(--accent);
 padding:10px;
-margin-bottom:10px;
-font-family:var(--font2);
 
 }
 
@@ -140,120 +196,96 @@ min-height:120px;
 
 }
 
-/* ===========================
+/* =====================================================
 BUTTONS
-=========================== */
+===================================================== */
 
 button{
 
+background:#000;
+border:1px solid var(--accent);
+color:var(--accent);
 padding:10px;
-margin-top:5px;
-margin-right:5px;
-border:none;
 cursor:pointer;
-font-family:var(--font2);
+
+transition:var(--speed);
 
 }
 
-.save{
+button:hover{
 
-background:#222;
-color:#fff;
+background:var(--accent);
+color:#000;
 
 }
 
 .send{
 
-background:var(--green);
+background:var(--accent);
 color:#000;
-font-weight:bold;
 
 }
 
-.delete{
-
-background:#500;
-color:#fff;
-
-}
-
-/* ===========================
+/* =====================================================
 OUTPUT
-=========================== */
+===================================================== */
 
 .output{
 
-margin-top:15px;
+border:1px solid var(--accentSoft);
 padding:10px;
-border:1px solid var(--green);
+margin-top:10px;
 min-height:40px;
-color:var(--green);
 
 }
 
-/* ===========================
-CHECKLIST
-=========================== */
+/* =====================================================
+MESSAGE BOARD
+===================================================== */
 
-.task{
+.msg{
 
-display:flex;
-gap:10px;
-margin-bottom:5px;
-
-}
-
-.task input[type=text]{
-
-flex:1;
+border:1px solid var(--accentSoft);
+padding:10px;
+margin-bottom:10px;
 
 }
 
-/* ===========================
-FOOTER
-=========================== */
-
-footer{
-
-padding:30px;
-text-align:center;
-border-top:1px solid var(--red);
-margin-top:50px;
-
-}
-
-/* ===========================
+/* =====================================================
 LOADING
-=========================== */
+===================================================== */
 
 .loading{
 
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:#000;
-display:none;
+display:flex;
 align-items:center;
 justify-content:center;
 z-index:9999;
 
+opacity:1;
+transition:1s;
+
 }
 
-.loading.show{
+.loading.hide{
 
-display:flex;
+opacity:0;
+pointer-events:none;
 
 }
 
 .loader{
 
 border:3px solid #111;
-border-top:3px solid var(--green);
-width:40px;
-height:40px;
+border-top:3px solid var(--accent);
+width:60px;
+height:60px;
 border-radius:50%;
+
 animation:spin 1s linear infinite;
 
 }
@@ -264,184 +296,111 @@ animation:spin 1s linear infinite;
 
 }
 
-/* ===========================
-TOAST
-=========================== */
+/* =====================================================
+FOOTER
+===================================================== */
 
-.toast{
+footer{
 
-position:fixed;
-bottom:20px;
-right:20px;
-background:#000;
-border:1px solid var(--green);
-padding:10px;
-display:none;
-color:var(--green);
+text-align:center;
+padding:40px;
+border-top:1px solid var(--accent);
 
-}
+font-family:var(--fontDisplay);
 
-.toast.show{
-
-display:block;
+animation:pulse 4s infinite;
 
 }
 
-/* ===========================
-GLITCH BACKGROUND
-=========================== */
+@keyframes pulse{
 
-canvas{
-
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+0%,100%{opacity:1}
+50%{opacity:0.5}
 
 }
 
 </style>
+
 </head>
+
 <body>
 
-<canvas id="glitch"></canvas>
-
-<header>
-
-<h1><a href="/index.html" style="text-decoration: none; color: #ff0033;" title="back to home...">SUPPLY CHAIN CV-7</a></h1>
-
-</header>
 
 <div class="loading" id="loading">
 <div class="loader"></div>
 </div>
 
-<div class="toast" id="toast"></div>
 
-<main>
+<header>
 
-<!-- SECTION 1 -->
+<h1>
+
+<a href="/index.html">
+
+SUPPLY CHAIN CV-7
+
+</a>
+
+</h1>
+
+</header>
+
+
+<div class="quickNav">
+
+<button onclick="scrollToTop()">TOP</button>
+
+<button onclick="scrollToMiddle()">MID</button>
+
+<button onclick="scrollToBottom()">BOT</button>
+
+</div>
+
+
+<main id="mainContent">
+
+
+<!-- TARGET -->
 
 <div class="section">
 
-<h2>SECTION 1 — TARGET</h2>
+<h2>TARGET OPERATIONS</h2>
+
+<div class="workspace">
+
+<div>
 
 <textarea id="s1_input"></textarea>
 
-<button class="save" onclick="save(1)">SAVE</button>
+<button onclick="save(1)">SAVE</button>
 
 <button class="send" onclick="send(1)">SEND</button>
 
-<div class="output" id="s1_output"></div>
+</div>
+
+<div id="s1_output" class="output"></div>
+
+</div>
 
 </div>
 
 
-<!-- SECTION 2 -->
+<!-- TEAM BOARD -->
 
 <div class="section">
 
-<h2>SECTION 2 — CHECKLIST</h2>
+<h2>TEAM MESSAGE BOARD</h2>
 
-<div id="tasks"></div>
+<input id="codename" placeholder="Operator Codename">
 
-<input id="taskInput">
+<textarea id="message"></textarea>
 
-<button class="save" onclick="addTask()">ADD</button>
+<button class="send" onclick="postMessage()">SEND</button>
 
-<button class="send" onclick="sendTasks()">SEND</button>
-
-<div class="output" id="s2_output"></div>
+<div id="board"></div>
 
 </div>
 
-
-<!-- SECTION 3 -->
-
-<!-- We're gonna be uploading here -->
-
-<div class="section">
-
-<h2>SECTION 3 — INTEL LOG</h2>
-
-<textarea id="s3_input"></textarea>
-
-<button class="save" onclick="save(3)">SAVE</button>
-
-<button class="send" onclick="send(3)">SEND</button>
-
-<div class="output" id="s3_output"></div>
-
-</div>
-
-
-<!-- SECTION 4 -->
-
-<div class="section">
-
-<h2>SECTION 4 — n/a</h2>
-
-<textarea id="s4_input"></textarea>
-
-<button class="save" onclick="save(4)">SAVE</button>
-
-<button class="send" onclick="send(4)">SEND</button>
-
-<div class="output" id="s4_output"></div>
-
-</div>
-
-
-<!-- SECTION 5 -->
-
-<div class="section">
-
-<h2>SECTION 5 — n/a</h2>
-
-<textarea id="s5_input"></textarea>
-
-<button class="save" onclick="save(5)">SAVE</button>
-
-<button class="send" onclick="send(5)">SEND</button>
-
-<div class="output" id="s5_output"></div>
-
-</div>
-
-
-<!-- SECTION 6 -->
-
-<div class="section">
-
-<h2>SECTION 6 — n/a</h2>
-
-<textarea id="s6_input"></textarea>
-
-<button class="save" onclick="save(6)">SAVE</button>
-
-<button class="send" onclick="send(6)">SEND</button>
-
-<div class="output" id="s6_output"></div>
-
-</div>
-
-
-<!-- SECTION 7 -->
-
-<div class="section">
-
-<h2>SECTION 7 — ZAMA MDLULI (AI)</h2>
-
-<input id="ai_input">
-
-<button class="send" onclick="ai()">SEND</button>
-
-<div class="output" id="ai_output"></div>
-
-</div>
-
-
-</main>
 
 <footer>
 
@@ -450,267 +409,243 @@ z-index:-1;
 </footer>
 
 
-<script>
+</main>
 
-/* ===========================
-DATABASE
-=========================== */
 
-let DB = JSON.parse(localStorage.DB || "{}");
+<script type="module">
 
-/* ===========================
-SAVE
-=========================== */
 
-function save(id){
+import { initializeApp }
 
-DB["s"+id] = document.getElementById("s"+id+"_input").value;
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-persist();
+import {
 
-toast("Saved");
+getFirestore,
+doc,
+setDoc,
+getDoc,
+collection,
+addDoc,
+onSnapshot,
+deleteDoc,
+updateDoc,
+serverTimestamp
 
 }
 
-/* ===========================
-SEND
-=========================== */
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-function send(id){
 
-load(true);
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+authDomain:"eden-4a8d3.firebaseapp.com",
+projectId:"eden-4a8d3",
+storageBucket:"eden-4a8d3.firebasestorage.app",
+messagingSenderId:"421147129483",
+appId:"1:421147129483:web:9495dfb813fe6195f2c68e"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+/* =====================================================
+LOADING ENGINE
+===================================================== */
+
+window.addEventListener("load",()=>{
 
 setTimeout(()=>{
 
-DB["s"+id+"_output"] = DB["s"+id];
-
-persist();
-
-document.getElementById("s"+id+"_output").innerText = DB["s"+id];
-
-load(false);
-
-toast("Sent");
+loading.classList.add("hide");
 
 },800);
 
+});
+
+
+/* =====================================================
+LOCAL STORAGE
+===================================================== */
+
+const LOCAL="SUPPLYCHAIN";
+
+function saveLocal(id,value){
+
+let data=JSON.parse(localStorage.getItem(LOCAL)||"{}");
+
+data[id]=value;
+
+localStorage.setItem(LOCAL,JSON.stringify(data));
+
 }
 
-/* ===========================
-TASKS CRUD
-=========================== */
 
-let tasks = DB.tasks || [];
+function loadLocal(id){
 
-function renderTasks(){
+let data=JSON.parse(localStorage.getItem(LOCAL)||"{}");
 
-tasksDiv.innerHTML="";
+return data[id]||"";
 
-tasks.forEach((t,i)=>{
+}
+
+
+
+/* =====================================================
+SAVE
+===================================================== */
+
+window.save=async function(id){
+
+let value=document.getElementById("s"+id+"_input").value;
+
+saveLocal(id,value);
+
+};
+
+
+
+/* =====================================================
+SEND CLOUD
+===================================================== */
+
+window.send=async function(id){
+
+let value=document.getElementById("s"+id+"_input").value;
+
+await setDoc(doc(db,"supplychain_sections","s"+id),{
+
+content:value,
+time:serverTimestamp()
+
+});
+
+};
+
+
+
+/* =====================================================
+LOAD
+===================================================== */
+
+async function load(){
+
+let snap=await getDoc(doc(db,"supplychain_sections","s1"));
+
+if(snap.exists()){
+
+s1_input.value=snap.data().content;
+
+}
+
+else{
+
+s1_input.value=loadLocal(1);
+
+}
+
+}
+
+load();
+
+
+
+/* =====================================================
+TEAM MESSAGE BOARD
+===================================================== */
+
+const boardCol=collection(db,"supplychain_board");
+
+
+window.postMessage=async function(){
+
+await addDoc(boardCol,{
+
+name:codename.value,
+text:message.value,
+time:serverTimestamp()
+
+});
+
+};
+
+
+
+onSnapshot(boardCol,(snap)=>{
+
+board.innerHTML="";
+
+snap.forEach(docu=>{
+
+let data=docu.data();
 
 let div=document.createElement("div");
 
-div.className="task";
+div.className="msg";
 
 div.innerHTML=`
 
-<input value="${t}">
+<b>${data.name}</b>
 
-<button onclick="delTask(${i})">X</button>
+<p>${data.text}</p>
+
+<button onclick="deleteMsg('${docu.id}')">Delete</button>
+
+<button onclick="editMsg('${docu.id}','${data.text}')">Edit</button>
 
 `;
 
-tasksDiv.appendChild(div);
+board.appendChild(div);
 
 });
 
-}
+});
 
-function addTask(){
 
-tasks.push(taskInput.value);
+window.deleteMsg=async function(id){
 
-persist();
+await deleteDoc(doc(db,"supplychain_board",id));
 
-renderTasks();
+};
 
-}
 
-function delTask(i){
+window.editMsg=async function(id,old){
 
-tasks.splice(i,1);
+let text=prompt("Edit Message",old);
 
-persist();
+if(!text)return;
 
-renderTasks();
+await updateDoc(doc(db,"supplychain_board",id),{
 
-}
-
-function sendTasks(){
-
-DB.tasks_output = tasks;
-
-persist();
-
-s2_output.innerText = JSON.stringify(tasks,null,2);
-
-toast("Checklist Sent");
-
-}
-
-/* ===========================
-AI
-=========================== */
-
-function ai(){
-
-let cmd=ai_input.value;
-
-let res="UNKNOWN";
-
-if(cmd.includes("status")) res="ALL SYSTEMS READY";
-
-ai_output.innerText=res;
-
-}
-
-/* ===========================
-AUTO SAVE
-=========================== */
-
-setInterval(()=>{
-
-document.querySelectorAll("textarea").forEach((t,i)=>{
-
-DB["s"+(i+1)] = t.value;
+text:text
 
 });
 
-persist();
+};
 
-},2000);
 
-/* ===========================
-LOAD
-=========================== */
 
-function load(show){
+/* =====================================================
+NAVIGATION
+===================================================== */
 
-loading.classList.toggle("show",show);
+window.scrollToTop=()=>window.scrollTo(0,0);
 
-}
+window.scrollToMiddle=()=>window.scrollTo(0,document.body.scrollHeight/2);
 
-/* ===========================
-PERSIST
-=========================== */
+window.scrollToBottom=()=>window.scrollTo(0,document.body.scrollHeight);
 
-function persist(){
 
-DB.tasks=tasks;
-
-localStorage.DB = JSON.stringify(DB);
-
-}
-
-/* ===========================
-TOAST
-=========================== */
-
-function toast(msg){
-
-toast.innerText=msg;
-
-toast.classList.add("show");
-
-setTimeout(()=>toast.classList.remove("show"),2000);
-
-}
-
-/* ===========================
-INIT
-=========================== */
-
-function init(){
-
-for(let i=1;i<=6;i++){
-
-if(DB["s"+i]){
-
-document.getElementById("s"+i+"_input").value = DB["s"+i];
-
-}
-
-if(DB["s"+i+"_output"]){
-
-document.getElementById("s"+i+"_output").innerText = DB["s"+i+"_output"];
-
-}
-
-}
-
-renderTasks();
-
-}
-
-init();
-
-/* ===========================
-GLITCH
-=========================== */
-
-let c=document.getElementById("glitch");
-let ctx=c.getContext("2d");
-
-function resize(){
-
-c.width=innerWidth;
-c.height=innerHeight;
-
-}
-
-resize();
-
-window.onresize=resize;
-
-function glitch(){
-
-ctx.clearRect(0,0,c.width,c.height);
-
-for(let i=0;i<5;i++){
-
-ctx.fillStyle="#003300";
-
-ctx.fillRect(
-
-Math.random()*c.width,
-Math.random()*c.height,
-Math.random()*2,
-Math.random()*40
-
-);
-
-}
-
-requestAnimationFrame(glitch);
-
-}
-
-glitch();
 
 </script>
 
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
