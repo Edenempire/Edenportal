@@ -1,1085 +1,761 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
+  
 <head>
-
+  
 <meta charset="UTF-8">
-
+  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Compliance CV-7</title>
-
+  
+<title>COMPLIANCE CV-5</title>
+  
 <link rel="icon" type="image/png" href="logo.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===========================
-ROOT
-=========================== */
+/* =========================================================
+INNOVATIONS CV-5 — TIER 1 SPECIAL OPS UI
+RED ON BLACK | STEALTH MODE
+========================================================= */
 
 :root{
-
---bg:#000;
+--bg:#000000;
 --panel:#050505;
+--panelSoft:#0b0b0b;
 --red:#ff0033;
---green:#00ff41;
---text:#ff0033;
-
---font1:'Orbitron',sans-serif;
---font2:'JetBrains Mono',monospace;
-
+--redSoft:#ff003322;
+--redGlow:#ff003355;
+--white:#e6e6e6;
+--green:#00ff88;
+--blue:#00c3ff;
+--yellow:#ffaa00;
+--radius:12px;
+--transition:0.25s cubic-bezier(.4,0,.2,1);
+--fontDisplay:'Orbitron',sans-serif;
+--fontMono:'JetBrains Mono',monospace;
+scroll-behavior:smooth;
 }
 
-/* ===========================
-BASE
-=========================== */
+/* =========================================================
+GLOBAL
+========================================================= */
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;}
 
 body{
-
-background:#000;
+margin:0;
+background:var(--bg);
 color:var(--red);
-font-family:var(--font2);
+font-family:var(--fontMono);
 overflow-x:hidden;
-
 }
 
-/* ===========================
+/* SNIPER OPTIC BACKGROUND */
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(255,0,51,0.15) 31%, transparent 32%),
+radial-gradient(circle at center, transparent 0%, transparent 50%, rgba(255,0,51,0.07) 51%, transparent 52%),
+linear-gradient(180deg,#000,#050505);
+background-size:100% 100%;
+animation:opticPulse 6s infinite alternate ease-in-out;
+z-index:-1;
+}
+
+@keyframes opticPulse{
+0%{filter:brightness(.85);}
+100%{filter:brightness(1.1);}
+}
+
+/* =========================================================
 HEADER
-=========================== */
+========================================================= */
 
 header{
-
-position:sticky;
-top:0;
-background:#000;
-padding:20px;
 text-align:center;
-border-bottom:1px solid var(--red);
-z-index:1000;
-
+padding:40px 20px;
+border-bottom:1px solid var(--redGlow);
+position:relative;
 }
 
 header h1{
-
-font-family:var(--font1);
-letter-spacing:6px;
-
+font-family:var(--fontDisplay);
+font-size:clamp(24px,5vw,52px);
+letter-spacing:5px;
+margin:0;
+text-shadow:0 0 20px var(--red);
 }
 
-/* ===========================
-MAIN
-=========================== */
-
-main{
-
-padding:20px;
-max-width:1400px;
-margin:auto;
-
+.shift-box{
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+align-items:center;
 }
 
-/* ===========================
-SECTION
-=========================== */
-
-.section{
-
-margin-bottom:40px;
-border:1px solid #111;
-padding:20px;
-background:#050505;
-
+.shift-timer{
+font-size:18px;
+color:var(--yellow);
 }
-
-.section h2{
-
-margin-bottom:15px;
-font-family:var(--font1);
-
-}
-
-/* ===========================
-PANELS
-=========================== */
-
-.panel{
-
-margin-top:15px;
-
-}
-
-/* ===========================
-INPUTS
-=========================== */
-
-textarea,
-input{
-
-width:100%;
-background:#000;
-border:1px solid #111;
-color:var(--green);
-padding:10px;
-margin-bottom:10px;
-font-family:var(--font2);
-
-}
-
-textarea{
-
-min-height:120px;
-
-}
-
-/* ===========================
-BUTTONS
-=========================== */
 
 button{
-
-padding:10px;
-margin-top:5px;
-margin-right:5px;
-border:none;
+background:#000;
+color:var(--red);
+border:1px solid var(--red);
+padding:12px 20px;
+border-radius:8px;
 cursor:pointer;
-font-family:var(--font2);
-
+transition:var(--transition);
+font-weight:bold;
+position:relative;
+overflow:hidden;
 }
 
-.save{
+button:hover{
+background:var(--red);
+color:#000;
+box-shadow:0 0 15px var(--red);
+transform:translateY(-2px);
+}
 
-background:#222;
-color:#fff;
-
+button:active{
+transform:scale(.95);
 }
 
 .send{
+background:var(--red);
+color:#000;
+}
 
+.export{
+border-color:var(--green);
+color:var(--green);
+}
+
+.export:hover{
 background:var(--green);
 color:#000;
-font-weight:bold;
-
 }
 
-.delete{
-
-background:#500;
-color:#fff;
-
+.save{
+border-color:var(--blue);
+color:var(--blue);
 }
 
-/* ===========================
-OUTPUT
-=========================== */
-
-.output{
-
-margin-top:15px;
-padding:10px;
-border:1px solid var(--green);
-min-height:40px;
-color:var(--green);
-
+.save:hover{
+background:var(--blue);
+color:#000;
 }
 
-/* ===========================
-CHECKLIST
-=========================== */
+/* =========================================================
+NAV RIGHT SIDE
+========================================================= */
 
-.task{
-
-display:flex;
-gap:10px;
-margin-bottom:5px;
-
-}
-
-.task input[type=text]{
-
-flex:1;
-
-}
-
-/* ===========================
-FOOTER
-=========================== */
-
-footer{
-
-padding:30px;
-text-align:center;
-border-top:1px solid var(--red);
-margin-top:50px;
-
-}
-
-/* ===========================
-LOADING
-=========================== */
-
-.loading{
-
+.nav-side{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-
-}
-
-.loading.show{
-
-display:flex;
-
-}
-
-.loader{
-
-border:3px solid #111;
-border-top:3px solid var(--green);
-width:40px;
-height:40px;
-border-radius:50%;
-animation:spin 1s linear infinite;
-
-}
-
-@keyframes spin{
-
-100%{transform:rotate(360deg)}
-
-}
-
-/* ===========================
-TOAST
-=========================== */
-
-.toast{
-
-position:fixed;
-bottom:20px;
 right:20px;
+top:50%;
+transform:translateY(-50%);
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:999;
+}
+
+.nav-side button{
+font-size:12px;
+padding:8px 12px;
+}
+
+/* =========================================================
+CONTAINER + SECTIONS
+========================================================= */
+
+.container{
+max-width:1600px;
+margin:auto;
+padding:40px 20px;
+display:flex;
+flex-direction:column;
+gap:70px;
+}
+
+.section{
+background:var(--panel);
+border:1px solid var(--redGlow);
+padding:30px;
+border-radius:var(--radius);
+position:relative;
+transition:var(--transition);
+}
+
+.section:hover{
+box-shadow:0 0 25px var(--redGlow);
+}
+
+.section h2{
+font-family:var(--fontDisplay);
+letter-spacing:3px;
+margin-top:0;
+}
+
+/* =========================================================
+INPUTS
+========================================================= */
+
+input, textarea, select{
+width:100%;
 background:#000;
-border:1px solid var(--green);
-padding:10px;
-display:none;
-color:var(--green);
-
+border:1px solid var(--redGlow);
+color:var(--red);
+padding:14px;
+border-radius:8px;
+margin-bottom:15px;
+font-family:var(--fontMono);
+transition:var(--transition);
 }
 
-.toast.show{
-
-display:block;
-
+input:focus, textarea:focus{
+outline:none;
+box-shadow:0 0 12px var(--redGlow);
 }
 
-/* ===========================
-GLITCH BACKGROUND
-=========================== */
+/* =========================================================
+CARD
+========================================================= */
 
-canvas{
-
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-
-}
-
-  .task-list{
-  margin-top:10px;
-}
-
-.task-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  margin-bottom:6px;
-  background:#020202;
-  border:1px solid #111;
-  transition:all .3s ease;
-  animation:fadeIn .3s ease;
-}
-
-.task-item:hover{
-  background:#111;
-}
-
-.task-text.checked{
-  text-decoration:line-through;
-  opacity:.6;
+.card{
+background:var(--panelSoft);
+border:1px solid var(--redSoft);
+padding:15px;
+border-radius:8px;
+margin-bottom:12px;
+animation:fadeIn .4s ease;
 }
 
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(-5px);}
-  to{opacity:1; transform:translateY(0);}
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
 }
 
-.mini-section{
-  margin-top:20px;
+/* =========================================================
+CHECKLIST ADVANCED
+========================================================= */
+
+.check-wrapper{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
 
-  @media(max-width:600px){
-
-  .task-item{
-    flex-wrap:wrap;
-  }
-
-  .task-item button{
-    flex:1;
-  }
-
-  .task-creator{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-
+.check-column{
+background:#000;
+padding:15px;
+border-radius:8px;
+border:1px solid var(--redSoft);
+min-height:200px;
+transition:var(--transition);
 }
 
-  .upload-box{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-bottom:20px;
+.check-column h3{
+margin-top:0;
+text-align:center;
 }
 
-.intel-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:15px;
+.move{
+transition:all .4s ease;
 }
 
-.file-card{
-  border:1px solid #111;
-  padding:10px;
-  background:#020202;
-  animation:fadeIn .3s ease;
+/* =========================================================
+DRAWING CANVAS
+========================================================= */
+
+.canvas-box{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
 }
 
-.file-card img,
-.file-card video{
-  width:100%;
-  max-height:200px;
-  object-fit:cover;
+#drawCanvas{
+background:white;
+border-radius:10px;
+cursor:crosshair;
+width: 50%;
 }
 
-.preview audio{
-  width:100%;
+/* =========================================================
+LOADER
+========================================================= */
+
+.loader{
+position:fixed;
+inset:0;
+background:#000000cc;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+display:none;
+}
+
+.spinner{
+width:60px;
+height:60px;
+border:5px solid #111;
+border-top:5px solid var(--red);
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+.check-wrapper{
+grid-template-columns:1fr;
+}
+.nav-side{
+display:none;
+}
+}
+
+footer{
+text-align:center;
+padding:40px 20px;
+border-top:1px solid var(--redGlow);
+color:var(--white);
+margin-top:60px;
+}
+
+footer span{
+color:var(--green);
+font-weight:bold;
 }
 
 </style>
 </head>
 <body>
 
-<canvas id="glitch"></canvas>
+<div class="loader" id="loader"><div class="spinner"></div></div>
 
 <header>
+<h1>COMPLIANCE CV-5</h1>
 
-<h1><a href="/index.html" style="text-decoration: none; color: #ff0033;" title="back to home...">COMPLIANCE CV-7</a></h1>
+<div class="shift-box">
+<button id="shiftBtn">START SHIFT</button>
+<div class="shift-timer" id="shiftTimer">00:00:00</div>
+</div>
 
 </header>
 
-<div class="loading" id="loading">
-<div class="loader"></div>
+<div class="nav-side">
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})">TOP</button>
+<button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})">MID</button>
+<button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">DOWN</button>
 </div>
 
-<div class="toast" id="toast"></div>
-
-<main>
+<div class="container">
 
 <!-- SECTION 1 -->
+<div class="section" id="sec1">
+<h2>SECTION 1 — 01. INNOVATIONS COMMAND DESK</h2>
+  <h3>The Target</h3>
 
+<label>codename:</label>
+<input id="noteCode">
+
+<label>notepad:</label>
+<textarea id="noteInput" rows="6"></textarea>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<button class="save" id="noteSave">SAVE</button>
+<button class="export" id="noteExportTXT">EXPORT TXT</button>
+<button class="export" id="noteExportJSON">EXPORT JSON</button>
+<button class="send" id="noteSend">SEND</button>
+</div>
+
+<hr>
+
+<h3>live clock & calendar</h3>
+<div id="liveClock"></div>
+<input type="date" id="calendar">
+
+<hr>
+
+<h3>CIO whiteboard</h3>
+
+<div class="canvas-box">
+<canvas id="drawCanvas" width="400" height="300"></canvas>
+<div>
+<button onclick="clearCanvas()">CLEAR</button>
+</div>
+</div>
+
+<hr>
+
+<h3>advanced calculator</h3>
+<input id="calcInput" placeholder="e.g. (10*5)+3">
+<button onclick="calculate()">CALCULATE</button>
+<div id="calcResult"></div>
+
+<div id="noteView"></div>
+</div>
+
+<!-- SECTION 2 -->
 <div class="section">
+<h2>SECTION 2 — TEAM MESSAGE BOARD</h2>
 
-<h2>SECTION 1 — TARGET</h2>
+<label>codename:</label>
+<input id="boardName">
 
-<textarea id="s1_input">
-  Target: money (R5000 into P&P business bank account every end of the month)
-  <br>
-  Execution: Parables & Platters
-  Routes: ends EAST stalwart semelane street... flank endings are NORTH ke masinga and SOUTH harbour... then WEST, the market...
-  Rules: deposits are only done @ 320 west street
-  Logic: 6 units a day = R150 a day / R100 into Parables & Platters business bank account
-  Cooking starts: 04:00am every morning
-  -------
-  TYPE WHAT YOU NEED TO TYPE BELOW...
-  -------
-</textarea>
+<label>Message:</label>
+<textarea id="boardMessage"></textarea>
 
-<button class="save" onclick="save(1)">SAVE</button>
-
-<button class="send" onclick="send(1)">SEND</button>
-
-<div class="output" id="s1_output"></div>
-
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<button class="save" id="boardSave">SAVE</button>
+<button class="send" id="boardSend">SEND</button>
+<button onclick="encryptText()">ENCRYPT AES</button>
+<button onclick="decryptText()">DECRYPT AES</button>
+<button class="export" id="boardExport">EXPORT JSON</button>
 </div>
 
-  <!-- SECTION 2 -->
-
-  <div class="section">
-
-<h2>SECTION 2 — CHECKLIST</h2>
-
-<!-- TASK CREATOR -->
-<div class="task-creator">
-  <input id="taskInput" placeholder="Add a task... cipc, embassies, illegalities, taxi association">
-  <button class="save" onclick="addTask()">ADD</button>
-</div>
-
-<!-- MINI SECTIONS -->
-<div class="mini-section">
-  <h3>ACTIVE TASKS</h3>
-  <div id="activeTasks" class="task-list"></div>
-</div>
-
-<div class="mini-section">
-  <h3>COMPLETED TASKS</h3>
-  <div id="completedTasks" class="task-list"></div>
-</div>
-
+<div id="boardView"></div>
 </div>
 
 <!-- SECTION 3 -->
-
 <div class="section">
+<h2>SECTION 3 — CHECKLIST</h2>
 
-<h2>SECTION 3 — INTEL LOG</h2>
+<label>codename:</label>
+<input id="taskCode">
 
-<div class="upload-box">
+<input id="checkInput" placeholder="Enter Task">
 
-  <input type="file" id="fileInput" multiple>
-  <textarea id="fileNote" placeholder="Add note for these files..."></textarea>
+<button class="send" id="taskSend">SEND</button>
 
-  <button class="save" onclick="uploadFiles()">UPLOAD (MAX 7)</button>
-
+<div class="check-wrapper">
+<div class="check-column">
+<h3>ACTIVE</h3>
+<div id="activeTasks"></div>
 </div>
-
-<div id="intelLog" class="intel-grid"></div>
+<div class="check-column">
+<h3>COMPLETED</h3>
+<div id="completedTasks"></div>
+</div>
+</div>
 
 </div>
 
 <!-- SECTION 4 -->
-
 <div class="section">
+<h2>SECTION 4 — LOG</h2>
 
-<h2>SECTION 4 — n/a</h2>
+<label>Upload File (single)</label>
+<input type="file" id="fileSingle">
 
-<textarea id="s4_input"></textarea>
+<label>Upload Up To 5 Files</label>
+<input type="file" id="fileMulti" multiple>
 
-<button class="save" onclick="save(4)">SAVE</button>
+<button onclick="saveFiles()">SAVE FILES</button>
 
-<button class="send" onclick="send(4)">SEND</button>
+<h3>File Viewer</h3>
+<div id="fileView"></div>
 
-<div class="output" id="s4_output"></div>
+<hr>
+
+<h3>Shift Logs</h3>
+<div id="shiftLogs"></div>
 
 </div>
-
 
 <!-- SECTION 5 -->
-
 <div class="section">
+<h2>SECTION 5 — AI TERMINAL: ZAMA MDLULI</h2>
 
-<h2>SECTION 5 — n/a</h2>
+<label>Codename:</label>
+<input id="aiCode">
 
-<textarea id="s5_input"></textarea>
+<textarea id="aiInput" placeholder="Directive for Zama Mdluli..."></textarea>
 
-<button class="save" onclick="save(5)">SAVE</button>
+<button class="send" id="aiSend">SEND</button>
+<button class="export" id="aiExport">EXPORT JSON</button>
 
-<button class="send" onclick="send(5)">SEND</button>
-
-<div class="output" id="s5_output"></div>
-
+<div id="aiView"></div>
 </div>
 
-
-<!-- SECTION 6 -->
-
-<div class="section">
-
-<h2>SECTION 6 — n/a</h2>
-
-<textarea id="s6_input"></textarea>
-
-<button class="save" onclick="save(6)">SAVE</button>
-
-<button class="send" onclick="send(6)">SEND</button>
-
-<div class="output" id="s6_output"></div>
-
 </div>
-
-
-<!-- SECTION 7 -->
-
-<div class="section">
-
-<h2>SECTION 7 — ZAMA MDLULI (AI)</h2>
-
-<input id="ai_input">
-
-<button class="send" onclick="ai()">SEND</button>
-
-<div class="output" id="ai_output"></div>
-
-</div>
-
-
-</main>
 
 <footer>
-
-"The Lord is my light and my salvation; whom shall I fear?" — Psalm 27:1 KJV
-
+<span>"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest." — Joshua 1:9 (KJV)</span>
 </footer>
 
-  <script type="module">
+<script type="module">
 
 /* =========================================================
-CV-7 ENTERPRISE CORE
-LOCAL SAVE + CLOUD SEND + FULL RECOVERY + FULL FLOW
-========================================================= */
-
-
-/* =========================================================
-FIREBASE IMPORTS
+FIREBASE CONFIG (YOUR REAL CONFIG)
 ========================================================= */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-
 import {
-
 getFirestore,
-doc,
-setDoc,
-getDoc,
-onSnapshot,
-collection,
-addDoc,
-deleteDoc,
-updateDoc,
-serverTimestamp
-
+collection,addDoc,doc,setDoc,getDoc,onSnapshot,
+deleteDoc,updateDoc,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-
-/* =========================================================
-CONFIG
-========================================================= */
-
 const firebaseConfig = {
-
 apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
 authDomain: "eden-4a8d3.firebaseapp.com",
 projectId: "eden-4a8d3",
 storageBucket: "eden-4a8d3.firebasestorage.app",
 messagingSenderId: "421147129483",
 appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-
 };
-
-
-/* =========================================================
-INITIALIZE
-========================================================= */
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-
 /* =========================================================
-GLOBAL SAFE SYSTEM
+SHIFT SYSTEM
 ========================================================= */
 
-const LOCAL_KEY = "CV7_LOCAL";
+let shiftInterval=null;
+let shiftStartTime=null;
+let shiftDocId=null;
+const shiftBtn=document.getElementById("shiftBtn");
+const shiftTimer=document.getElementById("shiftTimer");
 
-const loading = document.getElementById("loading");
-
-const toastBox = document.getElementById("toast");
-
-
-/* =========================================================
-LOADING SYSTEM
-========================================================= */
-
-function showLoading(){
-
-loading.classList.add("show");
-
+function formatTime(ms){
+let sec=Math.floor(ms/1000);
+let h=Math.floor(sec/3600);
+let m=Math.floor((sec%3600)/60);
+let s=sec%60;
+return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-function hideLoading(){
+shiftBtn.onclick=async()=>{
+if(!shiftStartTime){
+shiftStartTime=Date.now();
+shiftBtn.innerText="END SHIFT";
+shiftDocId=(await addDoc(collection(db,"shifts"),{
+start:serverTimestamp(),
+active:true
+})).id;
 
-loading.classList.remove("show");
+shiftInterval=setInterval(()=>{
+shiftTimer.innerText=formatTime(Date.now()-shiftStartTime);
+},1000);
 
+alert("PROTOCOL: 71 PUSH-UPS IN 60 SECONDS. SEND VIDEO TO EDEN WHATSAPP.");
 }
-
-
-/* =========================================================
-TOAST SYSTEM
-========================================================= */
-
-function toast(msg){
-
-toastBox.innerText = msg;
-
-toastBox.classList.add("show");
-
-setTimeout(()=>{
-
-toastBox.classList.remove("show");
-
-},3000);
-
+else{
+clearInterval(shiftInterval);
+let duration=Date.now()-shiftStartTime;
+await updateDoc(doc(db,"shifts",shiftDocId),{
+end:serverTimestamp(),
+duration
+});
+shiftBtn.innerText="START SHIFT";
+shiftStartTime=null;
+shiftTimer.innerText="00:00:00";
+alert("SHIFT ENDED. PROTOCOL: 71 PUSH-UPS AGAIN.");
 }
-
-
-/* =========================================================
-LOCAL STORAGE ENGINE
-========================================================= */
-
-function getLocal(){
-
-try{
-
-return JSON.parse(localStorage.getItem(LOCAL_KEY)) || {};
-
-}catch{
-
-return {};
-
-}
-
-}
-
-
-function saveLocal(data){
-
-localStorage.setItem(LOCAL_KEY,JSON.stringify(data));
-
-}
-
-
-function saveLocalSection(id,value){
-
-let data = getLocal();
-
-data["s"+id] = value;
-
-saveLocal(data);
-
-}
-
-
-function loadLocalSection(id){
-
-let data = getLocal();
-
-return data["s"+id] || "";
-
-}
-
-
-/* =========================================================
-SECTION SAVE (LOCAL)
-========================================================= */
-
-window.save = async function(id){
-
-try{
-
-showLoading();
-
-let value = document.getElementById("s"+id+"_input").value;
-
-saveLocalSection(id,value);
-
-toast("Saved Locally");
-
-}catch(e){
-
-toast("Local Save Error");
-
-console.error(e);
-
-}
-
-hideLoading();
-
 };
 
+onSnapshot(collection(db,"shifts"),snap=>{
+shiftLogs.innerHTML="";
+snap.forEach(d=>{
+let data=d.data();
+if(data.duration){
+shiftLogs.innerHTML+=`
+<div class="card">
+Duration: ${formatTime(data.duration)}
+</div>`;
+}
+});
+});
 
 /* =========================================================
-SECTION SEND (CLOUD)
-========================================================= */
-
-window.send = async function(id){
-
-showLoading();
-
-try{
-
-let value = document.getElementById("s"+id+"_input").value;
-
-await setDoc(doc(db,"cv7_sections","s"+id),{
-
-content:value,
-
-time:serverTimestamp()
-
-});
-
-document.getElementById("s"+id+"_output").innerText=value;
-
-toast("Sent To Cloud");
-
-}catch(e){
-
-toast("Cloud Send Failed");
-
-console.error(e);
-
-}
-
-hideLoading();
-
-};
-
-
-/* =========================================================
-LOAD SECTIONS CLOUD FIRST LOCAL BACKUP SECOND
-========================================================= */
-
-async function loadSections(){
-
-showLoading();
-
-try{
-
-for(let i=1;i<=6;i++){
-
-let ref = doc(db,"cv7_sections","s"+i);
-
-let snap = await getDoc(ref);
-
-if(snap.exists()){
-
-let value = snap.data().content;
-
-document.getElementById("s"+i+"_input").value=value;
-
-document.getElementById("s"+i+"_output").innerText=value;
-
-saveLocalSection(i,value);
-
-}else{
-
-document.getElementById("s"+i+"_input").value=loadLocalSection(i);
-
-}
-
-}
-
-}catch(e){
-
-toast("Cloud Load Failed");
-
-console.error(e);
-
-}
-
-hideLoading();
-
-}
-
-
-/* =========================================================
-TASK SYSTEM CLOUD
-========================================================= */
-
-const taskCol = collection(db,"cv7_tasks");
-
-window.addTask = async function(){
-
-let input=document.getElementById("taskInput");
-
-if(!input.value)return;
-
-showLoading();
-
-try{
-
-await addDoc(taskCol,{
-
-text:input.value,
-
-done:false,
-
-time:serverTimestamp()
-
-});
-
-input.value="";
-
-toast("Task Added");
-
-}catch(e){
-
-toast("Task Add Failed");
-
-console.error(e);
-
-}
-
-hideLoading();
-
-};
-
-
-function renderTask(id,data){
-
-let div=document.createElement("div");
-
-div.className="task-item";
-
-div.innerHTML=`
-
-<input type="checkbox" ${data.done?"checked":""}>
-
-<span>${data.text}</span>
-
-<button>X</button>
-
-`;
-
-
-div.querySelector("input").onchange=async()=>{
-
-await updateDoc(doc(db,"cv7_tasks",id),{
-
-done:!data.done
-
-});
-
-};
-
-
-div.querySelector("button").onclick=async()=>{
-
-await deleteDoc(doc(db,"cv7_tasks",id));
-
-};
-
-
-return div;
-
-}
-
-
-function loadTasks(){
-
-onSnapshot(taskCol,(snap)=>{
-
-activeTasks.innerHTML="";
-
-completedTasks.innerHTML="";
-
-snap.forEach(docu=>{
-
-let el=renderTask(docu.id,docu.data());
-
-if(docu.data().done)
-
-completedTasks.appendChild(el);
-
-else
-
-activeTasks.appendChild(el);
-
-});
-
-});
-
-}
-
-
-/* =========================================================
-FILE SYSTEM LOCAL ONLY WITH PREVIEW
-========================================================= */
-
-window.uploadFiles=function(){
-
-let files=fileInput.files;
-
-if(!files.length)return;
-
-let store=getLocal();
-
-if(!store.files)store.files=[];
-
-Array.from(files).forEach(file=>{
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-store.files.push({
-
-name:file.name,
-
-type:file.type,
-
-data:reader.result,
-
-note:fileNote.value
-
-});
-
-saveLocal(store);
-
-loadFiles();
-
-};
-
-reader.readAsDataURL(file);
-
-});
-
-};
-
-
-function loadFiles(){
-
-intelLog.innerHTML="";
-
-let store=getLocal();
-
-if(!store.files)return;
-
-store.files.forEach((f,i)=>{
-
-let div=document.createElement("div");
-
-div.className="file-card";
-
-let preview="";
-
-if(f.type.startsWith("image"))
-
-preview=`<img src="${f.data}">`;
-
-else if(f.type.startsWith("video"))
-
-preview=`<video controls src="${f.data}"></video>`;
-
-else if(f.type.startsWith("audio"))
-
-preview=`<audio controls src="${f.data}"></audio>`;
-
-div.innerHTML=`
-
-${preview}
-
-<p>${f.name}</p>
-
-<p>${f.note}</p>
-
-<button onclick="deleteFile(${i})">Delete</button>
-
-`;
-
-intelLog.appendChild(div);
-
-});
-
-}
-
-
-window.deleteFile=function(i){
-
-let store=getLocal();
-
-store.files.splice(i,1);
-
-saveLocal(store);
-
-loadFiles();
-
-};
-
-
-/* =========================================================
-AUTO SAVE
+LIVE CLOCK
 ========================================================= */
 
 setInterval(()=>{
+liveClock.innerText=new Date().toLocaleString();
+},1000);
 
-for(let i=1;i<=6;i++){
+/* =========================================================
+DRAWING CANVAS
+========================================================= */
 
-saveLocalSection(i,document.getElementById("s"+i+"_input").value);
+const canvas=document.getElementById("drawCanvas");
+const ctx=canvas.getContext("2d");
+let drawing=false;
 
+canvas.onmousedown=()=>drawing=true;
+canvas.onmouseup=()=>drawing=false;
+canvas.onmousemove=(e)=>{
+if(!drawing)return;
+ctx.fillStyle="black";
+ctx.beginPath();
+ctx.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
+ctx.fill();
+};
+
+window.clearCanvas=()=>ctx.clearRect(0,0,canvas.width,canvas.height);
+
+/* =========================================================
+CALCULATOR
+========================================================= */
+
+window.calculate=()=>{
+try{
+calcResult.innerText="Result: "+eval(calcInput.value);
+}catch{
+calcResult.innerText="Error";
 }
-
-},5000);
-
+};
 
 /* =========================================================
-NETWORK DETECTION
+CHECKLIST DYNAMIC
 ========================================================= */
 
-window.addEventListener("offline",()=>toast("Offline"));
+const taskRef=collection(db,"tasks");
 
-window.addEventListener("online",()=>toast("Online Sync Ready"));
+taskSend.onclick=async()=>{
+await addDoc(taskRef,{
+text:checkInput.value,
+done:false
+});
+checkInput.value="";
+};
 
+onSnapshot(taskRef,snap=>{
+activeTasks.innerHTML="";
+completedTasks.innerHTML="";
+snap.forEach(docSnap=>{
+let d=docSnap.data();
+let el=document.createElement("div");
+el.className="card move";
+el.innerHTML=`
+${d.text}
+<button onclick="toggleTask('${docSnap.id}',${d.done})">TOGGLE</button>
+<button onclick="deleteTask('${docSnap.id}')">DELETE</button>
+`;
+if(d.done) completedTasks.appendChild(el);
+else activeTasks.appendChild(el);
+});
+});
+
+window.toggleTask=async(id,done)=>{
+await updateDoc(doc(db,"tasks",id),{done:!done});
+};
+
+window.deleteTask=async(id)=>{
+await deleteDoc(doc(db,"tasks",id));
+};
 
 /* =========================================================
-INIT
+FILES LOCAL PREVIEW
 ========================================================= */
 
-loadSections();
+window.saveFiles=()=>{
+let files=[...fileSingle.files,...fileMulti.files].slice(0,5);
+fileView.innerHTML="";
+files.forEach(f=>{
+let reader=new FileReader();
+reader.onload=()=>{
+let div=document.createElement("div");
+div.className="card";
+div.innerHTML=`<b>${f.name}</b><br><iframe src="${reader.result}" width="100%" height="200"></iframe>`;
+fileView.appendChild(div);
+};
+reader.readAsDataURL(f);
+});
+};
 
-loadTasks();
+/* =========================================================
+MESSAGE BOARD + AES
+========================================================= */
 
-loadFiles();
+const boardRef=collection(db,"board");
 
-toast("CV7 READY");
+boardSend.onclick=async()=>{
+await addDoc(boardRef,{
+name:boardName.value,
+text:boardMessage.value,
+time:serverTimestamp()
+});
+boardMessage.value="";
+};
+
+onSnapshot(boardRef,snap=>{
+boardView.innerHTML="";
+snap.forEach(docSnap=>{
+let d=docSnap.data();
+boardView.innerHTML+=`
+<div class="card">
+<b>${d.name}</b>
+<p>${d.text}</p>
+<button onclick="deleteBoard('${docSnap.id}')">DELETE</button>
+</div>`;
+});
+});
+
+window.deleteBoard=async(id)=>{
+await deleteDoc(doc(db,"board",id));
+};
+
+window.encryptText=async()=>{
+const enc=new TextEncoder();
+const key=await crypto.subtle.generateKey({name:"AES-GCM",length:256},true,["encrypt","decrypt"]);
+const iv=crypto.getRandomValues(new Uint8Array(12));
+const cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,enc.encode(boardMessage.value));
+boardMessage.value=btoa(String.fromCharCode(...new Uint8Array(cipher)));
+};
+
+window.decryptText=()=>alert("Key persistence required for real decrypt.");
+
+/* =========================================================
+AI TERMINAL
+========================================================= */
+
+const aiRef=collection(db,"ai");
+
+aiSend.onclick=async()=>{
+await addDoc(aiRef,{
+code:aiCode.value,
+prompt:aiInput.value,
+time:serverTimestamp()
+});
+aiInput.value="";
+};
+
+onSnapshot(aiRef,snap=>{
+aiView.innerHTML="";
+snap.forEach(docSnap=>{
+let d=docSnap.data();
+aiView.innerHTML+=`
+<div class="card">
+<b>${d.code}</b>
+<p>${d.prompt}</p>
+</div>`;
+});
+});
 
 </script>
-  
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
