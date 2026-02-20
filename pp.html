@@ -1,1 +1,240 @@
-<!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parables & Platters | Order</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:Poppins;
+margin:0;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:#111;
+padding:15px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+border-bottom:1px solid gold;
+}
+
+.container{
+padding:15px;
+}
+
+.item{
+background:#151515;
+padding:15px;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+button{
+background:gold;
+border:none;
+padding:10px;
+margin-top:10px;
+width:100%;
+font-weight:bold;
+border-radius:5px;
+}
+
+button:hover{
+background:#ffd700;
+}
+
+.cart{
+position:fixed;
+bottom:0;
+width:100%;
+background:#111;
+padding:15px;
+border-top:1px solid gold;
+}
+
+input, textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:none;
+}
+
+.checkout{
+background:green;
+color:white;
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+Parables & Platters Ordering
+
+</header>
+
+<div class="container" id="menu">
+
+<h2>Menu</h2>
+
+</div>
+
+
+<div class="cart">
+
+<div id="cart-items">
+
+Cart Empty
+
+</div>
+
+<h3 id="total">
+
+Total: R0
+
+</h3>
+
+<input type="text" id="name" placeholder="Your Name">
+
+<input type="text" id="phone" placeholder="Phone Number">
+
+<textarea id="address" placeholder="Delivery Address"></textarea>
+
+<button class="checkout" onclick="checkout()">
+
+Place Order
+
+</button>
+
+</div>
+
+
+<script>
+
+
+const menu = [
+
+{name:"Burger", price:50},
+
+{name:"Loaded Fries", price:40},
+
+{name:"Wings", price:60},
+
+{name:"Steak Plate", price:120},
+
+{name:"Cold Drink", price:20}
+
+];
+
+let cart = [];
+
+function loadMenu(){
+
+let html="";
+
+menu.forEach((item,index)=>{
+
+html+=`
+
+<div class="item">
+
+<h3>${item.name}</h3>
+
+<p>R${item.price}</p>
+
+<button onclick="addToCart(${index})">
+
+Add to Cart
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("menu").innerHTML+=html;
+
+}
+
+
+function addToCart(index){
+
+cart.push(menu[index]);
+
+updateCart();
+
+}
+
+
+function updateCart(){
+
+let html="";
+
+let total=0;
+
+cart.forEach(item=>{
+
+html+=item.name+" - R"+item.price+"<br>";
+
+total+=item.price;
+
+});
+
+document.getElementById("cart-items").innerHTML=html;
+
+document.getElementById("total").innerHTML="Total: R"+total;
+
+}
+
+
+function checkout(){
+
+let name=document.getElementById("name").value;
+
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+if(cart.length==0){
+
+alert("Cart Empty");
+
+return;
+
+}
+
+if(name==""||phone==""||address==""){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+alert("Order Placed Successfully");
+
+cart=[];
+
+updateCart();
+
+}
+
+
+loadMenu();
+
+
+</script>
+
+</body>
+  </html>
