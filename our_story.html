@@ -1,133 +1,247 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  
 <head>
+  
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Story</title>
-<link rel="icon" type="image/png" href="logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  
+<title>Our Story | Eden Conglomerate Pty Ltd</title>
+
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg:#000;
-  --text:#ff0033;
-  --accent:#00ff41;
-  --panel:#050505;
-  --font1:'Orbitron',sans-serif;
-  --font2:'JetBrains Mono',monospace;
+
+/* ===============================
+   ROOT SYSTEM VARIABLES
+=================================*/
+:root{
+    --cyan:#00ffff;
+    --panel:rgba(0,10,15,0.75);
+    --border:rgba(0,255,255,0.35);
+    --glow:0 0 25px rgba(0,255,255,0.45);
+    --radius:14px;
+    --font-tactical:'Orbitron',sans-serif;
+    --font-body:'Electrolize',sans-serif;
+    --font-mono:'VT323',monospace;
 }
 
-body {
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font2);
-  line-height:1.6;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html,body{
+    background:#000;
+    color:var(--cyan);
+    font-family:var(--font-body);
+    overflow-x:hidden;
 }
 
-header {
-  text-align:center;
-  padding:40px 20px;
-  border-bottom:1px solid var(--accent);
+/* Background subtle grid */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+    background-size:50px 50px;
+    z-index:0;
 }
 
-header h1 {
-  font-family:var(--font1);
-  letter-spacing:4px;
+/* Main wrapper */
+.main{
+    position:relative;
+    z-index:2;
+    padding:clamp(20px,5vw,60px);
+    min-height:100vh;
 }
 
-main {
-  max-width:900px;
-  margin:40px auto;
-  padding:0 20px;
+/* Header */
+.header{
+    text-align:center;
+    margin-bottom:60px;
 }
 
-.section {
-  background:var(--panel);
-  padding:20px;
-  margin-bottom:20px;
-  border-left:5px solid var(--accent);
-  border-radius:4px;
+.header h1{
+    font-family:var(--font-tactical);
+    font-size:clamp(2rem,5vw,3rem);
+    letter-spacing:6px;
 }
 
-.section h2 {
-  font-family:var(--font1);
-  margin-bottom:10px;
+.header span{
+    font-family:var(--font-mono);
+    opacity:0.7;
 }
 
-.section p {
-  margin-bottom:10px;
+/* Story container */
+.story{
+    max-width:900px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:50px;
 }
 
-.timeline {
-  list-style:none;
-  padding-left:0;
+/* Story block */
+.block{
+    padding:35px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--panel);
+    backdrop-filter:blur(8px);
+    box-shadow:var(--glow);
+    transition:0.3s ease;
 }
 
-.timeline li {
-  margin-bottom:20px;
-  border-left:3px solid var(--accent);
-  padding-left:15px;
-  position:relative;
+.block:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 40px rgba(0,255,255,0.6);
 }
 
-.timeline li::before {
-  content:"";
-  position:absolute;
-  left:-7px;
-  top:0;
-  width:14px;
-  height:14px;
-  background:var(--accent);
-  border-radius:50%;
+.block h2{
+    font-family:var(--font-tactical);
+    margin-bottom:20px;
+    letter-spacing:2px;
 }
 
-footer {
-  text-align:center;
-  padding:30px;
-  border-top:1px solid var(--accent);
-  margin-top:50px;
+.block p{
+    line-height:1.8;
+    opacity:0.9;
 }
+
+/* Footer */
+.footer{
+    text-align:center;
+    margin-top:70px;
+    font-family:var(--font-mono);
+    opacity:0.6;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .block:hover{transform:none;}
+}
+
 </style>
+  
 </head>
+
 <body>
 
-<header>
-  <h1>Our Story</h1>
-  <p>From humble beginnings to the vision we live today.</p>
-</header>
+<div class="main">
 
-<main>
+<div class="header">
+<h1>OUR STORY</h1>
+<span>[ EDEN CONGLOMERATE — ORIGIN ARCHIVE ]</span>
+</div>
 
-  <div class="section">
-    <h2>The Beginning</h2>
-    <p>It all started in a small garage, where our founders dreamed of creating something meaningful. With nothing but ideas and determination, the journey began.</p>
-  </div>
+<div class="story">
 
-  <div class="section">
-    <h2>First Milestones</h2>
-    <ul class="timeline">
-      <li><strong>2018:</strong> Company founded.</li>
-      <li><strong>2019:</strong> First product launched.</li>
-      <li><strong>2020:</strong> Expanded to international clients.</li>
-    </ul>
-  </div>
+<div class="block">
+<h2>THE VISIONARY</h2>
+<p>
+It all began with Thato Morake — the founder.
+Once there was a young boy named Thato who carried within him a global vision:
+to build an empire. A boy with no limits in thinking, no mental constraints,
+and absolutely no desire for anything small.
+</p>
+</div>
 
-  <div class="section">
-    <h2>Growth & Vision</h2>
-    <p>Our team grew, our goals expanded, and our vision became clearer. We focused on innovation, community, and building a legacy for the future.</p>
-  </div>
+<div class="block">
+<h2>2023 — DIVINE ALIGNMENT</h2>
+<p>
+In 2023, while attending the Universal Church, Thato crossed paths with Philani Kemele.
+Thato had long been part of the church community, but for Philani, 2023 was his first year.
+At first, nothing significant stood between them.
+Philani initially dismissed Thato as just another charmer boy who thinks the entire world revolves around him.
+</p>
+</div>
 
-  <div class="section">
-    <h2>Today</h2>
-    <p>Today, we continue to push boundaries, deliver quality, and live by the values that started this journey. Our story is ongoing, and every team member contributes to the next chapter.</p>
-  </div>
+<div class="block">
+<h2>THE SOCCER CATALYST</h2>
+<p>
+When the church launched a soccer tournament, the young men began practicing regularly.
+Philani had no interest in soccer at the time — his world revolved entirely around coding.
+He lacked experience and didn’t want embarrassment.
+But Thato and Mpumelelo convinced him to join.
+That single practice session changed everything.
+</p>
+<p>
+During games, between passes and tactical shifts, conversations unfolded —
+about God, about manhood, about purpose.
+With every word Thato spoke, Philani began to realize:
+this was not just a talker. This was someone who thought like him.
+</p>
+</div>
 
-</main>
+<div class="block">
+<h2>THE LIBRARY MEETING — OCTOBER 2023</h2>
+<p>
+Around October 2023, Philani invited Thato to the Durban Central Municipal Library.
+He wanted clarity — to confirm whether his intuition was correct.
+The first meeting failed due to scheduling conflicts,
+but the next day they sat down together.
+</p>
+<p>
+Before business was discussed, they drew up soccer tactics —
+ensuring they would win the tournament.
+Then came the defining question.
+</p>
+<p>
+“Where do you want to be in life?”
+</p>
+<p>
+“The top,” Thato replied.
+</p>
+<p>
+“Me too,” Philani said.
+</p>
+<p>
+“How are we going to get there?”
+</p>
+<p>
+“Through money.”
+</p>
+<p>
+“And how do we get that money?”
+</p>
+<p>
+“Business.”
+</p>
+<p>
+Not small-time business.
+Global-scale business.
+</p>
+</div>
 
-<footer>
-  "Innovation is the heartbeat of our story."
-</footer>
+<div class="block">
+<h2>THE STRATEGY BEGINS</h2>
+<p>
+From that moment forward, Eden was not an idea —
+it was a direction.
+They began strategizing, mapping futures,
+calculating moves before they were ever made.
+What started as a conversation in a library
+became the foundation of Eden Conglomerate.
+</p>
+</div>
+
+</div>
+
+<div class="footer">
+© Eden Conglomerate // Strategic Origin Record
+</div>
+
+</div>
 
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
