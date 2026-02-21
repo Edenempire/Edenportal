@@ -1,51 +1,103 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KJV Holy Bible | Eden Stealth CV-1</title>
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+<title>KJV Holy Bible | Eden</title>
 
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
+
+/* ===============================
+   ROOT SYSTEM VARIABLES
+=================================*/
 :root{
     --cyan:#00ffff;
+    --cyan-dim:#00aaaa;
     --bg:#000;
-    --panel:rgba(0,10,10,0.9);
-    --glow:0 0 15px rgba(0,255,255,0.5);
+    --panel:rgba(0,10,15,0.75);
+    --glass:rgba(0,25,30,0.35);
+    --border:rgba(0,255,255,0.35);
+    --glow:0 0 20px rgba(0,255,255,0.4);
+    --radius:14px;
     --font-tactical:'Orbitron',sans-serif;
     --font-body:'Electrolize',sans-serif;
     --font-mono:'VT323',monospace;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-    background:radial-gradient(circle at top,#0a0f14,#000 70%);
-    color:var(--cyan);
-    font-family:var(--font-body);
-    padding:40px 5%;
+/* ===============================
+   GLOBAL RESET
+=================================*/
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+html,body{
+    height:100%;
+    background:#000;
+    font-family:var(--font-body);
+    color:var(--cyan);
+    overflow-x:hidden;
+}
+
+/* ===============================
+   RAIN CANVAS LAYER
+=================================*/
+canvas#rain{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* ===============================
+   MAIN WRAPPER
+=================================*/
+.main{
+    position:relative;
+    z-index:2;
+    padding:clamp(20px,5vw,60px);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* ===============================
+   HEADER
+=================================*/
 .header{
     text-align:center;
-    margin-bottom:40px;
+    margin-bottom:clamp(20px,4vh,40px);
 }
 
 .header h1{
     font-family:var(--font-tactical);
-    font-size:2.5rem;
+    font-size:clamp(1.8rem,4vw,3rem);
     letter-spacing:6px;
 }
 
 .header span{
     font-family:var(--font-mono);
     opacity:0.7;
+    font-size:clamp(0.9rem,2vw,1.2rem);
 }
 
+/* ===============================
+   CONTROL PANEL
+=================================*/
 .controls{
     display:flex;
-    gap:20px;
+    gap:clamp(10px,2vw,20px);
     justify-content:center;
     flex-wrap:wrap;
     margin-bottom:30px;
@@ -54,24 +106,36 @@ body{
 .btn{
     border:1px solid var(--cyan);
     padding:12px 30px;
-    background:transparent;
+    background:var(--glass);
+    backdrop-filter:blur(8px);
     color:var(--cyan);
     font-family:var(--font-tactical);
     text-transform:uppercase;
+    letter-spacing:2px;
     cursor:pointer;
-    transition:0.3s;
+    transition:all 0.3s ease;
+    border-radius:var(--radius);
+    min-width:180px;
 }
 
 .btn:hover{
     background:var(--cyan);
     color:#000;
     box-shadow:var(--glow);
+    transform:translateY(-2px);
 }
 
+/* ===============================
+   PDF VIEWER
+=================================*/
 .viewer{
-    border:2px solid var(--cyan);
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    backdrop-filter:blur(6px);
+    background:var(--panel);
     box-shadow:var(--glow);
-    height:80vh;
 }
 
 iframe{
@@ -81,19 +145,47 @@ iframe{
     background:#000;
 }
 
+/* ===============================
+   FOOTER
+=================================*/
 .footer{
     text-align:center;
-    margin-top:40px;
+    margin-top:30px;
     font-family:var(--font-mono);
     opacity:0.6;
+    font-size:0.9rem;
 }
+
+/* ===============================
+   MOBILE OPTIMIZATION
+=================================*/
+@media(max-width:768px){
+    .viewer{
+        height:70vh;
+    }
+}
+
+/* ===============================
+   REDUCED MOTION SUPPORT
+=================================*/
+@media (prefers-reduced-motion: reduce) {
+    canvas#rain {
+        display:none;
+    }
+}
+
 </style>
+    
 </head>
 
 <body>
 
+<canvas id="rain"></canvas>
+
+<div class="main">
+
 <div class="header">
-    <h1>KJV Holy Bible</h1>
+    <h1>KJV HOLY BIBLE</h1>
     <span>[ KING JAMES VERSION — AUTHORIZED 1611 ]</span>
 </div>
 
@@ -102,9 +194,9 @@ iframe{
         Open Full Screen
     </button>
 
-    <a href="kjv.pdf" download>
-        <button class="btn">Download PDF</button>
-    </a>
+    <button class="btn" onclick="window.location.href='kjv.pdf'">
+        Download PDF
+    </button>
 
     <button class="btn" onclick="window.location.href='index.html'">
         Return to HQ
@@ -112,12 +204,92 @@ iframe{
 </div>
 
 <div class="viewer">
-    <iframe src="kjv.pdf"></iframe>
+    <iframe src="the-holy-bible-king-james-version.pdf">
+        <p>Your browser does not support embedded PDFs.
+           <a href="the-holy-bible-king-james-version.pdf">Download instead</a>.
+        </p>
+    </iframe>
 </div>
 
 <div class="footer">
     © Eden Stealth CV-1 // Scripture Archive System
 </div>
 
+</div>
+
+<script>
+
+/* =========================================
+   LIGHT RAIN DRIZZLE ENGINE
+   High Performance Canvas System
+=========================================*/
+
+const canvas = document.getElementById('rain');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+let drops = [];
+let density;
+
+function resize(){
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+
+    // Adaptive density based on screen size
+    density = Math.floor((width * height) / 15000);
+    createDrops();
+}
+
+function createDrops(){
+    drops = [];
+    for(let i=0;i<density;i++){
+        drops.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            length: Math.random() * 15 + 8,
+            speed: Math.random() * 1.5 + 1,
+            opacity: Math.random() * 0.3 + 0.2
+        });
+    }
+}
+
+function drawRain(){
+    ctx.clearRect(0,0,width,height);
+    ctx.lineWidth = 1;
+    ctx.lineCap = "round";
+
+    for(let drop of drops){
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(0,255,255,${drop.opacity})`;
+        ctx.moveTo(drop.x, drop.y);
+        ctx.lineTo(drop.x, drop.y + drop.length);
+        ctx.stroke();
+
+        drop.y += drop.speed;
+
+        if(drop.y > height){
+            drop.y = -drop.length;
+            drop.x = Math.random() * width;
+        }
+    }
+}
+
+function animate(){
+    drawRain();
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', resize);
+
+resize();
+animate();
+
+</script>
+
 </body>
 </html>
+
+
+
+
+
