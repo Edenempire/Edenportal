@@ -1841,149 +1841,138 @@
                 </div>
             </div>
         </div>
-    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    
-        <script>
-    
-            /* ===============================
-            FORCE PAGE TO LOAD FROM TOP
-            ================================ */
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
-    
-            window.addEventListener("load", () => {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "auto"
-                });
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <script>
+            
+        /* ===============================
+        FORCE PAGE TO LOAD FROM TOP
+        ================================ */
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener("load", () => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto"
             });
-    
-            /* ===============================
-               CORE ENGINE
-            ================================ */
-            const sysTime = document.getElementById('sys-clock');
-            const yearSpan = document.getElementById('year');
-            const termInput = document.getElementById('term-input');
-            const termOutput = document.getElementById('terminal-output');
-    
-            // Smooth Scroll
-            function scrollToSection(id) {
-                const el = document.getElementById(id);
-                window.scrollTo({
-                    top: el.offsetTop - 90,
-                    behavior: 'smooth'
-                });
-            }
-    
-            // Modal Controls
-            function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-            function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    
-            // Reveal Animations on Scroll
-            const observerOptions = { threshold: 0.1 };
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    }
-                });
-            }, observerOptions);
-    
-            document.querySelectorAll('section').forEach(sec => observer.observe(sec));
-    
-            /* ===============================
-               TERMINAL LOGIC
-            ================================ */
-            function printToTerm(text, color = "inherit") {
-                const div = document.createElement('div');
-                div.style.color = color;
-                div.innerHTML = `> ${text}`;
-                termOutput.appendChild(div);
-                termOutput.scrollTop = termOutput.scrollHeight;
-            }
-    
-            termInput.addEventListener('keydown', (e) => {
-    
-                if (e.key === 'Enter') {
-                    const raw = termInput.value.trim();     // keep original
-                    const val = raw.toLowerCase();          // system parsing
-                    termInput.value = '';
-    
-                    // 🔒 ULTRA COVERT INTERNAL COMMAND (NOT LISTED)
-                    if (raw === '1.') {
-    
-                        printToTerm('PASSING BIOMETRIC...', 'var(--cyan)');
-    
-                        // Create loading animation
-                        let dots = 0;
-                        const loadingLine = document.createElement('div');
-                        loadingLine.style.color = 'var(--cyan)';
-                        loadingLine.innerHTML = '> AUTHENTICATING';
-                        termOutput.appendChild(loadingLine);
+        });
+
+        /* ===============================
+           CORE ENGINE
+        ================================ */
+        const sysTime = document.getElementById('sys-clock');
+        const yearSpan = document.getElementById('year');
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('terminal-output');
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            window.scrollTo({
+                top: el.offsetTop - 90,
+                behavior: 'smooth'
+            });
+        }
+
+        // Modal Controls
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+        /* ===============================
+           TERMINAL LOGIC
+        ================================ */
+        function printToTerm(text, color = "inherit") {
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.innerHTML = `> ${text}`;
+            termOutput.appendChild(div);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const raw = termInput.value.trim();
+                const val = raw.toLowerCase();
+                termInput.value = '';
+
+                if (raw === '1.') {
+                    printToTerm('PASSING BIOMETRIC...', 'var(--cyan)');
+                    
+                    let dots = 0;
+                    const loadingLine = document.createElement('div');
+                    loadingLine.style.color = 'var(--cyan)';
+                    loadingLine.innerHTML = '> AUTHENTICATING';
+                    termOutput.appendChild(loadingLine);
+                    termOutput.scrollTop = termOutput.scrollHeight;
+
+                    const loadingInterval = setInterval(() => {
+                        dots = (dots + 1) % 4;
+                        loadingLine.innerHTML = '> AUTHENTICATING' + '.'.repeat(dots);
                         termOutput.scrollTop = termOutput.scrollHeight;
-    
-                        const loadingInterval = setInterval(() => {
-                            dots = (dots + 1) % 4;
-                            loadingLine.innerHTML = '> AUTHENTICATING' + '.'.repeat(dots);
-                            termOutput.scrollTop = termOutput.scrollHeight;
-                        }, 400);
-    
-                        // After delay → redirect
-                        setTimeout(() => {
-                            clearInterval(loadingInterval);
-                            window.location.href = "direct_action.html";
-                        }, 2200);
-    
-                        return;
-                    }
-    
-                    if (val === 'help') {
-                        printToTerm('Available: clear | status | scan ops | open manifesto');
-                    } else if (val === 'clear') {
-                        termOutput.innerHTML = '';
-                    } else if (val === 'status') {
-                        printToTerm('UNIT: CV-7 | STATUS: STEALTH | ACCESS: TIER 1');
-                    } else if (val === 'scan ops') {
-                        scrollToSection('board');
-                        printToTerm('Scanning Operators...');
-                    } else if (val === 'open manifesto') {
-                        openModal('visionModal');
-                    } else {
-                        printToTerm(`Command '${raw}' not recognized. Type 'help'.`, '#ff0055');
-                    }
+                    }, 400);
+
+                    setTimeout(() => {
+                        clearInterval(loadingInterval);
+                        window.location.href = "direct_action.html";
+                    }, 2200);
+                    return;
                 }
-            });
-    
-            /* ===============================
-            CINEMATIC SNOW ENGINE
-            ================================ */
-    
-                const snowCanvas = document.getElementById("snowCanvas");
-                const ctx = snowCanvas.getContext("2d");
-    
-                let snowflakes = [];
-                let snowCount = window.innerWidth < 768 ? 80 : 140;
-    
-            function resizeSnow() {
-                const scale = window.devicePixelRatio || 1;
-                snowCanvas.width = window.innerWidth * scale;
-                snowCanvas.height = window.innerHeight * scale;
-                snowCanvas.style.width = window.innerWidth + "px";
-                snowCanvas.style.height = window.innerHeight + "px";
-                ctx.setTransform(scale, 0, 0, scale, 0, 0);
+
+                if (val === 'help') {
+                    printToTerm('Available: clear | status | scan ops | open manifesto');
+                } else if (val === 'clear') {
+                    termOutput.innerHTML = '';
+                } else if (val === 'status') {
+                    printToTerm('UNIT: CV-7 | STATUS: STEALTH | ACCESS: TIER 1');
+                } else if (val === 'scan ops') {
+                    scrollToSection('board');
+                    printToTerm('Scanning Operators...');
+                } else if (val === 'open manifesto') {
+                    openModal('visionModal');
+                } else {
+                    printToTerm(`Command '${raw}' not recognized. Type 'help'.`, '#ff0055');
+                }
             }
-            window.addEventListener("resize", resizeSnow);
-            resizeSnow();
-    
-            class Snowflake {
-                constructor() {
-                    this.reset();
-                }
-    
+        });
+
+        /* ===============================
+        CINEMATIC SNOW ENGINE
+        ================================ */
+        const snowCanvas = document.getElementById("snowCanvas");
+        const ctx = snowCanvas.getContext("2d");
+        let snowflakes = [];
+        let snowCount = window.innerWidth < 768 ? 80 : 140;
+
+        function resizeSnow() {
+            const scale = window.devicePixelRatio || 1;
+            snowCanvas.width = window.innerWidth * scale;
+            snowCanvas.height = window.innerHeight * scale;
+            snowCanvas.style.width = window.innerWidth + "px";
+            snowCanvas.style.height = window.innerHeight + "px";
+            ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
+        window.addEventListener("resize", resizeSnow);
+        resizeSnow();
+
+        class Snowflake {
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * snowCanvas.width;
                 this.y = Math.random() * -snowCanvas.height;
@@ -1992,17 +1981,14 @@
                 this.speedX = Math.random() * 0.4 - 0.2;
                 this.opacity = Math.random() * 0.5 + 0.3;
             }
-    
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2;
-    
                 if (this.y > snowCanvas.height) {
                     this.reset();
                     this.y = 0;
                 }
             }
-    
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -2010,715 +1996,520 @@
                 ctx.fill();
             }
         }
-    
-            function createSnow() {
-                snowflakes = [];
-                for (let i = 0; i < snowCount; i++) {
-                    snowflakes.push(new Snowflake());
-                }
+
+        function createSnow() {
+            snowflakes = [];
+            for (let i = 0; i < snowCount; i++) {
+                snowflakes.push(new Snowflake());
             }
-    
-            let snowAnimationId;
-    
-            function animateSnow() {
-                ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
-    
-                snowflakes.forEach(flake => {
-                    flake.update();
-                    flake.draw();
-                });
-    
-                snowAnimationId = requestAnimationFrame(animateSnow);
-            }
-    
-            createSnow();
-            animateSnow();
-    
-            /* Proper pause/resume */
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    cancelAnimationFrame(snowAnimationId);
-                } else {
-                    animateSnow();
-                }
+        }
+
+        let snowAnimationId;
+
+        function animateSnow() {
+            ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
             });
-    
-            /* ===============================
-               WEATHER ENGINE
-            ================================ */
-            async function fetchWeather() {
-    
-                try {
-                    // Cape Town Coordinates
-                    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.92&longitude=18.42&current_weather=true');
-                    const data = await res.json();
-    
-                    const temp = Math.round(data.current_weather.temperature);
-                    const wind = data.current_weather.windspeed;
-    
-                    document.getElementById('weather-temp').innerText = `${temp}°C`;
-                    document.getElementById('weather-desc').innerText = `CAPE TOWN AIRFORCE BASE // WIND ${wind} km/h`;
-    
-                } catch (e) {
-                    document.getElementById('weather-temp').innerText = "OFFLINE";
-                    document.getElementById('weather-desc').innerText = "WEATHER LINK LOST";
-                }
-            }
-            fetchWeather();
-    
-            // 
-    
-            /* ===============================
-            CAPE TOWN LOCKED SYSTEM CLOCK
-            ================================ */
-    
-            function updateClockCapeTown() {
-    
-                const now = new Date();
-    
-                // STRICTLY Cape Town timezone
-                const timeOptions = {
-                    timeZone: 'Africa/Johannesburg',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                };
-    
-                const dateOptions = {
-                    timeZone: 'Africa/Johannesburg',
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: '2-digit'
-                };
-    
-                const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
-                const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
-    
-                const clockEl = document.getElementById('sys-clock');
-    
-                if (clockEl) {
-                    clockEl.innerHTML = `
-                        ${timeString}
-                        <div style="
-                            font-size:0.8rem;
-                            font-family: var(--font-mono);
-                            opacity:0.7;
-                            margin-top:4px;
-                        ">
-                            ${dateString} // CAPE TOWN, SOUTH AFRICA
-                        </div>
-                    `;
-                }
-            }
-    
-            /* Run immediately */
-            updateClockCapeTown();
-    
-            /* Update every second */
-            setInterval(updateClockCapeTown, 1000);
-    
-            /* ===============================
-               TYPEWRITER EFFECT
-            ================================ */
-            function initTypewriter() {
-                const el = document.querySelector('.typing-effect');
-                const text = el.getAttribute('data-text');
-                let i = 0;
-                el.innerHTML = '';
-                
-                function type() {
-                    if (i < text.length) {
-                        el.innerHTML += text.charAt(i);
-                        i++;
-                        setTimeout(type, 80);
-                    }
-                }
-                type();
-            }
-    
-            // Initialization
-            window.onload = () => {
-                initTypewriter();
-                console.log("Eden stealth CV-1: Tier 1 active.");
-            };
-    
-// ===============================
-// HAMBURGER MENU - CLEAN TOUCH HANDLING
-// ===============================
-
-const hamburger = document.getElementById("hamburger");
-const nav = document.querySelector(".nav-system");
-const overlay = document.querySelector(".nav-overlay");
-
-// Create overlay if it doesn't exist
-if (!overlay) {
-    const newOverlay = document.createElement('div');
-    newOverlay.className = 'nav-overlay';
-    document.body.appendChild(newOverlay);
-}
-
-const navOverlay = document.querySelector(".nav-overlay");
-
-// Clean click/touch handler for hamburger
-function toggleMenu(e) {
-    e.preventDefault();
-    e.stopPropagation(); // CRITICAL: stops event from reaching logo
-    
-    nav.classList.toggle("open");
-    if (navOverlay) navOverlay.classList.toggle("active");
-    
-    return false;
-}
-
-// Add both click and touch events with proper handling
-hamburger.addEventListener("click", toggleMenu);
-hamburger.addEventListener("touchstart", toggleMenu, { passive: false });
-
-// Close menu when clicking overlay
-if (navOverlay) {
-    navOverlay.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        nav.classList.remove("open");
-        navOverlay.classList.remove("active");
-    });
-    
-    navOverlay.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        nav.classList.remove("open");
-        navOverlay.classList.remove("active");
-    }, { passive: false });
-}
-
-// Close menu when clicking a nav link
-document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", (e) => {
-        e.stopPropagation();
-        nav.classList.remove("open");
-        if (navOverlay) navOverlay.classList.remove("active");
-    });
-    
-    link.addEventListener("touchstart", (e) => {
-        e.stopPropagation();
-        nav.classList.remove("open");
-        if (navOverlay) navOverlay.classList.remove("active");
-    }, { passive: false });
-});
-
-// Prevent any clicks on header from highlighting logo
-document.getElementById("main-header").addEventListener("click", (e) => {
-    if (!e.target.closest('#hamburger')) {
-        e.stopPropagation();
-    }
-});
-    
-    /* =========================================
-       EDEN STEALTH CV-1 — FULL PWA INSTALL CORE
-       ========================================= */
-    
-    let deferredPrompt = null;
-    
-    window.addEventListener("DOMContentLoaded", () => {
-    
-        const installBtn = document.getElementById("installBtn");
-    
-        if (!installBtn) {
-            console.warn("Install button not found");
-            return;
+            snowAnimationId = requestAnimationFrame(animateSnow);
         }
-    
-    
-        /* ===============================
-           INITIAL STATE
-           =============================== */
-    
-        installBtn.style.display = "none";
-    
-    
-    
-        /* ===============================
-           SERVICE WORKER REGISTER
-           =============================== */
-    
-        if ("serviceWorker" in navigator) {
-    
-            navigator.serviceWorker.register("sw.js")
-    
-            .then(() => {
-    
-                console.log("Service Worker Registered");
-    
-            })
-    
-            .catch(err => {
-    
-                console.error("Service Worker Failed:", err);
-    
-            });
-    
-        }
-    
-        /* ===============================
-           CHECK IF ALREADY INSTALLED
-           =============================== */
-    
-        if (
-    
-            window.matchMedia("(display-mode: standalone)").matches ||
-    
-            window.navigator.standalone === true
-    
-        ) {
-    
-            console.log("App already installed");
-    
-            installBtn.style.display = "none";
-    
-            return;
-    
-        }
-    
-        /* ===============================
-           INSTALL AVAILABLE EVENT
-           =============================== */
-    
-        window.addEventListener("beforeinstallprompt", (e) => {
-    
-            console.log("Install prompt available");
-    
-            e.preventDefault();
-    
-            deferredPrompt = e;
-    
-            installBtn.style.display = "inline-block";
-    
-        });
-    
-        /* ===============================
-           INSTALL BUTTON CLICK
-           =============================== */
-    
-        installBtn.addEventListener("click", async () => {
-    
-            if (!deferredPrompt) {
-    
-                console.log("Install prompt not ready");
-    
-                return;
-    
-            }
-    
-            installBtn.innerText = "INSTALLING...";
-            installBtn.classList.add("installing");
-    
-            deferredPrompt.prompt();
-    
-            const { outcome } = await deferredPrompt.userChoice;
-    
-    
-            if (outcome === "accepted") {
-    
-                console.log("User accepted install");
-    
-                installBtn.innerText = "INSTALLED";
-    
-            }
-    
-            else {
-    
-                console.log("User cancelled install");
-    
-                installBtn.innerText = "INSTALL APP";
-    
-            }
-    
-    
-            deferredPrompt = null;
-    
-            installBtn.style.display = "none";
-    
-        });
-    
-        /* ===============================
-           INSTALL SUCCESS EVENT
-           =============================== */
-    
-        window.addEventListener("appinstalled", () => {
-    
-            console.log("PWA INSTALLED SUCCESSFULLY");
-    
-            deferredPrompt = null;
-    
-            installBtn.innerText = "INSTALLED";
-            installBtn.classList.remove("installing");
-            installBtn.classList.add("installed");
-    
-            installBtn.style.display = "none";
-    
-        });
-    
-    
-    });
-    
-        </script>
-    
-            <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag" style="cursor:pointer;">
-    
-            <div class="nav-overlay" id="navOverlay"></div>
-    
-            <script>
-    
-            window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
-            window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
-    
-// SPLASH SCREEN - CLEAN VERSION
-(function() {
-    const splash = document.getElementById('eliteSplash');
-    const bar = document.getElementById('splashBar');
-    const percentageEl = document.getElementById('loadingPercentage');
-    const statusEl = document.getElementById('loadingStatus');
-    const progressEl = document.getElementById('loadingProgress');
-    
-    if (!splash) return;
-    
-    const statusMessages = [
-        { time: 0, msg: 'INITIALIZING CORE SYSTEMS...' },
-        { time: 1, msg: 'LOADING ENCRYPTION MODULES...' },
-        { time: 2, msg: 'ESTABLISHING SECURE LINK...' },
-        { time: 3, msg: 'VERIFYING INTEGRITY...' },
-        { time: 4, msg: 'ACTIVATING STEALTH PROTOCOLS...' }
-    ];
-    
-    let startTime = Date.now();
-    const duration = 4500;
-    
-    function updateSplash() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration * 100, 100);
-        
-        if (percentageEl) {
-            percentageEl.textContent = Math.floor(progress) + '%';
-        }
-        
-        if (progressEl) {
-            const seconds = Math.floor(elapsed / 1000);
-            const ms = Math.floor((elapsed % 1000) / 10);
-            progressEl.textContent = `[00:0${seconds}:${ms.toString().padStart(2, '0')}]`;
-        }
-        
-        if (statusEl) {
-            const index = Math.min(Math.floor(elapsed / 1000), statusMessages.length - 1);
-            if (statusMessages[index]) {
-                statusEl.textContent = statusMessages[index].msg;
-            }
-        }
-        
-        if (elapsed < duration) {
-            requestAnimationFrame(updateSplash);
-        } else {
-            // Final update - biometric becomes active
-            const biometric = document.querySelector('.system-check:last-child .check-status');
-            if (biometric) {
-                biometric.innerHTML = '● ACTIVE';
-                biometric.className = 'check-status status-active';
-            }
-        }
-    }
-    
-    requestAnimationFrame(updateSplash);
-    
-    setTimeout(() => {
-        if (splash && splash.parentNode) {
-            splash.remove();
-        }
-    }, 5000);
-})();
-    
-                /* ===============================
-                THEME SYSTEM
-                =============================== */
-    
-                function toggleTheme(){
-    
-                    document.body.classList.toggle("green-yellow");
-    
-                    /* SAVE PREFERENCE */
-    
-                    if(document.body.classList.contains("green-yellow")){
-    
-                        localStorage.setItem("edenTheme","green-yellow");
-    
-                    }
-                    else{
-    
-                        localStorage.setItem("edenTheme","default");
-    
-                    }
-    
-                }
-    
-                /* LOAD SAVED THEME */
-    
-                (function(){
-    
-                    const savedTheme = localStorage.getItem("edenTheme");
-    
-                    if(savedTheme === "green-yellow"){
-    
-                        document.body.classList.add("green-yellow");
-    
-                    }
-    
-                    })();
-    
-                </script>
-    
-                <script>
-    
-                if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(() => console.log('Service Worker Registered'))
-                    .catch(err => console.log('SW registration failed:', err));
-                }
-                
-                </script>
-    
-        <script>
-    
-    <script>
-    
-    const flag = document.getElementById("rsaFlag");
-    
-    const anthem = document.getElementById("anthemAudio");
-    
-    const bg = document.getElementById("bgAudio");
-    
-    let anthemPlaying = false;
-    
-    flag.addEventListener("click", () => {
-    
-        if(!anthemPlaying){
-    
-            // PLAY ANTHEM
-            anthem.play();
-    
-            // PAUSE BACKGROUND
-            bg.pause();
-    
-            flag.classList.add("playing");
-    
-            anthemPlaying = true;
-    
-        }else{
-    
-            // PAUSE ANTHEM
-            anthem.pause();
-    
-            // RESUME BACKGROUND
-            bg.play();
-    
-            flag.classList.remove("playing");
-    
-            anthemPlaying = false;
-    
-        }
-    
-    });
-    
-    // ALSO handle anthem ending naturally
-    
-    anthem.addEventListener("ended", () => {
-    
-        bg.play();
-    
-        flag.classList.remove("playing");
-    
-        anthemPlaying = false;
-    
-    });
 
-/* ===============================
-   ADVANCED INTERNAL REFRESH - WITH NOTIFICATION
-   =============================== */
-
-window.internalRefresh = function() {
-    console.log("⚡ ADVANCED INTERNAL REFRESH INITIATED");
-    
-    // Show refresh notification
-    showRefreshNotification();
-    
-    /* ===== PHASE 1: IMMEDIATE ACTIONS ===== */
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    
-    // Close all UI elements
-    document.querySelector(".nav-system")?.classList.remove("open");
-    document.querySelector(".nav-overlay")?.classList.remove("active");
-    document.querySelectorAll(".modal-overlay").forEach(modal => {
-        modal.style.display = "none";
-    });
-    
-    /* ===== PHASE 2: SEQUENTIAL REINITIALIZATION ===== */
-    setTimeout(() => resetTerminal(), 100);
-    setTimeout(() => restartSnow(), 300);
-    setTimeout(() => refreshWeather(), 500);
-    setTimeout(() => resetTypewriter(), 700);
-    setTimeout(() => resetAnimations(), 900);
-    setTimeout(() => refreshClock(), 1100);
-    setTimeout(() => checkConnectivity(), 1300);
-    setTimeout(() => clearMemoryCache(), 1500);
-    
-    /* ===== PHASE 3: FINAL VERIFICATION ===== */
-    setTimeout(() => {
-        verifyRefresh();
-        hideRefreshNotification();
-    }, 2000);
-}
-
-// ===== NOTIFICATION FUNCTIONS =====
-
-function showRefreshNotification() {
-    // Remove existing notification
-    const existing = document.getElementById('refresh-notification');
-    if (existing) existing.remove();
-    
-    const notification = document.createElement('div');
-    notification.id = 'refresh-notification';
-    notification.innerHTML = `
-        <div class="refresh-icon">↻</div>
-        <div class="refresh-text">REFRESHING SYSTEMS</div>
-        <div class="refresh-progress">
-            <div class="refresh-bar" id="refreshBar"></div>
-        </div>
-        <div class="refresh-status" id="refreshStatus">Initializing...</div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate progress bar
-    let width = 0;
-    const bar = document.getElementById('refreshBar');
-    const status = document.getElementById('refreshStatus');
-    const interval = setInterval(() => {
-        width += 2;
-        if (bar) bar.style.width = width + '%';
-        
-        if (width === 20) status.textContent = 'Terminal reset';
-        if (width === 40) status.textContent = 'Snow engine restart';
-        if (width === 60) status.textContent = 'Weather sync';
-        if (width === 80) status.textContent = 'Animations reset';
-        if (width >= 100) {
-            clearInterval(interval);
-            status.textContent = 'Complete';
-        }
-    }, 30);
-}
-
-function hideRefreshNotification() {
-    const notification = document.getElementById('refresh-notification');
-    if (notification) {
-        notification.style.animation = 'fadeOut 0.3s forwards';
-        setTimeout(() => notification.remove(), 300);
-    }
-}
-
-// ===== PHASE ACTIONS =====
-
-function resetTerminal() {
-    const termOutput = document.getElementById('terminal-output');
-    if (termOutput) {
-        termOutput.innerHTML = `
-            <div style="color: var(--cyan);">[ SYSTEM REFRESH: ${new Date().toLocaleTimeString()} ]</div>
-            <div>[ MEMORY: CLEARED ]</div>
-            <div>[ CACHE: FLUSHED ]</div>
-            <br>
-            <div>type 'help' for commands...</div>
-        `;
-        termOutput.scrollTop = 0;
-    }
-    
-    const termInput = document.getElementById('term-input');
-    if (termInput) termInput.value = '';
-}
-
-function restartSnow() {
-    if (window.snowAnimationId) {
-        cancelAnimationFrame(window.snowAnimationId);
-    }
-    if (typeof createSnow === 'function' && typeof animateSnow === 'function') {
         createSnow();
         animateSnow();
-    }
-}
 
-function refreshWeather() {
-    if (typeof fetchWeather === 'function') {
-        fetchWeather();
-    }
-}
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                cancelAnimationFrame(snowAnimationId);
+            } else {
+                animateSnow();
+            }
+        });
 
-function resetTypewriter() {
-    const el = document.querySelector('.typing-effect');
-    if (el && typeof initTypewriter === 'function') {
-        el.innerHTML = '';
-        initTypewriter();
-    }
-}
-
-function resetAnimations() {
-    document.querySelectorAll("section").forEach(sec => {
-        sec.classList.remove("revealed");
-        if (window.observer) {
-            window.observer.observe(sec);
+        /* ===============================
+           WEATHER ENGINE
+        ================================ */
+        async function fetchWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.92&longitude=18.42&current_weather=true');
+                const data = await res.json();
+                const temp = Math.round(data.current_weather.temperature);
+                const wind = data.current_weather.windspeed;
+                document.getElementById('weather-temp').innerText = `${temp}°C`;
+                document.getElementById('weather-desc').innerText = `CAPE TOWN AIRFORCE BASE // WIND ${wind} km/h`;
+            } catch (e) {
+                document.getElementById('weather-temp').innerText = "OFFLINE";
+                document.getElementById('weather-desc').innerText = "WEATHER LINK LOST";
+            }
         }
-    });
-}
+        fetchWeather();
 
-function refreshClock() {
-    if (typeof updateClockCapeTown === 'function') {
+        /* ===============================
+        CAPE TOWN LOCKED SYSTEM CLOCK
+        ================================ */
+        function updateClockCapeTown() {
+            const now = new Date();
+            const timeOptions = {
+                timeZone: 'Africa/Johannesburg',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const dateOptions = {
+                timeZone: 'Africa/Johannesburg',
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit'
+            };
+            const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
+            const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
+            const clockEl = document.getElementById('sys-clock');
+            if (clockEl) {
+                clockEl.innerHTML = `
+                    ${timeString}
+                    <div style="font-size:0.8rem; font-family: var(--font-mono); opacity:0.7; margin-top:4px;">
+                        ${dateString} // CAPE TOWN, SOUTH AFRICA
+                    </div>
+                `;
+            }
+        }
         updateClockCapeTown();
-    }
-}
+        setInterval(updateClockCapeTown, 1000);
 
-function checkConnectivity() {
-    const offlineBanner = document.getElementById('offline-banner');
-    if (offlineBanner) {
-        offlineBanner.style.display = navigator.onLine ? 'none' : 'block';
-    }
-}
+        /* ===============================
+           TYPEWRITER EFFECT
+        ================================ */
+        function initTypewriter() {
+            const el = document.querySelector('.typing-effect');
+            const text = el.getAttribute('data-text');
+            let i = 0;
+            el.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 80);
+                }
+            }
+            type();
+        }
 
-function clearMemoryCache() {
-    // Keep theme preference
-    const theme = localStorage.getItem('edenTheme');
-    sessionStorage.clear();
-    if (theme) localStorage.setItem('edenTheme', theme);
-}
+        window.onload = () => {
+            initTypewriter();
+            console.log("Eden stealth CV-1: Tier 1 active.");
+        };
 
-function verifyRefresh() {
-    const termOutput = document.getElementById('terminal-output');
-    if (termOutput) {
-        const verifyLine = document.createElement('div');
-        verifyLine.style.color = '#00ff00';
-        verifyLine.innerHTML = '> [ OK ] All systems verified';
-        termOutput.appendChild(verifyLine);
-        termOutput.scrollTop = termOutput.scrollHeight;
-    }
-}
+        /* ===============================
+        HAMBURGER MENU - CLEAN TOUCH HANDLING
+        ================================ */
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.querySelector(".nav-system");
+        let navOverlay = document.querySelector(".nav-overlay");
 
-                // Add keyboard shortcut (Ctrl+Shift+R) for internal refresh
-document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'R') {
-        e.preventDefault();
-        internalRefresh();
-    }
-});
-    
+        if (!navOverlay) {
+            navOverlay = document.createElement('div');
+            navOverlay.className = 'nav-overlay';
+            document.body.appendChild(navOverlay);
+        }
+
+        function toggleMenu(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            nav.classList.toggle("open");
+            navOverlay.classList.toggle("active");
+            return false;
+        }
+
+        hamburger.addEventListener("click", toggleMenu);
+        hamburger.addEventListener("touchstart", toggleMenu, { passive: false });
+
+        navOverlay.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            nav.classList.remove("open");
+            navOverlay.classList.remove("active");
+        });
+        
+        navOverlay.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            nav.classList.remove("open");
+            navOverlay.classList.remove("active");
+        }, { passive: false });
+
+        document.querySelectorAll(".nav-link").forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.stopPropagation();
+                nav.classList.remove("open");
+                navOverlay.classList.remove("active");
+            });
+            link.addEventListener("touchstart", (e) => {
+                e.stopPropagation();
+                nav.classList.remove("open");
+                navOverlay.classList.remove("active");
+            }, { passive: false });
+        });
+
+        document.getElementById("main-header").addEventListener("click", (e) => {
+            if (!e.target.closest('#hamburger')) {
+                e.stopPropagation();
+            }
+        });
+
+        /* ===============================
+           ADVANCED INTERNAL REFRESH - FIXED
+        ================================ */
+        window.internalRefresh = function() {
+            console.log("⚡ INTERNAL REFRESH ACTIVATED");
+            
+            // Show refresh notification
+            showRefreshNotification();
+            
+            // Phase 1: Immediate actions
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            
+            // Close all UI elements
+            document.querySelector(".nav-system")?.classList.remove("open");
+            document.querySelector(".nav-overlay")?.classList.remove("active");
+            document.querySelectorAll(".modal-overlay").forEach(modal => {
+                modal.style.display = "none";
+            });
+            
+            // Phase 2: Sequential reinitialization
+            setTimeout(() => resetTerminal(), 100);
+            setTimeout(() => restartSnow(), 300);
+            setTimeout(() => refreshWeather(), 500);
+            setTimeout(() => resetTypewriter(), 700);
+            setTimeout(() => resetAnimations(), 900);
+            setTimeout(() => refreshClock(), 1100);
+            setTimeout(() => checkConnectivity(), 1300);
+            setTimeout(() => clearMemoryCache(), 1500);
+            
+            // Phase 3: Final verification
+            setTimeout(() => {
+                verifyRefresh();
+                hideRefreshNotification();
+            }, 2000);
+        };
+
+        // ===== NOTIFICATION FUNCTIONS =====
+        function showRefreshNotification() {
+            const existing = document.getElementById('refresh-notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.id = 'refresh-notification';
+            notification.innerHTML = `
+                <div class="refresh-icon">↻</div>
+                <div class="refresh-text">REFRESHING SYSTEMS</div>
+                <div class="refresh-progress">
+                    <div class="refresh-bar" id="refreshBar"></div>
+                </div>
+                <div class="refresh-status" id="refreshStatus">Initializing...</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            let width = 0;
+            const bar = document.getElementById('refreshBar');
+            const status = document.getElementById('refreshStatus');
+            const interval = setInterval(() => {
+                width += 2;
+                if (bar) bar.style.width = width + '%';
+                
+                if (width === 20) status.textContent = 'Terminal reset';
+                if (width === 40) status.textContent = 'Snow engine restart';
+                if (width === 60) status.textContent = 'Weather sync';
+                if (width === 80) status.textContent = 'Animations reset';
+                if (width >= 100) {
+                    clearInterval(interval);
+                    status.textContent = 'Complete';
+                }
+            }, 30);
+        }
+
+        function hideRefreshNotification() {
+            const notification = document.getElementById('refresh-notification');
+            if (notification) {
+                notification.style.animation = 'fadeOut 0.3s forwards';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }
+
+        // ===== PHASE ACTIONS =====
+        function resetTerminal() {
+            const termOutput = document.getElementById('terminal-output');
+            if (termOutput) {
+                termOutput.innerHTML = `
+                    <div style="color: var(--cyan);">[ SYSTEM REFRESH: ${new Date().toLocaleTimeString()} ]</div>
+                    <div>[ MEMORY: CLEARED ]</div>
+                    <div>[ CACHE: FLUSHED ]</div>
+                    <br>
+                    <div>type 'help' for commands...</div>
+                `;
+                termOutput.scrollTop = 0;
+            }
+            const termInput = document.getElementById('term-input');
+            if (termInput) termInput.value = '';
+        }
+
+        function restartSnow() {
+            if (window.snowAnimationId) {
+                cancelAnimationFrame(window.snowAnimationId);
+            }
+            createSnow();
+            animateSnow();
+        }
+
+        function refreshWeather() {
+            fetchWeather();
+        }
+
+        function resetTypewriter() {
+            const el = document.querySelector('.typing-effect');
+            if (el) {
+                el.innerHTML = '';
+                initTypewriter();
+            }
+        }
+
+        function resetAnimations() {
+            document.querySelectorAll("section").forEach(sec => {
+                sec.classList.remove("revealed");
+                observer.observe(sec);
+            });
+        }
+
+        function refreshClock() {
+            updateClockCapeTown();
+        }
+
+        function checkConnectivity() {
+            const offlineBanner = document.getElementById('offline-banner');
+            if (offlineBanner) {
+                offlineBanner.style.display = navigator.onLine ? 'none' : 'block';
+            }
+        }
+
+        function clearMemoryCache() {
+            const theme = localStorage.getItem('edenTheme');
+            sessionStorage.clear();
+            if (theme) localStorage.setItem('edenTheme', theme);
+        }
+
+        function verifyRefresh() {
+            const termOutput = document.getElementById('terminal-output');
+            if (termOutput) {
+                const verifyLine = document.createElement('div');
+                verifyLine.style.color = '#00ff00';
+                verifyLine.innerHTML = '> [ OK ] All systems verified';
+                termOutput.appendChild(verifyLine);
+                termOutput.scrollTop = termOutput.scrollHeight;
+            }
+        }
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+                e.preventDefault();
+                window.internalRefresh();
+            }
+        });
+
+        /* =========================================
+           PWA INSTALL CORE
+        ========================================= */
+        let deferredPrompt = null;
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const installBtn = document.getElementById("installBtn");
+            if (!installBtn) return;
+
+            installBtn.style.display = "none";
+
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("sw.js")
+                    .then(() => console.log("Service Worker Registered"))
+                    .catch(err => console.error("Service Worker Failed:", err));
+            }
+
+            if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+                console.log("App already installed");
+                installBtn.style.display = "none";
+                return;
+            }
+
+            window.addEventListener("beforeinstallprompt", (e) => {
+                console.log("Install prompt available");
+                e.preventDefault();
+                deferredPrompt = e;
+                installBtn.style.display = "inline-block";
+            });
+
+            installBtn.addEventListener("click", async () => {
+                if (!deferredPrompt) return;
+                
+                installBtn.innerText = "INSTALLING...";
+                installBtn.classList.add("installing");
+                
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === "accepted") {
+                    console.log("User accepted install");
+                    installBtn.innerText = "INSTALLED";
+                } else {
+                    console.log("User cancelled install");
+                    installBtn.innerText = "INSTALL APP";
+                }
+                
+                deferredPrompt = null;
+                installBtn.style.display = "none";
+            });
+
+            window.addEventListener("appinstalled", () => {
+                console.log("PWA INSTALLED SUCCESSFULLY");
+                deferredPrompt = null;
+                installBtn.innerText = "INSTALLED";
+                installBtn.classList.remove("installing");
+                installBtn.classList.add("installed");
+                installBtn.style.display = "none";
+            });
+        });
+
+        /* ===============================
+        OFFLINE BANNER
+        ================================ */
+        window.addEventListener('online', () => {
+            const banner = document.getElementById('offline-banner');
+            if (banner) banner.style.display = 'none';
+        });
+        
+        window.addEventListener('offline', () => {
+            const banner = document.getElementById('offline-banner');
+            if (banner) banner.style.display = 'block';
+        });
+
+        /* ===============================
+        SPLASH SCREEN - CLEAN VERSION
+        ================================ */
+        (function() {
+            const splash = document.getElementById('eliteSplash');
+            const bar = document.getElementById('splashBar');
+            const percentageEl = document.getElementById('loadingPercentage');
+            const statusEl = document.getElementById('loadingStatus');
+            const progressEl = document.getElementById('loadingProgress');
+            
+            if (!splash) return;
+            
+            const statusMessages = [
+                { time: 0, msg: 'INITIALIZING CORE SYSTEMS...' },
+                { time: 1, msg: 'LOADING ENCRYPTION MODULES...' },
+                { time: 2, msg: 'ESTABLISHING SECURE LINK...' },
+                { time: 3, msg: 'VERIFYING INTEGRITY...' },
+                { time: 4, msg: 'ACTIVATING STEALTH PROTOCOLS...' }
+            ];
+            
+            let startTime = Date.now();
+            const duration = 4500;
+            
+            function updateSplash() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration * 100, 100);
+                
+                if (percentageEl) {
+                    percentageEl.textContent = Math.floor(progress) + '%';
+                }
+                
+                if (progressEl) {
+                    const seconds = Math.floor(elapsed / 1000);
+                    const ms = Math.floor((elapsed % 1000) / 10);
+                    progressEl.textContent = `[00:0${seconds}:${ms.toString().padStart(2, '0')}]`;
+                }
+                
+                if (statusEl) {
+                    const index = Math.min(Math.floor(elapsed / 1000), statusMessages.length - 1);
+                    if (statusMessages[index]) {
+                        statusEl.textContent = statusMessages[index].msg;
+                    }
+                }
+                
+                if (elapsed < duration) {
+                    requestAnimationFrame(updateSplash);
+                } else {
+                    const biometric = document.querySelector('.system-check:last-child .check-status');
+                    if (biometric) {
+                        biometric.innerHTML = '● ACTIVE';
+                        biometric.className = 'check-status status-active';
+                    }
+                }
+            }
+            
+            requestAnimationFrame(updateSplash);
+            
+            setTimeout(() => {
+                if (splash && splash.parentNode) {
+                    splash.remove();
+                }
+            }, 5000);
+        })();
+
+        /* ===============================
+        THEME SYSTEM
+        ================================ */
+        function toggleTheme() {
+            document.body.classList.toggle("green-yellow");
+            if (document.body.classList.contains("green-yellow")) {
+                localStorage.setItem("edenTheme", "green-yellow");
+            } else {
+                localStorage.setItem("edenTheme", "default");
+            }
+        }
+
+        (function() {
+            const savedTheme = localStorage.getItem("edenTheme");
+            if (savedTheme === "green-yellow") {
+                document.body.classList.add("green-yellow");
+            }
+        })();
+
+        /* ===============================
+        FLAG AUDIO CONTROLS
+        ================================ */
+        const flag = document.getElementById("rsaFlag");
+        const anthem = document.getElementById("anthemAudio");
+        const bg = document.getElementById("bgAudio");
+        let anthemPlaying = false;
+
+        if (flag && anthem && bg) {
+            flag.addEventListener("click", () => {
+                if (!anthemPlaying) {
+                    anthem.play();
+                    bg.pause();
+                    flag.classList.add("playing");
+                    anthemPlaying = true;
+                } else {
+                    anthem.pause();
+                    bg.play();
+                    flag.classList.remove("playing");
+                    anthemPlaying = false;
+                }
+            });
+
+            anthem.addEventListener("ended", () => {
+                bg.play();
+                flag.classList.remove("playing");
+                anthemPlaying = false;
+            });
+        }
+            
     </script>
-    
-    </script>
-    
+
+    <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag" style="cursor:pointer;">
+    <div class="nav-overlay" id="navOverlay"></div>
+
     <!-- BACKGROUND TRACK -->
     <audio id="bgAudio" autoplay loop>
         <source src="background.mp3" type="audio/mpeg">
@@ -2728,12 +2519,8 @@ document.addEventListener('keydown', (e) => {
     <audio id="anthemAudio">
         <source src="National_Anthem_RSA.mp3" type="audio/mpeg">
     </audio>
-    
-                </body>
-    
-                </html>
-                
-                
+</body>
+</html>
                 
                 
                 
