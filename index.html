@@ -1,3 +1,2211 @@
-  .hero-title {
-    font-size: clamp(2.5rem, 7.5vw, 6rem);
-  }
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Eden stealth CV-1</title>
+
+    <meta name="description" content="Official Eden portal - Operator unit - Universal Tier 1 Conglomerate.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <style>
+
+        :root {
+
+            --cyan: #00ffff;
+            --cyan-dim: rgba(0, 255, 255, 0.15);
+            --cyan-glow: 0 0 15px rgba(0, 255, 255, 0.5);
+            --bg-black: #050505;
+            --panel-bg: rgba(0, 10, 10, 0.85);
+            --font-tactical: 'Orbitron', sans-serif;
+            --font-body: 'Electrolize', sans-serif;
+            --font-mono: 'VT323', monospace;
+            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            --header-h: 90px;
+
+        }
+
+        /*  */
+
+        /* ===============================
+        THEME: GREEN-YELLOW MODE
+        =============================== */
+
+        body.green-yellow {
+
+            --cyan: #d4ff00;
+            --cyan-dim: rgba(212, 255, 0, 0.18);
+            --cyan-glow: 0 0 18px rgba(212, 255, 0, 0.6);
+
+            --bg-black: #0b0f00;
+
+            --panel-bg: rgba(20, 30, 0, 0.88);
+
+        }
+
+        /* optional: smoother transition */
+        body,
+        .ops-card,
+        .branch-card,
+        #main-header,
+        #main-footer {
+
+            transition:
+            background 0.4s ease,
+            color 0.4s ease,
+            border-color 0.4s ease,
+            box-shadow 0.4s ease;
+
+        }
+
+        /* ===============================
+        FOOTER THEME BUTTON
+        =============================== */
+
+        .theme-toggle {
+
+            margin-top: 25px;
+
+            background: transparent;
+
+            border: 1px solid var(--cyan);
+
+            color: var(--cyan);
+
+            padding: 12px 28px;
+
+            font-family: var(--font-tactical);
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            transition: var(--transition);
+
+        }
+
+        .theme-toggle:hover {
+
+            background: var(--cyan);
+
+            color: #000;
+
+            box-shadow: var(--cyan-glow);
+
+        }
+
+        /*  */
+
+        /* --- ALPHA BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        
+        body {
+
+            background: radial-gradient(circle at top, #0a0f14, #000000 70%);
+            background-color: var(--bg-black);
+            color: var(--cyan);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+
+        }
+
+        /* Tactical Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+        .scanlines {
+
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 1000;
+            pointer-events: none;
+
+        }
+
+        /* --- ADVANCED HEADER --- */
+        #main-header {
+
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-h);
+            background: rgba(0,0,0,0.9);
+            border-bottom: 2px solid var(--cyan);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            position: fixed;
+
+        }
+
+        .header-container {
+
+            width: 95%;
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 30px;
+
+        }
+
+        .brand-unit {
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+
+        }
+
+        .logo-frame {
+
+            position: relative;
+            width: 60px; height: 60px;
+
+        }
+
+        .logo-img {
+
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            padding: 3px;
+            box-shadow: var(--cyan-glow);
+
+        }
+
+        .logo-ring {
+
+            position: absolute;
+            top: -5px; left: -5px; width: 70px; height: 70px;
+            border: 1px dashed var(--cyan);
+            border-radius: 50%;
+            animation: spin 8s linear infinite;
+
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .brand-text h1 {
+
+            font-family: var(--font-tactical);
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+
+        }
+
+        .brand-text span {
+
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            opacity: 0.7;
+
+        }
+
+        /* Navigation System */
+        .nav-system { display: flex; gap: 15px; justify-content: center; }
+        .nav-link {
+            text-transform: uppercase;
+            font-family: var(--font-tactical);
+            font-size: 0.8rem;
+            padding: 10px 15px;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--cyan);
+        }
+
+        .nav-link:hover {
+          
+            border: 1px solid var(--cyan);
+            background: var(--cyan-dim);
+            text-shadow: var(--cyan-glow);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+
+        }
+
+        #hero {
+
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /* HERO MUST NEVER COLLIDE WITH HEADER */
+            min-height: 100svh; /* dynamic viewport for mobile browsers */
+            padding-top: calc(var(--header-h) + clamp(50px, 8vh, 120px));
+            padding-bottom: clamp(60px, 10vh, 140px);
+            padding-left: 20px;
+            padding-right: 20px;
+
+            text-align: center;
+            box-sizing: border-box;
+            overflow: hidden;
+
+            background: radial-gradient(circle at center, rgba(0,255,255,0.06), transparent 65%);
+
+        }
+
+        .hero-title {
+
+            font-family: var(--font-tactical);
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+
+            font-size: clamp(2.5rem, 7.5vw, 6rem);
+            letter-spacing: clamp(4px, 1.2vw, 14px);
+            line-height: 1.1;
+
+            color: #ffffff;
+
+            /* Clean tactical glow */
+            text-shadow:
+                0 0 4px rgba(0,255,255,0.5),
+                0 0 10px rgba(0,255,255,0.25);
+
+            margin: 0 0 25px 0;
+            max-width: 95%;
+
+        }
+
+        .hero-subtitle {
+
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--cyan);
+            letter-spacing: 5px;
+            height: 1.6em;
+            text-transform: uppercase;
+
+        }
+
+        .cta-group {
+
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+
+        }
+
+        .btn-tactical {
+
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 15px 40px;
+            font-family: var(--font-tactical);
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+
+        }
+
+        .btn-tactical::before {
+
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--cyan);
+            transition: var(--transition);
+            z-index: -1;
+
+        }
+
+        .btn-tactical:hover { color: red; box-shadow: var(--cyan-glow); }
+        .btn-tactical:hover::before { left: 0; }
+
+        /* --- SECTIONS: THE FOUNDATION --- */
+        section {
+
+            padding: 100px 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+
+        }
+
+        section.revealed { opacity: 1; transform: translateY(0); }
+
+        .section-header {
+
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+        }
+
+        .section-title {
+
+            font-family: var(--font-tactical);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .separator { height: 2px; flex-grow: 1; background: var(--cyan-dim); }
+
+        /* --- OPERATIVES GRID: STEALTH CV-1 --- */
+        .Operator-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+
+        }
+
+        .ops-card {
+
+            background: var(--panel-bg);
+            border: 1px solid var(--cyan-dim);
+            padding: 0;
+            position: relative;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+
+        }
+
+        .ops-card:hover {
+
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+            transform: translateY(-5px);
+
+        }
+
+        .ops-header {
+
+            padding: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px solid var(--cyan-dim);
+
+        }
+
+        .ops-img {
+
+            width: 100px; height: 100px;
+            border: 2px solid var(--cyan);
+            padding: 5px;
+            background: #000;
+
+        }
+
+        .ops-info h3 { font-family: var(--font-tactical); color: #fff; }
+        .op-info span { color: var(--cyan); font-family: var(--font-mono); font-size: 0.9rem; }
+
+        .ops-stats {
+
+            padding: 20px 30px;
+            background: rgba(0, 255, 255, 0.02);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+
+        }
+
+        .stat-line { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dotted rgba(0, 255, 255, 0.2); }
+        .tier-1 { color: #ff0055; font-weight: bold; }
+
+        /* --- BRANCHES: SUBSIDIARIES --- */
+        .branch-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+
+        }
+
+        .branch-card {
+
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--cyan-dim);
+            text-align: center;
+            transition: var(--transition);
+
+        }
+
+        .branch-card:hover {
+
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+
+        }
+
+        .branch-card i { font-size: 3rem; margin-bottom: 20px; color: var(--cyan); }
+        .branch-card h3 { font-family: var(--font-tactical); margin-bottom: 15px; }
+
+        /* ===============================
+        BRANCH LOGO SYSTEM
+        ================================ */
+
+        .branch-logo-frame {
+
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+            border: 1px solid var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,255,255,0.03);
+            overflow: hidden;
+            transition: var(--transition);
+
+        }
+
+        .branch-logo {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            filter: brightness(0.9) contrast(1.1);
+            transition: var(--transition);
+        }
+
+        /* Hover power-up */
+        .branch-card:hover .branch-logo-frame {
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+            background: rgba(0,255,255,0.08);
+        }
+
+        .branch-card:hover .branch-logo {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+
+        /* Scan line animation */
+        .logo-scan {
+            position: absolute;
+            width: 100%;
+            height: 40%;
+            top: -50%;
+            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.3), transparent);
+            animation: scanMove 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanMove {
+            0% { top: -50%; }
+            100% { top: 120%; }
+        }
+
+        /* --- TERMINAL COMMAND CENTER --- */
+        #terminal-wrap {
+
+            background: #000;
+            border: 2px solid var(--cyan);
+            border-radius: 5px;
+            margin-top: 50px;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+
+        }
+
+        #terminal-output {
+
+            height: 300px;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+
+        }
+
+        .terminal-input-row { display: flex; align-items: center; gap: 10px; }
+        #term-input {
+
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            outline: none;
+
+        }
+
+        /* --- FOOTER: APEX --- */
+        #main-footer {
+
+            border-top: 2px solid var(--cyan);
+            padding: 60px 5%;
+            background: #000;
+            text-align: center;
+            margin-top: 100px;
+
+        }
+
+        .footer-grid {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+
+        }
+
+        .weather-panel {
+
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 4px;
+            display: inline-block;
+
+        }
+
+        /* --- NAVIGATION CONTROLS --- */
+        .hud-nav {
+
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 3000;
+
+        }
+
+        .hud-btn {
+
+            width: 50px; height: 50px;
+            background: #000;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+
+        }
+
+        .hud-btn:hover { background: var(--cyan); color: #000; }
+
+        /* --- MOBILE REFINEMENT --- */
+        @media (max-width: 900px) {
+
+            #hamburger {
+                display: block;
+            }
+        }
+
+        /* --- MODAL SYSTEM --- */
+        .modal-overlay {
+
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+        }
+
+        .modal-body {
+
+            background: var(--bg-black);
+            border: 2px solid var(--cyan);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+
+        }
+
+        .close-modal {
+
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+
+        }
+
+        /* ===============================
+            DOCUMENT VAULT RESPONSIVE SYSTEM
+           ================================ */
+
+        .docs-layout {
+
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 25px;
+            align-items: start;
+
+        }
+
+        #docViewer {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--cyan);
+            background: #000;
+        }
+
+        /* Control panel column */
+        .docs-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* TABLETS */
+        @media (max-width: 1100px) {
+        
+            .docs-layout {
+                grid-template-columns: 1fr;
+            }
+
+            #docViewer {
+                height: 500px;
+            }
+
+            .docs-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .docs-controls .btn-tactical {
+                flex: 1 1 45%;
+                min-width: 140px;
+            }
+            
+        }
+
+        /* PHONES */
+        @media (max-width: 600px) {
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            #docViewer {
+                height: 380px;
+            }
+
+            .docs-controls {
+                flex-direction: column;
+            }
+
+            .docs-controls .btn-tactical {
+                width: 100%;
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+        }
+
+        @media (max-width: 500px) {
+
+            .branch-logo-frame {
+
+                width: 75px;
+                height: 75px;
+
+            }
+
+        }
+
+        #hamburger {
+
+            display: none;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: var(--cyan);
+            cursor: pointer;
+            z-index: 3001;
+
+        }
+
+        @media (max-width: 900px) {
+
+            #hamburger {
+                display: block;
+            }
+            
+        }
+
+        #snowCanvas {
+        
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            
+        }
+
+        #rsaFlag {
+        
+            position: fixed;
+            bottom: 18px;
+            left: 28px;
+            margin-bottom: 18px;
+            width: 90px;
+            height: auto;
+            z-index: 2500;
+            border-radius: 4px;
+            opacity: 0.9;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: none; /* doesn't block buttons */
+            
+        }
+
+        /* Subtle hover life */
+        #rsaFlag:hover {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* Mobile size */
+        @media (max-width: 600px) {
+            #rsaFlag {
+                width: 65px;
+                bottom: 12px;
+                right: 12px;
+            }
+        }
+
+        /* ===============================
+        GLOBAL HAMBURGER NAV SYSTEM
+        (ALL SCREEN SIZES)
+        ================================ */
+
+        /* Hide default horizontal layout */
+        .nav-system {
+        
+            position: fixed;
+            top: var(--header-h);
+            right: -320px;
+            width: 300px;
+            height: calc(100svh - var(--header-h));
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(12px);
+            flex-direction: column;
+            padding: 40px 30px;
+            gap: 25px;
+            transition: right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            border-left: 2px solid var(--cyan);
+            overflow-y: auto;
+            z-index: 4000;
+            box-shadow: -10px 0 30px rgba(0,255,255,0.15);
+            
+        }
+
+        /* When open */
+        .nav-system.open {
+        
+            right: 0;
+            
+        }
+
+        /* Always show hamburger */
+        #hamburger {
+        
+            display: block;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+            background: none;
+            padding: 8px 12px;
+            color: var(--cyan);
+            cursor: pointer;
+            transition: var(--transition);
+            
+        }
+
+        #hamburger:hover {
+        
+            background: var(--cyan);
+            color: #000;
+            box-shadow: var(--cyan-glow);
+            
+        }
+
+        /* Optional backdrop overlay */
+        .nav-overlay {
+        
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 3500;
+            
+        }
+
+        .nav-overlay.active {
+        
+            opacity: 1;
+            pointer-events: auto;
+            
+        }
+
+        /* ============================
+        ELITE SPLASH SCREEN
+        ============================ */
+
+        #eliteSplash{
+
+        position:fixed;
+        inset:0;
+        background:#000;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:999999;
+
+        animation: splashFade 1s ease 4s forwards;
+
+        }
+
+        @keyframes splashFade{
+
+        to{
+
+        opacity:0;
+        visibility:hidden;
+
+        }
+
+        }
+
+
+        .splash-core{
+
+        text-align:center;
+        color:#00ffff;
+
+        }
+
+
+        .splash-logo{
+
+        width:140px;
+        height:140px;
+
+        border-radius:50%;
+
+        border:3px solid cyan;
+
+        box-shadow:0 0 40px cyan;
+
+        animation: pulse 2s infinite;
+
+        }
+
+
+        @keyframes pulse{
+
+        0%{
+
+        box-shadow:0 0 20px cyan;
+
+        }
+
+        50%{
+
+        box-shadow:0 0 60px cyan;
+
+        }
+
+        100%{
+
+        box-shadow:0 0 20px cyan;
+
+        }
+
+        }
+
+
+        .splash-title{
+
+        font-family:Orbitron;
+        margin-top:20px;
+        letter-spacing:6px;
+
+        }
+
+        .splash-version{
+
+        margin-top:10px;
+
+        opacity:0.7;
+
+        font-family:VT323;
+
+        font-size:22px;
+
+        }
+
+        .loader{
+
+        width:250px;
+        height:4px;
+        background:#111;
+        margin-top:30px;
+
+        overflow:hidden;
+
+        }
+
+        .bar{
+
+        height:100%;
+
+        background:cyan;
+
+        width:0;
+
+        animation: loading 5s linear forwards;
+
+        }
+
+        @keyframes loading{
+
+        to{
+
+        width:100%;
+
+        }
+
+        }
+
+        .loading-text{
+
+        margin-top:15px;
+
+        font-family:VT323;
+
+        animation: blink 1s infinite;
+
+        }
+
+        @keyframes blink{
+
+        50%{
+
+        opacity:0.3;
+
+        }
+
+        }
+
+        /* =====================================
+           PWA INSTALL BUTTON — ELITE VERSION
+           ===================================== */
+
+        #installBtn {
+
+            display: none;
+
+            background: transparent;
+
+            border: 2px solid var(--cyan);
+
+            color: var(--cyan);
+
+            padding: 15px 38px;
+
+            font-family: var(--font-tactical);
+
+            font-size: 0.9rem;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: var(--transition);
+
+        }
+
+        /* scanning glow line */
+        #installBtn::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(0,255,255,0.4),
+                transparent
+            );
+
+            transition: 0.6s;
+
+        }
+
+
+        /* hover */
+        #installBtn:hover {
+
+            color: #000;
+
+            background: var(--cyan);
+
+            box-shadow:
+            0 0 15px var(--cyan),
+            inset 0 0 10px rgba(0,255,255,0.5);
+
+        }
+
+
+        #installBtn:hover::before {
+
+            left: 100%;
+
+        }
+
+
+        /* CLICK */
+        #installBtn:active {
+
+            transform: scale(0.96);
+
+        }
+
+
+        /* INSTALLING STATE */
+        #installBtn.installing {
+
+            border-color: orange;
+
+            color: orange;
+
+            box-shadow: 0 0 15px orange;
+
+        }
+
+
+        /* INSTALLED STATE */
+        #installBtn.installed {
+
+            border-color: lime;
+
+            color: lime;
+
+            box-shadow: 0 0 20px lime;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ELITE SPLASH SCREEN -->
+    <div id="eliteSplash">
+
+        <div class="splash-core">
+
+            <img src="logo.png" class="splash-logo">
+
+            <h1 class="splash-title">
+                ES-CV-1
+            </h1>
+
+            <div class="splash-version">
+                Version 1.0.0
+            </div>
+
+            <div class="loader">
+                <div class="bar"></div>
+            </div>
+
+            <div class="loading-text">
+                INITIALIZING OPERATING SYSTEM...
+            </div>
+
+        </div>
+
+    </div>
+
+    <canvas id="snowCanvas"></canvas>
+    <div class="scanlines"></div>
+
+    <div class="hud-nav">
+
+    <!-- INTERNAL REFRESH -->
+    <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- TOP -->
+    <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-up"></i>
+    </button>
+
+    <!-- MIDDLE -->
+    <button class="hud-btn" onclick="scrollToSection('board')">
+        <i class="fas fa-crosshairs"></i>
+    </button>
+
+    <!-- BOTTOM -->
+    <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-down"></i>
+    </button>
+
+</div>
+
+    <header id="main-header">
+        <div class="header-container">
+            <a href="javascript:location.reload()" class="brand-unit">
+                <div class="logo-frame">
+                    <img src="logo.png" alt="Eden" class="logo-img">
+                    <div class="logo-ring"></div>
+                </div>
+                <div class="brand-text">
+                    <h1>Tier 1</h1>
+                </div>
+                <button id="hamburger" type="button" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+            </a>
+
+            <nav class="nav-system">
+                <a href="#board" class="nav-link">Team profile</a>
+                <a href="#subsidiaries" class="nav-link">Branches</a>
+                <a href="essmain.html" class="nav-link">E.S.S</a>
+                <a href="our_story.html" class="nav-link">Our Story</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" style="opacity: 1; transform: none;">
+
+            <div id="offline-banner" style="display:none;position:fixed;top:90px;width:100%;background:#ff0055;color:#fff;text-align:center;padding:5px;z-index:5000;">
+            You are offline. Homepage is fully available.
+            </div>
+            
+            <div style="font-family: var(--font-mono); margin-bottom: 10px;">[ ACCESS GRANTED: PUBLIC ENTRANCE ]</div>
+            <h1 class="hero-title">Eden stealth CV-1</h1>
+            <div class="hero-subtitle typing-effect" style="text-align: center;" data-text="Under the Best Operator unit in the entire universe."></div>
+            
+            <div class="cta-group">
+                <button class="btn-tactical" onclick="scrollToSection('about')">Engage Protocol</button>
+                <button class="btn-tactical" onclick="openModal('visionModal')">Read Manifest</button>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">The Foundation</h2>
+                <div class="separator"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+                <div style="line-height: 2;">
+                    <p style="font-size: 1.4rem; color: #fff;"><strong>First and foremost, we Direct Action For God.</strong></p>
+                    <p>The Operator Team name <strong>Eden stealth CV-1</strong> was given to us by God—our Most High, signifying the beginning, foundation, and source @ Direct Actioning. We stand for the Defense of HQ, and the Re-private of our Great Land, South Africa.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="board">
+            <div class="section-header">
+                <h2 class="section-title">Eden Stealth CV-1</h2>
+                <div class="separator"></div>
+                <i class="fas fa-crosshairs" style="font-size: 2rem;"></i>
+            </div>
+
+            <div class="Operator-grid">
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/hoss.png" class="ops-img" alt="Morake">
+                        <div class="ops-info">
+                            <h3>Thato 'Hoss' Morake</h3>
+                            <span>01. THE PRESIDENT</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Founder / Chairman / CIO</span></div>
+                        <div class="stat-line"><span>RANK:</span><span class="tier-1">Commander-in-Chief</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>03 OCTOBER 2002(Blessedistheman.)</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>  // Mon to Thurs :: 17:00pm - 01:00am</span></div> 
+                    </div>
+                </div>
+
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/joy.jpg" class="ops-img" alt="Joyson">
+                        <div class="ops-info">
+                            <h3>Joyson</h3>
+                            <span>02. CEO</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Executive</span></div>
+                        <div class="stat-line"><span>RANK:</span><span>Sergeant</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>  // Mon to Wed :: 10:00pm - 16:00pm</span></div>
+                    </div>
+                </div>
+
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/frost.jpg" class="ops-img" alt="Frost">
+                        <div class="ops-info">
+                            <h3>Arnold 'Tobin Frost' Khumalo</h3>
+                            <span>03. CSCO</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Routes / Artillery</span></div>
+                        <div class="stat-line"><span>RANK:</span><span>Tier 3 operative</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>19 September 2001</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span>  // Mon to Sat :: 09:00am - 17:00pm</span></div>
+                    </div>
+                </div>
+
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/xan.jpg" class="ops-img" alt="Xolisa">
+                        <div class="ops-info">
+                            <h3>Xolisa (Xan)</h3>
+                            <span>06. CTO</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                        <div class="stat-line"><span>ROLE:</span><span>Computer Science</span></div>
+                        <div class="stat-line"><span>RANK:</span><span>Tier 3 operative</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span> // Mon to Wed :: 12:00pm - 16:00pm</span></div>
+                    </div>
+                </div>
+
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/morpheus.jpg" class="ops-img" alt="Khayyim">
+                        <div class="ops-info">
+                            <h3>Olama Khayyim</h3>
+                            <span>09. COMPLIANCE OFFICER & FRONT-END ALGORITHMIST</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                      <div class="stat-line"><span>ROLE:</span><span>National Law / security</span></div>
+
+                        <div class="stat-line"><span>RANK:</span><span class="tier-1">Tier 1 special Ops; Commander of the Airforce</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>22 October 1999</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span> // Mon to Sat :: 09:00am - 17:00pm // Sunday - 20:00pm - 22:00pm</span></div>
+                    </div>
+                </div>
+
+                <div class="ops-card">
+                    <div class="ops-header">
+                        <img src="images/bayanda.jpg" class="ops-img" alt="Bayanda">
+                        <div class="ops-info">
+                            <h3>Bayanda</h3>
+                            <span>11. SENIOR SOFTWARE DEVELOPER</span>
+                        </div>
+                    </div>
+                    <div class="ops-stats">
+                      <div class="stat-line"><span>ROLE:</span><span>Full-Stack SDLC</span></div>
+
+                        <div class="stat-line"><span>RANK:</span><span class="tier-1">ONE FOR THE PACK - Tier 4</span></div>
+                        <div class="stat-line"><span>BORN:</span><span>--</span></div>
+                        <div class="stat-line"><span>SHIFT:</span><span> // Mon to Wed :: 12:00pm - 16:00pm // Sunday - 20:00pm - 22:00pm</span></div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section id="subsidiaries">
+            <div class="section-header">
+                <h2 class="section-title">Branches of the Tree of Life</h2>
+                <div class="separator"></div>
+            </div>
+
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/parables.png" alt="Parables & Platters" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>01. Parables & Platters</h3>
+                    <p>Sector: Food</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="pp.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/hopco.jpg" alt="HopCo Transportation" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>02. HopCo Transportation</h3>
+                    <p>Sector: Tactical Transportation</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">ACTIVE</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/ss.png" alt="Stainless Steel" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>03. Stainless Steel</h3>
+                    <p>Sector: Private Security</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">N/A</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-logo-frame">
+                    <img src="images/lawk.png" alt="Lawk National" class="branch-logo">
+                    <div class="logo-scan"></div>
+                    </div>
+                    <h3>04. Lawk National</h3>
+                    <p>Sector: Law</p>
+                    <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">N/A</span></div>
+                    <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="hopco.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
+                </div>
+
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="btn-tactical" onclick="window.open('essmain.html')" id="ess">Access E.S.S. Portal <i class="fas fa-external-link-alt"></i></button>
+            </div>
+        </section>
+
+        <section id="terminal-section">
+            <div class="section-header">
+                <h2 class="section-title">Terminal</h2>
+                <div class="separator"></div>
+            </div>
+
+            <div id="terminal-wrap">
+                <div id="terminal-output">
+                    <div>[ Eden stealth CV-1 portal INITIALIZING ]</div>
+                    <div>[ ENCRYPTION: running ]</div>
+                    <br>
+                    <div>type 'help' for commands...</div>
+                </div>
+                <div class="terminal-input-row">
+                    <span>EDEN@OP_UNIT:~$</span>
+                    <input type="text" id="term-input" spellcheck="false" autocomplete="off">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="main-footer">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">Eden stealth CV-1</h4>
+            </div>
+            <div>
+
+                <h4 style="font-family: var(--font-tactical); margin-bottom: 20px;">QUICK LINKS</h4>
+
+                <button class="btn-tactical" onclick="openDocsHub()" style="width:100%;">DOCUMENTS</button>
+
+                <br>
+                <br>
+
+                <button class="btn-tactical" style="width:100%;"><a href="https://oldgamesdownload.com/file/62627-2/" style="text-decoration: none; color: var(--cyan);">Conflict: Vietnam (PC)</a></button>
+
+                <br>
+                <br>
+
+                <button class="btn-tactical" style="width:100%;"><a href="eu.html" style="text-decoration: none; color: var(--cyan);">EU (ETERNAL UNIVERSITY)</a></button>
+
+                <br>
+                <br>
+
+                <button class="btn-tactical" style="width:100%;"><a href="KJV.html" style="text-decoration: none; color: var(--cyan);">KJV Holy Bible</a></button>
+
+            </div>
+
+            <div class="weather-panel">
+                <div style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 10px;">LIVE WEATHER // CAPE TOWN</div>
+                <div id="weather-temp" style="font-size: 2rem; font-family: var(--font-tactical);">--°C</div>
+                <div id="weather-desc" style="font-family: var(--font-mono);">SYNCING...</div>
+            </div>
+        </div>
+
+        <div style="margin-top:30px;">
+            
+            <div id="sys-clock" style="
+                font-family: var(--font-tactical);
+                font-size: 2rem;
+                letter-spacing: 3px;
+                margin-top: 5px;
+                text-shadow: var(--cyan-glow);
+            ">
+                --:--:--
+            </div>
+        </div>
+
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+
+        <p style="font-family: var(--font-mono); opacity: 0.5; margin-top: 40px;">
+            &copy; <span id="year"></span> Eden stealth CV-1. ALL RIGHTS RESERVED.<br>
+           under the solid protection of our stainless steel branch.<br>
+        </p>
+        <br>
+
+        <button id="installBtn">
+        INSTALL OUR MOBILE APP
+        </button>
+
+    </footer>
+
+    <div class="modal-overlay" id="visionModal">
+        <div class="modal-body">
+            <span class="close-modal" onclick="closeModal('visionModal')">&times;</span>
+            <h2 class="section-title">ES-CV-1 MANIFEST</h2>
+            <div style="margin-top: 30px; line-height: 1.8; font-size: 1.1rem;">
+                <p><strong>Direct Action code: CV-5</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <script>
+
+        /* ===============================
+        FORCE PAGE TO LOAD FROM TOP
+        ================================ */
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener("load", () => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto"
+            });
+        });
+
+        /* ===============================
+           CORE ENGINE
+        ================================ */
+        const sysTime = document.getElementById('sys-clock');
+        const yearSpan = document.getElementById('year');
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('terminal-output');
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            window.scrollTo({
+                top: el.offsetTop - 90,
+                behavior: 'smooth'
+            });
+        }
+
+        // Modal Controls
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+        /* ===============================
+           TERMINAL LOGIC
+        ================================ */
+        function printToTerm(text, color = "inherit") {
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.innerHTML = `> ${text}`;
+            termOutput.appendChild(div);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        termInput.addEventListener('keydown', (e) => {
+
+            if (e.key === 'Enter') {
+                const raw = termInput.value.trim();     // keep original
+                const val = raw.toLowerCase();          // system parsing
+                termInput.value = '';
+
+                // 🔒 ULTRA COVERT INTERNAL COMMAND (NOT LISTED)
+                if (raw === '1.') {
+
+                    printToTerm('PASSING BIOMETRIC...', 'var(--cyan)');
+
+                    // Create loading animation
+                    let dots = 0;
+                    const loadingLine = document.createElement('div');
+                    loadingLine.style.color = 'var(--cyan)';
+                    loadingLine.innerHTML = '> AUTHENTICATING';
+                    termOutput.appendChild(loadingLine);
+                    termOutput.scrollTop = termOutput.scrollHeight;
+
+                    const loadingInterval = setInterval(() => {
+                        dots = (dots + 1) % 4;
+                        loadingLine.innerHTML = '> AUTHENTICATING' + '.'.repeat(dots);
+                        termOutput.scrollTop = termOutput.scrollHeight;
+                    }, 400);
+
+                    // After delay → redirect
+                    setTimeout(() => {
+                        clearInterval(loadingInterval);
+                        window.location.href = "direct_action.html";
+                    }, 2200);
+
+                    return;
+                }
+
+                if (val === 'help') {
+                    printToTerm('Available: clear | status | scan ops | open manifesto');
+                } else if (val === 'clear') {
+                    termOutput.innerHTML = '';
+                } else if (val === 'status') {
+                    printToTerm('UNIT: CV-7 | STATUS: STEALTH | ACCESS: TIER 1');
+                } else if (val === 'scan ops') {
+                    scrollToSection('board');
+                    printToTerm('Scanning Operators...');
+                } else if (val === 'open manifesto') {
+                    openModal('visionModal');
+                } else {
+                    printToTerm(`Command '${raw}' not recognized. Type 'help'.`, '#ff0055');
+                }
+            }
+        });
+
+        /* ===============================
+        CINEMATIC SNOW ENGINE
+        ================================ */
+
+            const snowCanvas = document.getElementById("snowCanvas");
+            const ctx = snowCanvas.getContext("2d");
+
+            let snowflakes = [];
+            let snowCount = window.innerWidth < 768 ? 80 : 140;
+
+        function resizeSnow() {
+            const scale = window.devicePixelRatio || 1;
+            snowCanvas.width = window.innerWidth * scale;
+            snowCanvas.height = window.innerHeight * scale;
+            snowCanvas.style.width = window.innerWidth + "px";
+            snowCanvas.style.height = window.innerHeight + "px";
+            ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
+        window.addEventListener("resize", resizeSnow);
+        resizeSnow();
+
+        class Snowflake {
+            constructor() {
+                this.reset();
+            }
+
+        reset() {
+            this.x = Math.random() * snowCanvas.width;
+            this.y = Math.random() * -snowCanvas.height;
+            this.radius = Math.random() * 2.2 + 0.5;
+            this.speedY = Math.random() * 0.6 + 0.3;
+            this.speedX = Math.random() * 0.4 - 0.2;
+            this.opacity = Math.random() * 0.5 + 0.3;
+        }
+
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2;
+
+            if (this.y > snowCanvas.height) {
+                this.reset();
+                this.y = 0;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+        function createSnow() {
+            snowflakes = [];
+            for (let i = 0; i < snowCount; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+
+        let snowAnimationId;
+
+        function animateSnow() {
+            ctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
+
+            snowAnimationId = requestAnimationFrame(animateSnow);
+        }
+
+        createSnow();
+        animateSnow();
+
+        /* Proper pause/resume */
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                cancelAnimationFrame(snowAnimationId);
+            } else {
+                animateSnow();
+            }
+        });
+
+        /* ===============================
+           WEATHER ENGINE
+        ================================ */
+        async function fetchWeather() {
+
+            try {
+                // Cape Town Coordinates
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.92&longitude=18.42&current_weather=true');
+                const data = await res.json();
+
+                const temp = Math.round(data.current_weather.temperature);
+                const wind = data.current_weather.windspeed;
+
+                document.getElementById('weather-temp').innerText = `${temp}°C`;
+                document.getElementById('weather-desc').innerText = `CAPE TOWN AIRFORCE BASE // WIND ${wind} km/h`;
+
+            } catch (e) {
+                document.getElementById('weather-temp').innerText = "OFFLINE";
+                document.getElementById('weather-desc').innerText = "WEATHER LINK LOST";
+            }
+        }
+        fetchWeather();
+
+        // 
+
+        /* ===============================
+        CAPE TOWN LOCKED SYSTEM CLOCK
+        ================================ */
+
+        function updateClockCapeTown() {
+
+            const now = new Date();
+
+            // STRICTLY Cape Town timezone
+            const timeOptions = {
+                timeZone: 'Africa/Johannesburg',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            const dateOptions = {
+                timeZone: 'Africa/Johannesburg',
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit'
+            };
+
+            const timeString = new Intl.DateTimeFormat('en-ZA', timeOptions).format(now);
+            const dateString = new Intl.DateTimeFormat('en-ZA', dateOptions).format(now);
+
+            const clockEl = document.getElementById('sys-clock');
+
+            if (clockEl) {
+                clockEl.innerHTML = `
+                    ${timeString}
+                    <div style="
+                        font-size:0.8rem;
+                        font-family: var(--font-mono);
+                        opacity:0.7;
+                        margin-top:4px;
+                    ">
+                        ${dateString} // CAPE TOWN, SOUTH AFRICA
+                    </div>
+                `;
+            }
+        }
+
+        /* Run immediately */
+        updateClockCapeTown();
+
+        /* Update every second */
+        setInterval(updateClockCapeTown, 1000);
+
+        /* ===============================
+           TYPEWRITER EFFECT
+        ================================ */
+        function initTypewriter() {
+            const el = document.querySelector('.typing-effect');
+            const text = el.getAttribute('data-text');
+            let i = 0;
+            el.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 80);
+                }
+            }
+            type();
+        }
+
+        // Initialization
+        window.onload = () => {
+            initTypewriter();
+            console.log("Eden stealth CV-1: Tier 1 active.");
+        };
+
+            const hamburger = document.getElementById("hamburger");
+            const nav = document.querySelector(".nav-system");
+
+            hamburger.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nav.classList.toggle("open");
+            });
+
+            // 
+
+            /* ===============================
+            INTERNAL REFRESH ENGINE
+            ================================ */
+
+            function internalRefresh() {
+
+                console.log("Internal refresh initiated...");
+
+                /* 1 — Scroll to top instantly */
+                window.scrollTo({ top: 0, behavior: "auto" });
+
+                /* 2 — Reset terminal */
+                termOutput.innerHTML = `
+                    <div>[ Eden stealth CV-1 portal REINITIALIZING ]</div>
+                    <div>[ ENCRYPTION: running ]</div>
+                    <br>
+                    <div>type 'help' for commands...</div>
+                `;
+
+                /* 3 — Restart snow engine */
+                cancelAnimationFrame(snowAnimationId);
+                createSnow();
+                animateSnow();
+
+                /* 4 — Restart typewriter */
+                const el = document.querySelector('.typing-effect');
+                if (el) {
+                    el.innerHTML = '';
+                    initTypewriter();
+                }
+
+                /* 5 — Re-fetch weather */
+                fetchWeather();
+
+                /* 6 — Close navigation panel */
+                nav.classList.remove("open");
+
+                /* 7 — Close any open modals */
+                document.querySelectorAll(".modal-overlay").forEach(modal => {
+                    modal.style.display = "none";
+                });
+
+                /* 8 — Reset section animations */
+                document.querySelectorAll("section").forEach(sec => {
+                    sec.classList.remove("revealed");
+                    observer.observe(sec);
+                });
+
+            }
+
+/* =========================================
+   EDEN STEALTH CV-1 — FULL PWA INSTALL CORE
+   ========================================= */
+
+let deferredPrompt = null;
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const installBtn = document.getElementById("installBtn");
+
+    if (!installBtn) {
+        console.warn("Install button not found");
+        return;
+    }
+
+
+    /* ===============================
+       INITIAL STATE
+       =============================== */
+
+    installBtn.style.display = "none";
+
+
+
+    /* ===============================
+       SERVICE WORKER REGISTER
+       =============================== */
+
+    if ("serviceWorker" in navigator) {
+
+        navigator.serviceWorker.register("sw.js")
+
+        .then(() => {
+
+            console.log("Service Worker Registered");
+
+        })
+
+        .catch(err => {
+
+            console.error("Service Worker Failed:", err);
+
+        });
+
+    }
+
+    /* ===============================
+       CHECK IF ALREADY INSTALLED
+       =============================== */
+
+    if (
+
+        window.matchMedia("(display-mode: standalone)").matches ||
+
+        window.navigator.standalone === true
+
+    ) {
+
+        console.log("App already installed");
+
+        installBtn.style.display = "none";
+
+        return;
+
+    }
+
+    /* ===============================
+       INSTALL AVAILABLE EVENT
+       =============================== */
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+
+        console.log("Install prompt available");
+
+        e.preventDefault();
+
+        deferredPrompt = e;
+
+        installBtn.style.display = "inline-block";
+
+    });
+
+    /* ===============================
+       INSTALL BUTTON CLICK
+       =============================== */
+
+    installBtn.addEventListener("click", async () => {
+
+        if (!deferredPrompt) {
+
+            console.log("Install prompt not ready");
+
+            return;
+
+        }
+
+        installBtn.innerText = "INSTALLING...";
+        installBtn.classList.add("installing");
+
+        deferredPrompt.prompt();
+
+        const { outcome } = await deferredPrompt.userChoice;
+
+
+        if (outcome === "accepted") {
+
+            console.log("User accepted install");
+
+            installBtn.innerText = "INSTALLED";
+
+        }
+
+        else {
+
+            console.log("User cancelled install");
+
+            installBtn.innerText = "INSTALL APP";
+
+        }
+
+
+        deferredPrompt = null;
+
+        installBtn.style.display = "none";
+
+    });
+
+    /* ===============================
+       INSTALL SUCCESS EVENT
+       =============================== */
+
+    window.addEventListener("appinstalled", () => {
+
+        console.log("PWA INSTALLED SUCCESSFULLY");
+
+        deferredPrompt = null;
+
+        installBtn.innerText = "INSTALLED";
+        installBtn.classList.remove("installing");
+        installBtn.classList.add("installed");
+
+        installBtn.style.display = "none";
+
+    });
+
+
+});
+
+    </script>
+
+        <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag" style="cursor:pointer;">
+
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <script>
+
+        window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
+        window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
+
+        // SPLASH SCREEN
+
+            setTimeout(()=>{
+
+            document.getElementById("eliteSplash").remove();
+
+            },3000);
+
+            /* ===============================
+            THEME SYSTEM
+            =============================== */
+
+            function toggleTheme(){
+
+                document.body.classList.toggle("green-yellow");
+
+                /* SAVE PREFERENCE */
+
+                if(document.body.classList.contains("green-yellow")){
+
+                    localStorage.setItem("edenTheme","green-yellow");
+
+                }
+                else{
+
+                    localStorage.setItem("edenTheme","default");
+
+                }
+
+            }
+
+            /* LOAD SAVED THEME */
+
+            (function(){
+
+                const savedTheme = localStorage.getItem("edenTheme");
+
+                if(savedTheme === "green-yellow"){
+
+                    document.body.classList.add("green-yellow");
+
+                }
+
+                })();
+
+            </script>
+
+            <script>
+
+            if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch(err => console.log('SW registration failed:', err));
+            }
+            
+            </script>
+
+    <script>
+
+<script>
+
+const flag = document.getElementById("rsaFlag");
+
+const anthem = document.getElementById("anthemAudio");
+
+const bg = document.getElementById("bgAudio");
+
+let anthemPlaying = false;
+
+flag.addEventListener("click", () => {
+
+    if(!anthemPlaying){
+
+        // PLAY ANTHEM
+        anthem.play();
+
+        // PAUSE BACKGROUND
+        bg.pause();
+
+        flag.classList.add("playing");
+
+        anthemPlaying = true;
+
+    }else{
+
+        // PAUSE ANTHEM
+        anthem.pause();
+
+        // RESUME BACKGROUND
+        bg.play();
+
+        flag.classList.remove("playing");
+
+        anthemPlaying = false;
+
+    }
+
+});
+
+// ALSO handle anthem ending naturally
+
+anthem.addEventListener("ended", () => {
+
+    bg.play();
+
+    flag.classList.remove("playing");
+
+    anthemPlaying = false;
+
+});
+
+</script>
+
+</script>
+
+<!-- BACKGROUND TRACK -->
+<audio id="bgAudio" autoplay loop>
+    <source src="background.mp3" type="audio/mpeg">
+</audio>
+
+<!-- NATIONAL ANTHEM -->
+<audio id="anthemAudio">
+    <source src="National_Anthem_RSA.mp3" type="audio/mpeg">
+</audio>
+
+            </body>
+
+            </html>
+            
+            
+            
+            
+            
+            
+
+
+
+
