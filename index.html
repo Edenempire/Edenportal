@@ -1359,7 +1359,7 @@
     position: relative; /* REQUIRED for absolute hamburger */
 }
 
-                /* ===============================
+/* ===============================
    REFRESH NOTIFICATION SYSTEM
    =============================== */
 
@@ -1423,7 +1423,6 @@
     background: var(--cyan);
     width: 0%;
     transition: width 0.1s linear;
-    box-shadow: 0 0 5px var(--cyan);
 }
 
 .refresh-status {
@@ -1434,7 +1433,6 @@
     opacity: 0.8;
 }
 
-/* Mobile responsive */
 @media (max-width: 600px) {
     #refresh-notification {
         top: auto;
@@ -1505,29 +1503,27 @@
                 <canvas id="snowCanvas"></canvas>
                 <div class="scanlines"></div>
             
-                <div class="hud-nav">
-            
-                <!-- INTERNAL REFRESH -->
-                <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-            
-                <!-- TOP -->
-                <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                    <i class="fas fa-angle-double-up"></i>
-                </button>
-            
-                <!-- MIDDLE -->
-                <button class="hud-btn" onclick="scrollToSection('board')">
-                    <i class="fas fa-crosshairs"></i>
-                </button>
-            
-                <!-- BOTTOM -->
-                <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
-                    <i class="fas fa-angle-double-down"></i>
-                </button>
-            
-            </div>
+<div class="hud-nav">
+    <!-- INTERNAL REFRESH - FIXED -->
+    <button class="hud-btn" onclick="window.internalRefresh()" title="Internal Refresh">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- TOP -->
+    <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-up"></i>
+    </button>
+
+    <!-- MIDDLE -->
+    <button class="hud-btn" onclick="scrollToSection('board')">
+        <i class="fas fa-crosshairs"></i>
+    </button>
+
+    <!-- BOTTOM -->
+    <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+        <i class="fas fa-angle-double-up"></i>
+    </button>
+</div>
     
         <header id="main-header">
             <div class="header-container">
@@ -2544,18 +2540,17 @@ document.getElementById("main-header").addEventListener("click", (e) => {
     
     });
 
-                /* ===============================
-   ADVANCED INTERNAL REFRESH ENGINE v2.0
+/* ===============================
+   ADVANCED INTERNAL REFRESH - WITH NOTIFICATION
    =============================== */
 
-function internalRefresh() {
+window.internalRefresh = function() {
     console.log("⚡ ADVANCED INTERNAL REFRESH INITIATED");
     
     // Show refresh notification
     showRefreshNotification();
     
     /* ===== PHASE 1: IMMEDIATE ACTIONS ===== */
-    // Scroll to top smoothly
     window.scrollTo({ top: 0, behavior: "smooth" });
     
     // Close all UI elements
@@ -2566,20 +2561,14 @@ function internalRefresh() {
     });
     
     /* ===== PHASE 2: SEQUENTIAL REINITIALIZATION ===== */
-    const refreshPhases = [
-        { delay: 100, action: resetTerminal },
-        { delay: 300, action: restartSnow },
-        { delay: 500, action: refreshWeather },
-        { delay: 700, action: resetTypewriter },
-        { delay: 900, action: resetAnimations },
-        { delay: 1100, action: refreshClock },
-        { delay: 1300, action: checkConnectivity },
-        { delay: 1500, action: clearMemoryCache }
-    ];
-    
-    refreshPhases.forEach(phase => {
-        setTimeout(phase.action, phase.delay);
-    });
+    setTimeout(() => resetTerminal(), 100);
+    setTimeout(() => restartSnow(), 300);
+    setTimeout(() => refreshWeather(), 500);
+    setTimeout(() => resetTypewriter(), 700);
+    setTimeout(() => resetAnimations(), 900);
+    setTimeout(() => refreshClock(), 1100);
+    setTimeout(() => checkConnectivity(), 1300);
+    setTimeout(() => clearMemoryCache(), 1500);
     
     /* ===== PHASE 3: FINAL VERIFICATION ===== */
     setTimeout(() => {
@@ -2588,12 +2577,10 @@ function internalRefresh() {
     }, 2000);
 }
 
-/* ===============================
-   REFRESH NOTIFICATION SYSTEM
-   =============================== */
+// ===== NOTIFICATION FUNCTIONS =====
 
 function showRefreshNotification() {
-    // Remove existing notification if any
+    // Remove existing notification
     const existing = document.getElementById('refresh-notification');
     if (existing) existing.remove();
     
@@ -2618,7 +2605,6 @@ function showRefreshNotification() {
         width += 2;
         if (bar) bar.style.width = width + '%';
         
-        // Update status messages
         if (width === 20) status.textContent = 'Terminal reset';
         if (width === 40) status.textContent = 'Snow engine restart';
         if (width === 60) status.textContent = 'Weather sync';
@@ -2638,9 +2624,7 @@ function hideRefreshNotification() {
     }
 }
 
-/* ===============================
-   PHASE ACTIONS
-   =============================== */
+// ===== PHASE ACTIONS =====
 
 function resetTerminal() {
     const termOutput = document.getElementById('terminal-output');
@@ -2655,31 +2639,23 @@ function resetTerminal() {
         termOutput.scrollTop = 0;
     }
     
-    // Clear terminal input
     const termInput = document.getElementById('term-input');
     if (termInput) termInput.value = '';
-    
-    console.log('✓ Terminal reset complete');
 }
 
 function restartSnow() {
-    // Cancel existing animation
     if (window.snowAnimationId) {
         cancelAnimationFrame(window.snowAnimationId);
     }
-    
-    // Recreate snow with fresh parameters
     if (typeof createSnow === 'function' && typeof animateSnow === 'function') {
         createSnow();
         animateSnow();
-        console.log('✓ Snow engine restarted');
     }
 }
 
 function refreshWeather() {
     if (typeof fetchWeather === 'function') {
         fetchWeather();
-        console.log('✓ Weather data refreshed');
     }
 }
 
@@ -2688,58 +2664,39 @@ function resetTypewriter() {
     if (el && typeof initTypewriter === 'function') {
         el.innerHTML = '';
         initTypewriter();
-        console.log('✓ Typewriter reset');
     }
 }
 
 function resetAnimations() {
-    // Reset section reveal animations
     document.querySelectorAll("section").forEach(sec => {
         sec.classList.remove("revealed");
         if (window.observer) {
             window.observer.observe(sec);
         }
     });
-    console.log('✓ Section animations reset');
 }
 
 function refreshClock() {
     if (typeof updateClockCapeTown === 'function') {
         updateClockCapeTown();
-        console.log('✓ System clock synced');
     }
 }
 
 function checkConnectivity() {
     const offlineBanner = document.getElementById('offline-banner');
     if (offlineBanner) {
-        if (navigator.onLine) {
-            offlineBanner.style.display = 'none';
-        } else {
-            offlineBanner.style.display = 'block';
-        }
+        offlineBanner.style.display = navigator.onLine ? 'none' : 'block';
     }
-    console.log('✓ Connectivity checked');
 }
 
 function clearMemoryCache() {
-    // Clear any temporary session data
-    if (sessionStorage) {
-        const keysToKeep = ['edenTheme']; // Keep theme preference
-        const theme = localStorage.getItem('edenTheme');
-        
-        sessionStorage.clear();
-        
-        // Restore theme
-        if (theme) localStorage.setItem('edenTheme', theme);
-    }
-    console.log('✓ Memory cache cleared');
+    // Keep theme preference
+    const theme = localStorage.getItem('edenTheme');
+    sessionStorage.clear();
+    if (theme) localStorage.setItem('edenTheme', theme);
 }
 
 function verifyRefresh() {
-    console.log('✓ ALL SYSTEMS OPERATIONAL');
-    
-    // Add verification log to terminal
     const termOutput = document.getElementById('terminal-output');
     if (termOutput) {
         const verifyLine = document.createElement('div');
