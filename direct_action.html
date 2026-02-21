@@ -1,478 +1,518 @@
 <!DOCTYPE html>
-
 <html lang="en">
-   
 <head>
-   
-<meta charset="UTF-8">
-   
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-<title>CV-5</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV-5 · direct action</title>
+  
+  <!-- fonts & icons (clean) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* ----- root clean ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-   
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
-   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    :root {
+      --bg: #01030a;
+      --panel: #071821;
+      --accent: #00f0ff;
+      --soft: #77faff;
+      --ok: #00ff99;
+      --warn: #ffaa00;
+      --danger: #ff3355;
+      --mono: 'VT323', monospace;
+      --ui: 'Electrolize', sans-serif;
+      --header-font: 'Orbitron', sans-serif;
+      --header-h: 90px;
+      --chip-border: rgba(0, 255, 255, 0.2);
+      --chip-glow: rgba(0, 255, 255, 0.25);
+    }
 
-<style>
-   
-/* ======================================================
-   ROOT VARIABLES
-====================================================== */
-:root{
-  --bg:#01030a;
-  --panel:#071821;
-  --accent:#00f0ff;
-  --soft:#77faff;
-  --ok:#00ff99;
-  --warn:#ffaa00;
-  --danger:#ff3355;
-  --mono:'VT323',monospace;
-  --ui:'Electrolize',sans-serif;
-  --header:'Orbitron',sans-serif;
-  --header-h:90px;
-  --chip-border:rgba(0,255,255,.2);
-  --chip-glow:rgba(0,255,255,.25); /* reduced glow */
-  --binary-speed:1s;
-  --matrix-speed:40ms; /* smoother, faster rain */
-  --scroll-speed:0.15s;
-}
+    html, body {
+      height: 100%;
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--accent);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--header-h);
+    }
 
-/* ======================================================
-   GLOBAL RESET
-====================================================== */
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{
-  height:100%;
-  font-family:var(--mono);
-  background:var(--bg);
-  color:var(--accent);
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-  scroll-padding-top:var(--header-h);
-}
-body.fade-out{opacity:0;transition:opacity .8s ease;}
-canvas,video,img{display:block;max-width:100%;}
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
 
-/* ======================================================
-   MATRIX RAIN
-====================================================== */
-#matrixCanvas{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  opacity:.12;
-  pointer-events:none;
-}
-@keyframes scanPulse{
-  0%{opacity:.6}
-  100%{opacity:.9}
-}
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:repeating-linear-gradient(to bottom,transparent,transparent 2px,rgba(0,255,255,.02) 3px);
-  pointer-events:none;
-  z-index:9999;
-  animation:scanPulse 4s infinite alternate;
-}
+    canvas, img, video {
+      display: block;
+      max-width: 100%;
+    }
 
-/* ======================================================
-   HEADER
-====================================================== */
-header{
-  position:fixed;
-  top:0;left:0;width:100%;height:var(--header-h);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.95);
-  border-bottom:1px solid var(--accent);
-  z-index:1000;
-  backdrop-filter:blur(12px);
-  overflow:hidden;
-}
-header h1{
-  font-family:var(--header);
-  letter-spacing:6px;
-  font-size:clamp(1rem,2.5vw,1.8rem);
-  text-shadow:0 0 15px var(--accent);
-  animation:glitch 6s infinite;
-}
-@keyframes glitch{
-  0%,100%{text-shadow:0 0 15px var(--accent);}
-  10%{text-shadow:-2px 0 red,2px 0 cyan;}
-  20%{text-shadow:2px 0 red,-2px 0 cyan;}
-  30%{text-shadow:0 0 20px #0ff;}
-  50%{text-shadow:-1px 1px lime,1px -1px cyan;}
-  70%{text-shadow:1px -1px magenta,-1px 1px blue;}
-}
+    /* ----- fixed matrix canvas (clean opacity) ----- */
+    #matrixCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.12;
+      pointer-events: none;
+    }
 
-/* ======================================================
-   HERO SECTION (CPU MICROCHIP)
-====================================================== */
-#hero{
-  min-height:90vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:2;
-  padding:100px 20px;
-  scroll-behavior:smooth;
-}
-#chip-container{
-  position:relative;
-  width:500px;
-  max-width:95vw;
-  height:500px;
-  background:rgba(5,20,28,.95);
-  border:2px solid var(--chip-border);
-  box-shadow:0 0 50px var(--chip-glow), inset 0 0 20px var(--chip-glow);
-  border-radius:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  overflow:hidden;
-  animation:chipPulse 4s ease-in-out infinite alternate;
-  transition:transform .4s ease-in-out;
-}
-@keyframes chipPulse{
-  0%{box-shadow:0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow);}
-  50%{box-shadow:0 0 90px var(--chip-glow), inset 0 0 45px var(--chip-glow);}
-  100%{box-shadow:0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow);}
-}
-#binary-code{
-  font-family:var(--header);
-  font-size:clamp(2rem,6vw,4rem);
-  letter-spacing:8px;
-  color:var(--accent);
-  text-align:center;
-  word-break:break-word;
-  animation:binaryPulse 3s ease-in-out infinite;
-}
-@keyframes binaryPulse{
-  0%{opacity:.6;transform:scale(1);}
-  50%{opacity:1;transform:scale(1.06);}
-  100%{opacity:.6;transform:scale(1);}
-}
-.chip-circuit{
-  position:absolute;
-  inset:10px;
-  border:1px dashed var(--chip-border);
-  pointer-events:none;
-}
-.chip-circuit::before,.chip-circuit::after{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  border:1px dashed rgba(0,255,255,.1);
-  top:0;left:0;
-  transform:rotate(45deg);
-}
+    /* scanline effect (subtle) */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 255, 0.02) 3px);
+      pointer-events: none;
+      z-index: 9999;
+      animation: scanPulse 4s infinite alternate;
+    }
 
-/* ======================================================
-   SECTION TITLES
-====================================================== */
-.section-title{
-  text-align:center;
-  font-family:var(--header);
-  letter-spacing:10px;
-  margin:80px 0 40px;
-  font-size:clamp(1.5rem,4vw,2.5rem);
-  text-shadow:0 0 5px var(--accent);
-  scroll-margin-top:calc(var(--header-h)+20px);
-}
+    @keyframes scanPulse {
+      0% { opacity: 0.6; }
+      100% { opacity: 0.9; }
+    }
 
-/* ======================================================
-   GRID CARDS
-====================================================== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:40px;
-  padding:0 6% 160px;
-}
-.card{
-  position:relative;
-  background:rgba(7,24,33,.85);
-  border:1px solid rgba(0,255,255,.1);
-  padding:50px 30px;
-  text-align:center;
-  transition:.4s cubic-bezier(.19,1,.22,1);
-  cursor:pointer;
-  overflow:hidden;
-  border-radius:15px;
-}
-.card::before{
-  content:"";
-  position:absolute;
-  top:0;left:-100%;
-  width:100%;height:100%;
-  background:linear-gradient(120deg,transparent,rgba(0,255,255,.1),transparent);
-  transition:.8s;
-}
-.card:hover::before{left:100%}
-.card:hover{
-  transform:translateY(-12px) scale(1.02);
-  border-color:var(--accent);
-  box-shadow:0 20px 50px rgba(0,255,255,.3);
-}
-.card i{font-size:3rem;margin-bottom:20px;color:var(--accent);}
-.enter-btn{
-  margin-top:20px;
-  padding:10px 25px;
-  background:transparent;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  cursor:pointer;
-  font-family:var(--ui);
-  letter-spacing:2px;
-  transition:.3s;
-}
-.enter-btn:hover{
-  background:var(--accent);
-  color:#000;
-}
+    /* ----- header (clean) ----- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 1px solid var(--accent);
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
 
-/* ======================================================
-   AUTH MODAL
-====================================================== */
-#authOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.97);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
-  transition:opacity .3s ease-in-out;
-}
-#authBox{
-  background:#040b10;
-  border:1px solid var(--accent);
-  padding:60px 50px;
-  max-width:550px;
-  width:95%;
-  text-align:center;
-  box-shadow:0 0 100px rgba(0,255,255,.3);
-  border-radius:15px;
-  animation:popup 0.5s ease-out;
-}
-@keyframes popup{
-  0%{transform:scale(.8);opacity:0;}
-  100%{transform:scale(1);opacity:1;}
-}
-#codeInput{
-  width:100%;
-  padding:20px;
-  background:#000;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  text-align:center;
-  letter-spacing:6px;
-  font-size:1.8rem;
-  margin:25px 0;
-}
-#authStatus{height:24px;margin-bottom:12px;}
+    header h1 {
+      font-family: var(--header-font);
+      letter-spacing: 6px;
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
+      text-shadow: 0 0 15px var(--accent);
+      animation: glitch 6s infinite;
+    }
 
-/* ======================================================
-   FOOTER HUD
-====================================================== */
-#data-footer{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,.9);
-  border-top:1px solid rgba(0,255,255,.1);
-  padding:10px 25px;
-  display:flex;
-  justify-content:space-between;
-  font-size:.75rem;
-  z-index:100;
-  font-family:var(--ui);
-}
-.threat-low{color:var(--ok)}
-.threat-high{color:var(--danger);animation:pulse 1s infinite}
-@keyframes pulse{
-  0%{opacity:.4}50%{opacity:1}100%{opacity:.4}
-}
+    @keyframes glitch {
+      0%, 100% { text-shadow: 0 0 15px var(--accent); }
+      10% { text-shadow: -2px 0 red, 2px 0 cyan; }
+      20% { text-shadow: 2px 0 red, -2px 0 cyan; }
+      30% { text-shadow: 0 0 20px #0ff; }
+      50% { text-shadow: -1px 1px lime, 1px -1px cyan; }
+      70% { text-shadow: 1px -1px magenta, -1px 1px blue; }
+    }
 
-/* ======================================================
-   MEDIA QUERIES
-====================================================== */
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr}
-  header{height:auto;padding:20px}
-  #chip-container{height:350px;width:90%}
-}
+    /* ----- hero / chip (clean) ----- */
+    #hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      padding: 100px 20px;
+    }
 
-/* ======================================================
-   EXTRA LONG ANIMATIONS
-====================================================== */
-@keyframes flickerText{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
-@keyframes slowPulse{
-  0%{box-shadow:0 0 50px var(--chip-glow)}
-  50%{box-shadow:0 0 120px var(--chip-glow)}
-  100%{box-shadow:0 0 50px var(--chip-glow)}
-}
-   
-</style>
+    #chip-container {
+      position: relative;
+      width: 500px;
+      max-width: 95vw;
+      height: 500px;
+      background: rgba(5, 20, 28, 0.95);
+      border: 2px solid var(--chip-border);
+      box-shadow: 0 0 50px var(--chip-glow), inset 0 0 20px var(--chip-glow);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+      animation: chipPulse 4s ease-in-out infinite alternate;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    @keyframes chipPulse {
+      0% { box-shadow: 0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow); }
+      50% { box-shadow: 0 0 90px var(--chip-glow), inset 0 0 45px var(--chip-glow); }
+      100% { box-shadow: 0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow); }
+    }
+
+    #binary-code {
+      font-family: var(--header-font);
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: 8px;
+      color: var(--accent);
+      text-align: center;
+      word-break: break-word;
+      animation: binaryPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes binaryPulse {
+      0% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+      100% { opacity: 0.6; transform: scale(1); }
+    }
+
+    .chip-circuit {
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed var(--chip-border);
+      pointer-events: none;
+    }
+
+    .chip-circuit::before,
+    .chip-circuit::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 1px dashed rgba(0, 255, 255, 0.1);
+      top: 0;
+      left: 0;
+      transform: rotate(45deg);
+    }
+
+    /* ----- section titles (clean) ----- */
+    .section-title {
+      text-align: center;
+      font-family: var(--header-font);
+      letter-spacing: 10px;
+      margin: 80px 0 40px;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      text-shadow: 0 0 5px var(--accent);
+      scroll-margin-top: calc(var(--header-h) + 20px);
+    }
+
+    /* ----- grid cards (clean) ----- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      padding: 0 6% 160px;
+    }
+
+    .card {
+      position: relative;
+      background: rgba(7, 24, 33, 0.85);
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      padding: 50px 30px;
+      text-align: center;
+      transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+      transition: 0.8s;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 20px 50px rgba(0, 255, 255, 0.3);
+    }
+
+    .card i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .enter-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      cursor: pointer;
+      font-family: var(--ui);
+      letter-spacing: 2px;
+      transition: 0.3s;
+    }
+
+    .enter-btn:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    /* ----- auth modal (clean) ----- */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.97);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    #authBox {
+      background: #040b10;
+      border: 1px solid var(--accent);
+      padding: 60px 50px;
+      max-width: 550px;
+      width: 95%;
+      text-align: center;
+      box-shadow: 0 0 100px rgba(0, 255, 255, 0.3);
+      border-radius: 15px;
+      animation: popup 0.5s ease-out;
+    }
+
+    @keyframes popup {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #codeInput {
+      width: 100%;
+      padding: 20px;
+      background: #000;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-align: center;
+      letter-spacing: 6px;
+      font-size: 1.8rem;
+      margin: 25px 0;
+    }
+
+    #authStatus {
+      height: 24px;
+      margin-bottom: 12px;
+    }
+
+    /* ----- footer HUD (clean) ----- */
+    #data-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      border-top: 1px solid rgba(0, 255, 255, 0.1);
+      padding: 10px 25px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      z-index: 100;
+      font-family: var(--ui);
+    }
+
+    .threat-low { color: var(--ok); }
+    .threat-high { color: var(--danger); animation: pulse 1s infinite; }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      header { height: auto; padding: 20px; }
+      #chip-container { height: 350px; width: 90%; }
+    }
+  </style>
 </head>
 <body>
 
-<canvas id="matrixCanvas"></canvas>
+  <!-- matrix background (canvas) -->
+  <canvas id="matrixCanvas"></canvas>
 
-<header>
-<h1>CV-5 DIRECT ACTION</h1>
-</header>
+  <!-- header -->
+  <header>
+    <h1>CV-5 DIRECT ACTION</h1>
+  </header>
 
-<main>
+  <main>
+    <!-- hero chip -->
+    <section id="hero">
+      <div id="chip-container">
+        <div class="chip-circuit"></div>
+        <div id="binary-code">01000011 01010110 00101101 00110101</div>
+      </div>
+    </section>
 
-<section id="hero">
-<div id="chip-container">
-<div class="chip-circuit"></div>
-<div id="binary-code">
-01000011 01010110 00101101 00110101
-</div>
-</div>
-</section>
+    <!-- departments section -->
+    <h2 class="section-title">DEPARTMENTS</h2>
+    <div class="grid" id="deptGrid"></div>
+  </main>
 
-<h2 class="section-title">DEPARTMENTS</h2>
-<div class="grid" id="deptGrid"></div>
-
-</main>
-
-<div id="authOverlay">
-<div id="authBox">
-<h3 style="font-family:Orbitron">SECURE ACCESS</h3>
-<p id="authDept"></p>
-<input type="password" id="codeInput" placeholder="••••">
-<div id="authStatus"></div>
-<button class="enter-btn" onclick="verify()">AUTHORIZE</button>
-<button class="enter-btn" onclick="closeAuth()">ABORT</button>
-</div>
-</div>
-
-<div id="data-footer">
-<span>Operator: Eden</span>
-<span id="clock"></span>
-<span id="threat" class="threat-low">THREAT: EVIL</span>
-</div>
-
-<script>
-   
-/* ======================================================
-   MATRIX RAIN SCRIPT
-====================================================== */
-const canvas=document.getElementById("matrixCanvas");
-const ctx=canvas.getContext("2d");
-let width,height;
-function resize(){width=canvas.width=window.innerWidth;height=canvas.height=window.innerHeight;}
-resize();window.addEventListener("resize",resize);
-
-const letters="01";
-const fontSize=20;
-let columns=Math.floor(width/fontSize);
-let drops=Array(columns).fill(1);
-function drawMatrix(){
-  ctx.fillStyle="rgba(1,3,9,.15)";
-  ctx.fillRect(0,0,width,height);
-  ctx.fillStyle="#00f0ff";
-  ctx.font=fontSize+"px monospace";
-  for(let i=0;i<drops.length;i++){
-    const text=letters[Math.floor(Math.random()*2)];
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-    if(drops[i]*fontSize>height&&Math.random()>0.975)drops[i]=0;
-    drops[i]++;
-  }
-}
-setInterval(drawMatrix,40); // smoother, faster updates
-
-/* ======================================================
-   DEPARTMENTS DATA
-====================================================== */
-const DEPARTMENTS=[
-{id:'io',name:'01. Innovations',icon:'fa-lightbulb',code:'CIC-01',file:'innovations.html'},
-{id:'ceo',name:'02. Executive',icon:'fa-chess-king',code:'CEO-02',file:'ceo.html'},
-{id:'sc',name:'03. Supply Chain',icon:'fa-truck-fast',code:'SC-T3',file:'scl.html'},
-{id:'sec',name:'04. Compliance',icon:'fa-shield-halved',code:'LAW-33',file:'compliance.html'}
-];
-let activeDept=null;
-function renderDepts(){
-  const grid=document.getElementById("deptGrid");
-  grid.innerHTML=DEPARTMENTS.map(d=>`
-    <div class="card" onclick="openAuth('${d.id}')">
-      <i class="fas ${d.icon}"></i>
-      <h3>${d.name}</h3>
-      <p>Access Level: Eden</p>
-      <button class="enter-btn">ENTER</button>
+  <!-- secure access modal -->
+  <div id="authOverlay">
+    <div id="authBox">
+      <h3 style="font-family:Orbitron">SECURE ACCESS</h3>
+      <p id="authDept"></p>
+      <input type="password" id="codeInput" placeholder="••••" maxlength="8">
+      <div id="authStatus"></div>
+      <button class="enter-btn" onclick="verify()">AUTHORIZE</button>
+      <button class="enter-btn" onclick="closeAuth()">ABORT</button>
     </div>
-  `).join("");
-}
-renderDepts();
+  </div>
 
-function openAuth(id){
-  activeDept=DEPARTMENTS.find(d=>d.id===id);
-  document.getElementById("authDept").innerText="UPLINK TO: "+activeDept.name;
-  document.getElementById("authOverlay").style.display="flex";
-  document.getElementById("codeInput").value="";
-}
-function closeAuth(){
-  document.getElementById("authOverlay").style.display="none";
-  activeDept=null;
-}
-function verify(){
-  if(!activeDept) return;
-  const val=document.getElementById("codeInput").value;
-  const status=document.getElementById("authStatus");
-  if(val===activeDept.code){
-    status.style.color="var(--ok)";
-    status.innerText="ACCESS GRANTED";
-    document.body.classList.add("fade-out");
-    setTimeout(()=>{window.location.href=activeDept.file},900);
-  } else {
-    status.style.color="var(--danger)";
-    status.innerText="ACCESS DENIED";
-    document.getElementById("threat").innerText="THREAT: HIGH";
-    document.getElementById("threat").className="threat-high";
-  }
-}
+  <!-- footer HUD -->
+  <div id="data-footer">
+    <span>Operator: Eden</span>
+    <span id="clock"></span>
+    <span id="threat" class="threat-low">THREAT: EVIL</span>
+  </div>
 
-document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape") closeAuth();
-  if(e.key==="Enter" && document.getElementById("authOverlay").style.display==="flex") verify();
-});
+  <!-- clean script section -->
+  <script>
+    (function() {
+      // --- matrix rain (cleaned) ---
+      const canvas = document.getElementById('matrixCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
 
-function updateClock(){
-  const now=new Date();
-  document.getElementById("clock").innerText=now.toLocaleTimeString();
-}
-setInterval(updateClock,1000);
-updateClock();
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
 
-/* ======================================================
-   SMOOTH SCROLLING ENHANCEMENT
-====================================================== */
-let scrollPos=window.scrollY;
-window.addEventListener('wheel',e=>{
-  e.preventDefault();
-  scrollPos += e.deltaY*0.5;
-  scrollPos=Math.max(0,Math.min(scrollPos,document.body.scrollHeight-window.innerHeight));
-  window.scrollTo({top:scrollPos,behavior:'smooth'});
-},{passive:false});
-   
-</script>
+      const letters = '01';
+      const fontSize = 20;
+      let columns, drops;
 
+      function initMatrix() {
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(1);
+      }
+      initMatrix();
+
+      function drawMatrix() {
+        ctx.fillStyle = 'rgba(1, 3, 9, 0.15)';
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = '#00f0ff';
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const char = letters[Math.floor(Math.random() * 2)];
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      setInterval(drawMatrix, 40);
+
+      // reinit matrix on resize
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        initMatrix();
+      });
+
+      // --- departments data (clean) ---
+      const DEPARTMENTS = [
+        { id: 'io', name: '01. Innovations', icon: 'fa-lightbulb', code: 'CIC-01', file: 'innovations.html' },
+        { id: 'ceo', name: '02. Executive', icon: 'fa-chess-king', code: 'CEO-02', file: 'ceo.html' },
+        { id: 'sc', name: '03. Supply Chain', icon: 'fa-truck-fast', code: 'SC-T3', file: 'scl.html' },
+        { id: 'sec', name: '04. Compliance', icon: 'fa-shield-halved', code: 'LAW-33', file: 'compliance.html' }
+      ];
+
+      let activeDept = null;
+
+      function renderDepts() {
+        const grid = document.getElementById('deptGrid');
+        grid.innerHTML = DEPARTMENTS.map(dept => `
+          <div class="card" onclick="openAuth('${dept.id}')">
+            <i class="fas ${dept.icon}"></i>
+            <h3>${dept.name}</h3>
+            <p>Access Level: Eden</p>
+            <button class="enter-btn">ENTER</button>
+          </div>
+        `).join('');
+      }
+      renderDepts();
+
+      // expose functions globally (for onclick)
+      window.openAuth = (id) => {
+        activeDept = DEPARTMENTS.find(d => d.id === id);
+        document.getElementById('authDept').innerText = 'UPLINK TO: ' + activeDept.name;
+        document.getElementById('authOverlay').style.display = 'flex';
+        document.getElementById('codeInput').value = '';
+        document.getElementById('authStatus').innerText = '';
+        document.getElementById('threat').className = 'threat-low';
+        document.getElementById('threat').innerText = 'THREAT: EVIL';
+      };
+
+      window.closeAuth = () => {
+        document.getElementById('authOverlay').style.display = 'none';
+        activeDept = null;
+      };
+
+      window.verify = () => {
+        if (!activeDept) return;
+        const input = document.getElementById('codeInput').value.trim();
+        const statusEl = document.getElementById('authStatus');
+        if (input === activeDept.code) {
+          statusEl.style.color = 'var(--ok)';
+          statusEl.innerText = 'ACCESS GRANTED';
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = activeDept.file;
+          }, 900);
+        } else {
+          statusEl.style.color = 'var(--danger)';
+          statusEl.innerText = 'ACCESS DENIED';
+          document.getElementById('threat').innerText = 'THREAT: HIGH';
+          document.getElementById('threat').className = 'threat-high';
+        }
+      };
+
+      // --- keyboard: escape & enter (modal) ---
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeAuth();
+        }
+        if (e.key === 'Enter' && document.getElementById('authOverlay').style.display === 'flex') {
+          verify();
+        }
+      });
+
+      // --- right click disabled (as original) ---
+      document.addEventListener('contextmenu', e => e.preventDefault());
+
+      // --- clock update ---
+      function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // --- smooth scroll with wheel (clean) ---
+      let scrollPos = window.scrollY;
+      window.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        scrollPos += e.deltaY * 0.5;
+        scrollPos = Math.max(0, Math.min(scrollPos, document.body.scrollHeight - window.innerHeight));
+        window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+      }, { passive: false });
+
+    })(); // end iife
+  </script>
 </body>
-</html>
-
-
-
-
+   </html>
