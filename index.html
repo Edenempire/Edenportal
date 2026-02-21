@@ -919,155 +919,398 @@
                 
             }
     
-            /* ============================
-            ELITE SPLASH SCREEN
-            ============================ */
-    
-            #eliteSplash{
-    
-            position:fixed;
-            inset:0;
-            background:#000;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            z-index:999999;
-    
-            animation: splashFade 1s ease 4s forwards;
-    
+        /* ============================
+           UPDATED ELITE SPLASH SCREEN
+           ============================ */
+        
+        #eliteSplash {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            animation: tacticalFade 1s ease 5s forwards;
+            overflow: hidden;
+        }
+        
+        @keyframes tacticalFade {
+            to {
+                opacity: 0;
+                visibility: hidden;
             }
-    
-            @keyframes splashFade{
-    
-            to{
-    
-            opacity:0;
-            visibility:hidden;
-    
+        }
+        
+        .splash-core {
+            text-align: center;
+            color: var(--cyan);
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px 20px;
+            z-index: 10;
+        }
+        
+        /* Hexagon background grid */
+        .splash-hex-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.03) 0px, transparent 2px),
+                radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.03) 0px, transparent 2px),
+                repeating-linear-gradient(45deg, rgba(0, 255, 255, 0.02) 0px, rgba(0, 255, 255, 0.02) 2px, transparent 2px, transparent 10px);
+            animation: hexPulse 4s infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes hexPulse {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        /* Logo container with advanced effects */
+        .splash-logo-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+            z-index: 20;
+        }
+        
+        .splash-logo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--cyan);
+            box-shadow: 0 0 40px var(--cyan);
+            animation: tacticalPulse 2s infinite;
+            position: relative;
+            z-index: 3;
+            object-fit: cover;
+        }
+        
+        .splash-logo-glow {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.4) 0%, transparent 70%);
+            animation: glowRotate 4s linear infinite;
+            z-index: 2;
+        }
+        
+        .splash-logo-scan {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            animation: logoScan 3s ease-in-out infinite;
+            border-radius: 50%;
+            z-index: 4;
+        }
+        
+        @keyframes tacticalPulse {
+            0% { box-shadow: 0 0 30px var(--cyan); transform: scale(1); }
+            50% { box-shadow: 0 0 70px var(--cyan); transform: scale(1.05); }
+            100% { box-shadow: 0 0 30px var(--cyan); transform: scale(1); }
+        }
+        
+        @keyframes glowRotate {
+            0% { transform: rotate(0deg); opacity: 0.5; }
+            100% { transform: rotate(360deg); opacity: 0.5; }
+        }
+        
+        @keyframes logoScan {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Glitch title */
+        .splash-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 20;
+            color: #fff;
+            text-shadow: 
+                0 0 10px var(--cyan),
+                2px 2px 0 rgba(255, 0, 0, 0.5),
+                -2px -2px 0 rgba(0, 255, 255, 0.5);
+            animation: glitch 3s infinite;
+        }
+        
+        .splash-title::before,
+        .splash-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .splash-title::before {
+            animation: glitch-left 2s infinite linear alternate-reverse;
+            color: #ff00ff;
+            z-index: -1;
+        }
+        
+        .splash-title::after {
+            animation: glitch-right 2s infinite linear alternate-reverse;
+            color: #00ffff;
+            z-index: -2;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: skew(0deg); }
+            96% { transform: skew(0deg); }
+            97% { transform: skew(5deg); }
+            98% { transform: skew(-5deg); }
+            99% { transform: skew(0deg); }
+        }
+        
+        @keyframes glitch-left {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 1px); }
+            40% { transform: translate(-3px, -1px); }
+            60% { transform: translate(3px, 1px); }
+            80% { transform: translate(3px, -1px); }
+            100% { transform: translate(0); }
+        }
+        
+        @keyframes glitch-right {
+            0% { transform: translate(0); }
+            20% { transform: translate(3px, -1px); }
+            40% { transform: translate(3px, 1px); }
+            60% { transform: translate(-3px, -1px); }
+            80% { transform: translate(-3px, 1px); }
+            100% { transform: translate(0); }
+        }
+        
+        /* Version badge */
+        .splash-version-badge {
+            margin: 15px 0 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 20;
+            position: relative;
+        }
+        
+        .version-number {
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            background: rgba(0, 255, 255, 0.1);
+            padding: 5px 15px;
+            border: 1px solid var(--cyan-dim);
+            display: inline-block;
+            margin: 0 auto;
+            letter-spacing: 2px;
+        }
+        
+        .version-codename {
+            font-family: 'Electrolize', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        /* Loading container */
+        .splash-loading-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 10, 10, 0.8);
+            border: 1px solid var(--cyan-dim);
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(5px);
+        }
+        
+        .splash-loading-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: var(--cyan);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .loading-percentage {
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .splash-loader {
+            width: 100%;
+            height: 20px;
+            background: #111;
+            border: 1px solid var(--cyan-dim);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .splash-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan-dim), var(--cyan), var(--cyan-dim));
+            width: 0%;
+            animation: tacticalLoading 4.5s linear forwards;
+            position: relative;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+        
+        .splash-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: barShine 1.5s infinite;
+        }
+        
+        @keyframes tacticalLoading {
+            0% { width: 0%; }
+            20% { width: 35%; }
+            40% { width: 55%; }
+            60% { width: 75%; }
+            80% { width: 90%; }
+            95% { width: 98%; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes barShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .splash-loading-footer {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            color: rgba(0, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+        
+        .loading-status {
+            color: var(--cyan);
+            animation: blinkStatus 2s infinite;
+        }
+        
+        @keyframes blinkStatus {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* System checks */
+        .splash-system-checks {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            z-index: 20;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        
+        .system-check {
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--cyan-dim);
+            min-width: 100px;
+        }
+        
+        .check-label {
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        
+        .check-status {
+            font-size: 0.9rem;
+        }
+        
+        .status-active {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .status-pending {
+            color: #ffff00;
+            text-shadow: 0 0 5px #ffff00;
+        }
+        
+        /* Matrix rain effect (very subtle) */
+        .splash-matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, 
+                rgba(0, 255, 255, 0.02) 0px, 
+                transparent 1px,
+                transparent 2px);
+            pointer-events: none;
+            animation: matrixRain 20s linear infinite;
+            z-index: 5;
+        }
+        
+        @keyframes matrixRain {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .splash-logo-container {
+                width: 120px;
+                height: 120px;
             }
-    
+            
+            .splash-title {
+                font-size: 2rem;
+                letter-spacing: 4px;
             }
-    
-    
-            .splash-core{
-    
-            text-align:center;
-            color:#00ffff;
-    
+            
+            .splash-system-checks {
+                gap: 10px;
             }
-    
-    
-            .splash-logo{
-    
-            width:140px;
-            height:140px;
-    
-            border-radius:50%;
-    
-            border:3px solid cyan;
-    
-            box-shadow:0 0 40px cyan;
-    
-            animation: pulse 2s infinite;
-    
+            
+            .system-check {
+                min-width: 80px;
+                padding: 5px 8px;
             }
-    
-    
-            @keyframes pulse{
-    
-            0%{
-    
-            box-shadow:0 0 20px cyan;
-    
-            }
-    
-            50%{
-    
-            box-shadow:0 0 60px cyan;
-    
-            }
-    
-            100%{
-    
-            box-shadow:0 0 20px cyan;
-    
-            }
-    
-            }
-    
-    
-            .splash-title{
-    
-            font-family:Orbitron;
-            margin-top:20px;
-            letter-spacing:6px;
-    
-            }
-    
-            .splash-version{
-    
-            margin-top:10px;
-    
-            opacity:0.7;
-    
-            font-family:VT323;
-    
-            font-size:22px;
-    
-            }
-    
-            .loader{
-    
-            width:250px;
-            height:4px;
-            background:#111;
-            margin-top:30px;
-    
-            overflow:hidden;
-    
-            }
-    
-            .bar{
-    
-            height:100%;
-    
-            background:cyan;
-    
-            width:0;
-    
-            animation: loading 5s linear forwards;
-    
-            }
-    
-            @keyframes loading{
-    
-            to{
-    
-            width:100%;
-    
-            }
-    
-            }
-    
-            .loading-text{
-    
-            margin-top:15px;
-    
-            font-family:VT323;
-    
-            animation: blink 1s infinite;
-    
-            }
-    
-            @keyframes blink{
-    
-            50%{
-    
-            opacity:0.3;
-    
-            }
-    
-            }
+        }
     
             /* =====================================
                PWA INSTALL BUTTON — ELITE VERSION
@@ -1187,60 +1430,89 @@
     </head>
     
     <body>
-    
-        <!-- ELITE SPLASH SCREEN -->
+            
+        <!-- ELITE SPLASH SCREEN - UPDATED TACTICAL VERSION -->
         <div id="eliteSplash">
-    
             <div class="splash-core">
-    
-                <img src="logo.png" class="splash-logo">
-    
-                <h1 class="splash-title">
-                    ES-CV-1
-                </h1>
-    
-                <div class="splash-version">
-                    Version 1.0.0
+                <!-- Animated hexagon grid background -->
+                <div class="splash-hex-bg"></div>
+                
+                <!-- Glitching logo with scan effect -->
+                <div class="splash-logo-container">
+                    <div class="splash-logo-glow"></div>
+                    <img src="logo.png" class="splash-logo" alt="ES-CV-1">
+                    <div class="splash-logo-scan"></div>
                 </div>
-    
-                <div class="loader">
-                    <div class="bar"></div>
+                
+                <!-- Tactical typography with glitch effect -->
+                <h1 class="splash-title" data-text="ES-CV-1">ES-CV-1</h1>
+                
+                <div class="splash-version-badge">
+                    <span class="version-number">v.1.0.0</span>
                 </div>
-    
-                <div class="loading-text">
-                    INITIALIZING OPERATING SYSTEM...
+                
+                <!-- Tactical loading bar with percentage -->
+                <div class="splash-loading-container">
+                    <div class="splash-loading-header">
+                        <span>SYSTEM BOOT SEQUENCE</span>
+                        <span class="loading-percentage" id="loadingPercentage">0%</span>
+                    </div>
+                    <div class="splash-loader">
+                        <div class="splash-bar" id="splashBar"></div>
+                    </div>
+                    <div class="splash-loading-footer">
+                        <span class="loading-status" id="loadingStatus">INITIALIZING CORE SYSTEMS...</span>
+                        <span class="loading-progress" id="loadingProgress">[00:00:03]</span>
+                    </div>
                 </div>
-    
+                
+                <!-- System check indicators -->
+                <div class="splash-system-checks">
+                    <div class="system-check">
+                        <span class="check-label">ENCRYPTION</span>
+                        <span class="check-status status-active">● AES-256</span>
+                    </div>
+                    <div class="system-check">
+                        <span class="check-label">SECURE LINK</span>
+                        <span class="check-status status-active">● ESTABLISHED</span>
+                    </div>
+                    <div class="system-check">
+                        <span class="check-label">BIOMETRIC</span>
+                        <span class="check-status status-pending">○ PENDING</span>
+                    </div>
+                </div>
+                
+                <!-- Matrix-style code rain (subtle) -->
+                <div class="splash-matrix"></div>
             </div>
-    
         </div>
-    
-        <canvas id="snowCanvas"></canvas>
-        <div class="scanlines"></div>
-    
-        <div class="hud-nav">
-    
-        <!-- INTERNAL REFRESH -->
-        <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
-            <i class="fas fa-sync-alt"></i>
-        </button>
-    
-        <!-- TOP -->
-        <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-            <i class="fas fa-angle-double-up"></i>
-        </button>
-    
-        <!-- MIDDLE -->
-        <button class="hud-btn" onclick="scrollToSection('board')">
-            <i class="fas fa-crosshairs"></i>
-        </button>
-    
-        <!-- BOTTOM -->
-        <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
-            <i class="fas fa-angle-double-down"></i>
-        </button>
-    
-    </div>
+            
+                <canvas id="snowCanvas"></canvas>
+                <div class="scanlines"></div>
+            
+                <div class="hud-nav">
+            
+                <!-- INTERNAL REFRESH -->
+                <button class="hud-btn" onclick="internalRefresh()" title="Internal Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            
+                <!-- TOP -->
+                <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <i class="fas fa-angle-double-up"></i>
+                </button>
+            
+                <!-- MIDDLE -->
+                <button class="hud-btn" onclick="scrollToSection('board')">
+                    <i class="fas fa-crosshairs"></i>
+                </button>
+            
+                <!-- BOTTOM -->
+                <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+                    <i class="fas fa-angle-double-down"></i>
+                </button>
+            
+            </div>
     
         <header id="main-header">
             <div class="header-container">
@@ -2081,13 +2353,62 @@
             window.addEventListener('online', () => document.getElementById('offline-banner').style.display='none');
             window.addEventListener('offline', () => document.getElementById('offline-banner').style.display='block');
     
-            // SPLASH SCREEN
+// SPLASH SCREEN - UPDATED WITH DYNAMIC PERCENTAGE
+(function() {
+    const splash = document.getElementById('eliteSplash');
+    const bar = document.getElementById('splashBar');
+    const percentageEl = document.getElementById('loadingPercentage');
+    const statusEl = document.getElementById('loadingStatus');
+    const progressEl = document.getElementById('loadingProgress');
     
-                setTimeout(()=>{
+    if (!splash) return;
     
-                document.getElementById("eliteSplash").remove();
+    const statusMessages = [
+        { time: 0, msg: 'INITIALIZING CORE SYSTEMS...' },
+        { time: 1, msg: 'LOADING ENCRYPTION MODULES...' },
+        { time: 2, msg: 'ESTABLISHING SECURE LINK...' },
+        { time: 3, msg: 'VERIFYING INTEGRITY...' },
+        { time: 4, msg: 'ACTIVATING STEALTH PROTOCOLS...' }
+    ];
     
-                },3000);
+    let startTime = Date.now();
+    const duration = 4500; // 4.5 seconds
+    
+    function updateSplash() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration * 100, 100);
+        
+        if (percentageEl) {
+            percentageEl.textContent = Math.floor(progress) + '%';
+        }
+        
+        if (progressEl) {
+            const seconds = Math.floor(elapsed / 1000);
+            const ms = Math.floor((elapsed % 1000) / 10);
+            progressEl.textContent = `[00:0${seconds}:${ms.toString().padStart(2, '0')}]`;
+        }
+        
+        if (statusEl) {
+            const index = Math.min(Math.floor(elapsed / 1000), statusMessages.length - 1);
+            if (statusMessages[index]) {
+                statusEl.textContent = statusMessages[index].msg;
+            }
+        }
+        
+        if (elapsed < duration) {
+            requestAnimationFrame(updateSplash);
+        }
+    }
+    
+    requestAnimationFrame(updateSplash);
+    
+    // Remove splash after animation
+    setTimeout(() => {
+        if (splash && splash.parentNode) {
+            splash.remove();
+        }
+    }, 5000); // 5 seconds total
+})();
     
                 /* ===============================
                 THEME SYSTEM
