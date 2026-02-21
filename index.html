@@ -134,13 +134,12 @@
             width: 95%;
             max-width: 1800px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            display: flex;
             align-items: center;
-            gap: 30px;
+            justify-content: space-between;
             position: relative;
         }
-
+        
         .brand-unit {
             display: flex;
             align-items: center;
@@ -151,6 +150,22 @@
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             z-index: 2000;
+        }
+        
+        #hamburger {
+            display: block;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            padding: 12px;
+            margin: 0;
+            color: var(--cyan);
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 3001;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .logo-frame {
@@ -1076,10 +1091,11 @@
                 <div class="brand-text">
                     <h1>Tier 1</h1>
                 </div>
-                <button id="hamburger" type="button" aria-label="Menu" ontouchstart="event.stopPropagation()">
-                    <i class="fas fa-bars"></i>
-                </button>
             </a>
+            <!-- Move hamburger button outside the anchor tag -->
+            <button id="hamburger" type="button" aria-label="Menu" ontouchstart="event.stopPropagation()">
+                <i class="fas fa-bars"></i>
+            </button>
             <nav class="nav-system">
                 <a href="#board" class="nav-link">Team profile</a>
                 <a href="#subsidiaries" class="nav-link">Branches</a>
