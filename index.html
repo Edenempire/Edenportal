@@ -1442,6 +1442,64 @@
         min-width: auto;
     }
 }
+
+                /* ===============================
+   AUDIO STATUS INDICATOR
+   =============================== */
+.audio-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--cyan);
+    border-radius: 20px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 3000;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.audio-status.visible {
+    opacity: 1;
+}
+
+.audio-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: audioPulse 2s infinite;
+}
+
+@keyframes audioPulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.audio-text {
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+/* Flag playing state */
+#rsaFlag.playing {
+    animation: flagPulse 1.5s infinite;
+    filter: drop-shadow(0 0 5px var(--cyan));
+}
+
+@keyframes flagPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
     
         </style>
     
@@ -2475,50 +2533,298 @@
             }
         })();
 
-        /* ===============================
-        FLAG AUDIO CONTROLS
-        ================================ */
-        const flag = document.getElementById("rsaFlag");
-        const anthem = document.getElementById("anthemAudio");
-        const bg = document.getElementById("bgAudio");
-        let anthemPlaying = false;
+            /* ===============================
+   ADVANCED AUDIO CONTROL SYSTEM v2.0
+   =============================== */
 
-        if (flag && anthem && bg) {
-            flag.addEventListener("click", () => {
-                if (!anthemPlaying) {
-                    anthem.play();
-                    bg.pause();
-                    flag.classList.add("playing");
-                    anthemPlaying = true;
-                } else {
-                    anthem.pause();
-                    bg.play();
-                    flag.classList.remove("playing");
-                    anthemPlaying = false;
+class AudioManager {
+    constructor() {
+        this.bg = document.getElementById('bgAudio');
+        this.anthem = document.getElementById('anthemAudio');
+        this.flag = document.getElementById('rsaFlag');
+        this.statusIndicator = document.getElementById('audioStatus');
+        this.anthemPlaying = false;
+        this.bgEnabled = true;
+        this.recoveryAttempts = 0;
+        this.maxRecoveryAttempts = 3;
+        this.userInteracted = false;
+        
+        this.init();
+    }
+    
+    init() {
+        if (!this.bg || !this.anthem || !this.flag) {
+            console.warn("Audio elements not found");
+            return;
+        }
+        
+        this.setupEventListeners();
+        this.setupAudioRecovery();
+        this.startBackgroundAudio();
+        this.createStatusIndicator();
+    }
+    
+    setupEventListeners() {
+        // Flag click handler
+        this.flag.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleAnthem();
+        });
+        
+        // Touch support
+        this.flag.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.toggleAnthem();
+        }, { passive: false });
+        
+        // Anthem ended naturally
+        this.anthem.addEventListener('ended', () => {
+            this.resumeBackground();
+        });
+        
+        // Anthem error
+        this.anthem.addEventListener('error', (e) => {
+            console.error("Anthem error:", e);
+            this.showStatus("ANTHEM ERROR", 3000);
+            this.resumeBackground();
+        });
+        
+        // Background error
+        this.bg.addEventListener('error', (e) => {
+            console.error("Background audio error:", e);
+            this.attemptRecovery();
+        });
+        
+        // Background playback ended (shouldn't happen with loop)
+        this.bg.addEventListener('ended', () => {
+            console.log("Background ended unexpectedly, restarting");
+            this.startBackgroundAudio();
+        });
+        
+        // User interaction detection (for autoplay policies)
+        document.addEventListener('click', () => {
+            this.userInteracted = true;
+            if (this.bg.paused && !this.anthemPlaying) {
+                this.startBackgroundAudio();
+            }
+        }, { once: true });
+        
+        document.addEventListener('touchstart', () => {
+            this.userInteracted = true;
+            if (this.bg.paused && !this.anthemPlaying) {
+                this.startBackgroundAudio();
+            }
+        }, { once: true });
+        
+        // Visibility change - pause when tab hidden, resume when visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (this.bg && !this.anthemPlaying) {
+                    this.bg.pause();
                 }
-            });
-
-            anthem.addEventListener("ended", () => {
-                bg.play();
-                flag.classList.remove("playing");
-                anthemPlaying = false;
+            } else {
+                if (this.bgEnabled && !this.anthemPlaying && this.userInteracted) {
+                    this.startBackgroundAudio();
+                }
+            }
+        });
+        
+        // Page unload - save state
+        window.addEventListener('beforeunload', () => {
+            if (this.bg && !this.bg.paused) {
+                sessionStorage.setItem('bgAudioPlaying', 'true');
+            }
+        });
+    }
+    
+    setupAudioRecovery() {
+        // Check every 30 seconds if audio should be playing
+        setInterval(() => {
+            if (this.bgEnabled && !this.anthemPlaying && this.userInteracted) {
+                if (this.bg.paused || this.bg.ended) {
+                    console.log("Audio recovery: background not playing");
+                    this.startBackgroundAudio();
+                }
+            }
+        }, 30000);
+    }
+    
+    startBackgroundAudio() {
+        if (!this.bg) return;
+        
+        this.bgEnabled = true;
+        this.bg.volume = 0.3; // 30% volume for background
+        
+        // Try to play with promise handling
+        const playPromise = this.bg.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log("Background audio playing");
+                this.showStatus("AUDIO ACTIVE", 2000);
+                this.recoveryAttempts = 0;
+            }).catch(error => {
+                console.warn("Background autoplay failed:", error);
+                this.showStatus("CLICK FLAG TO PLAY", 3000);
+                
+                // Will try again on user interaction
+                this.bgEnabled = false;
             });
         }
+    }
+    
+    toggleAnthem() {
+        if (!this.anthem || !this.bg) return;
+        
+        this.userInteracted = true;
+        
+        if (!this.anthemPlaying) {
+            // Play anthem
+            this.anthem.currentTime = 0;
+            this.anthem.volume = 1.0; // Full volume for anthem
             
+            const playPromise = this.anthem.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Pause background
+                    this.bg.pause();
+                    this.anthemPlaying = true;
+                    this.flag.classList.add('playing');
+                    this.showStatus("NATIONAL ANTHEM", 0);
+                    console.log("Anthem playing");
+                }).catch(error => {
+                    console.error("Anthem play failed:", error);
+                    this.showStatus("ANTHEM ERROR", 3000);
+                });
+            }
+        } else {
+            // Stop anthem and resume background
+            this.anthem.pause();
+            this.anthem.currentTime = 0;
+            this.resumeBackground();
+        }
+    }
+    
+    resumeBackground() {
+        this.anthemPlaying = false;
+        this.flag.classList.remove('playing');
+        
+        if (this.bgEnabled && this.userInteracted) {
+            this.startBackgroundAudio();
+        }
+        
+        this.showStatus("BACKGROUND ACTIVE", 2000);
+    }
+    
+    attemptRecovery() {
+        if (this.recoveryAttempts < this.maxRecoveryAttempts) {
+            this.recoveryAttempts++;
+            console.log(`Recovery attempt ${this.recoveryAttempts}/${this.maxRecoveryAttempts}`);
+            
+            // Reload and retry
+            this.bg.load();
+            setTimeout(() => {
+                this.startBackgroundAudio();
+            }, 1000 * this.recoveryAttempts);
+        } else {
+            console.error("Max recovery attempts reached");
+            this.showStatus("AUDIO UNAVAILABLE", 0);
+        }
+    }
+    
+    showStatus(message, duration) {
+        if (!this.statusIndicator) {
+            this.createStatusIndicator();
+        }
+        
+        const textEl = this.statusIndicator.querySelector('.audio-text');
+        if (textEl) {
+            textEl.textContent = message;
+        }
+        
+        this.statusIndicator.classList.add('visible');
+        
+        if (duration > 0) {
+            setTimeout(() => {
+                this.statusIndicator.classList.remove('visible');
+            }, duration);
+        }
+    }
+    
+    createStatusIndicator() {
+        if (document.getElementById('audioStatus')) return;
+        
+        const indicator = document.createElement('div');
+        indicator.id = 'audioStatus';
+        indicator.className = 'audio-status';
+        indicator.innerHTML = `
+            <span class="audio-indicator"></span>
+            <span class="audio-text">AUDIO ACTIVE</span>
+        `;
+        document.body.appendChild(indicator);
+        this.statusIndicator = indicator;
+    }
+    
+    // Public method to force restart background
+    restartBackground() {
+        this.bgEnabled = true;
+        this.anthemPlaying = false;
+        this.flag.classList.remove('playing');
+        this.startBackgroundAudio();
+    }
+    
+    // Public method to toggle background on/off
+    toggleBackground() {
+        this.bgEnabled = !this.bgEnabled;
+        
+        if (this.bgEnabled && !this.anthemPlaying) {
+            this.startBackgroundAudio();
+        } else {
+            this.bg.pause();
+            this.showStatus("AUDIO MUTED", 2000);
+        }
+    }
+}
+
+// Initialize audio manager when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.audioManager = new AudioManager();
+});
+
+// Also try to initialize if DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.audioManager = new AudioManager();
+    });
+} else {
+    window.audioManager = new AudioManager();
+}
+      
     </script>
 
     <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag" style="cursor:pointer;">
     <div class="nav-overlay" id="navOverlay"></div>
 
-    <!-- BACKGROUND TRACK -->
-    <audio id="bgAudio" autoplay loop>
-        <source src="background.mp3" type="audio/mpeg">
-    </audio>
-    
-    <!-- NATIONAL ANTHEM -->
-    <audio id="anthemAudio">
-        <source src="National_Anthem_RSA.mp3" type="audio/mpeg">
-    </audio>
+<!-- AUDIO SYSTEM - ROBUST INFINITE PLAYBACK -->
+<audio id="bgAudio" loop preload="auto" style="display:none">
+    <source src="background.mp3" type="audio/mpeg">
+    <source src="background.ogg" type="audio/ogg">
+    Your browser does not support audio.
+</audio>
+
+<audio id="anthemAudio" preload="auto" style="display:none">
+    <source src="National_Anthem_RSA.mp3" type="audio/mpeg">
+    <source src="National_Anthem_RSA.ogg" type="audio/ogg">
+    Your browser does not support audio.
+</audio>
+
+<!-- Optional: Visual audio indicator -->
+<div id="audioStatus" class="audio-status" style="display: none;">
+    <span class="audio-indicator"></span>
+    <span class="audio-text">AUDIO ACTIVE</span>
+</div>
+            
 </body>
 </html>
                 
