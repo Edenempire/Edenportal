@@ -189,7 +189,7 @@
         }
 
         /* ===============================
-        ADVANCED HAMBURGER MENU STYLES
+        HAMBURGER MENU - POSITIONED RIGHT
         =============================== */
         #hamburger {
             display: flex;
@@ -202,58 +202,46 @@
             border-radius: 8px;
             color: var(--cyan);
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             z-index: 3001;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            position: relative;
-            margin-left: auto;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
         }
         
         #hamburger i {
             font-size: 2rem;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        #hamburger:hover {
-            background: var(--cyan-dim);
-            box-shadow: 0 0 20px var(--cyan);
-            border-color: var(--cyan);
-            transform: scale(1.05);
-        }
-        
-        #hamburger:active {
-            transform: scale(0.95);
+            transition: transform 0.3s ease;
         }
         
         #hamburger.active {
             background: var(--cyan);
             color: #000;
-            box-shadow: 0 0 30px var(--cyan);
         }
         
         #hamburger.active i {
-            transform: rotate(180deg);
+            transform: rotate(90deg);
         }
         
-        /* Advanced Navigation System */
+        /* Navigation System */
         .nav-system {
             position: fixed;
             top: var(--header-h);
-            right: -100%;
-            width: min(380px, 90%);
+            right: -400px;
+            width: min(350px, 85%);
             height: calc(100svh - var(--header-h));
             background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             padding: 30px 25px;
-            gap: 8px;
-            transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            gap: 10px;
+            transition: right 0.3s ease;
             border-left: 3px solid var(--cyan);
-            box-shadow: -10px 0 50px rgba(0,255,255,0.2);
+            box-shadow: -10px 0 30px rgba(0,255,255,0.2);
             z-index: 4000;
             overflow-y: auto;
         }
@@ -262,37 +250,12 @@
             right: 0;
         }
         
-        /* Navigation Header */
-        .nav-header {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--cyan-dim);
-            position: relative;
-        }
-        
-        .nav-title {
-            font-family: var(--font-tactical);
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: var(--cyan);
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .nav-scanline {
-            height: 2px;
-            width: 100%;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            animation: scanMove 2s linear infinite;
-        }
-        
-        /* Navigation Links */
+        /* Navigation Links - NO ANIMATION */
         .nav-link {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 16px 20px;
-            margin: 4px 0;
+            padding: 15px 20px;
             text-decoration: none;
             color: #fff;
             font-family: var(--font-tactical);
@@ -302,51 +265,16 @@
             border-radius: 4px;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateX(20px);
-            animation: slideInLink 0.4s ease forwards;
-        }
-        
-        .nav-link:nth-child(2) { animation-delay: 0.1s; }
-        .nav-link:nth-child(3) { animation-delay: 0.15s; }
-        .nav-link:nth-child(4) { animation-delay: 0.2s; }
-        .nav-link:nth-child(5) { animation-delay: 0.25s; }
-        .nav-link:nth-child(6) { animation-delay: 0.3s; }
-        
-        @keyframes slideInLink {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .nav-link:hover::before {
-            left: 100%;
         }
         
         .nav-link:hover {
             border-color: var(--cyan);
-            background: rgba(0, 255, 255, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            transform: translateX(5px);
+            background: rgba(0, 255, 255, 0.1);
         }
         
         .nav-link.active {
             border-left: 4px solid var(--cyan);
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.15);
         }
         
         .link-icon {
@@ -360,17 +288,20 @@
             flex: 1;
         }
         
-        .link-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: transparent;
-            transition: background 0.3s ease;
+        /* Navigation Header */
+        .nav-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--cyan-dim);
         }
         
-        .nav-link:hover .link-indicator {
-            background: var(--cyan);
-            box-shadow: 0 0 10px var(--cyan);
+        .nav-title {
+            font-family: var(--font-tactical);
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--cyan);
+            display: block;
+            margin-bottom: 10px;
         }
         
         /* Navigation Footer */
@@ -397,7 +328,6 @@
             background: #0f0;
             border-radius: 50%;
             display: inline-block;
-            animation: pulse 1s infinite;
         }
         
         .nav-time {
@@ -405,20 +335,14 @@
             opacity: 0.7;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        /* Overlay Enhancement */
+        /* Overlay - NO BLUR */
         .nav-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.5);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
             z-index: 3500;
         }
         
@@ -432,6 +356,7 @@
             #hamburger {
                 width: 48px;
                 height: 48px;
+                right: 20px;
             }
             
             #hamburger i {
@@ -439,7 +364,7 @@
             }
             
             .nav-link {
-                padding: 14px 16px;
+                padding: 12px 16px;
                 font-size: 1rem;
             }
         }
@@ -453,6 +378,7 @@
             #hamburger {
                 width: 44px;
                 height: 44px;
+                right: 15px;
             }
             
             #hamburger i {
@@ -1292,37 +1218,31 @@
                     <h1>Tier 1</h1>
                 </div>
             </a>
-            <!-- Move hamburger button outside the anchor tag -->
-            <!-- Replace your existing hamburger button with this -->
+            <!-- Hamburger Button -->
             <button id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
             
-            <!-- Replace your existing nav-system with this -->
+            <!-- Navigation System -->
             <nav class="nav-system" id="navSystem">
                 <div class="nav-header">
                     <span class="nav-title">NAVIGATION</span>
-                    <div class="nav-scanline"></div>
                 </div>
-                <a href="#board" class="nav-link" data-target="board">
+                <a href="#board" class="nav-link">
                     <span class="link-icon"><i class="fas fa-crosshairs"></i></span>
                     <span class="link-text">Team profile</span>
-                    <span class="link-indicator"></span>
                 </a>
-                <a href="#subsidiaries" class="nav-link" data-target="subsidiaries">
+                <a href="#subsidiaries" class="nav-link">
                     <span class="link-icon"><i class="fas fa-code-branch"></i></span>
                     <span class="link-text">Branches</span>
-                    <span class="link-indicator"></span>
                 </a>
                 <a href="essmain.html" class="nav-link">
                     <span class="link-icon"><i class="fas fa-shield-alt"></i></span>
                     <span class="link-text">E.S.S</span>
-                    <span class="link-indicator"></span>
                 </a>
                 <a href="our_story.html" class="nav-link">
                     <span class="link-icon"><i class="fas fa-scroll"></i></span>
                     <span class="link-text">Our Story</span>
-                    <span class="link-indicator"></span>
                 </a>
                 <div class="nav-footer">
                     <div class="nav-status">SYSTEM: ONLINE</div>
@@ -1809,7 +1729,7 @@
         }
 
         /* ===============================
-        ADVANCED HAMBURGER MENU
+        ADVANCED HAMBURGER MENU - FIXED
         =============================== */
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById("hamburger");
@@ -1832,13 +1752,11 @@
                     navOverlay.classList.add("active");
                     hamburger.classList.add("active");
                     hamburger.setAttribute("aria-expanded", "true");
-                    document.body.style.overflow = "hidden";
                 } else {
                     nav.classList.remove("open");
                     navOverlay.classList.remove("active");
                     hamburger.classList.remove("active");
                     hamburger.setAttribute("aria-expanded", "false");
-                    document.body.style.overflow = "";
                 }
             }
         
@@ -1866,12 +1784,11 @@
             // Navigation links click handler
             document.querySelectorAll(".nav-link").forEach(link => {
                 link.addEventListener("click", (e) => {
-                    // Close menu after navigation
-                    setTimeout(() => toggleMenu(false), 150);
+                    toggleMenu(false);
                 });
                 
                 link.addEventListener("touchstart", (e) => {
-                    setTimeout(() => toggleMenu(false), 150);
+                    toggleMenu(false);
                 }, { passive: true });
             });
         
@@ -1882,54 +1799,7 @@
                 }
             });
         
-            // Update active link based on scroll position
-            function updateActiveLink() {
-                const sections = ['board', 'subsidiaries'];
-                const scrollPos = window.scrollY + 100;
-                
-                sections.forEach(id => {
-                    const section = document.getElementById(id);
-                    const link = document.querySelector(`.nav-link[data-target="${id}"]`);
-                    
-                    if (section && link) {
-                        const sectionTop = section.offsetTop - 100;
-                        const sectionBottom = sectionTop + section.offsetHeight;
-                        
-                        if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                            link.classList.add('active');
-                        } else {
-                            link.classList.remove('active');
-                        }
-                    }
-                });
-            }
-        
-            window.addEventListener('scroll', updateActiveLink);
-            updateActiveLink();
-        
-            // Update nav time
-            function updateNavTime() {
-                const navTime = document.getElementById('navTime');
-                if (navTime) {
-                    const now = new Date();
-                    navTime.textContent = now.toLocaleTimeString('en-ZA', { 
-                        timeZone: 'Africa/Johannesburg',
-                        hour12: false 
-                    });
-                }
-            }
-            
-            updateNavTime();
-            setInterval(updateNavTime, 1000);
-        
-            // Prevent body scroll when menu is open on resize
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768 && nav.classList.contains('open')) {
-                    toggleMenu(false);
-                }
-            });
-        
-            console.log("✅ Advanced hamburger menu initialized");
+            console.log("✅ Hamburger menu initialized");
         });
 
         /* ===============================
