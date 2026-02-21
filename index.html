@@ -288,11 +288,22 @@
             flex: 1;
         }
         
-        /* Navigation Header */
+        /* ===============================
+        ENHANCED MENU FUNCTIONALITY
+        =============================== */
+        
+        /* Menu Header with Close Button */
         .nav-header {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--cyan-dim);
+        }
+        
+        .nav-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
         
         .nav-title {
@@ -300,55 +311,292 @@
             font-size: 1.2rem;
             letter-spacing: 3px;
             color: var(--cyan);
-            display: block;
-            margin-bottom: 10px;
         }
         
-        /* Navigation Footer */
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid var(--cyan-dim);
+        .nav-close {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: 1px solid var(--cyan-dim);
+            color: var(--cyan);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-close:hover {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            transform: scale(1.05);
+        }
+        
+        .nav-close i {
+            font-size: 1.2rem;
+        }
+        
+        .nav-scanline {
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            animation: scanMove 2s linear infinite;
+        }
+        
+        /* User Status Section */
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--cyan-dim);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-user:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--cyan);
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--cyan);
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-family: var(--font-tactical);
+            font-size: 1rem;
+            color: #fff;
+        }
+        
+        .user-rank {
             font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--cyan);
+        }
+        
+        /* Navigation Links Container */
+        .nav-links {
+            flex: 1;
+            overflow-y: auto;
+            margin: 10px 0;
+            padding-right: 5px;
+        }
+        
+        /* Enhanced Link Styles */
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 16px;
+            margin: 4px 0;
+            text-decoration: none;
+            color: #fff;
+            font-family: var(--font-tactical);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .nav-link:active {
+            transform: translateX(2px);
+        }
+        
+        .nav-link.active {
+            background: rgba(0, 255, 255, 0.15);
+            border-left: 3px solid var(--cyan);
+        }
+        
+        .link-icon {
+            width: 30px;
+            color: var(--cyan);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .link-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .link-badge {
+            padding: 3px 8px;
+            background: var(--cyan);
+            color: #000;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        
+        /* Secondary Links */
+        .nav-link-secondary {
+            opacity: 0.8;
             font-size: 0.9rem;
         }
         
-        .nav-status {
-            color: #0f0;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .nav-link-secondary .link-icon {
+            font-size: 1rem;
+            opacity: 0.8;
         }
         
-        .nav-status::before {
-            content: '';
+        /* Divider */
+        .nav-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+            margin: 15px 0;
+        }
+        
+        /* Quick Actions */
+        .nav-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px 0;
+            margin: 10px 0;
+            border-top: 1px solid var(--cyan-dim);
+            border-bottom: 1px solid var(--cyan-dim);
+        }
+        
+        .nav-action-btn {
+            background: transparent;
+            border: 1px solid var(--cyan-dim);
+            color: var(--cyan);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-action-btn:hover {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+        
+        .nav-action-btn:active {
+            transform: translateY(0);
+        }
+        
+        .nav-action-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* Enhanced Footer */
+        .nav-footer {
+            padding-top: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0f0;
+        }
+        
+        .status-dot {
             width: 8px;
             height: 8px;
             background: #0f0;
             border-radius: 50%;
-            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-text {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
         
         .nav-time {
             color: var(--cyan);
-            opacity: 0.7;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 5px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 4px;
         }
         
-        /* Overlay - NO BLUR */
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 3500;
+        .nav-version {
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            font-size: 0.7rem;
         }
         
-        .nav-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        @keyframes scanMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Scrollbar for nav-links */
+        .nav-links::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .nav-links::-webkit-scrollbar-track {
+            background: rgba(0, 255, 255, 0.05);
+        }
+        
+        .nav-links::-webkit-scrollbar-thumb {
+            background: var(--cyan);
+            border-radius: 3px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 12px 14px;
+            }
+            
+            .link-text {
+                font-size: 0.9rem;
+            }
+            
+            .nav-action-btn {
+                padding: 8px;
+                font-size: 0.7rem;
+            }
         }
         
         /* Mobile Responsive */
@@ -1225,28 +1473,84 @@
             
             <!-- Navigation System -->
             <nav class="nav-system" id="navSystem">
+                <!-- Menu Header with Close Button -->
                 <div class="nav-header">
-                    <span class="nav-title">NAVIGATION</span>
+                    <div class="nav-header-top">
+                        <span class="nav-title">NAVIGATION</span>
+                        <button class="nav-close" id="navClose" aria-label="Close menu">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="nav-scanline"></div>
                 </div>
-                <a href="#board" class="nav-link">
-                    <span class="link-icon"><i class="fas fa-crosshairs"></i></span>
-                    <span class="link-text">Team profile</span>
-                </a>
-                <a href="#subsidiaries" class="nav-link">
-                    <span class="link-icon"><i class="fas fa-code-branch"></i></span>
-                    <span class="link-text">Branches</span>
-                </a>
-                <a href="essmain.html" class="nav-link">
-                    <span class="link-icon"><i class="fas fa-shield-alt"></i></span>
-                    <span class="link-text">E.S.S</span>
-                </a>
-                <a href="our_story.html" class="nav-link">
-                    <span class="link-icon"><i class="fas fa-scroll"></i></span>
-                    <span class="link-text">Our Story</span>
-                </a>
+            
+                <!-- User Status (optional) -->
+                <div class="nav-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">OPERATOR</span>
+                        <span class="user-rank">TIER 1 ACCESS</span>
+                    </div>
+                </div>
+            
+                <!-- Navigation Links with Icons -->
+                <div class="nav-links">
+                    <a href="#board" class="nav-link" data-target="board">
+                        <span class="link-icon"><i class="fas fa-crosshairs"></i></span>
+                        <span class="link-text">Team profile</span>
+                        <span class="link-badge">6</span>
+                    </a>
+                    <a href="#subsidiaries" class="nav-link" data-target="subsidiaries">
+                        <span class="link-icon"><i class="fas fa-code-branch"></i></span>
+                        <span class="link-text">Branches</span>
+                        <span class="link-badge">4</span>
+                    </a>
+                    <a href="essmain.html" class="nav-link">
+                        <span class="link-icon"><i class="fas fa-shield-alt"></i></span>
+                        <span class="link-text">E.S.S</span>
+                        <span class="link-badge">NEW</span>
+                    </a>
+                    <a href="our_story.html" class="nav-link">
+                        <span class="link-icon"><i class="fas fa-scroll"></i></span>
+                        <span class="link-text">Our Story</span>
+                    </a>
+                    
+                    <!-- Divider -->
+                    <div class="nav-divider"></div>
+                    
+                    <!-- Secondary Links -->
+                    <a href="#terminal-section" class="nav-link nav-link-secondary">
+                        <span class="link-icon"><i class="fas fa-terminal"></i></span>
+                        <span class="link-text">Terminal</span>
+                    </a>
+                    <a href="#main-footer" class="nav-link nav-link-secondary">
+                        <span class="link-icon"><i class="fas fa-address-card"></i></span>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </div>
+            
+                <!-- Quick Actions -->
+                <div class="nav-actions">
+                    <button class="nav-action-btn" onclick="window.internalRefresh()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh</span>
+                    </button>
+                    <button class="nav-action-btn" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i>
+                        <span>Theme</span>
+                    </button>
+                </div>
+            
+                <!-- Menu Footer -->
                 <div class="nav-footer">
-                    <div class="nav-status">SYSTEM: ONLINE</div>
-                    <div class="nav-time" id="navTime"></div>
+                    <div class="nav-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">SECURE CONNECTION</span>
+                    </div>
+                    <div class="nav-time" id="navTime">--:--:--</div>
+                    <div class="nav-version">v.1.0.0</div>
                 </div>
             </nav>
         </div>
@@ -1729,11 +2033,12 @@
         }
 
         /* ===============================
-        ADVANCED HAMBURGER MENU - FIXED
+        ENHANCED HAMBURGER MENU FUNCTIONALITY
         =============================== */
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById("hamburger");
             const nav = document.querySelector(".nav-system");
+            const navClose = document.getElementById("navClose");
             let navOverlay = document.querySelector(".nav-overlay");
         
             // Create overlay if it doesn't exist
@@ -1767,6 +2072,14 @@
                 toggleMenu();
             }
         
+            // Close button handler
+            if (navClose) {
+                navClose.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    toggleMenu(false);
+                });
+            }
+        
             // Add event listeners
             hamburger.addEventListener("click", handleHamburgerClick);
             hamburger.addEventListener("touchstart", handleHamburgerClick, { passive: false });
@@ -1784,12 +2097,11 @@
             // Navigation links click handler
             document.querySelectorAll(".nav-link").forEach(link => {
                 link.addEventListener("click", (e) => {
-                    toggleMenu(false);
+                    // Don't close if it's a button or has special behavior
+                    if (!link.classList.contains('no-close')) {
+                        toggleMenu(false);
+                    }
                 });
-                
-                link.addEventListener("touchstart", (e) => {
-                    toggleMenu(false);
-                }, { passive: true });
             });
         
             // Close on escape key
@@ -1799,8 +2111,114 @@
                 }
             });
         
-            console.log("✅ Hamburger menu initialized");
+            // Update active states based on scroll
+            function updateActiveStates() {
+                const sections = ['board', 'subsidiaries', 'terminal-section'];
+                const scrollPos = window.scrollY + 100;
+                
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    const link = document.querySelector(`.nav-link[data-target="${id}"]`);
+                    
+                    if (section && link) {
+                        const sectionTop = section.offsetTop - 100;
+                        const sectionBottom = sectionTop + section.offsetHeight;
+                        
+                        if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    }
+                });
+            }
+        
+            window.addEventListener('scroll', updateActiveStates);
+            updateActiveStates();
+        
+            // Update time in nav
+            function updateNavTime() {
+                const navTime = document.getElementById('navTime');
+                if (navTime) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-ZA', { 
+                        timeZone: 'Africa/Johannesburg',
+                        hour12: false 
+                    });
+                    navTime.textContent = timeString;
+                }
+            }
+            
+            updateNavTime();
+            setInterval(updateNavTime, 1000);
+        
+            // Add ripple effect to links (optional)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    const x = e.clientX - this.getBoundingClientRect().left;
+                    const y = e.clientY - this.getBoundingClientRect().top;
+                    
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        
+            // Prevent body scroll when menu is open
+            function preventBodyScroll() {
+                if (nav.classList.contains('open')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+        
+            // Watch for menu open/close
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        preventBodyScroll();
+                    }
+                });
+            });
+        
+            observer.observe(nav, { attributes: true });
+        
+            console.log("✅ Enhanced hamburger menu initialized");
         });
+        
+        // Add ripple effect styles dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-link {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(0, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s ease-out;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
         /* ===============================
         INTERNAL REFRESH
