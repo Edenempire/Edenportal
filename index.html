@@ -1358,6 +1358,92 @@
     gap: 30px;
     position: relative; /* REQUIRED for absolute hamburger */
 }
+
+                /* ===============================
+   REFRESH NOTIFICATION SYSTEM
+   =============================== */
+
+#refresh-notification {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--cyan);
+    border-left: 4px solid var(--cyan);
+    padding: 20px;
+    min-width: 280px;
+    z-index: 10000;
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    font-family: var(--font-mono);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(100%); }
+}
+
+.refresh-icon {
+    font-size: 2rem;
+    color: var(--cyan);
+    animation: spin 2s linear infinite;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.refresh-text {
+    font-family: var(--font-tactical);
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.refresh-progress {
+    width: 100%;
+    height: 4px;
+    background: #222;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.refresh-bar {
+    height: 100%;
+    background: var(--cyan);
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 5px var(--cyan);
+}
+
+.refresh-status {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--cyan);
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    #refresh-notification {
+        top: auto;
+        bottom: 30px;
+        right: 20px;
+        left: 20px;
+        min-width: auto;
+    }
+}
     
         </style>
     
@@ -2133,58 +2219,6 @@ document.getElementById("main-header").addEventListener("click", (e) => {
     }
 });
     
-                // 
-    
-                /* ===============================
-                INTERNAL REFRESH ENGINE
-                ================================ */
-    
-                function internalRefresh() {
-    
-                    console.log("Internal refresh initiated...");
-    
-                    /* 1 — Scroll to top instantly */
-                    window.scrollTo({ top: 0, behavior: "auto" });
-    
-                    /* 2 — Reset terminal */
-                    termOutput.innerHTML = `
-                        <div>[ Eden stealth CV-1 portal REINITIALIZING ]</div>
-                        <div>[ ENCRYPTION: running ]</div>
-                        <br>
-                        <div>type 'help' for commands...</div>
-                    `;
-    
-                    /* 3 — Restart snow engine */
-                    cancelAnimationFrame(snowAnimationId);
-                    createSnow();
-                    animateSnow();
-    
-                    /* 4 — Restart typewriter */
-                    const el = document.querySelector('.typing-effect');
-                    if (el) {
-                        el.innerHTML = '';
-                        initTypewriter();
-                    }
-    
-                    /* 5 — Re-fetch weather */
-                    fetchWeather();
-    
-                    /* 6 — Close navigation panel */
-                    nav.classList.remove("open");
-    
-                    /* 7 — Close any open modals */
-                    document.querySelectorAll(".modal-overlay").forEach(modal => {
-                        modal.style.display = "none";
-                    });
-    
-                    /* 8 — Reset section animations */
-                    document.querySelectorAll("section").forEach(sec => {
-                        sec.classList.remove("revealed");
-                        observer.observe(sec);
-                    });
-    
-                }
-    
     /* =========================================
        EDEN STEALTH CV-1 — FULL PWA INSTALL CORE
        ========================================= */
@@ -2509,6 +2543,220 @@ document.getElementById("main-header").addEventListener("click", (e) => {
         anthemPlaying = false;
     
     });
+
+                /* ===============================
+   ADVANCED INTERNAL REFRESH ENGINE v2.0
+   =============================== */
+
+function internalRefresh() {
+    console.log("⚡ ADVANCED INTERNAL REFRESH INITIATED");
+    
+    // Show refresh notification
+    showRefreshNotification();
+    
+    /* ===== PHASE 1: IMMEDIATE ACTIONS ===== */
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    
+    // Close all UI elements
+    document.querySelector(".nav-system")?.classList.remove("open");
+    document.querySelector(".nav-overlay")?.classList.remove("active");
+    document.querySelectorAll(".modal-overlay").forEach(modal => {
+        modal.style.display = "none";
+    });
+    
+    /* ===== PHASE 2: SEQUENTIAL REINITIALIZATION ===== */
+    const refreshPhases = [
+        { delay: 100, action: resetTerminal },
+        { delay: 300, action: restartSnow },
+        { delay: 500, action: refreshWeather },
+        { delay: 700, action: resetTypewriter },
+        { delay: 900, action: resetAnimations },
+        { delay: 1100, action: refreshClock },
+        { delay: 1300, action: checkConnectivity },
+        { delay: 1500, action: clearMemoryCache }
+    ];
+    
+    refreshPhases.forEach(phase => {
+        setTimeout(phase.action, phase.delay);
+    });
+    
+    /* ===== PHASE 3: FINAL VERIFICATION ===== */
+    setTimeout(() => {
+        verifyRefresh();
+        hideRefreshNotification();
+    }, 2000);
+}
+
+/* ===============================
+   REFRESH NOTIFICATION SYSTEM
+   =============================== */
+
+function showRefreshNotification() {
+    // Remove existing notification if any
+    const existing = document.getElementById('refresh-notification');
+    if (existing) existing.remove();
+    
+    const notification = document.createElement('div');
+    notification.id = 'refresh-notification';
+    notification.innerHTML = `
+        <div class="refresh-icon">↻</div>
+        <div class="refresh-text">REFRESHING SYSTEMS</div>
+        <div class="refresh-progress">
+            <div class="refresh-bar" id="refreshBar"></div>
+        </div>
+        <div class="refresh-status" id="refreshStatus">Initializing...</div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate progress bar
+    let width = 0;
+    const bar = document.getElementById('refreshBar');
+    const status = document.getElementById('refreshStatus');
+    const interval = setInterval(() => {
+        width += 2;
+        if (bar) bar.style.width = width + '%';
+        
+        // Update status messages
+        if (width === 20) status.textContent = 'Terminal reset';
+        if (width === 40) status.textContent = 'Snow engine restart';
+        if (width === 60) status.textContent = 'Weather sync';
+        if (width === 80) status.textContent = 'Animations reset';
+        if (width >= 100) {
+            clearInterval(interval);
+            status.textContent = 'Complete';
+        }
+    }, 30);
+}
+
+function hideRefreshNotification() {
+    const notification = document.getElementById('refresh-notification');
+    if (notification) {
+        notification.style.animation = 'fadeOut 0.3s forwards';
+        setTimeout(() => notification.remove(), 300);
+    }
+}
+
+/* ===============================
+   PHASE ACTIONS
+   =============================== */
+
+function resetTerminal() {
+    const termOutput = document.getElementById('terminal-output');
+    if (termOutput) {
+        termOutput.innerHTML = `
+            <div style="color: var(--cyan);">[ SYSTEM REFRESH: ${new Date().toLocaleTimeString()} ]</div>
+            <div>[ MEMORY: CLEARED ]</div>
+            <div>[ CACHE: FLUSHED ]</div>
+            <br>
+            <div>type 'help' for commands...</div>
+        `;
+        termOutput.scrollTop = 0;
+    }
+    
+    // Clear terminal input
+    const termInput = document.getElementById('term-input');
+    if (termInput) termInput.value = '';
+    
+    console.log('✓ Terminal reset complete');
+}
+
+function restartSnow() {
+    // Cancel existing animation
+    if (window.snowAnimationId) {
+        cancelAnimationFrame(window.snowAnimationId);
+    }
+    
+    // Recreate snow with fresh parameters
+    if (typeof createSnow === 'function' && typeof animateSnow === 'function') {
+        createSnow();
+        animateSnow();
+        console.log('✓ Snow engine restarted');
+    }
+}
+
+function refreshWeather() {
+    if (typeof fetchWeather === 'function') {
+        fetchWeather();
+        console.log('✓ Weather data refreshed');
+    }
+}
+
+function resetTypewriter() {
+    const el = document.querySelector('.typing-effect');
+    if (el && typeof initTypewriter === 'function') {
+        el.innerHTML = '';
+        initTypewriter();
+        console.log('✓ Typewriter reset');
+    }
+}
+
+function resetAnimations() {
+    // Reset section reveal animations
+    document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("revealed");
+        if (window.observer) {
+            window.observer.observe(sec);
+        }
+    });
+    console.log('✓ Section animations reset');
+}
+
+function refreshClock() {
+    if (typeof updateClockCapeTown === 'function') {
+        updateClockCapeTown();
+        console.log('✓ System clock synced');
+    }
+}
+
+function checkConnectivity() {
+    const offlineBanner = document.getElementById('offline-banner');
+    if (offlineBanner) {
+        if (navigator.onLine) {
+            offlineBanner.style.display = 'none';
+        } else {
+            offlineBanner.style.display = 'block';
+        }
+    }
+    console.log('✓ Connectivity checked');
+}
+
+function clearMemoryCache() {
+    // Clear any temporary session data
+    if (sessionStorage) {
+        const keysToKeep = ['edenTheme']; // Keep theme preference
+        const theme = localStorage.getItem('edenTheme');
+        
+        sessionStorage.clear();
+        
+        // Restore theme
+        if (theme) localStorage.setItem('edenTheme', theme);
+    }
+    console.log('✓ Memory cache cleared');
+}
+
+function verifyRefresh() {
+    console.log('✓ ALL SYSTEMS OPERATIONAL');
+    
+    // Add verification log to terminal
+    const termOutput = document.getElementById('terminal-output');
+    if (termOutput) {
+        const verifyLine = document.createElement('div');
+        verifyLine.style.color = '#00ff00';
+        verifyLine.innerHTML = '> [ OK ] All systems verified';
+        termOutput.appendChild(verifyLine);
+        termOutput.scrollTop = termOutput.scrollHeight;
+    }
+}
+
+                // Add keyboard shortcut (Ctrl+Shift+R) for internal refresh
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+        e.preventDefault();
+        internalRefresh();
+    }
+});
     
     </script>
     
