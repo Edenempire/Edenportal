@@ -8,7 +8,8 @@
             
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <title>Eden stealth CV-1</title>
-            <meta name="description" content="Official Eden portal - Operator unit - Universal Tier 1 Conglomerate.">
+            <meta name="description" content="Tier 1 Operator Team.">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
             
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1284,6 +1285,79 @@
                 box-shadow: 0 0 20px lime;
     
             }
+
+                /* ============================
+   FIX: Hamburger Menu - No Logo Interference
+   ============================ */
+
+/* Remove tap highlight on all elements for touch devices */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Ensure hamburger is completely separate from logo */
+#hamburger {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    padding: 12px; /* INCREASED for better touch target */
+    margin: 0;
+    color: var(--cyan);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 3001;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* PREVENTS double-tap zoom */
+}
+
+/* Remove focus ring on click */
+#hamburger:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Optional active state (just subtle) */
+#hamburger:active {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Ensure brand unit doesn't capture taps meant for hamburger */
+.brand-unit {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 2000;
+}
+
+/* Stop propagation on logo click (no highlight) */
+.logo-frame, .brand-text {
+    pointer-events: none; /* PREVENTS logo from capturing taps */
+}
+
+/* Make header container position relative for absolute positioning */
+.header-container {
+    width: 95%;
+    max-width: 1800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 30px;
+    position: relative; /* REQUIRED for absolute hamburger */
+}
     
         </style>
     
@@ -1379,9 +1453,9 @@
                     <div class="brand-text">
                         <h1>Tier 1</h1>
                     </div>
-                    <button id="hamburger" type="button" aria-label="Menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
+                        
+                    <button id="hamburger" type="button" aria-label="Menu" ontouchstart="event.stopPropagation()">                                                <i class="fas fa-bars"></i>
+                        </button>
     
                 </a>
     
@@ -1988,14 +2062,76 @@
                 console.log("Eden stealth CV-1: Tier 1 active.");
             };
     
-                const hamburger = document.getElementById("hamburger");
-                const nav = document.querySelector(".nav-system");
+// ===============================
+// HAMBURGER MENU - CLEAN TOUCH HANDLING
+// ===============================
+
+const hamburger = document.getElementById("hamburger");
+const nav = document.querySelector(".nav-system");
+const overlay = document.querySelector(".nav-overlay");
+
+// Create overlay if it doesn't exist
+if (!overlay) {
+    const newOverlay = document.createElement('div');
+    newOverlay.className = 'nav-overlay';
+    document.body.appendChild(newOverlay);
+}
+
+const navOverlay = document.querySelector(".nav-overlay");
+
+// Clean click/touch handler for hamburger
+function toggleMenu(e) {
+    e.preventDefault();
+    e.stopPropagation(); // CRITICAL: stops event from reaching logo
     
-                hamburger.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    nav.classList.toggle("open");
-                });
+    nav.classList.toggle("open");
+    if (navOverlay) navOverlay.classList.toggle("active");
+    
+    return false;
+}
+
+// Add both click and touch events with proper handling
+hamburger.addEventListener("click", toggleMenu);
+hamburger.addEventListener("touchstart", toggleMenu, { passive: false });
+
+// Close menu when clicking overlay
+if (navOverlay) {
+    navOverlay.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        nav.classList.remove("open");
+        navOverlay.classList.remove("active");
+    });
+    
+    navOverlay.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        nav.classList.remove("open");
+        navOverlay.classList.remove("active");
+    }, { passive: false });
+}
+
+// Close menu when clicking a nav link
+document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+        e.stopPropagation();
+        nav.classList.remove("open");
+        if (navOverlay) navOverlay.classList.remove("active");
+    });
+    
+    link.addEventListener("touchstart", (e) => {
+        e.stopPropagation();
+        nav.classList.remove("open");
+        if (navOverlay) navOverlay.classList.remove("active");
+    }, { passive: false });
+});
+
+// Prevent any clicks on header from highlighting logo
+document.getElementById("main-header").addEventListener("click", (e) => {
+    if (!e.target.closest('#hamburger')) {
+        e.stopPropagation();
+    }
+});
     
                 // 
     
