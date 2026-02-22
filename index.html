@@ -1692,7 +1692,7 @@
         }
 
         /* ===============================
-        ROBUST MENU SYSTEM
+        ROBUST MENU SYSTEM - FIXED
         =============================== */
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById("hamburger");
@@ -1710,14 +1710,14 @@
                 nav.classList.add("open");
                 overlay.classList.add("active");
                 hamburger.classList.add("active");
-                document.body.style.overflow = "hidden"; // Prevent background scroll
+                document.body.style.overflow = "hidden";
             }
         
             function closeMenu() {
                 nav.classList.remove("open");
                 overlay.classList.remove("active");
                 hamburger.classList.remove("active");
-                document.body.style.overflow = ""; // Restore scroll
+                document.body.style.overflow = "";
             }
         
             function toggleMenu() {
@@ -1732,14 +1732,14 @@
             hamburger.addEventListener("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Hamburger clicked"); // Debug
+                console.log("Hamburger clicked");
                 toggleMenu();
             });
         
             hamburger.addEventListener("touchstart", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Hamburger touched"); // Debug
+                console.log("Hamburger touched");
                 toggleMenu();
             }, { passive: false });
         
@@ -1748,26 +1748,26 @@
                 overlay.addEventListener("click", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log("Overlay clicked"); // Debug
+                    console.log("Overlay clicked");
                     closeMenu();
                 });
         
                 overlay.addEventListener("touchstart", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log("Overlay touched"); // Debug
+                    console.log("Overlay touched");
                     closeMenu();
                 }, { passive: false });
             }
         
-            // MENU LINKS - Navigate and close
+            // FIXED: MENU LINKS - Navigate properly
             navLinks.forEach(link => {
                 link.addEventListener("click", function(e) {
-                    e.preventDefault(); // Prevent default first
+                    e.preventDefault(); // Prevent default only temporarily
                     e.stopPropagation();
                     
                     const href = this.getAttribute("href");
-                    console.log("Link clicked:", href); // Debug
+                    console.log("Link clicked:", href);
                     
                     // Close menu first
                     closeMenu();
@@ -1787,21 +1787,19 @@
                                 }, 100);
                             }
                         } else {
-                            // External page
-                            setTimeout(() => {
-                                window.location.href = href;
-                            }, 150);
+                            // External page - navigate to the href
+                            window.location.href = href;
                         }
                     }
                 });
         
-                // Touch handling
+                // FIXED: Touch handling
                 link.addEventListener("touchstart", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     
                     const href = this.getAttribute("href");
-                    console.log("Link touched:", href); // Debug
+                    console.log("Link touched:", href);
                     
                     closeMenu();
                     
@@ -1818,9 +1816,8 @@
                                 }, 100);
                             }
                         } else {
-                            setTimeout(() => {
-                                window.location.href = href;
-                            }, 150);
+                            // External page - navigate to the href
+                            window.location.href = href;
                         }
                     }
                 }, { passive: false });
@@ -1829,17 +1826,17 @@
             // ESC KEY - Close menu
             document.addEventListener("keydown", function(e) {
                 if (e.key === "Escape" && nav.classList.contains("open")) {
-                    console.log("Escape pressed"); // Debug
+                    console.log("Escape pressed");
                     closeMenu();
                 }
             });
         
-            // CLICK OUTSIDE - Close menu (additional safety)
+            // CLICK OUTSIDE - Close menu
             document.addEventListener("click", function(e) {
                 if (nav.classList.contains("open") && 
                     !nav.contains(e.target) && 
                     !hamburger.contains(e.target)) {
-                    console.log("Clicked outside"); // Debug
+                    console.log("Clicked outside");
                     closeMenu();
                 }
             });
@@ -1866,7 +1863,7 @@
             updateNavTime();
             setInterval(updateNavTime, 1000);
         
-            console.log("✅ Robust menu system initialized");
+            console.log("✅ Robust menu system initialized with fixed navigation");
         });
 
         /* ===============================
