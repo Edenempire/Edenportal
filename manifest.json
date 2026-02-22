@@ -1,69 +1,23 @@
 {
-  "id": "/",
-  "name": "Eden Stealth CV-1",
+  "name": "Eden stealth CV-1",
   "short_name": "Eden",
-  "description": "Eden Stealth CV-1 — Version 1.0.0",
-  "start_url": "/index.html",
-  "scope": "/",
+  "description": "Tier 1 Operator Team",
+  "start_url": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
-  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "categories": ["business", "productivity", "utilities"],
-  "lang": "en",
-  "dir": "ltr",
-
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-
-  "shortcuts": [
-    {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "url": "/index.html#dashboard",
-      "description": "Open main control dashboard",
-      "icons": [
-        {
-          "src": "/logo.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Strategic Panel",
-      "short_name": "Panel",
-      "url": "/index.html#panel",
-      "description": "Access strategic systems panel",
-      "icons": [
-        {
-          "src": "/logo.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
-
-  "screenshots": [
-    {
-      "src": "/screenshot1.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow"
     }
   ]
 }
