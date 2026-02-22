@@ -8,7 +8,7 @@
   
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   
-<title>Our Story | Eden Conglomerate Pty Ltd</title>
+<title>Our Story</title>
 
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -19,107 +19,404 @@
 =================================*/
 :root{
     --cyan:#00ffff;
-    --panel:rgba(0,10,15,0.75);
+    --panel:rgba(0,10,15,0.85);
     --border:rgba(0,255,255,0.35);
     --glow:0 0 25px rgba(0,255,255,0.45);
     --radius:14px;
     --font-tactical:'Orbitron',sans-serif;
     --font-body:'Electrolize',sans-serif;
     --font-mono:'VT323',monospace;
+    --scrollbar:rgba(0,255,255,0.3);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 html,body{
-    background:#000;
+    background:#0a0c0e;
     color:var(--cyan);
     font-family:var(--font-body);
     overflow-x:hidden;
+    scroll-behavior:smooth;
 }
 
-/* Background subtle grid */
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#000;}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px;}
+
+/* ===== PARCHMENT BACKGROUND ===== */
 body::before{
     content:"";
     position:fixed;
     inset:0;
     background:
-        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
-    background-size:50px 50px;
+        linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
     z-index:0;
+    pointer-events:none;
 }
 
-/* Main wrapper */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 30% 40%, rgba(0,255,255,0.08) 0%, transparent 50%);
+    z-index:0;
+    pointer-events:none;
+}
+
+/* ===== MAIN WRAPPER ===== */
 .main{
     position:relative;
     z-index:2;
-    padding:clamp(20px,5vw,60px);
+    padding:clamp(30px,6vw,80px);
     min-height:100vh;
+    max-width:1200px;
+    margin:0 auto;
 }
 
-/* Header */
+/* ===== HEADER ===== */
 .header{
     text-align:center;
-    margin-bottom:60px;
+    margin-bottom:70px;
+    padding:30px 20px;
+    border:2px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(0,5,8,0.7);
+    backdrop-filter:blur(5px);
+    box-shadow:var(--glow);
+    position:relative;
+}
+
+.header::before{
+    content:"⚔️";
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    opacity:0.5;
+}
+
+.header::after{
+    content:"⚔️";
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:2rem;
+    opacity:0.5;
 }
 
 .header h1{
     font-family:var(--font-tactical);
-    font-size:clamp(2rem,5vw,3rem);
-    letter-spacing:6px;
+    font-size:clamp(2.5rem,6vw,4rem);
+    letter-spacing:8px;
+    text-transform:uppercase;
+    text-shadow:0 0 15px var(--cyan);
+    margin-bottom:10px;
+}
+
+.header h2{
+    font-family:var(--font-mono);
+    font-size:clamp(1rem,2vw,1.4rem);
+    color:#fff;
+    letter-spacing:4px;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    display:inline-block;
+    padding:8px 25px;
+    margin-top:10px;
 }
 
 .header span{
     font-family:var(--font-mono);
     opacity:0.7;
+    display:block;
+    margin-top:15px;
+    font-size:1.1rem;
 }
 
-/* Story container */
+/* ===== BOOK CONTAINER ===== */
 .story{
-    max-width:900px;
+    max-width:1000px;
     margin:0 auto;
     display:flex;
     flex-direction:column;
-    gap:50px;
+    gap:60px;
+    position:relative;
 }
 
-/* Story block */
-.block{
-    padding:35px;
+/* ===== SCROLL INDICATOR ===== */
+.story::before{
+    content:"";
+    position:absolute;
+    left:-20px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background:linear-gradient(to bottom, transparent, var(--cyan), transparent);
+    opacity:0.3;
+}
+
+/* ===== CHAPTER BLOCK ===== */
+.chapter{
+    padding:45px 40px;
     border:1px solid var(--border);
     border-radius:var(--radius);
     background:var(--panel);
     backdrop-filter:blur(8px);
     box-shadow:var(--glow);
-    transition:0.3s ease;
+    transition:0.4s ease;
+    position:relative;
+    counter-increment:chapter;
 }
 
-.block:hover{
-    transform:translateY(-5px);
-    box-shadow:0 0 40px rgba(0,255,255,0.6);
+.chapter:hover{
+    transform:translateY(-8px) scale(1.01);
+    box-shadow:0 0 50px rgba(0,255,255,0.7);
+    border-color:#fff;
 }
 
-.block h2{
+/* ===== CHAPTER RIBBON ===== */
+.chapter::before{
+    content:"CHAPTER " counter(chapter);
+    position:absolute;
+    top:-15px;
+    left:30px;
+    background:#000;
+    padding:5px 25px;
     font-family:var(--font-tactical);
-    margin-bottom:20px;
+    font-size:0.9rem;
+    letter-spacing:3px;
+    border:1px solid var(--cyan);
+    border-radius:30px;
+    box-shadow:0 0 15px var(--cyan);
+    text-transform:uppercase;
+    z-index:10;
+}
+
+/* ===== CHAPTER NUMBER OVERLAY ===== */
+.chapter::after{
+    content:"📜";
+    position:absolute;
+    bottom:10px;
+    right:20px;
+    font-size:2.5rem;
+    opacity:0.15;
+    transform:rotate(15deg);
+    pointer-events:none;
+}
+
+.chapter h2{
+    font-family:var(--font-tactical);
+    margin-bottom:25px;
     letter-spacing:2px;
+    font-size:1.8rem;
+    color:#fff;
+    text-shadow:0 0 8px var(--cyan);
+    border-left:4px solid var(--cyan);
+    padding-left:20px;
 }
 
-.block p{
-    line-height:1.8;
+/* ===== VERSE CONTAINER ===== */
+.verses{
+    font-family:'Electrolize', sans-serif;
+    line-height:2;
+    font-size:1.1rem;
+}
+
+/* ===== INDIVIDUAL VERSE ===== */
+.verse{
+    margin-bottom:15px;
+    padding-left:30px;
+    position:relative;
+    color:#e0f0f0;
+}
+
+.verse:hover{
+    color:#fff;
+    text-shadow:0 0 5px var(--cyan);
+    transform:translateX(5px);
+    transition:0.2s;
+}
+
+/* ===== VERSE NUMBER ===== */
+.verse::before{
+    content:attr(data-verse);
+    position:absolute;
+    left:-5px;
+    top:-2px;
+    font-family:var(--font-mono);
+    color:var(--cyan);
+    font-size:0.9rem;
+    font-weight:bold;
     opacity:0.9;
+    background:rgba(0,0,0,0.5);
+    padding:2px 8px;
+    border-radius:4px;
+    border-left:2px solid var(--cyan);
 }
 
-/* Footer */
+/* ===== PARAGRAPH BREAKS ===== */
+.verse-break{
+    height:10px;
+}
+
+/* ===== DIALOGUE STYLING ===== */
+.dialogue{
+    color:#fff;
+    font-style:italic;
+    padding:10px 20px;
+    border-left:3px solid var(--cyan);
+    background:rgba(0,255,255,0.05);
+    margin:15px 0;
+    border-radius:0 8px 8px 0;
+}
+
+/* ===== EMPHASIS ===== */
+.emphasis{
+    color:var(--cyan);
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.highlight{
+    background:rgba(0,255,255,0.15);
+    padding:2px 6px;
+    border-radius:3px;
+}
+
+/* ===== PROPHECY SECTION ===== */
+.prophecy{
+    margin-top:30px;
+    padding:20px;
+    border:1px dashed var(--cyan);
+    border-radius:12px;
+    background:rgba(0,20,20,0.6);
+}
+
+.prophecy-title{
+    font-family:var(--font-tactical);
+    margin-bottom:15px;
+    font-size:1.2rem;
+    color:#fff;
+}
+
+/* ===== FOOTER ===== */
 .footer{
     text-align:center;
-    margin-top:70px;
+    margin-top:100px;
+    padding:40px 20px;
     font-family:var(--font-mono);
-    opacity:0.6;
+    opacity:0.8;
+    border-top:1px solid var(--border);
+    position:relative;
 }
 
-@media (prefers-reduced-motion: reduce){
-    .block:hover{transform:none;}
+.footer::before{
+    content:"✧ ✧ ✧";
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#000;
+    padding:0 20px;
+    color:var(--cyan);
+    letter-spacing:5px;
+}
+
+.footer p{
+    margin:10px 0;
+    font-size:1.1rem;
+}
+
+/* ===== ANCIENT SCROLL EFFECT ===== */
+.scroll-corner{
+    position:absolute;
+    width:30px;
+    height:30px;
+    border:2px solid var(--cyan);
+    opacity:0.3;
+}
+
+.corner-tl{
+    top:-2px;
+    left:-2px;
+    border-right:none;
+    border-bottom:none;
+}
+
+.corner-tr{
+    top:-2px;
+    right:-2px;
+    border-left:none;
+    border-bottom:none;
+}
+
+.corner-bl{
+    bottom:-2px;
+    left:-2px;
+    border-right:none;
+    border-top:none;
+}
+
+.corner-br{
+    bottom:-2px;
+    right:-2px;
+    border-left:none;
+    border-top:none;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width:768px){
+    .main{padding:20px;}
+    
+    .chapter{padding:40px 20px;}
+    
+    .chapter::before{
+        left:10px;
+        padding:3px 15px;
+        font-size:0.8rem;
+    }
+    
+    .chapter h2{font-size:1.4rem;}
+    
+    .verse{padding-left:25px; font-size:1rem;}
+    
+    .header::before, .header::after{display:none;}
+}
+
+@media (max-width:480px){
+    .verse::before{
+        position:relative;
+        display:inline-block;
+        margin-right:8px;
+        left:0;
+        top:0;
+    }
+    
+    .verse{padding-left:0;}
+}
+
+/* ===== PRINT STYLE ===== */
+@media print{
+    body{background:#fff; color:#000;}
+    .chapter{break-inside:avoid; border:1px solid #333;}
+    .verse::before{color:#333;}
+}
+
+/* ===== GLOW ANIMATION ===== */
+@keyframes pulseGlow{
+    0%{box-shadow:0 0 20px rgba(0,255,255,0.3);}
+    50%{box-shadow:0 0 40px rgba(0,255,255,0.7);}
+    100%{box-shadow:0 0 20px rgba(0,255,255,0.3);}
+}
+
+.chapter:first-child{
+    animation:pulseGlow 3s infinite;
 }
 
 </style>
@@ -130,113 +427,235 @@ body::before{
 
 <div class="main">
 
+<!-- ========== HEADER ========== -->
 <div class="header">
 <h1>OUR STORY</h1>
-<span>[ EDEN CONGLOMERATE — ORIGIN ARCHIVE ]</span>
 </div>
 
+<!-- ========== THE STORY ========== -->
 <div class="story">
 
-<div class="block">
+<!-- CHAPTER I -->
+<div class="chapter">
+<div class="scroll-corner corner-tl"></div>
+<div class="scroll-corner corner-tr"></div>
+<div class="scroll-corner corner-bl"></div>
+<div class="scroll-corner corner-br"></div>
+
 <h2>THE VISIONARY</h2>
-<p>
-It all began with Thato Morake — the founder.
-Once there was a young boy named Thato who carried within him a global vision:
-to build an empire. A boy with no limits in thinking, no mental constraints,
-and absolutely no desire for anything small.
-</p>
+<div class="verses">
+
+<div class="verse" data-verse="1:1">
+In the beginning, before the foundations of the Conglomerate were laid, there arose a young male adult named <span class="emphasis">Thato Morake</span>, a son of the soil, born under the African sun with fire in his bones and vision in his spirit.
 </div>
 
-<div class="block">
-<h2>2023 — DIVINE ALIGNMENT</h2>
-<p>
-In 2023, while attending the Universal Church, Thato crossed paths with Philani Kemele.
-Thato had long been part of the church community, but for Philani, 2023 was his first year.
-At first, nothing significant stood between them.
-Philani initially dismissed Thato as just another charmer boy who thinks the entire world revolves around him.
-</p>
+<div class="verse" data-verse="1:2">
+And the young Thato looked upon the world and saw that it was bound by smallness, by the chains of limited thinking, by minds that could not stretch beyond the horizon of their own sight.
 </div>
 
-<div class="block">
-<h2>THE SOCCER CATALYST</h2>
-<p>
-When the church launched a soccer tournament, the young men began practicing regularly.
-Philani had no interest in soccer at the time — his world revolved entirely around coding.
-He lacked experience and didn’t want embarrassment.
-But Thato and Mpumelelo convinced him to join.
-That single practice session changed everything.
-</p>
-<p>
-During games, between passes and tactical shifts, conversations unfolded —
-about God, about manhood, about purpose.
-With every word Thato spoke, Philani began to realize:
-this was not just a talker. This was someone who thought like him.
-</p>
+<div class="verse" data-verse="1:3">
+But Thato was not like the others. For within him burned a flame that could not be quenched — the flame of empire, the fire of dominion, the unrelenting desire to build something <span class="highlight">greater than himself</span>.
 </div>
 
-<div class="block">
-<h2>THE LIBRARY MEETING — OCTOBER 2023</h2>
-<p>
-Around October 2023, Philani invited Thato to the Durban Central Municipal Library.
-He wanted clarity — to confirm whether his intuition was correct.
-The first meeting failed due to scheduling conflicts,
-but the next day they sat down together.
-</p>
-<p>
-Before business was discussed, they drew up soccer tactics —
-ensuring they would win the tournament.
-Then came the defining question.
-</p>
-<p>
-“Where do you want to be in life?”
-</p>
-<p>
-“The top,” Thato replied.
-</p>
-<p>
-“Me too,” Philani said.
-</p>
-<p>
-“How are we going to get there?”
-</p>
-<p>
-“Through money.”
-</p>
-<p>
-“And how do we get that money?”
-</p>
-<p>
-“Business.”
-</p>
-<p>
-Not small-time business.
-Global-scale business.
-</p>
+<div class="verse" data-verse="1:4">
+He spoke to himself in the quiet hours, saying, <span class="dialogue">"Why should I inherit leftovers when I can sit at the head of the table? Why should I follow when I was born to lead?"</span>
 </div>
 
-<div class="block">
-<h2>THE STRATEGY BEGINS</h2>
-<p>
-From that moment forward, Eden was not an idea —
-it was a direction.
-They began strategizing, mapping futures,
-calculating moves before they were ever made.
-What started as a conversation in a library
-became the foundation of Eden Conglomerate.
-</p>
+<div class="verse" data-verse="1:5">
+And the Lord, who sees the hearts of men, looked upon Thato and was pleased, for his ambition was not for vanity but for purpose — to create, to build, to establish a legacy that would outlive his bones.
+</div>
+
+<div class="verse" data-verse="1:6">
+Thus the seed of Eden was planted in secret, in the soil of a young man's soul, waiting for the appointed time to sprout forth.
 </div>
 
 </div>
+</div>
 
+<!-- CHAPTER II -->
+<div class="chapter">
+<div class="scroll-corner corner-tl"></div>
+<div class="scroll-corner corner-tr"></div>
+<div class="scroll-corner corner-bl"></div>
+<div class="scroll-corner corner-br"></div>
+
+<h2>THE YEAR OF DIVINE APPOINTMENT — 2023</h2>
+<div class="verses">
+
+<div class="verse" data-verse="2:1">
+Now it came to pass in the year of our Lord 2023, in the city of Durban, at the <span class="emphasis">universal church</span>, that the hand of Providence moved to weave together the threads of destiny.
+</div>
+
+<div class="verse" data-verse="2:2">
+For Thato had long been a faithful among the congregation, a familiar face in the assembly, known to many but truly known by few.
+</div>
+
+<div class="verse" data-verse="2:3">
+But there came also one <span class="emphasis">Philani Kemele</span>, a young male adult of code and logic, whose mind ran in circuits and algorithms.
+</div>
+
+<div class="verse" data-verse="2:4">
+And 2023 was Philani's first year at that place. He came as a stranger, as one unknown, carrying within him gifts he himself did not yet fully comprehend.
+</div>
+
+<div class="verse" data-verse="2:5">
+At first, Philani looked upon Thato with skeptical eyes, saying in his mind, <span class="dialogue">"yeah... another charmer boy that thinks the world revolves around him."</span>
+</div>
+
+<div class="verse" data-verse="2:6">
+Little did he know that the very skepticism that guarded him would soon become the foundation of an unshakeable alliance.
+</div>
+
+</div>
+</div>
+
+<!-- CHAPTER III -->
+<div class="chapter">
+<div class="scroll-corner corner-tl"></div>
+<div class="scroll-corner corner-tr"></div>
+<div class="scroll-corner corner-bl"></div>
+<div class="scroll-corner corner-br"></div>
+
+<h2>THE SOCCER TOURNAMENT</h2>
+<div class="verses">
+
+<div class="verse" data-verse="3:1">
+And it came to pass that the church proclaimed a soccer tournament, a gathering of the young boys to compete in the beautiful game.
+</div>
+
+<div class="verse" data-verse="3:2">
+The boys assembled, and they began to practice together, their feet upon the grass, their hearts stirred by the prospect of victory.
+</div>
+
+<div class="verse" data-verse="3:3">
+Now Philani had no love for soccer in those days. His world was the world of <span class="highlight">ones and zeros</span>, of compilers and interpreters, of logic gates and data streams. He feared embarrassment, for the field was foreign territory to his feet.
+</div>
+
+<div class="verse" data-verse="3:4">
+But Thato and one <span class="emphasis">mpumelelo</span> came to Philani and spoke, saying, <span class="dialogue">"Come, join us. Let not fear keep you from the fellowship. What matters is not your skill but your presence among us, and besides, you'll adapt very quickly."</span>
+</div>
+
+<div class="verse" data-verse="3:5">
+And Philani heeded their voice, though reluctance weighed upon his steps. He went to the practice, not knowing that this simple act of obedience would alter the course of his life forever.
+</div>
+
+<div class="verse" data-verse="3:6">
+As they ran and passed and strategized upon the field, conversations flowed like water between them — not merely of the game, but of <span class="emphasis">weightier matters</span>.
+</div>
+
+<div class="verse" data-verse="3:7">
+Between passes, they spoke of God. Between tactical formations, they spoke of manhood. Between goals, they spoke of purpose.
+</div>
+
+<div class="verse" data-verse="3:8">
+And with every word that Thato spoke, Philani felt the walls of his skepticism crumble, brick by brick, until he could see clearly: <span class="dialogue">"This one is different. This one thinks as I think. This one dreams as I dream."</span>
+</div>
+
+<div class="verse" data-verse="3:9">
+For Thato spoke not of small things — of petty gains or momentary pleasures — but of <span class="highlight">legacy, of impact, of changing the very fabric of the nation</span>.
+</div>
+
+<div class="verse" data-verse="3:10">
+And Philani's spirit recognized a kindred spirit, as iron sharpens iron, and as one flame kindles another.
+</div>
+
+</div>
+</div>
+
+<!-- CHAPTER IV -->
+<div class="chapter">
+<div class="scroll-corner corner-tl"></div>
+<div class="scroll-corner corner-tr"></div>
+<div class="scroll-corner corner-bl"></div>
+<div class="scroll-corner corner-br"></div>
+
+<h2>THE LIBRARY COVENANT</h2>
+<div class="verses">
+
+<div class="verse" data-verse="4:1">
+Now in the tenth month, which is called October, in the year 2023, Philani sent word to Thato, saying, <span class="dialogue">"Let us meet at the Durban Central Municipal Library, for I must speak with you concerning matters of weight."</span>
+</div>
+
+<div class="verse" data-verse="4:2">
+For Philani's spirit was stirred, and he needed to test the spirits, to discern whether what he felt was truth or merely the excitement of a newfound acquaintance.
+</div>
+
+<div class="verse" data-verse="4:3">
+The first day they appointed, Philani had to postpone, for other matters demanded his attention. But they agreed to meet on the morrow.
+</div>
+
+<div class="verse" data-verse="4:4">
+And it came to pass that they sat together in that place of books and silence.
+</div>
+
+<div class="verse" data-verse="4:5">
+Then, Philani looked upon Thato and posed the question that would define their future:
+</div>
+
+<div class="verse" data-verse="4:6">
+<span class="dialogue emphasis">"Where do you want to be in life?"</span>
+</div>
+
+<div class="verse" data-verse="4:7">
+And Thato answered without hesitation, his voice steady as a pillar, <span class="dialogue emphasis">"The top."</span>
+</div>
+
+<div class="verse" data-verse="4:8">
+Then Philani smiled. And he spoke in return, <span class="dialogue emphasis">"Me too."</span>
+</div>
+
+<div class="verse" data-verse="4:7">
+Then Philani spoke again, saying, <span class="dialogue">"How are we going to get there?"</span>
+</div>
+
+<div class="verse" data-verse="4:8">
+And Thato replied, <span class="dialogue">"Through money."</span>
+</div>
+
+<div class="verse" data-verse="4:9">
+Again Philani asked, <span class="dialogue">"And how do we get that money?"</span>
+</div>
+
+<div class="verse" data-verse="4:10">
+Thato's said: <span class="dialogue emphasis">"well, I was thinking business."</span>
+</div>
+
+<div class="verse" data-verse="4:11">
+And in that library, two young men bound themselves to a vision that would become <span class="emphasis">Eden Conglomerate</span>.
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- ========== FOOTER ========== -->
 <div class="footer">
-© Eden Conglomerate // Strategic Origin Record
+<p>✧ THE BOOK OF EDEN ✧</p>
 </div>
 
 </div>
+
+<!-- Optional: Add a small script for dynamic verse numbering if needed -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add chapter numbers to any that might need dynamic updating
+    console.log('The Book of Eden has been opened.');
+});
+  
+</script>
 
 </body>
   
 </html>
+
+
+
+
+
+
+
+
 
 
 
