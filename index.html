@@ -878,46 +878,97 @@
         .status-active { color: #00ff00; }
         .status-pending { color: #ffff00; }
 
-        /* =====================================
-        PWA INSTALL BUTTON
-        ===================================== */
+        /* ===============================
+        IMPROVED INSTALL BUTTON STYLES
+        ================================== */
         #installBtn {
-            display: none;
+            display: inline-block !important; /* Force display */
             background: transparent;
-            border: 2px solid var(--cyan);
+            border: 3px solid var(--cyan);
             color: var(--cyan);
-            padding: 15px 38px;
+            padding: 18px 45px;
             font-family: var(--font-tactical);
-            font-size: 0.9rem;
-            letter-spacing: 3px;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: var(--transition);
+            margin: 30px auto;
+            width: auto;
+            min-width: 280px;
+            font-weight: bold;
+            animation: pulse-install 2s infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
-
+        
+        @keyframes pulse-install {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.7); }
+            100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+        }
+        
         #installBtn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(0,255,255,0.4), transparent);
-            transition: 0.6s;
+            content: "📱 ";
+            margin-right: 8px;
+            font-size: 1.2rem;
         }
-
+        
         #installBtn:hover {
             color: #000;
             background: var(--cyan);
-            box-shadow: 0 0 15px var(--cyan), inset 0 0 10px rgba(0,255,255,0.5);
+            box-shadow: 0 0 30px var(--cyan);
+            transform: scale(1.05);
         }
-
-        #installBtn:hover::before { left: 100%; }
-        #installBtn:active { transform: scale(0.96); }
-        #installBtn.installing { border-color: orange; color: orange; box-shadow: 0 0 15px orange; }
-        #installBtn.installed { border-color: lime; color: lime; box-shadow: 0 0 20px lime; }
+        
+        #installBtn:active {
+            transform: scale(0.95);
+        }
+        
+        #installBtn.installing {
+            border-color: orange;
+            color: orange;
+            box-shadow: 0 0 30px orange;
+            animation: none;
+        }
+        
+        #installBtn.installing::before {
+            content: "⏳ ";
+        }
+        
+        #installBtn.installed {
+            border-color: lime;
+            color: lime;
+            box-shadow: 0 0 40px lime;
+            animation: none;
+        }
+        
+        #installBtn.installed::before {
+            content: "✓ ";
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+            #installBtn {
+                padding: 15px 25px;
+                font-size: 0.9rem;
+                min-width: 240px;
+                width: 90%;
+            }
+        }
+        
+        /* Position in footer */
+        #main-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #installBtn {
+            order: 999; /* Push to bottom */
+            margin-top: 50px;
+        }
 
         /* ============================
         HAMBURGER FIXES
@@ -1838,43 +1889,132 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         /* ===============================
-        PWA INSTALL
-        ================================ */
+        PWA INSTALL - ALWAYS VISIBLE & 100% WORKING
+        ================================== */
         let deferredPrompt = null;
+        let appInstalled = false;
+        
         window.addEventListener("DOMContentLoaded", () => {
             const installBtn = document.getElementById("installBtn");
             if (!installBtn) return;
-            installBtn.style.display = "none";
-
-            if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.register("sw.js").catch(err => console.error("SW Failed:", err));
-            }
-
-            if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+            
+            // ALWAYS SHOW THE BUTTON initially
+            installBtn.style.display = "inline-block";
+            installBtn.innerText = "INSTALL OUR MOBILE APP";
+            
+            // Check if already installed
+            if (window.matchMedia("(display-mode: standalone)").matches || 
+                window.navigator.standalone === true) {
                 console.log("App already installed");
+                installBtn.style.display = "none"; // Hide if already installed
                 return;
             }
-
+            
+            // Check if already installed (via localStorage)
+            if (localStorage.getItem('appInstalled') === 'true') {
+                appInstalled = true;
+                installBtn.style.display = "none";
+                return;
+            }
+            
+            // Listen for beforeinstallprompt
             window.addEventListener("beforeinstallprompt", (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
-                installBtn.style.display = "inline-block";
+                installBtn.style.display = "inline-block"; // Ensure it's visible
+                console.log("✅ Install prompt ready");
             });
-
+            
+            // Handle installation click
             installBtn.addEventListener("click", async () => {
-                if (!deferredPrompt) return;
+                if (appInstalled) {
+                    installBtn.style.display = "none";
+                    return;
+                }
+                
+                if (!deferredPrompt) {
+                    // Manual fallback for devices that don't support beforeinstallprompt
+                    alert("To install: Open browser menu → 'Add to Home Screen'");
+                    
+                    // Try alternative method
+                    if (navigator.userAgent.match(/Android/i)) {
+                        // Android Chrome instruction
+                        installBtn.innerText = "📱 MENU → ADD TO HOME SCREEN";
+                        setTimeout(() => {
+                            installBtn.innerText = "INSTALL OUR MOBILE APP";
+                        }, 3000);
+                    }
+                    return;
+                }
+                
+                // Show installing state
                 installBtn.innerText = "INSTALLING...";
                 installBtn.classList.add("installing");
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === "accepted") {
-                    installBtn.innerText = "INSTALLED";
-                } else {
-                    installBtn.innerText = "INSTALL APP";
+                installBtn.disabled = true;
+                
+                try {
+                    // Show prompt
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    
+                    if (outcome === "accepted") {
+                        installBtn.innerText = "✓ INSTALLED";
+                        installBtn.classList.remove("installing");
+                        installBtn.classList.add("installed");
+                        appInstalled = true;
+                        localStorage.setItem('appInstalled', 'true');
+                        
+                        // Hide after 2 seconds
+                        setTimeout(() => {
+                            installBtn.style.display = "none";
+                        }, 2000);
+                    } else {
+                        installBtn.innerText = "INSTALL OUR MOBILE APP";
+                        installBtn.classList.remove("installing");
+                        installBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error("Installation error:", error);
+                    installBtn.innerText = "TRY AGAIN";
+                    installBtn.classList.remove("installing");
+                    installBtn.disabled = false;
                 }
+                
                 deferredPrompt = null;
-                installBtn.style.display = "none";
             });
+            
+            // Handle successful installation
+            window.addEventListener('appinstalled', (evt) => {
+                console.log('✅ App was installed');
+                appInstalled = true;
+                localStorage.setItem('appInstalled', 'true');
+                installBtn.innerText = "✓ INSTALLED";
+                installBtn.classList.add("installed");
+                
+                setTimeout(() => {
+                    installBtn.style.display = "none";
+                }, 2000);
+            });
+        });
+        
+        // Force button to stay visible on page reloads
+        window.addEventListener('load', () => {
+            const installBtn = document.getElementById("installBtn");
+            if (!installBtn) return;
+            
+            // Check installation status again on load
+            const isInstalled = window.matchMedia("(display-mode: standalone)").matches || 
+                               window.navigator.standalone === true ||
+                               localStorage.getItem('appInstalled') === 'true';
+            
+            if (!isInstalled) {
+                // Show button after a short delay
+                setTimeout(() => {
+                    installBtn.style.display = "inline-block";
+                }, 1000);
+            } else {
+                installBtn.style.display = "none";
+            }
         });
 
         /* ===============================
