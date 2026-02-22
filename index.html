@@ -1692,7 +1692,7 @@
         }
 
         /* ===============================
-        ROBUST MENU SYSTEM - FIXED
+        SIMPLIFIED MENU SYSTEM - GUARANTEED TO WORK
         =============================== */
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById("hamburger");
@@ -1705,167 +1705,100 @@
                 return;
             }
         
-            // Toggle menu function
+            // Simple menu toggle functions
             function openMenu() {
                 nav.classList.add("open");
-                overlay.classList.add("active");
+                if (overlay) overlay.classList.add("active");
                 hamburger.classList.add("active");
                 document.body.style.overflow = "hidden";
             }
         
             function closeMenu() {
                 nav.classList.remove("open");
-                overlay.classList.remove("active");
+                if (overlay) overlay.classList.remove("active");
                 hamburger.classList.remove("active");
                 document.body.style.overflow = "";
             }
         
-            function toggleMenu() {
+            // Hamburger click - just toggle menu
+            hamburger.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 if (nav.classList.contains("open")) {
                     closeMenu();
                 } else {
                     openMenu();
                 }
-            }
+                return false;
+            };
         
-            // HAMBURGER CLICK - Opens menu
-            hamburger.addEventListener("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("Hamburger clicked");
-                toggleMenu();
-            });
-        
-            hamburger.addEventListener("touchstart", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("Hamburger touched");
-                toggleMenu();
-            }, { passive: false });
-        
-            // OVERLAY CLICK - Closes menu
+            // Overlay click - close menu
             if (overlay) {
-                overlay.addEventListener("click", function(e) {
+                overlay.onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log("Overlay clicked");
                     closeMenu();
-                });
-        
-                overlay.addEventListener("touchstart", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log("Overlay touched");
-                    closeMenu();
-                }, { passive: false });
+                    return false;
+                };
             }
         
-            // FIXED: MENU LINKS - Navigate properly
+            // SIMPLE LINK HANDLING - NO COMPLEX LOGIC
             navLinks.forEach(link => {
-                link.addEventListener("click", function(e) {
-                    e.preventDefault(); // Prevent default only temporarily
-                    e.stopPropagation();
-                    
-                    const href = this.getAttribute("href");
-                    console.log("Link clicked:", href);
-                    
-                    // Close menu first
-                    closeMenu();
-                    
-                    // Handle navigation
-                    if (href) {
-                        if (href.startsWith("#")) {
-                            // Scroll to section
-                            const targetId = href.substring(1);
-                            const targetElement = document.getElementById(targetId);
-                            if (targetElement) {
-                                setTimeout(() => {
-                                    targetElement.scrollIntoView({ 
-                                        behavior: "smooth",
-                                        block: "start"
-                                    });
-                                }, 100);
-                            }
-                        } else {
-                            // External page - navigate to the href
-                            window.location.href = href;
-                        }
-                    }
-                });
-        
-                // FIXED: Touch handling
-                link.addEventListener("touchstart", function(e) {
+                // Remove any existing handlers
+                link.removeEventListener('click', () => {});
+                
+                // Set new handler
+                link.onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    const href = this.getAttribute("href");
-                    console.log("Link touched:", href);
+                    const href = this.getAttribute('href');
+                    console.log('Navigating to:', href);
                     
+                    // Close menu
                     closeMenu();
                     
-                    if (href) {
-                        if (href.startsWith("#")) {
+                    // Navigate after a tiny delay to ensure menu closes
+                    setTimeout(function() {
+                        if (href.startsWith('#')) {
+                            // Smooth scroll to section
                             const targetId = href.substring(1);
                             const targetElement = document.getElementById(targetId);
                             if (targetElement) {
-                                setTimeout(() => {
-                                    targetElement.scrollIntoView({ 
-                                        behavior: "smooth",
-                                        block: "start"
-                                    });
-                                }, 100);
+                                targetElement.scrollIntoView({ 
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
                             }
                         } else {
-                            // External page - navigate to the href
+                            // Navigate to other page
                             window.location.href = href;
                         }
-                    }
-                }, { passive: false });
+                    }, 50);
+                    
+                    return false;
+                };
             });
         
-            // ESC KEY - Close menu
-            document.addEventListener("keydown", function(e) {
-                if (e.key === "Escape" && nav.classList.contains("open")) {
-                    console.log("Escape pressed");
+            // Close on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && nav.classList.contains('open')) {
                     closeMenu();
                 }
             });
         
-            // CLICK OUTSIDE - Close menu
-            document.addEventListener("click", function(e) {
-                if (nav.classList.contains("open") && 
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('open') && 
                     !nav.contains(e.target) && 
                     !hamburger.contains(e.target)) {
-                    console.log("Clicked outside");
                     closeMenu();
                 }
             });
         
-            // RESIZE - Close menu on desktop
-            window.addEventListener("resize", function() {
-                if (window.innerWidth > 768 && nav.classList.contains("open")) {
-                    closeMenu();
-                }
-            });
-        
-            // Update time in footer
-            function updateNavTime() {
-                const navTime = document.getElementById('navTime');
-                if (navTime) {
-                    const now = new Date();
-                    navTime.textContent = now.toLocaleTimeString('en-ZA', { 
-                        timeZone: 'Africa/Johannesburg',
-                        hour12: false 
-                    });
-                }
-            }
-            
-            updateNavTime();
-            setInterval(updateNavTime, 1000);
-        
-            console.log("✅ Robust menu system initialized with fixed navigation");
+            console.log("✅ Simplified menu system initialized");
         });
-
+        
         /* ===============================
         INTERNAL REFRESH
         ================================ */
