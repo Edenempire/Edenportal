@@ -199,106 +199,101 @@
         }
 
         /* ===============================
-        CLEAN MENU - NO BLUR
+        CLEAN MENU - FIXED VERSION
         =============================== */
         
-        /* Overlay - ONLY outside, NO blur */
+        /* Overlay - covers everything behind menu */
         .nav-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            background: rgba(0, 0, 0, 0.85);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
             z-index: 3500;
-            pointer-events: none; /* Important: clicks pass through when hidden */
+            backdrop-filter: blur(3px);
         }
         
         .nav-overlay.active {
             opacity: 1;
             visibility: visible;
-            pointer-events: auto; /* Clicks captured when active */
         }
         
-        /* Menu - NO blur inside */
+        /* Menu panel - slides in from right */
         .nav-system {
             position: fixed;
-            top: var(--header-h);
-            right: -350px;
+            top: 0;
+            right: -320px; /* Start hidden */
             width: 300px;
-            height: calc(100svh - var(--header-h));
-            background: #000; /* Solid black, no blur */
+            height: 100vh;
+            background: #000;
             border-left: 2px solid var(--cyan);
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
+            padding: 80px 0 20px 0; /* Top padding to clear header */
             transition: right 0.3s ease;
             z-index: 4000;
-            box-shadow: -5px 0 20px rgba(0,255,255,0.2);
+            box-shadow: -5px 0 30px rgba(0,255,255,0.3);
+            overflow-y: auto;
         }
         
         .nav-system.open {
             right: 0;
         }
         
-        /* Header */
+        /* Header section inside menu */
         .nav-header {
-            padding: 0 20px 15px 20px;
+            padding: 0 20px 20px 20px;
             border-bottom: 1px solid var(--cyan-dim);
         }
         
         .nav-title {
             font-family: var(--font-tactical);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--cyan);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         
-        /* Menu Links Container */
+        /* Menu links container */
         .nav-links {
             flex: 1;
-            padding: 15px 0;
-            overflow-y: auto;
+            padding: 20px 0;
         }
         
-        /* Menu Items */
+        /* Individual menu items */
         .nav-link {
             display: block;
-            padding: 15px 25px;
+            padding: 16px 25px;
             color: #fff;
             text-decoration: none;
             font-family: var(--font-tactical);
             font-size: 1.1rem;
             border-left: 3px solid transparent;
             transition: all 0.2s ease;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .nav-link:hover {
             background: rgba(0, 255, 255, 0.1);
             border-left-color: var(--cyan);
+            color: var(--cyan);
         }
         
         .nav-link:active {
             background: rgba(0, 255, 255, 0.2);
         }
         
-        .nav-link.active {
-            background: rgba(0, 255, 255, 0.15);
-            border-left-color: var(--cyan);
-        }
-        
-        /* Footer */
+        /* Footer section */
         .nav-footer {
-            padding: 15px 20px;
+            padding: 20px 25px;
             border-top: 1px solid var(--cyan-dim);
             font-family: var(--font-mono);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--cyan);
         }
         
@@ -306,19 +301,27 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         
         .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #0f0;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
             border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
         
         #navTime {
             font-size: 0.9rem;
             opacity: 0.8;
+            font-family: var(--font-mono);
         }
         
         /* Hamburger button */
@@ -334,7 +337,7 @@
             color: var(--cyan);
             cursor: pointer;
             transition: all 0.3s ease;
-            z-index: 3001;
+            z-index: 4500; /* Higher than menu */
             outline: none;
             -webkit-tap-highlight-color: transparent;
             position: absolute;
@@ -348,6 +351,10 @@
             transition: transform 0.3s ease;
         }
         
+        #hamburger:hover {
+            background: var(--cyan-dim);
+        }
+        
         #hamburger.active {
             background: var(--cyan);
             color: #000;
@@ -357,10 +364,11 @@
             transform: rotate(90deg);
         }
         
-        /* Mobile */
+        /* Mobile optimization */
         @media (max-width: 768px) {
             .nav-system {
                 width: 280px;
+                right: -280px;
             }
             
             #hamburger {
@@ -375,6 +383,8 @@
             }
         }
 
+        /* -- */
+        
         #hero {
             position: relative;
             display: flex;
