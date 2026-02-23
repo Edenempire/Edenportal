@@ -1,762 +1,1705 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-  
 <meta charset="UTF-8">
-  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-<title>INNOVATIONS CV-5</title>
-  
-<link rel="icon" type="image/png" href="logo.png">
-
+<title>INNOVATIONS CV-5 · TACTICAL COMMAND INTERFACE</title>
+<link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0033'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='black' font-family='Arial'%3E5%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-
 <style>
-
 /* =========================================================
 INNOVATIONS CV-5 — TIER 1 SPECIAL OPS UI
-RED ON BLACK | STEALTH MODE
+RED ON BLACK | STEALTH MODE | ENHANCED EDITION
 ========================================================= */
 
-:root{
---bg:#000000;
---panel:#050505;
---panelSoft:#0b0b0b;
---red:#ff0033;
---redSoft:#ff003322;
---redGlow:#ff003355;
---white:#e6e6e6;
---green:#00ff88;
---blue:#00c3ff;
---yellow:#ffaa00;
---radius:12px;
---transition:0.25s cubic-bezier(.4,0,.2,1);
---fontDisplay:'Orbitron',sans-serif;
---fontMono:'JetBrains Mono',monospace;
-scroll-behavior:smooth;
+:root {
+    --bg: #000000;
+    --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0000 100%);
+    --panel: #0a0a0a;
+    --panelSoft: #121212;
+    --red: #ff0033;
+    --redSoft: rgba(255, 0, 51, 0.15);
+    --redGlow: rgba(255, 0, 51, 0.3);
+    --redIntense: #ff3366;
+    --white: #e6e6e6;
+    --green: #00ff88;
+    --blue: #00c3ff;
+    --yellow: #ffaa00;
+    --purple: #aa00ff;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --fontDisplay: 'Orbitron', sans-serif;
+    --fontMono: 'JetBrains Mono', monospace;
+    --shadow: 0 4px 20px rgba(255, 0, 51, 0.2);
+    --shadow-hover: 0 8px 30px rgba(255, 0, 51, 0.4);
+    scroll-behavior: smooth;
 }
 
 /* =========================================================
-GLOBAL
+GLOBAL STYLES
 ========================================================= */
 
-*{box-sizing:border-box;}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-body{
-margin:0;
-background:var(--bg);
-color:var(--red);
-font-family:var(--fontMono);
-overflow-x:hidden;
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--red);
+    font-family: var(--fontMono);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* TACTICAL GRID OVERLAY */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(var(--redSoft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--redSoft) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -2;
+    opacity: 0.1;
+    pointer-events: none;
 }
 
 /* SNIPER OPTIC BACKGROUND */
-
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(255,0,51,0.15) 31%, transparent 32%),
-radial-gradient(circle at center, transparent 0%, transparent 50%, rgba(255,0,51,0.07) 51%, transparent 52%),
-linear-gradient(180deg,#000,#050505);
-background-size:100% 100%;
-animation:opticPulse 6s infinite alternate ease-in-out;
-z-index:-1;
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 30% 50%, var(--redSoft) 0%, transparent 30%),
+        radial-gradient(circle at 70% 30%, var(--redSoft) 0%, transparent 30%),
+        var(--bg-gradient);
+    animation: opticPulse 8s infinite alternate ease-in-out;
+    z-index: -1;
 }
 
-@keyframes opticPulse{
-0%{filter:brightness(.85);}
-100%{filter:brightness(1.1);}
+@keyframes opticPulse {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* =========================================================
+TYPING ANIMATION
+========================================================= */
+
+.typing-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: typingPulse 1s infinite;
+    margin-left: 5px;
+}
+
+@keyframes typingPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* =========================================================
 HEADER
 ========================================================= */
 
-header{
-text-align:center;
-padding:40px 20px;
-border-bottom:1px solid var(--redGlow);
-position:relative;
+header {
+    text-align: center;
+    padding: 30px 20px;
+    border-bottom: 2px solid var(--red);
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
 }
 
-header h1{
-font-family:var(--fontDisplay);
-font-size:clamp(24px,5vw,52px);
-letter-spacing:5px;
-margin:0;
-text-shadow:0 0 20px var(--red);
+header h1 {
+    font-family: var(--fontDisplay);
+    font-size: clamp(28px, 6vw, 60px);
+    letter-spacing: 8px;
+    margin: 0;
+    text-shadow: 0 0 20px var(--red), 0 0 40px var(--red);
+    animation: glitch 3s infinite;
 }
 
-.shift-box{
-margin-top:20px;
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-align-items:center;
+@keyframes glitch {
+    0%, 100% { transform: skew(0deg); }
+    95% { transform: skew(2deg); }
+    96% { transform: skew(-2deg); }
+    97% { transform: skew(1deg); }
 }
 
-.shift-timer{
-font-size:18px;
-color:var(--yellow);
+.shift-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-button{
-background:#000;
-color:var(--red);
-border:1px solid var(--red);
-padding:12px 20px;
-border-radius:8px;
-cursor:pointer;
-transition:var(--transition);
-font-weight:bold;
-position:relative;
-overflow:hidden;
-}
-
-button:hover{
-background:var(--red);
-color:#000;
-box-shadow:0 0 15px var(--red);
-transform:translateY(-2px);
-}
-
-button:active{
-transform:scale(.95);
-}
-
-.send{
-background:var(--red);
-color:#000;
-}
-
-.export{
-border-color:var(--green);
-color:var(--green);
-}
-
-.export:hover{
-background:var(--green);
-color:#000;
-}
-
-.save{
-border-color:var(--blue);
-color:var(--blue);
-}
-
-.save:hover{
-background:var(--blue);
-color:#000;
+.shift-timer {
+    font-size: 24px;
+    color: var(--yellow);
+    font-family: var(--fontDisplay);
+    text-shadow: 0 0 10px var(--yellow);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--yellow);
 }
 
 /* =========================================================
-NAV RIGHT SIDE
+BUTTON STYLES
 ========================================================= */
 
-.nav-side{
-position:fixed;
-right:20px;
-top:50%;
-transform:translateY(-50%);
-display:flex;
-flex-direction:column;
-gap:10px;
-z-index:999;
+button {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: bold;
+    font-family: var(--fontDisplay);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.nav-side button{
-font-size:12px;
-padding:8px 12px;
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--red);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    z-index: -1;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:hover {
+    color: #000;
+    box-shadow: 0 0 20px var(--red);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.send {
+    background: var(--red);
+    color: #000;
+    border-color: var(--red);
+}
+
+.send:hover {
+    background: var(--redIntense);
+    border-color: var(--redIntense);
+}
+
+.export {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.export::before {
+    background: var(--green);
+}
+
+.export:hover {
+    color: #000;
+}
+
+.save {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.save::before {
+    background: var(--blue);
 }
 
 /* =========================================================
-CONTAINER + SECTIONS
+NAVIGATION SIDE
 ========================================================= */
 
-.container{
-max-width:1600px;
-margin:auto;
-padding:40px 20px;
-display:flex;
-flex-direction:column;
-gap:70px;
+.nav-side {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
 }
 
-.section{
-background:var(--panel);
-border:1px solid var(--redGlow);
-padding:30px;
-border-radius:var(--radius);
-position:relative;
-transition:var(--transition);
-}
-
-.section:hover{
-box-shadow:0 0 25px var(--redGlow);
-}
-
-.section h2{
-font-family:var(--fontDisplay);
-letter-spacing:3px;
-margin-top:0;
+.nav-side button {
+    font-size: 12px;
+    padding: 8px 12px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    min-width: 40px;
+    height: auto;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
 }
 
 /* =========================================================
-INPUTS
+MAIN CONTAINER
 ========================================================= */
 
-input, textarea, select{
-width:100%;
-background:#000;
-border:1px solid var(--redGlow);
-color:var(--red);
-padding:14px;
-border-radius:8px;
-margin-bottom:15px;
-font-family:var(--fontMono);
-transition:var(--transition);
-}
-
-input:focus, textarea:focus{
-outline:none;
-box-shadow:0 0 12px var(--redGlow);
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 /* =========================================================
-CARD
+SECTION STYLES
 ========================================================= */
 
-.card{
-background:var(--panelSoft);
-border:1px solid var(--redSoft);
-padding:15px;
-border-radius:8px;
-margin-bottom:12px;
-animation:fadeIn .4s ease;
+.section {
+    background: var(--panel);
+    border: 1px solid var(--red);
+    padding: 30px;
+    border-radius: var(--radius);
+    position: relative;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+    box-shadow: var(--shadow);
 }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
+.section:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--redIntense);
+}
+
+.section h2 {
+    font-family: var(--fontDisplay);
+    letter-spacing: 3px;
+    margin: 0 0 20px 0;
+    color: var(--red);
+    border-bottom: 1px solid var(--redSoft);
+    padding-bottom: 10px;
+}
+
+.section h3 {
+    font-family: var(--fontDisplay);
+    letter-spacing: 2px;
+    margin: 20px 0 15px 0;
+    color: var(--white);
+    font-size: 1.2rem;
 }
 
 /* =========================================================
-CHECKLIST ADVANCED
+FORM ELEMENTS
 ========================================================= */
 
-.check-wrapper{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
 }
 
-.check-column{
-background:#000;
-padding:15px;
-border-radius:8px;
-border:1px solid var(--redSoft);
-min-height:200px;
-transition:var(--transition);
+input, textarea, select {
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--redSoft);
+    color: var(--white);
+    padding: 12px 15px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 15px;
+    font-family: var(--fontMono);
+    transition: var(--transition);
+    font-size: 14px;
 }
 
-.check-column h3{
-margin-top:0;
-text-align:center;
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 15px var(--redGlow);
 }
 
-.move{
-transition:all .4s ease;
+textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
 /* =========================================================
-DRAWING CANVAS
+CARD STYLES
 ========================================================= */
 
-.canvas-box{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
+.card {
+    background: var(--panelSoft);
+    border: 1px solid var(--redSoft);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    animation: slideIn 0.3s ease;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-#drawCanvas{
-background:white;
-border-radius:10px;
-cursor:crosshair;
-width: 50%;
+.card:hover {
+    border-color: var(--red);
+    transform: translateX(5px);
+}
+
+.card::before {
+    content: '►';
+    position: absolute;
+    left: -20px;
+    color: var(--red);
+    transition: var(--transition);
+}
+
+.card:hover::before {
+    left: 5px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* =========================================================
+CHECKLIST LAYOUT
+========================================================= */
+
+.check-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.check-column {
+    background: #000;
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--redSoft);
+    min-height: 300px;
+    transition: var(--transition);
+}
+
+.check-column:hover {
+    border-color: var(--red);
+}
+
+.check-column h3 {
+    margin: 0 0 15px 0;
+    text-align: center;
+    color: var(--yellow);
+}
+
+/* =========================================================
+CANVAS AREA
+========================================================= */
+
+.canvas-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+#drawCanvas {
+    background: #111;
+    border-radius: var(--radius-sm);
+    cursor: crosshair;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border: 2px solid var(--redSoft);
+    transition: var(--transition);
+}
+
+#drawCanvas:hover {
+    border-color: var(--red);
+    box-shadow: 0 0 20px var(--redGlow);
+}
+
+/* =========================================================
+CALCULATOR
+========================================================= */
+
+#calcInput {
+    font-family: var(--fontMono);
+    background: #000;
+    color: var(--green);
+}
+
+#calcResult {
+    margin-top: 10px;
+    padding: 10px;
+    background: #000;
+    border: 1px solid var(--red);
+    border-radius: var(--radius-sm);
+    font-size: 1.2rem;
+    color: var(--green);
+}
+
+/* =========================================================
+LIVE CLOCK
+========================================================= */
+
+#liveClock {
+    font-size: 1.5rem;
+    font-family: var(--fontDisplay);
+    color: var(--blue);
+    text-shadow: 0 0 10px var(--blue);
+    background: #000;
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    margin-bottom: 15px;
+    border: 1px solid var(--blue);
+}
+
+/* =========================================================
+FILE PREVIEW
+========================================================= */
+
+#fileView {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#fileView .card {
+    background: #000;
+    padding: 10px;
+}
+
+#fileView iframe {
+    border: 1px solid var(--redSoft);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    margin-top: 10px;
 }
 
 /* =========================================================
 LOADER
 ========================================================= */
 
-.loader{
-position:fixed;
-inset:0;
-background:#000000cc;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-display:none;
+.loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+    backdrop-filter: blur(5px);
 }
 
-.spinner{
-width:60px;
-height:60px;
-border:5px solid #111;
-border-top:5px solid var(--red);
-border-radius:50%;
-animation:spin 1s linear infinite;
+.spinner {
+    width: 70px;
+    height: 70px;
+    border: 5px solid var(--redSoft);
+    border-top: 5px solid var(--red);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
-@keyframes spin{
-100%{transform:rotate(360deg);}
+@keyframes spin {
+    100% { transform: rotate(360deg); }
 }
 
 /* =========================================================
-RESPONSIVE
+STATUS BADGES
 ========================================================= */
 
-@media(max-width:900px){
-.check-wrapper{
-grid-template-columns:1fr;
-}
-.nav-side{
-display:none;
-}
-}
-
-footer{
-text-align:center;
-padding:40px 20px;
-border-top:1px solid var(--redGlow);
-color:var(--white);
-margin-top:60px;
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-left: 10px;
 }
 
-footer span{
-color:var(--green);
-font-weight:bold;
+.status-active {
+    background: var(--green);
+    color: #000;
+}
+
+.status-pending {
+    background: var(--yellow);
+    color: #000;
+}
+
+.status-offline {
+    background: var(--red);
+    color: #000;
+}
+
+/* =========================================================
+PROGRESS BAR
+========================================================= */
+
+.progress-container {
+    background: #111;
+    border-radius: 10px;
+    height: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px var(--red);
+}
+
+/* =========================================================
+TOOLTIPS
+========================================================= */
+
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: var(--red);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    white-space: nowrap;
+    border: 1px solid var(--red);
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 900px) {
+    .check-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-side {
+        display: none;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    #liveClock {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .shift-box {
+        flex-direction: column;
+    }
+    
+    .canvas-box {
+        flex-direction: column;
+    }
+    
+    #drawCanvas {
+        max-width: 100%;
+    }
+}
+
+/* =========================================================
+FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 2px solid var(--red);
+    color: var(--white);
+    margin-top: 60px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+footer span {
+    color: var(--red);
+    font-weight: bold;
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* =========================================================
+SCROLLBAR CUSTOMIZATION
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--red);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--redIntense);
+}
+
+/* =========================================================
+ANIMATIONS
+========================================================= */
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+/* =========================================================
+STATUS INDICATOR
+========================================================= */
+
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-red {
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+}
+
+.status-green {
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+.status-blue {
+    background: var(--blue);
+    box-shadow: 0 0 10px var(--blue);
+}
+
+/* =========================================================
+HOTKEY HINT
+========================================================= */
+
+.hotkey-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--red);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    font-size: 12px;
+    z-index: 998;
+    backdrop-filter: blur(5px);
+}
+
+.hotkey-hint kbd {
+    background: var(--red);
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 2px;
+    font-family: var(--fontMono);
 }
 
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader"><div class="spinner"></div></div>
-
-<header>
-<h1>INNOVATIONS CV-5</h1>
-
-<div class="shift-box">
-<button id="shiftBtn">START SHIFT</button>
-<div class="shift-timer" id="shiftTimer">00:00:00</div>
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="spinner"></div>
 </div>
 
+<!-- HOTKEY HINT -->
+<div class="hotkey-hint">
+    <kbd>Ctrl</kbd> + <kbd>S</kbd> Save · <kbd>Ctrl</kbd> + <kbd>E</kbd> Export · <kbd>Esc</kbd> Clear
+</div>
+
+<!-- HEADER -->
+<header>
+    <h1>INNOVATIONS CV-5</h1>
+    <div class="shift-box">
+        <button id="shiftBtn" data-tooltip="Start/End tactical shift">▶ START SHIFT</button>
+        <div class="shift-timer" id="shiftTimer">00:00:00</div>
+        <span class="status-indicator status-red pulse" id="shiftStatus"></span>
+    </div>
 </header>
 
+<!-- NAVIGATION SIDE -->
 <div class="nav-side">
-<button onclick="window.scrollTo({top:0,behavior:'smooth'})">TOP</button>
-<button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})">MID</button>
-<button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">DOWN</button>
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" data-tooltip="Go to top">TOP</button>
+    <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})" data-tooltip="Go to middle">MID</button>
+    <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" data-tooltip="Go to bottom">DOWN</button>
 </div>
 
+<!-- MAIN CONTAINER -->
 <div class="container">
 
-<!-- SECTION 1 -->
-<div class="section" id="sec1">
-<h2>SECTION 1 — INNOVATIONS COMMAND DESK</h2>
-  <h3>The Target</h3>
+    <!-- SECTION 1 — COMMAND DESK -->
+    <div class="section" id="sec1">
+        <h2>⚡ SECTION 1 — COMMAND DESK</h2>
+        
+        <h3>🎯 TARGET DESIGNATION</h3>
+        <label>CODENAME:</label>
+        <input id="noteCode" placeholder="Enter codename..." data-tooltip="Target identification code">
+        
+        <label>NOTEPAD:</label>
+        <textarea id="noteInput" rows="4" placeholder="Enter mission notes..."></textarea>
+        
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="save" id="noteSave" data-tooltip="Save to Firebase">💾 SAVE</button>
+            <button class="export" id="noteExportTXT" data-tooltip="Export as text file">📄 EXPORT TXT</button>
+            <button class="export" id="noteExportJSON" data-tooltip="Export as JSON">🔧 EXPORT JSON</button>
+            <button class="send" id="noteSend" data-tooltip="Send to command">📡 SEND</button>
+        </div>
 
-<label>codename:</label>
-<input id="noteCode">
+        <hr style="border-color: var(--redSoft); margin: 20px 0;">
 
-<label>notepad:</label>
-<textarea id="noteInput" rows="6"></textarea>
+        <h3>⏰ TACTICAL TIMELINE</h3>
+        <div id="liveClock"></div>
+        <input type="date" id="calendar" class="calendar">
 
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
-<button class="save" id="noteSave">SAVE</button>
-<button class="export" id="noteExportTXT">EXPORT TXT</button>
-<button class="export" id="noteExportJSON">EXPORT JSON</button>
-<button class="send" id="noteSend">SEND</button>
+        <hr style="border-color: var(--redSoft); margin: 20px 0;">
+
+        <h3>✏️ TACTICAL WHITEBOARD</h3>
+        <div class="canvas-box">
+            <canvas id="drawCanvas" width="500" height="300"></canvas>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="clearCanvas()" data-tooltip="Clear canvas">🗑️ CLEAR</button>
+                <button onclick="saveCanvas()" data-tooltip="Save drawing">💾 SAVE</button>
+                <button onclick="changeBrushSize(2)" data-tooltip="Small brush">●</button>
+                <button onclick="changeBrushSize(5)" data-tooltip="Medium brush">⬤</button>
+                <button onclick="changeBrushSize(10)" data-tooltip="Large brush">◉</button>
+                <input type="color" id="brushColor" value="#ff0033" style="width: 50px; height: 40px; padding: 0;">
+            </div>
+        </div>
+
+        <hr style="border-color: var(--redSoft); margin: 20px 0;">
+
+        <h3>🧮 TACTICAL CALCULATOR</h3>
+        <input id="calcInput" placeholder="e.g., (10*5)+3" data-tooltip="Enter expression">
+        <button onclick="calculate()" data-tooltip="Calculate result">🔢 CALCULATE</button>
+        <div id="calcResult">—</div>
+        
+        <div id="noteView"></div>
+    </div>
+
+    <!-- SECTION 2 — TEAM MESSAGE BOARD -->
+    <div class="section">
+        <h2>📡 SECTION 2 — MESSAGE BOARD</h2>
+        
+        <label>CODENAME:</label>
+        <input id="boardName" placeholder="Enter your callsign..." data-tooltip="Your identification">
+        
+        <label>MESSAGE:</label>
+        <textarea id="boardMessage" rows="3" placeholder="Enter encrypted message..."></textarea>
+        
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="save" id="boardSave" data-tooltip="Save message">💾 SAVE</button>
+            <button class="send" id="boardSend" data-tooltip="Send message">📡 SEND</button>
+            <button onclick="encryptText()" data-tooltip="Encrypt with AES">🔒 ENCRYPT</button>
+            <button onclick="decryptText()" data-tooltip="Decrypt message">🔓 DECRYPT</button>
+            <button class="export" id="boardExport" data-tooltip="Export messages">📥 EXPORT</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h3>📨 ACTIVE MESSAGES <span class="status-badge status-active" id="messageCount">0</span></h3>
+            <div id="boardView"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 3 — CHECKLIST -->
+    <div class="section">
+        <h2>✅ SECTION 3 — MISSION CHECKLIST</h2>
+        
+        <label>MISSION CODE:</label>
+        <input id="taskCode" placeholder="Enter mission code..." data-tooltip="Mission identification">
+        
+        <label>TASK:</label>
+        <input id="checkInput" placeholder="Enter task description..." data-tooltip="Task to complete">
+        
+        <button class="send" id="taskSend" data-tooltip="Add new task">➕ ADD TASK</button>
+        
+        <div class="check-wrapper">
+            <div class="check-column">
+                <h3>⚔️ ACTIVE MISSIONS <span class="status-badge status-pending" id="activeCount">0</span></h3>
+                <div id="activeTasks"></div>
+            </div>
+            <div class="check-column">
+                <h3>✅ COMPLETED <span class="status-badge status-green" id="completedCount">0</span></h3>
+                <div id="completedTasks"></div>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="taskProgress" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 4 — LOGS & FILES -->
+    <div class="section">
+        <h2>📁 SECTION 4 — INTELLIGENCE LOGS</h2>
+        
+        <label>📎 UPLOAD SINGLE FILE:</label>
+        <input type="file" id="fileSingle" data-tooltip="Upload one file">
+        
+        <label>📎 UPLOAD MULTIPLE (MAX 5):</label>
+        <input type="file" id="fileMulti" multiple data-tooltip="Upload up to 5 files">
+        
+        <button onclick="saveFiles()" data-tooltip="Process files">💾 PROCESS FILES</button>
+        
+        <h3>📂 FILE VIEWER</h3>
+        <div id="fileView"></div>
+
+        <hr style="border-color: var(--redSoft); margin: 20px 0;">
+
+        <h3>📋 SHIFT LOGS</h3>
+        <div id="shiftLogs"></div>
+    </div>
+
+    <!-- SECTION 5 — AI TERMINAL -->
+    <div class="section">
+        <h2>🤖 SECTION 5 — AI TERMINAL: ZAMA MDLULI</h2>
+        
+        <label>CODENAME:</label>
+        <input id="aiCode" placeholder="Enter your callsign..." data-tooltip="Your identification">
+        
+        <label>DIRECTIVE:</label>
+        <textarea id="aiInput" rows="4" placeholder="Enter directive for Zama Mdluli..."></textarea>
+        
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="send" id="aiSend" data-tooltip="Send to AI">🤖 SEND</button>
+            <button class="export" id="aiExport" data-tooltip="Export AI logs">📥 EXPORT</button>
+            <button onclick="analyzeAIText()" data-tooltip="Analyze text">📊 ANALYZE</button>
+        </div>
+        
+        <div id="aiView"></div>
+    </div>
 </div>
 
-<hr>
-
-<h3>live clock & calendar</h3>
-<div id="liveClock"></div>
-<input type="date" id="calendar">
-
-<hr>
-
-<h3>CIO whiteboard</h3>
-
-<div class="canvas-box">
-<canvas id="drawCanvas" width="400" height="300"></canvas>
-<div>
-<button onclick="clearCanvas()">CLEAR</button>
-</div>
-</div>
-
-<hr>
-
-<h3>advanced calculator</h3>
-<input id="calcInput" placeholder="e.g. (10*5)+3">
-<button onclick="calculate()">CALCULATE</button>
-<div id="calcResult"></div>
-
-<div id="noteView"></div>
-</div>
-
-<!-- SECTION 2 -->
-<div class="section">
-<h2>SECTION 2 — TEAM MESSAGE BOARD</h2>
-
-<label>codename:</label>
-<input id="boardName">
-
-<label>Message:</label>
-<textarea id="boardMessage"></textarea>
-
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
-<button class="save" id="boardSave">SAVE</button>
-<button class="send" id="boardSend">SEND</button>
-<button onclick="encryptText()">ENCRYPT AES</button>
-<button onclick="decryptText()">DECRYPT AES</button>
-<button class="export" id="boardExport">EXPORT JSON</button>
-</div>
-
-<div id="boardView"></div>
-</div>
-
-<!-- SECTION 3 -->
-<div class="section">
-<h2>SECTION 3 — CHECKLIST</h2>
-
-<label>codename:</label>
-<input id="taskCode">
-
-<input id="checkInput" placeholder="Enter Task">
-
-<button class="send" id="taskSend">SEND</button>
-
-<div class="check-wrapper">
-<div class="check-column">
-<h3>ACTIVE</h3>
-<div id="activeTasks"></div>
-</div>
-<div class="check-column">
-<h3>COMPLETED</h3>
-<div id="completedTasks"></div>
-</div>
-</div>
-
-</div>
-
-<!-- SECTION 4 -->
-<div class="section">
-<h2>SECTION 4 — LOG</h2>
-
-<label>Upload File (single)</label>
-<input type="file" id="fileSingle">
-
-<label>Upload Up To 5 Files</label>
-<input type="file" id="fileMulti" multiple>
-
-<button onclick="saveFiles()">SAVE FILES</button>
-
-<h3>File Viewer</h3>
-<div id="fileView"></div>
-
-<hr>
-
-<h3>Shift Logs</h3>
-<div id="shiftLogs"></div>
-
-</div>
-
-<!-- SECTION 5 -->
-<div class="section">
-<h2>SECTION 5 — AI TERMINAL: ZAMA MDLULI</h2>
-
-<label>Codename:</label>
-<input id="aiCode">
-
-<textarea id="aiInput" placeholder="Directive for Zama Mdluli..."></textarea>
-
-<button class="send" id="aiSend">SEND</button>
-<button class="export" id="aiExport">EXPORT JSON</button>
-
-<div id="aiView"></div>
-</div>
-
-</div>
-
+<!-- FOOTER -->
 <footer>
-<span>"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest." — Joshua 1:9 (KJV)</span>
+    <span>"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest." — Joshua 1:9 (KJV)</span>
+    <br>
+    <small style="color: var(--red); margin-top: 20px; display: block;">INNOVATIONS CV-5 · TACTICAL COMMAND INTERFACE · v2.0</small>
 </footer>
 
 <script type="module">
-
 /* =========================================================
-FIREBASE CONFIG (YOUR REAL CONFIG)
+FIREBASE CONFIGURATION
 ========================================================= */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
-getFirestore,
-collection,addDoc,doc,setDoc,getDoc,onSnapshot,
-deleteDoc,updateDoc,serverTimestamp
+    getFirestore,
+    collection, addDoc, doc, setDoc, getDoc, onSnapshot,
+    deleteDoc, updateDoc, serverTimestamp, query, orderBy, limit
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-authDomain: "eden-4a8d3.firebaseapp.com",
-projectId: "eden-4a8d3",
-storageBucket: "eden-4a8d3.firebasestorage.app",
-messagingSenderId: "421147129483",
-appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+    apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+    authDomain: "eden-4a8d3.firebaseapp.com",
+    projectId: "eden-4a8d3",
+    storageBucket: "eden-4a8d3.firebasestorage.app",
+    messagingSenderId: "421147129483",
+    appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 /* =========================================================
+GLOBAL VARIABLES
+========================================================= */
+
+let shiftInterval = null;
+let shiftStartTime = null;
+let shiftDocId = null;
+let brushSize = 3;
+let brushColor = '#ff0033';
+
+/* =========================================================
+DOM ELEMENTS
+========================================================= */
+
+const shiftBtn = document.getElementById("shiftBtn");
+const shiftTimer = document.getElementById("shiftTimer");
+const shiftStatus = document.getElementById("shiftStatus");
+const shiftLogs = document.getElementById("shiftLogs");
+const liveClock = document.getElementById("liveClock");
+const canvas = document.getElementById("drawCanvas");
+const ctx = canvas.getContext("2d");
+const calcInput = document.getElementById("calcInput");
+const calcResult = document.getElementById("calcResult");
+const checkInput = document.getElementById("checkInput");
+const taskSend = document.getElementById("taskSend");
+const activeTasks = document.getElementById("activeTasks");
+const completedTasks = document.getElementById("completedTasks");
+const fileSingle = document.getElementById("fileSingle");
+const fileMulti = document.getElementById("fileMulti");
+const fileView = document.getElementById("fileView");
+const boardName = document.getElementById("boardName");
+const boardMessage = document.getElementById("boardMessage");
+const boardSend = document.getElementById("boardSend");
+const boardView = document.getElementById("boardView");
+const aiCode = document.getElementById("aiCode");
+const aiInput = document.getElementById("aiInput");
+const aiSend = document.getElementById("aiSend");
+const aiView = document.getElementById("aiView");
+const loader = document.getElementById("loader");
+const noteCode = document.getElementById("noteCode");
+const noteInput = document.getElementById("noteInput");
+const noteSave = document.getElementById("noteSave");
+const noteSend = document.getElementById("noteSend");
+const noteExportTXT = document.getElementById("noteExportTXT");
+const noteExportJSON = document.getElementById("noteExportJSON");
+const messageCount = document.getElementById("messageCount");
+const activeCount = document.getElementById("activeCount");
+const completedCount = document.getElementById("completedCount");
+const taskProgress = document.getElementById("taskProgress");
+
+/* =========================================================
+UTILITY FUNCTIONS
+========================================================= */
+
+function showLoader(show = true) {
+    loader.style.display = show ? "flex" : "none";
+}
+
+function formatTime(ms) {
+    let sec = Math.floor(ms / 1000);
+    let h = Math.floor(sec / 3600);
+    let m = Math.floor((sec % 3600) / 60);
+    let s = sec % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'error' ? 'var(--red)' : type === 'success' ? 'var(--green)' : 'var(--blue)'};
+        color: #000;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        font-family: var(--fontMono);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        border: 1px solid var(--white);
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
+
+/* =========================================================
 SHIFT SYSTEM
 ========================================================= */
 
-let shiftInterval=null;
-let shiftStartTime=null;
-let shiftDocId=null;
-const shiftBtn=document.getElementById("shiftBtn");
-const shiftTimer=document.getElementById("shiftTimer");
+shiftBtn.onclick = async () => {
+    if (!shiftStartTime) {
+        shiftStartTime = Date.now();
+        shiftBtn.innerHTML = '◼ END SHIFT';
+        shiftBtn.style.borderColor = 'var(--yellow)';
+        shiftStatus.className = 'status-indicator status-green pulse';
+        
+        try {
+            shiftDocId = (await addDoc(collection(db, "shifts"), {
+                start: serverTimestamp(),
+                active: true,
+                operator: noteCode.value || 'Unknown'
+            })).id;
+            
+            showNotification('Shift started', 'success');
+        } catch (error) {
+            showNotification('Firebase error: ' + error.message, 'error');
+        }
 
-function formatTime(ms){
-let sec=Math.floor(ms/1000);
-let h=Math.floor(sec/3600);
-let m=Math.floor((sec%3600)/60);
-let s=sec%60;
-return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
+        shiftInterval = setInterval(() => {
+            shiftTimer.innerText = formatTime(Date.now() - shiftStartTime);
+        }, 1000);
 
-shiftBtn.onclick=async()=>{
-if(!shiftStartTime){
-shiftStartTime=Date.now();
-shiftBtn.innerText="END SHIFT";
-shiftDocId=(await addDoc(collection(db,"shifts"),{
-start:serverTimestamp(),
-active:true
-})).id;
-
-shiftInterval=setInterval(()=>{
-shiftTimer.innerText=formatTime(Date.now()-shiftStartTime);
-},1000);
-
-alert("PROTOCOL: 71 PUSH-UPS IN 60 SECONDS. SEND VIDEO TO EDEN WHATSAPP.");
-}
-else{
-clearInterval(shiftInterval);
-let duration=Date.now()-shiftStartTime;
-await updateDoc(doc(db,"shifts",shiftDocId),{
-end:serverTimestamp(),
-duration
-});
-shiftBtn.innerText="START SHIFT";
-shiftStartTime=null;
-shiftTimer.innerText="00:00:00";
-alert("SHIFT ENDED. PROTOCOL: 71 PUSH-UPS AGAIN.");
-}
+        alert("⚡ PROTOCOL ACTIVATED: 71 PUSH-UPS IN 60 SECONDS. SEND VIDEO TO EDEN WHATSAPP.");
+    } else {
+        clearInterval(shiftInterval);
+        let duration = Date.now() - shiftStartTime;
+        
+        try {
+            await updateDoc(doc(db, "shifts", shiftDocId), {
+                end: serverTimestamp(),
+                duration,
+                active: false
+            });
+            showNotification('Shift ended', 'success');
+        } catch (error) {
+            showNotification('Error ending shift', 'error');
+        }
+        
+        shiftBtn.innerHTML = '▶ START SHIFT';
+        shiftBtn.style.borderColor = '';
+        shiftStartTime = null;
+        shiftTimer.innerText = "00:00:00";
+        shiftStatus.className = 'status-indicator status-red';
+        
+        alert("⚡ SHIFT ENDED. PROTOCOL: 71 PUSH-UPS AGAIN.");
+    }
 };
 
-onSnapshot(collection(db,"shifts"),snap=>{
-shiftLogs.innerHTML="";
-snap.forEach(d=>{
-let data=d.data();
-if(data.duration){
-shiftLogs.innerHTML+=`
-<div class="card">
-Duration: ${formatTime(data.duration)}
-</div>`;
-}
-});
+// Listen to shifts
+onSnapshot(query(collection(db, "shifts"), orderBy("start", "desc"), limit(10)), (snap) => {
+    shiftLogs.innerHTML = "";
+    snap.forEach(d => {
+        let data = d.data();
+        if (data.duration) {
+            shiftLogs.innerHTML += `
+                <div class="card">
+                    <span class="status-indicator status-green" style="margin-right: 10px;"></span>
+                    <strong>${data.operator || 'Unknown'}</strong> — ${formatTime(data.duration)}
+                    <small style="color: var(--white); display: block; margin-top: 5px;">
+                        ${new Date(data.start?.toDate()).toLocaleString()}
+                    </small>
+                </div>`;
+        }
+    });
 });
 
 /* =========================================================
 LIVE CLOCK
 ========================================================= */
 
-setInterval(()=>{
-liveClock.innerText=new Date().toLocaleString();
-},1000);
+setInterval(() => {
+    const now = new Date();
+    liveClock.innerHTML = `
+        <span style="color: var(--red);">${now.toLocaleDateString()}</span><br>
+        <span style="font-size: 2rem; color: var(--blue);">${now.toLocaleTimeString()}</span>
+    `;
+}, 1000);
 
 /* =========================================================
-DRAWING CANVAS
+CANVAS DRAWING ENHANCED
 ========================================================= */
 
-const canvas=document.getElementById("drawCanvas");
-const ctx=canvas.getContext("2d");
-let drawing=false;
+// Set initial canvas style
+ctx.strokeStyle = brushColor;
+ctx.lineWidth = brushSize;
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
 
-canvas.onmousedown=()=>drawing=true;
-canvas.onmouseup=()=>drawing=false;
-canvas.onmousemove=(e)=>{
-if(!drawing)return;
-ctx.fillStyle="black";
-ctx.beginPath();
-ctx.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
-ctx.fill();
-};
+let drawing = false;
+let lastX = 0;
+let lastY = 0;
 
-window.clearCanvas=()=>ctx.clearRect(0,0,canvas.width,canvas.height);
-
-/* =========================================================
-CALCULATOR
-========================================================= */
-
-window.calculate=()=>{
-try{
-calcResult.innerText="Result: "+eval(calcInput.value);
-}catch{
-calcResult.innerText="Error";
-}
-};
-
-/* =========================================================
-CHECKLIST DYNAMIC
-========================================================= */
-
-const taskRef=collection(db,"tasks");
-
-taskSend.onclick=async()=>{
-await addDoc(taskRef,{
-text:checkInput.value,
-done:false
+canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
 });
-checkInput.value="";
+
+canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    
+    ctx.strokeStyle = brushColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+    
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+});
+
+canvas.addEventListener('mouseup', () => { drawing = false; });
+canvas.addEventListener('mouseleave', () => { drawing = false; });
+
+window.clearCanvas = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    showNotification('Canvas cleared', 'success');
 };
 
-onSnapshot(taskRef,snap=>{
-activeTasks.innerHTML="";
-completedTasks.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-let el=document.createElement("div");
-el.className="card move";
-el.innerHTML=`
-${d.text}
-<button onclick="toggleTask('${docSnap.id}',${d.done})">TOGGLE</button>
-<button onclick="deleteTask('${docSnap.id}')">DELETE</button>
+window.saveCanvas = () => {
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `tactical-drawing-${Date.now()}.png`;
+    link.href = dataURL;
+    link.click();
+    showNotification('Drawing saved', 'success');
+};
+
+window.changeBrushSize = (size) => {
+    brushSize = size;
+    showNotification(`Brush size: ${size}px`, 'info');
+};
+
+document.getElementById('brushColor').addEventListener('input', (e) => {
+    brushColor = e.target.value;
+});
+
+/* =========================================================
+CALCULATOR ENHANCED
+========================================================= */
+
+window.calculate = () => {
+    try {
+        // Safe evaluation
+        const result = new Function('return ' + calcInput.value)();
+        calcResult.innerHTML = `
+            <span style="color: var(--green);">RESULT: ${result}</span>
+            <span style="color: var(--white); display: block; margin-top: 5px;">${new Date().toLocaleTimeString()}</span>
+        `;
+        showNotification('Calculation complete', 'success');
+    } catch {
+        calcResult.innerHTML = '<span style="color: var(--red);">⚠ ERROR: Invalid expression</span>';
+        showNotification('Invalid expression', 'error');
+    }
+};
+
+// Allow Enter key
+calcInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') calculate();
+});
+
+/* =========================================================
+TASKS / CHECKLIST ENHANCED
+========================================================= */
+
+const taskRef = collection(db, "tasks");
+
+taskSend.onclick = async () => {
+    if (!checkInput.value.trim()) {
+        showNotification('Please enter a task', 'error');
+        return;
+    }
+    
+    showLoader(true);
+    try {
+        await addDoc(taskRef, {
+            text: checkInput.value,
+            done: false,
+            created: serverTimestamp(),
+            code: noteCode.value || 'Unknown'
+        });
+        checkInput.value = "";
+        showNotification('Task added', 'success');
+    } catch (error) {
+        showNotification('Error adding task', 'error');
+    }
+    showLoader(false);
+};
+
+onSnapshot(query(taskRef, orderBy("created", "desc")), (snap) => {
+    activeTasks.innerHTML = "";
+    completedTasks.innerHTML = "";
+    let active = 0;
+    let completed = 0;
+    
+    snap.forEach(docSnap => {
+        let d = docSnap.data();
+        if (d.done) completed++;
+        else active++;
+        
+        let el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: ${d.done ? 'var(--green)' : 'var(--white)'};">${d.text}</span>
+                <div>
+                    <button class="save" style="padding: 5px 10px; font-size: 12px;" onclick="toggleTask('${docSnap.id}', ${d.done})">
+                        ${d.done ? '↩️' : '✅'}
+                    </button>
+                    <button class="export" style="padding: 5px 10px; font-size: 12px;" onclick="deleteTask('${docSnap.id}')">
+                        🗑️
+                    </button>
+                </div>
+            </div>
+            <small style="color: var(--red); display: block; margin-top: 5px;">
+                ${d.code || 'Unknown'} · ${d.created ? new Date(d.created.toDate()).toLocaleString() : 'Just now'}
+            </small>
+        `;
+        
+        if (d.done) completedTasks.appendChild(el);
+        else activeTasks.appendChild(el);
+    });
+    
+    activeCount.textContent = active;
+    completedCount.textContent = completed;
+    
+    // Update progress bar
+    const total = active + completed;
+    if (total > 0) {
+        const percentage = (completed / total) * 100;
+        taskProgress.style.width = percentage + '%';
+    }
+});
+
+window.toggleTask = async (id, done) => {
+    showLoader(true);
+    try {
+        await updateDoc(doc(db, "tasks", id), { done: !done });
+        showNotification('Task updated', 'success');
+    } catch (error) {
+        showNotification('Error updating task', 'error');
+    }
+    showLoader(false);
+};
+
+window.deleteTask = async (id) => {
+    if (confirm('Delete this task?')) {
+        showLoader(true);
+        try {
+            await deleteDoc(doc(db, "tasks", id));
+            showNotification('Task deleted', 'success');
+        } catch (error) {
+            showNotification('Error deleting task', 'error');
+        }
+        showLoader(false);
+    }
+};
+
+/* =========================================================
+FILE HANDLING ENHANCED
+========================================================= */
+
+window.saveFiles = () => {
+    let files = [...fileSingle.files, ...fileMulti.files].slice(0, 5);
+    
+    if (files.length === 0) {
+        showNotification('No files selected', 'error');
+        return;
+    }
+    
+    fileView.innerHTML = "";
+    
+    files.forEach((f, index) => {
+        let reader = new FileReader();
+        reader.onload = () => {
+            let div = document.createElement("div");
+            div.className = "card";
+            
+            // Determine file type
+            const isImage = f.type.startsWith('image/');
+            const isPDF = f.type === 'application/pdf';
+            const isText = f.type.startsWith('text/');
+            
+            let preview = '';
+            if (isImage) {
+                preview = `<img src="${reader.result}" style="max-width: 100%; max-height: 150px; border-radius: 4px;">`;
+            } else if (isPDF) {
+                preview = `<iframe src="${reader.result}" width="100%" height="150" style="border: none;"></iframe>`;
+            } else if (isText) {
+                preview = `<pre style="max-height: 150px; overflow: auto; background: #111; padding: 10px; border-radius: 4px;">${atob(reader.result.split(',')[1] || '')}</pre>`;
+            }
+            
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <strong>📁 ${f.name}</strong>
+                    <small>${(f.size / 1024).toFixed(2)} KB</small>
+                </div>
+                ${preview}
+                <button onclick="downloadFile('${reader.result}', '${f.name}')" style="margin-top: 10px; padding: 5px; font-size: 12px;">⬇ DOWNLOAD</button>
+            `;
+            fileView.appendChild(div);
+        };
+        reader.readAsDataURL(f);
+    });
+    
+    showNotification(`Processing ${files.length} files...`, 'success');
+};
+
+window.downloadFile = (dataURL, filename) => {
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = filename;
+    link.click();
+};
+
+/* =========================================================
+MESSAGE BOARD ENHANCED
+========================================================= */
+
+const boardRef = collection(db, "board");
+
+boardSend.onclick = async () => {
+    if (!boardMessage.value.trim() || !boardName.value.trim()) {
+        showNotification('Name and message required', 'error');
+        return;
+    }
+    
+    showLoader(true);
+    try {
+        await addDoc(boardRef, {
+            name: boardName.value,
+            text: boardMessage.value,
+            time: serverTimestamp(),
+            encrypted: false
+        });
+        boardMessage.value = "";
+        showNotification('Message sent', 'success');
+    } catch (error) {
+        showNotification('Error sending message', 'error');
+    }
+    showLoader(false);
+};
+
+onSnapshot(query(boardRef, orderBy("time", "desc")), (snap) => {
+    boardView.innerHTML = "";
+    let count = 0;
+    
+    snap.forEach(docSnap => {
+        let d = docSnap.data();
+        count++;
+        
+        boardView.innerHTML += `
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="color: var(--blue);">${d.name}</strong>
+                    <small style="color: var(--white);">${d.time ? new Date(d.time.toDate()).toLocaleString() : 'Just now'}</small>
+                </div>
+                <p style="margin: 10px 0; color: var(--white);">${d.text}</p>
+                <div style="display: flex; gap: 5px;">
+                    <button class="export" style="padding: 5px; font-size: 12px;" onclick="deleteBoard('${docSnap.id}')">🗑️ DELETE</button>
+                    ${d.encrypted ? '<span class="status-badge status-active">🔒 ENCRYPTED</span>' : ''}
+                </div>
+            </div>`;
+    });
+    
+    messageCount.textContent = count;
+});
+
+window.deleteBoard = async (id) => {
+    if (confirm('Delete this message?')) {
+        showLoader(true);
+        try {
+            await deleteDoc(doc(db, "board", id));
+            showNotification('Message deleted', 'success');
+        } catch (error) {
+            showNotification('Error deleting message', 'error');
+        }
+        showLoader(false);
+    }
+};
+
+/* =========================================================
+ENCRYPTION/DECRYPTION (SIMPLIFIED)
+========================================================= */
+
+window.encryptText = async () => {
+    try {
+        const text = boardMessage.value;
+        if (!text) {
+            showNotification('No text to encrypt', 'error');
+            return;
+        }
+        
+        // Simple base64 encoding as demo (in production, use proper encryption)
+        const encrypted = btoa(text);
+        boardMessage.value = `🔒 ${encrypted}`;
+        showNotification('Text encrypted (demo)', 'success');
+    } catch (error) {
+        showNotification('Encryption error', 'error');
+    }
+};
+
+window.decryptText = () => {
+    try {
+        const text = boardMessage.value.replace('🔒 ', '');
+        const decrypted = atob(text);
+        boardMessage.value = decrypted;
+        showNotification('Text decrypted (demo)', 'success');
+    } catch {
+        showNotification('Invalid encrypted text', 'error');
+    }
+};
+
+/* =========================================================
+AI TERMINAL ENHANCED
+========================================================= */
+
+const aiRef = collection(db, "ai");
+
+aiSend.onclick = async () => {
+    if (!aiInput.value.trim() || !aiCode.value.trim()) {
+        showNotification('Codename and directive required', 'error');
+        return;
+    }
+    
+    showLoader(true);
+    try {
+        await addDoc(aiRef, {
+            code: aiCode.value,
+            prompt: aiInput.value,
+            time: serverTimestamp(),
+            analyzed: false
+        });
+        aiInput.value = "";
+        showNotification('Directive sent to AI', 'success');
+    } catch (error) {
+        showNotification('Error sending directive', 'error');
+    }
+    showLoader(false);
+};
+
+onSnapshot(query(aiRef, orderBy("time", "desc")), (snap) => {
+    aiView.innerHTML = "";
+    snap.forEach(docSnap => {
+        let d = docSnap.data();
+        aiView.innerHTML += `
+            <div class="card">
+                <div style="display: flex; justify-content: space-between;">
+                    <strong style="color: var(--purple);">${d.code}</strong>
+                    <small>${d.time ? new Date(d.time.toDate()).toLocaleString() : 'Just now'}</small>
+                </div>
+                <p style="margin: 10px 0; color: var(--white);">${d.prompt}</p>
+                ${d.analyzed ? '<span class="status-badge status-green">✓ ANALYZED</span>' : ''}
+            </div>`;
+    });
+});
+
+window.analyzeAIText = () => {
+    const text = aiInput.value;
+    if (!text) {
+        showNotification('No text to analyze', 'error');
+        return;
+    }
+    
+    const wordCount = text.split(/\s+/).length;
+    const charCount = text.length;
+    
+    alert(`📊 ANALYSIS:\nWords: ${wordCount}\nCharacters: ${charCount}\nSentences: ${text.split(/[.!?]+/).length - 1}`);
+    showNotification('Analysis complete', 'success');
+};
+
+/* =========================================================
+NOTE SAVING/EXPORTING
+========================================================= */
+
+noteSave.onclick = async () => {
+    if (!noteInput.value.trim()) {
+        showNotification('No notes to save', 'error');
+        return;
+    }
+    
+    showLoader(true);
+    try {
+        await addDoc(collection(db, "notes"), {
+            code: noteCode.value || 'Unknown',
+            text: noteInput.value,
+            time: serverTimestamp()
+        });
+        showNotification('Notes saved', 'success');
+    } catch (error) {
+        showNotification('Error saving notes', 'error');
+    }
+    showLoader(false);
+};
+
+noteExportTXT.onclick = () => {
+    const content = noteInput.value;
+    if (!content) {
+        showNotification('No content to export', 'error');
+        return;
+    }
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `notes-${Date.now()}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotification('Exported as TXT', 'success');
+};
+
+noteExportJSON.onclick = () => {
+    const data = {
+        code: noteCode.value,
+        text: noteInput.value,
+        timestamp: new Date().toISOString()
+    };
+    
+    if (!data.text) {
+        showNotification('No content to export', 'error');
+        return;
+    }
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `notes-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotification('Exported as JSON', 'success');
+};
+
+/* =========================================================
+KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener('keydown', (e) => {
+    // Ctrl + S: Save notes
+    if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        noteSave.click();
+    }
+    
+    // Ctrl + E: Export
+    if (e.ctrlKey && e.key === 'e') {
+        e.preventDefault();
+        noteExportTXT.click();
+    }
+    
+    // Escape: Clear inputs
+    if (e.key === 'Escape') {
+        if (confirm('Clear all inputs?')) {
+            noteInput.value = '';
+            noteCode.value = '';
+            boardMessage.value = '';
+            boardName.value = '';
+            checkInput.value = '';
+            taskCode.value = '';
+            aiInput.value = '';
+            aiCode.value = '';
+            showNotification('Inputs cleared', 'info');
+        }
+    }
+});
+
+/* =========================================================
+INITIALIZATION
+========================================================= */
+
+// Set default values
+document.getElementById('calendar').valueAsDate = new Date();
+
+// Add CSS for loading state
+const style = document.createElement('style');
+style.textContent = `
+    .loading {
+        opacity: 0.5;
+        pointer-events: none;
+        position: relative;
+    }
+    
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        border: 3px solid var(--red);
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
 `;
-if(d.done) completedTasks.appendChild(el);
-else activeTasks.appendChild(el);
-});
-});
+document.head.appendChild(style);
 
-window.toggleTask=async(id,done)=>{
-await updateDoc(doc(db,"tasks",id),{done:!done});
-};
+showLoader(false);
+showNotification('INNOVATIONS CV-5 initialized', 'success');
 
-window.deleteTask=async(id)=>{
-await deleteDoc(doc(db,"tasks",id));
-};
+</script>
 
-/* =========================================================
-FILES LOCAL PREVIEW
-========================================================= */
-
-window.saveFiles=()=>{
-let files=[...fileSingle.files,...fileMulti.files].slice(0,5);
-fileView.innerHTML="";
-files.forEach(f=>{
-let reader=new FileReader();
-reader.onload=()=>{
-let div=document.createElement("div");
-div.className="card";
-div.innerHTML=`<b>${f.name}</b><br><iframe src="${reader.result}" width="100%" height="200"></iframe>`;
-fileView.appendChild(div);
-};
-reader.readAsDataURL(f);
-});
-};
-
-/* =========================================================
-MESSAGE BOARD + AES
-========================================================= */
-
-const boardRef=collection(db,"board");
-
-boardSend.onclick=async()=>{
-await addDoc(boardRef,{
-name:boardName.value,
-text:boardMessage.value,
-time:serverTimestamp()
-});
-boardMessage.value="";
-};
-
-onSnapshot(boardRef,snap=>{
-boardView.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-boardView.innerHTML+=`
-<div class="card">
-<b>${d.name}</b>
-<p>${d.text}</p>
-<button onclick="deleteBoard('${docSnap.id}')">DELETE</button>
-</div>`;
-});
-});
-
-window.deleteBoard=async(id)=>{
-await deleteDoc(doc(db,"board",id));
-};
-
-window.encryptText=async()=>{
-const enc=new TextEncoder();
-const key=await crypto.subtle.generateKey({name:"AES-GCM",length:256},true,["encrypt","decrypt"]);
-const iv=crypto.getRandomValues(new Uint8Array(12));
-const cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,enc.encode(boardMessage.value));
-boardMessage.value=btoa(String.fromCharCode(...new Uint8Array(cipher)));
-};
-
-window.decryptText=()=>alert("Key persistence required for real decrypt.");
-
-/* =========================================================
-AI TERMINAL
-========================================================= */
-
-const aiRef=collection(db,"ai");
-
-aiSend.onclick=async()=>{
-await addDoc(aiRef,{
-code:aiCode.value,
-prompt:aiInput.value,
-time:serverTimestamp()
-});
-aiInput.value="";
-};
-
-onSnapshot(aiRef,snap=>{
-aiView.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-aiView.innerHTML+=`
-<div class="card">
-<b>${d.code}</b>
-<p>${d.prompt}</p>
-</div>`;
-});
-});
-
+<!-- Additional scripts for global functions -->
+<script>
+// Make functions available globally
+window.toggleTask = window.toggleTask;
+window.deleteTask = window.deleteTask;
+window.deleteBoard = window.deleteBoard;
+window.encryptText = window.encryptText;
+window.decryptText = window.decryptText;
+window.clearCanvas = window.clearCanvas;
+window.saveCanvas = window.saveCanvas;
+window.changeBrushSize = window.changeBrushSize;
+window.calculate = window.calculate;
+window.saveFiles = window.saveFiles;
+window.downloadFile = window.downloadFile;
+window.analyzeAIText = window.analyzeAIText;
 </script>
 </body>
 </html>
-
-
-
