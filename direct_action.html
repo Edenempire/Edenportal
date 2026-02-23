@@ -1,17 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CV-5 · direct action</title>
+  
+  <title>CV-5</title>
   
   <!-- fonts & icons (clean) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+      <!-- ===== CIRCLE FAVICON ===== -->
+    <link rel="icon" type="image/png" href="logo.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="logo.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="logo.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="logo.png" sizes="192x192">
   
   <style>
-    /* ----- root clean ----- */
+    
+    /* ----- root compact ----- */
     * {
       margin: 0;
       padding: 0;
@@ -29,9 +44,9 @@
       --mono: 'VT323', monospace;
       --ui: 'Electrolize', sans-serif;
       --header-font: 'Orbitron', sans-serif;
-      --header-h: 90px;
-      --chip-border: rgba(0, 255, 255, 0.2);
-      --chip-glow: rgba(0, 255, 255, 0.25);
+      --header-h: 70px;
+      --chip-border: rgba(0, 255, 255, 0.15);
+      --glow-subtle: 0 0 15px rgba(0, 255, 255, 0.15);
     }
 
     html, body {
@@ -40,13 +55,14 @@
       background: var(--bg);
       color: var(--accent);
       overflow-x: hidden;
+      overflow-y: auto;  /* normal scroll restored */
       scroll-behavior: smooth;
       scroll-padding-top: var(--header-h);
     }
 
     body.fade-out {
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.5s ease;
     }
 
     canvas, img, video {
@@ -54,16 +70,16 @@
       max-width: 100%;
     }
 
-    /* ----- fixed matrix canvas (clean opacity) ----- */
+    /* ----- matrix canvas (reduced opacity) ----- */
     #matrixCanvas {
       position: fixed;
       inset: 0;
       z-index: 0;
-      opacity: 0.12;
+      opacity: 0.08;
       pointer-events: none;
     }
 
-    /* scanline effect (subtle) */
+    /* ----- scanline (minimal) ----- */
     body::after {
       content: "";
       position: fixed;
@@ -71,15 +87,10 @@
       background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 255, 0.02) 3px);
       pointer-events: none;
       z-index: 9999;
-      animation: scanPulse 4s infinite alternate;
+      opacity: 0.5;
     }
 
-    @keyframes scanPulse {
-      0% { opacity: 0.6; }
-      100% { opacity: 0.9; }
-    }
-
-    /* ----- header (clean) ----- */
+    /* ----- header (compact) ----- */
     header {
       position: fixed;
       top: 0;
@@ -92,165 +103,147 @@
       background: rgba(0, 0, 0, 0.95);
       border-bottom: 1px solid var(--accent);
       z-index: 1000;
-      backdrop-filter: blur(12px);
-      overflow: hidden;
+      backdrop-filter: blur(8px);
     }
 
     header h1 {
       font-family: var(--header-font);
-      letter-spacing: 6px;
-      font-size: clamp(1rem, 2.5vw, 1.8rem);
-      text-shadow: 0 0 15px var(--accent);
-      animation: glitch 6s infinite;
+      letter-spacing: 4px;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      text-shadow: 0 0 8px var(--accent);
     }
 
-    @keyframes glitch {
-      0%, 100% { text-shadow: 0 0 15px var(--accent); }
-      10% { text-shadow: -2px 0 red, 2px 0 cyan; }
-      20% { text-shadow: 2px 0 red, -2px 0 cyan; }
-      30% { text-shadow: 0 0 20px #0ff; }
-      50% { text-shadow: -1px 1px lime, 1px -1px cyan; }
-      70% { text-shadow: 1px -1px magenta, -1px 1px blue; }
-    }
-
-    /* ----- hero / chip (clean) ----- */
+    /* ----- hero / chip (tightened) ----- */
     #hero {
-      min-height: 90vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       z-index: 2;
-      padding: 100px 20px;
+      padding: var(--header-h) 15px 30px;
     }
 
     #chip-container {
       position: relative;
-      width: 500px;
-      max-width: 95vw;
-      height: 500px;
-      background: rgba(5, 20, 28, 0.95);
-      border: 2px solid var(--chip-border);
-      box-shadow: 0 0 50px var(--chip-glow), inset 0 0 20px var(--chip-glow);
-      border-radius: 30px;
+      width: 450px;
+      max-width: 90vw;
+      height: 450px;
+      background: rgba(5, 20, 28, 0.98);
+      border: 1px solid var(--chip-border);
+      box-shadow: var(--glow-subtle);
+      border-radius: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       overflow: hidden;
-      animation: chipPulse 4s ease-in-out infinite alternate;
-      transition: transform 0.4s ease-in-out;
-    }
-
-    @keyframes chipPulse {
-      0% { box-shadow: 0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow); }
-      50% { box-shadow: 0 0 90px var(--chip-glow), inset 0 0 45px var(--chip-glow); }
-      100% { box-shadow: 0 0 40px var(--chip-glow), inset 0 0 15px var(--chip-glow); }
     }
 
     #binary-code {
       font-family: var(--header-font);
-      font-size: clamp(2rem, 6vw, 4rem);
-      letter-spacing: 8px;
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      letter-spacing: 4px;
       color: var(--accent);
       text-align: center;
       word-break: break-word;
-      animation: binaryPulse 3s ease-in-out infinite;
-    }
-
-    @keyframes binaryPulse {
-      0% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.06); }
-      100% { opacity: 0.6; transform: scale(1); }
+      opacity: 0.9;
     }
 
     .chip-circuit {
       position: absolute;
-      inset: 10px;
+      inset: 8px;
       border: 1px dashed var(--chip-border);
       pointer-events: none;
+      border-radius: 20px;
     }
 
-    .chip-circuit::before,
-    .chip-circuit::after {
+    .chip-circuit::before {
       content: "";
       position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 1px dashed rgba(0, 255, 255, 0.1);
-      top: 0;
-      left: 0;
+      inset: 0;
+      border: 1px dashed rgba(0, 255, 255, 0.05);
       transform: rotate(45deg);
+      border-radius: 20px;
     }
 
-    /* ----- section titles (clean) ----- */
+    /* ----- section titles (compact) ----- */
     .section-title {
       text-align: center;
       font-family: var(--header-font);
-      letter-spacing: 10px;
-      margin: 80px 0 40px;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      text-shadow: 0 0 5px var(--accent);
-      scroll-margin-top: calc(var(--header-h) + 20px);
+      letter-spacing: 6px;
+      margin: 30px 0 25px;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      text-shadow: 0 0 3px var(--accent);
+      scroll-margin-top: var(--header-h);
     }
 
-    /* ----- grid cards (clean) ----- */
+    .section-title::before,
+    .section-title::after {
+      content: "⏤";
+      margin: 0 10px;
+      opacity: 0.4;
+      font-size: 1.2rem;
+    }
+
+    /* ----- grid cards (compact) ----- */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      padding: 0 6% 160px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 0 20px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .card {
       position: relative;
-      background: rgba(7, 24, 33, 0.85);
+      background: rgba(7, 24, 33, 0.95);
       border: 1px solid rgba(0, 255, 255, 0.1);
-      padding: 50px 30px;
+      padding: 30px 20px;
       text-align: center;
-      transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      transition: all 0.2s ease;
       cursor: pointer;
-      overflow: hidden;
-      border-radius: 15px;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-      transition: 0.8s;
-    }
-
-    .card:hover::before {
-      left: 100%;
+      border-radius: 12px;
     }
 
     .card:hover {
-      transform: translateY(-12px) scale(1.02);
+      transform: translateY(-4px);
       border-color: var(--accent);
-      box-shadow: 0 20px 50px rgba(0, 255, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
+      background: rgba(10, 30, 38, 0.98);
     }
 
     .card i {
-      font-size: 3rem;
-      margin-bottom: 20px;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
       color: var(--accent);
     }
 
+    .card h3 {
+      font-family: var(--header-font);
+      letter-spacing: 2px;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-bottom: 15px;
+    }
+
     .enter-btn {
-      margin-top: 20px;
-      padding: 10px 25px;
+      padding: 8px 20px;
       background: transparent;
       border: 1px solid var(--accent);
       color: var(--accent);
       cursor: pointer;
       font-family: var(--ui);
       letter-spacing: 2px;
-      transition: 0.3s;
+      font-size: 0.8rem;
+      transition: 0.2s;
+      border-radius: 5px;
     }
 
     .enter-btn:hover {
@@ -258,60 +251,85 @@
       color: #000;
     }
 
-    /* ----- auth modal (clean) ----- */
+    /* ----- auth modal (compact) ----- */
     #authOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.97);
+      background: rgba(0, 0, 0, 0.98);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      transition: opacity 0.3s ease-in-out;
     }
 
     #authBox {
       background: #040b10;
       border: 1px solid var(--accent);
-      padding: 60px 50px;
-      max-width: 550px;
-      width: 95%;
+      padding: 40px 30px;
+      max-width: 450px;
+      width: 90%;
       text-align: center;
-      box-shadow: 0 0 100px rgba(0, 255, 255, 0.3);
+      box-shadow: var(--glow-subtle);
       border-radius: 15px;
-      animation: popup 0.5s ease-out;
     }
 
-    @keyframes popup {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    #authBox h3 {
+      font-family: var(--header-font);
+      letter-spacing: 3px;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+    }
+
+    #authDept {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 20px;
     }
 
     #codeInput {
       width: 100%;
-      padding: 20px;
+      padding: 15px;
       background: #000;
       border: 1px solid var(--accent);
       color: var(--accent);
       text-align: center;
-      letter-spacing: 6px;
-      font-size: 1.8rem;
-      margin: 25px 0;
+      letter-spacing: 4px;
+      font-size: 1.5rem;
+      margin: 20px 0;
+      font-family: var(--header-font);
+      border-radius: 8px;
+    }
+
+    #codeInput:focus {
+      outline: none;
+      border-color: var(--accent);
     }
 
     #authStatus {
       height: 24px;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
+      font-size: 1rem;
     }
 
-    /* ----- footer HUD (clean) ----- */
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .auth-buttons .enter-btn {
+      min-width: 100px;
+      padding: 10px;
+    }
+
+    /* ----- footer HUD (compact) ----- */
     #data-footer {
       position: fixed;
       bottom: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       border-top: 1px solid rgba(0, 255, 255, 0.1);
-      padding: 10px 25px;
+      padding: 8px 20px;
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
@@ -320,34 +338,79 @@
     }
 
     .threat-low { color: var(--ok); }
-    .threat-high { color: var(--danger); animation: pulse 1s infinite; }
+    .threat-high { color: var(--danger); }
 
-    @keyframes pulse {
-      0% { opacity: 0.4; }
-      50% { opacity: 1; }
-      100% { opacity: 0.4; }
+    /* ----- responsive breakpoints (tight) ----- */
+    @media (max-width: 768px) {
+      :root { --header-h: 60px; }
+      
+      header h1 { letter-spacing: 2px; }
+      
+      #hero { min-height: 70vh; }
+      
+      #chip-container {
+        width: 350px;
+        height: 350px;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 0 15px 70px;
+      }
+      
+      .card { padding: 20px 15px; }
+      .card i { font-size: 1.8rem; }
+      .card h3 { font-size: 1rem; }
+      
+      .section-title::before,
+      .section-title::after {
+        content: "";
+        margin: 0 5px;
+      }
     }
 
-    /* responsive */
-    @media (max-width: 600px) {
+    @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
-      header { height: auto; padding: 20px; }
-      #chip-container { height: 350px; width: 90%; }
+      
+      #chip-container {
+        width: 280px;
+        height: 280px;
+      }
+      
+      #binary-code { letter-spacing: 2px; }
+      
+      #data-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 6px;
+        font-size: 0.7rem;
+      }
+      
+      #authBox { padding: 25px 20px; }
+      #codeInput { font-size: 1.2rem; padding: 12px; }
     }
+
+    /* ----- reduced motion ----- */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      body::after { display: none; }
+    }
+    
   </style>
+  
 </head>
+  
 <body>
 
-  <!-- matrix background (canvas) -->
   <canvas id="matrixCanvas"></canvas>
 
-  <!-- header -->
   <header>
     <h1>CV-5 DIRECT ACTION</h1>
   </header>
 
   <main>
-    <!-- hero chip -->
     <section id="hero">
       <div id="chip-container">
         <div class="chip-circuit"></div>
@@ -355,34 +418,33 @@
       </div>
     </section>
 
-    <!-- departments section -->
     <h2 class="section-title">DEPARTMENTS</h2>
     <div class="grid" id="deptGrid"></div>
   </main>
 
-  <!-- secure access modal -->
   <div id="authOverlay">
     <div id="authBox">
-      <h3 style="font-family:Orbitron">SECURE ACCESS</h3>
+      <h3>SECURE ACCESS</h3>
       <p id="authDept"></p>
-      <input type="password" id="codeInput" placeholder="••••" maxlength="8">
+      <input type="password" id="codeInput" placeholder="••••" maxlength="5" autocomplete="off">
       <div id="authStatus"></div>
-      <button class="enter-btn" onclick="verify()">AUTHORIZE</button>
-      <button class="enter-btn" onclick="closeAuth()">ABORT</button>
+      <div class="auth-buttons">
+        <button class="enter-btn" onclick="verify()">AUTHORIZE</button>
+        <button class="enter-btn" onclick="closeAuth()">ABORT</button>
+      </div>
     </div>
   </div>
 
-  <!-- footer HUD -->
   <div id="data-footer">
-    <span>Operator: Eden</span>
+    <span>OPERATOR: EDEN</span>
     <span id="clock"></span>
     <span id="threat" class="threat-low">THREAT: EVIL</span>
   </div>
 
-  <!-- clean script section -->
   <script>
+    
     (function() {
-      // --- matrix rain (cleaned) ---
+      // --- matrix rain (minimal) ---
       const canvas = document.getElementById('matrixCanvas');
       const ctx = canvas.getContext('2d');
       let width, height;
@@ -394,8 +456,8 @@
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      const letters = '01';
-      const fontSize = 20;
+      const chars = '01';
+      const fontSize = 16;
       let columns, drops;
 
       function initMatrix() {
@@ -405,12 +467,13 @@
       initMatrix();
 
       function drawMatrix() {
-        ctx.fillStyle = 'rgba(1, 3, 9, 0.15)';
+        ctx.fillStyle = 'rgba(1, 3, 9, 0.1)';
         ctx.fillRect(0, 0, width, height);
         ctx.fillStyle = '#00f0ff';
         ctx.font = fontSize + 'px monospace';
+        
         for (let i = 0; i < drops.length; i++) {
-          const char = letters[Math.floor(Math.random() * 2)];
+          const char = chars[Math.floor(Math.random() * chars.length)];
           ctx.fillText(char, i * fontSize, drops[i] * fontSize);
           if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
           drops[i]++;
@@ -418,18 +481,17 @@
       }
       setInterval(drawMatrix, 40);
 
-      // reinit matrix on resize
       window.addEventListener('resize', () => {
         resizeCanvas();
         initMatrix();
       });
 
-      // --- departments data (clean) ---
+      // --- departments data ---
       const DEPARTMENTS = [
-        { id: 'io', name: '01. Innovations', icon: 'fa-lightbulb', code: 'CIC-01', file: 'innovations.html' },
-        { id: 'ceo', name: '02. Executive', icon: 'fa-chess-king', code: 'CEO-02', file: 'ceo.html' },
-        { id: 'sc', name: '03. Supply Chain', icon: 'fa-truck-fast', code: 'SC-T3', file: 'scl.html' },
-        { id: 'sec', name: '04. Compliance', icon: 'fa-shield-halved', code: 'LAW-33', file: 'compliance.html' }
+        { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIC01', file: 'innovations.html' },
+        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-crown', code: 'CEO02', file: 'ceo.html' },
+        { id: 'sc', name: '03. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SCT03', file: 'scl.html' },
+        { id: 'sec', name: '04. COMPLIANCE', icon: 'fa-shield', code: 'LAW33', file: 'compliance.html' }
       ];
 
       let activeDept = null;
@@ -440,22 +502,23 @@
           <div class="card" onclick="openAuth('${dept.id}')">
             <i class="fas ${dept.icon}"></i>
             <h3>${dept.name}</h3>
-            <p>Access Level: Eden</p>
+            <p>EDEN CLEARANCE</p>
             <button class="enter-btn">ENTER</button>
           </div>
         `).join('');
       }
       renderDepts();
 
-      // expose functions globally (for onclick)
+      // --- auth functions (exposed globally) ---
       window.openAuth = (id) => {
         activeDept = DEPARTMENTS.find(d => d.id === id);
-        document.getElementById('authDept').innerText = 'UPLINK TO: ' + activeDept.name;
+        document.getElementById('authDept').innerText = activeDept.name;
         document.getElementById('authOverlay').style.display = 'flex';
         document.getElementById('codeInput').value = '';
         document.getElementById('authStatus').innerText = '';
         document.getElementById('threat').className = 'threat-low';
         document.getElementById('threat').innerText = 'THREAT: EVIL';
+        setTimeout(() => document.getElementById('codeInput').focus(), 50);
       };
 
       window.closeAuth = () => {
@@ -465,37 +528,44 @@
 
       window.verify = () => {
         if (!activeDept) return;
-        const input = document.getElementById('codeInput').value.trim();
+        const input = document.getElementById('codeInput').value.trim().toUpperCase();
         const statusEl = document.getElementById('authStatus');
+        const threatEl = document.getElementById('threat');
+        
         if (input === activeDept.code) {
           statusEl.style.color = 'var(--ok)';
           statusEl.innerText = 'ACCESS GRANTED';
+          threatEl.className = 'threat-low';
+          threatEl.innerText = 'THREAT: EVIL';
           document.body.classList.add('fade-out');
-          setTimeout(() => {
-            window.location.href = activeDept.file;
-          }, 900);
+          setTimeout(() => { window.location.href = activeDept.file; }, 500);
         } else {
           statusEl.style.color = 'var(--danger)';
           statusEl.innerText = 'ACCESS DENIED';
-          document.getElementById('threat').innerText = 'THREAT: HIGH';
-          document.getElementById('threat').className = 'threat-high';
+          threatEl.className = 'threat-high';
+          threatEl.innerText = 'THREAT: HIGH';
+          document.getElementById('codeInput').value = '';
+          document.getElementById('codeInput').focus();
         }
       };
 
-      // --- keyboard: escape & enter (modal) ---
+      // --- keyboard controls ---
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
+        const overlay = document.getElementById('authOverlay');
+        if (e.key === 'Escape' && overlay.style.display === 'flex') {
           closeAuth();
         }
-        if (e.key === 'Enter' && document.getElementById('authOverlay').style.display === 'flex') {
+        if (e.key === 'Enter' && overlay.style.display === 'flex') {
           verify();
         }
       });
 
-      // --- right click disabled (as original) ---
-      document.addEventListener('contextmenu', e => e.preventDefault());
+      // --- click outside to close modal ---
+      document.getElementById('authOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'authOverlay') closeAuth();
+      });
 
-      // --- clock update ---
+      // --- clock ---
       function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString();
@@ -503,16 +573,30 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // --- smooth scroll with wheel (clean) ---
-      let scrollPos = window.scrollY;
-      window.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        scrollPos += e.deltaY * 0.5;
-        scrollPos = Math.max(0, Math.min(scrollPos, document.body.scrollHeight - window.innerHeight));
-        window.scrollTo({ top: scrollPos, behavior: 'smooth' });
-      }, { passive: false });
+      // --- right click disabled ---
+      document.addEventListener('contextmenu', e => e.preventDefault());
 
-    })(); // end iife
+      // --- normal scrolling (restored) ---
+      // No custom wheel handler - using native scroll
+
+    })();
+    
   </script>
+  
 </body>
-   </html>
+  
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
