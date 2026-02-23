@@ -4,290 +4,632 @@
     
 <head>
     
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-<title>KJV Holy Bible | Eden</title>
+    <title>KJV HOLY BIBLE</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        
+        /* ===============================
+           ROOT SYSTEM VARIABLES
+        ==================================*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+        :root {
+            --cyan: #00ffff;
+            --cyan-dim: #00aaaa;
+            --cyan-glow: 0 0 10px #00ffff33;
+            --bg: #000;
+            --panel: rgba(0, 15, 20, 0.85);
+            --glass: rgba(0, 25, 35, 0.4);
+            --border: rgba(0, 255, 255, 0.3);
+            --glow: 0 0 30px rgba(0, 255, 255, 0.3);
+            --glow-intense: 0 0 40px #00ffff;
+            --radius: 12px;
+            --font-tactical: 'Orbitron', sans-serif;
+            --font-body: 'Electrolize', sans-serif;
+            --font-mono: 'VT323', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-<style>
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            font-family: var(--font-body);
+            color: var(--cyan);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-/* ===============================
-   ROOT SYSTEM VARIABLES
-=================================*/
-:root{
-    --cyan:#00ffff;
-    --cyan-dim:#00aaaa;
-    --bg:#000;
-    --panel:rgba(0,10,15,0.75);
-    --glass:rgba(0,25,30,0.35);
-    --border:rgba(0,255,255,0.35);
-    --glow:0 0 20px rgba(0,255,255,0.4);
-    --radius:14px;
-    --font-tactical:'Orbitron',sans-serif;
-    --font-body:'Electrolize',sans-serif;
-    --font-mono:'VT323',monospace;
-}
+        /* ===============================
+           RAIN CANVAS LAYER
+        ==================================*/
+        canvas#rain {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.8;
+            will-change: transform;
+        }
 
-/* ===============================
-   GLOBAL RESET
-=================================*/
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        /* ===============================
+           MAIN WRAPPER
+        ==================================*/
+        .main {
+            position: relative;
+            z-index: 2;
+            padding: clamp(1rem, 5vw, 3rem);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-html,body{
-    height:100%;
-    background:#000;
-    font-family:var(--font-body);
-    color:var(--cyan);
-    overflow-x:hidden;
-}
+        /* ===============================
+           HEADER
+        ==================================*/
+        .header {
+            text-align: center;
+            margin-bottom: clamp(1.5rem, 4vh, 3rem);
+            position: relative;
+        }
 
-/* ===============================
-   RAIN CANVAS LAYER
-=================================*/
-canvas#rain{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-}
+        .header h1 {
+            font-family: var(--font-tactical);
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-shadow: var(--glow);
+            line-height: 1.2;
+        }
 
-/* ===============================
-   MAIN WRAPPER
-=================================*/
-.main{
-    position:relative;
-    z-index:2;
-    padding:clamp(20px,5vw,60px);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-}
+        .header span {
+            font-family: var(--font-mono);
+            opacity: 0.7;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            letter-spacing: 2px;
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--cyan-dim);
+        }
 
-/* ===============================
-   HEADER
-=================================*/
-.header{
-    text-align:center;
-    margin-bottom:clamp(20px,4vh,40px);
-}
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            33% { opacity: 0.95; text-shadow: 0 0 20px #00ffff; }
+            66% { opacity: 0.9; text-shadow: 0 0 25px #00ffff; }
+        }
 
-.header h1{
-    font-family:var(--font-tactical);
-    font-size:clamp(1.8rem,4vw,3rem);
-    letter-spacing:6px;
-}
+        /* ===============================
+           CONTROL PANEL
+        ==================================*/
+        .controls {
+            display: flex;
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
 
-.header span{
-    font-family:var(--font-mono);
-    opacity:0.7;
-    font-size:clamp(0.9rem,2vw,1.2rem);
-}
+        .btn {
+            border: 1.5px solid var(--cyan);
+            padding: 0.875rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--cyan);
+            font-family: var(--font-tactical);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: var(--radius);
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+        }
 
-/* ===============================
-   CONTROL PANEL
-=================================*/
-.controls{
-    display:flex;
-    gap:clamp(10px,2vw,20px);
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-bottom:30px;
-}
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
 
-.btn{
-    border:1px solid var(--cyan);
-    padding:12px 30px;
-    background:var(--glass);
-    backdrop-filter:blur(8px);
-    color:var(--cyan);
-    font-family:var(--font-tactical);
-    text-transform:uppercase;
-    letter-spacing:2px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-    border-radius:var(--radius);
-    min-width:180px;
-}
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
 
-.btn:hover{
-    background:var(--cyan);
-    color:#000;
-    box-shadow:var(--glow);
-    transform:translateY(-2px);
-}
+        .btn:hover {
+            background: var(--cyan);
+            color: #000;
+            box-shadow: var(--glow-intense);
+            transform: translateY(-3px);
+            border-color: transparent;
+        }
 
-/* ===============================
-   PDF VIEWER
-=================================*/
-.viewer{
-    flex:1;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    overflow:hidden;
-    backdrop-filter:blur(6px);
-    background:var(--panel);
-    box-shadow:var(--glow);
-}
+        .btn:active {
+            transform: translateY(0);
+            transition: 0.1s;
+        }
 
-iframe{
-    width:100%;
-    height:100%;
-    border:none;
-    background:#000;
-}
+        /* ===============================
+           PDF VIEWER
+        ==================================*/
+        .viewer {
+            flex: 1;
+            min-height: 65vh;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background: var(--panel);
+            box-shadow: var(--glow), inset 0 0 20px rgba(0, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
 
-/* ===============================
-   FOOTER
-=================================*/
-.footer{
-    text-align:center;
-    margin-top:30px;
-    font-family:var(--font-mono);
-    opacity:0.6;
-    font-size:0.9rem;
-}
+        .viewer:hover {
+            box-shadow: var(--glow-intense), inset 0 0 30px rgba(0, 255, 255, 0.2);
+            border-color: var(--cyan);
+        }
 
-/* ===============================
-   MOBILE OPTIMIZATION
-=================================*/
-@media(max-width:768px){
-    .viewer{
-        height:70vh;
-    }
-}
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0a0f12;
+            display: block;
+        }
 
-/* ===============================
-   REDUCED MOTION SUPPORT
-=================================*/
-@media (prefers-reduced-motion: reduce) {
-    canvas#rain {
-        display:none;
-    }
-}
+        .viewer .fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--panel);
+            color: var(--cyan);
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
 
-</style>
+        .viewer .fallback a {
+            color: var(--cyan);
+            text-decoration: none;
+            border-bottom: 1px solid var(--cyan);
+            padding-bottom: 2px;
+            transition: var(--transition);
+        }
+
+        .viewer .fallback a:hover {
+            text-shadow: var(--glow);
+            border-bottom-color: transparent;
+        }
+
+        /* ===============================
+           FOOTER
+        ==================================*/
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-family: var(--font-mono);
+            opacity: 0.6;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        /* ===============================
+           LOADING STATE
+        ==================================*/
+        .viewer.loading::after {
+            content: 'ACCESSING ARCHIVE...';
+            position: absolute;
+            inset: 0;
+            background: var(--panel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ===============================
+           MOBILE OPTIMIZATION
+        ==================================*/
+        @media (max-width: 768px) {
+            .viewer {
+                min-height: 60vh;
+            }
+            
+            .btn {
+                min-width: 160px;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+            
+            .header h1 {
+                letter-spacing: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                padding: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .viewer {
+                min-height: 50vh;
+            }
+        }
+
+        /* ===============================
+           REDUCED MOTION SUPPORT
+        ==================================*/
+        @media (prefers-reduced-motion: reduce) {
+            canvas#rain {
+                display: none;
+            }
+            
+            .header h1 {
+                animation: none;
+            }
+            
+            .btn::before {
+                display: none;
+            }
+            
+            .viewer.loading::after {
+                animation: none;
+            }
+        }
+
+        /* ===============================
+           HIGH CONTRAST MODE
+        ==================================*/
+        @media (prefers-contrast: high) {
+            :root {
+                --cyan: #00ffff;
+                --border: #00ffff;
+                --glow: none;
+            }
+        }
+        
+    </style>
     
 </head>
-
+    
 <body>
+    
+    <canvas id="rain" aria-hidden="true"></canvas>
+    
+    <div class="main">
+        <header class="header">
+            <h1>KJV HOLY BIBLE</h1>
+            <span>[ KING JAMES VERSION // AUTHORIZED 1611 ]</span>
+        </header>
+        
+        <nav class="controls" aria-label="Bible controls">
+            <button class="btn" id="fullscreenBtn" aria-label="Open PDF in full screen">
+                ⎔ OPEN FULL SCREEN
+            </button>
+            <button class="btn" id="downloadBtn" aria-label="Download PDF">
+                ⬇ DOWNLOAD PDF
+            </button>
+            <button class="btn" id="returnBtn" aria-label="Return to main hub">
+                ⌂ RETURN TO HQ
+            </button>
+        </nav>
+        
+        <main class="viewer" id="viewer">
+            <iframe 
+                src="about:blank" 
+                title="KJV Bible PDF Viewer"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+                referrerpolicy="no-referrer"
+            >
+                <div class="fallback">
+                    <p>Your browser does not support embedded PDFs. 
+                       <a href="#" id="fallbackLink">Download the Bible instead</a>.
+                    </p>
+                </div>
+            </iframe>
+        </main>
+        
+        <footer class="footer">
+            © EDEN STEALTH CV-1 // SCRIPTURE ARCHIVE SYSTEM
+        </footer>
+    </div>
 
-<canvas id="rain"></canvas>
-
-<div class="main">
-
-<div class="header">
-    <h1>KJV HOLY BIBLE</h1>
-    <span>[ KING JAMES VERSION — AUTHORIZED 1611 ]</span>
-</div>
-
-<div class="controls">
-    <button class="btn" onclick="window.open('the-holy-bible-king-james-version.pdf','_blank')">
-        Open Full Screen
-    </button>
-
-    <button class="btn" onclick="window.location.href='kjv.pdf'">
-        Download PDF
-    </button>
-
-    <button class="btn" onclick="window.location.href='index.html'">
-        Return to HQ
-    </button>
-</div>
-
-<div class="viewer">
-    <iframe src="the-holy-bible-king-james-version.pdf">
-        <p>Your browser does not support embedded PDFs.
-           <a href="the-holy-bible-king-james-version.pdf">Download instead</a>.
-        </p>
-    </iframe>
-</div>
-
-<div class="footer">
-    © Eden Stealth CV-1 // Scripture Archive System
-</div>
-
-</div>
-
-<script>
-
-/* =========================================
-   LIGHT RAIN DRIZZLE ENGINE
-   High Performance Canvas System
-=========================================*/
-
-const canvas = document.getElementById('rain');
-const ctx = canvas.getContext('2d');
-
-let width, height;
-let drops = [];
-let density;
-
-function resize(){
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-
-    // Adaptive density based on screen size
-    density = Math.floor((width * height) / 15000);
-    createDrops();
-}
-
-function createDrops(){
-    drops = [];
-    for(let i=0;i<density;i++){
-        drops.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            length: Math.random() * 15 + 8,
-            speed: Math.random() * 1.5 + 1,
-            opacity: Math.random() * 0.3 + 0.2
-        });
-    }
-}
-
-function drawRain(){
-    ctx.clearRect(0,0,width,height);
-    ctx.lineWidth = 1;
-    ctx.lineCap = "round";
-
-    for(let drop of drops){
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(0,255,255,${drop.opacity})`;
-        ctx.moveTo(drop.x, drop.y);
-        ctx.lineTo(drop.x, drop.y + drop.length);
-        ctx.stroke();
-
-        drop.y += drop.speed;
-
-        if(drop.y > height){
-            drop.y = -drop.length;
-            drop.x = Math.random() * width;
-        }
-    }
-}
-
-function animate(){
-    drawRain();
-    requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize', resize);
-
-resize();
-animate();
-
-</script>
-
+    <script>
+        
+        (function() {
+            'use strict';
+            
+            /* =========================================
+               CONFIGURATION
+            ==========================================*/
+            const CONFIG = {
+                pdfUrl: 'the-holy-bible-king-james-version.pdf',
+                fallbackUrl: 'kjv.pdf',
+                hqUrl: 'index.html',
+                rainDensity: 15000, // Lower = more drops
+                maxDrops: 150
+            };
+            
+            /* =========================================
+               LIGHT RAIN DRIZZLE ENGINE
+            ==========================================*/
+            const canvas = document.getElementById('rain');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let drops = [];
+            let animationFrame;
+            let lastTime = 0;
+            const fps = 60;
+            const interval = 1000 / fps;
+            
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                createDrops();
+            }
+            
+            function createDrops() {
+                const dropCount = Math.min(
+                    Math.floor((width * height) / CONFIG.rainDensity),
+                    CONFIG.maxDrops
+                );
+                
+                drops = Array.from({ length: dropCount }, () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    length: Math.random() * 15 + 8,
+                    speed: Math.random() * 1.5 + 1,
+                    opacity: Math.random() * 0.3 + 0.15
+                }));
+            }
+            
+            function drawRain(currentTime) {
+                if (!ctx) return;
+                
+                if (currentTime - lastTime < interval) {
+                    animationFrame = requestAnimationFrame(drawRain);
+                    return;
+                }
+                
+                lastTime = currentTime;
+                ctx.clearRect(0, 0, width, height);
+                ctx.lineWidth = 1.2;
+                ctx.lineCap = 'round';
+                
+                for (let drop of drops) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 255, 255, ${drop.opacity})`;
+                    ctx.moveTo(drop.x, drop.y);
+                    ctx.lineTo(drop.x, drop.y + drop.length);
+                    ctx.stroke();
+                    
+                    drop.y += drop.speed;
+                    
+                    if (drop.y > height) {
+                        drop.y = -drop.length;
+                        drop.x = Math.random() * width;
+                    }
+                }
+                
+                animationFrame = requestAnimationFrame(drawRain);
+            }
+            
+            // Initialize rain with performance optimization
+            resizeCanvas();
+            
+            // Throttled resize handler
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    resizeCanvas();
+                }, 100);
+            });
+            
+            // Start animation
+            animationFrame = requestAnimationFrame(drawRain);
+            
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+            });
+            
+            /* =========================================
+               PDF VIEWER HANDLING
+            ==========================================*/
+            const iframe = document.querySelector('iframe');
+            const viewer = document.getElementById('viewer');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const returnBtn = document.getElementById('returnBtn');
+            const fallbackLink = document.getElementById('fallbackLink');
+            
+            // Validate PDF URLs
+            function validatePdfUrl(url) {
+                return url && url.trim() !== '' && url !== 'about:blank';
+            }
+            
+            // Set PDF source with loading state
+            function loadPdfInIframe(url) {
+                if (!validatePdfUrl(url)) {
+                    console.warn('Invalid PDF URL:', url);
+                    return false;
+                }
+                
+                viewer.classList.add('loading');
+                iframe.src = url;
+                
+                // Remove loading state after timeout or on load
+                const removeLoading = () => {
+                    viewer.classList.remove('loading');
+                };
+                
+                iframe.onload = removeLoading;
+                setTimeout(removeLoading, 5000); // Fallback timeout
+                
+                return true;
+            }
+            
+            // Initialize iframe with PDF
+            if (CONFIG.pdfUrl && CONFIG.pdfUrl !== 'about:blank') {
+                loadPdfInIframe(CONFIG.pdfUrl);
+            } else {
+                console.warn('No valid PDF URL provided');
+                viewer.classList.remove('loading');
+            }
+            
+            // Event Handlers
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                    if (CONFIG.pdfUrl && CONFIG.pdfUrl !== 'about:blank') {
+                        window.open(CONFIG.pdfUrl, '_blank', 'noopener,noreferrer');
+                    } else {
+                        alert('PDF URL not configured. Please check the file path.');
+                    }
+                });
+            }
+            
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    if (!CONFIG.fallbackUrl || CONFIG.fallbackUrl === 'about:blank') {
+                        alert('Download URL not configured.');
+                        return;
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.href = CONFIG.fallbackUrl;
+                    link.download = 'KJV_Holy_Bible.pdf';
+                    link.rel = 'noopener noreferrer';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+            }
+            
+            if (returnBtn) {
+                returnBtn.addEventListener('click', () => {
+                    if (CONFIG.hqUrl && CONFIG.hqUrl !== 'about:blank') {
+                        window.location.href = CONFIG.hqUrl;
+                    } else {
+                        alert('Return URL not configured.');
+                    }
+                });
+            }
+            
+            if (fallbackLink) {
+                fallbackLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (CONFIG.fallbackUrl && CONFIG.fallbackUrl !== 'about:blank') {
+                        window.location.href = CONFIG.fallbackUrl;
+                    }
+                });
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.altKey || e.ctrlKey || e.metaKey) return;
+                
+                switch(e.key) {
+                    case 'f':
+                    case 'F':
+                        e.preventDefault();
+                        fullscreenBtn?.click();
+                        break;
+                    case 'd':
+                    case 'D':
+                        e.preventDefault();
+                        downloadBtn?.click();
+                        break;
+                    case 'h':
+                    case 'H':
+                        e.preventDefault();
+                        returnBtn?.click();
+                        break;
+                }
+            });
+            
+            // Error handling for iframe
+            iframe.addEventListener('error', () => {
+                console.error('Failed to load PDF');
+                viewer.classList.remove('loading');
+                iframe.style.display = 'none';
+                const fallback = document.querySelector('.fallback');
+                if (fallback) {
+                    fallback.style.display = 'flex';
+                }
+            });
+            
+        })();
+        
+    </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
 
 
 
