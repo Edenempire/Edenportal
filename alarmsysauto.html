@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>CV-5 · ALARM HUB</title>
+  
+  <!-- fonts & icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* ----- ROOT COMPACT ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #01030a;
+      --panel: #071821;
+      --panel-light: #0f2a33;
+      --accent: #00f0ff;
+      --accent-dim: #00a0aa;
+      --ok: #00ff99;
+      --warn: #ffaa00;
+      --danger: #ff3355;
+      --mono: 'VT323', monospace;
+      --ui: 'Electrolize', sans-serif;
+      --header-font: 'Orbitron', sans-serif;
+      --header-h: 70px;
+      --border-subtle: rgba(0, 255, 255, 0.15);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--accent);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /* ----- matrix background (ultra subtle) ----- */
+    #matrixCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 255, 255, 0.01) 3px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ----- HEADER ----- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(0, 0, 0, 0.98);
+      border-bottom: 1px solid var(--accent);
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-left h1 {
+      font-family: var(--header-font);
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      letter-spacing: 2px;
+    }
+
+    .time-display {
+      font-family: var(--header-font);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    /* ----- MAIN CONTENT ----- */
+    .main {
+      padding: calc(var(--header-h) + 20px) 15px 80px;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ----- CURRENT TIME CARD ----- */
+    .current-time-card {
+      background: rgba(7, 24, 33, 0.95);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 30px 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .current-label {
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      opacity: 0.7;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .current-time {
+      font-family: var(--header-font);
+      font-size: 4.5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 5px;
+      text-shadow: 0 0 15px var(--accent);
+    }
+
+    .current-date {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      letter-spacing: 2px;
+    }
+
+    /* ----- QUICK ADD ----- */
+    .quick-add {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .quick-add input {
+      flex: 1;
+      background: rgba(7, 24, 33, 0.95);
+      border: 1px solid var(--border-subtle);
+      padding: 15px;
+      color: var(--accent);
+      font-family: var(--header-font);
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 4px;
+      border-radius: 12px;
+    }
+
+    .quick-add input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .quick-add button {
+      width: 60px;
+      background: rgba(7, 24, 33, 0.95);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 12px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .quick-add button:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    /* ----- SECTION TITLE ----- */
+    .section-title {
+      font-family: var(--header-font);
+      letter-spacing: 3px;
+      font-size: 1.2rem;
+      margin: 30px 0 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ----- ALARMS LIST ----- */
+    .alarms-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .alarm-item {
+      background: rgba(7, 24, 33, 0.95);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: 0.2s;
+      cursor: move;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alarm-item.active {
+      border-color: var(--accent);
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .alarm-time-block {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+
+    .alarm-time {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .alarm-period {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    .alarm-label {
+      font-size: 0.95rem;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    .alarm-days {
+      display: flex;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .day-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-family: var(--ui);
+      border: 1px solid transparent;
+    }
+
+    .day-badge.active {
+      border-color: var(--accent);
+      background: rgba(0, 255, 255, 0.2);
+    }
+
+    .alarm-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .toggle-switch {
+      width: 50px;
+      height: 26px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .toggle-switch.active {
+      background: rgba(0, 255, 255, 0.2);
+      border-color: var(--accent);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: 0.2s;
+    }
+
+    .toggle-switch.active::after {
+      left: 26px;
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-icon:hover {
+      border-color: var(--accent);
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .btn-icon.delete:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* ----- ADD ALARM MODAL ----- */
+    #alarmModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: #040b10;
+      border: 1px solid var(--accent);
+      padding: 30px 25px;
+      max-width: 400px;
+      width: 90%;
+      border-radius: 20px;
+      animation: modalPop 0.3s ease;
+    }
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-content h2 {
+      font-family: var(--header-font);
+      text-align: center;
+      margin-bottom: 25px;
+      letter-spacing: 2px;
+    }
+
+    .time-picker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .time-picker input {
+      width: 80px;
+      background: #000;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--header-font);
+      font-size: 2rem;
+      text-align: center;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .time-picker span {
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+
+    .time-picker select {
+      background: #000;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--header-font);
+      font-size: 1.2rem;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .label-input {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent);
+      font-family: var(--ui);
+      font-size: 1rem;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .days-selector {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 25px;
+    }
+
+    .day-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent);
+      padding: 12px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--ui);
+      transition: 0.2s;
+    }
+
+    .day-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+      padding: 15px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--ui);
+      font-size: 1rem;
+      letter-spacing: 2px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-buttons button.save {
+      background: var(--accent);
+      color: #000;
+    }
+
+    /* ----- ALERT POPUP ----- */
+    #alarmAlert {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+
+    .alert-content {
+      background: #040b10;
+      border: 2px solid var(--danger);
+      padding: 40px;
+      text-align: center;
+      border-radius: 30px;
+      animation: alertPulse 1s infinite;
+    }
+
+    @keyframes alertPulse {
+      0% { box-shadow: 0 0 20px var(--danger); }
+      50% { box-shadow: 0 0 60px var(--danger); }
+      100% { box-shadow: 0 0 20px var(--danger); }
+    }
+
+    .alert-content i {
+      font-size: 5rem;
+      color: var(--danger);
+      margin-bottom: 20px;
+    }
+
+    .alert-content h2 {
+      font-family: var(--header-font);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--danger);
+    }
+
+    .alert-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .alert-content button {
+      padding: 15px 40px;
+      background: var(--danger);
+      border: none;
+      color: #000;
+      font-family: var(--header-font);
+      font-size: 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* ----- FOOTER ----- */
+    #data-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.98);
+      border-top: 1px solid rgba(0, 255, 255, 0.1);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      z-index: 100;
+      font-family: var(--ui);
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 480px) {
+      .current-time { font-size: 3.5rem; }
+      .alarm-time { font-size: 1.6rem; }
+      .day-badge { width: 25px; height: 25px; }
+      .time-picker input { width: 60px; font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrixCanvas"></canvas>
+
+  <header>
+    <div class="header-left">
+      <i class="fas fa-clock"></i>
+      <h1>ALARM HUB</h1>
+    </div>
+    <div class="time-display" id="liveTime">00:00</div>
+  </header>
+
+  <div class="main">
+    <!-- CURRENT TIME CARD -->
+    <div class="current-time-card">
+      <div class="current-label">CURRENT TIME</div>
+      <div class="current-time" id="currentTime">00:00:00</div>
+      <div class="current-date" id="currentDate"></div>
+    </div>
+
+    <!-- QUICK ADD -->
+    <div class="quick-add">
+      <input type="text" id="quickTime" placeholder="HH:MM" maxlength="5">
+      <button onclick="openAddModal()"><i class="fas fa-plus"></i></button>
+    </div>
+
+    <!-- ALARMS SECTION -->
+    <div class="section-title">
+      <i class="fas fa-bell"></i> YOUR ALARMS
+    </div>
+    <div class="alarms-list" id="alarmsList"></div>
+
+    <!-- PRESETS SECTION -->
+    <div class="section-title">
+      <i class="fas fa-star"></i> PRESETS
+    </div>
+    <div class="alarms-list" id="presetsList"></div>
+  </div>
+
+  <!-- ADD/EDIT ALARM MODAL -->
+  <div id="alarmModal">
+    <div class="modal-content">
+      <h2 id="modalTitle">ADD ALARM</h2>
+      <div class="time-picker">
+        <input type="number" id="alarmHour" min="1" max="12" value="7">
+        <span>:</span>
+        <input type="number" id="alarmMinute" min="0" max="59" value="0" step="10">
+        <select id="alarmPeriod">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+      <input type="text" id="alarmLabel" class="label-input" placeholder="Label (e.g., Wake up)" value="Morning Alarm">
+      
+      <div class="days-selector" id="daysSelector">
+        <button class="day-btn" data-day="0">S</button>
+        <button class="day-btn" data-day="1">M</button>
+        <button class="day-btn" data-day="2">T</button>
+        <button class="day-btn" data-day="3">W</button>
+        <button class="day-btn" data-day="4">T</button>
+        <button class="day-btn" data-day="5">F</button>
+        <button class="day-btn" data-day="6">S</button>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="save" onclick="saveAlarm()">SAVE</button>
+        <button onclick="closeModal()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALARM ALERT POPUP -->
+  <div id="alarmAlert">
+    <div class="alert-content">
+      <i class="fas fa-bell fa-shake"></i>
+      <h2 id="alertTitle">ALARM!</h2>
+      <p id="alertMessage">Time to wake up</p>
+      <button onclick="dismissAlarm()">DISMISS</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="data-footer">
+    <span>ALARMS: <span id="alarmCount">0</span> ACTIVE</span>
+    <span id="clock"></span>
+    <span>NEXT: <span id="nextAlarm">--:--</span></span>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // =========================================
+      // MATRIX BACKGROUND
+      // =========================================
+      const canvas = document.getElementById('matrixCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const chars = '01';
+      const fontSize = 14;
+      let columns, drops;
+
+      function initMatrix() {
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(1);
+      }
+      initMatrix();
+
+      function drawMatrix() {
+        ctx.fillStyle = 'rgba(1, 3, 9, 0.1)';
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = '#00f0ff';
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const char = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      setInterval(drawMatrix, 40);
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        initMatrix();
+      });
+
+      // =========================================
+      // ALARM DATA
+      // =========================================
+      let alarms = [
+        {
+          id: '1',
+          time: '07:00',
+          period: 'AM',
+          label: 'Morning Wake Up',
+          days: [1, 2, 3, 4, 5], // Mon-Fri
+          enabled: true,
+          sound: 'default',
+          snooze: 5
+        },
+        {
+          id: '2',
+          time: '08:30',
+          period: 'PM',
+          label: 'Evening Meditation',
+          days: [0, 6], // Weekend
+          enabled: false,
+          sound: 'default',
+          snooze: 10
+        }
+      ];
+
+      const presets = [
+        {
+          id: 'p1',
+          time: '06:30',
+          period: 'AM',
+          label: 'Early Bird',
+          days: [1, 2, 3, 4, 5],
+          enabled: false
+        },
+        {
+          id: 'p2',
+          time: '22:00',
+          period: 'PM',
+          label: 'Bedtime',
+          days: [1, 2, 3, 4, 5, 6, 0],
+          enabled: false
+        }
+      ];
+
+      let editingId = null;
+      let activeAlarm = null;
+
+      // =========================================
+      // RENDER ALARMS
+      // =========================================
+      function renderAlarms() {
+        const list = document.getElementById('alarmsList');
+        list.innerHTML = alarms.map(alarm => `
+          <div class="alarm-item ${alarm.enabled ? 'active' : ''}" data-id="${alarm.id}" draggable="true">
+            <div style="flex:1">
+              <div class="alarm-time-block">
+                <span class="alarm-time">${alarm.time}</span>
+                <span class="alarm-period">${alarm.period}</span>
+              </div>
+              <div class="alarm-label">${alarm.label}</div>
+              <div class="alarm-days">
+                ${renderDays(alarm.days)}
+              </div>
+            </div>
+            <div class="alarm-controls">
+              <div class="toggle-switch ${alarm.enabled ? 'active' : ''}" onclick="toggleAlarm('${alarm.id}')"></div>
+              <button class="btn-icon" onclick="editAlarm('${alarm.id}')"><i class="fas fa-pen"></i></button>
+              <button class="btn-icon delete" onclick="deleteAlarm('${alarm.id}')"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+        `).join('');
+
+        document.getElementById('alarmCount').innerText = alarms.filter(a => a.enabled).length;
+      }
+
+      function renderPresets() {
+        const list = document.getElementById('presetsList');
+        list.innerHTML = presets.map(preset => `
+          <div class="alarm-item">
+            <div style="flex:1">
+              <div class="alarm-time-block">
+                <span class="alarm-time">${preset.time}</span>
+                <span class="alarm-period">${preset.period}</span>
+              </div>
+              <div class="alarm-label">${preset.label}</div>
+              <div class="alarm-days">
+                ${renderDays(preset.days)}
+              </div>
+            </div>
+            <div>
+              <button class="btn-icon" onclick="usePreset('${preset.id}')"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderDays(days) {
+        const allDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        return allDays.map((day, index) => `
+          <div class="day-badge ${days.includes(index) ? 'active' : ''}">${day}</div>
+        `).join('');
+      }
+
+      // =========================================
+      // ALARM CRUD OPERATIONS
+      // =========================================
+      window.toggleAlarm = (id) => {
+        const alarm = alarms.find(a => a.id === id);
+        if (alarm) {
+          alarm.enabled = !alarm.enabled;
+          renderAlarms();
+          saveToStorage();
+          checkNextAlarm();
+        }
+      };
+
+      window.deleteAlarm = (id) => {
+        if (confirm('Delete this alarm?')) {
+          alarms = alarms.filter(a => a.id !== id);
+          renderAlarms();
+          saveToStorage();
+          checkNextAlarm();
+        }
+      };
+
+      window.editAlarm = (id) => {
+        const alarm = alarms.find(a => a.id === id);
+        if (alarm) {
+          editingId = id;
+          const [hours, minutes] = alarm.time.split(':');
+          document.getElementById('alarmHour').value = parseInt(hours);
+          document.getElementById('alarmMinute').value = parseInt(minutes);
+          document.getElementById('alarmPeriod').value = alarm.period;
+          document.getElementById('alarmLabel').value = alarm.label;
+          
+          // Set days
+          document.querySelectorAll('.day-btn').forEach(btn => {
+            const day = parseInt(btn.dataset.day);
+            btn.classList.toggle('active', alarm.days.includes(day));
+          });
+          
+          document.getElementById('modalTitle').innerText = 'EDIT ALARM';
+          document.getElementById('alarmModal').style.display = 'flex';
+        }
+      };
+
+      window.usePreset = (id) => {
+        const preset = presets.find(p => p.id === id);
+        if (preset) {
+          const newAlarm = {
+            ...preset,
+            id: Date.now().toString(),
+            enabled: true
+          };
+          alarms.push(newAlarm);
+          renderAlarms();
+          saveToStorage();
+          checkNextAlarm();
+        }
+      };
+
+      window.openAddModal = () => {
+        editingId = null;
+        document.getElementById('alarmHour').value = 7;
+        document.getElementById('alarmMinute').value = 0;
+        document.getElementById('alarmPeriod').value = 'AM';
+        document.getElementById('alarmLabel').value = 'New Alarm';
+        document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('modalTitle').innerText = 'ADD ALARM';
+        document.getElementById('alarmModal').style.display = 'flex';
+      };
+
+      window.closeModal = () => {
+        document.getElementById('alarmModal').style.display = 'none';
+      };
+
+      window.saveAlarm = () => {
+        const hour = document.getElementById('alarmHour').value.padStart(2, '0');
+        const minute = document.getElementById('alarmMinute').value.padStart(2, '0');
+        const period = document.getElementById('alarmPeriod').value;
+        const label = document.getElementById('alarmLabel').value;
+        
+        const days = [];
+        document.querySelectorAll('.day-btn.active').forEach(btn => {
+          days.push(parseInt(btn.dataset.day));
+        });
+
+        if (days.length === 0) {
+          alert('Select at least one day');
+          return;
+        }
+
+        const alarmData = {
+          id: editingId || Date.now().toString(),
+          time: `${hour}:${minute}`,
+          period,
+          label,
+          days,
+          enabled: true
+        };
+
+        if (editingId) {
+          alarms = alarms.map(a => a.id === editingId ? alarmData : a);
+        } else {
+          alarms.push(alarmData);
+        }
+
+        renderAlarms();
+        saveToStorage();
+        checkNextAlarm();
+        closeModal();
+      };
+
+      // =========================================
+      // DAY SELECTOR
+      // =========================================
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+        });
+      });
+
+      // =========================================
+      // REAL TIME CLOCK
+      // =========================================
+      function updateClock() {
+        const now = new Date();
+        
+        // Live time in header
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        
+        document.getElementById('liveTime').innerText = `${hours}:${minutes}`;
+        document.getElementById('currentTime').innerText = `${hours}:${minutes}:${seconds}`;
+        
+        // Date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerText = now.toLocaleDateString('en-US', options);
+        
+        // Footer clock
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+        
+        // Check alarms every second
+        checkActiveAlarms(now);
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // =========================================
+      // ALARM CHECKING
+      // =========================================
+      function checkActiveAlarms(now) {
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentDay = now.getDay(); // 0-6
+        
+        // Format current time for comparison
+        const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+        const currentPeriod = currentHour >= 12 ? 'PM' : 'AM';
+        const currentHour12 = currentHour % 12 || 12;
+        const currentTime12Str = `${currentHour12.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+
+        alarms.forEach(alarm => {
+          if (!alarm.enabled) return;
+          
+          // Check if alarm should trigger today
+          if (!alarm.days.includes(currentDay)) return;
+          
+          // Check time match
+          const [alarmHour, alarmMinute] = alarm.time.split(':');
+          const alarmHour24 = alarm.period === 'PM' && alarmHour !== '12' ? 
+            parseInt(alarmHour) + 12 : 
+            (alarm.period === 'AM' && alarmHour === '12' ? 0 : parseInt(alarmHour));
+          
+          if (alarmHour24 === currentHour && parseInt(alarmMinute) === currentMinute && seconds < 2) {
+            triggerAlarm(alarm);
+          }
+        });
+      }
+
+      function triggerAlarm(alarm) {
+        if (activeAlarm) return; // Already showing an alarm
+        
+        activeAlarm = alarm;
+        document.getElementById('alertTitle').innerText = '⏰ ALARM!';
+        document.getElementById('alertMessage').innerText = `${alarm.label} • ${alarm.time} ${alarm.period}`;
+        document.getElementById('alarmAlert').style.display = 'flex';
+        
+        // Play sound
+        playAlarmSound();
+      }
+
+      window.dismissAlarm = () => {
+        document.getElementById('alarmAlert').style.display = 'none';
+        if (activeAlarm) {
+          // Snooze or dismiss logic
+          activeAlarm = null;
+          stopAlarmSound();
+        }
+      };
+
+      // =========================================
+      // SOUND (using Web Audio API)
+      // =========================================
+      let audioContext = null;
+      let oscillator = null;
+      let gainNode = null;
+
+      function playAlarmSound() {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        if (oscillator) oscillator.stop();
+        
+        oscillator = audioContext.createOscillator();
+        gainNode = audioContext.createGain();
+        
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.start();
+        
+        // Loop pattern
+        setInterval(() => {
+          if (oscillator) {
+            oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.3);
+          }
+        }, 600);
+      }
+
+      function stopAlarmSound() {
+        if (oscillator) {
+          oscillator.stop();
+          oscillator = null;
+        }
+      }
+
+      // =========================================
+      // NEXT ALARM CALCULATION
+      // =========================================
+      function checkNextAlarm() {
+        const now = new Date();
+        let nextAlarmTime = null;
+        let minDiff = Infinity;
+
+        alarms.filter(a => a.enabled).forEach(alarm => {
+          alarm.days.forEach(day => {
+            const alarmDate = new Date();
+            const dayDiff = (day - now.getDay() + 7) % 7;
+            alarmDate.setDate(now.getDate() + dayDiff);
+            
+            const [hour, minute] = alarm.time.split(':');
+            const alarmHour24 = alarm.period === 'PM' && hour !== '12' ? 
+              parseInt(hour) + 12 : 
+              (alarm.period === 'AM' && hour === '12' ? 0 : parseInt(hour));
+            
+            alarmDate.setHours(alarmHour24, parseInt(minute), 0, 0);
+            
+            const diff = alarmDate - now;
+            if (diff > 0 && diff < minDiff) {
+              minDiff = diff;
+              nextAlarmTime = `${alarm.time} ${alarm.period}`;
+            }
+          });
+        });
+
+        document.getElementById('nextAlarm').innerText = nextAlarmTime || '--:--';
+      }
+
+      // =========================================
+      // LOCAL STORAGE
+      // =========================================
+      function saveToStorage() {
+        localStorage.setItem('alarms', JSON.stringify(alarms));
+      }
+
+      function loadFromStorage() {
+        const saved = localStorage.getItem('alarms');
+        if (saved) {
+          alarms = JSON.parse(saved);
+        }
+      }
+
+      // =========================================
+      // DRAG TO REORDER (basic)
+      // =========================================
+      let draggedItem = null;
+      
+      document.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('alarm-item')) {
+          draggedItem = e.target;
+          e.target.style.opacity = '0.5';
+        }
+      });
+
+      document.addEventListener('dragend', (e) => {
+        if (e.target.classList.contains('alarm-item')) {
+          e.target.style.opacity = '1';
+        }
+      });
+
+      document.addEventListener('dragover', (e) => e.preventDefault());
+
+      document.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (draggedItem && e.target.closest('.alarm-item')) {
+          const target = e.target.closest('.alarm-item');
+          const draggedId = draggedItem.dataset.id;
+          const targetId = target.dataset.id;
+          
+          if (draggedId && targetId && draggedId !== targetId) {
+            const draggedIndex = alarms.findIndex(a => a.id === draggedId);
+            const targetIndex = alarms.findIndex(a => a.id === targetId);
+            
+            const [draggedAlarm] = alarms.splice(draggedIndex, 1);
+            alarms.splice(targetIndex, 0, draggedAlarm);
+            
+            renderAlarms();
+          }
+        }
+      });
+
+      // =========================================
+      // INITIALIZATION
+      // =========================================
+      loadFromStorage();
+      renderAlarms();
+      renderPresets();
+      checkNextAlarm();
+
+      // Auto-check permissions
+      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission();
+      }
+
+      // Cleanup on unload
+      window.addEventListener('beforeunload', () => {
+        stopAlarmSound();
+      });
+
+      // Click outside modal
+      document.getElementById('alarmModal').addEventListener('click', (e) => {
+        if (e.target.id === 'alarmModal') closeModal();
+      });
+
+      document.getElementById('alarmAlert').addEventListener('click', (e) => {
+        if (e.target.id === 'alarmAlert') dismissAlarm();
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+          dismissAlarm();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
