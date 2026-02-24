@@ -1,761 +1,1950 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  
+    
 <head>
+    
+  <meta charset="UTF-8">
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    
+  <title>COMPLIANCE CV-5</title>
+    
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0033'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='black' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+    
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@100;300;400;700&display=swap" rel="stylesheet">
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
   
-<meta charset="UTF-8">
-  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-<title>COMPLIANCE CV-5</title>
-  
-<link rel="icon" type="image/png" href="logo.png">
+  <!-- FIREBASE IMPORT MAP -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+        "@firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"
+      }
+    }
+  </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+      
+    /* ===== ULTIMATE MILITARY DESIGN SYSTEM ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
+    :root {
+      --bg-primary: #030303;
+      --bg-secondary: #0a0a0a;
+      --bg-tertiary: #111111;
+      --panel: #0c0c0c;
+      --panel-light: #1a1a1a;
+      --accent-red: #ff0015;
+      --accent-red-dim: rgba(255, 0, 21, 0.15);
+      --accent-green: #00ff88;
+      --accent-blue: #0066ff;
+      --accent-yellow: #ffaa00;
+      --accent-purple: #aa44ff;
+      --accent-orange: #ff5500;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
+      --text-muted: #888888;
+      --border-color: #ff0015;
+      --border-dim: rgba(255, 0, 21, 0.3);
+      --shadow-intensity: 0 0 30px rgba(255, 0, 21, 0.2);
+      --transition-tactical: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --spacing-unit: 8px;
+      --border-radius-tactical: 4px;
+      --font-tactical: 'Orbitron', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
-/* =========================================================
-INNOVATIONS CV-5 — TIER 1 SPECIAL OPS UI
-RED ON BLACK | STEALTH MODE
-========================================================= */
+    /* ===== SNIPER SCOPE BACKGROUND ===== */
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-:root{
---bg:#000000;
---panel:#050505;
---panelSoft:#0b0b0b;
---red:#ff0033;
---redSoft:#ff003322;
---redGlow:#ff003355;
---white:#e6e6e6;
---green:#00ff88;
---blue:#00c3ff;
---yellow:#ffaa00;
---radius:12px;
---transition:0.25s cubic-bezier(.4,0,.2,1);
---fontDisplay:'Orbitron',sans-serif;
---fontMono:'JetBrains Mono',monospace;
-scroll-behavior:smooth;
-}
+    /* Sniper scope reticule animation */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 50% 50%, transparent 40%, rgba(255,0,21,0.03) 70%),
+        repeating-linear-gradient(45deg, 
+          transparent 0px, 
+          transparent 20px, 
+          rgba(255,0,21,0.02) 20px, 
+          rgba(255,0,21,0.02) 40px),
+        repeating-linear-gradient(-45deg, 
+          transparent 0px, 
+          transparent 20px, 
+          rgba(255,0,21,0.02) 20px, 
+          rgba(255,0,21,0.02) 40px);
+      z-index: -2;
+      pointer-events: none;
+      animation: scopePulse 4s ease-in-out infinite;
+    }
 
-/* =========================================================
-GLOBAL
-========================================================= */
+    /* Moving scope lines */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(90deg, 
+          transparent 49.9%, 
+          rgba(255,0,21,0.1) 50%, 
+          transparent 50.1%),
+        linear-gradient(0deg, 
+          transparent 49.9%, 
+          rgba(255,0,21,0.1) 50%, 
+          transparent 50.1%);
+      z-index: -1;
+      animation: scopeBreathing 3s ease-in-out infinite;
+    }
 
-*{box-sizing:border-box;}
+    @keyframes scopePulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
 
-body{
-margin:0;
-background:var(--bg);
-color:var(--red);
-font-family:var(--fontMono);
-overflow-x:hidden;
-}
+    @keyframes scopeBreathing {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.02); opacity: 0.4; }
+    }
 
-/* SNIPER OPTIC BACKGROUND */
+    /* ===== STICKY TACTICAL HEADER ===== */
+    .tactical-header {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: rgba(3, 3, 3, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--accent-red);
+      padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 4);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      width: 100%;
+    }
 
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(255,0,51,0.15) 31%, transparent 32%),
-radial-gradient(circle at center, transparent 0%, transparent 50%, rgba(255,0,51,0.07) 51%, transparent 52%),
-linear-gradient(180deg,#000,#050505);
-background-size:100% 100%;
-animation:opticPulse 6s infinite alternate ease-in-out;
-z-index:-1;
-}
+    .header-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: calc(var(--spacing-unit) * 2);
+      max-width: 1800px;
+      margin: 0 auto;
+    }
 
-@keyframes opticPulse{
-0%{filter:brightness(.85);}
-100%{filter:brightness(1.1);}
-}
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 4);
+    }
 
-/* =========================================================
-HEADER
-========================================================= */
+    .header-logo {
+      font-family: var(--font-tactical);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent-red);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
-header{
-text-align:center;
-padding:40px 20px;
-border-bottom:1px solid var(--redGlow);
-position:relative;
-}
+    .header-nav {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 2);
+    }
 
-header h1{
-font-family:var(--fontDisplay);
-font-size:clamp(24px,5vw,52px);
-letter-spacing:5px;
-margin:0;
-text-shadow:0 0 20px var(--red);
-}
+    .header-nav a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
+      border: 1px solid transparent;
+      transition: var(--transition-tactical);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-.shift-box{
-margin-top:20px;
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-align-items:center;
-}
+    .header-nav a:hover {
+      border-color: var(--accent-red);
+      background: var(--accent-red-dim);
+    }
 
-.shift-timer{
-font-size:18px;
-color:var(--yellow);
-}
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 3);
+    }
 
-button{
-background:#000;
-color:var(--red);
-border:1px solid var(--red);
-padding:12px 20px;
-border-radius:8px;
-cursor:pointer;
-transition:var(--transition);
-font-weight:bold;
-position:relative;
-overflow:hidden;
-}
+    .live-time {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--accent-green);
+      text-shadow: 0 0 10px var(--accent-green);
+      letter-spacing: 2px;
+    }
 
-button:hover{
-background:var(--red);
-color:#000;
-box-shadow:0 0 15px var(--red);
-transform:translateY(-2px);
-}
+    .weather-indicator {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit));
+      background: rgba(0,0,0,0.5);
+      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
+      border: 1px solid var(--border-dim);
+    }
 
-button:active{
-transform:scale(.95);
-}
+    .weather-temp {
+      font-size: 1rem;
+      color: var(--accent-yellow);
+    }
 
-.send{
-background:var(--red);
-color:#000;
-}
+    .weather-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
 
-.export{
-border-color:var(--green);
-color:var(--green);
-}
+    /* ===== VERTICAL QUICK NAVIGATION ===== */
+    .vertical-nav {
+      position: fixed;
+      right: calc(var(--spacing-unit) * 2);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--spacing-unit));
+    }
 
-.export:hover{
-background:var(--green);
-color:#000;
-}
+    .nav-dot {
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,0.8);
+      border: 2px solid var(--accent-red);
+      color: var(--accent-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-tactical);
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-tactical);
+      backdrop-filter: blur(4px);
+    }
 
-.save{
-border-color:var(--blue);
-color:var(--blue);
-}
+    .nav-dot:hover {
+      background: var(--accent-red);
+      color: black;
+      transform: scale(1.2);
+    }
 
-.save:hover{
-background:var(--blue);
-color:#000;
-}
+    .nav-dot.active {
+      background: var(--accent-red);
+      color: black;
+      box-shadow: 0 0 20px var(--accent-red);
+    }
 
-/* =========================================================
-NAV RIGHT SIDE
-========================================================= */
+    /* ===== MAIN CONTAINER ===== */
+    .container {
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 0 calc(var(--spacing-unit) * 4);
+    }
 
-.nav-side{
-position:fixed;
-right:20px;
-top:50%;
-transform:translateY(-50%);
-display:flex;
-flex-direction:column;
-gap:10px;
-z-index:999;
-}
+    /* ===== TACTICAL SECTIONS ===== */
+    .section {
+      background: var(--panel);
+      border: 2px solid var(--border-color);
+      margin-bottom: calc(var(--spacing-unit) * 8);
+      padding: calc(var(--spacing-unit) * 4);
+      position: relative;
+      transition: var(--transition-tactical);
+      animation: sectionEntry 0.4s ease-out;
+    }
 
-.nav-side button{
-font-size:12px;
-padding:8px 12px;
-}
+    @keyframes sectionEntry {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* =========================================================
-CONTAINER + SECTIONS
-========================================================= */
+    .section::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+      animation: scanline 3s linear infinite;
+    }
 
-.container{
-max-width:1600px;
-margin:auto;
-padding:40px 20px;
-display:flex;
-flex-direction:column;
-gap:70px;
-}
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
 
-.section{
-background:var(--panel);
-border:1px solid var(--redGlow);
-padding:30px;
-border-radius:var(--radius);
-position:relative;
-transition:var(--transition);
-}
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: calc(var(--spacing-unit) * 4);
+      padding-bottom: calc(var(--spacing-unit) * 2);
+      border-bottom: 1px solid var(--border-dim);
+    }
 
-.section:hover{
-box-shadow:0 0 25px var(--redGlow);
-}
+    .section-title {
+      font-family: var(--font-tactical);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 3px;
+    }
 
-.section h2{
-font-family:var(--fontDisplay);
-letter-spacing:3px;
-margin-top:0;
-}
+    .section-badge {
+      background: var(--accent-red-dim);
+      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
+      border: 1px solid var(--accent-red);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
 
-/* =========================================================
-INPUTS
-========================================================= */
+    /* ===== BUTTON SYSTEMS ===== */
+    .button-group {
+      display: flex;
+      gap: calc(var(--spacing-unit));
+      flex-wrap: wrap;
+      margin: calc(var(--spacing-unit) * 2) 0;
+    }
 
-input, textarea, select{
-width:100%;
-background:#000;
-border:1px solid var(--redGlow);
-color:var(--red);
-padding:14px;
-border-radius:8px;
-margin-bottom:15px;
-font-family:var(--fontMono);
-transition:var(--transition);
-}
+    .btn {
+      background: transparent;
+      border: 2px solid var(--accent-red);
+      color: var(--accent-red);
+      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 3);
+      font-family: var(--font-tactical);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: var(--transition-tactical);
+      position: relative;
+      overflow: hidden;
+      min-width: 90px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--spacing-unit));
+    }
 
-input:focus, textarea:focus{
-outline:none;
-box-shadow:0 0 12px var(--redGlow);
-}
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--accent-red);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s;
+      z-index: -1;
+    }
 
-/* =========================================================
-CARD
-========================================================= */
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
 
-.card{
-background:var(--panelSoft);
-border:1px solid var(--redSoft);
-padding:15px;
-border-radius:8px;
-margin-bottom:12px;
-animation:fadeIn .4s ease;
-}
+    .btn:hover {
+      color: black;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px var(--accent-red);
+    }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
-}
+    .btn:active {
+      transform: translateY(0);
+    }
 
-/* =========================================================
-CHECKLIST ADVANCED
-========================================================= */
+    .btn-primary {
+      background: var(--accent-red);
+      color: black;
+    }
 
-.check-wrapper{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
+    .btn-green {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+    .btn-green:hover::before { background: var(--accent-green); }
+    .btn-green:hover { color: black; }
 
-.check-column{
-background:#000;
-padding:15px;
-border-radius:8px;
-border:1px solid var(--redSoft);
-min-height:200px;
-transition:var(--transition);
-}
+    .btn-blue {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    .btn-blue:hover::before { background: var(--accent-blue); }
+    .btn-blue:hover { color: black; }
 
-.check-column h3{
-margin-top:0;
-text-align:center;
-}
+    .btn-yellow {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+    .btn-yellow:hover::before { background: var(--accent-yellow); }
+    .btn-yellow:hover { color: black; }
 
-.move{
-transition:all .4s ease;
-}
+    /* ===== FORM ELEMENTS ===== */
+    .input-group {
+      margin-bottom: calc(var(--spacing-unit) * 3);
+    }
 
-/* =========================================================
-DRAWING CANVAS
-========================================================= */
+    label {
+      display: block;
+      margin-bottom: calc(var(--spacing-unit));
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-.canvas-box{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-}
+    input, textarea, select {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-dim);
+      color: var(--text-primary);
+      padding: calc(var(--spacing-unit) * 2);
+      font-family: var(--font-mono);
+      transition: var(--transition-tactical);
+    }
 
-#drawCanvas{
-background:white;
-border-radius:10px;
-cursor:crosshair;
-width: 50%;
-}
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 3px var(--accent-red-dim);
+    }
 
-/* =========================================================
-LOADER
-========================================================= */
+    /* ===== CARD SYSTEM ===== */
+    .card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-dim);
+      padding: calc(var(--spacing-unit) * 2);
+      margin-bottom: calc(var(--spacing-unit));
+      transition: var(--transition-tactical);
+      animation: cardEntry 0.2s ease-out;
+    }
 
-.loader{
-position:fixed;
-inset:0;
-background:#000000cc;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-display:none;
-}
+    @keyframes cardEntry {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-.spinner{
-width:60px;
-height:60px;
-border:5px solid #111;
-border-top:5px solid var(--red);
-border-radius:50%;
-animation:spin 1s linear infinite;
-}
+    .card:hover {
+      border-color: var(--accent-red);
+      transform: translateX(3px);
+    }
 
-@keyframes spin{
-100%{transform:rotate(360deg);}
-}
+    /* ===== NOTIFICATION CENTER ===== */
+    .notification-center {
+      position: fixed;
+      top: calc(var(--spacing-unit) * 10);
+      right: calc(var(--spacing-unit) * 4);
+      z-index: 99999;
+      max-width: 400px;
+      width: calc(100% - 32px);
+      pointer-events: none;
+    }
 
-/* =========================================================
-RESPONSIVE
-========================================================= */
+    .notification {
+      background: var(--accent-red);
+      color: black;
+      padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+      margin-bottom: calc(var(--spacing-unit));
+      border-left: 5px solid white;
+      font-weight: 700;
+      animation: notificationSlide 0.2s ease-out;
+      pointer-events: auto;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 2);
+      font-family: var(--font-tactical);
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
 
-@media(max-width:900px){
-.check-wrapper{
-grid-template-columns:1fr;
-}
-.nav-side{
-display:none;
-}
-}
+    @keyframes notificationSlide {
+      from { transform: translateX(100%) scale(0.8); opacity: 0; }
+      to { transform: translateX(0) scale(1); opacity: 1; }
+    }
 
-footer{
-text-align:center;
-padding:40px 20px;
-border-top:1px solid var(--redGlow);
-color:var(--white);
-margin-top:60px;
-}
+    /* ===== LOADING STATES ===== */
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+    }
 
-footer span{
-color:var(--green);
-font-weight:bold;
-}
+    .loader-tactical {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--accent-red-dim);
+      border-top: 4px solid var(--accent-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
 
-</style>
+    .btn-loader {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ===== GRID SYSTEMS ===== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: calc(var(--spacing-unit) * 3);
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-container {
+      background: var(--bg-tertiary);
+      height: 10px;
+      border: 1px solid var(--border-dim);
+      margin: calc(var(--spacing-unit) * 2) 0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent-red);
+      width: 0%;
+      transition: width 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ===== ENCRYPTION BADGES ===== */
+    .enc-badge {
+      background: var(--accent-blue);
+      color: black;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .key-indicator {
+      background: var(--bg-tertiary);
+      padding: calc(var(--spacing-unit));
+      border-left: 3px solid var(--accent-yellow);
+      font-family: monospace;
+      font-size: 0.8rem;
+      word-break: break-all;
+    }
+
+    /* ===== FILE GRID ===== */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: calc(var(--spacing-unit));
+      margin-top: calc(var(--spacing-unit) * 2);
+    }
+
+    .file-item {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-dim);
+      padding: calc(var(--spacing-unit));
+      text-align: center;
+      transition: var(--transition-tactical);
+    }
+
+    .file-item:hover {
+      border-color: var(--accent-red);
+      transform: scale(1.02);
+    }
+
+    .file-item img {
+      max-width: 100%;
+      max-height: 80px;
+      object-fit: contain;
+    }
+
+    /* ===== FOOTER ===== */
+    .tactical-footer {
+      background: var(--panel);
+      border-top: 2px solid var(--accent-red);
+      padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 4);
+      margin-top: calc(var(--spacing-unit) * 8);
+      text-align: center;
+    }
+
+    .verse {
+      font-family: var(--font-tactical);
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+      font-style: italic;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .tactical-header { padding: calc(var(--spacing-unit)); }
+      .header-grid { flex-direction: column; align-items: stretch; }
+      .header-left { flex-direction: column; align-items: stretch; }
+      .header-nav { flex-wrap: wrap; }
+      .vertical-nav { display: none; }
+      .section { padding: calc(var(--spacing-unit) * 2); }
+    }
+
+    /* ===== UTILITY ===== */
+    .text-accent { color: var(--accent-red); }
+    .text-green { color: var(--accent-green); }
+    .text-blue { color: var(--accent-blue); }
+    .text-yellow { color: var(--accent-yellow); }
+    .mb-2 { margin-bottom: calc(var(--spacing-unit) * 2); }
+    .mt-2 { margin-top: calc(var(--spacing-unit) * 2); }
+    .w-100 { width: 100%; }
+    .flex { display: flex; gap: calc(var(--spacing-unit)); align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
+      
+  </style>
+    
 </head>
+    
 <body>
-
-<div class="loader" id="loader"><div class="spinner"></div></div>
-
-<header>
-<h1>COMPLIANCE CV-5</h1>
-
-<div class="shift-box">
-<button id="shiftBtn">START SHIFT</button>
-<div class="shift-timer" id="shiftTimer">00:00:00</div>
-</div>
-
-</header>
-
-<div class="nav-side">
-<button onclick="window.scrollTo({top:0,behavior:'smooth'})">TOP</button>
-<button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})">MID</button>
-<button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">DOWN</button>
-</div>
-
-<div class="container">
-
-<!-- SECTION 1 -->
-<div class="section" id="sec1">
-<h2>SECTION 1 — 01. INNOVATIONS COMMAND DESK</h2>
-  <h3>The Target</h3>
-
-<label>codename:</label>
-<input id="noteCode">
-
-<label>notepad:</label>
-<textarea id="noteInput" rows="6"></textarea>
-
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
-<button class="save" id="noteSave">SAVE</button>
-<button class="export" id="noteExportTXT">EXPORT TXT</button>
-<button class="export" id="noteExportJSON">EXPORT JSON</button>
-<button class="send" id="noteSend">SEND</button>
-</div>
-
-<hr>
-
-<h3>live clock & calendar</h3>
-<div id="liveClock"></div>
-<input type="date" id="calendar">
-
-<hr>
-
-<h3>CIO whiteboard</h3>
-
-<div class="canvas-box">
-<canvas id="drawCanvas" width="400" height="300"></canvas>
-<div>
-<button onclick="clearCanvas()">CLEAR</button>
-</div>
-</div>
-
-<hr>
-
-<h3>advanced calculator</h3>
-<input id="calcInput" placeholder="e.g. (10*5)+3">
-<button onclick="calculate()">CALCULATE</button>
-<div id="calcResult"></div>
-
-<div id="noteView"></div>
-</div>
-
-<!-- SECTION 2 -->
-<div class="section">
-<h2>SECTION 2 — TEAM MESSAGE BOARD</h2>
-
-<label>codename:</label>
-<input id="boardName">
-
-<label>Message:</label>
-<textarea id="boardMessage"></textarea>
-
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
-<button class="save" id="boardSave">SAVE</button>
-<button class="send" id="boardSend">SEND</button>
-<button onclick="encryptText()">ENCRYPT AES</button>
-<button onclick="decryptText()">DECRYPT AES</button>
-<button class="export" id="boardExport">EXPORT JSON</button>
-</div>
-
-<div id="boardView"></div>
-</div>
-
-<!-- SECTION 3 -->
-<div class="section">
-<h2>SECTION 3 — CHECKLIST</h2>
-
-<label>codename:</label>
-<input id="taskCode">
-
-<input id="checkInput" placeholder="Enter Task">
-
-<button class="send" id="taskSend">SEND</button>
-
-<div class="check-wrapper">
-<div class="check-column">
-<h3>ACTIVE</h3>
-<div id="activeTasks"></div>
-</div>
-<div class="check-column">
-<h3>COMPLETED</h3>
-<div id="completedTasks"></div>
-</div>
-</div>
-
-</div>
-
-<!-- SECTION 4 -->
-<div class="section">
-<h2>SECTION 4 — LOG</h2>
-
-<label>Upload File (single)</label>
-<input type="file" id="fileSingle">
-
-<label>Upload Up To 5 Files</label>
-<input type="file" id="fileMulti" multiple>
-
-<button onclick="saveFiles()">SAVE FILES</button>
-
-<h3>File Viewer</h3>
-<div id="fileView"></div>
-
-<hr>
-
-<h3>Shift Logs</h3>
-<div id="shiftLogs"></div>
-
-</div>
-
-<!-- SECTION 5 -->
-<div class="section">
-<h2>SECTION 5 — AI TERMINAL: ZAMA MDLULI</h2>
-
-<label>Codename:</label>
-<input id="aiCode">
-
-<textarea id="aiInput" placeholder="Directive for Zama Mdluli..."></textarea>
-
-<button class="send" id="aiSend">SEND</button>
-<button class="export" id="aiExport">EXPORT JSON</button>
-
-<div id="aiView"></div>
-</div>
-
-</div>
-
-<footer>
-<span>"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest." — Joshua 1:9 (KJV)</span>
-</footer>
-
-<script type="module">
-
-/* =========================================================
-FIREBASE CONFIG (YOUR REAL CONFIG)
-========================================================= */
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import {
-getFirestore,
-collection,addDoc,doc,setDoc,getDoc,onSnapshot,
-deleteDoc,updateDoc,serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-authDomain: "eden-4a8d3.firebaseapp.com",
-projectId: "eden-4a8d3",
-storageBucket: "eden-4a8d3.firebasestorage.app",
-messagingSenderId: "421147129483",
-appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-/* =========================================================
-SHIFT SYSTEM
-========================================================= */
-
-let shiftInterval=null;
-let shiftStartTime=null;
-let shiftDocId=null;
-const shiftBtn=document.getElementById("shiftBtn");
-const shiftTimer=document.getElementById("shiftTimer");
-
-function formatTime(ms){
-let sec=Math.floor(ms/1000);
-let h=Math.floor(sec/3600);
-let m=Math.floor((sec%3600)/60);
-let s=sec%60;
-return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-shiftBtn.onclick=async()=>{
-if(!shiftStartTime){
-shiftStartTime=Date.now();
-shiftBtn.innerText="END SHIFT";
-shiftDocId=(await addDoc(collection(db,"shifts"),{
-start:serverTimestamp(),
-active:true
-})).id;
-
-shiftInterval=setInterval(()=>{
-shiftTimer.innerText=formatTime(Date.now()-shiftStartTime);
-},1000);
-
-alert("PROTOCOL: 71 PUSH-UPS IN 60 SECONDS. SEND VIDEO TO EDEN WHATSAPP.");
-}
-else{
-clearInterval(shiftInterval);
-let duration=Date.now()-shiftStartTime;
-await updateDoc(doc(db,"shifts",shiftDocId),{
-end:serverTimestamp(),
-duration
-});
-shiftBtn.innerText="START SHIFT";
-shiftStartTime=null;
-shiftTimer.innerText="00:00:00";
-alert("SHIFT ENDED. PROTOCOL: 71 PUSH-UPS AGAIN.");
-}
-};
-
-onSnapshot(collection(db,"shifts"),snap=>{
-shiftLogs.innerHTML="";
-snap.forEach(d=>{
-let data=d.data();
-if(data.duration){
-shiftLogs.innerHTML+=`
-<div class="card">
-Duration: ${formatTime(data.duration)}
-</div>`;
-}
-});
-});
-
-/* =========================================================
-LIVE CLOCK
-========================================================= */
-
-setInterval(()=>{
-liveClock.innerText=new Date().toLocaleString();
-},1000);
-
-/* =========================================================
-DRAWING CANVAS
-========================================================= */
-
-const canvas=document.getElementById("drawCanvas");
-const ctx=canvas.getContext("2d");
-let drawing=false;
-
-canvas.onmousedown=()=>drawing=true;
-canvas.onmouseup=()=>drawing=false;
-canvas.onmousemove=(e)=>{
-if(!drawing)return;
-ctx.fillStyle="black";
-ctx.beginPath();
-ctx.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
-ctx.fill();
-};
-
-window.clearCanvas=()=>ctx.clearRect(0,0,canvas.width,canvas.height);
-
-/* =========================================================
-CALCULATOR
-========================================================= */
-
-window.calculate=()=>{
-try{
-calcResult.innerText="Result: "+eval(calcInput.value);
-}catch{
-calcResult.innerText="Error";
-}
-};
-
-/* =========================================================
-CHECKLIST DYNAMIC
-========================================================= */
-
-const taskRef=collection(db,"tasks");
-
-taskSend.onclick=async()=>{
-await addDoc(taskRef,{
-text:checkInput.value,
-done:false
-});
-checkInput.value="";
-};
-
-onSnapshot(taskRef,snap=>{
-activeTasks.innerHTML="";
-completedTasks.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-let el=document.createElement("div");
-el.className="card move";
-el.innerHTML=`
-${d.text}
-<button onclick="toggleTask('${docSnap.id}',${d.done})">TOGGLE</button>
-<button onclick="deleteTask('${docSnap.id}')">DELETE</button>
-`;
-if(d.done) completedTasks.appendChild(el);
-else activeTasks.appendChild(el);
-});
-});
-
-window.toggleTask=async(id,done)=>{
-await updateDoc(doc(db,"tasks",id),{done:!done});
-};
-
-window.deleteTask=async(id)=>{
-await deleteDoc(doc(db,"tasks",id));
-};
-
-/* =========================================================
-FILES LOCAL PREVIEW
-========================================================= */
-
-window.saveFiles=()=>{
-let files=[...fileSingle.files,...fileMulti.files].slice(0,5);
-fileView.innerHTML="";
-files.forEach(f=>{
-let reader=new FileReader();
-reader.onload=()=>{
-let div=document.createElement("div");
-div.className="card";
-div.innerHTML=`<b>${f.name}</b><br><iframe src="${reader.result}" width="100%" height="200"></iframe>`;
-fileView.appendChild(div);
-};
-reader.readAsDataURL(f);
-});
-};
-
-/* =========================================================
-MESSAGE BOARD + AES
-========================================================= */
-
-const boardRef=collection(db,"board");
-
-boardSend.onclick=async()=>{
-await addDoc(boardRef,{
-name:boardName.value,
-text:boardMessage.value,
-time:serverTimestamp()
-});
-boardMessage.value="";
-};
-
-onSnapshot(boardRef,snap=>{
-boardView.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-boardView.innerHTML+=`
-<div class="card">
-<b>${d.name}</b>
-<p>${d.text}</p>
-<button onclick="deleteBoard('${docSnap.id}')">DELETE</button>
-</div>`;
-});
-});
-
-window.deleteBoard=async(id)=>{
-await deleteDoc(doc(db,"board",id));
-};
-
-window.encryptText=async()=>{
-const enc=new TextEncoder();
-const key=await crypto.subtle.generateKey({name:"AES-GCM",length:256},true,["encrypt","decrypt"]);
-const iv=crypto.getRandomValues(new Uint8Array(12));
-const cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,enc.encode(boardMessage.value));
-boardMessage.value=btoa(String.fromCharCode(...new Uint8Array(cipher)));
-};
-
-window.decryptText=()=>alert("Key persistence required for real decrypt.");
-
-/* =========================================================
-AI TERMINAL
-========================================================= */
-
-const aiRef=collection(db,"ai");
-
-aiSend.onclick=async()=>{
-await addDoc(aiRef,{
-code:aiCode.value,
-prompt:aiInput.value,
-time:serverTimestamp()
-});
-aiInput.value="";
-};
-
-onSnapshot(aiRef,snap=>{
-aiView.innerHTML="";
-snap.forEach(docSnap=>{
-let d=docSnap.data();
-aiView.innerHTML+=`
-<div class="card">
-<b>${d.code}</b>
-<p>${d.prompt}</p>
-</div>`;
-});
-});
-
-</script>
+    
+  <!-- GLOBAL LOADER -->
+  <div class="loader-overlay" id="globalLoader">
+    <div class="loader-tactical"></div>
+  </div>
+
+  <!-- NOTIFICATION CENTER -->
+  <div class="notification-center" id="notificationCenter"></div>
+
+  <!-- VERTICAL QUICK NAVIGATION -->
+  <div class="vertical-nav">
+    <div class="nav-dot" data-section="s1">S1</div>
+    <div class="nav-dot" data-section="s2">S2</div>
+    <div class="nav-dot" data-section="s3">S3</div>
+    <div class="nav-dot" data-section="s4">S4</div>
+    <div class="nav-dot" data-section="s5">S5</div>
+  </div>
+
+  <!-- STICKY TACTICAL HEADER -->
+  <header class="tactical-header">
+    <div class="header-grid">
+      <div class="header-left">
+        <div class="header-logo">COMPLIANCE CV-5</div>
+        <nav class="header-nav">
+          <a href="#s1">S1·</a>
+          <a href="#s2">S2·</a>
+          <a href="#s3">S3·</a>
+          <a href="#s4">S4·</a>
+          <a href="#s5">S5·</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="live-time" id="liveTime">00:00:00</div>
+        <div class="weather-indicator" id="weatherDisplay">
+          <span class="weather-temp" id="weatherTemp">--°C</span>
+          <span class="weather-desc" id="weatherDesc">CAPE TOWN</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- SECTION 1: COMMAND (S1) -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <h2 class="section-title">⚡ Section 01 · CHIEF INNOVATIONS OFFICER</h2>
+        <span class="section-badge" id="s1Status">CLASSIFIED</span>
+      </div>
+
+      <!-- PUBLIC DIRECTIVE (ALWAYS VISIBLE) -->
+      <div class="card" style="border-left: 5px solid var(--accent-blue); margin-bottom: calc(var(--spacing-unit) * 4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: calc(var(--spacing-unit) * 2);">
+          <h3 style="color: var(--accent-blue);">📋 ACTIVE DIRECT ACTION</h3>
+          <span class="enc-badge">PUBLIC</span>
+        </div>
+        <div id="publicDirective" style="color: var(--text-primary); min-height: 60px; padding: calc(var(--spacing-unit) * 2); background: var(--bg-tertiary;"></div>
+        <div id="directiveMeta" style="font-size: 0.7rem; color: var(--text-muted); margin-top: calc(var(--spacing-unit));"></div>
+      </div>
+
+      <!-- ACCESS CONTROL -->
+      <div style="display: flex; gap: calc(var(--spacing-unit) * 2); align-items: center; margin-bottom: calc(var(--spacing-unit) * 4);">
+        <button class="btn btn-blue" id="unlockS1Btn">🔓 UNLOCK</button>
+        <span id="s1AccessLevel" style="color: var(--accent-red); font-size: 0.9rem;">● LOCKED</span>
+      </div>
+
+      <!-- COMMAND PANEL (LOCKED BY DEFAULT) -->
+      <div id="s1Panel" style="display: none;">
+        <div style="background: rgba(0,255,0,0.1); border-left: 5px solid var(--accent-green); padding: calc(var(--spacing-unit) * 2); margin-bottom: calc(var(--spacing-unit) * 3);">
+          <span class="text-green">✓ ACCESS GRANTED</span>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-green" id="s1Create">➕ NEW</button>
+          <button class="btn btn-blue" id="s1Read">🔄 READ</button>
+          <button class="btn btn-yellow" id="s1Update">✏️ UPDATE</button>
+          <button class="btn" id="s1Delete">🗑️ DELETE</button>
+          <button class="btn btn-primary" id="s1Send">📡 SEND</button>
+          <button class="btn" id="s1Lock">🔒 LOCK</button>
+        </div>
+
+        <div class="input-group">
+          <label>📝 DIRECT ACTION</label>
+          <textarea id="s1Directive" rows="5" placeholder="Enter CV-5 Direct Action..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: calc(var(--spacing-unit) * 4);">
+          <h3>📜 HISTORY LOG</h3>
+          <div class="button-group">
+            <button class="btn btn-blue" id="refreshHistory">🔄</button>
+            <button class="btn" id="clearHistory">🗑️ CLEAR</button>
+          </div>
+        </div>
+        <div id="s1History" style="max-height: 250px; overflow-y: auto;"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: COMMUNICATIONS (S2) -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <h2 class="section-title">📡 Section 02 · COMMS</h2>
+        <span class="section-badge" id="msgCount">0</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- COMPOSE -->
+        <div>
+          <div class="flex" style="margin-bottom: calc(var(--spacing-unit) * 2);">
+            <input type="text" id="callsign" placeholder="codename" value="Hoss" style="flex: 2;">
+            <button class="btn btn-blue" id="emojiBtn">😊</button>
+            <button class="btn btn-blue" id="attachBtn">📎</button>
+          </div>
+
+          <div class="relative">
+            <textarea id="msgInput" rows="4" placeholder="Type message..."></textarea>
+            <emoji-picker id="emojiPicker" style="display: none; position: absolute; z-index: 1000;"></emoji-picker>
+          </div>
+
+          <input type="file" id="msgFile" style="display: none;" accept="image/*,.pdf,.txt">
+          <div id="attachmentPreview" style="margin: calc(var(--spacing-unit) * 2) 0; color: var(--accent-yellow);"></div>
+
+          <!-- AES-256 PANEL -->
+          <div class="card" style="border-color: var(--accent-blue);">
+            <h4 style="color: var(--accent-blue); margin-bottom: calc(var(--spacing-unit) * 2);">🔐 AES-256 ENCRYPTION</h4>
+            <div class="button-group">
+              <button class="btn btn-blue" id="encryptMsg">🔒 ENCRYPT</button>
+              <button class="btn btn-yellow" id="decryptMsg">🔓 DECRYPT</button>
+              <button class="btn btn-green" id="genKey">🔑 GENERATE KEY</button>
+              <button class="btn btn-blue" id="copyKey">📋 COPY</button>
+            </div>
+            <input type="text" id="encKey" placeholder="AES-256 KEY" style="margin-top: calc(var(--spacing-unit) * 2);">
+            <div class="key-indicator" id="keyStrength"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary" id="sendMsg">📡 SEND MESSAGE</button>
+            <button class="btn btn-blue" id="refreshMsgs">🔄 REFRESH</button>
+          </div>
+        </div>
+
+        <!-- MESSAGE BOARD -->
+        <div>
+          <h3 style="display: flex; justify-content: space-between; margin-bottom: calc(var(--spacing-unit) * 2);">
+            <span>💬 LIVE TEAM MESSAGE BOARD</span>
+            <span class="enc-badge" id="liveMsgCount">0</span>
+          </h3>
+          <div id="messageBoard" style="max-height: 600px; overflow-y: auto;"></div>
+        </div>
+      </div>
+
+      <!-- WALKIE TALKIE SECTION -->
+      <div style="margin-top: calc(var(--spacing-unit) * 6);">
+        <h3>📻 OPEN-LINE</h3>
+        <div class="card">
+          <button class="btn btn-primary" id="pttBtn" style="width: 100%; padding: calc(var(--spacing-unit) * 4); font-size: 1.5rem;">🔴 PUSH TO SPEAK (HOLD)</button>
+          
+          <div style="margin: calc(var(--spacing-unit) * 2) 0;">
+            <div id="pttStatus" style="padding: calc(var(--spacing-unit) * 2); background: var(--bg-tertiary; text-align: center;">● CHANNEL CLEAR</div>
+            <div id="activeSpeaker" style="color: var(--accent-green); text-align: center; margin-top: calc(var(--spacing-unit));"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-green" id="joinChannel">📻 JOIN</button>
+            <button class="btn" id="leaveChannel">🚪 LEAVE</button>
+            <button class="btn btn-yellow" id="clearWalkie">🗑️ CLEAR</button>
+          </div>
+
+          <div id="walkieMsgs" style="max-height: 150px; overflow-y: auto; margin-top: calc(var(--spacing-unit) * 2);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TASK FORCE (S3) -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <h2 class="section-title">✅ Section 03 · OBJECTIVE MANAGEMENT</h2>
+        <span class="section-badge" id="taskCount">0</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- TASK MANAGEMENT -->
+        <div>
+          <div class="button-group">
+            <button class="btn btn-green" id="addTaskBtn">➕ NEW OBJECTIVE</button>
+            <button class="btn btn-blue" id="refreshTasks">🔄 REFRESH</button>
+            <button class="btn btn-yellow" id="completeAll">✅ COMPLETE ALL</button>
+            <button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button>
+          </div>
+
+          <div class="flex" style="margin: calc(var(--spacing-unit) * 2) 0;">
+            <input type="text" id="taskInput" placeholder="Enter task..." style="flex: 3;">
+            <button class="btn btn-yellow" id="priorityBtn">⚡ PRIORITY</button>
+          </div>
+          <button class="btn btn-primary w-100" id="createTask">CREATE OBJECTIVE</button>
+
+          <h3 style="margin: calc(var(--spacing-unit) * 3) 0;">⚡ ACTIVE OBJECTIVES</h3>
+          <div id="activeTasks" style="max-height: 350px; overflow-y: auto;"></div>
+        </div>
+
+        <!-- STATS & COMPLETED -->
+        <div>
+          <h3>✅ COMPLETED</h3>
+          <div id="completedTasks" style="max-height: 250px; overflow-y: auto;"></div>
+
+          <div style="margin-top: calc(var(--spacing-unit) * 4);">
+            <h4>📊 MISSION PROGRESS</h4>
+            <div class="progress-container">
+              <div class="progress-bar" id="taskProgress"></div>
+            </div>
+
+            <div class="grid-2" style="margin-top: calc(var(--spacing-unit) * 2);">
+              <div class="card" style="text-align: center;">
+                <div style="color: var(--text-muted);">RATE</div>
+                <div style="font-size: 2rem; color: var(--accent-green);" id="completionRate">0%</div>
+              </div>
+              <div class="card" style="text-align: center;">
+                <div style="color: var(--text-muted);">TOTAL</div>
+                <div style="font-size: 2rem; color: var(--accent-blue);" id="totalTasks">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTEL & LOGS (S4) -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <h2 class="section-title">📁 Section 04 · INTEL & LOGS</h2>
+        <span class="section-badge" id="logCount">0</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- SHIFT LOGS -->
+        <div>
+          <div class="button-group">
+            <button class="btn btn-blue" id="refreshLogs">🔄 REFRESH</button>
+            <button class="btn" id="clearLogs">🗑️ CLEAR LOGS</button>
+            <button class="btn btn-yellow" id="exportLogs">📥 EXPORT</button>
+            <button class="btn btn-primary" id="sendLogs">📡 SEND</button>
+          </div>
+          <div id="shiftLogs" style="max-height: 400px; overflow-y: auto;"></div>
+        </div>
+
+        <!-- FILE STORAGE -->
+        <div>
+          <h3>📎 INTEL FILES</h3>
+          <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt">
+          
+          <div class="button-group" style="margin-top: calc(var(--spacing-unit) * 2);">
+            <button class="btn btn-primary" onclick="processFiles()">📤 UPLOAD</button>
+            <button class="btn" id="clearFiles">🗑️ CLEAR ALL</button>
+            <button class="btn btn-blue" id="downloadFiles">📦 DOWNLOAD</button>
+          </div>
+
+          <div id="filePreview" class="file-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ZAMA MDLULI AI (S5) -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <h2 class="section-title">🤖 Section 05 · ZAMA MDLULI (AI)</h2>
+        <span class="section-badge">QUANTUM</span>
+      </div>
+
+      <div class="card" style="border: 2px dashed var(--accent-blue); padding: calc(var(--spacing-unit) * 8); text-align: center;">
+        <div style="font-size: 5rem; margin-bottom: calc(var(--spacing-unit) * 4); filter: drop-shadow(0 0 30px var(--accent-blue));">⚡</div>
+        <h3 style="color: var(--accent-blue); font-size: 2rem; margin-bottom: calc(var(--spacing-unit) * 2);">NEURAL INTERFACE</h3>
+        <p style="color: var(--text-muted);">Quantum core initialization: Q4 2024</p>
+        <div style="margin-top: calc(var(--spacing-unit) * 4); display: flex; gap: calc(var(--spacing-unit) * 2); justify-content: center;">
+          <span class="enc-badge" style="background: var(--accent-purple);">NEURAL LINK</span>
+          <span class="enc-badge" style="background: var(--accent-orange);">QUANTUM READY</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- TACTICAL FOOTER -->
+  <footer class="tactical-footer">
+    <div class="verse" id="bibleVerse"></div>
+  </footer>
+
+  <script type="module">
+      
+    // ===== FIREBASE INIT =====
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc,
+      onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch,
+      where, arrayUnion, arrayRemove, limit, Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+      authDomain: "eden-4a8d3.firebaseapp.com",
+      projectId: "eden-4a8d3",
+      storageBucket: "eden-4a8d3.firebasestorage.app",
+      messagingSenderId: "421147129483",
+      appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const pageName = 'INNOVATIONS CV-5';
+
+    // ===== GLOBAL UI =====
+    const loader = document.getElementById('globalLoader');
+    const notifCenter = document.getElementById('notificationCenter');
+
+    // Ultra notification system
+    window.showNotification = (message, type = 'info', duration = 4000) => {
+      const notif = document.createElement('div');
+      notif.className = 'notification';
+      
+      const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+      const bgColors = { success: 'var(--accent-green)', error: 'var(--accent-red)', warning: 'var(--accent-yellow)', info: 'var(--accent-blue)' };
+      
+      notif.style.background = bgColors[type] || 'var(--accent-blue)';
+      notif.innerHTML = `
+        <span>${icons[type] || 'ℹ️'}</span>
+        <span style="flex: 1;">${message}</span>
+        <span style="font-size: 0.7rem; opacity: 0.8;">${new Date().toLocaleTimeString()}</span>
+      `;
+      
+      notifCenter.appendChild(notif);
+      
+      setTimeout(() => {
+        notif.style.animation = 'notificationSlide 0.2s reverse';
+        setTimeout(() => notif.remove(), 200);
+      }, duration);
+    };
+
+    // Global loader
+    window.showLoader = (show) => {
+      loader.style.display = show ? 'flex' : 'none';
+    };
+
+    // Request notification permission
+    if ('Notification' in window) Notification.requestPermission();
+
+    // ===== LIVE TIME (CAPE TOWN) =====
+    function updateLiveTime() {
+      const now = new Date();
+      const capeTown = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
+      document.getElementById('liveTime').textContent = capeTown.toLocaleTimeString('en-ZA', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      });
+    }
+    setInterval(updateLiveTime, 1000);
+    updateLiveTime();
+
+    // ===== CAPE TOWN WEATHER (SIMULATED LIVE) =====
+    function updateWeather() {
+      const temps = [18, 19, 20, 21, 22, 23, 24, 25];
+      const desc = ['CLEAR', 'PARTLY CLOUDY', 'WINDY', 'COASTAL FOG'];
+      document.getElementById('weatherTemp').textContent = temps[Math.floor(Math.random() * temps.length)] + '°C';
+      document.getElementById('weatherDesc').textContent = desc[Math.floor(Math.random() * desc.length)];
+    }
+    setInterval(updateWeather, 30000);
+    updateWeather();
+
+    // ===== VERTICAL NAVIGATION =====
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const sectionId = dot.dataset.section;
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const sections = ['s1', 's2', 's3', 's4', 's5'];
+      const scrollPos = window.scrollY + 100;
+      
+      sections.forEach((section, index) => {
+        const el = document.getElementById(section);
+        if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) {
+          document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+          document.querySelector(`.nav-dot[data-section="${section}"]`).classList.add('active');
+        }
+      });
+    });
+
+    // ===== SECTION 1: COMMAND =====
+    const s1Panel = document.getElementById('s1Panel');
+    const s1Directive = document.getElementById('s1Directive');
+    const publicDirective = document.getElementById('publicDirective');
+    const directiveMeta = document.getElementById('directiveMeta');
+    const s1Status = document.getElementById('s1Status');
+    const s1AccessLevel = document.getElementById('s1AccessLevel');
+    const s1History = document.getElementById('s1History');
+
+    // Load draft
+    const savedDraft = localStorage.getItem('s1Draft');
+    if (savedDraft) s1Directive.value = savedDraft;
+
+    s1Directive.addEventListener('input', () => {
+      clearTimeout(window.draftTimer);
+      window.draftTimer = setTimeout(() => {
+        localStorage.setItem('s1Draft', s1Directive.value);
+        showNotification('Draft auto-saved', 'info', 2000);
+      }, 2000);
+    });
+
+    // Unlock S1 (PIN: 1234)
+    document.getElementById('unlockS1Btn').onclick = () => {
+      const pin = prompt('ENTER COMMAND PIN:');
+      if (pin === '1234') {
+        s1Panel.style.display = 'block';
+        s1Status.textContent = 'UNLOCKED';
+        s1AccessLevel.innerHTML = '● UNLOCKED · COMMAND';
+        showNotification('S1 COMMAND ACCESS GRANTED', 'success');
+      } else if (pin !== null) {
+        showNotification('INVALID PIN', 'error');
+      }
+    };
+
+    document.getElementById('s1Lock').onclick = () => {
+      s1Panel.style.display = 'none';
+      s1Status.textContent = 'CLASSIFIED';
+      s1AccessLevel.innerHTML = '● LOCKED';
+      showNotification('S1 LOCKED', 'warning');
+    };
+
+    // CRUD Operations
+    async function withLoaderAsync(fn, successMsg) {
+      showLoader(true);
+      try {
+        await fn();
+        showNotification(successMsg, 'success');
+      } catch (error) {
+        showNotification(`ERROR: ${error.message}`, 'error');
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    document.getElementById('s1Create').onclick = () => {
+      s1Directive.value = '';
+      showNotification('New directive ready', 'info');
+    };
+
+    document.getElementById('s1Read').onclick = () => withLoaderAsync(async () => {
+      const snap = await getDoc(doc(db, 'cio', 'directive'));
+      if (snap.exists()) s1Directive.value = snap.data().text;
+      else showNotification('No directive found', 'warning');
+    }, 'Directive loaded');
+
+    document.getElementById('s1Update').onclick = () => withLoaderAsync(async () => {
+      if (!s1Directive.value.trim()) throw new Error('Empty directive');
+      await setDoc(doc(db, 'cio', 'directive'), {
+        text: s1Directive.value,
+        timestamp: serverTimestamp(),
+        operator: document.getElementById('callsign').value || 'Unknown',
+        sessionId,
+        page: pageName
+      });
+    }, 'Directive updated');
+
+    document.getElementById('s1Delete').onclick = () => withLoaderAsync(async () => {
+      if (!confirm('Delete directive?')) return;
+      await deleteDoc(doc(db, 'cio', 'directive'));
+      s1Directive.value = '';
+    }, 'Directive deleted');
+
+    document.getElementById('s1Send').onclick = () => withLoaderAsync(async () => {
+      if (!s1Directive.value.trim()) throw new Error('Empty directive');
+      await setDoc(doc(db, 'cio', 'directive'), {
+        text: s1Directive.value,
+        timestamp: serverTimestamp(),
+        operator: document.getElementById('callsign').value || 'Unknown',
+        sessionId,
+        page: pageName
+      });
+      await addDoc(collection(db, 'directiveHistory'), {
+        text: s1Directive.value,
+        timestamp: serverTimestamp(),
+        operator: document.getElementById('callsign').value || 'Unknown',
+        sessionId,
+        page: pageName
+      });
+    }, '🚀 DIRECTIVE SENT');
+
+    // Live directive
+    onSnapshot(doc(db, 'cio', 'directive'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        publicDirective.innerHTML = data.text.replace(/\n/g, '<br>');
+        directiveMeta.innerHTML = `Last: ${data.timestamp?.toDate().toLocaleString()} · ${data.operator || 'Unknown'}`;
+      } else {
+        publicDirective.innerHTML = '<span style="color: gray;">No active directive</span>';
+        directiveMeta.innerHTML = '';
+      }
+    });
+
+    // History
+    onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp', 'desc'), limit(20)), (snap) => {
+      s1History.innerHTML = '';
+      snap.forEach(d => {
+        const data = d.data();
+        s1History.innerHTML += `
+          <div class="card" style="margin: calc(var(--spacing-unit)) 0;">
+            <div style="display: flex; justify-content: space-between;">
+              <small style="color: gray;">${data.timestamp?.toDate().toLocaleString()}</small>
+              <button onclick="deleteHistory('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
+            </div>
+            <div style="color: var(--text-primary);">${data.text.substring(0, 100)}${data.text.length > 100 ? '…' : ''}</div>
+          </div>
+        `;
+      });
+    });
+
+    window.deleteHistory = async (id) => {
+      if (confirm('Delete history entry?')) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'directiveHistory', id));
+          showNotification('History deleted', 'info');
+        } catch (error) {
+          showNotification('Error: ' + error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    document.getElementById('clearHistory').onclick = () => withLoaderAsync(async () => {
+      if (!confirm('Clear ALL history? PIN required.')) return;
+      const pin = prompt('Enter command PIN:');
+      if (pin !== '1234') {
+        showNotification('Invalid PIN', 'error');
+        return;
+      }
+      const snap = await getDocs(collection(db, 'directiveHistory'));
+      const batch = writeBatch(db);
+      snap.forEach(d => batch.delete(d.ref));
+      await batch.commit();
+    }, 'History cleared');
+
+    // ===== SECTION 2: AES-256 COMMUNICATIONS =====
+    const callsign = document.getElementById('callsign');
+    const msgInput = document.getElementById('msgInput');
+    const msgBoard = document.getElementById('messageBoard');
+    const encKey = document.getElementById('encKey');
+    const keyStrength = document.getElementById('keyStrength');
+    const emojiPicker = document.getElementById('emojiPicker');
+    const msgFile = document.getElementById('msgFile');
+    const attachmentPreview = document.getElementById('attachmentPreview');
+    const liveMsgCount = document.getElementById('liveMsgCount');
+    let currentAttachment = null;
+
+    // AES Functions
+    function encryptAES(text, key) {
+      if (!key) key = 'cv5-default-key-2024';
+      return CryptoJS.AES.encrypt(text, key).toString();
+    }
+
+    function decryptAES(encryptedText, key) {
+      if (!key) return null;
+      try {
+        const bytes = CryptoJS.AES.decrypt(encryptedText, key);
+        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+        return decrypted || null;
+      } catch {
+        return null;
+      }
+    }
+
+    function updateKeyStrength() {
+      const key = encKey.value;
+      if (!key) {
+        keyStrength.innerHTML = '⚠️ DEFAULT KEY - INSECURE';
+        keyStrength.style.color = 'var(--accent-yellow)';
+      } else if (key.length < 16) {
+        keyStrength.innerHTML = '⚠️ WEAK KEY - MIN 16 CHARS';
+        keyStrength.style.color = 'var(--accent-yellow)';
+      } else {
+        keyStrength.innerHTML = '✅ AES-256 READY';
+        keyStrength.style.color = 'var(--accent-green)';
+      }
+    }
+    encKey.addEventListener('input', updateKeyStrength);
+    updateKeyStrength();
+
+    document.getElementById('genKey').onclick = () => {
+      encKey.value = CryptoJS.lib.WordArray.random(32).toString();
+      updateKeyStrength();
+      showNotification('AES-256 key generated', 'success');
+    };
+
+    document.getElementById('copyKey').onclick = () => {
+      encKey.select();
+      document.execCommand('copy');
+      showNotification('Key copied', 'success');
+    };
+
+    document.getElementById('encryptMsg').onclick = () => {
+      if (!msgInput.value.trim()) {
+        showNotification('No message', 'error');
+        return;
+      }
+      msgInput.value = '🔒' + encryptAES(msgInput.value, encKey.value);
+      showNotification('Message encrypted', 'success');
+    };
+
+    document.getElementById('decryptMsg').onclick = () => {
+      let text = msgInput.value;
+      if (text.startsWith('🔒')) text = text.substring(2);
+      
+      const decrypted = decryptAES(text, encKey.value);
+      if (decrypted === null) {
+        showNotification('Decryption failed - invalid key', 'error');
+      } else {
+        msgInput.value = decrypted;
+        showNotification('Message decrypted', 'success');
+      }
+    };
+
+    // Emoji picker
+    document.getElementById('emojiBtn').onclick = () => {
+      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+    };
+    emojiPicker.addEventListener('emoji-click', (e) => {
+      msgInput.value += e.detail.unicode;
+      emojiPicker.style.display = 'none';
+    });
+
+    // Attachment
+    document.getElementById('attachBtn').onclick = () => msgFile.click();
+    msgFile.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        currentAttachment = file;
+        attachmentPreview.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      }
+    };
+
+    // Send message
+    document.getElementById('sendMsg').onclick = async () => {
+      if (!callsign.value.trim() || (!msgInput.value.trim() && !currentAttachment)) {
+        showNotification('Callsign and message required', 'error');
+        return;
+      }
+
+      showLoader(true);
+      try {
+        const isEncrypted = msgInput.value.startsWith('🔒');
+        let text = msgInput.value;
+        if (isEncrypted) text = text.substring(2);
+
+        let attachmentData = null;
+        if (currentAttachment) {
+          attachmentData = await new Promise((res) => {
+            const reader = new FileReader();
+            reader.onload = (e) => res({
+              name: currentAttachment.name,
+              type: currentAttachment.type,
+              data: e.target.result,
+              size: currentAttachment.size
+            });
+            reader.readAsDataURL(currentAttachment);
+          });
+        }
+
+        await addDoc(collection(db, 'messages'), {
+          callsign: callsign.value.toUpperCase(),
+          text: text,
+          encrypted: isEncrypted,
+          encryptionMethod: isEncrypted ? 'AES-256' : 'plain',
+          attachment: attachmentData,
+          timestamp: serverTimestamp(),
+          operator: callsign.value,
+          sessionId,
+          page: pageName
+        });
+
+        msgInput.value = '';
+        attachmentPreview.innerHTML = '';
+        currentAttachment = null;
+        msgFile.value = '';
+        showNotification('Message sent', 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    // Live messages
+    onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
+      msgBoard.innerHTML = '';
+      let count = 0;
+      snap.forEach(d => {
+        count++;
+        const data = d.data();
+        const key = encKey.value;
+        
+        let displayText = data.text;
+        let decryptStatus = '';
+
+        if (data.encrypted) {
+          if (key) {
+            const decrypted = decryptAES(data.text, key);
+            if (decrypted === null) {
+              displayText = '🔒 [ENCRYPTED - KEY REQUIRED]';
+              decryptStatus = '<span style="color: var(--accent-red);"> (invalid key)</span>';
+            } else {
+              displayText = `🔓 ${decrypted}`;
+              decryptStatus = '<span style="color: var(--accent-green);"> (decrypted)</span>';
+            }
+          } else {
+            displayText = '🔒 [ENCRYPTED - ENTER KEY]';
+            decryptStatus = '<span style="color: var(--accent-yellow);"> (key missing)</span>';
+          }
+        }
+
+        let attachHtml = '';
+        if (data.attachment) {
+          if (data.attachment.type?.startsWith('image/')) {
+            attachHtml = `<img src="${data.attachment.data}" style="max-width: 150px; max-height: 100px; margin-top: calc(var(--spacing-unit)); border: 1px solid var(--border-dim);">`;
+          } else {
+            attachHtml = `<div style="margin-top: calc(var(--spacing-unit));"><a href="${data.attachment.data}" download="${data.attachment.name}" style="color: var(--accent-blue);">📎 ${data.attachment.name}</a></div>`;
+          }
+        }
+
+        msgBoard.innerHTML += `
+          <div class="card">
+            <div style="display: flex; justify-content: space-between;">
+              <strong style="color: var(--accent-blue);">${data.callsign}</strong>
+              <small style="color: gray;">${data.timestamp?.toDate().toLocaleTimeString()}</small>
+            </div>
+            <div style="margin: calc(var(--spacing-unit)) 0;">${displayText} ${decryptStatus}</div>
+            ${attachHtml}
+            <div style="display: flex; justify-content: space-between; margin-top: calc(var(--spacing-unit));">
+              <small style="color: gray;">${data.page || ''}</small>
+              <button onclick="deleteMessage('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
+            </div>
+          </div>
+        `;
+      });
+      liveMsgCount.textContent = count;
+      document.getElementById('msgCount').textContent = count;
+    });
+
+    window.deleteMessage = async (id) => {
+      if (confirm('Delete this message?')) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'messages', id));
+          showNotification('Message deleted', 'info');
+        } catch (error) {
+          showNotification('Error: ' + error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    // ===== WALKIE TALKIE =====
+    const pttBtn = document.getElementById('pttBtn');
+    const pttStatus = document.getElementById('pttStatus');
+    const activeSpeaker = document.getElementById('activeSpeaker');
+    const walkieMsgs = document.getElementById('walkieMsgs');
+    const clientId = 'client_' + Math.random().toString(36).substring(2, 10);
+    let pttActive = false;
+    let pttHeartbeat;
+
+    document.getElementById('joinChannel').onclick = async () => {
+      showLoader(true);
+      try {
+        await setDoc(doc(db, 'walkie', 'status'), {
+          listeners: arrayUnion(clientId),
+          lastSeen: serverTimestamp(),
+          page: pageName
+        }, { merge: true });
+        showNotification('Joined tactical channel', 'success');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    document.getElementById('leaveChannel').onclick = async () => {
+      showLoader(true);
+      try {
+        await setDoc(doc(db, 'walkie', 'status'), {
+          listeners: arrayRemove(clientId)
+        }, { merge: true });
+        showNotification('Left channel', 'info');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    document.getElementById('clearWalkie').onclick = () => {
+      walkieMsgs.innerHTML = '';
+    };
+
+    pttBtn.addEventListener('mousedown', async () => {
+      pttActive = true;
+      pttBtn.style.background = 'var(--accent-green)';
+      pttBtn.style.color = 'black';
+      pttBtn.textContent = '🔴 TRANSMITTING... RELEASE';
+      pttStatus.innerHTML = '🔴 YOU ARE TRANSMITTING';
+      pttStatus.style.background = '#330000';
+
+      await setDoc(doc(db, 'walkie', 'active'), {
+        active: true,
+        client: clientId,
+        callsign: callsign.value || 'Unknown',
+        timestamp: serverTimestamp(),
+        page: pageName,
+        sessionId
+      });
+
+      pttHeartbeat = setInterval(async () => {
+        if (pttActive) {
+          await updateDoc(doc(db, 'walkie', 'active'), {
+            heartbeat: serverTimestamp()
+          });
+        }
+      }, 2000);
+    });
+
+    pttBtn.addEventListener('mouseup', releasePTT);
+    pttBtn.addEventListener('mouseleave', releasePTT);
+
+    async function releasePTT() {
+      if (!pttActive) return;
+      pttActive = false;
+      clearInterval(pttHeartbeat);
+      pttBtn.style.background = '';
+      pttBtn.style.color = '';
+      pttBtn.textContent = '🔴 PUSH TO TALK (HOLD)';
+      pttStatus.innerHTML = '● CHANNEL CLEAR';
+      pttStatus.style.background = '';
+
+      await setDoc(doc(db, 'walkie', 'active'), {
+        active: false,
+        ended: serverTimestamp()
+      });
+    }
+
+    onSnapshot(doc(db, 'walkie', 'active'), (snap) => {
+      const data = snap.data();
+      if (data?.active && data.client !== clientId) {
+        activeSpeaker.innerHTML = `
+          <div style="background: #1a3300; padding: calc(var(--spacing-unit) * 2); border-radius: 2px; margin-top: calc(var(--spacing-unit));">
+            🔊 ${data.callsign || data.client} TRANSMITTING
+          </div>
+        `;
+        walkieMsgs.innerHTML += `
+          <div style="background: #1a3300; padding: calc(var(--spacing-unit)); margin: calc(var(--spacing-unit)) 0; border-left: 3px solid var(--accent-green);">
+            ${data.callsign || data.client} started transmission
+          </div>
+        `;
+      } else if (data?.active && data.client === clientId) {
+        activeSpeaker.innerHTML = '<div style="color: var(--accent-green);">🔊 YOU ARE TRANSMITTING</div>';
+      } else {
+        activeSpeaker.innerHTML = '';
+      }
+    });
+
+    // ===== SECTION 3: TASKS =====
+    const taskInput = document.getElementById('taskInput');
+    const activeTasks = document.getElementById('activeTasks');
+    const completedTasks = document.getElementById('completedTasks');
+    const taskProgress = document.getElementById('taskProgress');
+    const completionRate = document.getElementById('completionRate');
+    const totalTasks = document.getElementById('totalTasks');
+    const taskCount = document.getElementById('taskCount');
+
+    document.getElementById('createTask').onclick = async () => {
+      if (!taskInput.value.trim()) {
+        showNotification('Enter a task', 'error');
+        return;
+      }
+
+      showLoader(true);
+      try {
+        await addDoc(collection(db, 'tasks'), {
+          text: taskInput.value,
+          completed: false,
+          priority: taskInput.value.includes('⚡'),
+          created: serverTimestamp(),
+          operator: callsign.value || 'Unknown',
+          sessionId,
+          page: pageName
+        });
+        taskInput.value = '';
+        showNotification('Task created', 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    document.getElementById('priorityBtn').onclick = () => {
+      if (taskInput.value.trim() && !taskInput.value.includes('⚡')) {
+        taskInput.value = '⚡ ' + taskInput.value;
+      }
+    };
+
+    document.getElementById('completeAll').onclick = async () => {
+      showLoader(true);
+      try {
+        const snapshot = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false)));
+        const batch = writeBatch(db);
+        snapshot.docs.forEach(d => batch.update(d.ref, { completed: true }));
+        await batch.commit();
+        showNotification('All tasks completed', 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    document.getElementById('clearCompleted').onclick = async () => {
+      if (!confirm('Delete all completed tasks?')) return;
+      showLoader(true);
+      try {
+        const snapshot = await getDocs(query(collection(db, 'tasks'), where('completed', '==', true)));
+        const batch = writeBatch(db);
+        snapshot.docs.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        showNotification('Completed tasks cleared', 'info');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    // Live tasks
+    onSnapshot(query(collection(db, 'tasks'), orderBy('created', 'desc')), (snap) => {
+      let active = '';
+      let completed = '';
+      let aCnt = 0, cCnt = 0;
+
+      snap.forEach(d => {
+        const data = d.data();
+        const priority = data.priority ? '⚡ ' : '';
+        
+        const card = `
+          <div class="card">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: ${data.completed ? 'var(--accent-green)' : data.priority ? 'var(--accent-yellow)' : 'white'};">
+                ${priority}${data.text}
+              </span>
+              <div class="button-group" style="margin: 0;">
+                <button onclick="toggleTask('${d.id}', ${data.completed})" style="background: none; border: none; color: var(--accent-green); cursor: pointer;">${data.completed ? '↩️' : '✅'}</button>
+                <button onclick="editTask('${d.id}', '${data.text.replace(/'/g, "\\'")}')" style="background: none; border: none; color: var(--accent-blue); cursor: pointer;">✏️</button>
+                <button onclick="deleteTask('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
+                ${!data.completed ? `<button onclick="togglePriority('${d.id}', ${data.priority})" style="background: none; border: none; color: var(--accent-yellow); cursor: pointer;">⚡</button>` : ''}
+              </div>
+            </div>
+            <small style="color: gray;">${data.operator} · ${data.created?.toDate().toLocaleString()}</small>
+          </div>
+        `;
+
+        if (data.completed) {
+          completed += card;
+          cCnt++;
+        } else {
+          active += card;
+          aCnt++;
+        }
+      });
+
+      activeTasks.innerHTML = active || '<p style="color: gray;">No active tasks</p>';
+      completedTasks.innerHTML = completed || '<p style="color: gray;">No completed tasks</p>';
+      
+      const total = aCnt + cCnt;
+      const percent = total ? (cCnt / total) * 100 : 0;
+      taskProgress.style.width = `${percent}%`;
+      completionRate.textContent = `${Math.round(percent)}%`;
+      totalTasks.textContent = total;
+      taskCount.textContent = aCnt;
+    });
+
+    window.toggleTask = async (id, current) => {
+      showLoader(true);
+      try {
+        await updateDoc(doc(db, 'tasks', id), { completed: !current });
+        showNotification(`Task ${!current ? 'completed' : 'reopened'}`, 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    window.editTask = async (id, currentText) => {
+      const newText = prompt('Edit task:', currentText);
+      if (newText && newText !== currentText) {
+        showLoader(true);
+        try {
+          await updateDoc(doc(db, 'tasks', id), { text: newText });
+          showNotification('Task updated', 'success');
+        } catch (error) {
+          showNotification('Error: ' + error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    window.deleteTask = async (id) => {
+      if (confirm('Delete this task?')) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'tasks', id));
+          showNotification('Task deleted', 'info');
+        } catch (error) {
+          showNotification('Error: ' + error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    window.togglePriority = async (id, current) => {
+      showLoader(true);
+      try {
+        await updateDoc(doc(db, 'tasks', id), { priority: !current });
+        showNotification(`Priority ${!current ? 'set' : 'removed'}`, 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    // ===== SECTION 4: LOGS & FILES =====
+    const shiftLogs = document.getElementById('shiftLogs');
+    const logCount = document.getElementById('logCount');
+
+    // Shift timer (auto-logging)
+    const shiftBtn = document.getElementById('shiftBtn');
+    const shiftTimer = document.getElementById('shiftTimer');
+    let shiftStart = null;
+    let timerInterval;
+
+    document.getElementById('refreshLogs').onclick = () => {
+      showNotification('Logs refreshed', 'info');
+    };
+
+    document.getElementById('clearLogs').onclick = async () => {
+      const pin = prompt('Enter command PIN to clear logs:');
+      if (pin !== '1234') {
+        showNotification('Invalid PIN', 'error');
+        return;
+      }
+      showLoader(true);
+      try {
+        const snapshot = await getDocs(collection(db, 'shifts'));
+        const batch = writeBatch(db);
+        snapshot.docs.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        showNotification('All logs cleared', 'warning');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    document.getElementById('exportLogs').onclick = async () => {
+      showLoader(true);
+      try {
+        const snapshot = await getDocs(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(200)));
+        const logs = [];
+        snapshot.forEach(d => logs.push({ id: d.id, ...d.data() }));
+        const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `logs-${Date.now()}.json`;
+        a.click();
+        showNotification('Logs exported', 'success');
+      } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    // Live logs
+    onSnapshot(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
+      shiftLogs.innerHTML = '';
+      let count = 0;
+      snap.forEach(d => {
+        count++;
+        const data = d.data();
+        shiftLogs.innerHTML += `
+          <div class="card">
+            <div style="display: flex; justify-content: space-between;">
+              <strong style="color: var(--accent-yellow);">${data.type || 'EVENT'}</strong>
+              <button onclick="deleteLog('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
+            </div>
+            <div>${data.operator || 'Unknown'} · ${data.timestamp?.toDate().toLocaleString()}</div>
+            ${data.duration ? `<div style="color: var(--accent-green);">Duration: ${Math.floor(data.duration / 60000)} min</div>` : ''}
+          </div>
+        `;
+      });
+      logCount.textContent = count;
+    });
+
+    window.deleteLog = async (id) => {
+      if (confirm('Delete this log?')) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'shifts', id));
+          showNotification('Log deleted', 'info');
+        } catch (error) {
+          showNotification('Error: ' + error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    // ===== FILE HANDLING =====
+    window.processFiles = () => {
+      const files = document.getElementById('fileInput').files;
+      const preview = document.getElementById('filePreview');
+      
+      if (files.length === 0) {
+        showNotification('No files selected', 'warning');
+        return;
+      }
+
+      showLoader(true);
+      let processed = 0;
+
+      Array.from(files).slice(0, 10).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const fileData = {
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            data: e.target.result,
+            timestamp: Date.now()
+          };
+          
+          const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
+          savedFiles.push(fileData);
+          localStorage.setItem('intelFiles', JSON.stringify(savedFiles.slice(-30)));
+
+          preview.innerHTML += `
+            <div class="file-item">
+              ${file.type.startsWith('image/') 
+                ? `<img src="${e.target.result}" alt="${file.name}">` 
+                : `<div style="font-size: 2rem; color: var(--accent-blue);">📄</div>`}
+              <div style="font-size: 0.7rem; word-break: break-word;">${file.name.substring(0, 15)}</div>
+            </div>
+          `;
+          
+          processed++;
+          if (processed === files.length || processed === 10) {
+            showLoader(false);
+            showNotification(`Processed ${processed} files`, 'success');
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    };
+
+    document.getElementById('clearFiles').onclick = () => {
+      localStorage.removeItem('intelFiles');
+      document.getElementById('filePreview').innerHTML = '';
+      showNotification('Files cleared', 'info');
+    };
+
+    document.getElementById('downloadFiles').onclick = () => {
+      const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
+      if (savedFiles.length === 0) {
+        showNotification('No files', 'warning');
+        return;
+      }
+      
+      const data = JSON.stringify(savedFiles, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `intel-${Date.now()}.json`;
+      a.click();
+      showNotification('Files manifest downloaded', 'success');
+    };
+
+    // Load saved files
+    window.addEventListener('load', () => {
+      const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
+      const preview = document.getElementById('filePreview');
+      savedFiles.slice(-20).forEach(file => {
+        preview.innerHTML += `
+          <div class="file-item">
+            ${file.type?.startsWith('image/') 
+              ? `<img src="${file.data}" style="max-width:100%; max-height:60px;">` 
+              : `<div style="font-size: 2rem;">📄</div>`}
+            <div style="font-size: 0.7rem;">${file.name.substring(0, 12)}</div>
+          </div>
+        `;
+      });
+    });
+
+    // ===== BIBLE VERSE =====
+    const bibleVerses = [
+      '"Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go." — Joshua 1:9',
+      '"The LORD is my light and my salvation— whom shall I fear? The LORD is the stronghold of my life— of whom shall I be afraid?" — Psalm 27:1',
+      '"I can do all this through him who gives me strength." — Philippians 4:13',
+      '"For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline." — 2 Timothy 1:7',
+      '"So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand." — Isaiah 41:10',
+      '"Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid." — John 14:27'
+    ];
+    
+    document.getElementById('bibleVerse').textContent = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
+    setInterval(() => {
+      document.getElementById('bibleVerse').textContent = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
+    }, 3600000);
+
+    // ===== INITIAL LOADER HIDE =====
+    setTimeout(() => showLoader(false), 1500);
+  </script>
+
+  <script>
+    // Global function declarations
+    window.deleteHistory = window.deleteHistory || function() {};
+    window.deleteMessage = window.deleteMessage || function() {};
+    window.toggleTask = window.toggleTask || function() {};
+    window.editTask = window.editTask || function() {};
+    window.deleteTask = window.deleteTask || function() {};
+    window.togglePriority = window.togglePriority || function() {};
+    window.deleteLog = window.deleteLog || function() {};
+    window.processFiles = window.processFiles || function() {};
+  </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
