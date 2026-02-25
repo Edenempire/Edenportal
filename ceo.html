@@ -22,730 +22,194 @@
     {
       "imports": {
         "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
-        "@firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"
+        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
       }
     }
   </script>
 
   <style>
       
-    /* ===== ULTIMATE MILITARY DESIGN SYSTEM ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    /* === TACTICAL OPS DESIGN SYSTEM v2 === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg-primary: #030303;
-      --bg-secondary: #0a0a0a;
-      --bg-tertiary: #111111;
-      --panel: #0c0c0c;
-      --panel-light: #1a1a1a;
-      --accent-red: #ff0015;
-      --accent-red-dim: rgba(255, 0, 21, 0.15);
-      --accent-green: #00ff88;
-      --accent-blue: #0066ff;
-      --accent-yellow: #ffaa00;
-      --accent-purple: #aa44ff;
-      --accent-orange: #ff5500;
-      --text-primary: #ffffff;
-      --text-secondary: #cccccc;
-      --text-muted: #888888;
-      --border-color: #ff0015;
-      --border-dim: rgba(255, 0, 21, 0.3);
+      --bg-primary: #030303; --bg-secondary: #0a0a0a; --bg-tertiary: #111111;
+      --panel: #0c0c0c; --panel-light: #1a1a1a; --accent-red: #ff0015;
+      --accent-red-dim: rgba(255, 0, 21, 0.15); --accent-green: #00ff88;
+      --accent-blue: #0066ff; --accent-yellow: #ffaa00; --accent-purple: #aa44ff;
+      --accent-orange: #ff5500; --text-primary: #ffffff; --text-secondary: #cccccc;
+      --text-muted: #888888; --border-color: #ff0015; --border-dim: rgba(255, 0, 21, 0.3);
       --shadow-intensity: 0 0 30px rgba(255, 0, 21, 0.2);
       --transition-tactical: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      --spacing-unit: 8px;
-      --border-radius-tactical: 4px;
-      --font-tactical: 'Orbitron', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --spacing-unit: 8px; --border-radius-tactical: 4px;
+      --font-tactical: 'Orbitron', sans-serif; --font-mono: 'JetBrains Mono', monospace;
     }
-
-    /* ===== SNIPER SCOPE BACKGROUND ===== */
     body {
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: var(--font-mono);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      line-height: 1.6;
+      background: var(--bg-primary); color: var(--text-primary);
+      font-family: var(--font-mono); min-height: 100vh; position: relative;
+      overflow-x: hidden; line-height: 1.6;
     }
-
-    /* Sniper scope reticule animation */
+    /* SPECIAL OPS BACKGROUND — enhanced grit */
     body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at 50% 50%, transparent 40%, rgba(255,0,21,0.03) 70%),
-        repeating-linear-gradient(45deg, 
-          transparent 0px, 
-          transparent 20px, 
-          rgba(255,0,21,0.02) 20px, 
-          rgba(255,0,21,0.02) 40px),
-        repeating-linear-gradient(-45deg, 
-          transparent 0px, 
-          transparent 20px, 
-          rgba(255,0,21,0.02) 20px, 
-          rgba(255,0,21,0.02) 40px);
-      z-index: -2;
-      pointer-events: none;
-      animation: scopePulse 4s ease-in-out infinite;
+      content: ''; position: fixed; inset: 0;
+      background: radial-gradient(circle at 50% 30%, transparent 30%, rgba(255,0,21,0.03) 80%),
+                  repeating-linear-gradient(45deg, transparent 0px, transparent 25px, rgba(255,0,21,0.02) 25px, rgba(255,0,21,0.02) 50px),
+                  repeating-linear-gradient(-45deg, transparent 0px, transparent 25px, rgba(255,0,21,0.02) 25px, rgba(255,0,21,0.02) 50px),
+                  url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMjAgMkwyIDIwbDE4IDE4IDE4LTE4TDIwIDJ6IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjAwMTUiIHN0cm9rZS13aWR0aD0iMC4zIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+');
+      background-size: cover, 50px 50px, 50px 50px, 60px 60px;
+      z-index: -2; pointer-events: none; opacity: 0.6; animation: tacticalNoise 8s infinite alternate;
     }
+    @keyframes tacticalNoise { 0%{opacity:0.4; filter: blur(0.5px);} 100%{opacity:0.8; filter: blur(0px);} }
 
-    /* Moving scope lines */
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        linear-gradient(90deg, 
-          transparent 49.9%, 
-          rgba(255,0,21,0.1) 50%, 
-          transparent 50.1%),
-        linear-gradient(0deg, 
-          transparent 49.9%, 
-          rgba(255,0,21,0.1) 50%, 
-          transparent 50.1%);
-      z-index: -1;
-      animation: scopeBreathing 3s ease-in-out infinite;
-    }
-
-    @keyframes scopePulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-
-    @keyframes scopeBreathing {
-      0%, 100% { transform: scale(1); opacity: 0.2; }
-      50% { transform: scale(1.02); opacity: 0.4; }
-    }
-
-    /* ===== STICKY TACTICAL HEADER ===== */
+    /* STICKY HEADER — centered, no time/weather */
     .tactical-header {
-      position: sticky;
-      top: 0;
-      z-index: 9999;
-      background: rgba(3, 3, 3, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid var(--accent-red);
-      padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 4);
-      margin-bottom: calc(var(--spacing-unit) * 4);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-      width: 100%;
+      position: sticky; top: 0; z-index: 9999; background: rgba(3,3,3,0.95);
+      backdrop-filter: blur(16px); border-bottom: 3px solid var(--accent-red);
+      padding: calc(var(--spacing-unit)*2.5) calc(var(--spacing-unit)*4);
+      margin-bottom: calc(var(--spacing-unit)*5); width: 100%;
+      box-shadow: 0 10px 30px -10px rgba(255,0,21,0.5);
     }
-
-    .header-grid {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: calc(var(--spacing-unit) * 2);
-      max-width: 1800px;
-      margin: 0 auto;
+    .header-grid { 
+      display: flex; 
+      justify-content: center; /* centered */
+      align-items: center; 
+      max-width: 1800px; 
+      margin: 0 auto; 
     }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 4);
-    }
-
-    .header-logo {
-      font-family: var(--font-tactical);
-      font-size: 1.4rem;
-      font-weight: 900;
-      color: var(--accent-red);
-      letter-spacing: 4px;
+    .header-logo { 
+      font-family: var(--font-tactical); 
+      font-size: 2rem; 
+      font-weight: 900; 
+      color: var(--accent-red); 
+      letter-spacing: 6px; 
       text-transform: uppercase;
+      text-shadow: 0 0 15px var(--accent-red);
       white-space: nowrap;
     }
+    /* REMOVED weather/time spans from HTML later */
 
-    .header-nav {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 2);
-    }
+    /* VERTICAL NAV */
+    .vertical-nav { position: fixed; right: calc(var(--spacing-unit)*2); top: 50%; transform: translateY(-50%); z-index: 9998; display: flex; flex-direction: column; gap: calc(var(--spacing-unit)); }
+    .nav-dot { width: 40px; height: 40px; background: rgba(0,0,0,0.8); border: 2px solid var(--accent-red); color: var(--accent-red); display: flex; align-items: center; justify-content: center; font-family: var(--font-tactical); font-weight: 700; cursor: pointer; transition: var(--transition-tactical); backdrop-filter: blur(4px); }
+    .nav-dot:hover { background: var(--accent-red); color: black; transform: scale(1.2); }
+    .nav-dot.active { background: var(--accent-red); color: black; }
 
-    .header-nav a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
-      border: 1px solid transparent;
-      transition: var(--transition-tactical);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    /* MAIN CONTAINER */
+    .container { max-width: 1800px; margin: 0 auto; padding: 0 calc(var(--spacing-unit)*4); }
 
-    .header-nav a:hover {
-      border-color: var(--accent-red);
-      background: var(--accent-red-dim);
+    /* SECTIONS with clear separators + breathing space */
+    .section { 
+      background: var(--panel); 
+      border: 2px solid var(--border-color); 
+      margin-bottom: calc(var(--spacing-unit)*10); /* massive space */
+      padding: calc(var(--spacing-unit)*6); /* more padding */
+      position: relative; 
+      transition: var(--transition-tactical); 
+      animation: sectionEntry 0.5s ease-out;
+      box-shadow: 0 20px 40px -15px rgba(255,0,21,0.3);
     }
+    .section + .section { margin-top: calc(var(--spacing-unit)*8); } /* extra separator */
+    @keyframes sectionEntry { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .section::before { content: ''; position: absolute; top:-2px; left:0; right:0; height:2px; background: linear-gradient(90deg, transparent, var(--accent-red), transparent); animation: scanline 3s linear infinite; }
+    @keyframes scanline { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: calc(var(--spacing-unit)*5); padding-bottom: calc(var(--spacing-unit)*3); border-bottom: 2px solid var(--accent-red); }
+    .section-title { font-family: var(--font-tactical); font-size: 2rem; font-weight: 700; color: var(--accent-red); letter-spacing: 3px; }
+    .section-badge { background: var(--accent-red-dim); padding: calc(var(--spacing-unit)*1.5) calc(var(--spacing-unit)*3); border: 1px solid var(--accent-red); font-size: 0.9rem; text-transform: uppercase; }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 3);
-    }
-
-    .live-time {
-      font-family: var(--font-mono);
-      font-size: 1.2rem;
-      color: var(--accent-green);
-      text-shadow: 0 0 10px var(--accent-green);
-      letter-spacing: 2px;
-    }
-
-    .weather-indicator {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit));
-      background: rgba(0,0,0,0.5);
-      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
-      border: 1px solid var(--border-dim);
-    }
-
-    .weather-temp {
-      font-size: 1rem;
-      color: var(--accent-yellow);
-    }
-
-    .weather-desc {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    /* ===== VERTICAL QUICK NAVIGATION ===== */
-    .vertical-nav {
-      position: fixed;
-      right: calc(var(--spacing-unit) * 2);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 9998;
-      display: flex;
-      flex-direction: column;
-      gap: calc(var(--spacing-unit));
-    }
-
-    .nav-dot {
-      width: 40px;
-      height: 40px;
-      background: rgba(0,0,0,0.8);
-      border: 2px solid var(--accent-red);
-      color: var(--accent-red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-tactical);
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition-tactical);
-      backdrop-filter: blur(4px);
-    }
-
-    .nav-dot:hover {
-      background: var(--accent-red);
-      color: black;
-      transform: scale(1.2);
-    }
-
-    .nav-dot.active {
-      background: var(--accent-red);
-      color: black;
-      box-shadow: 0 0 20px var(--accent-red);
-    }
-
-    /* ===== MAIN CONTAINER ===== */
-    .container {
-      max-width: 1800px;
-      margin: 0 auto;
-      padding: 0 calc(var(--spacing-unit) * 4);
-    }
-
-    /* ===== TACTICAL SECTIONS ===== */
-    .section {
-      background: var(--panel);
-      border: 2px solid var(--border-color);
-      margin-bottom: calc(var(--spacing-unit) * 8);
-      padding: calc(var(--spacing-unit) * 4);
-      position: relative;
-      transition: var(--transition-tactical);
-      animation: sectionEntry 0.4s ease-out;
-    }
-
-    @keyframes sectionEntry {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
-      animation: scanline 3s linear infinite;
-    }
-
-    @keyframes scanline {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: calc(var(--spacing-unit) * 4);
-      padding-bottom: calc(var(--spacing-unit) * 2);
-      border-bottom: 1px solid var(--border-dim);
-    }
-
-    .section-title {
-      font-family: var(--font-tactical);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--accent-red);
-      letter-spacing: 3px;
-    }
-
-    .section-badge {
-      background: var(--accent-red-dim);
-      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
-      border: 1px solid var(--accent-red);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-    }
-
-    /* ===== BUTTON SYSTEMS ===== */
-    .button-group {
-      display: flex;
-      gap: calc(var(--spacing-unit));
-      flex-wrap: wrap;
-      margin: calc(var(--spacing-unit) * 2) 0;
-    }
-
-    .btn {
-      background: transparent;
-      border: 2px solid var(--accent-red);
-      color: var(--accent-red);
-      padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 3);
-      font-family: var(--font-tactical);
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: var(--transition-tactical);
-      position: relative;
-      overflow: hidden;
-      min-width: 90px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: calc(var(--spacing-unit));
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: var(--accent-red);
-      transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s;
-      z-index: -1;
-    }
-
-    .btn:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    .btn:hover {
-      color: black;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px var(--accent-red);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn-primary {
-      background: var(--accent-red);
-      color: black;
-    }
-
-    .btn-green {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-    }
+    /* BUTTONS */
+    .button-group { display: flex; gap: calc(var(--spacing-unit)*2); flex-wrap: wrap; margin: calc(var(--spacing-unit)*3) 0; }
+    .btn { background: transparent; border: 2px solid var(--accent-red); color: var(--accent-red); padding: calc(var(--spacing-unit)*2) calc(var(--spacing-unit)*4); font-family: var(--font-tactical); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-tactical); position: relative; overflow: hidden; min-width: 100px; display: inline-flex; align-items: center; justify-content: center; gap: calc(var(--spacing-unit)); }
+    .btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--accent-red); transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; z-index: -1; }
+    .btn:hover::before { width: 300px; height: 300px; }
+    .btn:hover { color: black; transform: translateY(-2px); }
+    .btn-primary { background: var(--accent-red); color: black; }
+    .btn-green { border-color: var(--accent-green); color: var(--accent-green); }
     .btn-green:hover::before { background: var(--accent-green); }
-    .btn-green:hover { color: black; }
-
-    .btn-blue {
-      border-color: var(--accent-blue);
-      color: var(--accent-blue);
-    }
+    .btn-blue { border-color: var(--accent-blue); color: var(--accent-blue); }
     .btn-blue:hover::before { background: var(--accent-blue); }
-    .btn-blue:hover { color: black; }
-
-    .btn-yellow {
-      border-color: var(--accent-yellow);
-      color: var(--accent-yellow);
-    }
+    .btn-yellow { border-color: var(--accent-yellow); color: var(--accent-yellow); }
     .btn-yellow:hover::before { background: var(--accent-yellow); }
-    .btn-yellow:hover { color: black; }
 
-    /* ===== FORM ELEMENTS ===== */
-    .input-group {
-      margin-bottom: calc(var(--spacing-unit) * 3);
-    }
+    /* FORMS */
+    .input-group { margin-bottom: calc(var(--spacing-unit)*4); }
+    label { display: block; margin-bottom: calc(var(--spacing-unit)*1.5); color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    input, textarea, select { width: 100%; background: var(--bg-tertiary); border: 2px solid var(--border-dim); color: var(--text-primary); padding: calc(var(--spacing-unit)*2.5); font-family: var(--font-mono); transition: var(--transition-tactical); }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 0 3px var(--accent-red-dim); }
 
-    label {
-      display: block;
-      margin-bottom: calc(var(--spacing-unit));
-      color: var(--text-secondary);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    /* CARDS */
+    .card { background: var(--bg-tertiary); border: 1px solid var(--border-dim); padding: calc(var(--spacing-unit)*3); margin-bottom: calc(var(--spacing-unit)*2); transition: var(--transition-tactical); animation: cardEntry 0.25s ease-out; }
+    @keyframes cardEntry { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+    .card:hover { border-color: var(--accent-red); transform: translateX(4px); }
 
-    input, textarea, select {
-      width: 100%;
-      background: var(--bg-tertiary);
-      border: 2px solid var(--border-dim);
-      color: var(--text-primary);
-      padding: calc(var(--spacing-unit) * 2);
-      font-family: var(--font-mono);
-      transition: var(--transition-tactical);
-    }
+    /* NOTIFICATIONS — for everything */
+    .notification-center { position: fixed; top: calc(var(--spacing-unit)*12); right: calc(var(--spacing-unit)*4); z-index: 99999; max-width: 420px; width: calc(100% - 32px); pointer-events: none; }
+    .notification { background: var(--accent-red); color: black; padding: calc(var(--spacing-unit)*3) calc(var(--spacing-unit)*4); margin-bottom: calc(var(--spacing-unit)*2); border-left: 6px solid white; font-weight: 700; animation: notificationSlide 0.25s ease-out; pointer-events: auto; backdrop-filter: blur(4px); display: flex; align-items: center; gap: calc(var(--spacing-unit)*3); font-family: var(--font-tactical); text-transform: uppercase; font-size: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    @keyframes notificationSlide { from{transform:translateX(120%) scale(0.9);opacity:0} to{transform:translateX(0) scale(1);opacity:1} }
 
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--accent-red);
-      box-shadow: 0 0 0 3px var(--accent-red-dim);
-    }
+    /* LOADER — shown for every firestore op */
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 999999; }
+    .loader-tactical { width: 70px; height: 70px; border: 5px solid var(--accent-red-dim); border-top: 5px solid var(--accent-red); border-radius: 50%; animation: spin 1s linear infinite; box-shadow: 0 0 30px red; }
+    @keyframes spin { 100%{transform:rotate(360deg)} }
 
-    /* ===== CARD SYSTEM ===== */
-    .card {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-dim);
-      padding: calc(var(--spacing-unit) * 2);
-      margin-bottom: calc(var(--spacing-unit));
-      transition: var(--transition-tactical);
-      animation: cardEntry 0.2s ease-out;
-    }
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--spacing-unit)*6); } /* more gap */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--spacing-unit)*5); }
+    @media (max-width:1024px){ .grid-2,.grid-3{grid-template-columns:1fr} }
 
-    @keyframes cardEntry {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    /* PROGRESS */
+    .progress-container { background: var(--bg-tertiary); height: 12px; border: 1px solid var(--border-dim); margin: calc(var(--spacing-unit)*3) 0; }
+    .progress-bar { height: 100%; background: var(--accent-red); width: 0%; transition: width 0.4s ease; position: relative; overflow: hidden; }
+    .progress-bar::after { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shimmer 1.5s infinite; }
+    @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-    .card:hover {
-      border-color: var(--accent-red);
-      transform: translateX(3px);
-    }
-
-    /* ===== NOTIFICATION CENTER ===== */
-    .notification-center {
-      position: fixed;
-      top: calc(var(--spacing-unit) * 10);
-      right: calc(var(--spacing-unit) * 4);
-      z-index: 99999;
-      max-width: 400px;
-      width: calc(100% - 32px);
-      pointer-events: none;
-    }
-
-    .notification {
-      background: var(--accent-red);
-      color: black;
-      padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
-      margin-bottom: calc(var(--spacing-unit));
-      border-left: 5px solid white;
-      font-weight: 700;
-      animation: notificationSlide 0.2s ease-out;
-      pointer-events: auto;
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 2);
-      font-family: var(--font-tactical);
-      text-transform: uppercase;
-      font-size: 0.9rem;
-    }
-
-    @keyframes notificationSlide {
-      from { transform: translateX(100%) scale(0.8); opacity: 0; }
-      to { transform: translateX(0) scale(1); opacity: 1; }
-    }
-
-    /* ===== LOADING STATES ===== */
-    .loader-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(8px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999999;
-    }
-
-    .loader-tactical {
-      width: 60px;
-      height: 60px;
-      border: 4px solid var(--accent-red-dim);
-      border-top: 4px solid var(--accent-red);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    .btn-loader {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid currentColor;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    /* ===== GRID SYSTEMS ===== */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: calc(var(--spacing-unit) * 4);
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: calc(var(--spacing-unit) * 3);
-    }
-
-    @media (max-width: 1024px) {
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    }
-
-    /* ===== PROGRESS ===== */
-    .progress-container {
-      background: var(--bg-tertiary);
-      height: 10px;
-      border: 1px solid var(--border-dim);
-      margin: calc(var(--spacing-unit) * 2) 0;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: var(--accent-red);
-      width: 0%;
-      transition: width 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      animation: shimmer 1.5s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    /* ===== ENCRYPTION BADGES ===== */
-    .enc-badge {
-      background: var(--accent-blue);
-      color: black;
-      padding: 2px 8px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      border-radius: 2px;
-      text-transform: uppercase;
-    }
-
-    .key-indicator {
-      background: var(--bg-tertiary);
-      padding: calc(var(--spacing-unit));
-      border-left: 3px solid var(--accent-yellow);
-      font-family: monospace;
-      font-size: 0.8rem;
-      word-break: break-all;
-    }
-
-    /* ===== FILE GRID ===== */
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: calc(var(--spacing-unit));
-      margin-top: calc(var(--spacing-unit) * 2);
-    }
-
-    .file-item {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-dim);
-      padding: calc(var(--spacing-unit));
-      text-align: center;
-      transition: var(--transition-tactical);
-    }
-
-    .file-item:hover {
-      border-color: var(--accent-red);
-      transform: scale(1.02);
-    }
-
-    .file-item img {
-      max-width: 100%;
-      max-height: 80px;
-      object-fit: contain;
-    }
-
-    /* ===== FOOTER ===== */
-    .tactical-footer {
-      background: var(--panel);
-      border-top: 2px solid var(--accent-red);
-      padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 4);
-      margin-top: calc(var(--spacing-unit) * 8);
-      text-align: center;
-    }
-
-    .verse {
-      font-family: var(--font-tactical);
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      margin-bottom: calc(var(--spacing-unit) * 4);
-      font-style: italic;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.8;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      .tactical-header { padding: calc(var(--spacing-unit)); }
-      .header-grid { flex-direction: column; align-items: stretch; }
-      .header-left { flex-direction: column; align-items: stretch; }
-      .header-nav { flex-wrap: wrap; }
-      .vertical-nav { display: none; }
-      .section { padding: calc(var(--spacing-unit) * 2); }
-    }
-
-    /* ===== UTILITY ===== */
-    .text-accent { color: var(--accent-red); }
-    .text-green { color: var(--accent-green); }
-    .text-blue { color: var(--accent-blue); }
-    .text-yellow { color: var(--accent-yellow); }
-    .mb-2 { margin-bottom: calc(var(--spacing-unit) * 2); }
-    .mt-2 { margin-top: calc(var(--spacing-unit) * 2); }
-    .w-100 { width: 100%; }
-    .flex { display: flex; gap: calc(var(--spacing-unit)); align-items: center; }
-    .flex-wrap { flex-wrap: wrap; }
+    /* MISC */
+    .enc-badge { background: var(--accent-blue); color: black; padding: 4px 10px; font-size: 0.8rem; font-weight: 700; border-radius: 2px; text-transform: uppercase; }
+    .key-indicator { background: var(--bg-tertiary); padding: calc(var(--spacing-unit)*2); border-left: 4px solid var(--accent-yellow); font-family: monospace; font-size: 0.9rem; word-break: break-all; }
+    .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: calc(var(--spacing-unit)*2); margin-top: calc(var(--spacing-unit)*3); }
+    .file-item { background: var(--bg-tertiary); border: 1px solid var(--border-dim); padding: calc(var(--spacing-unit)*2); text-align: center; transition: var(--transition-tactical); }
+    .file-item:hover { border-color: var(--accent-red); transform: scale(1.02); }
+    .file-item img { max-width: 100%; max-height: 90px; object-fit: contain; }
+    .tactical-footer { background: var(--panel); border-top: 3px solid var(--accent-red); padding: calc(var(--spacing-unit)*10) calc(var(--spacing-unit)*4); margin-top: calc(var(--spacing-unit)*10); text-align: center; }
+    .verse { font-family: var(--font-tactical); font-size: 1.3rem; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit)*4); font-style: italic; max-width: 1000px; margin-left: auto; margin-right: auto; line-height: 1.8; }
+    @media (max-width:768px){ .tactical-header{padding:calc(var(--spacing-unit)*2);} .vertical-nav{display:none;} .section{padding:calc(var(--spacing-unit)*3);} }
+    .text-accent { color: var(--accent-red); } .text-green { color: var(--accent-green); } .text-blue { color: var(--accent-blue); } .text-yellow { color: var(--accent-yellow); } .mb-2 { margin-bottom: calc(var(--spacing-unit)*3); } .mt-2 { margin-top: calc(var(--spacing-unit)*3); } .flex { display: flex; gap: calc(var(--spacing-unit)*2); align-items: center; flex-wrap: wrap; }
       
   </style>
     
 </head>
     
 <body>
-    
   <!-- GLOBAL LOADER -->
-  <div class="loader-overlay" id="globalLoader">
-    <div class="loader-tactical"></div>
-  </div>
-
+  <div class="loader-overlay" id="globalLoader"><div class="loader-tactical"></div></div>
   <!-- NOTIFICATION CENTER -->
   <div class="notification-center" id="notificationCenter"></div>
-
-  <!-- VERTICAL QUICK NAVIGATION -->
+  <!-- VERTICAL NAV -->
   <div class="vertical-nav">
-    <div class="nav-dot" data-section="s1">S1</div>
+    <div class="nav-dot active" data-section="s1">S1</div>
     <div class="nav-dot" data-section="s2">S2</div>
     <div class="nav-dot" data-section="s3">S3</div>
     <div class="nav-dot" data-section="s4">S4</div>
     <div class="nav-dot" data-section="s5">S5</div>
   </div>
 
-  <!-- STICKY TACTICAL HEADER -->
   <header class="tactical-header">
     <div class="header-grid">
-      <div class="header-left">
-        <div class="header-logo">EXECUTIVE CV-5</div>
-        <nav class="header-nav">
-          <a href="#s1">S1·</a>
-          <a href="#s2">S2·</a>
-          <a href="#s3">S3·</a>
-          <a href="#s4">S4·</a>
-          <a href="#s5">S5·</a>
-        </nav>
-      </div>
-      <div class="header-right">
-        <div class="live-time" id="liveTime">00:00:00</div>
-        <div class="weather-indicator" id="weatherDisplay">
-          <span class="weather-temp" id="weatherTemp">--°C</span>
-          <span class="weather-desc" id="weatherDesc">CAPE TOWN</span>
-        </div>
-      </div>
+      <div class="header-logo">EXECUTIVE CV-5</div>
+      <!-- time/weather elements removed -->
     </div>
   </header>
 
   <main class="container">
-    <!-- SECTION 1: COMMAND (S1) -->
+    <!-- S1: COMMAND -->
     <section class="section" id="s1">
-      <div class="section-header">
-        <h2 class="section-title">⚡ Section 01 · CHIEF INNOVATIONS OFFICER</h2>
-        <span class="section-badge" id="s1Status">CLASSIFIED</span>
+      <div class="section-header"><h2 class="section-title">Section 01 · CHIEF INNOVATIONS OFFICER</h2><span class="section-badge" id="s1Status">CLASSIFIED</span></div>
+      <div class="card" style="border-left:6px solid var(--accent-blue);margin-bottom:calc(var(--spacing-unit)*6);">
+        <div class="flex" style="justify-content:space-between;"><h3 style="color:var(--accent-blue);font-size:1.3rem;">📋 ACTIVE DIRECT ACTION</h3><span class="enc-badge">PUBLIC</span></div>
+        <div id="publicDirective" style="min-height:80px;padding:calc(var(--spacing-unit)*3);background:var(--bg-tertiary);font-size:1rem;">—</div>
+        <div id="directiveMeta" style="font-size:0.8rem;color:var(--text-muted);margin-top:10px;"></div>
       </div>
-
-      <!-- PUBLIC DIRECTIVE (ALWAYS VISIBLE) -->
-      <div class="card" style="border-left: 5px solid var(--accent-blue); margin-bottom: calc(var(--spacing-unit) * 4);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: calc(var(--spacing-unit) * 2);">
-          <h3 style="color: var(--accent-blue);">📋 ACTIVE DIRECT ACTION</h3>
-          <span class="enc-badge">PUBLIC</span>
-        </div>
-        <div id="publicDirective" style="color: var(--text-primary); min-height: 60px; padding: calc(var(--spacing-unit) * 2); background: var(--bg-tertiary;"></div>
-        <div id="directiveMeta" style="font-size: 0.7rem; color: var(--text-muted); margin-top: calc(var(--spacing-unit));"></div>
-      </div>
-
-      <!-- ACCESS CONTROL -->
-      <div style="display: flex; gap: calc(var(--spacing-unit) * 2); align-items: center; margin-bottom: calc(var(--spacing-unit) * 4);">
-        <button class="btn btn-blue" id="unlockS1Btn">🔓 UNLOCK</button>
-        <span id="s1AccessLevel" style="color: var(--accent-red); font-size: 0.9rem;">● LOCKED</span>
-      </div>
-
-      <!-- COMMAND PANEL (LOCKED BY DEFAULT) -->
-      <div id="s1Panel" style="display: none;">
-        <div style="background: rgba(0,255,0,0.1); border-left: 5px solid var(--accent-green); padding: calc(var(--spacing-unit) * 2); margin-bottom: calc(var(--spacing-unit) * 3);">
-          <span class="text-green">✓ ACCESS GRANTED</span>
-        </div>
-
+      <div class="flex" style="margin-bottom:calc(var(--spacing-unit)*6);"><button class="btn btn-blue" id="unlockS1Btn">🔓 UNLOCK</button><span id="s1AccessLevel" class="text-accent">● LOCKED</span></div>
+      <div id="s1Panel" style="display:none;">
+        <div style="background:rgba(0,255,0,0.1);border-left:6px solid var(--accent-green);padding:calc(var(--spacing-unit)*3);margin-bottom:calc(var(--spacing-unit)*4);"><span class="text-green">✓ ACCESS GRANTED</span></div>
         <div class="button-group">
           <button class="btn btn-green" id="s1Create">➕ NEW</button>
           <button class="btn btn-blue" id="s1Read">🔄 READ</button>
@@ -754,221 +218,86 @@
           <button class="btn btn-primary" id="s1Send">📡 SEND</button>
           <button class="btn" id="s1Lock">🔒 LOCK</button>
         </div>
-
-        <div class="input-group">
-          <label>📝 DIRECT ACTION</label>
-          <textarea id="s1Directive" rows="5" placeholder="Enter CV-5 Direct Action..."></textarea>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: calc(var(--spacing-unit) * 4);">
-          <h3>📜 HISTORY LOG</h3>
-          <div class="button-group">
-            <button class="btn btn-blue" id="refreshHistory">🔄</button>
-            <button class="btn" id="clearHistory">🗑️ CLEAR</button>
-          </div>
-        </div>
-        <div id="s1History" style="max-height: 250px; overflow-y: auto;"></div>
+        <div class="input-group"><label>📝 DIRECT ACTION</label><textarea id="s1Directive" rows="5" placeholder="Enter CV-5 directive..."></textarea></div>
+        <div class="flex" style="justify-content:space-between;margin-top:calc(var(--spacing-unit)*6);"><h3 style="font-size:1.4rem;">📜 HISTORY LOG</h3><div class="button-group"><button class="btn btn-blue" id="refreshHistory">🔄</button><button class="btn" id="clearHistory">🗑️ CLEAR</button></div></div>
+        <div id="s1History" style="max-height:300px;overflow-y:auto;"></div>
       </div>
     </section>
 
-    <!-- SECTION 2: COMMUNICATIONS (S2) -->
+    <!-- S2: COMMS -->
     <section class="section" id="s2">
-      <div class="section-header">
-        <h2 class="section-title">📡 Section 02 · COMMS</h2>
-        <span class="section-badge" id="msgCount">0</span>
-      </div>
-
+      <div class="section-header"><h2 class="section-title">Section 02 · COMMS</h2><span class="section-badge" id="msgCount">0</span></div>
       <div class="grid-2">
-        <!-- COMPOSE -->
         <div>
-          <div class="flex" style="margin-bottom: calc(var(--spacing-unit) * 2);">
-            <input type="text" id="callsign" placeholder="codename" value="Hoss" style="flex: 2;">
-            <button class="btn btn-blue" id="emojiBtn">😊</button>
-            <button class="btn btn-blue" id="attachBtn">📎</button>
-          </div>
-
-          <div class="relative">
-            <textarea id="msgInput" rows="4" placeholder="Type message..."></textarea>
-            <emoji-picker id="emojiPicker" style="display: none; position: absolute; z-index: 1000;"></emoji-picker>
-          </div>
-
-          <input type="file" id="msgFile" style="display: none;" accept="image/*,.pdf,.txt">
-          <div id="attachmentPreview" style="margin: calc(var(--spacing-unit) * 2) 0; color: var(--accent-yellow);"></div>
-
-          <!-- AES-256 PANEL -->
-          <div class="card" style="border-color: var(--accent-blue);">
-            <h4 style="color: var(--accent-blue); margin-bottom: calc(var(--spacing-unit) * 2);">🔐 AES-256 ENCRYPTION</h4>
+          <div class="flex"><input type="text" id="callsign" placeholder="codename" value="Hoss"><button class="btn btn-blue" id="emojiBtn">😊</button><button class="btn btn-blue" id="attachBtn">📎</button></div>
+          <div class="relative"><textarea id="msgInput" rows="4" placeholder="Type message..."></textarea><emoji-picker id="emojiPicker" style="display:none;position:absolute;z-index:1000;"></emoji-picker></div>
+          <input type="file" id="msgFile" style="display:none;" accept="image/*,.pdf,.txt">
+          <div id="attachmentPreview" class="text-yellow" style="margin:calc(var(--spacing-unit)*3)0;"></div>
+          <div class="card" style="border-color:var(--accent-blue);">
+            <h4 style="color:var(--accent-blue);margin-bottom:calc(var(--spacing-unit)*3);">🔐 AES-256 ENCRYPTION</h4>
             <div class="button-group">
               <button class="btn btn-blue" id="encryptMsg">🔒 ENCRYPT</button>
               <button class="btn btn-yellow" id="decryptMsg">🔓 DECRYPT</button>
-              <button class="btn btn-green" id="genKey">🔑 GENERATE KEY</button>
+              <button class="btn btn-green" id="genKey">🔑 GENERATE</button>
               <button class="btn btn-blue" id="copyKey">📋 COPY</button>
             </div>
-            <input type="text" id="encKey" placeholder="AES-256 KEY" style="margin-top: calc(var(--spacing-unit) * 2);">
-            <div class="key-indicator" id="keyStrength"></div>
+            <input type="text" id="encKey" placeholder="AES-256 KEY" style="margin-top:calc(var(--spacing-unit)*3);">
+            <div class="key-indicator" id="keyStrength">⚠️ DEFAULT KEY</div>
           </div>
-
-          <div class="button-group">
-            <button class="btn btn-primary" id="sendMsg">📡 SEND MESSAGE</button>
-            <button class="btn btn-blue" id="refreshMsgs">🔄 REFRESH</button>
-          </div>
+          <div class="button-group"><button class="btn btn-primary" id="sendMsg">📡 SEND MESSAGE</button><button class="btn btn-blue" id="refreshMsgs">🔄 REFRESH</button></div>
         </div>
-
-        <!-- MESSAGE BOARD -->
-        <div>
-          <h3 style="display: flex; justify-content: space-between; margin-bottom: calc(var(--spacing-unit) * 2);">
-            <span>💬 LIVE TEAM MESSAGE BOARD</span>
-            <span class="enc-badge" id="liveMsgCount">0</span>
-          </h3>
-          <div id="messageBoard" style="max-height: 600px; overflow-y: auto;"></div>
-        </div>
+        <div><h3 class="flex">💬 LIVE BOARD <span class="enc-badge" id="liveMsgCount">0</span></h3><div id="messageBoard" style="max-height:650px;overflow-y:auto;"></div></div>
       </div>
-
-      <!-- WALKIE TALKIE SECTION -->
-      <div style="margin-top: calc(var(--spacing-unit) * 6);">
-        <h3>📻 OPEN-LINE</h3>
+      <div style="margin-top:calc(var(--spacing-unit)*8);"><h3 style="font-size:1.5rem;">📻 OPEN-LINE</h3>
         <div class="card">
-          <button class="btn btn-primary" id="pttBtn" style="width: 100%; padding: calc(var(--spacing-unit) * 4); font-size: 1.5rem;">🔴 PUSH TO SPEAK (HOLD)</button>
-          
-          <div style="margin: calc(var(--spacing-unit) * 2) 0;">
-            <div id="pttStatus" style="padding: calc(var(--spacing-unit) * 2); background: var(--bg-tertiary; text-align: center;">● CHANNEL CLEAR</div>
-            <div id="activeSpeaker" style="color: var(--accent-green); text-align: center; margin-top: calc(var(--spacing-unit));"></div>
-          </div>
-
-          <div class="button-group">
-            <button class="btn btn-green" id="joinChannel">📻 JOIN</button>
-            <button class="btn" id="leaveChannel">🚪 LEAVE</button>
-            <button class="btn btn-yellow" id="clearWalkie">🗑️ CLEAR</button>
-          </div>
-
-          <div id="walkieMsgs" style="max-height: 150px; overflow-y: auto; margin-top: calc(var(--spacing-unit) * 2);"></div>
+          <button class="btn btn-primary" id="pttBtn" style="width:100%;padding:calc(var(--spacing-unit)*5);font-size:1.6rem;">🔴 PUSH TO TALK (HOLD)</button>
+          <div style="margin:calc(var(--spacing-unit)*3)0;"><div id="pttStatus" style="padding:calc(var(--spacing-unit)*3);background:var(--bg-tertiary);text-align:center;">● CHANNEL CLEAR</div><div id="activeSpeaker" class="text-green" style="text-align:center;"></div></div>
+          <div class="button-group"><button class="btn btn-green" id="joinChannel">📻 JOIN</button><button class="btn" id="leaveChannel">🚪 LEAVE</button><button class="btn btn-yellow" id="clearWalkie">🗑️ CLEAR</button></div>
+          <div id="walkieMsgs" style="max-height:180px;overflow-y:auto;margin-top:calc(var(--spacing-unit)*3);"></div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: TASK FORCE (S3) -->
+    <!-- S3: TASKS -->
     <section class="section" id="s3">
-      <div class="section-header">
-        <h2 class="section-title">✅ Section 03 · OBJECTIVE MANAGEMENT</h2>
-        <span class="section-badge" id="taskCount">0</span>
-      </div>
-
+      <div class="section-header"><h2 class="section-title">Section 03 · OBJECTIVES</h2><span class="section-badge" id="taskCount">0</span></div>
       <div class="grid-2">
-        <!-- TASK MANAGEMENT -->
         <div>
-          <div class="button-group">
-            <button class="btn btn-green" id="addTaskBtn">➕ NEW OBJECTIVE</button>
-            <button class="btn btn-blue" id="refreshTasks">🔄 REFRESH</button>
-            <button class="btn btn-yellow" id="completeAll">✅ COMPLETE ALL</button>
-            <button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button>
-          </div>
-
-          <div class="flex" style="margin: calc(var(--spacing-unit) * 2) 0;">
-            <input type="text" id="taskInput" placeholder="Enter task..." style="flex: 3;">
-            <button class="btn btn-yellow" id="priorityBtn">⚡ PRIORITY</button>
-          </div>
+          <div class="button-group"><button class="btn btn-green" id="addTaskBtn">➕ NEW</button><button class="btn btn-blue" id="refreshTasks">🔄</button><button class="btn btn-yellow" id="completeAll">✅ COMPLETE ALL</button><button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button></div>
+          <div class="flex"><input type="text" id="taskInput" placeholder="Enter task..."><button class="btn btn-yellow" id="priorityBtn">⚡ PRIORITY</button></div>
           <button class="btn btn-primary w-100" id="createTask">CREATE OBJECTIVE</button>
-
-          <h3 style="margin: calc(var(--spacing-unit) * 3) 0;">⚡ ACTIVE OBJECTIVES</h3>
-          <div id="activeTasks" style="max-height: 350px; overflow-y: auto;"></div>
+          <h3 style="margin:calc(var(--spacing-unit)*5)0;">⚡ ACTIVE</h3><div id="activeTasks" style="max-height:400px;overflow-y:auto;"></div>
         </div>
-
-        <!-- STATS & COMPLETED -->
-        <div>
-          <h3>✅ COMPLETED</h3>
-          <div id="completedTasks" style="max-height: 250px; overflow-y: auto;"></div>
-
-          <div style="margin-top: calc(var(--spacing-unit) * 4);">
-            <h4>📊 MISSION PROGRESS</h4>
-            <div class="progress-container">
-              <div class="progress-bar" id="taskProgress"></div>
-            </div>
-
-            <div class="grid-2" style="margin-top: calc(var(--spacing-unit) * 2);">
-              <div class="card" style="text-align: center;">
-                <div style="color: var(--text-muted);">RATE</div>
-                <div style="font-size: 2rem; color: var(--accent-green);" id="completionRate">0%</div>
-              </div>
-              <div class="card" style="text-align: center;">
-                <div style="color: var(--text-muted);">TOTAL</div>
-                <div style="font-size: 2rem; color: var(--accent-blue);" id="totalTasks">0</div>
-              </div>
-            </div>
-          </div>
+        <div><h3>✅ COMPLETED</h3><div id="completedTasks" style="max-height:300px;overflow-y:auto;"></div>
+          <div style="margin-top:calc(var(--spacing-unit)*6);"><h4>📊 PROGRESS</h4><div class="progress-container"><div class="progress-bar" id="taskProgress"></div></div>
+          <div class="grid-2"><div class="card" style="text-align:center;"><div class="text-muted">RATE</div><div class="text-green" style="font-size:2.2rem;" id="completionRate">0%</div></div><div class="card" style="text-align:center;"><div class="text-muted">TOTAL</div><div class="text-blue" style="font-size:2.2rem;" id="totalTasks">0</div></div></div></div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 4: INTEL & LOGS (S4) -->
+    <!-- S4: INTEL -->
     <section class="section" id="s4">
-      <div class="section-header">
-        <h2 class="section-title">📁 Section 04 · INTEL & LOGS</h2>
-        <span class="section-badge" id="logCount">0</span>
-      </div>
-
+      <div class="section-header"><h2 class="section-title">Section 04 · INTEL & LOGS</h2><span class="section-badge" id="logCount">0</span></div>
       <div class="grid-2">
-        <!-- SHIFT LOGS -->
-        <div>
-          <div class="button-group">
-            <button class="btn btn-blue" id="refreshLogs">🔄 REFRESH</button>
-            <button class="btn" id="clearLogs">🗑️ CLEAR LOGS</button>
-            <button class="btn btn-yellow" id="exportLogs">📥 EXPORT</button>
-            <button class="btn btn-primary" id="sendLogs">📡 SEND</button>
-          </div>
-          <div id="shiftLogs" style="max-height: 400px; overflow-y: auto;"></div>
-        </div>
-
-        <!-- FILE STORAGE -->
-        <div>
-          <h3>📎 INTEL FILES</h3>
-          <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt">
-          
-          <div class="button-group" style="margin-top: calc(var(--spacing-unit) * 2);">
-            <button class="btn btn-primary" onclick="processFiles()">📤 UPLOAD</button>
-            <button class="btn" id="clearFiles">🗑️ CLEAR ALL</button>
-            <button class="btn btn-blue" id="downloadFiles">📦 DOWNLOAD</button>
-          </div>
-
-          <div id="filePreview" class="file-grid"></div>
-        </div>
+        <div><div class="button-group"><button class="btn btn-blue" id="refreshLogs">🔄</button><button class="btn" id="clearLogs">🗑️ CLEAR</button><button class="btn btn-yellow" id="exportLogs">📥 EXPORT</button></div><div id="shiftLogs" style="max-height:450px;overflow-y:auto;"></div></div>
+        <div><h3>📎 INTEL FILES</h3><input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt"><div class="button-group"><button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD</button><button class="btn" id="clearFiles">🗑️ CLEAR</button><button class="btn btn-blue" id="downloadFiles">📦 DOWNLOAD</button></div><div id="filePreview" class="file-grid"></div></div>
       </div>
     </section>
 
-    <!-- SECTION 5: ZAMA MDLULI AI (S5) -->
+    <!-- S5: AI -->
     <section class="section" id="s5">
-      <div class="section-header">
-        <h2 class="section-title">🤖 Section 05 · ZAMA MDLULI (AI)</h2>
-        <span class="section-badge">QUANTUM</span>
-      </div>
-
-      <div class="card" style="border: 2px dashed var(--accent-blue); padding: calc(var(--spacing-unit) * 8); text-align: center;">
-        <div style="font-size: 5rem; margin-bottom: calc(var(--spacing-unit) * 4); filter: drop-shadow(0 0 30px var(--accent-blue));">⚡</div>
-        <h3 style="color: var(--accent-blue); font-size: 2rem; margin-bottom: calc(var(--spacing-unit) * 2);">NEURAL INTERFACE</h3>
-        <p style="color: var(--text-muted);">Quantum core initialization: Q4 2024</p>
-        <div style="margin-top: calc(var(--spacing-unit) * 4); display: flex; gap: calc(var(--spacing-unit) * 2); justify-content: center;">
-          <span class="enc-badge" style="background: var(--accent-purple);">NEURAL LINK</span>
-          <span class="enc-badge" style="background: var(--accent-orange);">QUANTUM READY</span>
-        </div>
-      </div>
+      <div class="section-header"><h2 class="section-title">Section 05 · ZAMA MDLULI (AI)</h2><span class="section-badge">QUANTUM</span></div>
+      <div class="card" style="border:2px dashed var(--accent-blue);padding:calc(var(--spacing-unit)*10);text-align:center;"><div style="font-size:6rem;margin-bottom:calc(var(--spacing-unit)*5);filter:drop-shadow(0 0 40px var(--accent-blue));">⚡</div><h3 style="color:var(--accent-blue);font-size:2.5rem;">NEURAL INTERFACE</h3><p class="text-muted" style="font-size:1.2rem;">Quantum core Q4 2026</p><div style="margin-top:calc(var(--spacing-unit)*5);display:flex;gap:calc(var(--spacing-unit)*3);justify-content:center;"><span class="enc-badge" style="background:var(--accent-purple);font-size:1rem;">NEURAL LINK</span><span class="enc-badge" style="background:var(--accent-orange);font-size:1rem;">QUANTUM READY</span></div></div>
     </section>
   </main>
 
-  <!-- TACTICAL FOOTER -->
-  <footer class="tactical-footer">
-    <div class="verse" id="bibleVerse"></div>
-  </footer>
+  <footer class="tactical-footer"><div class="verse" id="bibleVerse">"Be strong and courageous..."</div></footer>
 
   <script type="module">
-      
-    // ===== FIREBASE INIT =====
+    // ===== FIREBASE & CORE =====
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-      getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc,
-      onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch,
-      where, arrayUnion, arrayRemove, limit, Timestamp
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch, where, arrayUnion, arrayRemove, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
       authDomain: "eden-4a8d3.firebaseapp.com",
@@ -977,950 +306,133 @@
       messagingSenderId: "421147129483",
       appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
-
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
-    const pageName = 'INNOVATIONS CV-5';
+    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2)+Date.now().toString(36);
+    const pageName = 'EXECUTIVE CV-5';
 
-    // ===== GLOBAL UI =====
-    const loader = document.getElementById('globalLoader');
-    const notifCenter = document.getElementById('notificationCenter');
-
-    // Ultra notification system
-    window.showNotification = (message, type = 'info', duration = 4000) => {
-      const notif = document.createElement('div');
-      notif.className = 'notification';
-      
-      const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
-      const bgColors = { success: 'var(--accent-green)', error: 'var(--accent-red)', warning: 'var(--accent-yellow)', info: 'var(--accent-blue)' };
-      
-      notif.style.background = bgColors[type] || 'var(--accent-blue)';
-      notif.innerHTML = `
-        <span>${icons[type] || 'ℹ️'}</span>
-        <span style="flex: 1;">${message}</span>
-        <span style="font-size: 0.7rem; opacity: 0.8;">${new Date().toLocaleTimeString()}</span>
-      `;
-      
-      notifCenter.appendChild(notif);
-      
-      setTimeout(() => {
-        notif.style.animation = 'notificationSlide 0.2s reverse';
-        setTimeout(() => notif.remove(), 200);
-      }, duration);
+    // UI elements
+    const loader = document.getElementById('globalLoader'), notif = document.getElementById('notificationCenter');
+    window.showNotification = (msg, type='info', dur=4500) => {
+      const n = document.createElement('div'); n.className = 'notification';
+      const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'}, bg={success:'var(--accent-green)',error:'var(--accent-red)',warning:'var(--accent-yellow)',info:'var(--accent-blue)'};
+      n.style.background = bg[type]||bg.info; n.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span style="flex:1;">${msg}</span><span style="font-size:0.8rem;">${new Date().toLocaleTimeString()}</span>`;
+      notif.appendChild(n); setTimeout(()=>{ n.style.animation='notificationSlide 0.2s reverse'; setTimeout(()=>n.remove(),200); }, dur);
     };
-
-    // Global loader
-    window.showLoader = (show) => {
-      loader.style.display = show ? 'flex' : 'none';
-    };
-
-    // Request notification permission
-    if ('Notification' in window) Notification.requestPermission();
-
-    // ===== LIVE TIME (CAPE TOWN) =====
-    function updateLiveTime() {
-      const now = new Date();
-      const capeTown = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
-      document.getElementById('liveTime').textContent = capeTown.toLocaleTimeString('en-ZA', { 
-        hour12: false, 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit' 
-      });
-    }
-    setInterval(updateLiveTime, 1000);
-    updateLiveTime();
-
-    // ===== CAPE TOWN WEATHER (SIMULATED LIVE) =====
-    function updateWeather() {
-      const temps = [18, 19, 20, 21, 22, 23, 24, 25];
-      const desc = ['CLEAR', 'PARTLY CLOUDY', 'WINDY', 'COASTAL FOG'];
-      document.getElementById('weatherTemp').textContent = temps[Math.floor(Math.random() * temps.length)] + '°C';
-      document.getElementById('weatherDesc').textContent = desc[Math.floor(Math.random() * desc.length)];
-    }
-    setInterval(updateWeather, 30000);
-    updateWeather();
-
-    // ===== VERTICAL NAVIGATION =====
-    document.querySelectorAll('.nav-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        const sectionId = dot.dataset.section;
-        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      const sections = ['s1', 's2', 's3', 's4', 's5'];
-      const scrollPos = window.scrollY + 100;
-      
-      sections.forEach((section, index) => {
-        const el = document.getElementById(section);
-        if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) {
-          document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
-          document.querySelector(`.nav-dot[data-section="${section}"]`).classList.add('active');
-        }
-      });
-    });
-
-    // ===== SECTION 1: COMMAND =====
-    const s1Panel = document.getElementById('s1Panel');
-    const s1Directive = document.getElementById('s1Directive');
-    const publicDirective = document.getElementById('publicDirective');
-    const directiveMeta = document.getElementById('directiveMeta');
-    const s1Status = document.getElementById('s1Status');
-    const s1AccessLevel = document.getElementById('s1AccessLevel');
-    const s1History = document.getElementById('s1History');
-
-    // Load draft
-    const savedDraft = localStorage.getItem('s1Draft');
-    if (savedDraft) s1Directive.value = savedDraft;
-
-    s1Directive.addEventListener('input', () => {
-      clearTimeout(window.draftTimer);
-      window.draftTimer = setTimeout(() => {
-        localStorage.setItem('s1Draft', s1Directive.value);
-        showNotification('Draft auto-saved', 'info', 2000);
-      }, 2000);
-    });
-
-    // Unlock S1 (PIN: 1234)
-    document.getElementById('unlockS1Btn').onclick = () => {
-      const pin = prompt('ENTER COMMAND PIN:');
-      if (pin === '1234') {
-        s1Panel.style.display = 'block';
-        s1Status.textContent = 'UNLOCKED';
-        s1AccessLevel.innerHTML = '● UNLOCKED · COMMAND';
-        showNotification('S1 COMMAND ACCESS GRANTED', 'success');
-      } else if (pin !== null) {
-        showNotification('INVALID PIN', 'error');
-      }
-    };
-
-    document.getElementById('s1Lock').onclick = () => {
-      s1Panel.style.display = 'none';
-      s1Status.textContent = 'CLASSIFIED';
-      s1AccessLevel.innerHTML = '● LOCKED';
-      showNotification('S1 LOCKED', 'warning');
-    };
-
-    // CRUD Operations
-    async function withLoaderAsync(fn, successMsg) {
-      showLoader(true);
-      try {
-        await fn();
-        showNotification(successMsg, 'success');
-      } catch (error) {
-        showNotification(`ERROR: ${error.message}`, 'error');
-      } finally {
-        showLoader(false);
-      }
-    }
-
-    document.getElementById('s1Create').onclick = () => {
-      s1Directive.value = '';
-      showNotification('New directive ready', 'info');
-    };
-
-    document.getElementById('s1Read').onclick = () => withLoaderAsync(async () => {
-      const snap = await getDoc(doc(db, 'cio', 'directive'));
-      if (snap.exists()) s1Directive.value = snap.data().text;
-      else showNotification('No directive found', 'warning');
-    }, 'Directive loaded');
-
-    document.getElementById('s1Update').onclick = () => withLoaderAsync(async () => {
-      if (!s1Directive.value.trim()) throw new Error('Empty directive');
-      await setDoc(doc(db, 'cio', 'directive'), {
-        text: s1Directive.value,
-        timestamp: serverTimestamp(),
-        operator: document.getElementById('callsign').value || 'Unknown',
-        sessionId,
-        page: pageName
-      });
-    }, 'Directive updated');
-
-    document.getElementById('s1Delete').onclick = () => withLoaderAsync(async () => {
-      if (!confirm('Delete directive?')) return;
-      await deleteDoc(doc(db, 'cio', 'directive'));
-      s1Directive.value = '';
-    }, 'Directive deleted');
-
-    document.getElementById('s1Send').onclick = () => withLoaderAsync(async () => {
-      if (!s1Directive.value.trim()) throw new Error('Empty directive');
-      await setDoc(doc(db, 'cio', 'directive'), {
-        text: s1Directive.value,
-        timestamp: serverTimestamp(),
-        operator: document.getElementById('callsign').value || 'Unknown',
-        sessionId,
-        page: pageName
-      });
-      await addDoc(collection(db, 'directiveHistory'), {
-        text: s1Directive.value,
-        timestamp: serverTimestamp(),
-        operator: document.getElementById('callsign').value || 'Unknown',
-        sessionId,
-        page: pageName
-      });
-    }, '🚀 DIRECTIVE SENT');
-
-    // Live directive
-    onSnapshot(doc(db, 'cio', 'directive'), (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        publicDirective.innerHTML = data.text.replace(/\n/g, '<br>');
-        directiveMeta.innerHTML = `Last: ${data.timestamp?.toDate().toLocaleString()} · ${data.operator || 'Unknown'}`;
-      } else {
-        publicDirective.innerHTML = '<span style="color: gray;">No active directive</span>';
-        directiveMeta.innerHTML = '';
-      }
-    });
-
-    // History
-    onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp', 'desc'), limit(20)), (snap) => {
-      s1History.innerHTML = '';
-      snap.forEach(d => {
-        const data = d.data();
-        s1History.innerHTML += `
-          <div class="card" style="margin: calc(var(--spacing-unit)) 0;">
-            <div style="display: flex; justify-content: space-between;">
-              <small style="color: gray;">${data.timestamp?.toDate().toLocaleString()}</small>
-              <button onclick="deleteHistory('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
-            </div>
-            <div style="color: var(--text-primary);">${data.text.substring(0, 100)}${data.text.length > 100 ? '…' : ''}</div>
-          </div>
-        `;
-      });
-    });
-
-    window.deleteHistory = async (id) => {
-      if (confirm('Delete history entry?')) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'directiveHistory', id));
-          showNotification('History deleted', 'info');
-        } catch (error) {
-          showNotification('Error: ' + error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    document.getElementById('clearHistory').onclick = () => withLoaderAsync(async () => {
-      if (!confirm('Clear ALL history? PIN required.')) return;
-      const pin = prompt('Enter command PIN:');
-      if (pin !== '1234') {
-        showNotification('Invalid PIN', 'error');
-        return;
-      }
-      const snap = await getDocs(collection(db, 'directiveHistory'));
-      const batch = writeBatch(db);
-      snap.forEach(d => batch.delete(d.ref));
-      await batch.commit();
-    }, 'History cleared');
-
-    // ===== SECTION 2: AES-256 COMMUNICATIONS =====
-    const callsign = document.getElementById('callsign');
-    const msgInput = document.getElementById('msgInput');
-    const msgBoard = document.getElementById('messageBoard');
-    const encKey = document.getElementById('encKey');
-    const keyStrength = document.getElementById('keyStrength');
-    const emojiPicker = document.getElementById('emojiPicker');
-    const msgFile = document.getElementById('msgFile');
-    const attachmentPreview = document.getElementById('attachmentPreview');
-    const liveMsgCount = document.getElementById('liveMsgCount');
-    let currentAttachment = null;
-
-    // AES Functions
-    function encryptAES(text, key) {
-      if (!key) key = 'cv5-default-key-2024';
-      return CryptoJS.AES.encrypt(text, key).toString();
-    }
-
-    function decryptAES(encryptedText, key) {
-      if (!key) return null;
-      try {
-        const bytes = CryptoJS.AES.decrypt(encryptedText, key);
-        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-        return decrypted || null;
-      } catch {
-        return null;
-      }
-    }
-
-    function updateKeyStrength() {
-      const key = encKey.value;
-      if (!key) {
-        keyStrength.innerHTML = '⚠️ DEFAULT KEY - INSECURE';
-        keyStrength.style.color = 'var(--accent-yellow)';
-      } else if (key.length < 16) {
-        keyStrength.innerHTML = '⚠️ WEAK KEY - MIN 16 CHARS';
-        keyStrength.style.color = 'var(--accent-yellow)';
-      } else {
-        keyStrength.innerHTML = '✅ AES-256 READY';
-        keyStrength.style.color = 'var(--accent-green)';
-      }
-    }
-    encKey.addEventListener('input', updateKeyStrength);
-    updateKeyStrength();
-
-    document.getElementById('genKey').onclick = () => {
-      encKey.value = CryptoJS.lib.WordArray.random(32).toString();
-      updateKeyStrength();
-      showNotification('AES-256 key generated', 'success');
-    };
-
-    document.getElementById('copyKey').onclick = () => {
-      encKey.select();
-      document.execCommand('copy');
-      showNotification('Key copied', 'success');
-    };
-
-    document.getElementById('encryptMsg').onclick = () => {
-      if (!msgInput.value.trim()) {
-        showNotification('No message', 'error');
-        return;
-      }
-      msgInput.value = '🔒' + encryptAES(msgInput.value, encKey.value);
-      showNotification('Message encrypted', 'success');
-    };
-
-    document.getElementById('decryptMsg').onclick = () => {
-      let text = msgInput.value;
-      if (text.startsWith('🔒')) text = text.substring(2);
-      
-      const decrypted = decryptAES(text, encKey.value);
-      if (decrypted === null) {
-        showNotification('Decryption failed - invalid key', 'error');
-      } else {
-        msgInput.value = decrypted;
-        showNotification('Message decrypted', 'success');
-      }
-    };
-
-    // Emoji picker
-    document.getElementById('emojiBtn').onclick = () => {
-      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
-    };
-    emojiPicker.addEventListener('emoji-click', (e) => {
-      msgInput.value += e.detail.unicode;
-      emojiPicker.style.display = 'none';
-    });
-
-    // Attachment
-    document.getElementById('attachBtn').onclick = () => msgFile.click();
-    msgFile.onchange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        currentAttachment = file;
-        attachmentPreview.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-      }
-    };
-
-    // Send message
-    document.getElementById('sendMsg').onclick = async () => {
-      if (!callsign.value.trim() || (!msgInput.value.trim() && !currentAttachment)) {
-        showNotification('Callsign and message required', 'error');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        const isEncrypted = msgInput.value.startsWith('🔒');
-        let text = msgInput.value;
-        if (isEncrypted) text = text.substring(2);
-
-        let attachmentData = null;
-        if (currentAttachment) {
-          attachmentData = await new Promise((res) => {
-            const reader = new FileReader();
-            reader.onload = (e) => res({
-              name: currentAttachment.name,
-              type: currentAttachment.type,
-              data: e.target.result,
-              size: currentAttachment.size
-            });
-            reader.readAsDataURL(currentAttachment);
-          });
-        }
-
-        await addDoc(collection(db, 'messages'), {
-          callsign: callsign.value.toUpperCase(),
-          text: text,
-          encrypted: isEncrypted,
-          encryptionMethod: isEncrypted ? 'AES-256' : 'plain',
-          attachment: attachmentData,
-          timestamp: serverTimestamp(),
-          operator: callsign.value,
-          sessionId,
-          page: pageName
-        });
-
-        msgInput.value = '';
-        attachmentPreview.innerHTML = '';
-        currentAttachment = null;
-        msgFile.value = '';
-        showNotification('Message sent', 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    // Live messages
-    onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      msgBoard.innerHTML = '';
-      let count = 0;
-      snap.forEach(d => {
-        count++;
-        const data = d.data();
-        const key = encKey.value;
-        
-        let displayText = data.text;
-        let decryptStatus = '';
-
-        if (data.encrypted) {
-          if (key) {
-            const decrypted = decryptAES(data.text, key);
-            if (decrypted === null) {
-              displayText = '🔒 [ENCRYPTED - KEY REQUIRED]';
-              decryptStatus = '<span style="color: var(--accent-red);"> (invalid key)</span>';
-            } else {
-              displayText = `🔓 ${decrypted}`;
-              decryptStatus = '<span style="color: var(--accent-green);"> (decrypted)</span>';
-            }
-          } else {
-            displayText = '🔒 [ENCRYPTED - ENTER KEY]';
-            decryptStatus = '<span style="color: var(--accent-yellow);"> (key missing)</span>';
-          }
-        }
-
-        let attachHtml = '';
-        if (data.attachment) {
-          if (data.attachment.type?.startsWith('image/')) {
-            attachHtml = `<img src="${data.attachment.data}" style="max-width: 150px; max-height: 100px; margin-top: calc(var(--spacing-unit)); border: 1px solid var(--border-dim);">`;
-          } else {
-            attachHtml = `<div style="margin-top: calc(var(--spacing-unit));"><a href="${data.attachment.data}" download="${data.attachment.name}" style="color: var(--accent-blue);">📎 ${data.attachment.name}</a></div>`;
-          }
-        }
-
-        msgBoard.innerHTML += `
-          <div class="card">
-            <div style="display: flex; justify-content: space-between;">
-              <strong style="color: var(--accent-blue);">${data.callsign}</strong>
-              <small style="color: gray;">${data.timestamp?.toDate().toLocaleTimeString()}</small>
-            </div>
-            <div style="margin: calc(var(--spacing-unit)) 0;">${displayText} ${decryptStatus}</div>
-            ${attachHtml}
-            <div style="display: flex; justify-content: space-between; margin-top: calc(var(--spacing-unit));">
-              <small style="color: gray;">${data.page || ''}</small>
-              <button onclick="deleteMessage('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
-            </div>
-          </div>
-        `;
-      });
-      liveMsgCount.textContent = count;
-      document.getElementById('msgCount').textContent = count;
-    });
-
-    window.deleteMessage = async (id) => {
-      if (confirm('Delete this message?')) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'messages', id));
-          showNotification('Message deleted', 'info');
-        } catch (error) {
-          showNotification('Error: ' + error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ===== WALKIE TALKIE =====
-    const pttBtn = document.getElementById('pttBtn');
-    const pttStatus = document.getElementById('pttStatus');
-    const activeSpeaker = document.getElementById('activeSpeaker');
-    const walkieMsgs = document.getElementById('walkieMsgs');
-    const clientId = 'client_' + Math.random().toString(36).substring(2, 10);
-    let pttActive = false;
-    let pttHeartbeat;
-
-    document.getElementById('joinChannel').onclick = async () => {
-      showLoader(true);
-      try {
-        await setDoc(doc(db, 'walkie', 'status'), {
-          listeners: arrayUnion(clientId),
-          lastSeen: serverTimestamp(),
-          page: pageName
-        }, { merge: true });
-        showNotification('Joined tactical channel', 'success');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    document.getElementById('leaveChannel').onclick = async () => {
-      showLoader(true);
-      try {
-        await setDoc(doc(db, 'walkie', 'status'), {
-          listeners: arrayRemove(clientId)
-        }, { merge: true });
-        showNotification('Left channel', 'info');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    document.getElementById('clearWalkie').onclick = () => {
-      walkieMsgs.innerHTML = '';
-    };
-
-    pttBtn.addEventListener('mousedown', async () => {
-      pttActive = true;
-      pttBtn.style.background = 'var(--accent-green)';
-      pttBtn.style.color = 'black';
-      pttBtn.textContent = '🔴 TRANSMITTING... RELEASE';
-      pttStatus.innerHTML = '🔴 YOU ARE TRANSMITTING';
-      pttStatus.style.background = '#330000';
-
-      await setDoc(doc(db, 'walkie', 'active'), {
-        active: true,
-        client: clientId,
-        callsign: callsign.value || 'Unknown',
-        timestamp: serverTimestamp(),
-        page: pageName,
-        sessionId
-      });
-
-      pttHeartbeat = setInterval(async () => {
-        if (pttActive) {
-          await updateDoc(doc(db, 'walkie', 'active'), {
-            heartbeat: serverTimestamp()
-          });
-        }
-      }, 2000);
-    });
-
-    pttBtn.addEventListener('mouseup', releasePTT);
-    pttBtn.addEventListener('mouseleave', releasePTT);
-
-    async function releasePTT() {
-      if (!pttActive) return;
-      pttActive = false;
-      clearInterval(pttHeartbeat);
-      pttBtn.style.background = '';
-      pttBtn.style.color = '';
-      pttBtn.textContent = '🔴 PUSH TO TALK (HOLD)';
-      pttStatus.innerHTML = '● CHANNEL CLEAR';
-      pttStatus.style.background = '';
-
-      await setDoc(doc(db, 'walkie', 'active'), {
-        active: false,
-        ended: serverTimestamp()
-      });
-    }
-
-    onSnapshot(doc(db, 'walkie', 'active'), (snap) => {
-      const data = snap.data();
-      if (data?.active && data.client !== clientId) {
-        activeSpeaker.innerHTML = `
-          <div style="background: #1a3300; padding: calc(var(--spacing-unit) * 2); border-radius: 2px; margin-top: calc(var(--spacing-unit));">
-            🔊 ${data.callsign || data.client} TRANSMITTING
-          </div>
-        `;
-        walkieMsgs.innerHTML += `
-          <div style="background: #1a3300; padding: calc(var(--spacing-unit)); margin: calc(var(--spacing-unit)) 0; border-left: 3px solid var(--accent-green);">
-            ${data.callsign || data.client} started transmission
-          </div>
-        `;
-      } else if (data?.active && data.client === clientId) {
-        activeSpeaker.innerHTML = '<div style="color: var(--accent-green);">🔊 YOU ARE TRANSMITTING</div>';
-      } else {
-        activeSpeaker.innerHTML = '';
-      }
-    });
-
-    // ===== SECTION 3: TASKS =====
-    const taskInput = document.getElementById('taskInput');
-    const activeTasks = document.getElementById('activeTasks');
-    const completedTasks = document.getElementById('completedTasks');
-    const taskProgress = document.getElementById('taskProgress');
-    const completionRate = document.getElementById('completionRate');
-    const totalTasks = document.getElementById('totalTasks');
-    const taskCount = document.getElementById('taskCount');
-
-    document.getElementById('createTask').onclick = async () => {
-      if (!taskInput.value.trim()) {
-        showNotification('Enter a task', 'error');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        await addDoc(collection(db, 'tasks'), {
-          text: taskInput.value,
-          completed: false,
-          priority: taskInput.value.includes('⚡'),
-          created: serverTimestamp(),
-          operator: callsign.value || 'Unknown',
-          sessionId,
-          page: pageName
-        });
-        taskInput.value = '';
-        showNotification('Task created', 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    document.getElementById('priorityBtn').onclick = () => {
-      if (taskInput.value.trim() && !taskInput.value.includes('⚡')) {
-        taskInput.value = '⚡ ' + taskInput.value;
-      }
-    };
-
-    document.getElementById('completeAll').onclick = async () => {
-      showLoader(true);
-      try {
-        const snapshot = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false)));
-        const batch = writeBatch(db);
-        snapshot.docs.forEach(d => batch.update(d.ref, { completed: true }));
-        await batch.commit();
-        showNotification('All tasks completed', 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    document.getElementById('clearCompleted').onclick = async () => {
-      if (!confirm('Delete all completed tasks?')) return;
-      showLoader(true);
-      try {
-        const snapshot = await getDocs(query(collection(db, 'tasks'), where('completed', '==', true)));
-        const batch = writeBatch(db);
-        snapshot.docs.forEach(d => batch.delete(d.ref));
-        await batch.commit();
-        showNotification('Completed tasks cleared', 'info');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    // Live tasks
-    onSnapshot(query(collection(db, 'tasks'), orderBy('created', 'desc')), (snap) => {
-      let active = '';
-      let completed = '';
-      let aCnt = 0, cCnt = 0;
-
-      snap.forEach(d => {
-        const data = d.data();
-        const priority = data.priority ? '⚡ ' : '';
-        
-        const card = `
-          <div class="card">
-            <div style="display: flex; justify-content: space-between;">
-              <span style="color: ${data.completed ? 'var(--accent-green)' : data.priority ? 'var(--accent-yellow)' : 'white'};">
-                ${priority}${data.text}
-              </span>
-              <div class="button-group" style="margin: 0;">
-                <button onclick="toggleTask('${d.id}', ${data.completed})" style="background: none; border: none; color: var(--accent-green); cursor: pointer;">${data.completed ? '↩️' : '✅'}</button>
-                <button onclick="editTask('${d.id}', '${data.text.replace(/'/g, "\\'")}')" style="background: none; border: none; color: var(--accent-blue); cursor: pointer;">✏️</button>
-                <button onclick="deleteTask('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
-                ${!data.completed ? `<button onclick="togglePriority('${d.id}', ${data.priority})" style="background: none; border: none; color: var(--accent-yellow); cursor: pointer;">⚡</button>` : ''}
-              </div>
-            </div>
-            <small style="color: gray;">${data.operator} · ${data.created?.toDate().toLocaleString()}</small>
-          </div>
-        `;
-
-        if (data.completed) {
-          completed += card;
-          cCnt++;
-        } else {
-          active += card;
-          aCnt++;
-        }
-      });
-
-      activeTasks.innerHTML = active || '<p style="color: gray;">No active tasks</p>';
-      completedTasks.innerHTML = completed || '<p style="color: gray;">No completed tasks</p>';
-      
-      const total = aCnt + cCnt;
-      const percent = total ? (cCnt / total) * 100 : 0;
-      taskProgress.style.width = `${percent}%`;
-      completionRate.textContent = `${Math.round(percent)}%`;
-      totalTasks.textContent = total;
-      taskCount.textContent = aCnt;
-    });
-
-    window.toggleTask = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { completed: !current });
-        showNotification(`Task ${!current ? 'completed' : 'reopened'}`, 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.editTask = async (id, currentText) => {
-      const newText = prompt('Edit task:', currentText);
-      if (newText && newText !== currentText) {
-        showLoader(true);
-        try {
-          await updateDoc(doc(db, 'tasks', id), { text: newText });
-          showNotification('Task updated', 'success');
-        } catch (error) {
-          showNotification('Error: ' + error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.deleteTask = async (id) => {
-      if (confirm('Delete this task?')) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'tasks', id));
-          showNotification('Task deleted', 'info');
-        } catch (error) {
-          showNotification('Error: ' + error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.togglePriority = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { priority: !current });
-        showNotification(`Priority ${!current ? 'set' : 'removed'}`, 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    // ===== SECTION 4: LOGS & FILES =====
-    const shiftLogs = document.getElementById('shiftLogs');
-    const logCount = document.getElementById('logCount');
-
-    // Shift timer (auto-logging)
-    const shiftBtn = document.getElementById('shiftBtn');
-    const shiftTimer = document.getElementById('shiftTimer');
-    let shiftStart = null;
-    let timerInterval;
-
-    document.getElementById('refreshLogs').onclick = () => {
-      showNotification('Logs refreshed', 'info');
-    };
-
-    document.getElementById('clearLogs').onclick = async () => {
-      const pin = prompt('Enter command PIN to clear logs:');
-      if (pin !== '1234') {
-        showNotification('Invalid PIN', 'error');
-        return;
-      }
-      showLoader(true);
-      try {
-        const snapshot = await getDocs(collection(db, 'shifts'));
-        const batch = writeBatch(db);
-        snapshot.docs.forEach(d => batch.delete(d.ref));
-        await batch.commit();
-        showNotification('All logs cleared', 'warning');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    document.getElementById('exportLogs').onclick = async () => {
-      showLoader(true);
-      try {
-        const snapshot = await getDocs(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(200)));
-        const logs = [];
-        snapshot.forEach(d => logs.push({ id: d.id, ...d.data() }));
-        const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `logs-${Date.now()}.json`;
-        a.click();
-        showNotification('Logs exported', 'success');
-      } catch (error) {
-        showNotification('Error: ' + error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    // Live logs
-    onSnapshot(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      shiftLogs.innerHTML = '';
-      let count = 0;
-      snap.forEach(d => {
-        count++;
-        const data = d.data();
-        shiftLogs.innerHTML += `
-          <div class="card">
-            <div style="display: flex; justify-content: space-between;">
-              <strong style="color: var(--accent-yellow);">${data.type || 'EVENT'}</strong>
-              <button onclick="deleteLog('${d.id}')" style="background: none; border: none; color: var(--accent-red); cursor: pointer;">🗑️</button>
-            </div>
-            <div>${data.operator || 'Unknown'} · ${data.timestamp?.toDate().toLocaleString()}</div>
-            ${data.duration ? `<div style="color: var(--accent-green);">Duration: ${Math.floor(data.duration / 60000)} min</div>` : ''}
-          </div>
-        `;
-      });
-      logCount.textContent = count;
-    });
-
-    window.deleteLog = async (id) => {
-      if (confirm('Delete this log?')) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'shifts', id));
-          showNotification('Log deleted', 'info');
-        } catch (error) {
-          showNotification('Error: ' + error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ===== FILE HANDLING =====
-    window.processFiles = () => {
-      const files = document.getElementById('fileInput').files;
-      const preview = document.getElementById('filePreview');
-      
-      if (files.length === 0) {
-        showNotification('No files selected', 'warning');
-        return;
-      }
-
-      showLoader(true);
-      let processed = 0;
-
-      Array.from(files).slice(0, 10).forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const fileData = {
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            data: e.target.result,
-            timestamp: Date.now()
-          };
-          
-          const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
-          savedFiles.push(fileData);
-          localStorage.setItem('intelFiles', JSON.stringify(savedFiles.slice(-30)));
-
-          preview.innerHTML += `
-            <div class="file-item">
-              ${file.type.startsWith('image/') 
-                ? `<img src="${e.target.result}" alt="${file.name}">` 
-                : `<div style="font-size: 2rem; color: var(--accent-blue);">📄</div>`}
-              <div style="font-size: 0.7rem; word-break: break-word;">${file.name.substring(0, 15)}</div>
-            </div>
-          `;
-          
-          processed++;
-          if (processed === files.length || processed === 10) {
-            showLoader(false);
-            showNotification(`Processed ${processed} files`, 'success');
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    };
-
-    document.getElementById('clearFiles').onclick = () => {
-      localStorage.removeItem('intelFiles');
-      document.getElementById('filePreview').innerHTML = '';
-      showNotification('Files cleared', 'info');
-    };
-
-    document.getElementById('downloadFiles').onclick = () => {
-      const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
-      if (savedFiles.length === 0) {
-        showNotification('No files', 'warning');
-        return;
-      }
-      
-      const data = JSON.stringify(savedFiles, null, 2);
-      const blob = new Blob([data], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `intel-${Date.now()}.json`;
-      a.click();
-      showNotification('Files manifest downloaded', 'success');
-    };
-
-    // Load saved files
-    window.addEventListener('load', () => {
-      const savedFiles = JSON.parse(localStorage.getItem('intelFiles') || '[]');
-      const preview = document.getElementById('filePreview');
-      savedFiles.slice(-20).forEach(file => {
-        preview.innerHTML += `
-          <div class="file-item">
-            ${file.type?.startsWith('image/') 
-              ? `<img src="${file.data}" style="max-width:100%; max-height:60px;">` 
-              : `<div style="font-size: 2rem;">📄</div>`}
-            <div style="font-size: 0.7rem;">${file.name.substring(0, 12)}</div>
-          </div>
-        `;
-      });
-    });
-
-    // ===== BIBLE VERSE =====
-    const bibleVerses = [
-      '"Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go." — Joshua 1:9',
-      '"The LORD is my light and my salvation— whom shall I fear? The LORD is the stronghold of my life— of whom shall I be afraid?" — Psalm 27:1',
-      '"I can do all this through him who gives me strength." — Philippians 4:13',
-      '"For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline." — 2 Timothy 1:7',
-      '"So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand." — Isaiah 41:10',
-      '"Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid." — John 14:27'
-    ];
-    
-    document.getElementById('bibleVerse').textContent = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
-    setInterval(() => {
-      document.getElementById('bibleVerse').textContent = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
-    }, 3600000);
-
-    // ===== INITIAL LOADER HIDE =====
-    setTimeout(() => showLoader(false), 1500);
+    window.showLoader = (show) => loader.style.display = show ? 'flex' : 'none';
+
+    // nav active
+    window.addEventListener('scroll',()=>{ let s='s1s2s3s4s5'.match(/../g), pos=window.scrollY+100; s.forEach((id,i)=>{ let el=document.getElementById(id); if(el && pos>=el.offsetTop && pos<el.offsetTop+el.offsetHeight){ document.querySelectorAll('.nav-dot').forEach(d=>d.classList.remove('active')); document.querySelector(`.nav-dot[data-section="${id}"]`).classList.add('active'); } }); });
+
+    // ========== S1 COMMAND ==========
+    const s1Panel=document.getElementById('s1Panel'), s1Dir=document.getElementById('s1Directive'), pubDir=document.getElementById('publicDirective'), dirMeta=document.getElementById('directiveMeta'), s1Status=document.getElementById('s1Status'), s1Access=document.getElementById('s1AccessLevel'), s1History=document.getElementById('s1History');
+    // unlock pin 1234
+    document.getElementById('unlockS1Btn').onclick=()=>{ if(prompt('PIN:')==='1234'){ s1Panel.style.display='block'; s1Status.innerText='UNLOCKED'; s1Access.innerHTML='● UNLOCKED'; showNotification('S1 unlocked','success'); } else showNotification('Invalid PIN','error'); };
+    document.getElementById('s1Lock').onclick=()=>{ s1Panel.style.display='none'; s1Status.innerText='CLASSIFIED'; s1Access.innerHTML='● LOCKED'; };
+    document.getElementById('s1Create').onclick=()=>{ s1Dir.value=''; showNotification('New directive ready','info'); };
+    const withLoader = async (fn,msg)=>{ showLoader(true); try{ await fn(); showNotification(msg,'success'); }catch(e){ showNotification('ERR: '+e.message,'error'); }finally{ showLoader(false); } };
+    document.getElementById('s1Read').onclick=()=>withLoader(async()=>{ let snap=await getDoc(doc(db,'cio','directive')); if(snap.exists()) s1Dir.value=snap.data().text; else showNotification('No directive','warning'); },'Loaded');
+    document.getElementById('s1Update').onclick=()=>withLoader(async()=>{ if(!s1Dir.value.trim()) throw new Error('empty'); await setDoc(doc(db,'cio','directive'),{text:s1Dir.value,timestamp:serverTimestamp(),operator:document.getElementById('callsign').value||'Unknown',sessionId,page:pageName}); },'Updated');
+    document.getElementById('s1Delete').onclick=()=>withLoader(async()=>{ if(!confirm('Delete?')) return; await deleteDoc(doc(db,'cio','directive')); s1Dir.value=''; },'Deleted');
+    document.getElementById('s1Send').onclick=()=>withLoader(async()=>{ if(!s1Dir.value.trim()) throw new Error('empty'); await setDoc(doc(db,'cio','directive'),{text:s1Dir.value,timestamp:serverTimestamp(),operator:document.getElementById('callsign').value,sessionId,page:pageName}); await addDoc(collection(db,'directiveHistory'),{text:s1Dir.value,timestamp:serverTimestamp(),operator:document.getElementById('callsign').value,sessionId,page:pageName}); },'🚀 SENT');
+    onSnapshot(doc(db,'cio','directive'), snap=>{ if(snap.exists()){ let d=snap.data(); pubDir.innerHTML=d.text.replace(/\n/g,'<br>'); dirMeta.innerHTML=`Last: ${d.timestamp?.toDate().toLocaleString()} · ${d.operator||''}`; }else{ pubDir.innerHTML='<span style="color:gray;">—</span>'; dirMeta.innerHTML=''; } });
+    onSnapshot(query(collection(db,'directiveHistory'),orderBy('timestamp','desc'),limit(20)), snap=>{ s1History.innerHTML=''; snap.forEach(d=>{ let data=d.data(); s1History.innerHTML+=`<div class="card"><div class="flex" style="justify-content:space-between;"><small>${data.timestamp?.toDate().toLocaleString()}</small><button onclick="window.deleteHistory('${d.id}')" style="background:none;border:none;color:var(--accent-red);">🗑️</button></div><div>${data.text.substring(0,100)}${data.text.length>100?'…':''}</div></div>`; }); });
+    window.deleteHistory = async (id) => { if(confirm('Delete entry?')){ showLoader(true); await deleteDoc(doc(db,'directiveHistory',id)); showLoader(false); showNotification('Deleted','info'); } };
+    document.getElementById('clearHistory').onclick=()=>withLoader(async()=>{ if(prompt('PIN:')!=='1234') throw new Error('Invalid'); let snap=await getDocs(collection(db,'directiveHistory')); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); },'History cleared');
+
+    // ========== S2 COMMS ==========
+    const callsign=document.getElementById('callsign'), msgInput=document.getElementById('msgInput'), msgBoard=document.getElementById('messageBoard'), encKey=document.getElementById('encKey'), keyStrength=document.getElementById('keyStrength'), emojiPicker=document.getElementById('emojiPicker'), msgFile=document.getElementById('msgFile'), attachPrev=document.getElementById('attachmentPreview'), liveMsgCount=document.getElementById('liveMsgCount');
+    let currentAttachment=null;
+    function encryptAES(t,k){ return CryptoJS.AES.encrypt(t,k||'cv5-default-key-2024').toString(); }
+    function decryptAES(t,k){ try{ let b=CryptoJS.AES.decrypt(t,k); return b.toString(CryptoJS.enc.Utf8)||null; }catch{ return null; } }
+    encKey.addEventListener('input',()=>{ let k=encKey.value; if(!k) keyStrength.innerHTML='⚠️ DEFAULT KEY'; else if(k.length<16) keyStrength.innerHTML='⚠️ WEAK <16'; else keyStrength.innerHTML='✅ AES-256 READY'; });
+    document.getElementById('genKey').onclick=()=>{ encKey.value=CryptoJS.lib.WordArray.random(32).toString(); keyStrength.innerHTML='✅ AES-256 READY'; };
+    document.getElementById('copyKey').onclick=()=>{ encKey.select(); document.execCommand('copy'); showNotification('Key copied','success'); };
+    document.getElementById('encryptMsg').onclick=()=>{ if(msgInput.value.trim()){ msgInput.value='🔒'+encryptAES(msgInput.value,encKey.value); showNotification('Encrypted','success'); } };
+    document.getElementById('decryptMsg').onclick=()=>{ let txt=msgInput.value.startsWith('🔒')?msgInput.value.slice(2):msgInput.value; let dec=decryptAES(txt,encKey.value); if(dec===null) showNotification('Decrypt failed','error'); else{ msgInput.value=dec; showNotification('Decrypted','success'); } };
+    document.getElementById('emojiBtn').onclick=()=>{ emojiPicker.style.display=emojiPicker.style.display==='none'?'block':'none'; };
+    emojiPicker.addEventListener('emoji-click',e=>{ msgInput.value+=e.detail.unicode; emojiPicker.style.display='none'; });
+    document.getElementById('attachBtn').onclick=()=>msgFile.click();
+    msgFile.onchange=e=>{ let f=e.target.files[0]; if(f){ currentAttachment=f; attachPrev.innerText=`📎 ${f.name} (${(f.size/1024).toFixed(1)} KB)`; } };
+    document.getElementById('sendMsg').onclick=async()=>{ if(!callsign.value.trim()||(!msgInput.value.trim()&&!currentAttachment)){ showNotification('Callsign & message','error'); return; } showLoader(true); try{ let isEnc=msgInput.value.startsWith('🔒'); let text=isEnc?msgInput.value.slice(2):msgInput.value; let attach=null; if(currentAttachment){ attach=await new Promise(r=>{ let reader=new FileReader(); reader.onload=e=>r({name:currentAttachment.name,type:currentAttachment.type,data:e.target.result,size:currentAttachment.size}); reader.readAsDataURL(currentAttachment); }); } await addDoc(collection(db,'messages'),{callsign:callsign.value.toUpperCase(),text,encrypted:isEnc,encryptionMethod:isEnc?'AES-256':'plain',attachment:attach,timestamp:serverTimestamp(),operator:callsign.value,sessionId,page:pageName}); msgInput.value=''; attachPrev.innerHTML=''; currentAttachment=null; msgFile.value=''; showNotification('Sent','success'); }catch(e){ showNotification(e.message,'error'); }finally{ showLoader(false); } };
+    onSnapshot(query(collection(db,'messages'),orderBy('timestamp','desc'),limit(50)), snap=>{ let cnt=0; msgBoard.innerHTML=''; snap.forEach(d=>{ cnt++; let data=d.data(), key=encKey.value, disp=data.text, decryptStatus=''; if(data.encrypted){ if(key){ let dec=decryptAES(data.text,key); if(dec===null){ disp='🔒 [ENCRYPTED - KEY?]'; decryptStatus='<span style="color:var(--accent-red);"> (invalid key)</span>'; }else{ disp='🔓 '+dec; decryptStatus='<span style="color:var(--accent-green);"> (decrypted)</span>'; } }else{ disp='🔒 [ENCRYPTED - enter key]'; decryptStatus='<span style="color:var(--accent-yellow);"> (key missing)</span>'; } } let attachHtml=''; if(data.attachment){ if(data.attachment.type?.startsWith('image/')) attachHtml=`<img src="${data.attachment.data}" style="max-width:150px;max-height:100px;margin-top:6px;">`; else attachHtml=`<div><a href="${data.attachment.data}" download="${data.attachment.name}" style="color:var(--accent-blue);">📎 ${data.attachment.name}</a></div>`; } msgBoard.innerHTML+=`<div class="card"><div class="flex" style="justify-content:space-between;"><strong style="color:var(--accent-blue);">${data.callsign}</strong><small>${data.timestamp?.toDate().toLocaleTimeString()}</small></div><div>${disp} ${decryptStatus}</div>${attachHtml}<div class="flex" style="justify-content:space-between;"><small>${data.page||''}</small><button onclick="window.deleteMessage('${d.id}')" style="background:none;border:none;color:var(--accent-red);">🗑️</button></div></div>`; }); liveMsgCount.innerText=cnt; document.getElementById('msgCount').innerText=cnt; });
+    window.deleteMessage = async (id) => { if(confirm('Delete?')){ showLoader(true); await deleteDoc(doc(db,'messages',id)); showLoader(false); showNotification('Deleted','info'); } };
+    // walkie
+    const pttBtn=document.getElementById('pttBtn'), pttStatus=document.getElementById('pttStatus'), activeSpeaker=document.getElementById('activeSpeaker'), walkieMsgs=document.getElementById('walkieMsgs'), clientId='cli_'+Math.random().toString(36).substring(2,8);
+    let pttActive=false, pttHeartbeat;
+    document.getElementById('joinChannel').onclick=async()=>{ showLoader(true); await setDoc(doc(db,'walkie','status'),{listeners:arrayUnion(clientId),lastSeen:serverTimestamp(),page:pageName},{merge:true}); showLoader(false); showNotification('Joined channel','success'); };
+    document.getElementById('leaveChannel').onclick=async()=>{ showLoader(true); await setDoc(doc(db,'walkie','status'),{listeners:arrayRemove(clientId)},{merge:true}); showLoader(false); showNotification('Left','info'); };
+    document.getElementById('clearWalkie').onclick=()=>{ walkieMsgs.innerHTML=''; };
+    pttBtn.addEventListener('mousedown',async()=>{ pttActive=true; pttBtn.style.background='var(--accent-green)'; pttBtn.style.color='black'; pttBtn.textContent='🔴 TRANSMITTING... RELEASE'; pttStatus.innerHTML='🔴 YOU ARE TX'; pttStatus.style.background='#330000'; await setDoc(doc(db,'walkie','active'),{active:true,client:clientId,callsign:callsign.value||'Unknown',timestamp:serverTimestamp(),page:pageName,sessionId}); pttHeartbeat=setInterval(async()=>{ if(pttActive) await updateDoc(doc(db,'walkie','active'),{heartbeat:serverTimestamp()}); },2000); });
+    pttBtn.addEventListener('mouseup', releasePTT); pttBtn.addEventListener('mouseleave', releasePTT);
+    async function releasePTT(){ if(!pttActive) return; pttActive=false; clearInterval(pttHeartbeat); pttBtn.style=''; pttBtn.textContent='🔴 PUSH TO TALK (HOLD)'; pttStatus.innerHTML='● CHANNEL CLEAR'; pttStatus.style.background=''; await setDoc(doc(db,'walkie','active'),{active:false,ended:serverTimestamp()}); }
+    onSnapshot(doc(db,'walkie','active'), snap=>{ let d=snap.data(); if(d?.active && d.client!==clientId){ activeSpeaker.innerHTML=`<div style="background:#1a3300;padding:10px;">🔊 ${d.callsign||d.client} TX</div>`; walkieMsgs.innerHTML+=`<div style="background:#1a3300;padding:6px;margin:6px 0;border-left:4px solid var(--accent-green);">${d.callsign||d.client} started</div>`; } else if(d?.active && d.client===clientId) activeSpeaker.innerHTML='<div class="text-green">🔊 YOU ARE TX</div>'; else activeSpeaker.innerHTML=''; });
+
+    // ========== S3 TASKS ==========
+    const taskInput=document.getElementById('taskInput'), activeTasks=document.getElementById('activeTasks'), completedTasks=document.getElementById('completedTasks'), taskProgress=document.getElementById('taskProgress'), completionRate=document.getElementById('completionRate'), totalTasks=document.getElementById('totalTasks'), taskCount=document.getElementById('taskCount');
+    document.getElementById('createTask').onclick=async()=>{ if(!taskInput.value.trim()) return; showLoader(true); await addDoc(collection(db,'tasks'),{text:taskInput.value,completed:false,priority:taskInput.value.includes('⚡'),created:serverTimestamp(),operator:callsign.value||'Unknown',sessionId,page:pageName}); taskInput.value=''; showLoader(false); showNotification('Task created','success'); };
+    document.getElementById('priorityBtn').onclick=()=>{ if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value='⚡ '+taskInput.value; };
+    document.getElementById('completeAll').onclick=async()=>{ showLoader(true); let snap=await getDocs(query(collection(db,'tasks'),where('completed','==',false))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.update(d.ref,{completed:true})); await batch.commit(); showLoader(false); showNotification('All completed','success'); };
+    document.getElementById('clearCompleted').onclick=async()=>{ if(!confirm('Clear completed?')) return; showLoader(true); let snap=await getDocs(query(collection(db,'tasks'),where('completed','==',true))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); showNotification('Cleared','info'); };
+    onSnapshot(query(collection(db,'tasks'),orderBy('created','desc')), snap=>{ let act='', com='', aCnt=0,cCnt=0; snap.forEach(d=>{ let data=d.data(), pri=data.priority?'⚡ ':'', card=`<div class="card"><div class="flex" style="justify-content:space-between;"><span style="color:${data.completed?'var(--accent-green)':data.priority?'var(--accent-yellow)':'white'};">${pri}${data.text}</span><div class="button-group" style="margin:0;"><button onclick="window.toggleTask('${d.id}',${data.completed})" style="background:none;border:none;color:var(--accent-green);">${data.completed?'↩️':'✅'}</button><button onclick="window.editTask('${d.id}','${data.text.replace(/'/g,"\\'")}')" style="background:none;border:none;color:var(--accent-blue);">✏️</button><button onclick="window.deleteTask('${d.id}')" style="background:none;border:none;color:var(--accent-red);">🗑️</button>${!data.completed?`<button onclick="window.togglePriority('${d.id}',${data.priority})" style="background:none;border:none;color:var(--accent-yellow);">⚡</button>`:''}</div></div><small>${data.operator||''}</small></div>`; if(data.completed){ com+=card; cCnt++; } else { act+=card; aCnt++; } }); activeTasks.innerHTML=act||'<p class="text-muted">No active tasks</p>'; completedTasks.innerHTML=com||'<p class="text-muted">None</p>'; let tot=aCnt+cCnt, p=tot? (cCnt/tot*100):0; taskProgress.style.width=p+'%'; completionRate.innerText=Math.round(p)+'%'; totalTasks.innerText=tot; taskCount.innerText=aCnt; });
+    window.toggleTask=async(id,cur)=>{ showLoader(true); await updateDoc(doc(db,'tasks',id),{completed:!cur}); showLoader(false); };
+    window.editTask=async(id,cur)=>{ let n=prompt('Edit:',cur); if(n && n!==cur){ showLoader(true); await updateDoc(doc(db,'tasks',id),{text:n}); showLoader(false); } };
+    window.deleteTask=async(id)=>{ if(confirm('Delete?')){ showLoader(true); await deleteDoc(doc(db,'tasks',id)); showLoader(false); } };
+    window.togglePriority=async(id,cur)=>{ showLoader(true); await updateDoc(doc(db,'tasks',id),{priority:!cur}); showLoader(false); };
+
+    // ========== S4 LOGS & FILES ==========
+    const shiftLogs=document.getElementById('shiftLogs'), logCount=document.getElementById('logCount');
+    onSnapshot(query(collection(db,'shifts'),orderBy('timestamp','desc'),limit(50)), snap=>{ let c=0; shiftLogs.innerHTML=''; snap.forEach(d=>{ c++; let data=d.data(); shiftLogs.innerHTML+=`<div class="card"><div class="flex" style="justify-content:space-between;"><strong style="color:var(--accent-yellow);">${data.type||'EVENT'}</strong><button onclick="window.deleteLog('${d.id}')" style="background:none;border:none;color:var(--accent-red);">🗑️</button></div><div>${data.operator||''} · ${data.timestamp?.toDate().toLocaleString()}</div></div>`; }); logCount.innerText=c; });
+    window.deleteLog=async(id)=>{ if(confirm('Delete log?')){ showLoader(true); await deleteDoc(doc(db,'shifts',id)); showLoader(false); } };
+    document.getElementById('clearLogs').onclick=async()=>{ if(prompt('PIN:')!=='1234') return; showLoader(true); let snap=await getDocs(collection(db,'shifts')); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); showNotification('Logs cleared','warning'); };
+    document.getElementById('exportLogs').onclick=async()=>{ showLoader(true); let snap=await getDocs(query(collection(db,'shifts'),orderBy('timestamp','desc'),limit(200))); let arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()})); let blob=new Blob([JSON.stringify(arr,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`logs-${Date.now()}.json`; a.click(); showLoader(false); showNotification('Exported','success'); };
+    window.processFiles=()=>{ let files=document.getElementById('fileInput').files, preview=document.getElementById('filePreview'); if(!files.length){ showNotification('No files','warning'); return; } showLoader(true); let processed=0; Array.from(files).slice(0,10).forEach(f=>{ let reader=new FileReader(); reader.onload=e=>{ let fileData={name:f.name,type:f.type,size:f.size,data:e.target.result,timestamp:Date.now()}; let saved=JSON.parse(localStorage.getItem('intelFiles')||'[]'); saved.push(fileData); localStorage.setItem('intelFiles',JSON.stringify(saved.slice(-30))); preview.innerHTML+=`<div class="file-item">${f.type.startsWith('image/')?`<img src="${e.target.result}" alt="${f.name}">`:'<div style="font-size:2.5rem;">📄</div>'}<div style="font-size:0.8rem;">${f.name.substring(0,12)}</div></div>`; processed++; if(processed===files.length||processed===10){ showLoader(false); showNotification(`Processed ${processed}`,'success'); } }; reader.readAsDataURL(f); }); };
+    document.getElementById('clearFiles').onclick=()=>{ localStorage.removeItem('intelFiles'); document.getElementById('filePreview').innerHTML=''; showNotification('Cleared','info'); };
+    document.getElementById('downloadFiles').onclick=()=>{ let saved=JSON.parse(localStorage.getItem('intelFiles')||'[]'); if(!saved.length){ showNotification('No files','warning'); return; } let blob=new Blob([JSON.stringify(saved,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`intel-${Date.now()}.json`; a.click(); showNotification('Manifest downloaded','success'); };
+    window.addEventListener('load',()=>{ let saved=JSON.parse(localStorage.getItem('intelFiles')||'[]'); let preview=document.getElementById('filePreview'); saved.slice(-20).forEach(f=>{ preview.innerHTML+=`<div class="file-item">${f.type?.startsWith('image/')?`<img src="${f.data}" style="max-width:100%;">`:'<div style="font-size:2.5rem;">📄</div>'}<div>${f.name.substring(0,10)}</div></div>`; }); });
+
+    // bible verses
+    const verses=['"Be strong and courageous. — Joshua 1:9"','"The LORD is my light — Psalm 27:1"','"I can do all things — Phil 4:13"','"For God gave us a spirit not of fear — 2 Tim 1:7"','"Do not fear, for I am with you — Isaiah 41:10"','"Peace I leave with you — John 14:27"'];
+    document.getElementById('bibleVerse').innerText = verses[Math.floor(Math.random()*verses.length)];
+    setInterval(()=>{ document.getElementById('bibleVerse').innerText = verses[Math.floor(Math.random()*verses.length)]; }, 3600000);
+
+    // initial loader hide
+    setTimeout(()=>showLoader(false),1500);
   </script>
 
   <script>
-    // Global function declarations
-    window.deleteHistory = window.deleteHistory || function() {};
-    window.deleteMessage = window.deleteMessage || function() {};
-    window.toggleTask = window.toggleTask || function() {};
-    window.editTask = window.editTask || function() {};
-    window.deleteTask = window.deleteTask || function() {};
-    window.togglePriority = window.togglePriority || function() {};
-    window.deleteLog = window.deleteLog || function() {};
-    window.processFiles = window.processFiles || function() {};
+    // legacy function exposure
+    window.deleteHistory = window.deleteHistory || function(){};
+    window.deleteMessage = window.deleteMessage || function(){};
+    window.toggleTask = window.toggleTask || function(){};
+    window.editTask = window.editTask || function(){};
+    window.deleteTask = window.deleteTask || function(){};
+    window.togglePriority = window.togglePriority || function(){};
+    window.deleteLog = window.deleteLog || function(){};
+    window.processFiles = window.processFiles || function(){};
   </script>
     
 </body>
     
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
