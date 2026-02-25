@@ -66,7 +66,6 @@
       backdrop-filter: blur(16px); border-bottom: 3px solid var(--accent-red);
       padding: calc(var(--spacing-unit)*2.5) calc(var(--spacing-unit)*4);
       margin-bottom: calc(var(--spacing-unit)*5); width: 100%;
-      box-shadow: 0 10px 30px -10px rgba(255,0,21,0.5);
     }
     .header-grid { 
       display: flex; 
@@ -82,7 +81,6 @@
       color: var(--accent-red); 
       letter-spacing: 6px; 
       text-transform: uppercase;
-      text-shadow: 0 0 15px var(--accent-red);
       white-space: nowrap;
     }
     /* REMOVED weather/time spans from HTML later */
@@ -105,7 +103,6 @@
       position: relative; 
       transition: var(--transition-tactical); 
       animation: sectionEntry 0.5s ease-out;
-      box-shadow: 0 20px 40px -15px rgba(255,0,21,0.3);
     }
     .section + .section { margin-top: calc(var(--spacing-unit)*8); } /* extra separator */
     @keyframes sectionEntry { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
