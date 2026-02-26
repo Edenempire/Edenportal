@@ -306,7 +306,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const sessionId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2)+Date.now().toString(36);
-    const pageName = 'SUPPLY CHAIN CV-5';
+    const pageName = 'INNOVATIONS CV-5';
 
     // UI elements
     const loader = document.getElementById('globalLoader'), notif = document.getElementById('notificationCenter');
