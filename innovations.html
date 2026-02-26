@@ -103,7 +103,6 @@
       position: relative; 
       transition: var(--transition-tactical); 
       animation: sectionEntry 0.5s ease-out;
-      box-shadow: 0 20px 40px -15px rgba(255,0,21,0.3);
     }
     .section + .section { margin-top: calc(var(--spacing-unit)*8); } /* extra separator */
     @keyframes sectionEntry { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
@@ -244,7 +243,7 @@
           </div>
           <div class="button-group"><button class="btn btn-primary" id="sendMsg">📡 SEND MESSAGE</button><button class="btn btn-blue" id="refreshMsgs">🔄 REFRESH</button></div>
         </div>
-        <div><h3 class="flex">💬 LIVE BOARD <span class="enc-badge" id="liveMsgCount">0</span></h3><div id="messageBoard" style="max-height:650px;overflow-y:auto;"></div></div>
+        <div><h3 class="flex">💬 LIVE TEAM MESSAGE BOARD <span class="enc-badge" id="liveMsgCount">0</span></h3><div id="messageBoard" style="max-height:650px;overflow-y:auto;"></div></div>
       </div>
       <div style="margin-top:calc(var(--spacing-unit)*8);"><h3 style="font-size:1.5rem;">📻 OPEN-LINE</h3>
         <div class="card">
@@ -307,7 +306,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const sessionId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2)+Date.now().toString(36);
-    const pageName = 'INNOVATIONS CV-5';
+    const pageName = 'SUPPLY CHAIN CV-5';
 
     // UI elements
     const loader = document.getElementById('globalLoader'), notif = document.getElementById('notificationCenter');
@@ -413,7 +412,6 @@
 </body>
     
 </html>
-
 
 
 
