@@ -413,10 +413,6 @@ textarea {
       <div id="s1Panel" style="display:none;">
         <div style="background:rgba(0,255,0,0.1);border-left:6px solid var(--accent-green);padding:calc(var(--spacing-unit)*3);margin-bottom:calc(var(--spacing-unit)*4);"><span class="text-green">✓ ACCESS GRANTED</span></div>
         <div class="button-group">
-          <button class="btn btn-green" id="s1Create">➕ NEW</button>
-          <button class="btn btn-blue" id="s1Read">🔄 READ</button>
-          <button class="btn btn-yellow" id="s1Update">✏️ UPDATE</button>
-          <button class="btn" id="s1Delete">🗑️ DELETE</button>
           <button class="btn btn-primary" id="s1Send">📡 SEND</button>
           <button class="btn" id="s1Lock">🔒 LOCK</button>
         </div>
@@ -435,17 +431,7 @@ textarea {
           <div class="relative"><textarea id="msgInput" rows="4" placeholder="Type message..."></textarea><emoji-picker id="emojiPicker" style="display:none;position:absolute;z-index:1000;"></emoji-picker></div>
           <input type="file" id="msgFile" style="display:none;" accept="image/*,.pdf,.txt">
           <div id="attachmentPreview" class="text-yellow" style="margin:calc(var(--spacing-unit)*3)0;"></div>
-          <div class="card" style="border-color:var(--accent-blue);">
-            <h4 style="color:var(--accent-blue);margin-bottom:calc(var(--spacing-unit)*3);">🔐 AES-256 ENCRYPTION</h4>
-            <div class="button-group">
-              <button class="btn btn-blue" id="encryptMsg">🔒 ENCRYPT</button>
-              <button class="btn btn-yellow" id="decryptMsg">🔓 DECRYPT</button>
-              <button class="btn btn-green" id="genKey">🔑 GENERATE</button>
-              <button class="btn btn-blue" id="copyKey">📋 COPY</button>
-            </div>
-            <input type="text" id="encKey" placeholder="AES-256 KEY" style="margin-top:calc(var(--spacing-unit)*3);">
-            <div class="key-indicator" id="keyStrength">⚠️ DEFAULT KEY</div>
-          </div>
+
           <div class="button-group"><button class="btn btn-primary" id="sendMsg">📡 SEND MESSAGE</button><button class="btn btn-blue" id="refreshMsgs">🔄 REFRESH</button></div>
         </div>
         <div><h3 class="flex">💬 LIVE TEAM MESSAGE BOARD <span class="enc-badge" id="liveMsgCount">0</span></h3><div id="messageBoard" style="max-height:650px;overflow-y:auto;"></div></div>
@@ -617,6 +603,7 @@ textarea {
 </body>
     
 </html>
+
 
 
 
