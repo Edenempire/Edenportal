@@ -3,580 +3,1484 @@
 <html lang="en">
   
 <head>
-
+  
   <meta charset="UTF-8" />
-
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="theme-color" content="#0a0c10" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="E.S.S 2026 - Eden Soccer Sundays. Tactical league intelligence, real-time statistics, and immersive matchday experience." />
+  <meta name="keywords" content="Eden Soccer Sundays, E.S.S, operator soccer" />
+  <meta name="author" content="Eden Empire - Stealth Operations Division" />
+  
   <title>E.S.S 2026</title>
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="logo.png" />
   
-  <meta name="description" content="Eden Soccer Sundays (E.S.S) — Official 2026 Season Hub. Fixtures, results, statistics, awards, gallery, and league intelligence." />
-  
-  <meta name="theme-color" content="#1f2937" />
-
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <!-- =====================
-       🎨 DESIGN TOKENS / CSS VARIABLES
-  ====================== -->
   <style>
-
+    
+    /* =====================================================================
+       🎯 ROOT VARIABLES - BLACK OPS THEME
+       Tier 1 Special Operations Militancy - Precision Engineered
+    ====================================================================== */
     :root {
-
-      /* Brand */
-      --primary: #0f172a;        /* slate-900 */
-      --secondary: #2563eb;      /* blue-600 */
-      --accent: #22c55e;         /* green-500 */
-      --danger: #dc2626;         /* red-600 */
-      --warning: #f59e0b;        /* amber-500 */
-
-      /* Surface */
-      --bg: #f8fafc;             /* slate-50 */
-      --card: #ffffff;
-      --glass: rgba(255,255,255,0.75);
-
-      /* Text */
-      --text-dark: #020617;      /* slate-950 */
-      --text-mid: #334155;       /* slate-700 */
-      --text-light: #64748b;     /* slate-500 */
-      --muted: #94a3b8;          /* slate-400 */
-
-      /* Effects */
+      /* Stealth Color Palette - Dark Mode Supreme */
+      --ops-black: #030405;
+      --ops-deep: #0a0c10;
+      --ops-dark: #111317;
+      --ops-mid: #1a1e24;
+      --ops-card: #1f232b;
+      --ops-surface: #252b34;
+      --ops-border: #2f3640;
+      
+      /* Operational Accents */
+      --ops-blue: #2563eb;
+      --ops-blue-glow: #3b82f6;
+      --ops-green: #22c55e;
+      --ops-green-dim: #16a34a;
+      --ops-amber: #f59e0b;
+      --ops-red: #dc2626;
+      --ops-purple: #8b5cf6;
+      
+      /* Text Hierarchy */
+      --text-primary: #f0f4fa;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-stealth: #64748b;
+      
+      /* Typography - Fluid Scale */
+      --fs-micro: clamp(0.65rem, 1.5vw, 0.75rem);
+      --fs-xs: clamp(0.7rem, 2vw, 0.8rem);
+      --fs-sm: clamp(0.8rem, 2.5vw, 0.9rem);
+      --fs-md: clamp(0.9rem, 3vw, 1rem);
+      --fs-lg: clamp(1rem, 3.5vw, 1.25rem);
+      --fs-xl: clamp(1.25rem, 4.5vw, 1.75rem);
+      --fs-xxl: clamp(1.5rem, 6vw, 2.25rem);
+      --fs-hero: clamp(2rem, 8vw, 3rem);
+      
+      /* Spacing - Tactical Grid */
+      --space-xs: clamp(0.25rem, 1vw, 0.5rem);
+      --space-sm: clamp(0.5rem, 1.5vw, 0.75rem);
+      --space-md: clamp(0.75rem, 2vw, 1rem);
+      --space-lg: clamp(1rem, 3vw, 1.5rem);
+      --space-xl: clamp(1.5rem, 4vw, 2rem);
+      --space-2xl: clamp(2rem, 5vw, 3rem);
+      
+      /* Effects & Shadows */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.8);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.9);
+      --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+      --shadow-green: 0 0 20px rgba(34, 197, 94, 0.2);
+      
+      /* Borders */
+      --radius-xs: 4px;
       --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 22px;
-      --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
-      --shadow-md: 0 10px 24px rgba(2,6,23,0.10);
-      --shadow-lg: 0 18px 48px rgba(2,6,23,0.18);
-
-      /* Fluid Typography */
-      --fs-xxl: clamp(2.2rem, 6vw, 3.2rem);
-      --fs-xl: clamp(1.8rem, 5vw, 2.6rem);
-      --fs-lg: clamp(1.35rem, 4vw, 1.9rem);
-      --fs-md: clamp(1rem, 3.2vw, 1.25rem);
-      --fs-sm: clamp(0.85rem, 2.8vw, 1rem);
-      --fs-xs: clamp(0.75rem, 2.5vw, 0.9rem);
-
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
       /* Layout */
-      --max-w: 1280px;
-      --gap: clamp(0.75rem, 2vw, 1.5rem);
-
+      --max-width: 1400px;
+      --header-height: 80px;
     }
 
-    /* =====================
-       ⚙️ RESET & BASE
-    ====================== */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    /* =====================================================================
+       ⚡ RESET & BASE - Zero Tolerance for Defaults
+    ====================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 600px at 10% -10%, #e0e7ff 0%, transparent 40%),
-                  radial-gradient(900px 500px at 110% 10%, #dcfce7 0%, transparent 45%),
-                  var(--bg);
-      color: var(--text-dark);
-      line-height: 1.65;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-height) + 20px);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: var(--ops-black);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
       overflow-x: hidden;
     }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; cursor: pointer; }
 
-    /* =====================
-       🧭 HEADER / HERO
-    ====================== */
-    header {
-      position: sticky;
+    /* Stealth Background - Tactical Grid */
+    body::before {
+      content: '';
+      position: fixed;
       top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(135deg, rgba(15,23,42,0.92), rgba(2,6,23,0.92));
-      color: #fff;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* =====================================================================
+       🧭 CUSTOM SCROLLBAR - Operator Grade
+    ====================================================================== */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--ops-deep);
+      border-left: 1px solid var(--ops-border);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--ops-surface);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--ops-deep);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--ops-blue);
+    }
+    
+    ::-webkit-scrollbar-corner {
+      background: var(--ops-deep);
+    }
+
+    /* =====================================================================
+       🏛️ HEADER - Fixed Command Center
+    ====================================================================== */
+    .command-center {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(3, 4, 5, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--ops-border);
       box-shadow: var(--shadow-md);
+      z-index: 9999;
     }
-    .nav {
-      max-width: var(--max-w);
-      margin: auto;
-      padding: 0.75rem 1rem;
+
+    .header-grid {
+      max-width: var(--max-width);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-md);
     }
-    .brand h1 {
+
+    .logo-unit {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--ops-blue), var(--ops-purple));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: var(--fs-xl);
-      letter-spacing: 1px;
-      margin: 0;
+      font-weight: 800;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-glow);
+      transition: transform 0.2s ease;
     }
-    .brand small {
+
+    .logo-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-text h1 {
+      font-size: var(--fs-xl);
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--ops-blue-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .logo-text span {
       display: block;
       font-size: var(--fs-xs);
-      color: #e5e7eb;
-      opacity: 0.9;
-    }
-    .nav-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .pill {
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      letter-spacing: 1px;
     }
 
-    .hero {
-      max-width: var(--max-w);
-      margin: auto;
-      padding: 1.25rem 1rem 1.5rem;
-      display: grid;
-      gap: 0.75rem;
+    .countdown-display {
+      text-align: center;
     }
-    .hero h2 {
+
+    .countdown-label {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+    }
+
+    .countdown-timer {
       font-size: var(--fs-lg);
-      font-weight: 500;
-      margin: 0;
-      color: #e5e7eb;
-    }
-    .hero .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.25rem;
-      font-size: var(--fs-xs);
-      color: #c7d2fe;
-    }
-    .countdown {
-      margin-top: 0.5rem;
       font-weight: 700;
-      color: #fde68a;
-      animation: pulse 2s infinite;
+      color: var(--ops-green);
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+      font-family: 'Courier New', monospace;
     }
-    @keyframes pulse { 0%{opacity:1} 50%{opacity:.6} 100%{opacity:1} }
 
-    /* =====================
-       🧱 MAIN LAYOUT
-    ====================== */
-    main {
-      max-width: var(--max-w);
-      margin: auto;
-      padding: 1.5rem 1rem 3rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--gap);
+    .header-meta {
+      display: flex;
+      gap: var(--space-md);
     }
-    section.card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.98));
+
+    .header-badge {
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--ops-mid);
+      border: 1px solid var(--ops-border);
+      border-radius: var(--radius-full);
+      font-size: var(--fs-xs);
+      color: var(--text-secondary);
+    }
+
+    /* =====================================================================
+       🎯 SIDE MENU - Tactical Navigation (Left)
+    ====================================================================== */
+    .tactical-menu {
+      position: fixed;
+      left: var(--space-md);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .menu-trigger {
+      width: 50px;
+      height: 50px;
+      background: var(--ops-card);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-md);
+    }
+
+    .menu-trigger:hover {
+      border-color: var(--ops-blue);
+      color: var(--ops-blue);
+      transform: scale(1.1);
+    }
+
+    .menu-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 280px;
+      background: var(--ops-deep);
+      border: 2px solid var(--ops-border);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      padding: clamp(1rem, 2.5vw, 1.75rem);
+      padding: var(--space-md);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .tactical-menu:hover .menu-panel,
+    .menu-panel:hover {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(60px);
+    }
+
+    .menu-header {
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--ops-border);
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .menu-item {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--ops-mid);
+      border: 1px solid var(--ops-border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: var(--fs-sm);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: var(--ops-blue);
+      border-color: var(--ops-blue-glow);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    /* =====================================================================
+       🚀 QUICK SCROLL - Right Side Rapid Deployment
+    ====================================================================== */
+    .quick-scroll {
+      position: fixed;
+      right: var(--space-md);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .scroll-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--ops-card);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: var(--fs-lg);
+    }
+
+    .scroll-btn:hover {
+      background: var(--ops-blue);
+      border-color: var(--ops-blue-glow);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* =====================================================================
+       📦 MAIN CONTENT - Strategic Layout
+    ====================================================================== */
+    main {
+      max-width: var(--max-width);
+      margin: calc(var(--header-height) + var(--space-xl)) auto var(--space-xl);
+      padding: 0 var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-lg);
+      position: relative;
+    }
+
+    /* Section Cards - Military Grade */
+    .ops-card {
+      grid-column: span 12;
+      background: var(--ops-card);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
-    section.card::after {
-      content: "";
-      position: absolute;
-      inset: auto -30% -60% -30%;
-      height: 120px;
-      background: radial-gradient(closest-side, rgba(37,99,235,0.08), transparent);
-      pointer-events: none;
+
+    .ops-card:hover {
+      border-color: var(--ops-blue);
+      box-shadow: var(--shadow-glow);
     }
-    .section-title {
+
+    .ops-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--ops-blue), var(--ops-purple));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ops-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Section Headers */
+    .section-command {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.75rem;
+      justify-content: space-between;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--ops-border);
     }
-    .section-title h3 {
-      margin: 0;
-      font-size: var(--fs-lg);
-      color: var(--secondary);
+
+    .section-command h2 {
+      font-size: var(--fs-xl);
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 1px;
     }
-    .badge {
-      padding: 0.25rem 0.5rem;
-      border-radius: 999px;
+
+    .section-command h2::before {
+      content: '▶';
+      color: var(--ops-green);
+      margin-right: var(--space-sm);
+      font-size: var(--fs-sm);
+    }
+
+    .section-badge {
+      padding: var(--space-xs) var(--space-md);
+      background: var(--ops-mid);
+      border: 1px solid var(--ops-border);
+      border-radius: var(--radius-full);
       font-size: var(--fs-xs);
-      background: #e0e7ff;
-      color: #1e40af;
-      border: 1px solid #c7d2fe;
+      color: var(--text-muted);
     }
 
-    /* =====================
-       🏆 PREVIOUS SEASON CALLOUT
-    ====================== */
-    .champion {
-      display: grid;
-      gap: 0.5rem;
-      padding: 1rem;
+    /* =====================================================================
+       📊 TABLES - Data Visualization
+    ====================================================================== */
+    .table-container {
+      overflow-x: auto;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #ecfeff, #ecfdf5);
-      border: 1px solid #bbf7d0;
+      border: 1px solid var(--ops-border);
     }
-    .champion strong { color: #065f46; }
 
-    /* =====================
-       📊 TABLES
-    ====================== */
-    .table-wrap { overflow-x: auto; }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: var(--fs-xs);
-      min-width: 520px;
+      font-size: var(--fs-sm);
+      min-width: 600px;
     }
-    th, td {
-      padding: 0.55rem 0.6rem;
-      border: 1px solid #e5e7eb;
-      text-align: center;
-      white-space: nowrap;
-    }
-    th {
-      background: linear-gradient(180deg, #3b82f6, #2563eb);
-      color: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-    tbody tr:nth-child(even) { background: #f8fafc; }
-    tbody tr:hover { background: #eef2ff; }
 
-    /* =====================
-       📅 SCHEDULE
-    ====================== */
-    .legend {
+    th {
+      background: var(--ops-deep);
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: var(--space-md);
+      border-bottom: 2px solid var(--ops-blue);
+      text-align: center;
+    }
+
+    td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--ops-border);
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    tr:hover td {
+      background: var(--ops-mid);
+    }
+
+    /* =====================================================================
+       🎵 AUDIO CONTROL CENTER - Stealth Sound Operations
+    ====================================================================== */
+    .audio-command {
+      background: var(--ops-deep);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem 1.25rem;
-      margin-bottom: 0.75rem;
-      font-size: var(--fs-xs);
-    }
-    .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
-    .box { width: 14px; height: 14px; border-radius: 4px; }
-    .b-completed { background:#d1fae5; border:1px solid #059669 }
-    .b-postponed { background:#fee2e2; border:1px solid #dc2626 }
-    .b-upcoming { background:#e5e7eb; border:1px solid #9ca3af }
-    .b-next { background:#2563eb; border:1px solid #1e3a8a }
-
-    .schedule { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
-    .schedule li {
-      padding: 0.6rem 0.7rem;
-      border-radius: var(--radius-sm);
-      font-size: var(--fs-xs);
-      box-shadow: inset 0 0 0 1px #e5e7eb;
-    }
-    .completed { background:#d1fae5; color:#065f46; }
-    .postponed { background:#fee2e2; color:#7f1d1d; }
-    .upcoming { background:#e5e7eb; color:#334155; font-style: italic; }
-    .next { background: linear-gradient(90deg,#3b82f6,#2563eb); color:#fff; animation: glow 1.5s infinite alternate; }
-    @keyframes glow { from{box-shadow:0 0 6px #3b82f6} to{box-shadow:0 0 16px #2563eb} }
-
-    /* =====================
-       🖼️ GALLERY (PLACEHOLDER-READY)
-    ====================== */
-    .gallery-controls {
-      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 0.75rem;
-    }
-    .gallery-item {
-      aspect-ratio: 4 / 3;
-      border-radius: var(--radius-md);
-      background: repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 10px,#e5e7eb 10px,#e5e7eb 20px);
-      display: grid; place-items: center;
-      color: var(--text-light);
-      font-size: var(--fs-xs);
-      border: 1px dashed #cbd5f5;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
     }
 
-    /* =====================
-       🏅 AWARDS
-    ====================== */
+    .audio-visualizer {
+      display: flex;
+      gap: 3px;
+      height: 30px;
+      align-items: flex-end;
+    }
+
+    .visualizer-bar {
+      width: 4px;
+      background: var(--ops-green);
+      border-radius: var(--radius-full);
+      transition: height 0.1s ease;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .audio-btn {
+      padding: var(--space-sm) var(--space-lg);
+      background: var(--ops-mid);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .audio-btn:hover {
+      background: var(--ops-blue);
+      border-color: var(--ops-blue-glow);
+      color: white;
+    }
+
+    .audio-btn.playing {
+      background: var(--ops-green);
+      border-color: var(--ops-green-dim);
+      color: var(--ops-black);
+    }
+
+    .track-info {
+      color: var(--text-muted);
+      font-size: var(--fs-sm);
+      font-family: 'Courier New', monospace;
+    }
+
+    /* =====================================================================
+       🏆 AWARDS GRID
+    ====================================================================== */
     .awards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-md);
     }
-    .award {
-      border: 1px solid #e5e7eb;
-      border-radius: var(--radius-md);
-      padding: 0.75rem;
-      background: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-    .award h4 { margin: 0 0 0.25rem; color: #1e40af; }
-    .award p { margin: 0; font-size: var(--fs-xs); color: var(--text-mid); }
 
-    /* =====================
-       👥 TEAMS
-    ====================== */
-    .teams {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.75rem;
-    }
-    .team {
-      border: 1px solid #e5e7eb;
+    .award-item {
+      background: var(--ops-mid);
+      border: 1px solid var(--ops-border);
       border-radius: var(--radius-md);
-      padding: 0.75rem;
-      background: #fff;
+      padding: var(--space-md);
+      transition: all 0.2s ease;
     }
-    .team h4 { margin: 0 0 0.5rem; }
-    .team ul { margin: 0; padding-left: 1.1rem; font-size: var(--fs-xs); }
 
-    /* =====================
-       🧠 FOOTER
-    ====================== */
-    footer {
-      margin-top: 2rem;
-      background: linear-gradient(135deg, #0f172a, #020617);
-      color: #e5e7eb;
-      padding: 1.5rem 1rem;
+    .award-item:hover {
+      border-color: var(--ops-blue);
+      transform: translateY(-2px);
     }
-    .footer-inner {
-      max-width: var(--max-w);
-      margin: auto;
-      display: grid;
-      gap: 0.75rem;
+
+    .award-item h3 {
+      color: var(--ops-blue-glow);
+      font-size: var(--fs-md);
+      margin-bottom: var(--space-xs);
+    }
+
+    .award-item p {
+      color: var(--text-muted);
       font-size: var(--fs-xs);
     }
 
-    /* =====================
-       📱 RESPONSIVE ENHANCEMENTS
-    ====================== */
-    @media (min-width: 900px) {
-      main { grid-template-columns: repeat(12, 1fr); }
-      .span-6 { grid-column: span 6; }
-      .span-12 { grid-column: span 12; }
+    /* =====================================================================
+       🖼️ GALLERY GRID
+    ====================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-md);
     }
 
+    .gallery-item {
+      aspect-ratio: 16/9;
+      background: var(--ops-deep);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: var(--fs-sm);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--ops-blue);
+      transform: scale(1.02);
+    }
+
+    /* =====================================================================
+       👥 TEAMS GRID
+    ====================================================================== */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .team-card {
+      background: var(--ops-mid);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+    }
+
+    .team-card h3 {
+      color: var(--ops-blue);
+      font-size: var(--fs-lg);
+      margin-bottom: var(--space-md);
+      border-bottom: 2px solid var(--ops-border);
+      padding-bottom: var(--space-xs);
+    }
+
+    .team-card ul {
+      list-style: none;
+    }
+
+    .team-card li {
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--ops-border);
+      color: var(--text-secondary);
+      font-size: var(--fs-sm);
+    }
+
+    .team-card li::before {
+      content: '●';
+      color: var(--ops-green);
+      margin-right: var(--space-sm);
+      font-size: var(--fs-xs);
+    }
+
+    /* =====================================================================
+       📱 DOWNLOADS SECTION
+    ====================================================================== */
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .download-item {
+      background: var(--ops-mid);
+      border: 2px solid var(--ops-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .download-item:hover {
+      border-color: var(--ops-blue);
+      transform: translateY(-2px);
+    }
+
+    .download-icon {
+      font-size: var(--fs-xxl);
+      margin-bottom: var(--space-sm);
+    }
+
+    .download-title {
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .download-meta {
+      color: var(--text-muted);
+      font-size: var(--fs-xs);
+    }
+
+    /* =====================================================================
+       🦶 FOOTER - Strategic Command Footer
+    ====================================================================== */
+    .strategic-footer {
+      background: var(--ops-deep);
+      border-top: 2px solid var(--ops-border);
+      padding: var(--space-xl) 0;
+      margin-top: var(--space-2xl);
+    }
+
+    .footer-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .footer-meta {
+      color: var(--text-muted);
+    }
+
+    .footer-meta h4 {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      font-size: var(--fs-md);
+    }
+
+    .live-data {
+      font-family: 'Courier New', monospace;
+      background: var(--ops-black);
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--ops-border);
+    }
+
+    .live-data span {
+      color: var(--ops-green);
+    }
+
+    /* =====================================================================
+       📱 RESPONSIVE COMMANDS
+    ====================================================================== */
+    @media (max-width: 1024px) {
+      .header-grid {
+        grid-template-columns: auto 1fr;
+      }
+      
+      .header-meta {
+        display: none;
+      }
+      
+      .quick-scroll {
+        display: none;
+      }
+      
+      .tactical-menu {
+        bottom: var(--space-lg);
+        top: auto;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 70px;
+      }
+      
+      .logo-text h1 {
+        font-size: var(--fs-lg);
+      }
+      
+      .countdown-timer {
+        font-size: var(--fs-sm);
+      }
+      
+      .ops-card {
+        padding: var(--space-md);
+      }
+      
+      .menu-panel {
+        width: 240px;
+      }
+    }
+
+    /* =====================================================================
+       ⚡ LOADING ANIMATIONS - Every Element Gets Love
+    ====================================================================== */
+    @keyframes tacticalSlide {
+      0% { opacity: 0; transform: translateX(-10px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .ops-card {
+      animation: tacticalSlide 0.5s ease forwards;
+    }
+
+    .ops-card:nth-child(1) { animation-delay: 0.1s; }
+    .ops-card:nth-child(2) { animation-delay: 0.2s; }
+    .ops-card:nth-child(3) { animation-delay: 0.3s; }
+    .ops-card:nth-child(4) { animation-delay: 0.4s; }
+    .ops-card:nth-child(5) { animation-delay: 0.5s; }
+    .ops-card:nth-child(6) { animation-delay: 0.6s; }
+    .ops-card:nth-child(7) { animation-delay: 0.7s; }
+    .ops-card:nth-child(8) { animation-delay: 0.8s; }
+    .ops-card:nth-child(9) { animation-delay: 0.9s; }
+    .ops-card:nth-child(10) { animation-delay: 1s; }
+
+    table tr {
+      animation: tacticalSlide 0.3s ease forwards;
+      opacity: 0;
+    }
+
+    @for $i from 1 through 20 {
+      table tr:nth-child($i) { animation-delay: $i * 0.05s; }
+    }
+
+    .gallery-item, .award-item, .team-card, .download-item {
+      animation: tacticalSlide 0.4s ease forwards;
+      opacity: 0;
+    }
   </style>
-
 </head>
-
 <body>
-
-  <!-- ===================== HEADER ===================== -->
-  <header>
-    <div class="nav">
-      <div class="brand">
-        <h1>E.S.S ⚽</h1>
-        <small>Eden Soccer Sundays</small>
+  <!-- =====================================================================
+       🏛️ COMMAND CENTER - Fixed Header
+  ====================================================================== -->
+  <header class="command-center">
+    <div class="header-grid">
+      <a href="index.html" class="logo-unit" title="Return to E.S.S Home Command">
+        <div class="logo-icon">⚽</div>
+        <div class="logo-text">
+          <h1>E.S.S 2026</h1>
+        </div>
+      </a>
+      
+      <div class="countdown-display">
+        <div class="countdown-label">NEXT MISSION</div>
+        <div class="countdown-timer" id="mainCountdown">--:--:--</div>
       </div>
-    </div>
-
-    <div class="hero">
-      <h2>2026 Season</h2>
-      <div class="meta">
-        <span><strong>Duration:</strong> 01 March 2026 → 22nd of November 2026</span>
-        <span><strong>Awards:</strong> 29th of November 2026</span>
-        <span><strong>Kick-off:</strong> 14:00pm</span>
+      
+      <div class="header-meta">
+        <div class="header-badge" title="Active Season">SEASON 2026</div>
+        <div class="header-badge" title="Matchday Intelligence">⚡ LIVE</div>
       </div>
-      <div id="countdown" class="countdown">Calculating next match…</div>
     </div>
   </header>
 
-  <!-- ===================== MAIN ===================== -->
-  <main>
+  <!-- =====================================================================
+       🎯 TACTICAL SIDE MENU - Left Side Navigation
+  ====================================================================== -->
+  <nav class="tactical-menu" title="Deploy Navigation Menu">
+    <div class="menu-trigger" title="Pull up tactical menu">☰</div>
+    <div class="menu-panel">
+      <div class="menu-header">◈ NAVIGATION ◈</div>
+      <div class="menu-items">
+        <div class="menu-item" onclick="document.querySelector('#league-table').scrollIntoView({behavior:'smooth'})" title="View current league standings">🏆 LEAGUE TABLE</div>
+        <div class="menu-item" onclick="document.querySelector('#schedule').scrollIntoView({behavior:'smooth'})" title="Upcoming match schedule">📅 SCHEDULE</div>
+        <div class="menu-item" onclick="document.querySelector('#results').scrollIntoView({behavior:'smooth'})" title="Recent match results">⚔️ RESULTS</div>
+        <div class="menu-item" onclick="document.querySelector('#scorers').scrollIntoView({behavior:'smooth'})" title="Top goal scorers">🎯 SCORERS</div>
+        <div class="menu-item" onclick="document.querySelector('#motm').scrollIntoView({behavior:'smooth'})" title="Man of the Match awards">🎖️ M.O.T.M</div>
+        <div class="menu-item" onclick="document.querySelector('#defenders').scrollIntoView({behavior:'smooth'})" title="Defender of the Match">🔒 DEFENDERS</div>
+        <div class="menu-item" onclick="document.querySelector('#assisters').scrollIntoView({behavior:'smooth'})" title="Top assist providers">🤝 ASSISTERS</div>
+        <div class="menu-item" onclick="document.querySelector('#teams').scrollIntoView({behavior:'smooth'})" title="Team rosters">👥 TEAMS</div>
+        <div class="menu-item" onclick="document.querySelector('#awards').scrollIntoView({behavior:'smooth'})" title="End of season awards">🏅 AWARDS</div>
+        <div class="menu-item" onclick="document.querySelector('#downloads').scrollIntoView({behavior:'smooth'})" title="Download resources">⬇️ DOWNLOADS</div>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Previous Champion -->
-    <section class="card span-12">
-      <div class="section-title"><h3>🏆 Defending Champions</h3><span class="badge">From 2025</span></div>
-      <div class="champion">
-        <p><strong>Eden Alpha</strong> enter the 2026 season as reigning champions, having conquered the 2025 operation - Tier 3.</p>
-        <p>This season, all eyes are on whether Alpha can defend their trophy — or if Eden Delta will rewrite history.</p>
+  <!-- =====================================================================
+       🚀 QUICK SCROLL BUTTONS - Right Side
+  ====================================================================== -->
+  <div class="quick-scroll">
+    <div class="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Deploy to Top">⬆️</div>
+    <div class="scroll-btn" onclick="window.scrollTo({top:window.innerHeight/2,behavior:'smooth'})" title="Deploy to Center">⚡</div>
+    <div class="scroll-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="Deploy to Bottom">⬇️</div>
+  </div>
+
+  <!-- =====================================================================
+       📦 MAIN OPERATIONS AREA
+  ====================================================================== -->
+  <main>
+    <!-- 🏆 LEAGUE TABLE -->
+    <section id="league-table" class="ops-card">
+      <div class="section-command">
+        <h2>LEAGUE TABLE - 2026 SEASON</h2>
+        <span class="section-badge">UPDATED: WEEK 1</span>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>TEAM</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody id="leagueTableBody">
+            <!-- DATA ENTRY POINT - Update after every match -->
+            <tr>
+              <td><strong>EDEN ALPHA</strong></td>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td><strong>3</strong></td>
+            </tr>
+            <tr>
+              <td><strong>EDEN DELTA</strong></td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td><strong>0</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: var(--space-md); color: var(--text-muted); font-size: var(--fs-xs);">
+        ⚡ GAME 1 COMPLETE: ALPHA 2-1 DELTA (VUYO , HOSS ; BAYANDA')
       </div>
     </section>
 
-    <!-- League Table -->
-    <section class="card span-6">
-      <div class="section-title"><h3>🏟️ League Table — 2026</h3></div>
-      <div class="table-wrap">
-        <table aria-label="League Table">
+    <!-- 📅 SCHEDULE & RESULTS -->
+    <section id="schedule" class="ops-card">
+      <div class="section-command">
+        <h2>MATCHDAY SCHEDULE</h2>
+        <span class="section-badge">2026 SEASON</span>
+      </div>
+      <div style="display: flex; gap: var(--space-md); flex-wrap: wrap; margin-bottom: var(--space-lg);">
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width:12px;height:12px;background:#22c55e;border-radius:4px;"></span> COMPLETED</span>
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width:12px;height:12px;background:#2563eb;border-radius:4px;"></span> NEXT</span>
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width:12px;height:12px;background:#f59e0b;border-radius:4px;"></span> UPCOMING</span>
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width:12px;height:12px;background:#dc2626;border-radius:4px;"></span> POSTPONED</span>
+      </div>
+      <div class="table-container">
+        <table>
           <thead>
-            <tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><<th>Pts</th></tr>
+            <tr>
+              <th>GAME</th>
+              <th>DATE</th>
+              <th>FIXTURE</th>
+              <th>RESULT</th>
+              <th>STATUS</th>
+              <th>M.O.T.M</th>
+            </tr>
           </thead>
-          <tbody id="league-body">
-            <tr><td><strong>Eden Alpha</strong></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-            <tr><td><strong>Eden Delta</strong></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tbody id="scheduleBody">
+            <!-- DATA ENTRY POINT - Update weekly -->
+            <tr style="background: rgba(34,197,94,0.1);">
+              <td><strong>GAME 01</strong></td>
+              <td>01 MAR 2026</td>
+              <td>ALPHA vs DELTA</td>
+              <td>2 - 1</td>
+              <td>✅ COMPLETED</td>
+              <td>HOSS</td>
+            </tr>
+            <tr style="background: rgba(37,99,235,0.2); border-left: 4px solid var(--ops-blue);">
+              <td><strong>GAME 02</strong></td>
+              <td>08 MAR 2026</td>
+              <td>DELTA vs ALPHA</td>
+              <td>-</td>
+              <td>⏳ NEXT</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><strong>GAME 03</strong></td>
+              <td>15 MAR 2026</td>
+              <td>ALPHA vs DELTA</td>
+              <td>-</td>
+              <td>🕒 UPCOMING</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><strong>GAME 04</strong></td>
+              <td>22 MAR 2026</td>
+              <td>DELTA vs ALPHA</td>
+              <td>-</td>
+              <td>🕒 UPCOMING</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: var(--space-md); color: var(--text-muted); font-size: var(--fs-xs);">
+        📍 ALL MATCHES: SUNDAYS @ 14:00 | EDEN ARENA
+      </div>
+    </section>
+
+    <!-- 🎯 TOP SCORERS -->
+    <section id="scorers" class="ops-card">
+      <div class="section-command">
+        <h2>TOP GOAL SCORERS</h2>
+        <span class="section-badge">GOLDEN BOOT RACE</span>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>GOALS</th></tr>
+          </thead>
+          <tbody>
+            <!-- DATA ENTRY POINT - Update weekly -->
+            <tr><td>01</td><td>BAYANDA</td><td>DELTA</td><td>1</td></tr>
+            <tr><td>02</td><td>VUYO</td><td>ALPHA</td><td>1</td></tr>
+            <tr><td>03</td><td>HOSS</td><td>ALPHA</td><td>1</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Schedule -->
-    <section class="card span-6">
-      <div class="section-title"><h3>📅 Matchday Schedule</h3></div>
-      <div class="legend">
-        <span><i class="box b-completed"></i>Completed</span>
-        <span><i class="box b-postponed"></i>Postponed</span>
-        <span><i class="box b-upcoming"></i>Upcoming</span>
-        <span><i class="box b-next"></i>Next</span>
+    <!-- 🎖️ MAN OF THE MATCH -->
+    <section id="motm" class="ops-card">
+      <div class="section-command">
+        <h2>MAN OF THE MATCH AWARDS</h2>
+        <span class="section-badge">MISSION MVP</span>
       </div>
-      <ul id="schedule" class="schedule"></ul>
-    </section>
-
-    <!-- Statistics -->
-    <section class="card span-12">
-      <div class="section-title"><h3>📈 season intelligence</h3><span class="badge">Live-ready</span></div>
-      <p style="font-size:var(--fs-xs)">this section is architected for progressive enhancement: goals, assists, clean sheets, streaks, form, heat metrics, and advanced ratios.</p>
-    </section>
-
-    <!-- Gallery -->
-    <section class="card span-12">
-      <div class="section-title"><h3>🖼️ Season Gallery</h3><span class="badge">--</span></div>
-      <div class="gallery-controls">
-        <span class="pill">Auto-grid</span>
-        <span class="pill">Responsive</span>
-        <span class="pill">Lazy-ready</span>
-      </div>
-      <div class="gallery-grid" id="gallery">
-        <div class="gallery-item">Photo Slot</div>
-        <div class="gallery-item">Photo Slot</div>
-        <div class="gallery-item">Photo Slot</div>
-        <div class="gallery-item">Photo Slot</div>
-        <div class="gallery-item">Photo Slot</div>
-        <div class="gallery-item">Photo Slot</div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>GAME</th><th>PLAYER</th><th>TEAM</th><th>RATING</th></tr>
+          </thead>
+          <tbody>
+            <!-- DATA ENTRY POINT - Update weekly -->
+            <tr><td>GAME 01</td><td>HOSS</td><td>ALPHA</td><td>8.2</td></tr>
+            <tr><td>GAME 02</td><td>-</td><td>-</td><td>-</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <!-- Annual Awards -->
-    <section class="card span-12">
-      <div class="section-title"><h3>🏅 Annual Awards — 2026</h3><span class="badge">Final Sunday of November</span></div>
+    <!-- 🔒 DEFENDER OF THE MATCH -->
+    <section id="defenders" class="ops-card">
+      <div class="section-command">
+        <h2>DEFENDER OF THE MATCH</h2>
+        <span class="section-badge">WALL OF STEEL</span>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>GAME</th><th>PLAYER</th><th>TEAM</th></tr>
+          </thead>
+          <tbody>
+            <!-- DATA ENTRY POINT - Update weekly -->
+            <tr><td>GAME 01</td><td>HOSS</td><td>ALPHA</td></tr>
+            <tr><td>GAME 02</td><td>-</td><td>-</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 🤝 TOP ASSISTERS -->
+    <section id="assisters" class="ops-card">
+      <div class="section-command">
+        <h2>TOP ASSISTERS</h2>
+        <span class="section-badge">PLAYMAKERS</span>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>ASSISTS</th></tr>
+          </thead>
+          <tbody>
+            <!-- DATA ENTRY POINT - Update weekly -->
+            <tr><td>1</td><td>FROST</td><td>ALPHA</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 👥 TEAMS ROSTERS -->
+    <section id="teams" class="ops-card">
+      <div class="section-command">
+        <h2>TEAMS</h2>
+        <span class="section-badge">ELITE SQUADS</span>
+      </div>
+      <div class="teams-grid">
+        <div class="team-card">
+          <h3>◈ EDEN ALPHA ◈</h3>
+          <ul>
+            <li>HOSS (C) - STRIKER</li>
+            <li>VUYO - FORWARD</li>
+            <li>XAN - MIDFIELDER</li>
+            <li>FROST - MIDFIELDER</li>
+            <li>QUEENER - DEFENDER</li>
+
+            <br>
+            
+            <h4>RESERVES:</h4>
+            <li>JONATHAN - STRIKER</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <h3>◈ EDEN DELTA ◈</h3>
+          <ul>
+            <li>JOY (C) - DEFENDER</li>
+            <li>JUNIOR - STRIKER</li>
+            <li>S'PHE - FORWARD</li>
+            <li>OLAMA - MIDFIELDER</li>
+            <li>BAYANDA - DEFENDER</li>
+            
+            <br>
+            
+            <h4>RESERVES:</h4>
+            <li>MASIYA - MIDFIELDER</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🏅 ANNUAL AWARDS -->
+    <section id="awards" class="ops-card">
+      <div class="section-command">
+        <h2>END OF SEASON AWARDS 2026</h2>
+        <span class="section-badge">NOV 29 FINALE</span>
+      </div>
       <div class="awards-grid">
-        <div class="award"><h4>Golden Boot</h4><p>Top goal scorer of the season.</p></div>
-        <div class="award"><h4>Golden Playmaker</h4><p>Most assists.</p></div>
-        <div class="award"><h4>Defender of the Year</h4><p>Defensive excellence.</p></div>
-        <div class="award"><h4>Player of the Season</h4><p>Overall impact.</p></div>
-        <div class="award"><h4>Young Star</h4><p>Breakthrough performer.</p></div>
-        <div class="award"><h4>Most Improved</h4><p>Year-on-year growth.</p></div>
-        <div class="award"><h4>Moment of the Season</h4><p>Iconic highlight.</p></div>
-        <div class="award"><h4>Managerial Intelligence</h4><p>Tactical mastery.</p></div>
-      </div>
-    </section>
-
-    <!-- Teams -->
-    <section class="card span-12">
-      <div class="section-title"><h3>👑 Teams</h3></div>
-      <div class="teams">
-        <div class="team">
-          <h4>Eden Alpha</h4>
-          <ul>
-            <li>Hoss</li><li>Xan</li><li>Frost</li><li>Vuyo</li><li>Queener</li>
-          </ul>
+        <div class="award-item" title="Top goal scorer">
+          <h3>🎯 GOLDEN BOOT</h3>
+          <p>Leading goal scorer of the season</p>
         </div>
-        <div class="team">
-          <h4>Eden Delta</h4>
-          <ul>
-            <li>Olama</li><li>Joy</li><li>Junior</li><li>Bayanda</li><li>Masiya</li><li>S'phe</li>
-          </ul>
+        <div class="award-item" title="Most assists">
+          <h3>🤝 GOLDEN PLAYMAKER</h3>
+          <p>Highest assist provider</p>
+        </div>
+        <div class="award-item" title="Best defender">
+          <h3>🔒 DEFENDER OF THE YEAR</h3>
+          <p>Defensive excellence award</p>
+        </div>
+        <div class="award-item" title="Overall best player">
+          <h3>⚡ PLAYER OF THE SEASON</h3>
+          <p>Most valuable operator</p>
+        </div>
+        <div class="award-item" title="Breakthrough player">
+          <h3>🌟 YOUNG STAR</h3>
+          <p>Best U-25 performer</p>
+        </div>
+        <div class="award-item" title="Most improved">
+          <h3>📈 MOST IMPROVED</h3>
+          <p>Greatest year-on-year growth</p>
         </div>
       </div>
     </section>
 
-    <!-- Eden Philosophy -->
-    <section class="card span-12">
-      <div class="section-title"><h3>🌍 Eden Philosophy</h3></div>
-      <p style="font-size:var(--fs-xs)"><strong>Eden</strong> is the Best Operator unit in the entire universe.</p>
-      <p style="font-size:var(--fs-xs)"><strong>E.S.S Oversight:</strong> E.S.S Algorithmist <strong>Lerato Morake</strong> — just pure JavaScript.</p>
+        <!-- 🎵 AUDIO COMMAND CENTER -->
+    <section class="ops-card">
+      <div class="section-command">
+        <h2>◈ STEALTH SOUND OPERATIONS ◈</h2>
+        <span class="section-badge">CV-1 ENGINE</span>
+      </div>
+      <div class="audio-command">
+        <div class="audio-visualizer" id="visualizer">
+          <div class="visualizer-bar" style="height:10px"></div>
+          <div class="visualizer-bar" style="height:20px"></div>
+          <div class="visualizer-bar" style="height:15px"></div>
+          <div class="visualizer-bar" style="height:25px"></div>
+          <div class="visualizer-bar" style="height:18px"></div>
+          <div class="visualizer-bar" style="height:30px"></div>
+        </div>
+        <div class="audio-controls">
+          <button class="audio-btn" id="playPauseBtn" title="Toggle audio playback">▶ PLAY</button>
+          <button class="audio-btn" id="nextTrackBtn" title="Skip to next track">⏭ NEXT</button>
+          <button class="audio-btn" id="volumeUpBtn" title="Increase volume">🔊 +</button>
+          <button class="audio-btn" id="volumeDownBtn" title="Decrease volume">🔉 -</button>
+        </div>
+        <div class="track-info" id="trackInfo">TRACK: 1/5 · OPERATION ECHO</div>
+      </div>
     </section>
 
+    <!-- 🌍 EDEN PHILOSOPHY -->
+    <section class="ops-card">
+      <div class="section-command">
+        <h2>◈ EDEN STEALTH CV-1 ◈</h2>
+        <span class="section-badge">TIER 1 SPECIAL OPERATIONS - WE TAKE FLIGHT</span>
+      </div>
+      <div style="color: var(--text-secondary);">
+        <p style="margin-bottom: var(--space-md);"><strong>EDEN</strong> is the best operator unit in the entire universe. Private company soccer at its finest. Two elite squads. One legacy.</p>
+        <p style="color: var(--text-muted); font-size: var(--fs-sm);">◈ E.S.S OVERSIGHT: LERATO MORAKE - ALGORITHMIST</p>
+      </div>
+    </section>
   </main>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer>
-    <div class="footer-inner">
-      <p style="text-align: center;">© 2026 Eden Soccer Sundays</p>
+  <!-- =====================================================================
+       🦶 STRATEGIC FOOTER - Live Data
+  ====================================================================== -->
+  <footer class="strategic-footer">
+    <div class="footer-grid">
+      <div class="footer-meta">
+        <h4>◈ LIVE STATUS</h4>
+        <div class="live-data">
+          <div><span>🕒 TIME:</span> <span id="liveTime"></span></div>
+          <div><span>🌡️ WEATHER:</span> <span id="liveWeather">18°C · CLEAR</span></div>
+          <div><span>📡 STATUS:</span> <span>OPERATIONAL</span></div>
+        </div>
+      </div>
+      
+      <div class="footer-meta">
+        <h4>◈ E.S.S 2026</h4>
+        <p style="color: var(--text-muted);">© 2026 Eden Soccer Sundays<br>All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- ===================== SCRIPTS ===================== -->
+  <!-- =====================================================================
+       ⚡ EDEN STEALTH CV-1 ENGINE - Single Point of Control
+       ALL FUNCTIONS OPERATE FROM THIS CORE
+  ====================================================================== -->
   <script>
-    (function(){
+    
+    (function() {
       'use strict';
-
-      // --------- DATE UTILITIES ---------
-      function firstSundayOfMarch(year){
-        const d = new Date(year, 2, 1, 14, 0, 0);
-        while(d.getDay() !== 0) d.setDate(d.getDate()+1);
-        return d;
-      }
-      function thirdSundayOfNovember(year){
-        const d = new Date(year, 10, 1, 14, 0, 0);
-        let count = 0;
-        while(true){
-          if(d.getDay() === 0) count++;
-          if(count === 3) break;
-          d.setDate(d.getDate()+1);
+      
+      // ========== EDEN STEALTH CV-1 ENGINE ==========
+      const ESS2026 = {
+        // Core Properties
+        version: 'CV-1',
+        status: 'OPERATIONAL',
+        
+        // Audio System
+        audio: {
+          context: null,
+          tracks: [],
+          currentTrack: 0,
+          isPlaying: false,
+          volume: 0.7,
+          gainNode: null,
+          source: null,
+          
+          init: function() {
+            try {
+              // Create audio context
+              this.context = new (window.AudioContext || window.webkitAudioContext)();
+              this.gainNode = this.context.createGain();
+              this.gainNode.gain.value = this.volume;
+              this.gainNode.connect(this.context.destination);
+              
+              // Create 5 silent tracks (in production, these would be actual MP3s)
+              // For demo, we create oscillator-based tones
+              for(let i = 0; i < 5; i++) {
+                const oscillator = this.context.createOscillator();
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 220 + (i * 55);
+                oscillator.connect(this.gainNode);
+                this.tracks.push(oscillator);
+              }
+              
+              this.updateUI();
+              console.log('🎵 Audio System Initialized');
+            } catch(e) {
+              console.log('Audio context not supported:', e);
+            }
+          },
+          
+          play: function() {
+            if(!this.context) return;
+            
+            if(this.context.state === 'suspended') {
+              this.context.resume();
+            }
+            
+            // Stop current track
+            if(this.source) {
+              try { this.source.stop(); } catch(e) {}
+            }
+            
+            // Play new track
+            const track = this.tracks[this.currentTrack];
+            if(track) {
+              this.source = track;
+              track.start();
+              this.isPlaying = true;
+            }
+            
+            this.updateUI();
+            this.startVisualizer();
+          },
+          
+          pause: function() {
+            if(!this.context) return;
+            this.context.suspend();
+            this.isPlaying = false;
+            this.updateUI();
+          },
+          
+          next: function() {
+            this.currentTrack = (this.currentTrack + 1) % 5;
+            if(this.isPlaying) {
+              this.play();
+            }
+            document.getElementById('trackInfo').textContent = `TRACK: ${this.currentTrack + 1}/5 · OPERATION ${['ECHO','STEALTH','PHANTOM','SHADOW','GHOST'][this.currentTrack]}`;
+          },
+          
+          setVolume: function(change) {
+            this.volume = Math.max(0, Math.min(1, this.volume + change));
+            if(this.gainNode) {
+              this.gainNode.gain.value = this.volume;
+            }
+          },
+          
+          updateUI: function() {
+            const btn = document.getElementById('playPauseBtn');
+            if(btn) {
+              btn.innerHTML = this.isPlaying ? '⏸ PAUSE' : '▶ PLAY';
+              btn.classList.toggle('playing', this.isPlaying);
+            }
+          },
+          
+          startVisualizer: function() {
+            // Simple visualizer animation
+            const bars = document.querySelectorAll('.visualizer-bar');
+            if(!bars.length) return;
+            
+            setInterval(() => {
+              if(this.isPlaying) {
+                bars.forEach(bar => {
+                  const height = 10 + Math.random() * 30;
+                  bar.style.height = height + 'px';
+                });
+              }
+            }, 100);
+          }
+        },
+        
+        // Live Time Update
+        updateLiveTime: function() {
+          const update = () => {
+            const now = new Date();
+            document.getElementById('liveTime').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+          };
+          update();
+          setInterval(update, 1000);
+        },
+        
+        // Countdown Timer
+        initCountdown: function() {
+          const targetDate = new Date(2026, 2, 8, 14, 0, 0); // March 8, 2026 14:00
+          const countdownEl = document.getElementById('mainCountdown');
+          
+          const update = () => {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            if(diff <= 0) {
+              countdownEl.textContent = 'MATCHDAY ACTIVE';
+              return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            
+            countdownEl.textContent = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+          };
+          
+          update();
+          setInterval(update, 1000);
+        },
+        
+        // Download Handler
+        handleDownload: function(type) {
+          // In production, this would trigger actual file downloads
+          // For demo, we show alert
+          alert(`⬇️ Downloading ${type}... (Demo - File would download)`);
+        },
+        
+        // Initialize Everything
+        init: function() {
+          console.log('🚀 EDEN STEALTH CV-1 ENGINE INITIALIZING...');
+          
+          // Initialize audio (user interaction required for autoplay policies)
+          document.addEventListener('click', () => {
+            if(!this.audio.context) {
+              this.audio.init();
+            }
+          }, { once: true });
+          
+          // Initialize time
+          this.updateLiveTime();
+          
+          // Initialize countdown
+          this.initCountdown();
+          
+          // Add click handlers for downloads
+          window.downloadFile = this.handleDownload;
+          
+          console.log('✅ EDEN STEALTH CV-1 ENGINE OPERATIONAL');
         }
-        return d;
-      }
-
-      const YEAR = 2026;
-      const seasonStart = firstSundayOfMarch(YEAR);
-      const seasonEnd = thirdSundayOfNovember(YEAR);
-
-      // --------- GENERATE SUNDAYS ---------
-      const matches = [];
-      let cursor = new Date(seasonStart);
-      let id = 1;
-      while(cursor <= seasonEnd){
-        matches.push({ id, date: new Date(cursor), status: 'upcoming' });
-        cursor.setDate(cursor.getDate()+7);
-        id++;
-      }
-
-      // --------- PLACEHOLDER STATUS CONTROL ---------
-      const postponed = new Set(); // add ids later
-      const completedUpTo = 0; // dynamic when season starts
-
-      // --------- RENDER SCHEDULE ---------
-      const ul = document.getElementById('schedule');
-      const now = new Date();
-      let nextSet = true;
-
-      matches.forEach(m => {
-        const li = document.createElement('li');
-        const label = m.date.toLocaleDateString('en-GB',{weekday:'short', day:'numeric', month:'short', year:'numeric'});
-
-        if(postponed.has(m.id)){
-          li.className = 'postponed';
-          li.textContent = `Game ${m.id} — ${label} | Postponed`;
-        } else if(m.id <= completedUpTo){
-          li.className = 'completed';
-          li.textContent = `Game ${m.id} — ${label} | Completed`;
-        } else if(!nextSet && m.date > now){
-          li.className = 'next';
-          li.textContent = `Game ${m.id} — ${label} | Next Match`;
-          startCountdown(m.date);
-          nextSet = true;
-        } else {
-          li.className = 'upcoming';
-          li.textContent = `Game ${m.id} — ${label} | Upcoming`;
-        }
-        ul.appendChild(li);
+      };
+      
+      // ========== USER GUIDES ==========
+      const addUserGuides = () => {
+        // Add hover titles to all interactive elements
+        document.querySelectorAll('th').forEach(el => el.setAttribute('title', 'Sortable column'));
+        document.querySelectorAll('tr').forEach(el => el.setAttribute('title', 'Click for detailed stats'));
+        document.querySelectorAll('.menu-item').forEach(el => el.setAttribute('title', 'Navigate to section'));
+        document.querySelectorAll('.download-item').forEach(el => el.setAttribute('title', 'Click to download'));
+      };
+      
+      // ========== START THE ENGINE ==========
+      document.addEventListener('DOMContentLoaded', () => {
+        ESS2026.init();
+        addUserGuides();
+        
+        // Add weather simulation
+        const weatherEl = document.getElementById('liveWeather');
+        const conditions = ['18°C · CLEAR', '16°C · CLOUDY', '15°C · LIGHT RAIN', '20°C · SUNNY'];
+        setInterval(() => {
+          weatherEl.textContent = conditions[Math.floor(Math.random() * conditions.length)];
+        }, 30000);
       });
-
-      // --------- COUNTDOWN ---------
-      function startCountdown(target){
-        const el = document.getElementById('countdown');
-        function tick(){
-          const diff = target - new Date();
-          if(diff <= 0){ el.textContent = 'Matchday is here! ⚽'; return; }
-          const d = Math.floor(diff/86400000);
-          const h = Math.floor(diff/3600000)%24;
-          const m = Math.floor(diff/60000)%60;
-          const s = Math.floor(diff/1000)%60;
-          el.textContent = `Next Match In: ${d}d ${h}h ${m}m ${s}s`;
-        }
-        tick(); setInterval(tick,1000);
-      }
-
+      
+      // Expose to global for debugging
+      window.ESS2026 = ESS2026;
     })();
   </script>
+  
+  <!-- =====================================================================
+       📝 USER GUIDE COMMENTS FOR DATA ENTRY
+       
+       DATA ENTRY POINTS (Update every Sunday):
+       
+       1. LEAGUE TABLE (id: leagueTableBody):
+          - Update P, W, D, L, GF, GA, PTS for both teams
+          
+       2. SCHEDULE (id: scheduleBody):
+          - Add new rows for completed matches
+          - Update results and M.O.T.M
+          
+       3. TOP SCORERS (section id: scorers):
+          - Update goals for each player
+          - Add new players as needed
+          
+       4. M.O.T.M (section id: motm):
+          - Add new entries for each match
+          
+       5. DEFENDERS (section id: defenders):
+          - Update defender awards
+          
+       6. ASSISTERS (section id: assisters):
+          - Update assist counts
+          
+       Note: Maintain alphabetical order for players
+       ====================================================================== -->
+  
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
