@@ -344,8 +344,12 @@
       background: black;
       border: 3px solid var(--sniper-green);
       padding: var(--space-xl) var(--space-3xl);
-      display: flex; flex-direction: column; align-items: center;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
       max-width: 80%;
+      margin: 0 auto; /* This centers the element horizontally */
+      text-align: center;
     }
     .story-emblem {
       font-size: var(--fs-2xl);
@@ -355,6 +359,7 @@
       border: 4px solid var(--hrzn-line);
       transform: rotate(-1deg);
       margin-bottom: var(--space-lg);
+      max-width: 90%;
     }
     .story-title h3 {
       font-size: var(--fs-xl);
