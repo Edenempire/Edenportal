@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>EU · ETERNAL AIRFORCE | ATPL · SAAF</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- RESET / TACTICAL BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background: #0c120e;  /* deep military green-black */
+            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            color: #f0f6f2;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ---------- FIXED HEADER (DOES NOT MOVE) ---------- */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            background: #0b1a14;
+            background: linear-gradient(180deg, #10261e 0%, #07130e 100%);
+            border-bottom: 6px solid #de3831; /* SA red */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 0 2px #002395 inset;
+            padding: 0.5rem 2rem 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            backdrop-filter: none; /* solid, no blur */
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .black-cap-logo {
+            background: #1e2b24;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px 30px 20px 30px; /* military cap shape */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid #002395; /* SA blue */
+            box-shadow: 0 0 0 3px #de3831, 0 0 0 6px #fcb514;
+            transform: rotate(-1deg);
+        }
+
+        .black-cap-logo i {
+            font-size: 2.8rem;
+            color: #ffffff;
+            filter: drop-shadow(0 0 5px #aadfc5);
+        }
+
+        .eu-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: #f2fcf5;
+            text-shadow: 3px 3px 0 #002395, 6px 6px 0 #de3831, 0 0 20px #fcb514;
+            line-height: 1.1;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .tactical-badge {
+            background: #002f1d;
+            border: 3px solid #fcb514;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 700;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .tactical-badge i {
+            color: #de3831;
+            margin-right: 8px;
+        }
+
+        /* campus strip inside header (compact) */
+        .campus-strip-header {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+            width: 100%;
+            border-top: 2px solid #007749;
+            padding-top: 0.4rem;
+        }
+        .campus-tag {
+            background: #1d3d30;
+            color: white;
+            border: 2px solid #de3831;
+            border-radius: 40px;
+            padding: 0.2rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .campus-tag.obsolete {
+            background: #2d2d2d;
+            border-color: #a13b3b;
+            text-decoration: line-through 2px #fcb514;
+            opacity: 0.9;
+        }
+
+        /* ---------- BODY PADDING (FIXED HEADER OFFSET) ---------- */
+        .main-body {
+            max-width: 1400px;
+            margin: 140px auto 0;  /* enough space for fixed header */
+            padding: 1rem 2rem 3rem;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* every section clearly divided */
+        .section-block {
+            margin: 3rem 0;
+            border: 3px solid transparent;
+            border-image: repeating-linear-gradient(45deg, #007749, #fcb514, #de3831, #002395) 30;
+            border-image-slice: 1;
+            background: rgba(0, 20, 15, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 2.5rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 0 35px rgba(0,0,0,0.7), 0 0 15px #002395;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            border-left: 15px solid #fcb514;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .section-title i {
+            font-size: 2.5rem;
+            color: #de3831;
+        }
+
+        /* ----- STINCH CARD (strict schedule) ----- */
+        .stinch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .stinch-item {
+            background: #0d281e;
+            border: 4px solid #007749;
+            border-radius: 40px;
+            padding: 1.8rem;
+        }
+
+        .big-hour {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #fcb514;
+            text-shadow: 4px 4px 0 #002395;
+        }
+
+        /* ----- ATPL COURSE GRID (our own syllabus) ----- */
+        .atpl-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: #10261d;
+            border: 4px solid #002395;
+            border-radius: 40px;
+            padding: 2rem 1.5rem;
+            transition: 0.15s;
+        }
+
+        .course-card:hover {
+            border-color: #fcb514;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 4px solid #de3831;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header i {
+            font-size: 2.2rem;
+            background: #00462b;
+            padding: 0.6rem;
+            border-radius: 30px;
+        }
+
+        /* ----- PROMOTION ZONE (TIER 3 → TIER 1) ----- */
+        .promotion-divider {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            background: #092016;
+            border-radius: 90px;
+            padding: 2rem 2rem;
+            border: 6px solid #de3831;
+        }
+
+        .tier-box {
+            text-align: center;
+            min-width: 180px;
+        }
+        .tier-box .tier {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: #002395;
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            border-radius: 60px;
+            border: 4px solid #fcb514;
+        }
+        .tier-box .label {
+            font-size: 1.3rem;
+            margin-top: 0.7rem;
+        }
+
+        .arrow-big {
+            font-size: 4rem;
+            color: #de3831;
+        }
+
+        /* audio element - tactical, subtle */
+        #atcAudio {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 260px;
+            height: 44px;
+            opacity: 0.3;
+            z-index: 10000;
+            border: 3px solid #fcb514;
+            border-radius: 40px;
+            background: #00150c;
+        }
+        #atcAudio:hover { opacity: 1; }
+
+        /* aerospace background (fixed, militant) */
+        .airforce-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .airforce-bg video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            filter: grayscale(0.8) contrast(1.4) brightness(0.5);
+        }
+
+        /* footer militant */
+        .footer-tactical {
+            margin-top: 4rem;
+            background: #05120d;
+            border-top: 8px solid #007749;
+            border-bottom: 8px solid #de3831;
+            border-left: 8px solid #fcb514;
+            border-right: 8px solid #002395;
+            border-radius: 70px 70px 30px 30px;
+            padding: 2.5rem 2rem 2rem;
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 2rem;
+        }
+
+        .flag-compact {
+            display: flex;
+            height: 38px;
+            width: 100%;
+            border-radius: 60px;
+            overflow: hidden;
+            border: 3px solid white;
+            margin: 1.5rem 0;
+        }
+
+        /* responsiveness */
+        @media (max-width: 800px) {
+            .fixed-header {
+                padding: 0.5rem 1rem;
+            }
+            .eu-title { font-size: 2.2rem; letter-spacing: 5px; }
+            .black-cap-logo { width: 55px; height: 55px; }
+            .black-cap-logo i { font-size: 2.2rem; }
+            .main-body { margin-top: 160px; padding: 1rem 1rem; }
+        }
+
+        /* extra military touches */
+        .hr-tactical {
+            height: 5px;
+            background: linear-gradient(90deg, #007749, #fcb514, #de3831, #002395, #007749);
+            border: none;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED HEADER - DOES NOT MOVE (militant) -->
+    <header class="fixed-header">
+        <div class="header-left">
+            <div class="black-cap-logo">
+                <i class="fas fa-cap"></i> <!-- military cap -->
+            </div>
+            <div class="eu-title">EU</div>
+        </div>
+        <div class="header-right">
+            <span class="tactical-badge"><i class="fas fa-shield-alt"></i> SAAF AIRFORCE</span>
+            <span class="tactical-badge"><i class="fas fa-crown"></i> TIER-1 GATE</span>
+        </div>
+        <!-- second row: campus strip inside header (all SA) -->
+        <div class="campus-strip-header">
+            <span class="campus-tag"><i class="fas fa-map-pin"></i> PRETORIA AFB</span>
+            <span class="campus-tag"><i class="fas fa-map-pin"></i> BLOEMFONTEIN</span>
+            <span class="campus-tag"><i class="fas fa-map-pin"></i> CAPE TOWN (YSTERPLAAT)</span>
+            <span class="campus-tag"><i class="fas fa-map-pin"></i> DURBAN</span>
+            <span class="campus-tag"><i class="fas fa-map-pin"></i> HOEDSPRUIT</span>
+            <span class="campus-tag obsolete"><i class="fas fa-skull"></i> CCI (OBSOLETE)</span>
+        </div>
+    </header>
+
+    <!-- AEROSPACE BACKGROUND (militant low-contrast) -->
+    <div class="airforce-bg">
+        <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1584433144859-1fc3ab64c957?w=800">
+            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- MAIN BODY (offset for fixed header) -->
+    <div class="main-body">
+
+        <!-- SECTION 1: STINCH (strict schedule) -->
+        <section class="section-block">
+            <div class="section-title">
+                <i class="fas fa-clock"></i> STINCH · STRICT OPERATIONAL SCHEDULE
+            </div>
+            <div class="stinch-grid">
+                <div class="stinch-item">
+                    <div class="big-hour">10H</div>
+                    <div>total shift</div>
+                    <div style="background:#002f22; border-radius:30px; padding:0.4rem; margin:1rem 0; border:2px solid #fcb514;">FIRST BREAK AFTER 5H</div>
+                </div>
+                <div class="stinch-item">
+                    <div class="big-hour">1:30</div>
+                    <div>total break + lunch</div>
+                    <div style="margin-top:1rem;"><i class="fas fa-utensils" style="color:#fcb514;"></i> 5h work → break</div>
+                </div>
+                <div class="stinch-item">
+                    <div><i class="fas fa-laptop" style="font-size:3rem;"></i></div>
+                    <div><strong>LOGIN → CONFIGURE TOOLS → GUIDED COURSE → LOGOFF</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ATPL COURSE (our own syllabus) -->
+        <section class="section-block">
+            <div class="section-title">
+                <i class="fas fa-infinity"></i> ETERNAL ATPL · AIRFORCE SYLLABUS
+            </div>
+            <div class="atpl-grid">
+                <div class="course-card">
+                    <div class="card-header"><i class="fas fa-map"></i><h3>NAVIGATION & COMMAND</h3></div>
+                    <ul style="list-style: none;">
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Tactical RNAV / GNSS</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Mission planning / fuel</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Emergency divergence (SAAF)</li>
+                    </ul>
+                </div>
+                <div class="course-card">
+                    <div class="card-header"><i class="fas fa-cloud-sun"></i><h3>AEROSPACE MET</h3></div>
+                    <ul style="list-style: none;">
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Thunderstorms / jet stream</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Wind shear & SAT</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Tactical weather</li>
+                    </ul>
+                </div>
+                <div class="course-card">
+                    <div class="card-header"><i class="fas fa-cogs"></i><h3>SYSTEMS & PERFORMANCE</h3></div>
+                    <ul style="list-style: none;">
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Turbofan / thrust</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Mass & balance / load</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Human factors / CRM</li>
+                    </ul>
+                </div>
+                <div class="course-card">
+                    <div class="card-header"><i class="fas fa-gavel"></i><h3>LAW · AIRSPACE</h3></div>
+                    <ul style="list-style: none;">
+                        <li><i class="fas fa-check" style="color:#007749;"></i> SAAF regs / ROE</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Air defence / ICAO</li>
+                        <li><i class="fas fa-check" style="color:#007749;"></i> Rules of engagement</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PROMOTION (TIER 3 → TIER 1) -->
+        <section class="section-block">
+            <div class="section-title">
+                <i class="fas fa-arrow-up"></i> RANK ASCENSION: ATPL MANDATORY
+            </div>
+            <div class="promotion-divider">
+                <div class="tier-box">
+                    <div class="tier">TIER 3</div>
+                    <div class="label">operative</div>
+                    <div><i class="fas fa-tools"></i> ground / support</div>
+                </div>
+                <div class="arrow-big"><i class="fas fa-long-arrow-alt-right"></i></div>
+                <div class="tier-box">
+                    <div class="tier">TIER 1</div>
+                    <div class="label">operator</div>
+                    <div><i class="fas fa-crown"></i> airborne commander</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem; background:#002b1e; border-radius: 60px; padding:0.8rem; border:4px solid #fcb514;">
+                <i class="fas fa-infinity"></i> NO GRADUATION — ONLY PROMOTION. ACQUIRE ATPL → RISE TO OPERATOR.
+            </div>
+        </section>
+
+        <!-- AUDIO: atc.mp3 (robust infinite) -->
+        <audio id="atcAudio" controls autoplay loop preload="auto" playsinline>
+            <source src="atc.mp3" type="audio/mpeg">
+            <source src="ATC.MP3" type="audio/mpeg">
+            Your browser does not support ATC audio.
+        </audio>
+
+        <!-- SECTION 4: TACTICAL FOOTER (already below, but we put extra) -->
+    </div> <!-- end main-body -->
+
+    <!-- TACTICAL MILITANT FOOTER -->
+    <footer class="footer-tactical">
+        <div class="footer-grid">
+            <div>
+                <i class="fas fa-cap" style="font-size:2rem;"></i> <strong style="font-size:1.5rem;">EU</strong>
+                <p>eternal university · airforce wing<br>CCI campus officially obsolete</p>
+            </div>
+            <div>
+                <h4>STINCH</h4>
+                <p>10h shift · break @5h<br>1h30 total · LOGOFF mandatory</p>
+            </div>
+            <div>
+                <h4>CAMPUSES</h4>
+                <p>Pretoria · Bloem · Cape Town<br>Durban · Hoedspruit · Makhado</p>
+            </div>
+            <div>
+                <h4>TIERS</h4>
+                <p>Tier3 operative → Tier1 operator<br>ATPL gateway</p>
+            </div>
+        </div>
+        <!-- flag strip (clean) -->
+        <div class="flag-compact">
+            <div style="flex:1; background:#007749;"></div>
+            <div style="flex:1; background:#fcb514;"></div>
+            <div style="flex:1; background:#de3831;"></div>
+            <div style="flex:1; background:#002395;"></div>
+            <div style="flex:1; background:#000;"></div>
+            <div style="flex:1; background:#fff;"></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+            <span><i class="fas fa-cloud-sun"></i> CAPE TOWN AFB: 20°C · 11km/h · 15:39</span>
+            <span><i class="fas fa-shield-alt"></i> EDEN stealth CV-1</span>
+            <span>© 2026 EU · eternal</span>
+        </div>
+        <div style="text-align: center; margin-top: 1.2rem; font-size:0.8rem;">
+            <i class="fas fa-headset"></i> ATC.MP3 active (infinite loop)
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const audio = document.getElementById('atcAudio');
+            if (audio) {
+                let playAttempt = audio.play();
+                if (playAttempt !== undefined) {
+                    playAttempt.catch(() => {
+                        // autoplay blocked — show small message but remain militant
+                        const msg = document.createElement('div');
+                        msg.innerText = '🎧 click to enable ATC';
+                        msg.style.position = 'fixed'; msg.style.bottom = '80px'; msg.style.right = '30px';
+                        msg.style.background = '#001f14'; msg.style.padding = '0.3rem 1.2rem';
+                        msg.style.borderRadius = '60px'; msg.style.border = '3px solid #fcb514';
+                        msg.style.zIndex = '10001'; msg.style.color = 'white';
+                        msg.addEventListener('click', () => { audio.play(); msg.remove(); });
+                        document.body.appendChild(msg);
+                    });
+                }
+                audio.volume = 0.4;
+                audio.loop = true;
+            }
+        })();
+    </script>
+</body>
+</html>
