@@ -448,7 +448,7 @@
   <main>
     <!-- CHAMPION STORY -->
     <section id="champion-story" class="champion-story ops-card">
-      <div class="story-emblem"><a href="#" style="text-decoration:none; color:black;">E.S.S 2025 · EDEN ALPHA</a></div>
+      <div class="story-emblem"><a href="ess2025.html" style="text-decoration:none; color:black;">E.S.S 2025 · EDEN ALPHA</a></div>
       <div class="story-title"><h3>THE REIGNING CHAMPIONS 🏆</h3></div>
       <p style="color: var(--text-dim); max-width: 800px; text-align: center;">can alpha, as ancient spartan warriors of old retain their trophy against a 'full' modern militant airbourne delta force side this season? | E.S.S 2026: locked and loaded.</p>
     </section>
@@ -467,7 +467,7 @@
 
     <!-- SCHEDULE (38 GAMES, fully expanded) -->
     <section id="schedule" class="ops-card">
-      <div class="section-command"><h2>MISSION SCHEDULE · 38 GAMES</h2></div>
+      <div class="section-command"><h2>OPERATION SCHEDULE · 38 GAMES</h2></div>
       <div class="color-key"><span class="key-item"><span class="key-dot dot-green"></span> COMPLETED</span><span class="key-item"><span class="key-dot dot-blue"></span> NEXT</span><span class="key-item"><span class="key-dot dot-amber"></span> UPCOMING</span></div>
       <div class="table-container"><table><thead><tr><th>MISSION</th><th>DATE (14:00pm)</th></tr></thead><tbody id="schedule-tbody"></tbody></table></div>
     </section>
@@ -580,7 +580,7 @@
         const end = new Date(2026, 10, 22); // nov 22
         let idx = 1;
         while (current <= end && idx <= 38) {
-          const dateStr = current.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + ' 14:00';
+          const dateStr = current.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
           let status, result, motm, summary;
           if (idx === 1) { status='completed'; result='2-1'; motm='HOSS'; summary='Alpha comeback from 1-0.'; }
           else if (idx === 2) { status='next'; result='—'; motm='TBD'; summary='locked.'; }
@@ -630,7 +630,7 @@
       document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr><tr><td>S\'PHE</td><td>0</td></tr>';
 
       // teams
-      document.getElementById('teams-grid').innerHTML = `<div class="team-card"><h3>⚔️ ALPHA</h3><ul><li>HOSS (C)</li><li>VUYO</li><li>XAN</li><li>FROST</li><li>QUEENER</li><li>ZEN</li></ul></div><div class="team-card delta-force"><h3>🎯 DELTA</h3><ul><li>JOY (C)</li><li>JUNIOR</li><li>S'PHE</li><li>OLAMA</li><li>BAYANDA</li><li>RAZE</li></ul></div>`;
+      document.getElementById('teams-grid').innerHTML = `<div class="team-card"><h3>⚔️ ALPHA</h3><ul><li>HOSS (C)</li><li>VUYO</li><li>XAN</li><li>FROST</li><li>QUEENER</li><li>(RESERVE) JONATHAN</li></ul></div><div class="team-card delta-force"><h3>🎯 DELTA</h3><ul><li>JOY (C)</li><li>JUNIOR</li><li>S'PHE</li><li>OLAMA</li><li>BAYANDA</li><li>(RESERVE) MASIYA</li></ul></div>`;
 
       // awards
       document.getElementById('awards-tbody').innerHTML = '<tr><td>MVP</td><td>TBD</td></tr><tr><td>GOLDEN BOOT</td><td>TBD</td></tr><tr><td>SILVER BOOT</td><td>TBD</td></tr><tr><td>BRONZE BOOT</td><td>TBD</td></tr><tr><td>DEFENDER OF THE OPERATION</td><td>TBD</td></tr><tr><td>PLAYMAKER OF THE OPERATION</td><td>TBD</td></tr>';
