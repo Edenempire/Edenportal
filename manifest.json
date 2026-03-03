@@ -2,7 +2,7 @@
   "name": "Eden stealth CV-1",
   "short_name": "Eden",
   "description": "Tier 1 Operator Team",
-  "start_url": "/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
