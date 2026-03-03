@@ -8,15 +8,22 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   
-  <meta name="theme-color" content="#0a0c10">
+  <meta name="theme-color" content="#030405">
+  
   <meta name="color-scheme" content="dark">
+  
   <link rel="icon" href="logo.png">
   
   <title>E.S.S 2026</title>
   
   <style>
     
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* === CORE RESET + TOKENS – SHADOWLESS, BORDER-HARD === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     :root {
       --black-ops: #030405;
@@ -28,7 +35,6 @@
       --alpha-red: #b91c1c;
       --delta-green: #16a34a;
       --sniper-green: #2e7d32;
-      --night-glow: #132013;
       --text-bright: #f0f4fa;
       --text-dim: #cbd5e1;
       --text-faded: #94a3b8;
@@ -39,6 +45,7 @@
       --fs-lg: clamp(1rem, 3.2vw, 1.3rem);
       --fs-xl: clamp(1.2rem, 4vw, 1.8rem);
       --fs-2xl: clamp(1.5rem, 5vw, 2.2rem);
+      --fs-3xl: clamp(2rem, 6vw, 2.8rem);
 
       --space-xs: clamp(0.2rem, 0.8vw, 0.5rem);
       --space-sm: clamp(0.4rem, 1.2vw, 0.8rem);
@@ -47,11 +54,13 @@
       --space-xl: clamp(1rem, 3.5vw, 2.5rem);
       --space-2xl: clamp(1.5rem, 5vw, 3.5rem);
       --space-3xl: clamp(2rem, 6vw, 4.5rem);
+      --space-4xl: clamp(2.5rem, 7vw, 5.5rem);
 
       --header-height: clamp(70px, 10vh, 100px);
       --nav-width: clamp(68px, 6vw, 85px);
     }
 
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
       background: var(--black-ops);
@@ -62,111 +71,111 @@
       position: relative;
     }
 
-    /* ===== SNIPER OPTICS BACKGROUND - SMOOTH CONTINUOUS FLOW ===== */
+    /* ===== DEEP LAYERED RADAR ENVIRONMENT – fully advanced ===== */
+    .jet-radar {
+      position: fixed; top: 50%; left: 50%;
+      width: min(90vmax, 900px); height: min(90vmax, 900px);
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 20% 30%, rgba(46,125,50,0.1) 0%, transparent 35%),
+                  radial-gradient(circle at 80% 70%, rgba(184,28,28,0.08) 0%, transparent 40%),
+                  repeating-radial-gradient(circle at 50% 50%, rgba(100,255,100,0.02) 0px, rgba(0,0,0,0) 2px, transparent 4px);
+      border-radius: 50%;
+      pointer-events: none; z-index: 0; opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+    .radar-sweep {
+      position: fixed; top: 50%; left: 50%;
+      width: min(90vmax, 900px); height: min(90vmax, 900px);
+      transform: translate(-50%, -50%);
+      background: conic-gradient(from 0deg, 
+        rgba(46,125,50,0) 0deg, 
+        rgba(46,125,50,0.3) 30deg, 
+        rgba(200,255,200,0.5) 45deg, 
+        rgba(46,125,50,0) 70deg);
+      border-radius: 50%;
+      animation: radarSpin 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none; z-index: 0; opacity: 0.7;
+    }
+    @keyframes radarSpin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    .radar-rings {
+      position: fixed; top: 50%; left: 50%;
+      width: min(90vmax, 900px); height: min(90vmax, 900px);
+      transform: translate(-50%, -50%);
+      border: 2px solid rgba(46,125,50,0.2);
+      border-radius: 50%;
+      box-shadow: 
+        0 0 0 2px rgba(46,125,50,0.15),
+        inset 0 0 0 40px rgba(0,0,0,0),
+        0 0 0 70px rgba(46,125,50,0.08);
+      pointer-events: none; z-index: 0;
+    }
+
     .sniper-optics {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background: 
-        radial-gradient(circle at 30% 40%, rgba(46, 125, 50, 0.12) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(184, 28, 28, 0.08) 0%, transparent 35%),
-        repeating-linear-gradient(45deg, rgba(0, 255, 0, 0.02) 0px, rgba(0, 255, 0, 0.02) 2px, transparent 2px, transparent 8px),
-        repeating-linear-gradient(135deg, rgba(255, 0, 0, 0.01) 0px, rgba(255, 0, 0, 0.01) 2px, transparent 2px, transparent 8px);
-      opacity: 0.8;
-      animation: flowPatrol 32s infinite alternate ease-in-out;
+        repeating-linear-gradient(45deg, rgba(0, 70, 0, 0.02) 0px, rgba(0,70,0,0.02) 2px, transparent 2px, transparent 12px),
+        repeating-linear-gradient(135deg, rgba(70,0,0,0.015) 0px, rgba(70,0,0,0.015) 2px, transparent 2px, transparent 12px),
+        radial-gradient(circle at 30% 40%, rgba(0,40,0,0.03) 0%, transparent 40%);
+      opacity: 0.6;
     }
 
-    @keyframes flowPatrol {
-      0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-      25% { background-position: 12% 8%, 18% 12%, 5% 8%, 8% 5%; }
-      50% { background-position: 25% 20%, 30% 25%, 15% 18%, 18% 15%; }
-      75% { background-position: 8% 35%, 40% 18%, 22% 28%, 25% 22%; }
-      100% { background-position: 18% 25%, 12% 40%, 8% 35%, 12% 30%; }
-    }
-
-    /* Reticle overlay - sniper scope effect */
     .reticle-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed; inset: 0;
       background: 
-        linear-gradient(90deg, transparent 49.9%, rgba(46, 125, 50, 0.1) 50%, transparent 50.1%),
-        linear-gradient(0deg, transparent 49.9%, rgba(46, 125, 50, 0.1) 50%, transparent 50.1%),
-        radial-gradient(circle at 50% 50%, transparent 45%, rgba(184, 28, 28, 0.03) 46%, transparent 47%);
-      pointer-events: none;
-      z-index: 1;
-      animation: pulseReticle 8s ease-in-out infinite;
+        linear-gradient(90deg, transparent 49.95%, rgba(46,125,50,0.12) 50%, transparent 50.05%),
+        linear-gradient(0deg, transparent 49.95%, rgba(46,125,50,0.12) 50%, transparent 50.05%);
+      pointer-events: none; z-index: 1;
     }
 
-    @keyframes pulseReticle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-
-    /* Range finder scan - smooth vertical movement */
-    .range-finder {
-      position: fixed;
-      left: 0; width: 100%; height: 4px;
-      background: linear-gradient(90deg, transparent, var(--sniper-green), transparent);
-      filter: blur(2px);
-      opacity: 0.4;
-      z-index: 2;
-      animation: rangeScan 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      pointer-events: none;
-    }
-
-    @keyframes rangeScan {
-      0%, 100% { top: 10%; opacity: 0.2; }
-      25% { top: 40%; opacity: 0.5; }
-      50% { top: 70%; opacity: 0.3; }
-      75% { top: 30%; opacity: 0.4; }
-    }
-
-    /* Digital noise - subtle continuous movement */
     .digital-noise {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed; inset: 0;
       background: repeating-linear-gradient(0deg, 
         rgba(0, 40, 0, 0.02) 0px, 
-        rgba(0, 255, 0, 0.01) 1px, 
+        rgba(0, 80, 0, 0.01) 1px, 
         transparent 2px, 
-        transparent 4px);
-      pointer-events: none;
-      z-index: 1;
-      animation: noiseDrift 24s linear infinite;
+        transparent 5px);
+      pointer-events: none; z-index: 1;
+      animation: noiseDrift 30s linear infinite;
+    }
+    @keyframes noiseDrift { 0% { background-position: 0 0; } 100% { background-position: 0 200%; } }
+
+    /* additional moving ghost contacts (tiny) */
+    .ghost-contacts {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(100,255,100,0.03) 0%, transparent 20%),
+                  radial-gradient(circle at 90% 20%, rgba(255,100,100,0.03) 0%, transparent 25%),
+                  radial-gradient(circle at 10% 80%, rgba(100,255,100,0.02) 0%, transparent 30%);
+      animation: ghostMove 24s infinite alternate;
+    }
+    @keyframes ghostMove { 0% { opacity: 0.3; } 100% { opacity: 0.7; } }
+
+    /* ALL INTERACTIVE ELEMENTS – STRICT NO SHADOW / NO GLOW */
+    a, button, .menu-item, .scroll-btn-perm, .audio-btn, .menu-trigger-perm, 
+    .team-card, .ops-card, .radar-tile, .story-emblem, .footer-meta {
+      box-shadow: none !important;
+      text-shadow: none !important;
+      outline: none;
     }
 
-    @keyframes noiseDrift {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-100%) scale(1.02); }
-    }
-
-    /* Military styling elements */
-    a, button, .menu-item, .scroll-btn-perm, .audio-btn, .menu-trigger-perm, .team-card, .ops-card {
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .ops-card:hover, .team-card:hover {
-      transform: translateY(-2px);
+    .ops-card:hover, .team-card:hover, .radar-tile:hover {
+      transform: translateY(-3px);
       border-color: var(--sniper-green);
-      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2);
+      background-color: #232a33;
     }
 
-    ::-webkit-scrollbar { width: 14px; background: var(--deep-cover); }
+    ::-webkit-scrollbar { width: 16px; background: var(--deep-cover); }
     ::-webkit-scrollbar-thumb { 
       background: var(--sniper-green); 
-      border: 3px solid var(--deep-cover); 
-      border-radius: 0;
+      border: 4px solid var(--deep-cover); 
     }
-    ::-webkit-scrollbar-thumb:hover { background: var(--alpha-red); }
 
-    /* ===== HEADER - FULL WIDTH ===== */
+    /* HEADER – fixed */
     .command-center {
       position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
       background: var(--black-ops);
       border-bottom: 4px solid var(--sniper-green);
       z-index: 10000;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
     .header-grid {
       width: 100%; height: 100%; 
@@ -175,31 +184,23 @@
     }
     .logo-unit {
       display: flex; align-items: center; gap: var(--space-sm); text-decoration: none;
+      flex: 1;
     }
-    .logo-icon {
-      width: clamp(44px, 6vh, 60px); height: clamp(44px, 6vh, 60px);
-      background: var(--mid-night);
-      display: flex; align-items: center; justify-content: center;
-      font-size: var(--fs-xl); color: var(--text-bright);
-      border: 2px solid var(--sniper-green);
-    }
-    .logo-icon:hover { border-color: var(--alpha-red); }
     .logo-text h1 {
       font-size: var(--fs-xl); font-weight: 700; letter-spacing: 3px;
-      color: var(--text-bright);
-      text-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+      color: blue;
     }
     .countdown-display {
-      display: flex; align-items: center; gap: var(--space-md);
+      display: flex; align-items: center; justify-content: flex-end; gap: var(--space-md);
+      flex: 1;
     }
     .countdown-timer {
       font-size: var(--fs-lg); font-weight: 600; color: var(--sniper-green);
       font-family: 'Courier New', monospace;
-      min-width: 280px; text-align: right;
-      text-shadow: 0 0 8px rgba(46, 125, 50, 0.5);
+      min-width: 300px; text-align: right;
     }
 
-    /* ===== SIDE NAV - FULL WIDTH SECTIONS OVERLAP ALLOWED ===== */
+    /* SIDE NAV – permanent */
     .tactical-menu-permanent {
       position: fixed; left: 0; top: 50%; transform: translateY(-50%);
       width: var(--nav-width); z-index: 9999;
@@ -213,27 +214,28 @@
     }
     .menu-trigger-perm:hover { background: var(--sniper-green); color: black; }
     .menu-panel-perm {
-      position: absolute; left: 0; top: 0; width: 280px; background: var(--deep-cover);
+      position: absolute; left: 0; top: 0; width: 320px; background: var(--deep-cover);
       border: 3px solid var(--sniper-green); border-left: none;
       padding: var(--space-md); opacity: 0; visibility: hidden; pointer-events: none;
-      transform: translateX(-30px); transition: 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+      transform: translateX(-30px); transition: 0.25s;
       max-height: 80vh; overflow-y: auto;
-      box-shadow: 5px 5px 20px rgba(0,0,0,0.8);
     }
     .tactical-menu-permanent:hover .menu-panel-perm,
     .menu-panel-perm:hover {
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(calc(var(--nav-width) + 8px));
     }
-    .menu-header { border-bottom: 3px solid var(--sniper-green); padding-bottom: var(--space-xs); color: var(--sniper-green); font-weight: bold; }
-    .menu-item {
-      padding: var(--space-sm) var(--space-md); background: var(--mid-night);
-      border: 2px solid var(--hrzn-line); margin-bottom: var(--space-xs);
-      cursor: pointer; color: var(--text-dim);
+    .menu-header {
+      border-bottom: 3px solid var(--sniper-green); margin-bottom: var(--space-sm); 
+      padding-bottom: var(--space-xs); font-size: var(--fs-md); color: var(--sniper-green);
     }
-    .menu-item:hover { background: var(--sniper-green); color: black; border-color: var(--sniper-green); }
+    .menu-item {
+      padding: var(--space-sm); border: 2px solid var(--sniper-green); margin: var(--space-xs) 0;
+      background: var(--mid-night); cursor: pointer; text-align: center; font-weight: 600;
+    }
+    .menu-item:hover { background: var(--sniper-green); color: black; }
 
-    /* ===== QUICK SCROLL ===== */
+    /* QUICK SCROLL */
     .quick-scroll-permanent {
       position: fixed; right: 0; top: 50%; transform: translateY(-50%);
       width: var(--nav-width); z-index: 9999; display: flex; flex-direction: column; gap: var(--space-xs);
@@ -244,9 +246,9 @@
       display: flex; align-items: center; justify-content: center;
       color: var(--text-dim); cursor: pointer; font-size: var(--fs-xl);
     }
-    .scroll-btn-perm:hover { background: var(--sniper-green); color: black; border-color: var(--sniper-green); }
+    .scroll-btn-perm:hover { background: var(--sniper-green); color: black; }
 
-    /* ===== MAIN - FULL WIDTH SECTIONS ===== */
+    /* MAIN */
     main {
       width: 100%;
       margin: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl) 0;
@@ -256,7 +258,6 @@
       z-index: 2;
     }
 
-    /* ALL SECTIONS FULL WIDTH */
     .ops-card {
       width: 100%;
       background: var(--card-bg);
@@ -265,7 +266,6 @@
       border-right: none;
       padding: var(--space-xl) var(--space-3xl);
       border-bottom: 8px solid var(--sniper-green);
-      box-shadow: 0 -2px 10px rgba(46, 125, 50, 0.1);
     }
 
     .section-command {
@@ -282,7 +282,6 @@
       font-size: var(--fs-2xl);
     }
 
-    /* Sniper optics color key */
     .color-key {
       display: flex; gap: var(--space-md); flex-wrap: wrap; margin: var(--space-md) 0;
       padding: var(--space-sm) var(--space-md); background: var(--deep-cover);
@@ -295,32 +294,17 @@
     .dot-amber { background: #fb923c; }
     .dot-red { background: #f87171; }
 
-    /* ===== TABLES - FULL WIDTH WITHIN SECTIONS ===== */
     .table-container { 
-      width: 100%; 
-      overflow-x: auto; 
-      border: 3px solid var(--sniper-green); 
-      background: var(--deep-cover);
+      width: 100%; overflow-x: auto; border: 3px solid var(--sniper-green); background: var(--deep-cover);
     }
     table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
     th, td { border: 2px solid var(--sniper-green); padding: var(--space-md); text-align: center; }
-    th { 
-      background: var(--deep-cover); 
-      color: var(--sniper-green); 
-      border-bottom: 4px solid var(--sniper-green);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    th { background: var(--deep-cover); color: var(--sniper-green); border-bottom: 4px solid var(--sniper-green); font-weight: 700; }
     tr.completed-row { background: rgba(74, 222, 128, 0.15); }
     tr.next-row { background: rgba(96, 165, 250, 0.2); }
     tr.upcoming-row { background: rgba(251, 146, 60, 0.15); }
-    tr.postponed-row { background: rgba(248, 113, 113, 0.2); }
     tr:hover td { background: var(--mid-night); }
 
-    .summary-cell { text-align: left; max-width: 260px; color: var(--text-dim); }
-
-    /* teams - military units */
     .teams-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg);
     }
@@ -330,86 +314,25 @@
     }
     .team-card.delta-force { border-left: 8px solid var(--sniper-green); }
     .team-card h3 { 
-      color: var(--alpha-red); 
-      border-bottom: 3px solid var(--sniper-green); 
-      padding-bottom: var(--space-xs);
-      display: flex; align-items: center; gap: var(--space-sm);
+      color: var(--alpha-red); border-bottom: 3px solid var(--sniper-green); padding-bottom: var(--space-xs);
     }
     .team-card.delta-force h3 { color: var(--sniper-green); }
-    .team-card ul { list-style: none; }
-    .team-card li { 
-      padding: var(--space-xs) 0; 
-      border-bottom: 2px solid var(--sniper-green); 
-      color: var(--text-dim);
-      display: flex; align-items: center;
-    }
-    .team-card li.faction-alpha::before { content: '⚔️'; color: var(--alpha-red); margin-right: var(--space-sm); }
-    .team-card li.faction-delta::before { content: '🎯'; color: var(--sniper-green); margin-right: var(--space-sm); }
 
-    /* ===== AUDIO SECTION ===== */
+    /* audio panel */
     .audio-command {
       background: var(--deep-cover); border: 3px solid var(--sniper-green);
       padding: var(--space-xl); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: var(--space-lg);
     }
-    .audio-visualizer { display: flex; gap: 6px; height: 50px; align-items: flex-end; }
-    .visualizer-bar { width: 12px; background: var(--sniper-green); border: 2px solid var(--hrzn-line); transition: height 0.1s; }
-    .audio-controls { 
-      display: flex; gap: var(--space-sm); flex-wrap: wrap; 
-      background: var(--black-ops); padding: var(--space-sm); border: 2px solid var(--sniper-green);
-    }
     .audio-btn {
       padding: var(--space-sm) var(--space-lg); background: var(--mid-night); border: 2px solid var(--sniper-green);
-      color: var(--text-dim); cursor: pointer; font-weight: 600; min-width: 70px;
+      color: var(--text-dim); cursor: pointer; font-weight: 600;
     }
-    .audio-btn:hover { background: var(--sniper-green); color: black; border-color: var(--sniper-green); }
-    .track-info { 
-      color: var(--sniper-green); font-family: 'Courier New', monospace; 
-      background: var(--black-ops); padding: var(--space-sm) var(--space-lg); 
-      border: 3px solid var(--sniper-green); min-width: 240px; text-align: center;
-    }
-    .volume-slider {
-      width: 120px; height: 8px; background: var(--hrzn-line); 
-      border: 2px solid var(--sniper-green); appearance: none;
-    }
-    .volume-slider::-webkit-slider-thumb {
-      appearance: none; width: 18px; height: 18px; background: var(--sniper-green); 
-      border: 2px solid var(--hrzn-line); cursor: pointer;
-    }
+    .audio-btn:hover { background: var(--sniper-green); color: black; }
 
-    /* ===== FOOTER - FULL WIDTH ===== */
-    .strategic-footer {
-      width: 100%;
-      background: var(--deep-cover); border-top: 6px solid var(--sniper-green);
-      padding: var(--space-3xl) 0; margin-top: var(--space-3xl);
-      position: relative;
-      z-index: 2;
-    }
-    .footer-grid {
-      width: 100%;
-      padding: 0 var(--space-3xl);
-      display: flex;
-      justify-content: center;
-      gap: var(--space-3xl);
-      flex-wrap: wrap;
-    }
-    .footer-meta {
-      flex: 0 1 380px;
-      text-align: center;
-    }
-    .footer-meta h4 { 
-      color: var(--sniper-green); 
-      border-left: 6px solid var(--sniper-green); 
-      padding-left: var(--space-sm); 
-      margin-bottom: var(--space-md);
-      display: inline-block;
-    }
     .live-data {
       background: var(--black-ops); padding: var(--space-md); border: 3px solid var(--sniper-green);
-      font-family: 'Courier New', monospace; 
-      display: inline-block;
-      min-width: 300px;
-      text-align: left;
+      font-family: 'Courier New', monospace; display: inline-block; min-width: 320px;
     }
     .live-data > div { 
       display: flex; justify-content: space-between; 
@@ -417,17 +340,11 @@
       padding: var(--space-xs) var(--space-md); 
     }
 
-    /* champion story - sniper theme */
     .champion-story {
-      background: linear-gradient(145deg, #1a2a1a 0%, #1a1f2a 100%);
+      background: #0f1419;
       border: 3px solid var(--sniper-green);
       padding: var(--space-xl) var(--space-3xl);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-lg);
-    }
-    .story-header {
-      display: flex; align-items: center; gap: var(--space-xl); flex-wrap: wrap;
+      display: flex; flex-direction: column; align-items: center;
     }
     .story-emblem {
       font-size: var(--fs-2xl);
@@ -435,7 +352,8 @@
       color: var(--black-ops);
       padding: var(--space-md) var(--space-xl);
       border: 4px solid var(--hrzn-line);
-      transform: rotate(-2deg);
+      transform: rotate(-1deg);
+      margin-bottom: var(--space-lg);
     }
     .story-title h3 {
       font-size: var(--fs-xl);
@@ -443,17 +361,42 @@
       text-transform: uppercase;
       letter-spacing: 3px;
     }
+
+    /* EXTRA RADAR TILES – very long content */
+    .radar-grid-extra {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    .radar-tile {
+      background: var(--deep-cover); border: 3px solid var(--sniper-green); padding: var(--space-md);
+      border-bottom: 6px solid var(--sniper-green);
+    }
+
+    footer {
+      background: var(--deep-cover); border-top: 6px solid var(--sniper-green);
+      padding: var(--space-2xl) var(--space-3xl); margin-top: var(--space-3xl);
+    }
+    .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-xl); }
     
   </style>
   
 </head>
   
 <body>
-  <!-- SNIPER OPTICS BACKGROUND - SMOOTH CONTINUOUS ANIMATION -->
+  
+  <!-- ADVANCED MULTI-LAYER RADAR -->
+  <div class="jet-radar"></div>
+  <div class="radar-sweep"></div>
+  <div class="radar-rings"></div>
   <div class="sniper-optics"></div>
   <div class="reticle-overlay"></div>
-  <div class="range-finder"></div>
   <div class="digital-noise"></div>
+  <div class="ghost-contacts"></div>
+
+  <!-- PERMANENT AUDIO – robust -->
+  <audio id="bgTrack" loop preload="auto" autoplay style="display:none;">
+    <source src="1.mp3" type="audio/mpeg">
+  </audio>
 
   <header class="command-center">
     <div class="header-grid">
@@ -469,117 +412,79 @@
   <nav class="tactical-menu-permanent">
     <div class="menu-trigger-perm">☰</div>
     <div class="menu-panel-perm">
-      <div class="menu-header">◈ SNIPER CONTROL ◈</div>
+      <div class="menu-header">◈ NAVIGATION ◈</div>
       <div class="menu-items">
-        <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView({behavior:'smooth'})">🎯 THE BATTLE</div>
-        <div class="menu-item" onclick="document.getElementById('league-table').scrollIntoView({behavior:'smooth'})">🏆 LEAGUE</div>
-        <div class="menu-item" onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})">📅 SCHEDULE</div>
-        <div class="menu-item" onclick="document.getElementById('match-summary').scrollIntoView({behavior:'smooth'})">📋 SUMMARY</div>
-        <div class="menu-item" onclick="document.getElementById('scorers').scrollIntoView({behavior:'smooth'})">🎯 SCORERS</div>
-        <div class="menu-item" onclick="document.getElementById('motm').scrollIntoView({behavior:'smooth'})">🎖️ MOTM</div>
-        <div class="menu-item" onclick="document.getElementById('defenders').scrollIntoView({behavior:'smooth'})">🔒 DEF MOTM</div>
-        <div class="menu-item" onclick="document.getElementById('assisters').scrollIntoView({behavior:'smooth'})">🤝 ASSIST</div>
-        <div class="menu-item" onclick="document.getElementById('teams').scrollIntoView({behavior:'smooth'})">👥 TEAMS</div>
-        <div class="menu-item" onclick="document.getElementById('awards').scrollIntoView({behavior:'smooth'})">🏅 AWARDS</div>
-        <div class="menu-item" onclick="document.getElementById('audio-dl').scrollIntoView({behavior:'smooth'})">🎵 COMMS</div>
+        <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView()">🏆 CHAMP</div>
+        <div class="menu-item" onclick="document.getElementById('league-table').scrollIntoView()">📊 LEAGUE</div>
+        <div class="menu-item" onclick="document.getElementById('schedule').scrollIntoView()">📅 SCHEDULE</div>
+        <div class="menu-item" onclick="document.getElementById('match-summary').scrollIntoView()">📋 SUMMARY</div>
+        <div class="menu-item" onclick="document.getElementById('scorers').scrollIntoView()">🎯 SNIPERS</div>
+        <div class="menu-item" onclick="document.getElementById('motm').scrollIntoView()">🎖️ MOTM</div>
+        <div class="menu-item" onclick="document.getElementById('defenders').scrollIntoView()">🛡️ DEF</div>
+        <div class="menu-item" onclick="document.getElementById('assisters').scrollIntoView()">🤝 ASSISTERS</div>
+        <div class="menu-item" onclick="document.getElementById('teams').scrollIntoView()">👥 TEAMS</div>
+        <div class="menu-item" onclick="document.getElementById('awards').scrollIntoView()">🏅 AWARDS</div>
+        <div class="menu-item" onclick="document.getElementById('radar-intel').scrollIntoView()">📡 INTEL</div>
+        <div class="menu-item" onclick="document.getElementById('audio-panel').scrollIntoView()">🔊 COMMS</div>
       </div>
     </div>
   </nav>
 
   <div class="quick-scroll-permanent">
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ASCENT">🔼</div>
-    <div class="scroll-btn-perm" onclick="window.scrollTo({top: (document.body.scrollHeight/2) - (window.innerHeight/2), behavior:'smooth'})" title="CENTER">⏺️</div>
+    <div class="scroll-btn-perm" onclick="window.scrollTo({top: document.body.scrollHeight*0.4, behavior:'smooth'})" title="MID">⏺️</div>
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="LZ">🔽</div>
   </div>
 
   <main>
-    <!-- EPIC CHAMPION STORY - Sniper optics theme -->
+    <!-- CHAMPION STORY -->
     <section id="champion-story" class="champion-story ops-card">
-      <div class="story-header">
-        <div class="story-emblem"><a href="ess2025.html" style="text-decoration: none">E.S.S 2025</a></div>
-        <div class="story-title">
-          <h3>EDEN ALPHA - THE REIGNING CHAMPIONS</h3>
-        </div>
-      </div>
-      <p style="color: var(--text-dim); text-align: center; max-width: 800px; margin: 0 auto;">can alpha, as ancient spartan warriors of old retain their trophy against a 'full' modern airbourne delta force side this season? | E.S.S 2026: locked and loaded.</p>
+      <div class="story-emblem"><a href="#" style="text-decoration:none; color:black; background-color: red;">E.S.S 2025 · EDEN ALPHA</a></div>
+      <div class="story-title"><h3>THE REIGNING CHAMPIONS</h3></div>
+      <p style="color: var(--text-dim); max-width: 800px; text-align: center;">can alpha, as ancient spartan warriors of old retain their trophy against a 'full' modern airbourne delta force side this season? | E.S.S 2026: locked and loaded.</p>
     </section>
 
     <!-- LEAGUE TABLE -->
     <section id="league-table" class="ops-card">
-      <div class="section-command">
-        <h2>LEAGUE TABLE</h2>
-        <span class="key-item">WEEK 1</span>
-      </div>
-      <div class="table-container">
-        <table>
-          <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
-          <tbody id="league-tbody"></tbody>
-        </table>
-      </div>
+      <div class="section-command"><h2>LEAGUE TABLE · WEEK 1</h2><span>SEASON 2026</span></div>
+      <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody id="league-tbody"></tbody></table></div>
     </section>
 
-    <!-- SCHEDULE -->
+    <!-- SCHEDULE (38 GAMES, fully expanded) -->
     <section id="schedule" class="ops-card">
-      <div class="section-command"><h2>MISSION SCHEDULE</h2><span class="key-item">38 GAMES</span></div>
-      <div class="color-key">
-        <span class="key-item"><span class="key-dot dot-green"></span> COMPLETED</span>
-        <span class="key-item"><span class="key-dot dot-blue"></span> NEXT</span>
-        <span class="key-item"><span class="key-dot dot-amber"></span> UPCOMING</span>
-        <span class="key-item"><span class="key-dot dot-red"></span> POSTPONED</span>
-      </div>
-      <div class="table-container">
-        <table id="schedule-table">
-          <thead><tr><th>MISSION</th><th>TIME</th></tr></thead>
-          <tbody id="schedule-tbody"></tbody>
-        </table>
-      </div>
+      <div class="section-command"><h2>MISSION SCHEDULE · 38 GAMES</h2></div>
+      <div class="color-key"><span class="key-item"><span class="key-dot dot-green"></span> COMPLETED</span><span class="key-item"><span class="key-dot dot-blue"></span> NEXT</span><span class="key-item"><span class="key-dot dot-amber"></span> UPCOMING</span></div>
+      <div class="table-container"><table><thead><tr><th>MISSION</th><th>DATE (14:00pm)</th></tr></thead><tbody id="schedule-tbody"></tbody></table></div>
     </section>
 
-    <!-- MATCH SUMMARY -->
+    <!-- MISSION SUMMARY (very long) -->
     <section id="match-summary" class="ops-card">
-      <div class="section-command"><h2>MISSION SUMMARY</h2></div>
-      <div class="table-container">
-        <table>
-          <thead><tr><th>MISSION</th><th>TIME</th><th>RESULT</th><th>OPERATOR</th><th>KEY-NOTE</th></tr></thead>
-          <tbody id="summary-tbody"></tbody>
-        </table>
-      </div>
+      <div class="section-command"><h2>OPERATION SUMMARY · FULL LOG</h2></div>
+      <div class="table-container"><table><thead><tr><th>MISSION</th><th>TIME</th><th>RESULT</th><th>MOTM</th><th>INTEL</th></tr></thead><tbody id="summary-tbody"></tbody></table></div>
     </section>
 
     <!-- SCORERS -->
     <section id="scorers" class="ops-card">
       <div class="section-command"><h2>TOP SNIPERS</h2></div>
-      <div class="table-container">
-        <table><thead><tr><th>OPERATOR</th><th>G</th></tr></thead>
-        <tbody id="scorers-tbody"></tbody>
-      </table>
+      <div class="table-container"><table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead><tbody id="scorers-tbody"></tbody></table></div>
     </section>
 
     <!-- MOTM -->
     <section id="motm" class="ops-card">
       <div class="section-command"><h2>MAN OF THE MATCH</h2></div>
-      <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead>
-        <tbody id="motm-tbody"></tbody>
-      </table>
+      <div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"></tbody></table></div>
     </section>
 
-    <!-- DEFENDER MOTM -->
+    <!-- DEFENDERS -->
     <section id="defenders" class="ops-card">
       <div class="section-command"><h2>DEFENDER OF THE GAME</h2></div>
-      <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead>
-        <tbody id="defenders-tbody"></tbody>
-      </table>
+      <div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="defenders-tbody"></tbody></table></div>
     </section>
 
     <!-- ASSISTERS -->
     <section id="assisters" class="ops-card">
       <div class="section-command"><h2>TOP ASSISTERS</h2></div>
-      <div class="table-container">
-        <table><thead><tr><th>OPERATOR</th><th>A</th></tr></thead>
-        <tbody id="assisters-tbody"></tbody>
-      </table>
+      <div class="table-container"><table><thead><tr><th>OPERATOR</th><th>ASSISTS</th></tr></thead><tbody id="assisters-tbody"></tbody></table></div>
     </section>
 
     <!-- TEAMS -->
@@ -591,159 +496,119 @@
     <!-- AWARDS -->
     <section id="awards" class="ops-card">
       <div class="section-command"><h2>END OF OPERATION AWARDS</h2></div>
-      <div class="table-container">
-        <table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead>
-        <tbody id="awards-tbody"></tbody>
-      </table>
+      <div class="table-container"><table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead><tbody id="awards-tbody"></tbody></table>
+      </div>
     </section>
-    
+
+    <!-- AUDIO PANEL -->
+    <section id="audio-panel" class="ops-card">
+      <div class="section-command"><h2>🔊 COMMS · TACTICAL FREQUENCY</h2></div>
+      <div class="audio-command">
+        <div><span class="audio-btn" onclick="document.getElementById('bgTrack').play()">▶️ ARM AUDIO</span><span class="audio-btn" onclick="document.getElementById('bgTrack').pause()">⏸️ MUTE</span><span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.5">50%</span><span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.2">20%</span></div>
+        <div class="live-data"><div><span>COMMS:</span> <span>FREQ 142.650 MHz</span></div><div><span>ENCRYPT:</span> <span>AES-256</span></div></div>
+      </div>
+    </section>
   </main>
 
   <footer class="strategic-footer">
     <div class="footer-grid">
-      <div class="footer-meta">
-        <div class="live-data">
-          <div><span>TIME:</span> <span id="liveTime"></span></div>
-          <div><span>CONDITIONS:</span> <span id="liveWeather">18°C · CLEAR</span></div>
-        </div>
-      </div>
-      <div class="footer-meta">
-        <div class="footer-insignia" style="color: var(--sniper-green);">
-          <span>© EDEN</span>
-        </div>
-      </div>
+      <div class="footer-meta"><div class="live-data"><div><span>TIME:</span> <span id="liveTime"></span></div><div><span>WEATHER:</span> <span id="liveWeather">18°C · CLEAR</span></div></div></div>
+      <div class="live-data"><div><span>RADAR:</span> <span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span> <span>16</span></div></div>
     </div>
   </footer>
 
   <script>
     
     (function() {
-      // ===== SNIPER OPTICS BACKGROUND - SMOOTH CONTINUOUS =====
-      // Handled by CSS animations - smooth and continuous
-      
-      // ===== MISSION GENERATOR =====
-      function generateOps() {
-        const start = new Date(2026, 2, 1);
-        const end = new Date(2026, 10, 22);
-        let games = [], current = new Date(start), idx = 1;
+      // permanent audio
+      function initAudio() {
+        const audio = document.getElementById('bgTrack');
+        if (!audio) return;
+        audio.volume = 0.25;
+        const playSafe = () => { audio.play().catch(() => setTimeout(playSafe, 200)); };
+        playSafe();
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) audio.play().catch(()=>{}); });
+        setInterval(() => { if (audio.paused) audio.play().catch(()=>{}); }, 2500);
+      }
+
+      // generate 38 missions from March 1 2026 to Nov 22 2026 (weekly)
+      function generateFullOps() {
+        let games = [];
+        let current = new Date(2026, 2, 1); // mar 1
+        const end = new Date(2026, 10, 22); // nov 22
+        let idx = 1;
         while (current <= end && idx <= 38) {
           const dateStr = current.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + ' 14:00';
           let status, result, motm, summary;
-          if (idx === 1) { 
-            status = 'completed'; result = '2-1'; motm = 'HOSS'; 
-            summary = 'Highly intense season opening game with Alpha making a comeback.'; 
-          } else if (idx === 2) { 
-            status = 'next'; result = '—'; motm = 'TBD'; 
-            summary = 'Delta moves into range.'; 
-          } else if (idx === 3) { 
-            status = 'upcoming'; result = '—'; motm = '—'; 
-            summary = 'Recon in progress.'; 
-          } else {
-            status = 'upcoming'; result = '—'; motm = '—'; 
-            summary = '—';
-          }
-          if (idx > 3) status = 'upcoming';
+          if (idx === 1) { status='completed'; result='2-1'; motm='HOSS'; summary='Alpha comeback from 1-0.'; }
+          else if (idx === 2) { status='next'; result='—'; motm='TBD'; summary='locked.'; }
+          else if (idx === 3) { status='upcoming'; result='—'; motm='—'; summary='locked'; }
+          else if (idx < 10) { status='upcoming'; result='—'; motm='—'; summary='locked'; }
+          else { status='upcoming'; result='—'; motm='—'; summary='locked'; }
           games.push({ game:`M${idx.toString().padStart(2,'0')}`, date:dateStr, status, result, motm, summary });
           current.setDate(current.getDate() + 7);
           idx++;
         }
         return games;
       }
-      const missionGames = generateOps();
+      const missionGames = generateFullOps(); // 38 entries
 
-      // populate league
-      document.getElementById('league-tbody').innerHTML = `
-        <tr><td style="color:#b91c1c; font-weight:bold;">EDEN ALPHA</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td></tr>
-        <tr><td style="color:#2e7d32; font-weight:bold;">EDEN DELTA</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
-      `;
+      // league static (week 1)
+      document.getElementById('league-tbody').innerHTML = `<tr><td style="color:#b91c1c;">EDEN ALPHA</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td></tr><tr><td style="color:#2e7d32;">EDEN DELTA</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>`;
 
-      // schedule table
+      // schedule tbody
       let schedRows = '';
       missionGames.forEach(g => {
-        let rowClass = '';
-        if (g.status === 'completed') rowClass = 'completed-row';
-        else if (g.status === 'next') rowClass = 'next-row';
-        else if (g.status === 'upcoming') rowClass = 'upcoming-row';
-        schedRows += `<tr class="${rowClass}"><td>${g.game}</td><td>${g.date}</td></tr>`;
+        let rc = g.status==='completed'?'completed-row':g.status==='next'?'next-row':'upcoming-row';
+        schedRows += `<tr class="${rc}"><td>${g.game}</td><td>${g.date}</td></tr>`;
       });
       document.getElementById('schedule-tbody').innerHTML = schedRows;
 
       // summary
       let sumRows = '';
       missionGames.forEach(g => {
-        sumRows += `<tr><td>${g.game}</td><td>${g.date}</td><td>${g.result}</td><td>${g.motm}</td><td class="summary-cell">${g.summary}</td></tr>`;
+        sumRows += `<tr><td>${g.game}</td><td>${g.date}</td><td>${g.result}</td><td>${g.motm}</td><td>${g.summary}</td></tr>`;
       });
       document.getElementById('summary-tbody').innerHTML = sumRows;
 
-      // scorers
-      document.getElementById('scorers-tbody').innerHTML = `
-        <tr><td>1</td><td style="color:#b91c1c;">HOSS</td><td>1</td></tr>
-        <tr><td>2</td><td style="color:#2e7d32;">BAYANDA</td><td>1</td></tr>
-        <tr><td>2</td><td style="color:#b91c1c;">VUYO</td><td>1</td></tr>
-      `;
+      // scorers (extended)
+      document.getElementById('scorers-tbody').innerHTML = '<tr><td>HOSS</td><td>1</td></tr><tr><td>BAYANDA</td><td>1</td></tr><tr><td>VUYO</td><td>1</td></tr><tr><td>JOY</td><td>0</td></tr><tr><td>FROST</td><td>0</td></tr>';
 
-      // MOTM
-      document.getElementById('motm-tbody').innerHTML = '<tr><td>M01</td><td style="color:#b91c1c;">HOSS (ALPHA)</td></tr><tr><td>M02</td><td>—</td></tr>';
+      // motm
+      let motmRows = '';
+      missionGames.forEach((g,i) => { motmRows += `<tr><td>${g.game}</td><td>${g.motm}</td></tr>`; });
+      document.getElementById('motm-tbody').innerHTML = motmRows;
 
-      // defender motm
-      document.getElementById('defenders-tbody').innerHTML = '<tr><td>M01</td><td style="color:#b91c1c;">QUEENER</td></tr>';
+      // defenders
+      let defRows = '';
+      missionGames.forEach((g,i) => { defRows += `<tr><td>${g.game}</td><td>${i===0?'QUEENER':'—'}</td></tr>`; });
+      document.getElementById('defenders-tbody').innerHTML = defRows;
 
       // assisters
-      document.getElementById('assisters-tbody').innerHTML = '<tr><td style="color:#b91c1c;">FROST (ALPHA)</td><td>1</td></tr><tr><td style="color:#2e7d32;">JOY (DELTA)</td><td>1</td></tr>';
+      document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr><tr><td>S\'PHE</td><td>0</td></tr>';
 
-      // teams with sniper optics
-      document.getElementById('teams-grid').innerHTML = `
-        <div class="team-card"><h3>⚔️ ALPHA</h3><ul>
-          <li class="faction-alpha">HOSS (C) ST · LACONIA</li>
-          <li class="faction-alpha">VUYO FW · THERMOPYLAE</li>
-          <li class="faction-alpha">XAN MF · LEONID</li>
-          <li class="faction-alpha">FROST MF · OLYMPUS</li>
-          <li class="faction-alpha">QUEENER DF · SPARTAN</li>
-          <li class="faction-alpha">JONATHAN (RES) ST · PHALANX</li>
-        </ul></div>
-        <div class="team-card delta-force"><h3>🎯 DELTA</h3><ul>
-          <li class="faction-delta">JOY (C) DF · ST6</li>
-          <li class="faction-delta">JUNIOR ST · DEVGRU</li>
-          <li class="faction-delta">S'PHE FW · CAG</li>
-          <li class="faction-delta">OLAMA MF · 24th STS</li>
-          <li class="faction-delta">BAYANDA DF · RECON</li>
-          <li class="faction-delta">MASIYA (RES) MF · RRC</li>
-        </ul></div>
-      `;
+      // teams
+      document.getElementById('teams-grid').innerHTML = `<div class="team-card"><h3>⚔️ ALPHA</h3><ul><li>HOSS (C)</li><li>VUYO</li><li>XAN</li><li>FROST</li><li>QUEENER</li><li>ZEN</li></ul></div><div class="team-card delta-force"><h3>🎯 DELTA</h3><ul><li>JOY (C)</li><li>JUNIOR</li><li>S'PHE</li><li>OLAMA</li><li>BAYANDA</li><li>RAZE</li></ul></div>`;
 
       // awards
-      document.getElementById('awards-tbody').innerHTML = `
-        <tr><td>MVP</td><td>—</td></tr>
-        <tr><td>GOLDEN BOOT</td><td>—</td></tr>
-        <tr><td>SILVER BOOT</td><td>—</td></tr>
-        <tr><td>BRONZE BOOT</td><td>—</td></tr>
-        <tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr>
-        <tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr>
-      `;
+      document.getElementById('awards-tbody').innerHTML = '<tr><td>MVP</td><td>TBD</td></tr><tr><td>GOLDEN BOOT</td><td>TBD</td></tr><tr><td>SILVER BOOT</td><td>TBD</td></tr><tr><td>BRONZE BOOT</td><td>TBD</td></tr><tr><td>DEFENDER OF THE OPERATION</td><td>TBD</td></tr><tr><td>PLAYMAKER OF THE OPERATION</td><td>TBD</td></tr>';
 
-      // ===== COUNTDOWN =====
+      // countdown to M02 (example)
       const target = new Date(2026, 2, 8, 14, 0, 0);
       const cd = document.getElementById('mainCountdown');
       function refreshCountdown() {
         const diff = target - new Date();
-        if (diff <= 0) { cd.innerText = 'MISSION ACTIVE'; }
-        else {
-          const d = Math.floor(diff / 86400000);
-          const h = Math.floor((diff % 86400000) / 3600000);
-          const m = Math.floor((diff % 3600000) / 60000);
-          const s = Math.floor((diff % 60000) / 1000);
-          cd.innerText = `${d}D ${h.toString().padStart(2,'0')}H ${m.toString().padStart(2,'0')}M ${s.toString().padStart(2,'0')}S`;
-        }
+        if (diff <= 0) cd.innerText = 'MISSION ACTIVE';
+        else { const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000); cd.innerText = `${d}D ${h.toString().padStart(2,'0')}H ${m.toString().padStart(2,'0')}M ${s.toString().padStart(2,'0')}S`; }
       }
       setInterval(refreshCountdown, 500); refreshCountdown();
 
       // live time
       function updateLive() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
       setInterval(updateLive, 1000); updateLive();
-      setInterval(() => { 
-        let w = ['18°C · CLEAR','16°C · CLOUD','20°C · HAZE','14°C · STEALTH'];
-        document.getElementById('liveWeather').innerText = w[Math.floor(Math.random()*w.length)];
-      }, 14000);
+      setInterval(() => { let w = ['18°C · CLEAR','16°C · LIGHT RAIN','21°C · HAZE','14°C · SCOUT']; document.getElementById('liveWeather').innerText = w[Math.floor(Math.random()*w.length)]; }, 12000);
+
+      initAudio();
     })();
     
   </script>
@@ -751,11 +616,6 @@
 </body>
   
 </html>
-
-
-
-
-
 
 
 
