@@ -1,29 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    
 <head>
-    
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <title>KJV HOLY BIBLE</title>
-    
+    <title>KJV HOLY BIBLE // IFRAME EMBED</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    
     <style>
-        
-        /* ===============================
-           ROOT SYSTEM VARIABLES
-        ==================================*/
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* === ROOT SYSTEM VARIABLES === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --cyan: #00ffff;
@@ -52,9 +37,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===============================
-           RAIN CANVAS LAYER
-        ==================================*/
+        /* === RAIN CANVAS LAYER (CYBERPUNK AMBIANCE) === */
         canvas#rain {
             position: fixed;
             inset: 0;
@@ -66,9 +49,7 @@
             will-change: transform;
         }
 
-        /* ===============================
-           MAIN WRAPPER
-        ==================================*/
+        /* === MAIN WRAPPER (above rain) === */
         .main {
             position: relative;
             z-index: 2;
@@ -81,9 +62,7 @@
             width: 100%;
         }
 
-        /* ===============================
-           HEADER
-        ==================================*/
+        /* === HEADER === */
         .header {
             text-align: center;
             margin-bottom: clamp(1.5rem, 4vh, 3rem);
@@ -110,15 +89,7 @@
             color: var(--cyan-dim);
         }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            33% { opacity: 0.95; text-shadow: 0 0 20px #00ffff; }
-            66% { opacity: 0.9; text-shadow: 0 0 25px #00ffff; }
-        }
-
-        /* ===============================
-           CONTROL PANEL
-        ==================================*/
+        /* === CONTROL PANEL === */
         .controls {
             display: flex;
             gap: clamp(0.75rem, 2vw, 1.5rem);
@@ -174,14 +145,9 @@
             border-color: transparent;
         }
 
-        .btn:active {
-            transform: translateY(0);
-            transition: 0.1s;
-        }
+        .btn:active { transform: translateY(0); transition: 0.1s; }
 
-        /* ===============================
-           PDF VIEWER
-        ==================================*/
+        /* === PDF VIEWER - THE IFRAME BABY === */
         .viewer {
             flex: 1;
             min-height: 65vh;
@@ -212,7 +178,7 @@
         .viewer .fallback {
             position: absolute;
             inset: 0;
-            display: flex;
+            display: none;  /* hidden by default, shown on iframe error */
             align-items: center;
             justify-content: center;
             background: var(--panel);
@@ -236,9 +202,7 @@
             border-bottom-color: transparent;
         }
 
-        /* ===============================
-           FOOTER
-        ==================================*/
+        /* === FOOTER === */
         .footer {
             text-align: center;
             margin-top: 2rem;
@@ -250,11 +214,9 @@
             border-top: 1px solid rgba(0, 255, 255, 0.1);
         }
 
-        /* ===============================
-           LOADING STATE
-        ==================================*/
+        /* === LOADING STATE === */
         .viewer.loading::after {
-            content: 'ACCESSING ARCHIVE...';
+            content: 'ACCESSING ARCHIVE // INJECTING IFRAME';
             position: absolute;
             inset: 0;
             background: var(--panel);
@@ -265,6 +227,8 @@
             font-size: 1.2rem;
             letter-spacing: 4px;
             animation: pulse 1.5s infinite;
+            z-index: 10;
+            backdrop-filter: blur(4px);
         }
 
         @keyframes pulse {
@@ -272,87 +236,43 @@
             50% { opacity: 0.4; }
         }
 
-        /* ===============================
-           MOBILE OPTIMIZATION
-        ==================================*/
+        /* === MOBILE OPTIMIZATION === */
         @media (max-width: 768px) {
-            .viewer {
-                min-height: 60vh;
-            }
-            
-            .btn {
-                min-width: 160px;
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-                letter-spacing: 2px;
-            }
-            
-            .header h1 {
-                letter-spacing: 4px;
-            }
+            .viewer { min-height: 60vh; }
+            .btn { min-width: 160px; padding: 0.75rem 1.5rem; font-size: 0.9rem; letter-spacing: 2px; }
+            .header h1 { letter-spacing: 4px; }
         }
 
         @media (max-width: 480px) {
-            .main {
-                padding: 1rem;
-            }
-            
-            .btn {
-                width: 100%;
-                min-width: auto;
-            }
-            
-            .viewer {
-                min-height: 50vh;
-            }
+            .main { padding: 1rem; }
+            .btn { width: 100%; min-width: auto; }
+            .viewer { min-height: 50vh; }
         }
 
-        /* ===============================
-           REDUCED MOTION SUPPORT
-        ==================================*/
+        /* === REDUCED MOTION SUPPORT === */
         @media (prefers-reduced-motion: reduce) {
-            canvas#rain {
-                display: none;
-            }
-            
-            .header h1 {
-                animation: none;
-            }
-            
-            .btn::before {
-                display: none;
-            }
-            
-            .viewer.loading::after {
-                animation: none;
-            }
+            canvas#rain { display: none; }
+            .btn::before { display: none; }
+            .viewer.loading::after { animation: none; }
         }
 
-        /* ===============================
-           HIGH CONTRAST MODE
-        ==================================*/
+        /* === HIGH CONTRAST MODE === */
         @media (prefers-contrast: high) {
-            :root {
-                --cyan: #00ffff;
-                --border: #00ffff;
-                --glow: none;
-            }
+            :root { --cyan: #00ffff; --border: #00ffff; --glow: none; }
         }
-        
     </style>
-    
 </head>
-    
 <body>
-    
+
+    <!-- RAIN BACKGROUND (ambient) -->
     <canvas id="rain" aria-hidden="true"></canvas>
-    
+
     <div class="main">
         <header class="header">
             <h1>KJV HOLY BIBLE</h1>
-            <span>[ KING JAMES VERSION // AUTHORIZED 1611 ]</span>
+            <span>[ KING JAMES VERSION // AUTHORIZED 1611 // IFRAME ACTIVE ]</span>
         </header>
-        
+
         <nav class="controls" aria-label="Bible controls">
             <button class="btn" id="fullscreenBtn" aria-label="Open PDF in full screen">
                 ⎔ OPEN FULL SCREEN
@@ -364,196 +284,209 @@
                 ⌂ RETURN TO HQ
             </button>
         </nav>
-        
-        <main class="viewer" id="viewer">
+
+        <!-- MAIN VIEWER: THIS IS THE IFRAME CONTAINER -->
+        <main class="viewer loading" id="viewer">
             <iframe 
+                id="pdfIframe"
                 src="about:blank" 
-                title="KJV Bible PDF Viewer"
+                title="KJV Bible PDF Viewer (in-page iframe)"
                 loading="lazy"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
                 referrerpolicy="no-referrer"
-            >
-                <div class="fallback">
-                    <p>Your browser does not support embedded PDFs. 
-                       <a href="#" id="fallbackLink">Download the Bible instead</a>.
-                    </p>
-                </div>
-            </iframe>
+                style="background: #0c1014;"
+            ></iframe>
+            <!-- fallback message (hidden by default) -->
+            <div class="fallback" id="fallbackMessage">
+                <p>
+                    ⚠️ Browser cannot display PDF inline. 
+                    <a href="#" id="fallbackLink">⬇ Download the Bible</a>.
+                </p>
+            </div>
         </main>
-        
+
         <footer class="footer">
-            © EDEN STEALTH CV-1 // SCRIPTURE ARCHIVE SYSTEM
+            © EDEN STEALTH CV-1 // SCRIPTURE ARCHIVE SYSTEM // IFRAME EMBED ACTIVE
         </footer>
     </div>
 
     <script>
-        
         (function() {
             'use strict';
-            
-            /* =========================================
-               CONFIGURATION
-            ==========================================*/
+
+            /* ============================================
+               CONFIGURATION – POINTING TO YOUR PDF
+               (relative path, must be same directory)
+            =============================================*/
             const CONFIG = {
-                pdfUrl: 'the-holy-bible-king-james-version.pdf',
-                fallbackUrl: 'kjv.pdf',
-                hqUrl: 'index.html',
-                rainDensity: 15000, // Lower = more drops
+                pdfUrl: 'the-holy-bible-king-james-version.pdf',   // main PDF for iframe
+                fallbackUrl: 'the-holy-bible-king-james-version.pdf', // same file for download
+                hqUrl: 'index.html',                                 // return button destination
+                rainDensity: 15000,
                 maxDrops: 150
             };
-            
-            /* =========================================
-               LIGHT RAIN DRIZZLE ENGINE
-            ==========================================*/
+
+            /* ============================================
+               LIGHT RAIN ENGINE (cyberpunk drizzle)
+            =============================================*/
             const canvas = document.getElementById('rain');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let drops = [];
-            let animationFrame;
-            let lastTime = 0;
-            const fps = 60;
-            const interval = 1000 / fps;
-            
-            function resizeCanvas() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-                createDrops();
-            }
-            
-            function createDrops() {
-                const dropCount = Math.min(
-                    Math.floor((width * height) / CONFIG.rainDensity),
-                    CONFIG.maxDrops
-                );
-                
-                drops = Array.from({ length: dropCount }, () => ({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    length: Math.random() * 15 + 8,
-                    speed: Math.random() * 1.5 + 1,
-                    opacity: Math.random() * 0.3 + 0.15
-                }));
-            }
-            
-            function drawRain(currentTime) {
-                if (!ctx) return;
-                
-                if (currentTime - lastTime < interval) {
-                    animationFrame = requestAnimationFrame(drawRain);
-                    return;
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let drops = [];
+                let animationFrame;
+                let lastTime = 0;
+                const fps = 60;
+                const interval = 1000 / fps;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                    createDrops();
                 }
-                
-                lastTime = currentTime;
-                ctx.clearRect(0, 0, width, height);
-                ctx.lineWidth = 1.2;
-                ctx.lineCap = 'round';
-                
-                for (let drop of drops) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 255, 255, ${drop.opacity})`;
-                    ctx.moveTo(drop.x, drop.y);
-                    ctx.lineTo(drop.x, drop.y + drop.length);
-                    ctx.stroke();
-                    
-                    drop.y += drop.speed;
-                    
-                    if (drop.y > height) {
-                        drop.y = -drop.length;
-                        drop.x = Math.random() * width;
+
+                function createDrops() {
+                    const dropCount = Math.min(
+                        Math.floor((width * height) / CONFIG.rainDensity),
+                        CONFIG.maxDrops
+                    );
+                    drops = Array.from({ length: dropCount }, () => ({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        length: Math.random() * 15 + 8,
+                        speed: Math.random() * 1.5 + 1,
+                        opacity: Math.random() * 0.3 + 0.15
+                    }));
+                }
+
+                function drawRain(currentTime) {
+                    if (!ctx) return;
+                    if (currentTime - lastTime < interval) {
+                        animationFrame = requestAnimationFrame(drawRain);
+                        return;
                     }
+                    lastTime = currentTime;
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.lineWidth = 1.2;
+                    ctx.lineCap = 'round';
+                    for (let drop of drops) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${drop.opacity})`;
+                        ctx.moveTo(drop.x, drop.y);
+                        ctx.lineTo(drop.x, drop.y + drop.length);
+                        ctx.stroke();
+                        drop.y += drop.speed;
+                        if (drop.y > height) {
+                            drop.y = -drop.length;
+                            drop.x = Math.random() * width;
+                        }
+                    }
+                    animationFrame = requestAnimationFrame(drawRain);
                 }
-                
+
+                resizeCanvas();
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(resizeCanvas, 100);
+                });
                 animationFrame = requestAnimationFrame(drawRain);
+                window.addEventListener('beforeunload', () => {
+                    if (animationFrame) cancelAnimationFrame(animationFrame);
+                });
             }
-            
-            // Initialize rain with performance optimization
-            resizeCanvas();
-            
-            // Throttled resize handler
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    resizeCanvas();
-                }, 100);
-            });
-            
-            // Start animation
-            animationFrame = requestAnimationFrame(drawRain);
-            
-            // Cleanup on page unload
-            window.addEventListener('beforeunload', () => {
-                if (animationFrame) {
-                    cancelAnimationFrame(animationFrame);
-                }
-            });
-            
-            /* =========================================
-               PDF VIEWER HANDLING
-            ==========================================*/
-            const iframe = document.querySelector('iframe');
+
+            /* ============================================
+               IFRAME PDF EMBED – THE MAIN EVENT
+               "IFRAME BABY" – exactly as requested
+            =============================================*/
+            const iframe = document.getElementById('pdfIframe');
             const viewer = document.getElementById('viewer');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             const downloadBtn = document.getElementById('downloadBtn');
             const returnBtn = document.getElementById('returnBtn');
+            const fallbackDiv = document.getElementById('fallbackMessage');
             const fallbackLink = document.getElementById('fallbackLink');
-            
-            // Validate PDF URLs
-            function validatePdfUrl(url) {
-                return url && url.trim() !== '' && url !== 'about:blank';
-            }
-            
-            // Set PDF source with loading state
+
+            // helper to load PDF with loading state
             function loadPdfInIframe(url) {
-                if (!validatePdfUrl(url)) {
-                    console.warn('Invalid PDF URL:', url);
+                if (!url || url === 'about:blank' || url.trim() === '') {
+                    console.warn('Invalid PDF URL');
+                    viewer.classList.remove('loading');
                     return false;
                 }
-                
+
+                // Show loading, set src
                 viewer.classList.add('loading');
                 iframe.src = url;
-                
-                // Remove loading state after timeout or on load
+
+                // Hide fallback if visible
+                if (fallbackDiv) fallbackDiv.style.display = 'none';
+                iframe.style.display = 'block';
+
+                // We'll remove loading on iframe load or error
                 const removeLoading = () => {
                     viewer.classList.remove('loading');
                 };
-                
-                iframe.onload = removeLoading;
-                setTimeout(removeLoading, 5000); // Fallback timeout
-                
+
+                // Success load
+                iframe.onload = () => {
+                    removeLoading();
+                    // Edge case: some browsers load empty on error? We'll also check content
+                    try {
+                        // If the iframe loaded but couldn't display PDF, some browsers show a sad face.
+                        // We'll keep it as is. The fallback is still available via error event.
+                    } catch (e) {}
+                };
+
+                // Error handling
+                iframe.onerror = () => {
+                    console.error('Iframe failed to load PDF');
+                    removeLoading();
+                    iframe.style.display = 'none';
+                    if (fallbackDiv) fallbackDiv.style.display = 'flex';
+                };
+
+                // Timeout fallback (if load takes > 8 sec, assume failure)
+                setTimeout(() => {
+                    if (viewer.classList.contains('loading')) {
+                        viewer.classList.remove('loading');
+                        if (iframe.src !== 'about:blank' && iframe.src !== '') {
+                            // If src is set but still loading, maybe it's slow. We'll let it be, but remove loading indicator.
+                        }
+                    }
+                }, 8000);
+
                 return true;
             }
-            
-            // Initialize iframe with PDF
+
+            // Immediately try to load the PDF in the iframe
             if (CONFIG.pdfUrl && CONFIG.pdfUrl !== 'about:blank') {
                 loadPdfInIframe(CONFIG.pdfUrl);
             } else {
-                console.warn('No valid PDF URL provided');
                 viewer.classList.remove('loading');
+                if (fallbackDiv) fallbackDiv.style.display = 'flex';
             }
-            
-            // Event Handlers
+
+            // BUTTON: Fullscreen (opens in new tab but we keep the iframe page intact)
             if (fullscreenBtn) {
                 fullscreenBtn.addEventListener('click', () => {
                     if (CONFIG.pdfUrl && CONFIG.pdfUrl !== 'about:blank') {
                         window.open(CONFIG.pdfUrl, '_blank', 'noopener,noreferrer');
                     } else {
-                        alert('PDF URL not configured. Please check the file path.');
+                        alert('PDF not available.');
                     }
                 });
             }
-            
+
+            // BUTTON: Download
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
                     if (!CONFIG.fallbackUrl || CONFIG.fallbackUrl === 'about:blank') {
-                        alert('Download URL not configured.');
+                        alert('Download link not configured.');
                         return;
                     }
-                    
                     const link = document.createElement('a');
                     link.href = CONFIG.fallbackUrl;
                     link.download = 'the-holy-bible-king-james-version.pdf';
@@ -563,17 +496,19 @@
                     document.body.removeChild(link);
                 });
             }
-            
+
+            // BUTTON: Return to HQ (index.html)
             if (returnBtn) {
                 returnBtn.addEventListener('click', () => {
                     if (CONFIG.hqUrl && CONFIG.hqUrl !== 'about:blank') {
                         window.location.href = CONFIG.hqUrl;
                     } else {
-                        alert('Return URL not configured.');
+                        alert('HQ URL not configured.');
                     }
                 });
             }
-            
+
+            // Fallback link inside the fallback message
             if (fallbackLink) {
                 fallbackLink.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -582,56 +517,27 @@
                     }
                 });
             }
-            
-            // Keyboard navigation
+
+            // Keyboard shortcuts (optional)
             document.addEventListener('keydown', (e) => {
                 if (e.altKey || e.ctrlKey || e.metaKey) return;
-                
                 switch(e.key) {
-                    case 'f':
-                    case 'F':
-                        e.preventDefault();
-                        fullscreenBtn?.click();
-                        break;
-                    case 'd':
-                    case 'D':
-                        e.preventDefault();
-                        downloadBtn?.click();
-                        break;
-                    case 'h':
-                    case 'H':
-                        e.preventDefault();
-                        returnBtn?.click();
-                        break;
+                    case 'f': case 'F': e.preventDefault(); fullscreenBtn?.click(); break;
+                    case 'd': case 'D': e.preventDefault(); downloadBtn?.click(); break;
+                    case 'h': case 'H': e.preventDefault(); returnBtn?.click(); break;
                 }
             });
-            
-            // Error handling for iframe
+
+            // Additional: if iframe fails after trying, show fallback
             iframe.addEventListener('error', () => {
-                console.error('Failed to load PDF');
                 viewer.classList.remove('loading');
                 iframe.style.display = 'none';
-                const fallback = document.querySelector('.fallback');
-                if (fallback) {
-                    fallback.style.display = 'flex';
-                }
+                if (fallbackDiv) fallbackDiv.style.display = 'flex';
             });
-            
+
+            // If iframe loads a non-pdf content (some browsers), we can't detect easily.
+            // But we keep fallback as backup.
         })();
-        
     </script>
-    
 </body>
-    
 </html>
-
-
-
-
-
-
-
-
-
-
-
