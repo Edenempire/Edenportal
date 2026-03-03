@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  
+  <title>COMPUTER SCIENCE CV‑5</title>
+  
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0000'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
+  
+  <!-- FIREBASE modular (real cloud) -->
+  <script type="importmap">
+    { "imports": { 
+      "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+      "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js" 
+    } }
+  </script>
+
+  <style>
+    
+    /* ===== COLD PROFESSIONAL – NO GLOWS, NO SHADOWS, HARSH BLACK/RED ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0c0e;
+      --bg-tertiary: #111417;
+      --panel: #030506;
+      --accent-red: #e60000;
+      --accent-green: #20c997;
+      --accent-blue: #3b7fbd;
+      --accent-yellow: #f4c542;
+      --text-primary: #f0f2f5;
+      --text-secondary: #b0b8c5;
+      --text-muted: #6b7280;
+      --border-red: #b30000;
+      --border-light: #2a1e1e;
+      --font-sans: 'Inter', sans-serif;
+      --spacing-unit: 6px;
+    }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== SINGLE VERTICAL SCANNING LINE – RANDOM MOVEMENT ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent calc(50vh - 1px),
+        rgba(230, 0, 0, 0.9) calc(50vh - 1px),
+        rgba(230, 0, 0, 0.9) 50vh,
+        transparent 50vh,
+        transparent 100vh
+      );
+      animation: singleScan 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      opacity: 0.8;
+    }
+    @keyframes singleScan {
+      0% { transform: translateY(-100vh); }
+      20% { transform: translateY(-60vh); }
+      40% { transform: translateY(-20vh); }
+      60% { transform: translateY(20vh); }
+      80% { transform: translateY(60vh); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* ===== NO GLOW, NO SHADOW – FLAT RED BORDERS ===== */
+    .tactical-header, .section, .card, .btn, input, textarea, .nav-dot, .modal {
+      border: 2px solid var(--border-red) !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    .section-title, .header-logo, .text-accent, .nav-dot.active, .nav-dot:hover {
+      color: var(--accent-red) !important;
+    }
+    .btn-primary {
+      background: var(--accent-red);
+      border-color: #990000 !important;
+      color: black;
+      font-weight: 800;
+    }
+
+    /* ===== STICKY HEADER ===== */
+    .tactical-header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(0,0,0,0.98);
+      backdrop-filter: blur(12px);
+      padding: calc(var(--spacing-unit)*2) calc(var(--spacing-unit)*4);
+    }
+    .header-logo {
+      font-size: clamp(1.3rem, 5vw, 2rem);
+      font-weight: 800; letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ===== VERTICAL NAV ===== */
+    .vertical-nav {
+      position: fixed; right: clamp(8px, 2vw, 20px); top: 50%; transform: translateY(-50%);
+      z-index: 1000; display: flex; flex-direction: column; gap: clamp(6px, 1.5vh, 10px);
+    }
+    .nav-dot {
+      width: clamp(40px, 7vw, 52px); height: clamp(40px, 7vw, 52px);
+      background: #050505; border: 2px solid var(--border-red);
+      color: #aaa; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: clamp(0.8rem, 3vw, 1rem);
+      cursor: pointer; transition: 0.2s; border-radius: 0;
+    }
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--accent-red); color: white;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      width: 100%; max-width: 1800px; margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+    }
+
+    /* ===== SECTIONS – FLAT, NO SHADOWS ===== */
+    .section {
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(2px);
+      border: 2px solid var(--border-red);
+      margin-bottom: clamp(30px, 6vh, 80px);
+      padding: clamp(20px, 3.5vw, 40px);
+      scroll-margin-top: 80px;
+    }
+    .section::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+      margin-top: 16px;
+    }
+    .section:last-child::after { display: none; }
+
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-red);
+    }
+    .section-title {
+      font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+    .section-badge {
+      background: #1a0000; border: 1px solid var(--accent-red);
+      color: var(--accent-red); padding: 4px 14px; font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    /* ===== BUTTONS & FORMS – FLAT ===== */
+    .btn {
+      background: #0b0505; border: 2px solid var(--border-red);
+      color: var(--text-primary); padding: 10px 20px;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: 0.2s; letter-spacing: 0.5px;
+    }
+    .btn:hover { background: var(--accent-red); color: black; }
+    .btn:disabled { opacity: 0.4; pointer-events: none; }
+
+    input, textarea, select {
+      width: 80%; background: #0a0303; border: 2px solid var(--border-red);
+      color: #fff; padding: 14px; font-size: 0.95rem; border-radius: 0;
+    }
+    input:focus, textarea:focus { outline: none; border-color: #ff5e5e; background: #1f0a0a; }
+
+    /* ===== CARD ===== */
+    .card {
+      background: #0d0808; border: 2px solid var(--border-red);
+      padding: 16px; margin-bottom: 12px;
+    }
+
+    /* ===== MESSAGE BOARD ===== */
+    .message-actions button {
+      background: none; border: 1px solid #a00; color: #fbb;
+      padding: 4px 12px; font-size: 0.75rem; cursor: pointer;
+    }
+    .dept-tag {
+      background: #330000; color: #ff8a8a; padding: 2px 10px;
+      font-size: 0.7rem; font-weight: 600; border-left: 3px solid var(--accent-red);
+      margin-left: 8px; text-transform: uppercase;
+    }
+    .pinned-badge { background: var(--accent-yellow); color: black; padding: 2px 8px; font-size: 0.7rem; }
+
+    /* ===== MODAL – FIXED PIN INPUT ===== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+      z-index: 10000; display: none; justify-content: center; align-items: center;
+    }
+    .modal { 
+      background: #080000; border: 3px solid var(--accent-red); 
+      max-width: 380px; width: 90%; padding: 28px;
+    }
+    #pinInput {
+      background: #1a0404; border: 2px solid var(--border-red);
+      color: white; padding: 12px; font-size: 1.2rem;
+      width: 100%; margin: 16px 0; text-align: center;
+      letter-spacing: 4px;
+    }
+
+    /* ===== LOADER ===== */
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 999999; }
+    .loader { width: 44px; height: 44px; border: 4px solid #440000; border-top: 4px solid var(--accent-red); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .notification-center { position: fixed; top: 80px; right: 20px; z-index: 99999; max-width: 340px; width: calc(100% - 40px); }
+    .notification { background: #1f0a0a; border-left: 6px solid var(--accent-red); color: white; padding: 12px 18px; margin-bottom: 8px; border: 1px solid #b33; font-size: 0.9rem; }
+
+    /* ===== GRIDS ===== */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 3vw, 36px); }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #010101; border-top: 3px solid var(--accent-red);
+      padding: 24px; margin-top: 40px; text-align: center;
+    }
+    .verse { font-size: 1.1rem; color: #e6b3b3; font-weight: 500; }
+
+    /* ===== UTILITIES ===== */
+    .flex { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .mt-2 { margin-top: 12px; }
+    .text-accent { color: var(--accent-red); }
+    .dept-selector { background: #1a0404; border: 1px solid #a00; color: white; padding: 8px; width: 80%; }
+    
+  </style>
+  
+</head>
+  
+<body>
+  <!-- MODAL WITH ACTUAL PIN INPUT FIELD -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <p id="modalMessage" style="margin-bottom: 8px;">ENTER COMMAND PIN:</p>
+      <input type="password" id="pinInput" maxlength="4" placeholder="****" inputmode="numeric">
+      <div class="flex" style="justify-content: flex-end; gap:12px; margin-top: 20px;">
+        <button class="btn" id="modalCancel">CANCEL</button>
+        <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loader-overlay" id="globalLoader"><div class="loader"></div></div>
+  <div class="notification-center" id="notificationCenter"></div>
+
+  <!-- VERTICAL NAV -->
+  <div class="vertical-nav">
+    <div class="nav-dot active" data-section="s1">S1</div>
+    <div class="nav-dot" data-section="s2">S2</div>
+    <div class="nav-dot" data-section="s3">S3</div>
+    <div class="nav-dot" data-section="s4">S4</div>
+    <div class="nav-dot" data-section="s5">S5</div>
+  </div>
+
+  <header class="tactical-header"><div class="header-grid"><div class="header-logo">COMPUTER SCIENCE CV‑5</div></div></header>
+
+  <main class="container">
+    <!-- S1 – COMMAND (locked until PIN 1234) -->
+    <section class="section" id="s1">
+      <div class="section-header"><h2 class="section-title">Section 01 · DIRECT ACTION (CIO controlled only)</h2><span class="section-badge" id="s1Badge">🔒 LOCKED</span></div>
+      <div class="card"><h3 style="color:var(--accent-blue);">📋 CURRENT DIRECTIVE</h3><div id="publicDirective" style="background:#0a0303; padding:16px;">—</div><div id="directiveMeta" class="text-muted" style="margin-top:8px;"></div></div>
+      <div class="flex"><button class="btn btn-blue" id="unlockS1Btn">🔓 UNLOCK COMMAND</button><button class="btn btn-primary" id="s1Send" disabled>SEND</button></div>
+      <div id="s1Panel" style="margin-top:16px; display:none;">
+        <textarea id="s1Directive" rows="2" placeholder="Enter new directive..."></textarea>
+        <div class="flex mt-2"><button class="btn" id="s1Lock">🔒 LOCK</button></div>
+        <h3 style="margin-top:24px;">📜 HISTORY</h3><div id="s1History" style="max-height:200px; overflow-y:auto;"></div>
+      </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- S2 – TEAM MESSAGE BOARD with DEPARTMENT -->
+    <section class="section" id="s2">
+      <div class="section-header"><h2 class="section-title">Section 02 · TEAM MESSAGE BOARD</h2><span class="section-badge" id="msgCount">0</span></div>
+      <div class="grid-2">
+        <div>
+          <div class="flex">
+            <input type="text" id="callsign" placeholder="CODENAME" value="BAYANDA" style="flex:2;">
+            <select id="deptSelect" class="dept-selector" style="flex:1.5;">
+              <option value="COMPUTER SCIENCE CV-5" selected>COMPUTER SCIENCE CV-5</option>
+              <option value="FIELD OPS">FIELD OPS</option>
+              <option value="INTEL">INTEL</option>
+              <option value="TACTICAL">TACTICAL</option>
+            </select>
+          </div>
+          <div class="flex">
+            <button class="btn btn-blue" id="emojiBtn">😊</button>
+            <button class="btn btn-blue" id="attachBtn">📎</button>
+          </div>
+          <div style="position:relative;"><textarea id="msgInput" rows="3" placeholder="Secure message..."></textarea><emoji-picker id="emojiPicker" style="display:none; position:absolute; z-index:1000; bottom:100%;"></emoji-picker></div>
+          <input type="file" id="msgFile" style="display:none;" accept="image/*,.pdf,.txt"><div id="attachmentPreview" style="margin:8px 0; color:#f77; font-size:0.9rem;"></div>
+          <div class="flex"><button class="btn btn-primary" id="sendMsg">📨 SEND</button></div>
+        </div>
+        <div>
+          <h3 class="flex">💬 LIVE MESSAGES <span class="section-badge" id="liveMsgCount">0</span></h3>
+          <div id="messageBoard" style="max-height:550px; overflow-y:auto; padding-right:4px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- S3 – OBJECTIVES -->
+    <section class="section" id="s3">
+      <div class="section-header"><h2 class="section-title">Section 03 · OBJECTIVES</h2><span class="section-badge" id="taskCount">0</span></div>
+      <div class="grid-2">
+        <div>
+          <div class="flex"><button class="btn btn-green" id="addTaskBtn">➕ NEW</button><button class="btn btn-blue" id="refreshTasks">🔄</button><button class="btn" id="completeAll">✅ COMPLETE ALL</button><button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button></div>
+          <div class="flex"><input type="text" id="taskInput" placeholder="Enter objective..."><button class="btn" id="priorityBtn">⚡ PRIORITY</button></div>
+          <button class="btn btn-primary" id="createTask">CREATE OBJECTIVE</button>
+          <h3 style="margin-top:20px;">⚡ ACTIVE</h3><div id="activeTasks" style="max-height:300px; overflow-y:auto;"></div>
+        </div>
+        <div><h3>✅ COMPLETED</h3><div id="completedTasks" style="max-height:200px; overflow-y:auto;"></div><div style="margin-top:20px;"><h4>📊 PROGRESS</h4><div style="background:#1a0000; height:6px;"><div class="progress-bar" id="taskProgress" style="height:100%; background:var(--accent-green); width:0%;"></div></div><div class="grid-2" style="margin-top:10px;"><div class="card"><span class="text-muted">RATE</span><div class="text-green" style="font-size:1.8rem;" id="completionRate">0%</div></div><div class="card"><span class="text-muted">TOTAL</span><div class="text-blue" style="font-size:1.8rem;" id="totalTasks">0</div></div></div></div></div>
+      </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- S4 – INTEL -->
+    <section class="section" id="s4">
+      <div class="section-header"><h2 class="section-title">Section 04 · INTEL</h2><span class="section-badge" id="logCount">0</span></div>
+      <div class="grid-2">
+        <div><div class="flex"><button class="btn btn-blue" id="refreshLogs">🔄</button><button class="btn" id="clearLogs">🗑️ CLEAR</button><button class="btn" id="exportLogs">📥 EXPORT</button></div><div id="shiftLogs" style="max-height:350px; overflow-y:auto;"></div></div>
+        <div><h3>📎 FILES (local)</h3><input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt"><div class="flex"><button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD</button><button class="btn" id="clearFiles">🗑️ CLEAR</button><button class="btn btn-blue" id="downloadFiles">📦 MANIFEST</button></div><div id="filePreview" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(80px,1fr)); gap:6px; margin-top:12px;"></div></div>
+      </div>
+    </section>
+
+    <br>
+    <br>
+
+    <!-- S5 – ZAMA MDULI (LIVE CHAT – FIXED RESPONSES) -->
+    <section class="section" id="s5">
+      <div class="section-header"><h2 class="section-title">Section 05 · ZAMA MDULI</h2><span class="section-badge">LIVE</span></div>
+      <div class="card" style="padding:24px;">
+        <div style="display:flex; align-items:center; gap:16px;"><div style="font-size:3.5rem;">🧠</div><div><h3 style="color:var(--accent-red); font-size:1.8rem;">ZAMA MDULI</h3><p class="text-muted">live · cloud conversational AI</p></div></div>
+        <div style="margin:20px 0; background:#0a0303; padding:16px;"><div id="aiStatus" style="color:var(--accent-green);">neural core online</div><div id="aiResponse" style="margin-top:12px; min-height:70px; background:#1a0404; padding:16px;">Hello, I'm Zama. How can I support you today? 💙</div></div>
+        <div class="flex"><input type="text" id="aiQuery" placeholder="talk to Zama..." style="flex:3;"><button class="btn btn-primary" id="askAI">SEND</button>></div>
+      </div>
+    </section>
+  </main>
+
+  <br>
+  <br>
+
+  <footer class="footer"><div class="verse" id="bibleVerse">"She openeth her mouth with wisdom; and in her tongue is the law of kindness." — Proverbs 31:26 (KJV)</div></footer>
+
+  <script type="module">
+    // ========== FIREBASE ==========
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, writeBatch, where, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+      authDomain: "eden-4a8d3.firebaseapp.com",
+      projectId: "eden-4a8d3",
+      storageBucket: "eden-4a8d3.firebasestorage.app",
+      messagingSenderId: "421147129483",
+      appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+    // UI
+    const loader = document.getElementById('globalLoader');
+    const notif = document.getElementById('notificationCenter');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const modalCancel = document.getElementById('modalCancel');
+    const pinInput = document.getElementById('pinInput');
+    
+    window.showNotification = (msg, type='info', dur=4000) => {
+      const n = document.createElement('div'); n.className = 'notification';
+      const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
+      n.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span style="flex:1;">${msg}</span>`;
+      notif.appendChild(n);
+      setTimeout(()=> n.remove(), dur);
+    };
+    window.showLoader = (show) => loader.style.display = show ? 'flex' : 'none';
+
+    function confirmPIN() {
+      return new Promise((resolve) => {
+        modalMessage.innerText = 'ENTER COMMAND PIN:';
+        pinInput.value = '';
+        modalOverlay.style.display = 'flex';
+        pinInput.focus();
+        
+        const submitHandler = () => {
+          const entered = pinInput.value.trim();
+          modalOverlay.style.display = 'none';
+          resolve(entered);
+        };
+        
+        modalConfirm.onclick = submitHandler;
+        modalCancel.onclick = () => {
+          modalOverlay.style.display = 'none';
+          resolve(null);
+        };
+        pinInput.onkeypress = (e) => {
+          if (e.key === 'Enter') submitHandler();
+        };
+      });
+    }
+
+    // scroll nav
+    window.addEventListener('scroll', () => {
+      const sections = ['s1','s2','s3','s4','s5'];
+      let current = '';
+      for (let id of sections) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY + 90 >= el.offsetTop && window.scrollY + 90 < el.offsetTop + el.offsetHeight) {
+          current = id; break;
+        }
+      }
+      if (current) {
+        document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+        document.querySelector(`.nav-dot[data-section="${current}"]`).classList.add('active');
+      }
+    });
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        document.getElementById(dot.getAttribute('data-section')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // ========== S1 LOCK ========== (PIN 1234 only - FIXED)
+    const s1Panel = document.getElementById('s1Panel'), s1Dir = document.getElementById('s1Directive');
+    const pubDir = document.getElementById('publicDirective'), dirMeta = document.getElementById('directiveMeta');
+    const s1History = document.getElementById('s1History');
+    const s1SendBtn = document.getElementById('s1Send');
+    const unlockBtn = document.getElementById('unlockS1Btn');
+    const lockBtn = document.getElementById('s1Lock');
+    const s1Badge = document.getElementById('s1Badge');
+
+    unlockBtn.addEventListener('click', async () => {
+      const pin = await confirmPIN();
+      if (pin === '1234') {
+        s1Panel.style.display = 'block';
+        s1SendBtn.disabled = false;
+        s1Badge.innerHTML = '🔓 UNLOCKED';
+        showNotification('S1 command unlocked','success');
+      } else if (pin !== null) {
+        showNotification('Invalid PIN','error');
+      }
+    });
+    
+    lockBtn.addEventListener('click', () => {
+      s1Panel.style.display = 'none';
+      s1SendBtn.disabled = true;
+      s1Badge.innerHTML = '🔒 LOCKED';
+    });
+
+    s1SendBtn.addEventListener('click', async () => {
+      if (!s1Dir.value.trim()) return showNotification('Directive empty','error');
+      showLoader(true);
+      try {
+        await setDoc(doc(db,'cio','directive'), {text:s1Dir.value, timestamp:serverTimestamp(), operator:document.getElementById('callsign').value||'Unknown', sessionId});
+        await addDoc(collection(db,'directiveHistory'), {text:s1Dir.value, timestamp:serverTimestamp(), operator:document.getElementById('callsign').value});
+        showNotification('Directive sent','success');
+      } catch(e){ showNotification(e.message,'error'); } finally { showLoader(false); }
+    });
+
+    onSnapshot(doc(db,'cio','directive'), snap => {
+      if (snap.exists()){ let d=snap.data(); pubDir.innerText = d.text; dirMeta.innerText = `Last: ${d.timestamp?.toDate().toLocaleString()} · ${d.operator||''}`; }
+      else { pubDir.innerText = '—'; dirMeta.innerText = ''; }
+    });
+    onSnapshot(query(collection(db,'directiveHistory'), orderBy('timestamp','desc'), limit(12)), snap => {
+      s1History.innerHTML = '';
+      snap.forEach(d => { let data = d.data(); s1History.innerHTML += `<div class="card"><small>${data.timestamp?.toDate().toLocaleString()}</small><div>${data.text.substring(0,70)}… <button onclick="window.deleteHistory('${d.id}')" style="background:none;border:none;color:var(--accent-red);float:right;">🗑️</button></div></div>`; });
+    });
+
+    // ========== S2 MESSAGE BOARD ==========
+    const callsign = document.getElementById('callsign');
+    const deptSelect = document.getElementById('deptSelect');
+    const msgInput = document.getElementById('msgInput');
+    const msgBoard = document.getElementById('messageBoard');
+    const emojiPicker = document.getElementById('emojiPicker');
+    const msgFile = document.getElementById('msgFile');
+    const attachPrev = document.getElementById('attachmentPreview');
+    const liveMsgCount = document.getElementById('liveMsgCount');
+    let currentAttachment = null;
+
+    document.getElementById('emojiBtn').onclick = ()=> emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+    emojiPicker.addEventListener('emoji-click', e=>{ msgInput.value += e.detail.unicode; emojiPicker.style.display='none'; });
+    document.getElementById('attachBtn').onclick = ()=> msgFile.click();
+    msgFile.onchange = e => { let f = e.target.files[0]; if(f){ currentAttachment = f; attachPrev.innerText = `📎 ${f.name} (${(f.size/1024).toFixed(1)} KB)`; }};
+
+    document.getElementById('sendMsg').onclick = async () => {
+      if(!callsign.value.trim() || (!msgInput.value.trim() && !currentAttachment)) return showNotification('Callsign & message required','error');
+      showLoader(true);
+      try {
+        let attach = null;
+        if(currentAttachment){
+          attach = await new Promise(r => { let reader = new FileReader(); reader.onload = e => r({name:currentAttachment.name, type:currentAttachment.type, data:e.target.result, size:currentAttachment.size}); reader.readAsDataURL(currentAttachment); });
+        }
+        await addDoc(collection(db,'messages'), {
+          callsign: callsign.value.toUpperCase(),
+          department: deptSelect.value,
+          text: msgInput.value,
+          attachment: attach,
+          timestamp: serverTimestamp(),
+          operator: callsign.value,
+          sessionId,
+          pinned: false
+        });
+        msgInput.value = ''; attachPrev.innerHTML = ''; currentAttachment = null; msgFile.value = '';
+        showNotification('Message sent','success');
+      } catch(e){ showNotification(e.message,'error'); } finally { showLoader(false); }
+    };
+
+    onSnapshot(query(collection(db,'messages'), orderBy('timestamp','desc'), limit(40)), snap => {
+      let cnt = 0; let messages = [];
+      snap.forEach(d => { let data = d.data(); data.id = d.id; messages.push(data); });
+      messages.sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.timestamp?.seconds ||0) - (a.timestamp?.seconds||0));
+      msgBoard.innerHTML = '';
+      messages.forEach(data => {
+        cnt++;
+        let attachHtml = '';
+        if(data.attachment){
+          if(data.attachment.type?.startsWith('image/')) attachHtml = `<img src="${data.attachment.data}" style="max-width:120px; margin-top:6px;">`;
+          else attachHtml = `<div><a href="${data.attachment.data}" download="${data.attachment.name}" style="color:var(--accent-blue);">📎 ${data.attachment.name}</a></div>`;
+        }
+        msgBoard.innerHTML += `<div class="card" id="msg-${data.id}">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--accent-red);">${data.callsign}</strong>
+            <span class="dept-tag">${data.department || 'COMPLIANCE CV-5'}</span>
+            <div><small>${data.timestamp?.toDate().toLocaleString()}</small>${data.pinned ? '<span class="pinned-badge">📌</span>' : ''}</div>
+          </div>
+          <div style="margin:10px 0;">${data.text}</div>${attachHtml}
+          <div class="message-actions"><button onclick="window.editMessage('${data.id}','${data.text.replace(/'/g,"\\'")}')">✏️ Edit</button><button onclick="window.deleteMessage('${data.id}')">🗑️ Delete</button><button onclick="window.quoteMessage('${data.callsign}','${data.text.replace(/'/g,"\\'")}')">💬 Quote</button><button onclick="window.pinMessage('${data.id}',${data.pinned})">📌 ${data.pinned ? 'Unpin' : 'Pin'}</button></div>
+        </div>`;
+      });
+      liveMsgCount.innerText = cnt; document.getElementById('msgCount').innerText = cnt;
+    });
+
+    // ===== S3 TASKS =====
+    const taskInput = document.getElementById('taskInput'), activeTasks = document.getElementById('activeTasks'), completedTasks = document.getElementById('completedTasks'), taskProgress = document.getElementById('taskProgress'), completionRate = document.getElementById('completionRate'), totalTasks = document.getElementById('totalTasks'), taskCount = document.getElementById('taskCount');
+    document.getElementById('createTask').onclick = async () => { if(!taskInput.value.trim()) return; showLoader(true); await addDoc(collection(db,'tasks'), {text:taskInput.value, completed:false, priority:taskInput.value.includes('⚡'), created:serverTimestamp(), operator:callsign.value||'Unknown'}); taskInput.value=''; showLoader(false); showNotification('Task created','success'); };
+    document.getElementById('priorityBtn').onclick = ()=>{ if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value = '⚡ '+taskInput.value; };
+    onSnapshot(query(collection(db,'tasks'), orderBy('created','desc')), snap => { let act='', com='', aCnt=0,cCnt=0; snap.forEach(d=>{ let data=d.data(), pri=data.priority?'⚡ ':''; let card = `<div class="card"><div style="display:flex;justify-content:space-between;"><span style="color:${data.completed?'var(--accent-green)':data.priority?'var(--accent-yellow)':'white'};">${pri}${data.text}</span><div><button onclick="window.toggleTask('${d.id}',${data.completed})" style="background:none;border:none;color:var(--accent-green);">${data.completed?'↩️':'✅'}</button><button onclick="window.editTask('${d.id}','${data.text.replace(/'/g,"\\'")}')">✏️</button><button onclick="window.deleteTask('${d.id}')">🗑️</button>${!data.completed?`<button onclick="window.togglePriority('${d.id}',${data.priority})" style="background:none;border:none;color:var(--accent-yellow);">⚡</button>`:''}</div></div><small>${data.operator||''}</small></div>`;
+      if(data.completed){ com+=card; cCnt++; } else { act+=card; aCnt++; } });
+      activeTasks.innerHTML = act||'<p class="text-muted">No active</p>'; completedTasks.innerHTML = com||'<p class="text-muted">None</p>';
+      let tot = aCnt+cCnt; let p = tot? (cCnt/tot*100):0; taskProgress.style.width=p+'%'; completionRate.innerText=Math.round(p)+'%'; totalTasks.innerText=tot; taskCount.innerText=aCnt;
+    });
+
+    // ===== S4 =====
+    const shiftLogs = document.getElementById('shiftLogs'), logCount = document.getElementById('logCount');
+    onSnapshot(query(collection(db,'shifts'), orderBy('timestamp','desc'), limit(25)), snap => { let c=0; shiftLogs.innerHTML=''; snap.forEach(d=>{ c++; let data=d.data(); shiftLogs.innerHTML+=`<div class="card"><div><strong>${data.type||'EVENT'}</strong><button onclick="window.deleteLog('${d.id}')" style="float:right;background:none;border:none;color:var(--accent-red);">🗑️</button></div><div>${data.operator||''} · ${data.timestamp?.toDate().toLocaleString()}</div></div>`; }); logCount.innerText=c; });
+
+    // ===== S5 ZAMA – FIXED RESPONSES (now replies to "hi" etc) =====
+    const aiResponse = document.getElementById('aiResponse');
+    const aiConfidence = document.getElementById('aiConfidence');
+    const aiQuery = document.getElementById('aiQuery');
+
+    async function chatWithZama(userInput) {
+      const snap = await getDocs(collection(db,'tasks'));
+      const total = snap.size;
+      const completed = snap.docs.filter(d=>d.data().completed).length;
+      
+      const lower = userInput.toLowerCase().trim();
+      
+      // FIXED: Proper greeting detection
+      if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hi ') || lower.startsWith('hello ')) {
+        return { text: "Hi there! I'm Zama. So lovely to hear from you! How are you today? 💙", conf: 0.99 };
+      } else if (lower.includes('how are you')) {
+        return { text: "I'm doing wonderfully, thank you for asking! Ready to help you with anything you need. 😊", conf: 0.98 };
+      } else if (lower.includes('task') || lower.includes('objective')) {
+        return { text: `You have ${total} total objectives, with ${completed} completed. You're making good progress!`, conf: 0.95 };
+      } else if (lower.includes('thank')) {
+        return { text: "You're so welcome! Always here for you. 💕", conf: 0.97 };
+      } else if (lower.includes('bye')) {
+        return { text: "Goodbye for now! Come talk to me anytime. 💫", conf: 0.96 };
+      } else {
+        return { text: "That's interesting! Tell me more — I'm here to listen and support you.", conf: 0.85 };
+      }
+    }
+
+    document.getElementById('askAI').addEventListener('click', async () => {
+      const query = aiQuery.value.trim();
+      if (!query) return showNotification('Talk to Zama...','warning');
+      showLoader(true);
+      try {
+        const res = await chatWithZama(query);
+        aiResponse.innerText = res.text;
+        aiConfidence.innerText = `confidence: ${Math.round(res.conf*100)}%`;
+        showNotification('Zama replied 💬','success');
+      } catch (e) { 
+        aiResponse.innerText = "I'm here, lovely! Sometimes the cloud takes a moment. Try again?"; 
+      } finally { 
+        showLoader(false); 
+      }
+    });
+
+    document.getElementById('analyzeTasks').addEventListener('click', async () => {
+      showLoader(true);
+      const snap = await getDocs(collection(db,'tasks'));
+      let total = 0, completed = 0;
+      snap.forEach(d => { total++; if(d.data().completed) completed++; });
+      aiResponse.innerText = `Zama's analysis: ${completed}/${total} tasks done. You're doing great! 💪`;
+      aiConfidence.innerText = 'confidence: 97%';
+      showLoader(false);
+    });
+
+    document.getElementById('aiClear').addEventListener('click', () => {
+      aiResponse.innerText = "Hello, I'm Zama. How can I support you today? 💙";
+      aiConfidence.innerText = '';
+      aiQuery.value = '';
+    });
+
+    // expose helpers
+    window.deleteHistory = async (id) => { if(await confirm('Delete entry?')){ showLoader(true); await deleteDoc(doc(db,'directiveHistory',id)); showLoader(false); showNotification('Deleted','info'); }};
+    window.deleteMessage = async (id) => { if(await confirm('Delete message?')){ showLoader(true); await deleteDoc(doc(db,'messages',id)); showLoader(false); }};
+    window.editMessage = async (id, old) => { let n=prompt('Edit:',old); if(n && n!==old){ showLoader(true); await updateDoc(doc(db,'messages',id),{text:n}); showLoader(false); }};
+    window.quoteMessage = (c, t) => { msgInput.value = `> ${c}: ${t}\n`; };
+    window.pinMessage = async (id, cur) => { showLoader(true); await updateDoc(doc(db,'messages',id),{pinned:!cur}); showLoader(false); };
+    window.toggleTask = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{completed:!cur}); showLoader(false); };
+    window.editTask = async (id,cur) => { let n=prompt('Edit:',cur); if(n && n!==cur){ showLoader(true); await updateDoc(doc(db,'tasks',id),{text:n}); showLoader(false); }};
+    window.deleteTask = async (id) => { if(await confirm('Delete task?')){ showLoader(true); await deleteDoc(doc(db,'tasks',id)); showLoader(false); }};
+    window.togglePriority = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{priority:!cur}); showLoader(false); };
+    window.deleteLog = async (id) => { if(await confirm('Delete log?')){ showLoader(true); await deleteDoc(doc(db,'shifts',id)); showLoader(false); }};
+    window.processFiles = function() { let f=document.getElementById('fileInput').files; if(!f.length) return; let preview=document.getElementById('filePreview'); Array.from(f).slice(0,8).forEach(file=>{ let r=new FileReader(); r.onload=e=>{ preview.innerHTML+=`<div class="file-item" style="background:#0d0808; padding:4px;">${file.type.startsWith('image/')?`<img src="${e.target.result}" style="max-width:100%;">`:'📄'}<div style="font-size:0.7rem;">${file.name.substring(0,6)}</div></div>`; }; r.readAsDataURL(file); }); };
+    document.getElementById('clearFiles').onclick = ()=>{ document.getElementById('filePreview').innerHTML=''; };
+    document.getElementById('refreshMsgs').onclick = ()=>showNotification('Live synced','info');
+    document.getElementById('refreshTasks').onclick = ()=>showNotification('Tasks synced','info');
+    document.getElementById('refreshLogs').onclick = ()=>showNotification('Logs synced','info');
+    document.getElementById('addTaskBtn').onclick = ()=>document.getElementById('taskInput').focus();
+    document.getElementById('completeAll').onclick = async () => { if(!await confirm('Complete all active?')) return; showLoader(true); let snap = await getDocs(query(collection(db,'tasks'), where('completed','==',false))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.update(d.ref,{completed:true})); await batch.commit(); showLoader(false); };
+    document.getElementById('clearCompleted').onclick = async () => { if(!await confirm('Clear completed?')) return; showLoader(true); let snap = await getDocs(query(collection(db,'tasks'), where('completed','==',true))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); };
+    document.getElementById('clearLogs').onclick = async () => { if(!await confirm('Clear all logs? PIN required')) return; let pin=prompt('PIN:'); if(pin!=='1234') return; showLoader(true); let snap=await getDocs(collection(db,'shifts')); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); };
+    document.getElementById('exportLogs').onclick = async () => { showLoader(true); let snap=await getDocs(query(collection(db,'shifts'),orderBy('timestamp','desc'),limit(150))); let arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()})); let blob=new Blob([JSON.stringify(arr,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`logs-${Date.now()}.json`; a.click(); showLoader(false); };
+    document.getElementById('downloadFiles').onclick = ()=>{ showNotification('Manifest mock','info'); };
+    
+    // Helper confirm for delete dialogs (since we removed modal for deletes)
+    window.confirm = (msg) => { return window.confirm(msg); }; // use native
+    
+  </script>
+  
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+</html>
