@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-  
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  
   <meta name="theme-color" content="#030405">
-  
   <meta name="color-scheme" content="dark">
-  
   <link rel="icon" href="logo.png">
-  
-  <title>E.S.S 2026</title>
-  
+  <title>E.S.S 2026 · Command Centre</title>
   <style>
-    
     /* === CORE RESET + TOKENS – SHADOWLESS, BORDER-HARD === */
     * {
       margin: 0;
@@ -56,7 +46,7 @@
       --space-3xl: clamp(2rem, 6vw, 4.5rem);
       --space-4xl: clamp(2.5rem, 7vw, 5.5rem);
 
-      --header-height: clamp(70px, 10vh, 100px);
+      --header-height: clamp(80px, 12vh, 120px);
       --nav-width: clamp(68px, 6vw, 85px);
     }
 
@@ -140,7 +130,6 @@
     }
     @keyframes noiseDrift { 0% { background-position: 0 0; } 100% { background-position: 0 200%; } }
 
-    /* additional moving ghost contacts (tiny) */
     .ghost-contacts {
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background: radial-gradient(circle at 20% 30%, rgba(100,255,100,0.03) 0%, transparent 20%),
@@ -170,34 +159,57 @@
       border: 4px solid var(--deep-cover); 
     }
 
-    /* HEADER – fixed */
+    /* HEADER – fixed, fully centered content */
     .command-center {
       position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
       background: var(--black-ops);
       border-bottom: 4px solid var(--sniper-green);
       z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-sm) var(--space-xl);
     }
-    .header-grid {
-      width: 100%; height: 100%; 
-      padding: 0 var(--space-xl);
-      display: flex; align-items: center; justify-content: space-between;
+
+    /* Logo + heading group – centered */
+    .header-emblem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
     }
-    .logo-unit {
-      display: flex; align-items: center; gap: var(--space-sm); text-decoration: none;
-      flex: 1;
+    .logo-img {
+      height: clamp(40px, 7vh, 70px);
+      width: auto;
+      display: block;
+      image-rendering: crisp-edges;
     }
-    .logo-text h1 {
-      font-size: var(--fs-xl); font-weight: 700; letter-spacing: 3px;
+    .main-heading {
+      font-size: var(--fs-3xl);
+      font-weight: 800;
+      letter-spacing: 6px;
       color: lightblue;
+      line-height: 1.1;
+      text-transform: uppercase;
     }
-    .countdown-display {
-      display: flex; align-items: center; justify-content: flex-end; gap: var(--space-md);
-      flex: 1;
+
+    /* countdown directly under logo+heading */
+    .countdown-under {
+      margin-top: var(--space-xs);
+      text-align: center;
     }
     .countdown-timer {
-      font-size: var(--fs-lg); font-weight: 600; color: var(--sniper-green);
+      font-size: var(--fs-lg);
+      font-weight: 600;
+      color: var(--sniper-green);
       font-family: 'Courier New', monospace;
-      min-width: 300px; text-align: right;
+      background: rgba(0,0,0,0.6);
+      padding: var(--space-xs) var(--space-md);
+      border: 2px solid var(--sniper-green);
+      display: inline-block;
+      letter-spacing: 2px;
     }
 
     /* SIDE NAV – permanent */
@@ -251,7 +263,7 @@
     /* MAIN */
     main {
       width: 100%;
-      margin: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl) 0;
+      margin: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-2xl) 0;
       padding: 0;
       display: flex; flex-direction: column; gap: var(--space-2xl);
       position: relative;
@@ -348,7 +360,7 @@
       flex-direction: column;
       align-items: center;
       max-width: 80%;
-      margin: 0 auto; /* This centers the element horizontally */
+      margin: 0 auto;
       text-align: center;
     }
     .story-emblem {
@@ -368,7 +380,7 @@
       letter-spacing: 3px;
     }
 
-    /* EXTRA RADAR TILES – very long content */
+    /* EXTRA RADAR TILES */
     .radar-grid-extra {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-lg);
       margin-top: var(--space-lg);
@@ -385,11 +397,8 @@
     .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-xl); }
     
   </style>
-  
 </head>
-  
 <body>
-  
   <!-- ADVANCED MULTI-LAYER RADAR -->
   <div class="jet-radar"></div>
   <div class="radar-sweep"></div>
@@ -399,22 +408,25 @@
   <div class="digital-noise"></div>
   <div class="ghost-contacts"></div>
 
-  <!-- PERMANENT AUDIO – robust -->
+  <!-- PERMANENT AUDIO -->
   <audio id="bgTrack" loop preload="auto" autoplay style="display:none;">
     <source src="1.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- HEADER – LOGO + HEADING + COUNTDOWN (all centered) -->
   <header class="command-center">
-    <div class="header-grid">
-      <a href="index.html" class="logo-unit" title="back to home page">
-        <div class="logo-text"><h1>⚽ 2026</h1></div>
-      </a>
-      <div class="countdown-display">
-        <span class="countdown-timer" id="mainCountdown">--D --H --M --S</span>
-      </div>
+    <div class="header-emblem">
+      <!-- logo image from images/esslogo1.png -->
+      <img src="images/esslogo1.png" alt="ESS logo" class="logo-img" onerror="this.style.display='none';">
+      <span class="main-heading">E.S.S 2026</span>
+    </div>
+    <!-- live countdown placed directly underneath -->
+    <div class="countdown-under">
+      <span class="countdown-timer" id="mainCountdown">--D --H --M --S</span>
     </div>
   </header>
 
+  <!-- side menu (unchanged) -->
   <nav class="tactical-menu-permanent">
     <div class="menu-trigger-perm">☰</div>
     <div class="menu-panel-perm">
@@ -430,7 +442,6 @@
         <div class="menu-item" onclick="document.getElementById('assisters').scrollIntoView()">🤝 ASSISTERS</div>
         <div class="menu-item" onclick="document.getElementById('teams').scrollIntoView()">👥 TEAMS</div>
         <div class="menu-item" onclick="document.getElementById('awards').scrollIntoView()">🏅 AWARDS</div>
-        <div class="menu-item" onclick="document.getElementById('radar-intel').scrollIntoView()">📡 INTEL</div>
         <div class="menu-item" onclick="document.getElementById('audio-panel').scrollIntoView()">🔊 COMMS</div>
       </div>
     </div>
@@ -442,9 +453,6 @@
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" title="LZ">🔽</div>
   </div>
 
-  <br>
-  <br>
-
   <main>
     <!-- CHAMPION STORY -->
     <section id="champion-story" class="champion-story ops-card">
@@ -453,36 +461,24 @@
       <p style="color: var(--text-dim); max-width: 800px; text-align: center;">can alpha, as ancient spartan warriors of old retain their trophy against a 'full' modern militant airbourne delta force side this season? | E.S.S 2026: locked and loaded.</p>
     </section>
 
-    <br>
-    <br>
-
     <!-- LEAGUE TABLE -->
     <section id="league-table" class="ops-card">
       <div class="section-command"><h2>LEAGUE TABLE · WEEK 1</h2><span>SEASON 2026</span></div>
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody id="league-tbody"></tbody></table></div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- SCHEDULE (38 GAMES, fully expanded) -->
+    <!-- SCHEDULE (38 GAMES) -->
     <section id="schedule" class="ops-card">
       <div class="section-command"><h2>OPERATION SCHEDULE · 38 GAMES</h2></div>
       <div class="color-key"><span class="key-item"><span class="key-dot dot-green"></span> COMPLETED</span><span class="key-item"><span class="key-dot dot-blue"></span> NEXT</span><span class="key-item"><span class="key-dot dot-amber"></span> UPCOMING</span></div>
       <div class="table-container"><table><thead><tr><th>MISSION</th><th>DATE (14:00pm)</th></tr></thead><tbody id="schedule-tbody"></tbody></table></div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- MISSION SUMMARY (very long) -->
+    <!-- MISSION SUMMARY -->
     <section id="match-summary" class="ops-card">
       <div class="section-command"><h2>OPERATION SUMMARY · FULL LOG</h2></div>
       <div class="table-container"><table><thead><tr><th>MISSION</th><th>TIME</th><th>RESULT</th><th>MOTM</th><th>INTEL</th></tr></thead><tbody id="summary-tbody"></tbody></table></div>
     </section>
-
-    <br>
-    <br>
 
     <!-- SCORERS -->
     <section id="scorers" class="ops-card">
@@ -490,17 +486,11 @@
       <div class="table-container"><table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead><tbody id="scorers-tbody"></tbody></table></div>
     </section>
 
-    <br>
-    <br>
-
     <!-- MOTM -->
     <section id="motm" class="ops-card">
       <div class="section-command"><h2>MAN OF THE MATCH</h2></div>
       <div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"></tbody></table></div>
     </section>
-
-    <br>
-    <br>
 
     <!-- DEFENDERS -->
     <section id="defenders" class="ops-card">
@@ -508,17 +498,11 @@
       <div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="defenders-tbody"></tbody></table></div>
     </section>
 
-    <br>
-    <br>
-
     <!-- ASSISTERS -->
     <section id="assisters" class="ops-card">
       <div class="section-command"><h2>TOP ASSISTERS</h2></div>
       <div class="table-container"><table><thead><tr><th>OPERATOR</th><th>ASSISTS</th></tr></thead><tbody id="assisters-tbody"></tbody></table></div>
     </section>
-
-    <br>
-    <br>
 
     <!-- TEAMS -->
     <section id="teams" class="ops-card">
@@ -526,18 +510,12 @@
       <div class="teams-grid" id="teams-grid"></div>
     </section>
 
-    <br>
-    <br>
-
     <!-- AWARDS -->
     <section id="awards" class="ops-card">
       <div class="section-command"><h2>END OF OPERATION AWARDS</h2></div>
       <div class="table-container"><table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead><tbody id="awards-tbody"></tbody></table>
       </div>
     </section>
-
-    <br>
-    <br>
 
     <!-- AUDIO PANEL -->
     <section id="audio-panel" class="ops-card">
@@ -549,9 +527,6 @@
     </section>
   </main>
 
-  <br>
-  <br>
-
   <footer class="strategic-footer">
     <div class="footer-grid">
       <div class="footer-meta"><div class="live-data"><div><span>TIME:</span> <span id="liveTime"></span></div><div><span>WEATHER:</span> <span id="liveWeather">18°C · CLEAR</span></div></div></div>
@@ -560,7 +535,6 @@
   </footer>
 
   <script>
-    
     (function() {
       // permanent audio
       function initAudio() {
@@ -613,7 +587,7 @@
       });
       document.getElementById('summary-tbody').innerHTML = sumRows;
 
-      // scorers (extended)
+      // scorers
       document.getElementById('scorers-tbody').innerHTML = '<tr><td>HOSS</td><td>1</td></tr><tr><td>BAYANDA</td><td>1</td></tr><tr><td>VUYO</td><td>1</td></tr><tr><td>JOY</td><td>0</td></tr><tr><td>FROST</td><td>0</td></tr>';
 
       // motm
@@ -635,7 +609,7 @@
       // awards
       document.getElementById('awards-tbody').innerHTML = '<tr><td>MVP</td><td>TBD</td></tr><tr><td>GOLDEN BOOT</td><td>TBD</td></tr><tr><td>SILVER BOOT</td><td>TBD</td></tr><tr><td>BRONZE BOOT</td><td>TBD</td></tr><tr><td>DEFENDER OF THE OPERATION</td><td>TBD</td></tr><tr><td>PLAYMAKER OF THE OPERATION</td><td>TBD</td></tr>';
 
-      // countdown to M02 (example)
+      // COUNTDOWN to M02 (example: 8 march 2026, 14:00)
       const target = new Date(2026, 2, 8, 14, 0, 0);
       const cd = document.getElementById('mainCountdown');
       function refreshCountdown() {
@@ -652,19 +626,6 @@
 
       initAudio();
     })();
-    
   </script>
-  
 </body>
-  
 </html>
-
-
-
-
-
-
-
-
-
-
