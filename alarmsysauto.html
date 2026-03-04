@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>CV-5 · ALARM HUB</title>
+  <title>ALARM HUB · REAL NOTIFICATIONS</title>
   
-  <!-- fonts & icons -->
+  <!-- Critical for audio on mobile -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,6 +19,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
@@ -517,16 +521,28 @@
       margin-bottom: 30px;
     }
 
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
     .alert-content button {
-      padding: 15px 40px;
+      padding: 15px 30px;
       background: var(--danger);
       border: none;
       color: #000;
       font-family: var(--header-font);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       border-radius: 30px;
       cursor: pointer;
       font-weight: 700;
+      min-width: 120px;
+    }
+
+    .alert-content button.snooze {
+      background: var(--warn);
+      color: #000;
     }
 
     /* ----- FOOTER ----- */
@@ -544,12 +560,37 @@
       font-family: var(--ui);
     }
 
+    /* Permission banner */
+    #permissionBanner {
+      background: rgba(255, 170, 0, 0.2);
+      border: 1px solid var(--warn);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: var(--ui);
+      display: none;
+    }
+
+    #permissionBanner button {
+      background: var(--warn);
+      border: none;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
     /* ----- RESPONSIVE ----- */
     @media (max-width: 480px) {
       .current-time { font-size: 3.5rem; }
       .alarm-time { font-size: 1.6rem; }
       .day-badge { width: 25px; height: 25px; }
       .time-picker input { width: 60px; font-size: 1.5rem; }
+      .alert-content { padding: 25px; }
+      .alert-content button { padding: 12px 20px; font-size: 1rem; }
     }
   </style>
 </head>
@@ -566,6 +607,12 @@
   </header>
 
   <div class="main">
+    <!-- PERMISSION BANNER -->
+    <div id="permissionBanner">
+      <span>🔔 Enable notifications for real alarms</span>
+      <button onclick="requestPermissions()">ENABLE</button>
+    </div>
+
     <!-- CURRENT TIME CARD -->
     <div class="current-time-card">
       <div class="current-label">CURRENT TIME</div>
@@ -628,9 +675,12 @@
   <div id="alarmAlert">
     <div class="alert-content">
       <i class="fas fa-bell fa-shake"></i>
-      <h2 id="alertTitle">ALARM!</h2>
+      <h2 id="alertTitle">⏰ ALARM!</h2>
       <p id="alertMessage">Time to wake up</p>
-      <button onclick="dismissAlarm()">DISMISS</button>
+      <div class="button-group">
+        <button onclick="snoozeAlarm()" class="snooze">SNOOZE 5</button>
+        <button onclick="dismissAlarm()">DISMISS</button>
+      </div>
     </div>
   </div>
 
@@ -640,6 +690,11 @@
     <span id="clock"></span>
     <span>NEXT: <span id="nextAlarm">--:--</span></span>
   </div>
+
+  <!-- REAL AUDIO ELEMENT (CRITICAL FOR MOBILE) -->
+  <audio id="alarmSound" loop preload="auto" style="display: none;">
+    <source src="data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVAAAAA8AEAAPABAADwAQAA8AEAAPABAADwAQAA8AEAAPABAADwAQAA8AEAAPABAADwAQAA8AEAAPABAADwAQAA8AAA=" type="audio/wav">
+  </audio>
 
   <script>
     (function() {
@@ -689,6 +744,110 @@
       });
 
       // =========================================
+      // PERMISSIONS & NOTIFICATIONS
+      // =========================================
+      const permissionBanner = document.getElementById('permissionBanner');
+      
+      window.requestPermissions = () => {
+        // Request notification permission
+        if ('Notification' in window) {
+          Notification.requestPermission().then(perm => {
+            if (perm === 'granted') {
+              permissionBanner.style.display = 'none';
+              // Test notification
+              new Notification('✅ Alarms Ready', {
+                body: 'You will now receive real notifications',
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%2300f0ff"/></svg>'
+              });
+            }
+          });
+        }
+
+        // Request audio permissions (user interaction needed for mobile)
+        const audio = document.getElementById('alarmSound');
+        audio.play().then(() => {
+          audio.pause();
+          audio.currentTime = 0;
+        }).catch(e => console.log('Audio needs user interaction'));
+      };
+
+      // Check permissions on load
+      if ('Notification' in window) {
+        if (Notification.permission === 'default') {
+          permissionBanner.style.display = 'block';
+        }
+      }
+
+      // =========================================
+      // REAL AUDIO SYSTEM
+      // =========================================
+      const alarmAudio = document.getElementById('alarmSound');
+      let audioEnabled = false;
+
+      // Generate a proper alarm sound using Web Audio API as fallback
+      function generateAlarmSound() {
+        try {
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          
+          oscillator.type = 'sawtooth';
+          oscillator.frequency.value = 440;
+          
+          gainNode.gain.value = 0.3;
+          
+          oscillator.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          
+          // Create pattern
+          oscillator.start();
+          setTimeout(() => oscillator.stop(), 200);
+          setTimeout(() => {
+            const osc2 = audioContext.createOscillator();
+            osc2.type = 'sawtooth';
+            osc2.frequency.value = 880;
+            osc2.connect(gainNode);
+            osc2.start();
+            setTimeout(() => osc2.stop(), 200);
+          }, 250);
+        } catch (e) {
+          console.log('Web Audio not available, using fallback');
+        }
+      }
+
+      window.playRealAlarm = () => {
+        try {
+          alarmAudio.loop = true;
+          alarmAudio.volume = 0.8;
+          
+          // Create a more aggressive sound pattern
+          const playPromise = alarmAudio.play();
+          if (playPromise) {
+            playPromise.catch(e => {
+              console.log('Audio play failed, using Web Audio');
+              generateAlarmSound();
+            });
+          }
+
+          // Vibrate if supported (real hardware feedback)
+          if ('vibrate' in navigator) {
+            const vibrationPattern = [500, 200, 500, 200, 500];
+            navigator.vibrate(vibrationPattern);
+          }
+        } catch (e) {
+          generateAlarmSound();
+        }
+      };
+
+      window.stopRealAlarm = () => {
+        alarmAudio.pause();
+        alarmAudio.currentTime = 0;
+        if ('vibrate' in navigator) {
+          navigator.vibrate(0);
+        }
+      };
+
+      // =========================================
       // ALARM DATA
       // =========================================
       let alarms = [
@@ -697,9 +856,8 @@
           time: '07:00',
           period: 'AM',
           label: 'Morning Wake Up',
-          days: [1, 2, 3, 4, 5], // Mon-Fri
+          days: [1, 2, 3, 4, 5],
           enabled: true,
-          sound: 'default',
           snooze: 5
         },
         {
@@ -707,9 +865,8 @@
           time: '08:30',
           period: 'PM',
           label: 'Evening Meditation',
-          days: [0, 6], // Weekend
+          days: [0, 6],
           enabled: false,
-          sound: 'default',
           snooze: 10
         }
       ];
@@ -735,6 +892,7 @@
 
       let editingId = null;
       let activeAlarm = null;
+      let snoozeTimeout = null;
 
       // =========================================
       // RENDER ALARMS
@@ -824,7 +982,6 @@
           document.getElementById('alarmPeriod').value = alarm.period;
           document.getElementById('alarmLabel').value = alarm.label;
           
-          // Set days
           document.querySelectorAll('.day-btn').forEach(btn => {
             const day = parseInt(btn.dataset.day);
             btn.classList.toggle('active', alarm.days.includes(day));
@@ -866,10 +1023,14 @@
       };
 
       window.saveAlarm = () => {
-        const hour = document.getElementById('alarmHour').value.padStart(2, '0');
-        const minute = document.getElementById('alarmMinute').value.padStart(2, '0');
+        let hour = document.getElementById('alarmHour').value;
+        let minute = document.getElementById('alarmMinute').value;
         const period = document.getElementById('alarmPeriod').value;
         const label = document.getElementById('alarmLabel').value;
+        
+        // Validate and format
+        hour = hour.toString().padStart(2, '0');
+        minute = minute.toString().padStart(2, '0');
         
         const days = [];
         document.querySelectorAll('.day-btn.active').forEach(btn => {
@@ -887,7 +1048,8 @@
           period,
           label,
           days,
-          enabled: true
+          enabled: true,
+          snooze: 5
         };
 
         if (editingId) {
@@ -917,7 +1079,6 @@
       function updateClock() {
         const now = new Date();
         
-        // Live time in header
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
@@ -925,115 +1086,122 @@
         document.getElementById('liveTime').innerText = `${hours}:${minutes}`;
         document.getElementById('currentTime').innerText = `${hours}:${minutes}:${seconds}`;
         
-        // Date
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('currentDate').innerText = now.toLocaleDateString('en-US', options);
         
-        // Footer clock
         document.getElementById('clock').innerText = now.toLocaleTimeString();
         
-        // Check alarms every second
         checkActiveAlarms(now);
       }
       setInterval(updateClock, 1000);
       updateClock();
 
       // =========================================
-      // ALARM CHECKING
+      // REAL ALARM CHECKING
       // =========================================
+      let lastTriggered = {};
+
       function checkActiveAlarms(now) {
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
-        const currentDay = now.getDay(); // 0-6
+        const currentDay = now.getDay();
+        const currentSeconds = now.getSeconds();
         
-        // Format current time for comparison
-        const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
-        const currentPeriod = currentHour >= 12 ? 'PM' : 'AM';
-        const currentHour12 = currentHour % 12 || 12;
-        const currentTime12Str = `${currentHour12.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
-
+        // Check each enabled alarm
         alarms.forEach(alarm => {
           if (!alarm.enabled) return;
           
-          // Check if alarm should trigger today
+          // Skip if already triggered in last 60 seconds (prevents multiple triggers)
+          const alarmKey = `${alarm.id}-${now.toDateString()}`;
+          if (lastTriggered[alarmKey] && (Date.now() - lastTriggered[alarmKey]) < 60000) {
+            return;
+          }
+          
           if (!alarm.days.includes(currentDay)) return;
           
-          // Check time match
           const [alarmHour, alarmMinute] = alarm.time.split(':');
-          const alarmHour24 = alarm.period === 'PM' && alarmHour !== '12' ? 
-            parseInt(alarmHour) + 12 : 
-            (alarm.period === 'AM' && alarmHour === '12' ? 0 : parseInt(alarmHour));
+          let alarmHour24 = parseInt(alarmHour);
           
-          if (alarmHour24 === currentHour && parseInt(alarmMinute) === currentMinute && seconds < 2) {
-            triggerAlarm(alarm);
+          if (alarm.period === 'PM' && alarmHour !== '12') {
+            alarmHour24 += 12;
+          } else if (alarm.period === 'AM' && alarmHour === '12') {
+            alarmHour24 = 0;
+          }
+          
+          // Trigger at exact minute (within 2 seconds)
+          if (alarmHour24 === currentHour && parseInt(alarmMinute) === currentMinute && currentSeconds < 2) {
+            triggerRealAlarm(alarm);
+            lastTriggered[alarmKey] = Date.now();
           }
         });
       }
 
-      function triggerAlarm(alarm) {
-        if (activeAlarm) return; // Already showing an alarm
+      window.triggerRealAlarm = (alarm) => {
+        if (activeAlarm) {
+          // If another alarm triggers while one is active, queue it
+          setTimeout(() => triggerRealAlarm(alarm), 30000);
+          return;
+        }
         
         activeAlarm = alarm;
-        document.getElementById('alertTitle').innerText = '⏰ ALARM!';
+        document.getElementById('alertTitle').innerHTML = '⏰ ALARM!';
         document.getElementById('alertMessage').innerText = `${alarm.label} • ${alarm.time} ${alarm.period}`;
         document.getElementById('alarmAlert').style.display = 'flex';
         
-        // Play sound
-        playAlarmSound();
-      }
-
-      window.dismissAlarm = () => {
-        document.getElementById('alarmAlert').style.display = 'none';
-        if (activeAlarm) {
-          // Snooze or dismiss logic
-          activeAlarm = null;
-          stopAlarmSound();
+        // REAL sound
+        playRealAlarm();
+        
+        // REAL notification
+        if ('Notification' in window && Notification.permission === 'granted') {
+          const notification = new Notification('⏰ ALARM!', {
+            body: `${alarm.label} - ${alarm.time} ${alarm.period}`,
+            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ff3355"/></svg>',
+            tag: 'alarm',
+            requireInteraction: true,
+            silent: false
+          });
+          
+          notification.onclick = () => {
+            window.focus();
+            notification.close();
+          };
         }
       };
 
-      // =========================================
-      // SOUND (using Web Audio API)
-      // =========================================
-      let audioContext = null;
-      let oscillator = null;
-      let gainNode = null;
-
-      function playAlarmSound() {
-        if (!audioContext) {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      window.dismissAlarm = () => {
+        document.getElementById('alarmAlert').style.display = 'none';
+        stopRealAlarm();
+        
+        if (snoozeTimeout) {
+          clearTimeout(snoozeTimeout);
+          snoozeTimeout = null;
         }
         
-        if (oscillator) oscillator.stop();
+        activeAlarm = null;
+      };
+
+      window.snoozeAlarm = () => {
+        document.getElementById('alarmAlert').style.display = 'none';
+        stopRealAlarm();
         
-        oscillator = audioContext.createOscillator();
-        gainNode = audioContext.createGain();
-        
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.5);
-        
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.start();
-        
-        // Loop pattern
-        setInterval(() => {
-          if (oscillator) {
-            oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.3);
+        if (activeAlarm) {
+          const snoozeMinutes = activeAlarm.snooze || 5;
+          const snoozeTime = Date.now() + (snoozeMinutes * 60 * 1000);
+          
+          if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification(`⏰ Snoozed for ${snoozeMinutes} min`, {
+              body: activeAlarm.label,
+              icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ffaa00"/></svg>'
+            });
           }
-        }, 600);
-      }
-
-      function stopAlarmSound() {
-        if (oscillator) {
-          oscillator.stop();
-          oscillator = null;
+          
+          snoozeTimeout = setTimeout(() => {
+            triggerRealAlarm(activeAlarm);
+          }, snoozeMinutes * 60 * 1000);
+          
+          activeAlarm = null;
         }
-      }
+      };
 
       // =========================================
       // NEXT ALARM CALCULATION
@@ -1050,11 +1218,19 @@
             alarmDate.setDate(now.getDate() + dayDiff);
             
             const [hour, minute] = alarm.time.split(':');
-            const alarmHour24 = alarm.period === 'PM' && hour !== '12' ? 
-              parseInt(hour) + 12 : 
-              (alarm.period === 'AM' && hour === '12' ? 0 : parseInt(hour));
+            let alarmHour24 = parseInt(hour);
+            
+            if (alarm.period === 'PM' && hour !== '12') {
+              alarmHour24 += 12;
+            } else if (alarm.period === 'AM' && hour === '12') {
+              alarmHour24 = 0;
+            }
             
             alarmDate.setHours(alarmHour24, parseInt(minute), 0, 0);
+            
+            if (dayDiff === 0 && alarmDate <= now) {
+              alarmDate.setDate(alarmDate.getDate() + 7);
+            }
             
             const diff = alarmDate - now;
             if (diff > 0 && diff < minDiff) {
@@ -1071,18 +1247,22 @@
       // LOCAL STORAGE
       // =========================================
       function saveToStorage() {
-        localStorage.setItem('alarms', JSON.stringify(alarms));
+        localStorage.setItem('realAlarms', JSON.stringify(alarms));
       }
 
       function loadFromStorage() {
-        const saved = localStorage.getItem('alarms');
+        const saved = localStorage.getItem('realAlarms');
         if (saved) {
-          alarms = JSON.parse(saved);
+          try {
+            alarms = JSON.parse(saved);
+          } catch (e) {
+            console.log('Failed to load alarms');
+          }
         }
       }
 
       // =========================================
-      // DRAG TO REORDER (basic)
+      // DRAG TO REORDER
       // =========================================
       let draggedItem = null;
       
@@ -1116,6 +1296,31 @@
             alarms.splice(targetIndex, 0, draggedAlarm);
             
             renderAlarms();
+            saveToStorage();
+          }
+        }
+      });
+
+      // =========================================
+      // QUICK ADD
+      // =========================================
+      document.getElementById('quickTime').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const time = e.target.value.trim();
+          if (time.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)) {
+            const [hours, minutes] = time.split(':');
+            const hour12 = ((parseInt(hours) + 11) % 12 + 1).toString().padStart(2, '0');
+            const period = parseInt(hours) >= 12 ? 'PM' : 'AM';
+            
+            document.getElementById('alarmHour').value = hour12;
+            document.getElementById('alarmMinute').value = minutes;
+            document.getElementById('alarmPeriod').value = period;
+            document.getElementById('alarmLabel').value = 'Quick Alarm';
+            document.querySelectorAll('.day-btn').forEach(btn => {
+              btn.classList.toggle('active', [1,2,3,4,5].includes(parseInt(btn.dataset.day)));
+            });
+            document.getElementById('modalTitle').innerText = 'ADD ALARM';
+            document.getElementById('alarmModal').style.display = 'flex';
           }
         }
       });
@@ -1129,13 +1334,15 @@
       checkNextAlarm();
 
       // Auto-check permissions
-      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        Notification.requestPermission();
+      if (Notification.permission === 'default') {
+        setTimeout(() => {
+          permissionBanner.style.display = 'block';
+        }, 2000);
       }
 
       // Cleanup on unload
       window.addEventListener('beforeunload', () => {
-        stopAlarmSound();
+        stopRealAlarm();
       });
 
       // Click outside modal
@@ -1151,10 +1358,32 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal();
-          dismissAlarm();
+          if (document.getElementById('alarmAlert').style.display === 'flex') {
+            dismissAlarm();
+          }
         }
       });
 
+      // Enable audio on first user interaction
+      document.body.addEventListener('click', function enableAudio() {
+        alarmAudio.load();
+        document.body.removeEventListener('click', enableAudio);
+      }, { once: true });
+
+      // Expose functions globally
+      window.toggleAlarm = toggleAlarm;
+      window.deleteAlarm = deleteAlarm;
+      window.editAlarm = editAlarm;
+      window.usePreset = usePreset;
+      window.openAddModal = openAddModal;
+      window.closeModal = closeModal;
+      window.saveAlarm = saveAlarm;
+      window.dismissAlarm = dismissAlarm;
+      window.snoozeAlarm = snoozeAlarm;
+      window.requestPermissions = requestPermissions;
+
+      // Initialize
+      console.log('✅ REAL ALARM SYSTEM ACTIVE');
     })();
   </script>
 </body>
