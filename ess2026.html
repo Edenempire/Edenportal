@@ -327,6 +327,10 @@
       letter-spacing: 2px;
     }
 
+    #champion-story {
+      width: 80%;
+    };
+
     /* TEAMS – fully responsive grid */
     .teams-grid {
       display: grid;
@@ -487,7 +491,7 @@
 
   <main>
     <section id="champion-story" class="ops-card">
-      <div class="story-title"><h2 style="color:var(--strike-blue);">🏆 REIGNING CHAMPIONS</h2></div>
+      <div class="story-title"><h2 style="color:var(--strike-blue);">🏆 REIGNING CHAMPIONS: <span style="color: var(--alpha-red);">EDEN ALPHA</span></h2></div>
       <p style="color:var(--text-dim);">Can Alpha, as ancient Spartan warriors, retain their trophy against a 'full' modern airborne militant Delta Force side? | E.S.S 2026: locked and loaded.</p>
     </section>
 
@@ -517,8 +521,8 @@
     <section id="teams" class="ops-card">
       <div class="section-command"><h2>TEAMS · 5v5 TACTICAL</h2></div>
       <div class="teams-grid">
-        <div class="team-card"><div class="team-role">⚔️ ALPHA SQUAD</div><div class="starting-five"><div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div><div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div><div class="player-row"><span class="player-number">#07</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#19</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
-        <div class="team-card delta-force"><div class="team-role">🎯 DELTA FORCE</div><div class="starting-five"><div class="player-row"><span class="player-number">#04</span><span class="player-name">JOY</span><span class="player-position">DEF MID · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#10</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div><div class="player-row"><span class="player-number">#14</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#17</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING</span></div><div class="player-row"><span class="player-number">#05</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#12</span><span class="player-name">MASIYA</span><span class="player-position">MIDFIELDER</span></div></div></div>
+        <div class="team-card"><div class="team-role">⚔️ ALPHA SQUAD</div><div class="starting-five"><div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#10</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div><div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#12</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
+        <div class="team-card delta-force"><div class="team-role">🎯 DELTA FORCE</div><div class="starting-five"><div class="player-row"><span class="player-number">#05</span><span class="player-name">JOY</span><span class="player-position">DEF MID · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#07</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#14</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING</span></div><div class="player-row"><span class="player-number">#03</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#06</span><span class="player-name">MASIYA</span><span class="player-position">MIDFIELDER</span></div></div></div>
       </div>
     </section>
 
@@ -535,7 +539,7 @@
             <tr><td>BRONZE BOOT</td><td>—</td></tr>
             <tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr>
             <tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr>
-            <tr><td>GOAL OF THE SEASON</td><td>—</td></tr>
+            <tr><td>GOAL OF THE OPERATION</td><td>—</td></tr>
           </tbody>
         </table>
       </div>
@@ -566,9 +570,8 @@
   <!-- ADVANCED FOOTER – more data, responsive -->
   <footer>
     <div class="footer-grid">
-      <div class="live-data"><div><span>TIME (ZULU):</span><span id="liveTime"></span></div><div><span>WEATHER:</span><span id="liveWeather">18°C · CLEAR</span></div><div><span>WIND:</span><span>12km/h NW</span></div></div>
+      <div class="live-data"><div><span>TIME:</span><span id="liveTime"></span></div><div><span>WEATHER:</span><span id="liveWeather">18°C · CLEAR</span></div><div><span>WIND:</span><span>12km/h NW</span></div></div>
       <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div></div>
-      <div class="live-data"><div><span>BATTERY:</span><span>98%</span></div><div><span>GPS LOCK:</span><span>3D FIX</span></div><div><span>JAMMER:</span><span>OFF</span></div></div>
     </div>
     <div class="copyright">© <span>EDEN</span> · 2026 · ALL INTELLECTUAL PROPERTY</div>
   </footer>
@@ -623,16 +626,16 @@
         let g=i==1?'completed':i==2?'next':'upcoming';
         let dateStr = matches[i-1]?.date.toLocaleDateString('en-GB',{day:'2-digit', month:'short'}) || 'TBD';
         s+=`<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td></tr>`;
-        let scorers = (i===1) ? 'HOSS, VUYO' : (i%3===0) ? 'JOY, S\'PHE' : 'QUEENER';
-        let result = (i===1) ? '2-1' : (i===2) ? '0-0' : '—';
-        let motmName = (i===1) ? 'QUEENER' : (i===2) ? 'FROST' : 'TBD';
-        sum+=`<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${i===1?'alpha win':'locked'}</td></tr>`;
+        let scorers = (i===1) ? 'BAYANDA, HOSS, VUYO' : (i%3===0) ? 'JOY, S\'PHE' : 'QUEENER';
+        let result = (i===1) ? '2-1' : (i===2) ? '—' : '—';
+        let motmName = (i===1) ? 'QUEENER' : (i===2) ? '—' : 'TBD';
+        sum+=`<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${i===1?'alpha comeback from 1-0 down':'locked'}</td></tr>`;
         motm+=`<tr><td>M${i}</td><td>${motmName}</td></tr>`;
         def+=`<tr><td>M${i}</td><td>${i===1?'QUEENER':'—'}</td></tr>`;
       }
       document.getElementById('schedule-tbody').innerHTML = s;
       document.getElementById('summary-tbody').innerHTML = sum;
-      document.getElementById('scorers-tbody').innerHTML = '<tr><td>HOSS</td><td>1</td></tr><tr><td>BAYANDA</td><td>1</td></tr><tr><td>VUYO</td><td>1</td></tr><tr><td>QUEENER</td><td>1</td></tr>';
+      document.getElementById('scorers-tbody').innerHTML = '<tr><td>01. BAYANDA</td><td>1</td></tr><tr><td>02. HOSS</td><td>1</td></tr><tr><td>03. VUYO</td><td>1</td></tr>';
       document.getElementById('motm-tbody').innerHTML = motm;
       document.getElementById('defenders-tbody').innerHTML = def;
       document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr>';
