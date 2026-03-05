@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>ALARM HUB · REAL NOTIFICATIONS</title>
+  
+  <title>ALARM SYSTEM AUTOMATION</title>
   
   <!-- Critical for audio on mobile -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,8 +17,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="icon" type="image/png" href="logo.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="logo.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="logo.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="logo.png" sizes="192x192">
   
   <style>
+    
     /* ----- ROOT COMPACT ----- */
     * {
       margin: 0;
@@ -592,8 +604,11 @@
       .alert-content { padding: 25px; }
       .alert-content button { padding: 12px 20px; font-size: 1rem; }
     }
+    
   </style>
+  
 </head>
+  
 <body>
 
   <canvas id="matrixCanvas"></canvas>
@@ -601,7 +616,7 @@
   <header>
     <div class="header-left">
       <i class="fas fa-clock"></i>
-      <h1>ALARM HUB</h1>
+      <h1>ALARM SYSTEM AUTOMATION</h1>
     </div>
     <div class="time-display" id="liveTime">00:00</div>
   </header>
@@ -609,7 +624,7 @@
   <div class="main">
     <!-- PERMISSION BANNER -->
     <div id="permissionBanner">
-      <span>🔔 Enable notifications for real alarms</span>
+      <span>🔔 Enable notifications</span>
       <button onclick="requestPermissions()">ENABLE</button>
     </div>
 
@@ -697,6 +712,7 @@
   </audio>
 
   <script>
+    
     (function() {
       'use strict';
 
@@ -1383,8 +1399,29 @@
       window.requestPermissions = requestPermissions;
 
       // Initialize
-      console.log('✅ REAL ALARM SYSTEM ACTIVE');
+      console.log('✅ ALARM SYSTEM ACTIVE');
     })();
+    
   </script>
+  
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
