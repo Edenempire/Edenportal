@@ -489,16 +489,13 @@
     <div class="menu-panel-perm">
       <div class="menu-header" style="color:var(--strike-blue); border-bottom:2px solid; padding-bottom:0.5rem;">◈ TAC NAV ◈</div>
       <div class="menu-items">
-        <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView({behavior:'smooth'})">🏆 CHAMP</div>
+        <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView({behavior:'smooth'})">🏆 CHAMPS</div>
         <div class="menu-item" onclick="document.getElementById('league-table').scrollIntoView({behavior:'smooth'})">📊 LEAGUE</div>
         <div class="menu-item" onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})">📅 SCHEDULE</div>
         <div class="menu-item" onclick="document.getElementById('match-summary').scrollIntoView({behavior:'smooth'})">📋 SUMMARY</div>
         <div class="menu-item" onclick="document.getElementById('scorers').scrollIntoView({behavior:'smooth'})">🎯 SNIPERS</div>
         <div class="menu-item" onclick="document.getElementById('teams').scrollIntoView({behavior:'smooth'})">👥 TEAMS</div>
         <div class="menu-item" onclick="document.getElementById('awards').scrollIntoView({behavior:'smooth'})">🏅 AWARDS</div>
-        <div class="menu-item" onclick="document.getElementById('audio-panel').scrollIntoView({behavior:'smooth'})">🔊 COMMS</div>
-        <div class="menu-item" onclick="alert('Frequency hopping · AES-256 · secure')">📡 ENCRYPT</div>
-        <div class="menu-item" onclick="document.getElementById('bgTrack').volume=0.1; alert('whisper mode')">🔉 STEALTH</div>
       </div>
     </div>
   </nav>
@@ -658,7 +655,7 @@
         let loc = (i===1) ? 'HARBOUR' : (i===2) ? 'ST. GEORGES PARK' : 'TBD';
         scheduleRows += `<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td><td>${loc}</td></tr>`;
         
-        let scorers = (i===1) ? 'BAYANDA, HOSS, VUYO' : (i%3===0) ? 'JOY, S\'PHE' : 'QUEENER';
+        let scorers = (i===1) ? 'BAYANDA, HOSS, VUYO' : (i%3===0) ? '--' : '--';
         let result = (i===1) ? '2-1' : (i===2) ? '—' : '—';
         let motmName = (i===1) ? 'QUEENER' : (i===2) ? '—' : 'TBD';
         summaryRows += `<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${loc}</td><td>${i===1?'alpha comeback':'locked'}</td></tr>`;
@@ -683,6 +680,8 @@
 </body>
   
 </html>
+
+// ALL CODE WRITTEN BY OLAMA KHAYYIM. 
 
 
 
