@@ -5,20 +5,16 @@
 <head>
   
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  
   <meta name="theme-color" content="#000810">
-  
   <meta name="color-scheme" content="dark">
-  
   <link rel="icon" href="images/esslogo1.png">
   
-  <title>E.S.S 2026</title>
+  <title>E.S.S 2026 · FULL COMMS</title>
   
   <style>
     
-    /* ========== RESET – NO SHADOWS, NO GLOW, PEAK RESPONSIVENESS ========== */
+    /* ========== RESET – NO SHADOWS, FULL RESPONSIVENESS ========== */
     * {
       margin: 0;
       padding: 0;
@@ -36,16 +32,11 @@
       --text-dim: #b0d0e5;
       --panel-bg: rgba(0, 25, 35, 0.7);
       --header-solid: #000f18;
-      --header-height: clamp(150px, 22vh, 200px);     /* adaptive header */
-      --rail-width: clamp(60px, 6vw, 85px);           /* side controls width */
+      --header-height: clamp(150px, 22vh, 200px);     
+      --rail-width: clamp(70px, 7vw, 100px);          /* slightly wider for controls */
     }
 
-    /* universal responsiveness */
-    html { 
-      scroll-behavior: smooth; 
-      width: 100%; 
-      height: 100%; 
-    }
+    html { scroll-behavior: smooth; width: 100%; height: 100%; }
     body {
       font-family: 'Inter', 'Segoe UI', 'Courier New', monospace;
       background: var(--black-bg);
@@ -57,7 +48,7 @@
       position: relative;
     }
 
-    /* ===== RADAR – one clean circle, uniform small dots ===== */
+    /* ===== RADAR – uniform small dots, no variations ===== */
     .radar-grid {
       position: fixed;
       top: 0;
@@ -100,7 +91,6 @@
     }
     @keyframes f22spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* CONTACT DOTS – UNIFORM SMALL SIZE (8px), all same, pure green */
     .contact-dot {
       position: absolute;
       width: 8px;                        /* fixed small size */
@@ -140,7 +130,7 @@
       width: 100%;
       height: var(--header-height);
       background: var(--header-solid);
-      border-bottom: 8px solid var(--strike-blue);
+      border-bottom: 6px solid var(--strike-blue);    /* thinner border */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -171,7 +161,7 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      border: 6px solid var(--strike-blue);
+      border: 4px solid var(--strike-blue);           /* thinner border */
       background: #001c28;
       display: block;
     }
@@ -183,17 +173,16 @@
       font-family: 'Courier New', monospace;
       background: transparent;
       padding: 0.2rem 0;
-      display: inline-block;
       letter-spacing: 4px;
       border: none;
       white-space: nowrap;
     }
 
-    /* ===== SIDE CONTROLS – CENTERED ON SCREEN (not page) ===== */
+    /* ===== SIDE CONTROLS – LOWERED (shifted down a bit) ===== */
     .tactical-menu-permanent {
       position: fixed;
       left: 0;
-      top: 50vh;                          /* 50% of viewport height */
+      top: 55vh;                          /* slightly lower than 50% */
       transform: translateY(-50%);
       width: var(--rail-width);
       z-index: 10001;
@@ -208,7 +197,7 @@
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
-      border: 3px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);           /* thinner border */
       border-left: none;
       display: flex;
       align-items: center;
@@ -225,9 +214,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%) translateX(-30px);
-      width: min(300px, 80vw);            /* responsive width */
-      background: rgba(0, 20, 30, 0.95);
-      border: 3px solid var(--strike-blue);
+      width: min(320px, 80vw);            
+      background: rgba(0, 20, 30, 0.98);
+      border: 2px solid var(--strike-blue);           /* thinner */
       border-left: none;
       padding: 1rem;
       opacity: 0;
@@ -242,13 +231,13 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateY(-50%) translateX(calc(var(--rail-width) + 10px));
+      transform: translateY(-50%) translateX(calc(var(--rail-width) + 8px));
     }
 
     .menu-item {
       padding: 0.8rem;
       margin: 0.4rem 0;
-      border: 2px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);           /* thinner */
       color: var(--strike-blue);
       font-weight: 700;
       text-transform: uppercase;
@@ -259,11 +248,11 @@
     }
     .menu-item:hover { background: var(--strike-blue); color: black; }
 
-    /* RIGHT SIDE – centered on screen */
+    /* RIGHT SIDE – also lowered */
     .quick-scroll-permanent {
       position: fixed;
       right: 0;
-      top: 50vh;                          /* exact middle of viewport */
+      top: 55vh;                          /* same shift down */
       transform: translateY(-50%);
       width: var(--rail-width);
       z-index: 10001;
@@ -278,7 +267,7 @@
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
-      border: 3px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);           /* thinner */
       border-right: none;
       display: flex;
       align-items: center;
@@ -290,7 +279,7 @@
     }
     .scroll-btn-perm:hover { background: var(--strike-blue); color: #000; }
 
-    /* MAIN – responsive spacing */
+    /* MAIN – spacing */
     main {
       width: 100%;
       margin: calc(var(--header-height) + 2rem) 0 2rem 0;
@@ -305,9 +294,9 @@
     .ops-card {
       width: 100%;
       background: rgba(0, 20, 30, 0.65);
-      border: 3px solid var(--border-light);
-      border-left: 10px solid var(--strike-blue);
-      border-right: 3px solid var(--strike-blue);
+      border: 2px solid var(--border-light);          /* thinner */
+      border-left: 6px solid var(--strike-blue);      /* thinner */
+      border-right: 2px solid var(--strike-blue);
       padding: clamp(1rem, 3vw, 2rem);
     }
 
@@ -315,7 +304,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 4px solid var(--strike-blue);
+      border-bottom: 3px solid var(--strike-blue);    /* thinner */
       margin-bottom: 1.5rem;
       padding-bottom: 0.5rem;
       flex-wrap: wrap;
@@ -327,11 +316,14 @@
       letter-spacing: 2px;
     }
 
+    /* champion section: 80% width + centered */
     #champion-story {
       width: 80%;
-    };
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    /* TEAMS – fully responsive grid */
+    /* TEAMS grid */
     .teams-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -340,8 +332,8 @@
 
     .team-card {
       background: rgba(0, 30, 40, 0.7);
-      border: 3px solid var(--strike-blue);
-      border-left: 14px solid var(--alpha-red);
+      border: 2px solid var(--strike-blue);           /* thinner */
+      border-left: 10px solid var(--alpha-red);
       padding: 1.2rem;
     }
     .team-card.delta-force { border-left-color: var(--delta-green); }
@@ -350,7 +342,7 @@
       font-size: clamp(1.4rem, 3vw, 2rem);
       font-weight: 800;
       color: var(--strike-blue);
-      border-bottom: 3px dashed var(--strike-blue);
+      border-bottom: 2px dashed var(--strike-blue);   /* thinner */
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
     }
@@ -360,7 +352,7 @@
       align-items: center;
       gap: 0.8rem;
       background: rgba(0, 20, 30, 0.8);
-      border: 2px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);           /* thinner */
       padding: 0.5rem 0.8rem;
       margin: 0.5rem 0;
       flex-wrap: wrap;
@@ -379,21 +371,26 @@
     }
     .delta-force .player-captain { background: var(--delta-green); }
 
-    /* TABLES – scrollable on small screens */
+    /* TABLES – location column added */
     .table-container {
       width: 100%;
       overflow-x: auto;
-      border: 3px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);           /* thinner */
       background: rgba(0, 15, 20, 0.7);
     }
-    table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    table { width: 100%; border-collapse: collapse; min-width: 550px; }
     th, td { border: 2px solid var(--strike-blue); padding: 0.6rem; color: var(--text-primary); }
     th { background: rgba(0, 40, 60, 0.8); color: var(--strike-blue); }
+
+    /* color key highlighting for schedule rows */
+    .completed-row { background: rgba(74, 222, 128, 0.15); }  /* soft green */
+    .next-row { background: rgba(96, 165, 250, 0.25); }       /* blue */
+    .upcoming-row { background: rgba(251, 146, 60, 0.1); }     /* orange tint */
 
     /* FOOTER – advanced, fully responsive */
     footer {
       background: rgba(0, 15, 25, 0.85);
-      border-top: 8px solid var(--strike-blue);
+      border-top: 6px solid var(--strike-blue);        /* thinner */
       padding: 2rem 1rem 1rem;
       margin-top: 3rem;
       width: 100%;
@@ -408,7 +405,7 @@
     }
     .live-data {
       background: rgba(0, 20, 28, 0.7);
-      border: 2px solid var(--strike-blue);
+      border: 2px solid var(--strike-blue);            /* thinner */
       padding: 0.8rem 1.2rem;
       min-width: 200px;
     }
@@ -421,23 +418,42 @@
     .copyright {
       text-align: center;
       color: var(--text-dim);
-      border-top: 2px solid var(--strike-blue);
+      border-top: 2px solid var(--strike-blue);        /* thinner */
       padding-top: 1.5rem;
       font-size: clamp(0.6rem, 1.5vw, 0.8rem);
     }
     .copyright span { color: var(--strike-blue); }
 
-    /* no shadows anywhere */
     * { box-shadow: none !important; filter: none !important; text-shadow: none !important; }
 
-    /* responsive breakpoints for extreme small */
+    /* extra controls panel inside settings */
+    .advanced-settings-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-btn {
+      border: 2px solid var(--strike-blue);
+      background: transparent;
+      color: var(--strike-blue);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.1s;
+      font-size: 0.85rem;
+    }
+    .audio-btn:hover { background: var(--strike-blue); color: #000; }
+
     @media (max-width: 480px) {
       .player-row { flex-direction: column; align-items: flex-start; }
       .player-captain { align-self: flex-start; }
       .menu-panel-perm { width: 220px; }
+      #champion-story { width: 95%; }
     }
     @media (min-width: 2000px) {
-      :root { --rail-width: 100px; }
+      :root { --rail-width: 110px; }
     }
     
   </style>
@@ -446,29 +462,32 @@
   
 <body>
   
-  <!-- RADAR – uniform small dots -->
+  <!-- RADAR – uniform dots (all 8px) -->
   <div class="radar-grid" id="radarGrid">
     <div class="f22-radar"></div>
     <div class="scan-arm"></div>
     <div class="radar-noise"></div>
   </div>
 
-  <audio id="bgTrack" loop preload="auto" autoplay style="display:none;"><source src="1.mp3" type="audio/mpeg"></audio>
+  <!-- AUDIO: AUTOPLAY, ROBUST, LOOP FOREVER (no interaction needed) -->
+  <audio id="bgTrack" loop preload="auto" autoplay style="display:none;">
+    <source src="1.mp3" type="audio/mpeg">
+  </audio>
 
   <header class="command-center">
     <div class="header-emblem">
       <div class="logo-container">
-        <img src="images/esslogo1.png" alt="ESS" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23000%22 stroke=%22%231e90ff%22 stroke-width=%228%22/><text x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22%231e90ff%22 font-family=%22monospace%22>ESS</text></svg>';">
+        <img src="images/esslogo1.png" alt="ESS" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23000%22 stroke=%22%231e90ff%22 stroke-width=%226%22/><text x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22%231e90ff%22 font-family=%22monospace%22>ESS</text></svg>';">
       </div>
       <span class="countdown-timer" id="mainCountdown">--D --H --M --S</span>
     </div>
   </header>
 
-  <!-- LEFT MENU – centered on screen (50vh) -->
+  <!-- LEFT MENU – lowered a bit (55vh) -->
   <nav class="tactical-menu-permanent">
     <div class="menu-trigger-perm">☰</div>
     <div class="menu-panel-perm">
-      <div class="menu-header" style="color:var(--strike-blue); border-bottom:3px solid; padding-bottom:0.5rem;">◈ TAC NAV ◈</div>
+      <div class="menu-header" style="color:var(--strike-blue); border-bottom:2px solid; padding-bottom:0.5rem;">◈ TAC NAV ◈</div>
       <div class="menu-items">
         <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView({behavior:'smooth'})">🏆 CHAMP</div>
         <div class="menu-item" onclick="document.getElementById('league-table').scrollIntoView({behavior:'smooth'})">📊 LEAGUE</div>
@@ -478,18 +497,21 @@
         <div class="menu-item" onclick="document.getElementById('teams').scrollIntoView({behavior:'smooth'})">👥 TEAMS</div>
         <div class="menu-item" onclick="document.getElementById('awards').scrollIntoView({behavior:'smooth'})">🏅 AWARDS</div>
         <div class="menu-item" onclick="document.getElementById('audio-panel').scrollIntoView({behavior:'smooth'})">🔊 COMMS</div>
+        <div class="menu-item" onclick="alert('Frequency hopping · AES-256 · secure')">📡 ENCRYPT</div>
+        <div class="menu-item" onclick="document.getElementById('bgTrack').volume=0.1; alert('whisper mode')">🔉 STEALTH</div>
       </div>
     </div>
   </nav>
 
-  <!-- RIGHT SCROLL – centered on screen -->
+  <!-- RIGHT SCROLL – lowered -->
   <div class="quick-scroll-permanent">
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:0, behavior:'smooth'})">🔼</div>
-    <div class="scroll-btn-perm" onclick="window.scrollTo({top: window.innerHeight * 1.5, behavior:'smooth'})">⏺️</div>
+    <div class="scroll-btn-perm" onclick="window.scrollTo({top: window.innerHeight * 1.8, behavior:'smooth'})">⏺️</div>
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'})">🔽</div>
   </div>
 
   <main>
+    <!-- 80% width, centered -->
     <section id="champion-story" class="ops-card">
       <div class="story-title"><h2 style="color:var(--strike-blue);">🏆 REIGNING CHAMPIONS: <span style="color: var(--alpha-red);">EDEN ALPHA</span></h2></div>
       <p style="color:var(--text-dim);">Can Alpha, as ancient Spartan warriors, retain their trophy against a 'full' modern airborne militant Delta Force side? | E.S.S 2026: locked and loaded.</p>
@@ -500,16 +522,24 @@
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody id="league-tbody"></tbody></table></div>
     </section>
 
+    <!-- SCHEDULE now includes LOCATION column -->
     <section id="schedule" class="ops-card">
       <div class="section-command"><h2>OPERATION SCHEDULE · 38 GAMES</h2></div>
-      <div class="color-key" style="display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;"><span><span style="background:#4ade80; width:16px; height:16px; display:inline-block;"></span> COMPLETED</span><span><span style="background:#60a5fa; width:16px; height:16px; display:inline-block;"></span> NEXT</span><span><span style="background:#fb923c; width:16px; height:16px; display:inline-block;"></span> UPCOMING</span></div>
-      <div class="table-container"><table><thead><tr><th>MISSION</th><th>DATE (14:00)</th></tr></thead><tbody id="schedule-tbody"></tbody></table></div>
+      <div class="color-key" style="display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <span><span style="background:#4ade80; width:16px; height:16px; display:inline-block;"></span> COMPLETED</span>
+        <span><span style="background:#60a5fa; width:16px; height:16px; display:inline-block;"></span> NEXT</span>
+        <span><span style="background:#fb923c; width:16px; height:16px; display:inline-block;"></span> UPCOMING</span>
+      </div>
+      <div class="table-container">
+        <table><thead><tr><th>MISSION</th><th>DATE (14:00)</th><th>LOCATION</th></tr></thead><tbody id="schedule-tbody"></tbody></table>
+      </div>
     </section>
 
+    <!-- SUMMARY now includes LOCATION column (INTEL remains) -->
     <section id="match-summary" class="ops-card">
       <div class="section-command"><h2>OPERATION SUMMARY</h2></div>
       <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>INTEL</th></tr></thead><tbody id="summary-tbody"></tbody></table>
+        <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead><tbody id="summary-tbody"></tbody></table>
       </div>
     </section>
 
@@ -522,56 +552,40 @@
       <div class="section-command"><h2>TEAMS · 5v5 TACTICAL</h2></div>
       <div class="teams-grid">
         <div class="team-card"><div class="team-role">⚔️ ALPHA SQUAD</div><div class="starting-five"><div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#10</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div><div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#12</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
-        <div class="team-card delta-force"><div class="team-role">🎯 DELTA FORCE</div><div class="starting-five"><div class="player-row"><span class="player-number">#05</span><span class="player-name">JOY</span><span class="player-position">DEF MID · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#07</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#14</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING</span></div><div class="player-row"><span class="player-number">#03</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#06</span><span class="player-name">MASIYA</span><span class="player-position">MIDFIELDER</span></div></div></div>
+        <div class="team-card delta-force"><div class="team-role">🎯 DELTA FORCE</div><div class="starting-five"><div class="player-row"><span class="player-number">#05</span><span class="player-name">JOY</span><span class="player-position">DEF MID · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#07</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#14</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div><div class="player-row"><span class="player-number">#03</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#06</span><span class="player-name">MASIYA</span><span class="player-position">MIDFIELDER</span></div></div></div>
       </div>
     </section>
 
-    <!-- FULL END OF OPERATION AWARDS (8 rows restored) -->
+    <!-- AWARDS unchanged -->
     <section id="awards" class="ops-card">
       <div class="section-command"><h2>END OF OPERATION AWARDS</h2></div>
       <div class="table-container">
-        <table>
-          <thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead>
-          <tbody id="awards-tbody">
-            <tr><td>MVP</td><td>—</td></tr>
-            <tr><td>GOLDEN BOOT</td><td>—</td></tr>
-            <tr><td>SILVER BOOT</td><td>—</td></tr>
-            <tr><td>BRONZE BOOT</td><td>—</td></tr>
-            <tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr>
-            <tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr>
-            <tr><td>GOAL OF THE OPERATION</td><td>—</td></tr>
-          </tbody>
-        </table>
+        <table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead><tbody id="awards-tbody"><tr><td>MVP</td><td>—</td></tr><tr><td>GOLDEN BOOT</td><td>—</td></tr><tr><td>SILVER BOOT</td><td>—</td></tr><tr><td>BRONZE BOOT</td><td>—</td></tr><tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr><tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr><tr><td>GOAL OF THE OPERATION</td><td>—</td></tr></tbody></table>
       </div>
     </section>
 
-    <!-- SETTINGS SECTION – MORE CONTROLS ADDED -->
+    <!-- SETTINGS – more buttons & controls -->
     <section id="audio-panel" class="ops-card">
       <div class="section-command"><h2>SETTINGS · COMMS</h2></div>
-      <div class="audio-command" style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center;">
-        <div class="audio-controls" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').play()">▶️ ARM</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').pause()">⏸️ MUTE</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').volume=0.5">50%</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').volume=0.2">20%</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').volume=1.0">100%</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="if(document.getElementById('bgTrack').loop) { document.getElementById('bgTrack').loop = false; this.innerText='🔁 LOOP OFF'; } else { document.getElementById('bgTrack').loop = true; this.innerText='🔁 LOOP ON'; }">🔁 LOOP ON</span>
-          <span class="audio-btn" style="border:2px solid var(--strike-blue); padding:0.5rem 1rem; cursor:pointer;" onclick="document.getElementById('bgTrack').currentTime=0;">⏮️ RESTART</span>
-        </div>
-        <div class="live-data">
-          <div><span>FREQ:</span><span>142.650 MHz</span></div>
-          <div><span>ENCRYPT:</span><span>AES-256</span></div>
-          <div><span>CODEC:</span><span>MIL-STD</span></div>
+      <div class="advanced-settings-grid">
+        <div class="audio-controls" style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').play()">▶️ ARM</span>
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').pause()">⏸️ MUTE</span>
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.5">50%</span>
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.2">20%</span>
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=1.0">100%</span>
+          <span class="audio-btn" onclick="let a=document.getElementById('bgTrack'); a.loop=!a.loop; this.innerText=a.loop?'🔁 LOOP ON':'🔁 LOOP OFF';">🔁 LOOP ON</span>
+          <span class="audio-btn" onclick="document.getElementById('bgTrack').currentTime=0;">⏮️ RESTART</span>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ADVANCED FOOTER – more data, responsive -->
+  <!-- ADVANCED FOOTER -->
   <footer>
     <div class="footer-grid">
       <div class="live-data"><div><span>TIME:</span><span id="liveTime"></span></div><div><span>WEATHER:</span><span id="liveWeather">18°C · CLEAR</span></div><div><span>WIND:</span><span>12km/h NW</span></div></div>
-      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div></div>
+      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div><div><span>MISSION:</span><span>M02 · ST. GEORGES</span></div></div>
     </div>
     <div class="copyright">© <span>EDEN</span> · 2026 · ALL INTELLECTUAL PROPERTY</div>
   </footer>
@@ -579,22 +593,34 @@
   <script>
     
     (function() {
-      const audio = document.getElementById('bgTrack'); if(audio) { audio.volume = 0.25; audio.play().catch(()=>{}); audio.loop = true; }
+      // AUTO BACKGROUND – robust forever
+      const audio = document.getElementById('bgTrack');
+      if(audio) {
+        audio.volume = 0.25;
+        audio.loop = true;
+        let playPromise = audio.play();
+        if(playPromise !== undefined) {
+          playPromise.catch(() => {
+            // retry once on user interaction (some browsers require gesture)
+            document.addEventListener('click', function once() {
+              audio.play();
+              document.removeEventListener('click', once);
+            }, { once: true });
+          });
+        }
+      }
 
-      // RADAR DOTS – UNIFORM SMALL (8px)
+      // RADAR DOTS – uniform small (8px)
       const radarGrid = document.getElementById('radarGrid');
       function generateDots() {
         const existing = document.querySelectorAll('.contact-dot');
         existing.forEach(d => d.remove());
-        const count = Math.floor(Math.random() * 30) + 15; // 15-45 dots
+        const count = Math.floor(Math.random() * 30) + 15; // 15-45
         for (let i=0; i<count; i++) {
           const dot = document.createElement('div');
           dot.className = 'contact-dot';
-          const x = Math.random() * 100;
-          const y = Math.random() * 100;
-          dot.style.left = x + '%';
-          dot.style.top = y + '%';
-          // size fixed 8px – no variation
+          dot.style.left = Math.random() * 100 + '%';
+          dot.style.top = Math.random() * 100 + '%';
           radarGrid.appendChild(dot);
         }
         document.getElementById('dotCount') && (document.getElementById('dotCount').innerText = count);
@@ -619,27 +645,34 @@
       }
       setInterval(updateCountdown, 500); updateCountdown();
 
-      // populate tables
+      // POPULATE ALL TABLES + LOCATION DATA
+      // league (static)
       document.getElementById('league-tbody').innerHTML = '<tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td></tr><tr><td style="color:#2e7d32;">EDEN DELTA</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>';
-      let s='',sum='',motm='',def='';
-      for(let i=1;i<=38;i++){ 
-        let g=i==1?'completed':i==2?'next':'upcoming';
+      
+      let scheduleRows = '', summaryRows = '', motmRows = '', defRows = '';
+      const locations = ['HARBOUR', 'ST. GEORGES PARK', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD'];
+      
+      for(let i=1; i<=38; i++) {
+        let g = (i===1) ? 'completed' : (i===2) ? 'next' : 'upcoming';
         let dateStr = matches[i-1]?.date.toLocaleDateString('en-GB',{day:'2-digit', month:'short'}) || 'TBD';
-        s+=`<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td></tr>`;
+        let loc = (i===1) ? 'HARBOUR' : (i===2) ? 'ST. GEORGES PARK' : 'TBD';
+        scheduleRows += `<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td><td>${loc}</td></tr>`;
+        
         let scorers = (i===1) ? 'BAYANDA, HOSS, VUYO' : (i%3===0) ? 'JOY, S\'PHE' : 'QUEENER';
         let result = (i===1) ? '2-1' : (i===2) ? '—' : '—';
         let motmName = (i===1) ? 'QUEENER' : (i===2) ? '—' : 'TBD';
-        sum+=`<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${i===1?'alpha comeback from 1-0 down':'locked'}</td></tr>`;
-        motm+=`<tr><td>M${i}</td><td>${motmName}</td></tr>`;
-        def+=`<tr><td>M${i}</td><td>${i===1?'QUEENER':'—'}</td></tr>`;
+        summaryRows += `<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${loc}</td><td>${i===1?'alpha comeback':'locked'}</td></tr>`;
+        motmRows += `<tr><td>M${i}</td><td>${motmName}</td></tr>`;
+        defRows += `<tr><td>M${i}</td><td>${i===1?'QUEENER':'—'}</td></tr>`;
       }
-      document.getElementById('schedule-tbody').innerHTML = s;
-      document.getElementById('summary-tbody').innerHTML = sum;
+      document.getElementById('schedule-tbody').innerHTML = scheduleRows;
+      document.getElementById('summary-tbody').innerHTML = summaryRows;
       document.getElementById('scorers-tbody').innerHTML = '<tr><td>01. BAYANDA</td><td>1</td></tr><tr><td>02. HOSS</td><td>1</td></tr><tr><td>03. VUYO</td><td>1</td></tr>';
-      document.getElementById('motm-tbody').innerHTML = motm;
-      document.getElementById('defenders-tbody').innerHTML = def;
+      document.getElementById('motm-tbody').innerHTML = motmRows;
+      document.getElementById('defenders-tbody').innerHTML = defRows;
       document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr>';
 
+      // live time/weather
       function updateLive() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
       setInterval(updateLive,1000); updateLive();
       setInterval(()=>{let w=['18°C · CLEAR','16°C · LIGHT RAIN','21°C · HAZE','14°C · SCOUT']; document.getElementById('liveWeather').innerText = w[Math.floor(Math.random()*w.length)];},15000);
@@ -650,6 +683,15 @@
 </body>
   
 </html>
+
+
+
+
+
+
+
+
+
 
 
 
