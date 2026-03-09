@@ -1,600 +1,425 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAYYIM · TIER 1 · FULL MILITARY PROFILE</title>
-    <!-- Font Awesome 6 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    
+    <title>Olama Khayyim extended profile</title>
+    <!-- Font Awesome 6 (icons for clean metadata) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
         }
 
         body {
-            background: #03080e;
-            min-height: 100vh;
+            background: #05131d; /* deep navy background – military database */
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', Arial, sans-serif;
+            line-height: 1.5;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 24px;
+            padding: 20px 16px;
+            color: #e0e9f0;
         }
 
-        /* single operator dossier – only Khayyim */
-        .khayyim-dossier {
-            max-width: 1100px;
+        /* main container – Wikipedia / database width */
+        .database-entry {
+            max-width: 1000px;
             width: 100%;
-            background: #0c141f;
-            border: 1px solid #2a4b66;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 0 1px #1a3343 inset;
-            border-radius: 32px;
+            background: #0e1e2b; /* dark but readable background, same family */
+            border: 1px solid #2d4d65;
+            border-radius: 12px;
             overflow: hidden;
         }
 
-        /* header – access & time (generic but part of profile) */
-        .top-clearance {
-            background: #0b1a26;
-            padding: 14px 30px;
+        /* header bar – like wikipedia top bar but mil-spec */
+        .db-header {
+            background: #0b1f2d;
+            padding: 16px 24px;
+            border-bottom: 3px solid #3f6d8c;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #1d4a66;
-            color: #b0d2ec;
             flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .title-section h1 {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .title-section .subhead {
+            color: #c3ddf5;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 6px;
         }
 
         .access-badge {
-            background: #102433;
-            padding: 6px 22px;
-            border-radius: 40px;
-            border-left: 5px solid #deb887;
-            font-weight: 700;
-            color: #e4f0ff;
-            letter-spacing: 0.5px;
+            background: #1c3d55;
+            padding: 8px 28px;
+            border-radius: 30px;
+            border-left: 6px solid #dbb05c;
+            font-weight: 600;
+            color: #f0f9ff;
+            font-size: 0.95rem;
         }
 
         .access-badge i {
-            color: #70dbc0;
+            color: #71cfbb;
             margin-right: 8px;
         }
 
-        .time-strip {
-            display: flex;
-            gap: 20px;
-        }
-
-        .time-strip span {
-            background: #102d3f;
-            padding: 4px 18px;
-            border-radius: 30px;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #2f6585;
-        }
-
-        /* MAIN PROFILE CARD — KHAYYIM CENTRIC */
-        .profile-core {
-            display: flex;
-            flex-direction: column;
-            padding: 20px 30px 30px 30px;
-        }
-
-        /* top identity row: image + title + key stats */
-        .identity-strip {
+        /* navigation tabs – wikipedia style */
+        .nav-tabs {
+            background: #0d2536;
+            padding: 8px 24px 0 24px;
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            background: #0a1d2c;
-            border-radius: 50px;
-            padding: 20px 30px;
-            margin-bottom: 25px;
-            border: 1px solid #386885;
-            align-items: center;
+            gap: 4px 20px;
+            border-bottom: 1px solid #2e6380;
+            font-size: 1rem;
         }
 
-        .portrait-block {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .insignia {
-            width: 100px;
-            height: 100px;
-            background: #152e40;
-            border-radius: 50%;
-            border: 4px solid #b7955a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 0 3px #0b141e;
-        }
-
-        .insignia i {
-            font-size: 4rem;
-            color: #acd3f0;
-        }
-
-        .name-callsign h1 {
-            color: white;
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            line-height: 1.1;
-        }
-
-        .name-callsign .callsign {
-            color: #fadf9e;
-            font-size: 1.5rem;
-            background: #1d384b;
-            display: inline-block;
-            padding: 4px 30px;
-            border-radius: 60px;
-            border: 1px solid #8ab3cf;
-        }
-
-        .airforce-tag {
-            margin-left: auto;
-            background: #002b3b;
-            padding: 12px 30px;
-            border-radius: 60px;
-            border-right: 8px solid #e0b03b;
-        }
-
-        .airforce-tag .big {
-            font-size: 1.8rem;
-            color: white;
-            font-weight: 700;
-        }
-
-        .airforce-tag .small {
-            color: #aed6ff;
-            font-size: 0.9rem;
-        }
-
-        /* main dossier grid: left vitals / right service */
-        .dossier-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 2fr;
-            gap: 20px;
-            background: #0f1f2d;
-            border-radius: 40px;
-            padding: 25px;
-            border: 1px solid #2b5777;
-        }
-
-        /* left column – detailed vitals */
-        .vitals-panel {
-            background: #0b1b29;
-            border-radius: 30px;
-            padding: 22px 18px;
-            border: 1px solid #2a5e7a;
-        }
-
-        .section-title {
-            color: #dbbc7c;
-            font-size: 1.1rem;
-            border-bottom: 2px solid #2a6383;
-            padding-bottom: 8px;
-            margin: 20px 0 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .section-title i {
-            font-size: 1.2rem;
-            color: #e8b85c;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dotted #2f5775;
-            padding: 12px 0;
-        }
-
-        .stat-label {
-            color: #9fc1db;
+        .nav-tabs span {
+            color: #b6d6f2;
+            padding: 8px 0 6px 0;
+            border-bottom: 3px solid transparent;
+            transition: 0.1s;
+            cursor: default;
             font-weight: 500;
         }
 
-        .stat-value {
+        .nav-tabs span.active {
             color: white;
+            border-bottom-color: #e9c46a;
             font-weight: 600;
-            font-family: 'Courier New', monospace;
-            background: #142837;
-            padding: 2px 12px;
-            border-radius: 30px;
         }
 
-        .fullwidth-stat {
-            background: #103544;
-            padding: 18px 15px;
-            border-radius: 24px;
-            margin: 20px 0;
-            border-left: 8px solid #d4a259;
+        /* main two-column layout – exactly like wiki infobox + content */
+        .layout-wiki {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            padding: 28px 24px;
         }
 
-        .fullwidth-stat .question {
-            color: #c0d9f0;
-            font-size: 0.8rem;
+        /* left column – infobox (military style) */
+        .infobox {
+            background: #0a1e2e;
+            border: 1px solid #2c5a78;
+            border-radius: 12px;
+            padding: 18px 16px;
+            height: fit-content;
         }
 
-        .fullwidth-stat .answer {
-            color: white;
+        .infobox-title {
+            background: #143e57;
+            color: #faeec2;
+            padding: 10px 14px;
+            margin: -18px -16px 18px -16px;
+            border-radius: 12px 12px 0 0;
             font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .special-mil {
-            background: #06212f;
-            padding: 18px;
-            border-radius: 24px;
-            margin-top: 25px;
-        }
-
-        .special-mil h3 {
-            color: #ccb185;
-            font-size: 0.9rem;
-        }
-
-        .special-mil p {
-            color: #e3f0fa;
-            font-size: 1.1rem;
             font-weight: 600;
+            border-bottom: 2px solid #c5a150;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* right column – service & operational */
-        .service-panel {
-            background: #0b1b29;
-            border-radius: 30px;
-            padding: 22px 22px;
+        .infobox-title i {
+            color: #ffd966;
         }
 
-        .bio-card {
-            background: #123141;
-            border-radius: 28px;
-            padding: 18px 24px;
-            margin-bottom: 25px;
+        .img-placeholder {
+            background: #12394d;
+            height: 140px;
+            border-radius: 10px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            color: #b8dff5;
+            font-size: 3rem;
+            border: 1px solid #54809b;
+            margin-bottom: 20px;
         }
 
-        .bio-item {
-            min-width: 140px;
+        .info-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px dotted #2a5773;
         }
 
-        .bio-item .tag {
-            color: #aac7e2;
-            font-size: 0.7rem;
+        .info-label {
+            width: 38%;
+            color: #b7d3ed;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            width: 62%;
+            color: white;
+            font-weight: 600;
+        }
+
+        .info-value .small-note {
+            font-weight: 400;
+            color: #bedcf5;
+            font-size: 0.85rem;
+        }
+
+        .full-highlight {
+            background: #0e3146;
+            padding: 16px 15px;
+            border-radius: 12px;
+            margin: 20px 0 10px;
+            border-left: 7px solid #dbb158;
+        }
+
+        .full-highlight .label {
+            color: #cfdef5;
+            font-size: 0.8rem;
             text-transform: uppercase;
         }
 
-        .bio-item .value {
+        .full-highlight .value {
             color: white;
             font-size: 1.4rem;
             font-weight: 600;
         }
 
-        .shift-block {
-            background: #08212f;
-            border-radius: 30px;
-            padding: 22px 25px;
-            border: 1px solid #34749b;
-            margin-bottom: 25px;
+        /* right column – wikipedia style content sections */
+        .main-content {
+            background: #0a1e2e;
+            border: 1px solid #2c5a78;
+            border-radius: 12px;
+            padding: 24px 26px;
         }
 
-        .shift-block .label {
-            color: #c6daf0;
-            letter-spacing: 1px;
+        .content-section {
+            margin-bottom: 32px;
         }
 
-        .shift-block .big-hours {
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: #f5e2b6;
-            font-family: 'Courier New', monospace;
-            line-height: 1.2;
-        }
-
-        .decorations {
+        .section-head {
+            color: #f1ddac;
+            font-size: 1.7rem;
+            border-bottom: 2px solid #2b688b;
+            padding-bottom: 6px;
+            margin-bottom: 18px;
+            font-weight: 500;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .deco {
-            background: linear-gradient(145deg, #13384d, #08212f);
-            padding: 8px 22px;
-            border-radius: 60px;
-            color: #e7e1c5;
-            font-weight: 600;
-            border-left: 6px solid #dab066;
-        }
-
-        .chain-small {
-            display: flex;
-            gap: 20px;
-            background: #0f2c3f;
-            border-radius: 50px;
-            padding: 16px 22px;
             align-items: center;
+            gap: 12px;
+        }
+
+        .section-head i {
+            color: #f2ca76;
+            font-size: 1.6rem;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 25px;
+            background: #0e273b;
+            padding: 18px 22px;
+            border-radius: 16px;
             margin-bottom: 20px;
         }
 
-        .chain-icon {
-            background: #234f68;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: #fad37d;
+        .meta-item .tag {
+            color: #adcff2;
+            font-size: 0.75rem;
+            text-transform: uppercase;
         }
-
-        .chain-text h4 {
-            color: #c1defa;
-        }
-
-        .chain-text p {
+        .meta-item .data {
             color: white;
             font-size: 1.3rem;
             font-weight: 600;
         }
 
-        .terminal-window {
-            background: #03141f;
-            padding: 16px 22px;
-            border-radius: 24px;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #3d7b9e;
+        .duty-card {
+            background: #0a2a3f;
+            border-radius: 20px;
+            padding: 22px 25px;
+            margin: 25px 0;
+            border: 1px solid #387599;
+        }
+        .duty-hours {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #f9e6b3;
+            line-height: 1.2;
+        }
+
+        .ribbon-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 18px 0 22px;
+        }
+        .ribbon {
+            background: #1b405a;
+            padding: 6px 24px;
+            border-radius: 40px;
+            border-left: 6px solid #cfa95c;
+            color: #f3e5c7;
+            font-weight: 500;
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 15px;
             margin: 20px 0;
         }
-
-        .terminal-window div {
-            color: #87f0d0;
+        .branch-item {
+            background: #10364b;
+            padding: 14px 16px;
+            border-left: 7px solid #b78c4a;
+            border-radius: 12px;
         }
 
-        .weather-footer {
+        .terminal-block {
+            background: #041b2b;
+            padding: 18px 24px;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #3b779b;
+            margin: 30px 0 20px;
+        }
+
+        .weather-deck {
+            background: #0a2a40;
+            padding: 16px 24px;
+            border-radius: 50px;
             display: flex;
-            gap: 20px;
-            background: #0a283b;
-            padding: 14px 25px;
-            border-radius: 60px;
+            flex-wrap: wrap;
             align-items: center;
-            margin-top: 20px;
+            gap: 25px;
+            margin-top: 25px;
         }
 
-        .weather-footer i {
-            font-size: 2rem;
-            color: #f1c40f;
-        }
-
-        .weather-footer .weather-data {
-            color: white;
-            font-weight: 600;
-        }
-
-        .weather-footer .weather-data small {
-            color: #9bc2db;
-        }
-
-        /* footer – only khayyim related */
-        .dossier-footer {
-            background: #0b1a27;
-            padding: 18px 30px;
+        /* footer – database style */
+        .database-footer {
+            background: #0c202f;
+            padding: 18px 28px;
+            border-top: 2px solid #2f6885;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            border-top: 2px solid #1c4e6e;
-            color: #aac7e2;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 16px;
+            color: #b2d2ea;
+            font-size: 0.9rem;
+        }
+
+        .flag-za {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #163e57;
+            padding: 6px 24px;
+            border-radius: 60px;
+        }
+        .flag-za img {
+            width: 48px;
+            height: 30px;
+            border: 2px solid white;
+            border-radius: 5px;
         }
 
         .mobile-app {
-            background: #1f405b;
-            padding: 12px 30px;
-            border-radius: 60px;
-            font-weight: 700;
-            color: white;
-            border: 1px solid #5d9ec0;
+            background: #1b4f6e;
+            padding: 10px 34px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: 1px solid #64a6cc;
         }
 
-        .flag-play {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: #123f57;
-            padding: 6px 30px;
-            border-radius: 60px;
+        /* mobile responsiveness */
+        @media (max-width: 750px) {
+            .layout-wiki {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 16px;
+            }
+            .title-section h1 { font-size: 1.9rem; }
+            .db-header { flex-direction: column; align-items: start; }
+            .meta-grid { grid-template-columns: 1fr; }
+            .weather-deck { flex-direction: column; align-items: flex-start; }
         }
 
-        .flag-play img {
-            width: 46px;
-            height: 28px;
-            border: 2px solid white;
-            border-radius: 4px;
-            cursor: pointer;
+        /* misc */
+        hr {
+            border: 1px solid #1d4a66;
+            margin: 22px 0;
         }
-
-        .flag-play img:hover {
-            box-shadow: 0 0 15px cyan;
+        a {
+            color: #f0dfa3;
+            text-decoration: none;
         }
-
-        /* remove any extra team mentions */
-        .no-team {
-            /* ensures nothing else appears */
-        }
+        
     </style>
+    
 </head>
+    
 <body>
-<div class="khayyim-dossier">
+    
+<div class="database-entry">
 
-    <!-- top clearance (generic) -->
-    <div class="top-clearance">
-        <div class="access-badge"><i class="fas fa-shield-halos"></i> [ ACCESS GRANTED: PUBLIC ENTRANCE ]</div>
-        <div class="time-strip">
-            <span><i class="far fa-clock"></i> 22:29:27 Z</span>
-            <span><i class="fas fa-location-dot"></i> CAPE TOWN AIRFORCE</span>
-            <span><i class="fas fa-user-lock"></i> TIER 1 · KHAYYIM</span>
+    <!-- database header -->
+    <div class="db-header">
+        <div class="title-section">
+            <h1>Philani Fortune Kemele <span style="font-weight:300; color:#b3daf5;">(Olama Khayyim)</span></h1>
         </div>
     </div>
 
-    <!-- main core profile : only Olama Khayyim -->
-    <div class="profile-core">
-
-        <!-- identity strip – full focus Khayyim -->
-        <div class="identity-strip">
-            <div class="portrait-block">
-                <div class="insignia">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div class="name-callsign">
-                    <h1>OLAMA KHAYYIM</h1>
-                    <span class="callsign"><i class="fas fa-microphone-alt"></i> “KHAYYIM” · COMMANDER</span>
-                </div>
+    <!-- core layout: left infobox, right content (Wikipedia style) -->
+    <div class="layout-wiki">
+        <!-- LEFT INFOBOX (military database) -->
+        <div class="infobox">
+            <div class="infobox-title"><i class="fas fa-id-card"></i> FULL EXTENDED PROFILE</div>
+            <div class="img-placeholder">
+                <i class="fas fa-user-shield"></i>
             </div>
-            <div class="airforce-tag">
-                <div class="big">#TIER 1</div>
-                <div class="small">AIRFORCE COMMANDER</div>
-            </div>
-        </div>
+            <div class="info-row"><span class="info-label">Government name</span><span class="info-value">Philani Fortune Kemele</span></div>
+            <div class="info-row"><span class="info-label">Also Known As</span><span class="info-value">Olama Khayyim</span></div>
+            <div class="info-row"><span class="info-label">Born</span><span class="info-value">22 October 1999 <span class="small-note">(age 26)</span></span></div>
+            <div class="info-row"><span class="info-label">Birthplace</span><span class="info-value">Marianhill Hospital</span></div>
+            <div class="info-row"><span class="info-label">Hometown</span><span class="info-value">Hammarsdale, KZN</span></div>
+            <div class="info-row"><span class="info-label">Education</span><span class="info-value">Richfield Graduate Institute of Technology</span></div>
+            <div class="info-row"><span class="info-label">Qualifications</span><span class="info-value">Information Technology NQF-4 Certificate, HTML Certicate, Machine Learning Certificate</span></div>
+            <div class="info-row"><span class="info-label">Rank</span><span class="info-value">Commander of the Airforce - Tier 1 special Operations</span></div>
 
-        <!-- dossier grid - left & right all about Khayyim -->
-        <div class="dossier-grid">
-            <!-- LEFT: detailed stats, clearance, airforce specifics -->
-            <div class="vitals-panel">
-
-                <div class="section-title"><i class="fas fa-id-card"></i> OPERATOR VITALS</div>
-
-                <div class="stat-row"><span class="stat-label">DATE OF BIRTH</span><span class="stat-value">22 OCT 1999</span></div>
-                <div class="stat-row"><span class="stat-label">BORN (BLESSED)</span><span class="stat-value">22 OCTOBER</span></div>
-                <div class="stat-row"><span class="stat-label">BLOOD TYPE</span><span class="stat-value">A+ / COMBAT</span></div>
-                <div class="stat-row"><span class="stat-label">OPERATOR ID</span><span class="stat-value">EDEN–09–CV1</span></div>
-                <div class="stat-row"><span class="stat-label">COMMAND</span><span class="stat-value">AIR COMBAT</span></div>
-                <div class="stat-row"><span class="stat-label">SECURITY LVL</span><span class="stat-value">TOP SECRET//EDEN</span></div>
-                <div class="stat-row"><span class="stat-label">RANK (FIELD)</span><span class="stat-value">TIER 1 SPECIAL OPS</span></div>
-
-                <div class="fullwidth-stat">
-                    <div class="question"><i class="fas fa-gavel"></i> PRIMARY ROLE · NATIONAL LAW / COMPLIANCE</div>
-                    <div class="answer">COMPLIANCE OFFICER & FRONT-END ALGORITHMIST</div>
-                </div>
-
-                <!-- direct airforce command -->
-                <div class="special-mil">
-                    <h3><i class="fas fa-fan"></i> COMMANDER OF THE AIRFORCE</h3>
-                    <p><i class="fas fa-plane"></i> 12th TACTICAL SQUADRON · CAPE TOWN AIR BASE</p>
-                    <p style="font-size:0.9rem;"><i class="fas fa-shield"></i> AIR ALGORITHM WARFARE · SECURITY ALGORITHMS</p>
-                </div>
-
-                <!-- additional unique khayyim intel -->
-                <div style="margin-top: 20px;">
-                    <span style="background: #1f3b4b; padding:6px 16px; border-radius:40px; color:#aad0f0;"><i class="fas-regular fa-feather"></i> FOUNDATION: DIRECT ACTION FOR GOD</span>
-                </div>
-            </div>
-
-            <!-- RIGHT: service record, shifts, branches, terminal -->
-            <div class="service-panel">
-                <div class="section-title"><i class="fas fa-scroll"></i> SERVICE RECORD · EXTENDED</div>
-
-                <!-- bio compact -->
-                <div class="bio-card">
-                    <div class="bio-item"><span class="tag">COMMISSION</span><div class="value">22 OCT 2019</div></div>
-                    <div class="bio-item"><span class="tag">AIRFORCE COMMAND</span><div class="value">TIER 1 · 2024</div></div>
-                    <div class="bio-item"><span class="tag">ALGORITHMIST</span><div class="value">FRONT-END</div></div>
-                </div>
-
-                <!-- SHIFT – specific for Khayyim -->
-                <div class="shift-block">
-                    <div class="label"><i class="fas fa-calendar-alt"></i> OFFICIAL DUTY HOURS (ACTIVE)</div>
-                    <div class="big-hours">MON–SAT 09:00 – 17:00</div>
-                    <div style="font-size:1.5rem; font-weight:600; color:#f2e09f;">SUNDAY 20:00 – 22:00</div>
-                    <div style="color:#afd3f0; margin-top: 5px;"><i class="fas fa-stopwatch"></i> TOTAL WEEKLY: 55+ HOURS · AIR STANDBY</div>
-                </div>
-
-                <!-- decorations / air medals (only Khayyim's) -->
-                <div class="section-title"><i class="fas fa-medal"></i> AIR COMMAND RIBBONS</div>
-                <div class="decorations">
-                    <span class="deco"><i class="fas fa-star"></i> COMBAT AIR MEDAL</span>
-                    <span class="deco"><i class="fas fa-scale-balanced"></i> NATIONAL LAW STAR</span>
-                    <span class="deco"><i class="fas fa-brain"></i> ALGORITHM EXPERT</span>
-                    <span class="deco"><i class="fas fa-plane-departure"></i> AIR COMMANDER PIN</span>
-                    <span class="deco"><i class="fas fa-crosshairs"></i> TIER 1 OPERATIVE</span>
-                    <span class="deco"><i class="fas fa-feather"></i> DIRECT ACTION</span>
-                </div>
-
-                <!-- chain of command – directly reports to President Morake (only relation) -->
-                <div class="chain-small">
-                    <div class="chain-icon"><i class="fas fa-eagle"></i></div>
-                    <div class="chain-text">
-                        <h4>REPORTS TO: CMDR. MORAKE (PRESIDENT / FOUNDER)</h4>
-                        <p><i class="fas fa-check-circle" style="color:#62e5b0;"></i> DIRECT CHANNEL · CHAIRMAN</p>
-                    </div>
-                </div>
-
-                <!-- BRANCHES – only Khayyim's oversight (Lawk National & Stainless Steel etc) but no other names -->
-                <div class="section-title"><i class="fas fa-sitemap"></i> SECTOR OVERSIGHT (COMPLIANCE)</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-                    <div style="background:#102f42; padding:12px; border-left: 5px solid #b7955a;"><span style="color:#f5d79c;">PARABLES & PLATTERS</span><br><span style="color:#8dbcd0;">Sector: Food</span></div>
-                    <div style="background:#102f42; padding:12px; border-left: 5px solid #64b5b5;"><span style="color:#a3e6e6;">HOPCO TRANSPORT</span><br><span style="color:#8dbcd0;">Tactical Transport</span></div>
-                    <div style="background:#102f42; padding:12px; border-left: 5px solid #b286b9;"><span style="color:#d8b3e6;">STAINLESS STEEL</span><br><span style="color:#8dbcd0;">Private Security</span></div>
-                    <div style="background:#102f42; padding:12px; border-left: 5px solid #d47777;"><span style="color:#ffb6b6;">LAWK NATIONAL</span><br><span style="color:#8dbcd0;">Law Sector</span></div>
-                </div>
-
-                <!-- terminal EDEN / only Khayyim profile -->
-                <div class="terminal-window">
-                    <div>[ Eden stealth CV-1 portal // OPERATOR: KHAYYIM ]</div>
-                    <div>[ ENCRYPTION: ACTIVE · NATIONAL LAW PROTOCOL ]</div>
-                    <div>EDEN@OP_UNIT:~$ profile --khayyim --full-military</div>
-                    <div style="color:#eedc9e;">ACCESS: COMMANDER AIRFORCE · COMPLIANCE · FRONT-END ALGORITHMIST</div>
-                </div>
-
-                <!-- live weather cape town (always present) -->
-                <div class="weather-footer">
-                    <i class="fas fa-cloud-sun-rain"></i>
-                    <div class="weather-data">
-                        <span style="font-size:1.4rem;">18°C</span> · WIND 5.1 km/h · CAPE TOWN AIRFORCE BASE
-                        <br><small>22:29:27 · Tuesday 03 March 2026 · CAPE TOWN, ZA</small>
-                    </div>
-                    <span style="background:#1f5372; padding:6px 16px; border-radius:60px;">LIVE</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- subtle toggle theme (no team) -->
-        <div style="display: flex; justify-content: flex-end; margin-top: 18px;">
-            <span style="background:#1b3c51; padding:6px 28px; border-radius: 60px; color:#d2ecff;"><i class="fas-regular fa-circle-half-stroke"></i> TOGGLE THEME (DEFAULT)</span>
-        </div>
+    <!-- FOOTER: same as reference page, clean -->
+    <div class="database-footer">
+        <div>© 2026 Eden stealth CV‑1. ALL RIGHTS RESERVED.</div>
     </div>
-
-    <!-- FOOTER – only the required elements, no other team member names -->
-    <div class="dossier-footer">
-        <div>© 2026 Eden stealth CV-1. ALL RIGHTS RESERVED. <span style="color:#b3daf5;">stainless steel protection</span></div>
-        <div class="mobile-app"><i class="fas fa-download"></i> INSTALL OUR MOBILE APP</div>
-        <div class="flag-play">
-            <span>CLICK FLAG TO PLAY</span>
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 60'%3E%3Crect width='90' height='20' fill='%23e03a1e'/%3E%3Crect y='20' width='90' height='20' fill='%23ffffff'/%3E%3Crect y='40' width='90' height='20' fill='%23002876'/%3E%3C/svg%3E" alt="SA Flag">
-        </div>
-    </div>
-
-    <!-- absolutely no other team members listed – just a blank spacer -->
-    <div style="height: 2px; background: #0c3348;"></div>
 </div>
-
-<!-- only khayyim profile complete -->
+        
 </body>
+        
 </html>
+
+
+
+
+
+
+
+        
