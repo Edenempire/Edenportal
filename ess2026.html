@@ -5,9 +5,13 @@
 <head>
   
   <meta charset="UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
   <meta name="theme-color" content="#000810">
+  
   <meta name="color-scheme" content="dark">
+  
   <link rel="icon" href="images/esslogo1.png">
   
   <title>E.S.S 2026</title>
@@ -122,7 +126,7 @@
       z-index: 10;
     }
 
-    /* HEADER – solid, fully responsive */
+    /* HEADER – solid, fully responsive, with home link on logo */
     .command-center {
       position: fixed;
       top: 0;
@@ -164,6 +168,11 @@
       border: 4px solid var(--strike-blue);           /* thinner border */
       background: #001c28;
       display: block;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+    .logo-img:hover {
+      border-color: #ffffff;
     }
 
     .countdown-timer {
@@ -457,11 +466,8 @@
     }
     
   </style>
-  
 </head>
-  
 <body>
-  
   <!-- RADAR – uniform dots (all 8px) -->
   <div class="radar-grid" id="radarGrid">
     <div class="f22-radar"></div>
@@ -469,14 +475,15 @@
     <div class="radar-noise"></div>
   </div>
 
-  <!-- AUDIO: AUTOPLAY, ROBUST, LOOP FOREVER (no interaction needed) -->
+  <!-- AUDIO: ROBUST, AUTO, LOOP FOREVER – RETRY ON INTERACTION IF NEEDED -->
   <audio id="bgTrack" loop preload="auto" autoplay style="display:none;">
     <source src="1.mp3" type="audio/mpeg">
   </audio>
 
   <header class="command-center">
     <div class="header-emblem">
-      <div class="logo-container">
+      <!-- Logo now links to index.html with hover title -->
+      <div class="logo-container" onclick="window.location.href='index.html';" title="back to home..." style="cursor: pointer;">
         <img src="images/esslogo1.png" alt="ESS" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23000%22 stroke=%22%231e90ff%22 stroke-width=%226%22/><text x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22%231e90ff%22 font-family=%22monospace%22>ESS</text></svg>';">
       </div>
       <span class="countdown-timer" id="mainCountdown">--D --H --M --S</span>
@@ -487,7 +494,7 @@
   <nav class="tactical-menu-permanent">
     <div class="menu-trigger-perm">☰</div>
     <div class="menu-panel-perm">
-      <div class="menu-header" style="color:var(--strike-blue); border-bottom:2px solid; padding-bottom:0.5rem;">◈ TAC NAV ◈</div>
+      <div class="menu-header" style="color:var(--strike-blue); border-bottom:2px solid; padding-bottom:0.5rem;">◈ NAVIGATION ◈</div>
       <div class="menu-items">
         <div class="menu-item" onclick="document.getElementById('champion-story').scrollIntoView({behavior:'smooth'})">🏆 CHAMPS</div>
         <div class="menu-item" onclick="document.getElementById('league-table').scrollIntoView({behavior:'smooth'})">📊 LEAGUE</div>
@@ -516,10 +523,16 @@
 
     <section id="league-table" class="ops-card">
       <div class="section-command"><h2>LEAGUE TABLE · WEEK 02</h2><span>2026</span></div>
-      <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody id="league-tbody"></tbody></table></div>
+      <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
+        <tbody id="league-tbody">
+          <!-- STATIC HTML: two games played, Alpha both wins -->
+          <tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>2</td><td>2</td><td>0</td><td>0</td><td>6</td></tr>
+          <tr><td style="color:#2e7d32;">EDEN DELTA</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>
+        </tbody>
+      </table></div>
     </section>
 
-    <!-- SCHEDULE now includes LOCATION column -->
+    <!-- SCHEDULE with LOCATION column – fully static, only 2 games completed, rest TBD -->
     <section id="schedule" class="ops-card">
       <div class="section-command"><h2>OPERATION SCHEDULE · 38 GAMES</h2></div>
       <div class="color-key" style="display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
@@ -528,22 +541,112 @@
         <span><span style="background:#fb923c; width:16px; height:16px; display:inline-block;"></span> UPCOMING</span>
       </div>
       <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>DATE (14:00)</th><th>LOCATION</th></tr></thead><tbody id="schedule-tbody"></tbody></table>
-      </div>
+        <table><thead><tr><th>MISSION</th><th>DATE (14:00)</th><th>LOCATION</th></tr></thead>
+        <tbody id="schedule-tbody">
+          <!-- games: only first two played (completed), third is "next", rest upcoming. Locations: fixed -->
+          <tr class="completed-row"><td>M01</td><td>01 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="completed-row"><td>M02</td><td>08 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="next-row"><td>M03</td><td>15 Mar 2026</td><td>ST. GEORGES PARK</td></tr>
+          <!-- remaining 35 games: upcoming, location TBD -->
+          <tr class="upcoming-row"><td>M04</td><td>22 Mar 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M05</td><td>29 Mar 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M06</td><td>05 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M07</td><td>12 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M08</td><td>19 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M09</td><td>26 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M10</td><td>03 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M11</td><td>10 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M12</td><td>17 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M13</td><td>24 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M14</td><td>31 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M15</td><td>07 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M16</td><td>14 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M17</td><td>21 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M18</td><td>28 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M19</td><td>05 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M20</td><td>12 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M21</td><td>19 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M22</td><td>26 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M23</td><td>02 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M24</td><td>09 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M25</td><td>16 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M26</td><td>23 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M27</td><td>30 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M28</td><td>06 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M29</td><td>13 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M30</td><td>20 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M31</td><td>27 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M32</td><td>04 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M33</td><td>11 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M34</td><td>18 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M35</td><td>25 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M36</td><td>01 Nov 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M37</td><td>08 Nov 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>M38</td><td>15 Nov 2026</td><td>TBD</td></tr>
+        </tbody>
+      </table></div>
     </section>
 
-    <!-- SUMMARY now includes LOCATION column (INTEL remains) -->
+    <!-- SUMMARY now includes LOCATION column (INTEL remains) – only first two matches filled, rest TBD -->
     <section id="match-summary" class="ops-card">
       <div class="section-command"><h2>OPERATION SUMMARY</h2></div>
       <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead><tbody id="summary-tbody"></tbody></table>
-      </div>
-    </section>
+        <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead>
+        <tbody id="summary-tbody">
+          <!-- completed games: M01 and M02 -->
+          <tr><td>M01</td><td>2-1</td><td>BAYANDA (1), HOSS (1), VUYO (1)</td><td>QUEENER</td><td>HARBOUR</td><td>alpha comeback</td></tr>
+          <tr><td>M02</td><td>11-4</td><td>VUYO (5), JONATHAN (2), QUEENER (4), SPHE (3), OLAMA (1)</td><td>JONATHAN</td><td>HARBOUR</td><td>locked</td></tr>
+          <!-- games 3 to 38: TBD -->
+          <tr><td>M03</td><td>—</td><td>—</td><td>TBD</td><td>ST. GEORGES PARK</td><td>—</td></tr>
+          <tr><td>M04</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M05</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M06</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M07</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M08</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M09</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <!-- abbreviating for brevity, but keeping the first 9 to show pattern – rest are same -->
+          <tr><td>M10</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M11</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M12</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M13</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M14</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M15</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M16</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M17</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M18</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M19</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M20</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <!-- ... continue the pattern, for space we keep total rows to 38 -->
+          <tr><td>M21</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M22</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M23</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M24</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M25</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M26</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M27</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M28</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M29</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M30</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M31</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M32</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M33</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M34</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M35</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M36</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M37</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>M38</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div></section>
 
-    <section id="scorers" class="ops-card"><div class="section-command"><h2>TOP SNIPERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead><tbody id="scorers-tbody"></tbody></table></div></section>
-    <section id="motm" class="ops-card"><div class="section-command"><h2>MAN OF THE MATCH</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"></tbody></table></div></section>
-    <section id="defenders" class="ops-card"><div class="section-command"><h2>DEFENDER OF THE GAME</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="defenders-tbody"></tbody></table></div></section>
-    <section id="assisters" class="ops-card"><div class="section-command"><h2>TOP ASSISTERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>ASSISTS</th></tr></thead><tbody id="assisters-tbody"></tbody></table></div></section>
+    <!-- other tables (scorers, motm, defenders, assisters) remain static / dummy data, all HTML -->
+    <section id="scorers" class="ops-card"><div class="section-command"><h2>TOP SNIPERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead><tbody id="scorers-tbody"><tr><td>VUYO</td><td>5</td></tr><tr><td>QUEENER</td><td>4</td></tr><tr><td>SPHE</td><td>3</td></tr><tr><td>JONATHAN</td><td>2</td></tr><tr><td>OLAMA</td><td>1</td></tr><tr><td>BAYANDA</td><td>1</td></tr><tr><td>HOSS</td><td>1</td></tr></tbody></table></div></section>
+
+    <section id="motm" class="ops-card"><div class="section-command"><h2>MAN OF THE MATCH</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"><tr><td>M01</td><td>QUEENER</td></tr><tr><td>M02</td><td>JONATHAN</td></tr><tr><td>M03</td><td>TBD</td></tr><tr><td>M04</td><td>TBD</td></tr><tr><td>M05</td><td>TBD</td></tr><tr><td>M06</td><td>TBD</td></tr><tr><td>M07</td><td>TBD</td></tr><tr><td>M08</td><td>TBD</td></tr><tr><td>M09</td><td>TBD</td></tr><tr><td>M10</td><td>TBD</td></tr><tr><td>M11</td><td>TBD</td></tr><tr><td>M12</td><td>TBD</td></tr><tr><td>M13</td><td>TBD</td></tr><tr><td>M14</td><td>TBD</td></tr><tr><td>M15</td><td>TBD</td></tr><tr><td>M16</td><td>TBD</td></tr><tr><td>M17</td><td>TBD</td></tr><tr><td>M18</td><td>TBD</td></tr><tr><td>M19</td><td>TBD</td></tr><tr><td>M20</td><td>TBD</td></tr><tr><td>M21</td><td>TBD</td></tr><tr><td>M22</td><td>TBD</td></tr><tr><td>M23</td><td>TBD</td></tr><tr><td>M24</td><td>TBD</td></tr><tr><td>M25</td><td>TBD</td></tr><tr><td>M26</td><td>TBD</td></tr><tr><td>M27</td><td>TBD</td></tr><tr><td>M28</td><td>TBD</td></tr><tr><td>M29</td><td>TBD</td></tr><tr><td>M30</td><td>TBD</td></tr><tr><td>M31</td><td>TBD</td></tr><tr><td>M32</td><td>TBD</td></tr><tr><td>M33</td><td>TBD</td></tr><tr><td>M34</td><td>TBD</td></tr><tr><td>M35</td><td>TBD</td></tr><tr><td>M36</td><td>TBD</td></tr><tr><td>M37</td><td>TBD</td></tr><tr><td>M38</td><td>TBD</td></tr></tbody></table></div></section>
+
+    <section id="defenders" class="ops-card"><div class="section-command"><h2>DEFENDER OF THE GAME</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="defenders-tbody"><tr><td>M01</td><td>QUEENER</td></tr><tr><td>M02</td><td>JONATHAN</td></tr><tr><td>M03</td><td>TBD</td></tr><tr><td>M04</td><td>TBD</td></tr><tr><td>M05</td><td>TBD</td></tr><tr><td>M06</td><td>TBD</td></tr><tr><td>M07</td><td>TBD</td></tr><tr><td>M08</td><td>TBD</td></tr><tr><td>M09</td><td>TBD</td></tr><tr><td>M10</td><td>TBD</td></tr><tr><td>M11</td><td>TBD</td></tr><tr><td>M12</td><td>TBD</td></tr><tr><td>M13</td><td>TBD</td></tr><tr><td>M14</td><td>TBD</td></tr><tr><td>M15</td><td>TBD</td></tr><tr><td>M16</td><td>TBD</td></tr><tr><td>M17</td><td>TBD</td></tr><tr><td>M18</td><td>TBD</td></tr><tr><td>M19</td><td>TBD</td></tr><tr><td>M20</td><td>TBD</td></tr><tr><td>M21</td><td>TBD</td></tr><tr><td>M22</td><td>TBD</td></tr><tr><td>M23</td><td>TBD</td></tr><tr><td>M24</td><td>TBD</td></tr><tr><td>M25</td><td>TBD</td></tr><tr><td>M26</td><td>TBD</td></tr><tr><td>M27</td><td>TBD</td></tr><tr><td>M28</td><td>TBD</td></tr><tr><td>M29</td><td>TBD</td></tr><tr><td>M30</td><td>TBD</td></tr><tr><td>M31</td><td>TBD</td></tr><tr><td>M32</td><td>TBD</td></tr><tr><td>M33</td><td>TBD</td></tr><tr><td>M34</td><td>TBD</td></tr><tr><td>M35</td><td>TBD</td></tr><tr><td>M36</td><td>TBD</td></tr><tr><td>M37</td><td>TBD</td></tr><tr><td>M38</td><td>TBD</td></tr></tbody></table></div></section>
+
+    <section id="assisters" class="ops-card"><div class="section-command"><h2>TOP ASSISTERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>ASSISTS</th></tr></thead><tbody id="assisters-tbody"><tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr><tr><td>OLAMA</td><td>1</td></tr></tbody></table></div></section>
 
     <section id="teams" class="ops-card">
       <div class="section-command"><h2>TEAMS · 5v5 TACTICAL</h2></div>
@@ -582,38 +685,42 @@
   <footer>
     <div class="footer-grid">
       <div class="live-data"><div><span>TIME:</span><span id="liveTime"></span></div><div><span>WEATHER:</span><span id="liveWeather">18°C · CLEAR</span></div><div><span>WIND:</span><span>12km/h NW</span></div></div>
-      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div><div><span>MISSION:</span><span>M02 · ST. GEORGES</span></div></div>
+      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div><div><span>MISSION:</span><span>M03 · ST. GEORGES</span></div></div>
     </div>
     <div class="copyright">© <span>EDEN</span> · 2026 · ALL INTELLECTUAL PROPERTY</div>
   </footer>
 
   <script>
-    
+    // ONLY minimal functions for RADAR dots, COUNTDOWN, footer clock.
+
     (function() {
-      // AUTO BACKGROUND – robust forever
+      // BACKGROUND TRACK – robust forever (autoplay + retry)
       const audio = document.getElementById('bgTrack');
-      if(audio) {
+      if (audio) {
         audio.volume = 0.25;
         audio.loop = true;
         let playPromise = audio.play();
-        if(playPromise !== undefined) {
+        if (playPromise !== undefined) {
           playPromise.catch(() => {
-            // retry once on user interaction (some browsers require gesture)
-            document.addEventListener('click', function once() {
+            // retry on first user interaction
+            const retryPlay = function() {
               audio.play();
-              document.removeEventListener('click', once);
-            }, { once: true });
+              document.removeEventListener('click', retryPlay);
+              document.removeEventListener('touchstart', retryPlay);
+            };
+            document.addEventListener('click', retryPlay, { once: true });
+            document.addEventListener('touchstart', retryPlay, { once: true });
           });
         }
       }
 
-      // RADAR DOTS – uniform small (8px)
+      // RADAR DOTS
       const radarGrid = document.getElementById('radarGrid');
       function generateDots() {
         const existing = document.querySelectorAll('.contact-dot');
         existing.forEach(d => d.remove());
         const count = Math.floor(Math.random() * 30) + 15; // 15-45
-        for (let i=0; i<count; i++) {
+        for (let i = 0; i < count; i++) {
           const dot = document.createElement('div');
           dot.className = 'contact-dot';
           dot.style.left = Math.random() * 100 + '%';
@@ -625,71 +732,57 @@
       generateDots();
       setInterval(generateDots, 2200);
 
-      // COUNTDOWN
+      // COUNTDOWN (only visual, doesn't affect table data)
       const matches = [];
       let base = new Date(2026, 2, 1, 14, 0, 0);
-      for (let i=0; i<38; i++) { let d = new Date(base); d.setDate(base.getDate() + i*7); matches.push({date:d}); }
+      for (let i = 0; i < 38; i++) { 
+        let d = new Date(base); 
+        d.setDate(base.getDate() + i * 7); 
+        matches.push({ date: d }); 
+      }
       function updateCountdown() {
         const now = new Date();
         let nextMatch = null;
-        for (let m of matches) { if (m.date > now) { nextMatch = m; break; } }
+        for (let m of matches) { 
+          if (m.date > now) { 
+            nextMatch = m; 
+            break; 
+          } 
+        }
         const cd = document.getElementById('mainCountdown');
-        if (!nextMatch) { cd.innerText = 'OP COMPLETE'; return; }
+        if (!nextMatch) { 
+          cd.innerText = 'OP COMPLETE'; 
+          return; 
+        }
         const diff = nextMatch.date - now;
         if (diff <= 0) cd.innerText = '⚔️ MISSION ACTIVE ⚔️';
-        else { const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
-          cd.innerText = `${d}D ${h.toString().padStart(2,'0')}H ${m.toString().padStart(2,'0')}M ${s.toString().padStart(2,'0')}S`; }
+        else { 
+          const d = Math.floor(diff / 86400000), 
+                h = Math.floor((diff % 86400000) / 3600000), 
+                m = Math.floor((diff % 3600000) / 60000), 
+                s = Math.floor((diff % 60000) / 1000);
+          cd.innerText = `${d}D ${h.toString().padStart(2, '0')}H ${m.toString().padStart(2, '0')}M ${s.toString().padStart(2, '0')}S`;
+        }
       }
-      setInterval(updateCountdown, 500); updateCountdown();
+      setInterval(updateCountdown, 500); 
+      updateCountdown();
 
-      // POPULATE ALL TABLES + LOCATION DATA
-      // league (static)
-      document.getElementById('league-tbody').innerHTML = '<tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>2</td><td>2</td><td>0</td><td>0</td><td>6</td></tr><tr><td style="color:#2e7d32;">EDEN DELTA</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>';
-      
-      let scheduleRows = '', summaryRows = '', motmRows = '', defRows = '';
-      const locations = ['HARBOUR', 'HARBOUR', 'ST. GEORGES PARK', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD'];
-      
-      for(let i=1; i<=38; i++) {
-        let g = (i===1) ? 'completed' : (i===3) ? 'next' : 'upcoming';
-        let dateStr = matches[i-1]?.date.toLocaleDateString('en-GB',{day:'2-digit', month:'short'}) || 'TBD';
-        let loc = (i===1) ? 'HARBOUR' : (i===2) ? 'HARBOUR' : 'ST. GEORGES PARK';
-        scheduleRows += `<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td><td>${loc}</td></tr>`;
-        
-        let scorers = (i===1) ? 'BAYANDA (1), HOSS (1), VUYO (1)' : (i%3===0) ? 'VUYO (5), JONATHAN (2), QUEENER (4), SPHE (3), OLAMA (1)' : '--';
-        let result = (i===1) ? '2-1' : (i===2) ? '11-4' : '—';
-        let motmName = (i===1) ? 'QUEENER' : (i===2) ? 'JONATHAN' : 'TBD';
-        summaryRows += `<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${loc}</td><td>${i===1?'alpha comeback':'locked'}</td></tr>`;
-        motmRows += `<tr><td>M${i}</td><td>${motmName}</td></tr>`;
-        defRows += `<tr><td>M${i}</td><td>${i===1?'QUEENER':'JONATHAN'}</td></tr>`;
+      // live time/weather in footer
+      function updateLive() { 
+        document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false }); 
       }
-      document.getElementById('schedule-tbody').innerHTML = scheduleRows;
-      document.getElementById('summary-tbody').innerHTML = summaryRows;
-      document.getElementById('scorers-tbody').innerHTML = '<tr><td>01. VUYO</td><td>5</td></tr><tr><td>02. QUEENER</td><td>4</td></tr><tr><td>03. SPHE</td><td>3</td></tr><tr><td>04. JONATHAN</td><td>2</td></tr><tr><td>05. OLAMA</td><td>1</td></tr><tr><td>06. BAYANDA</td><td>1</td></tr><tr><td>07. HOSS</td><td>1</td></tr>';
-      document.getElementById('motm-tbody').innerHTML = motmRows;
-      document.getElementById('defenders-tbody').innerHTML = defRows;
-      document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr><tr><td>OLAMA</td><td>1</td></tr>';
-
-      // live time/weather
-      function updateLive() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
-      setInterval(updateLive,1000); updateLive();
-      setInterval(()=>{let w=['18°C · CLEAR','16°C · LIGHT RAIN','21°C · HAZE','14°C · SCOUT']; document.getElementById('liveWeather').innerText = w[Math.floor(Math.random()*w.length)];},15000);
+      setInterval(updateLive, 1000); 
+      updateLive();
+      setInterval(() => {
+        let w = ['18°C · CLEAR', '16°C · LIGHT RAIN', '21°C · HAZE', '14°C · SCOUT']; 
+        document.getElementById('liveWeather').innerText = w[Math.floor(Math.random() * w.length)];
+      }, 15000);
     })();
-    
   </script>
-  
+
+  <!-- logo home link already present in HTML; hover title via container -->
 </body>
-  
 </html>
-
-// ALL CODE WRITTEN BY OLAMA KHAYYIM. 
-
-
-
-
-
-
-
-
 
 
 
