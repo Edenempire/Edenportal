@@ -1,488 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>STAINLESS STEEL // SECURITY DIVISION</title>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0a0a0a;
-            color: #c0c0c0;
-            font-family: 'Orbitron', sans-serif;
-            min-height: 100vh;
-            background-image: repeating-linear-gradient(45deg, rgba(100,100,100,0.02) 0px, rgba(100,100,100,0.02) 2px, transparent 2px, transparent 6px);
-        }
-        
-        /* UNIQUE STAINLESS STEEL IDENTITY */
-        .steel-header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
-            background: #111;
-            border-bottom: 3px solid #c0c0c0;
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-            z-index: 100;
-            box-shadow: 0 0 30px rgba(192,192,192,0.2);
-        }
-        
-        .steel-logo {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #c0c0c0;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px rgba(192,192,192,0.5);
-        }
-        
-        .steel-logo span {
-            color: #fff;
-            background: #333;
-            padding: 5px 10px;
-            margin-left: 10px;
-            font-size: 0.8rem;
-            border: 1px solid #c0c0c0;
-        }
-        
-        /* UNIQUE HERO - COMPLETELY DIFFERENT FROM HOME */
-        .steel-hero {
-            height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: #000;
-            overflow: hidden;
-        }
-        
-        .steel-hero::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: linear-gradient(90deg, transparent 50%, rgba(192,192,192,0.05) 50%);
-            animation: scan 10s linear infinite;
-        }
-        
-        @keyframes scan {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        
-        .steel-emblem {
-            width: 150px;
-            height: 150px;
-            border: 4px solid #c0c0c0;
-            transform: rotate(45deg);
-            margin-bottom: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: rotate 10s linear infinite;
-            box-shadow: 0 0 30px rgba(192,192,192,0.3);
-        }
-        
-        .steel-emblem i {
-            transform: rotate(-45deg);
-            font-size: 4rem;
-            color: #c0c0c0;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(45deg); }
-            100% { transform: rotate(405deg); }
-        }
-        
-        .steel-hero h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: transparent;
-            -webkit-text-stroke: 2px #c0c0c0;
-            letter-spacing: 10px;
-            margin: 20px 0;
-        }
-        
-        .steel-hero p {
-            font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            background: #111;
-            padding: 10px 30px;
-            border: 1px solid #c0c0c0;
-        }
-        
-        /* UNIQUE CONTENT STYLES */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-        
-        .steel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
-        
-        .steel-card {
-            background: #111;
-            border: 1px solid #333;
-            padding: 30px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .steel-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 70%, rgba(192,192,192,0.1) 85%, transparent 100%);
-            opacity: 0;
-            transition: 0.5s;
-        }
-        
-        .steel-card:hover {
-            border-color: #c0c0c0;
-            box-shadow: 0 0 30px rgba(192,192,192,0.2);
-            transform: translateY(-5px);
-        }
-        
-        .steel-card:hover::after {
-            opacity: 1;
-            transform: translateX(20%) translateY(20%);
-        }
-        
-        .steel-card i {
-            font-size: 2.5rem;
-            color: #c0c0c0;
-            margin-bottom: 20px;
-        }
-        
-        .steel-card h3 {
-            color: #fff;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-        
-        .steel-badge {
-            display: inline-block;
-            background: #c0c0c0;
-            color: #000;
-            padding: 3px 10px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-        
-        /* UNIQUE PERSONNEL CARDS */
-        .personnel-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        
-        .personnel-card {
-            background: #111;
-            border: 1px solid #333;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .personnel-rank {
-            width: 50px;
-            height: 50px;
-            border: 2px solid #c0c0c0;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            color: #c0c0c0;
-        }
-        
-        .personnel-card h4 {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-        
-        .personnel-title {
-            color: #888;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #333;
-        }
-        
-        /* UNIQUE STATS SECTION */
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            background: #111;
-            border: 1px solid #333;
-            padding: 40px;
-            margin: 60px 0;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #c0c0c0;
-        }
-        
-        .stat-label {
-            color: #666;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-        }
-        
-        /* UNIQUE TERMINAL */
-        .steel-terminal {
-            background: #080808;
-            border: 2px solid #333;
-            padding: 20px;
-            font-family: 'VT323', monospace;
-            margin: 50px 0;
-        }
-        
-        .terminal-header {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #333;
-        }
-        
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #333;
-        }
-        
-        .terminal-dot.red { background: #c0c0c0; }
-        
-        /* UNIQUE BUTTON */
-        .steel-btn {
-            background: transparent;
-            border: 2px solid #c0c0c0;
-            color: #c0c0c0;
-            padding: 15px 40px;
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-        }
-        
-        .steel-btn:hover {
-            background: #c0c0c0;
-            color: #000;
-            box-shadow: 0 0 30px rgba(192,192,192,0.5);
-        }
-        
-        /* BACK TO HOME - UNIQUE POSITION */
-        .back-arrow {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        
-        .back-arrow a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: #111;
-            border: 2px solid #c0c0c0;
-            border-radius: 50%;
-            color: #c0c0c0;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-        
-        .back-arrow a:hover {
-            background: #c0c0c0;
-            color: #000;
-            transform: scale(1.1);
-        }
-        
-        /* FOOTER */
-        .steel-footer {
-            background: #111;
-            border-top: 3px solid #c0c0c0;
-            padding: 40px;
-            text-align: center;
-            margin-top: 80px;
-        }
-        
-        @media (max-width: 768px) {
-            .steel-hero h1 { font-size: 2.5rem; }
-            .personnel-grid { grid-template-columns: 1fr; }
-            .stats-container { flex-direction: column; gap: 30px; }
-        }
-    </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>STAINLESS STEEL | Tactical Security Division</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* GLOBAL RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+background:#070707;
+color:#c9c9c9;
+font-family:Orbitron, sans-serif;
+overflow-x:hidden;
+
+}
+
+/* TACTICAL GRID OVERLAY */
+
+body::before{
+
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+
+background-size:60px 60px;
+z-index:-1;
+
+}
+
+/* HEADER */
+
+header{
+
+position:fixed;
+top:0;
+width:100%;
+background:#0c0c0c;
+border-bottom:1px solid #2e2e2e;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 40px;
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:20px;
+letter-spacing:3px;
+font-weight:900;
+
+}
+
+.logo span{
+
+color:#8c8c8c;
+font-size:11px;
+margin-left:10px;
+
+}
+
+nav a{
+
+color:#9d9d9d;
+margin-left:30px;
+text-decoration:none;
+font-size:12px;
+letter-spacing:2px;
+
+transition:.3s;
+
+}
+
+nav a:hover{
+
+color:#fff;
+
+}
+
+/* HERO */
+
+.hero{
+
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+
+padding:120px 20px;
+
+}
+
+.hero h1{
+
+font-size:6vw;
+font-weight:900;
+letter-spacing:10px;
+color:transparent;
+-webkit-text-stroke:1px #d9d9d9;
+
+margin-bottom:30px;
+
+}
+
+.hero p{
+
+font-family:VT323;
+font-size:24px;
+letter-spacing:3px;
+color:#8d8d8d;
+
+}
+
+.hero-buttons{
+
+margin-top:40px;
+
+}
+
+.btn{
+
+padding:14px 34px;
+border:1px solid #c9c9c9;
+color:#c9c9c9;
+text-decoration:none;
+font-size:12px;
+letter-spacing:2px;
+margin:10px;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:#c9c9c9;
+color:#000;
+
+}
+
+/* SECTION */
+
+section{
+
+max-width:1200px;
+margin:auto;
+padding:100px 30px;
+
+}
+
+.section-title{
+
+font-size:22px;
+letter-spacing:6px;
+margin-bottom:60px;
+color:#ffffff;
+
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:40px;
+
+}
+
+.stat{
+
+border:1px solid #242424;
+padding:40px;
+text-align:center;
+
+}
+
+.stat h2{
+
+font-size:42px;
+color:white;
+margin-bottom:10px;
+
+}
+
+.stat span{
+
+font-size:12px;
+letter-spacing:2px;
+color:#777;
+
+}
+
+/* OPERATIONS */
+
+.operations{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
+
+}
+
+.operation{
+
+background:#0c0c0c;
+border:1px solid #242424;
+padding:40px;
+
+transition:.3s;
+
+}
+
+.operation:hover{
+
+border-color:#c9c9c9;
+transform:translateY(-6px);
+
+}
+
+.operation i{
+
+font-size:28px;
+margin-bottom:20px;
+color:#c9c9c9;
+
+}
+
+.operation h3{
+
+margin-bottom:15px;
+letter-spacing:2px;
+
+}
+
+/* OPERATORS */
+
+.operators{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
+
+}
+
+.operator{
+
+background:#0c0c0c;
+border:1px solid #242424;
+padding:40px;
+text-align:center;
+
+}
+
+.rank{
+
+border:1px solid #777;
+width:60px;
+height:60px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:20px;
+
+}
+
+.operator h3{
+
+margin-bottom:5px;
+
+}
+
+.operator span{
+
+font-size:12px;
+color:#777;
+
+}
+
+/* TERMINAL */
+
+.terminal{
+
+background:#050505;
+border:1px solid #2a2a2a;
+padding:30px;
+
+font-family:VT323;
+font-size:20px;
+color:#9eff9e;
+
+margin-top:80px;
+
+}
+
+/* FOOTER */
+
+footer{
+
+background:#0b0b0b;
+border-top:1px solid #2c2c2c;
+
+text-align:center;
+padding:60px 20px;
+
+}
+
+footer h3{
+
+letter-spacing:4px;
+margin-bottom:10px;
+
+}
+
+footer p{
+
+color:#666;
+font-size:12px;
+
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:12vw;
+}
+
+nav{
+display:none;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
-    <!-- UNIQUE HEADER - DIFFERENT FROM HOME -->
-    <div class="steel-header">
-        <div class="steel-logo">
-            SS <span>PRIVATE SECURITY</span>
-        </div>
-    </div>
 
-    <!-- UNIQUE HERO SECTION -->
-    <div class="steel-hero">
-        <div class="steel-emblem">
-            <i class="fas fa-shield-halved"></i>
-        </div>
-        <h1>STAINLESS STEEL</h1>
-        <p>/// TIER 1 SECURITY DIVISION ///</p>
-    </div>
+<header>
 
-    <!-- QUICK STATS - UNIQUE -->
-    <div class="container">
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">RAPID RESPONSE</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">DISCRETION</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">T1</div>
-                <div class="stat-label">OPERATIVES</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">5★</div>
-                <div class="stat-label">RATING</div>
-            </div>
-        </div>
-    </div>
+<div class="logo">
+STAINLESS STEEL <span>SECURITY DIVISION</span>
+</div>
 
-    <!-- SERVICES - COMPACT GRID -->
-    <div class="container">
-        <h2 style="color: #fff; letter-spacing: 4px; margin-bottom: 30px;">/// OPERATIONS</h2>
-        <div class="steel-grid">
-            <div class="steel-card">
-                <span class="steel-badge">EXECUTIVE</span>
-                <i class="fas fa-user-shield"></i>
-                <h3>VIP PROTECTION</h3>
-                <p style="color: #888; font-size: 0.9rem;">Close protection for high-profile individuals</p>
-            </div>
-            <div class="steel-card">
-                <span class="steel-badge">FACILITY</span>
-                <i class="fas fa-building"></i>
-                <h3>ASSET SECURITY</h3>
-                <p style="color: #888; font-size: 0.9rem;">24/7 facility monitoring and response</p>
-            </div>
-            <div class="steel-card">
-                <span class="steel-badge">TACTICAL</span>
-                <i class="fas fa-truck"></i>
-                <h3>ARMED ESCORT</h3>
-                <p style="color: #888; font-size: 0.9rem;">Secure transportation services</p>
-            </div>
-        </div>
-    </div>
+<nav>
+<a href="#">HOME</a>
+<a href="#">OPERATIONS</a>
+<a href="#">OPERATORS</a>
+<a href="#">CONTACT</a>
+</nav>
 
-    <!-- KEY PERSONNEL - SIMPLIFIED -->
-    <div class="container">
-        <h2 style="color: #fff; letter-spacing: 4px; margin-bottom: 30px;">/// COMMAND</h2>
-        <div class="personnel-grid">
-            <div class="personnel-card">
-                <div class="personnel-rank">01</div>
-                <h4>THATO 'HOSS' MORAKE</h4>
-                <div class="personnel-title">DIRECTOR</div>
-                <p style="color: #888; font-size: 0.8rem;">Strategic Operations</p>
-            </div>
-            <div class="personnel-card">
-                <div class="personnel-rank">02</div>
-                <h4>ARNOLD KHUMALO</h4>
-                <div class="personnel-title">TACTICAL COMMANDER</div>
-                <p style="color: #888; font-size: 0.8rem;">Rapid Response</p>
-            </div>
-            <div class="personnel-card">
-                <div class="personnel-rank">03</div>
-                <h4>OLAMA KHAYYIM</h4>
-                <div class="personnel-title">CLOSE PROTECTION</div>
-                <p style="color: #888; font-size: 0.8rem;">VIP Security</p>
-            </div>
-        </div>
-    </div>
+</header>
 
-    <!-- MINIMAL TERMINAL -->
-    <div class="container">
-        <div class="steel-terminal">
-            <div class="terminal-header">
-                <div class="terminal-dot red"></div>
-                <div class="terminal-dot"></div>
-                <div class="terminal-dot"></div>
-            </div>
-            <div style="font-size: 1.2rem; margin-bottom: 10px;">> SS://SECURE_CHANNEL</div>
-            <div style="color: #666;">> STATUS: ACTIVE</div>
-            <div style="color: #666;">> ENCRYPTION: AES-256</div>
-            <div style="color: #c0c0c0; margin-top: 20px;">>_ <span style="animation: blink 1s infinite;">█</span></div>
-        </div>
-    </div>
+<!-- HERO -->
 
-    <!-- ACTION BUTTONS -->
-    <div class="container" style="text-align: center;">
-        <a href="#" class="steel-btn" onclick="alert('Secure Channel: ss-contact@edenstealth.secure')">CONTACT</a>
-        <a href="#" class="steel-btn">REPORT INCIDENT</a>
-    </div>
+<div class="hero">
 
-    <!-- BACK TO HOME -->
-    <div class="back-arrow">
-        <a href="index.html" title="Return to HQ">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
+<h1>STAINLESS STEEL</h1>
 
-    <!-- MINIMAL FOOTER -->
-    <div class="steel-footer">
-        <div style="font-size: 1.5rem; color: #c0c0c0; margin-bottom: 10px;">STAINLESS STEEL</div>
-        <div style="color: #666; margin-bottom: 20px;">PRIVATE SECURITY DIVISION • EDEN STEALTH CV-1</div>
-        <div style="color: #444; font-size: 0.8rem;">&copy; 2024 • AUTHORIZED PERSONNEL ONLY</div>
-    </div>
+<p>// Elite Tactical Security Unit //</p>
 
-    <script>
-        // MINIMAL INTERACTIVITY
-        document.querySelectorAll('.steel-card').forEach(card => {
-            card.addEventListener('click', () => {
-                console.log('SS Division access logged');
-            });
-        });
+<div class="hero-buttons">
 
-        // Dynamic clock
-        setInterval(() => {
-            const now = new Date();
-            document.querySelector('.steel-terminal div:first-child').innerHTML = `> SS://${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
-        }, 1000);
-    </script>
+<a class="btn" href="#">REQUEST PROTECTION</a>
+<a class="btn" href="#">CONTACT COMMAND</a>
+
+</div>
+
+</div>
+
+<!-- STATS -->
+
+<section>
+
+<h2 class="section-title">OPERATIONS STATUS</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h2>24/7</h2>
+<span>ACTIVE RESPONSE</span>
+</div>
+
+<div class="stat">
+<h2>2</h2>
+<span>ACTIVE OPERATORS</span>
+</div>
+
+<div class="stat">
+<h2>100%</h2>
+<span>MISSION FOCUS</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- OPERATIONS -->
+
+<section>
+
+<h2 class="section-title">CORE OPERATIONS</h2>
+
+<div class="operations">
+
+<div class="operation">
+<i class="fa-solid fa-user-shield"></i>
+<h3>Executive Protection</h3>
+<p>Close protection services for high-profile individuals and sensitive movements.</p>
+</div>
+
+<div class="operation">
+<i class="fa-solid fa-building-shield"></i>
+<h3>Asset Security</h3>
+<p>Strategic security deployment for facilities, estates and high-value environments.</p>
+</div>
+
+<div class="operation">
+<i class="fa-solid fa-car"></i>
+<h3>Secure Transport</h3>
+<p>Escort and defensive transport operations for personnel and assets.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- OPERATORS -->
+
+<section>
+
+<h2 class="section-title">ACTIVE OPERATORS</h2>
+
+<div class="operators">
+
+<div class="operator">
+
+<div class="rank">01</div>
+
+<h3>THATO</h3>
+<span>Lead Bodyguard</span>
+
+</div>
+
+<div class="operator">
+
+<div class="rank">02</div>
+
+<h3>OLAMA</h3>
+<span>Close Protection Specialist</span>
+
+</div>
+
+</div>
+
+<div class="terminal">
+
+> SYSTEM NODE: STAINLESS STEEL <br>
+> STATUS: OPERATIONAL <br>
+> RESPONSE PROTOCOL: ACTIVE <br>
+> LOCATION: SOUTH AFRICA <br>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>STAINLESS STEEL</h3>
+
+<p>
+Professional Security Services • Registered & Compliant • South Africa
+</p>
+
+<p style="margin-top:20px;">
+© 2026 Stainless Steel Security
+</p>
+
+</footer>
+
 </body>
 </html>
