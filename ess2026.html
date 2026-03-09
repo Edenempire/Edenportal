@@ -644,30 +644,30 @@
 
       // POPULATE ALL TABLES + LOCATION DATA
       // league (static)
-      document.getElementById('league-tbody').innerHTML = '<tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>1</td><td>1</td><td>0</td><td>0</td><td>3</td></tr><tr><td style="color:#2e7d32;">EDEN DELTA</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>';
+      document.getElementById('league-tbody').innerHTML = '<tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>2</td><td>2</td><td>0</td><td>0</td><td>6</td></tr><tr><td style="color:#2e7d32;">EDEN DELTA</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>';
       
       let scheduleRows = '', summaryRows = '', motmRows = '', defRows = '';
-      const locations = ['HARBOUR', 'ST. GEORGES PARK', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD'];
+      const locations = ['HARBOUR', 'HARBOUR', 'ST. GEORGES PARK', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD', 'TBD'];
       
       for(let i=1; i<=38; i++) {
-        let g = (i===1) ? 'completed' : (i===2) ? 'next' : 'upcoming';
+        let g = (i===1) ? 'completed' : (i===3) ? 'next' : 'upcoming';
         let dateStr = matches[i-1]?.date.toLocaleDateString('en-GB',{day:'2-digit', month:'short'}) || 'TBD';
-        let loc = (i===1) ? 'HARBOUR' : (i===2) ? 'ST. GEORGES PARK' : 'TBD';
+        let loc = (i===1) ? 'HARBOUR' : (i===2) ? 'HARBOUR' : 'ST. GEORGES PARK';
         scheduleRows += `<tr class="${g}-row"><td>M${i.toString().padStart(2,'0')}</td><td>${dateStr}</td><td>${loc}</td></tr>`;
         
-        let scorers = (i===1) ? 'BAYANDA, HOSS, VUYO' : (i%3===0) ? '--' : '--';
-        let result = (i===1) ? '2-1' : (i===2) ? '—' : '—';
-        let motmName = (i===1) ? 'QUEENER' : (i===2) ? '—' : 'TBD';
+        let scorers = (i===1) ? 'BAYANDA (1), HOSS (1), VUYO (1)' : (i%3===0) ? 'VUYO (5), JONATHAN (2), QUEENER (4), SPHE (3), OLAMA (1)' : '--';
+        let result = (i===1) ? '2-1' : (i===2) ? '11-4' : '—';
+        let motmName = (i===1) ? 'QUEENER' : (i===2) ? 'JONATHAN' : 'TBD';
         summaryRows += `<tr><td>M${i}</td><td>${result}</td><td>${scorers}</td><td>${motmName}</td><td>${loc}</td><td>${i===1?'alpha comeback':'locked'}</td></tr>`;
         motmRows += `<tr><td>M${i}</td><td>${motmName}</td></tr>`;
-        defRows += `<tr><td>M${i}</td><td>${i===1?'QUEENER':'—'}</td></tr>`;
+        defRows += `<tr><td>M${i}</td><td>${i===1?'QUEENER':'JONATHAN'}</td></tr>`;
       }
       document.getElementById('schedule-tbody').innerHTML = scheduleRows;
       document.getElementById('summary-tbody').innerHTML = summaryRows;
-      document.getElementById('scorers-tbody').innerHTML = '<tr><td>01. BAYANDA</td><td>1</td></tr><tr><td>02. HOSS</td><td>1</td></tr><tr><td>03. VUYO</td><td>1</td></tr>';
+      document.getElementById('scorers-tbody').innerHTML = '<tr><td>01. VUYO</td><td>5</td></tr><tr><td>02. QUEENER</td><td>4</td></tr><tr><td>03. SPHE</td><td>3</td></tr><tr><td>04. JONATHAN</td><td>2</td></tr><tr><td>05. OLAMA</td><td>1</td></tr><tr><td>06. BAYANDA</td><td>1</td></tr><tr><td>07. HOSS</td><td>1</td></tr>';
       document.getElementById('motm-tbody').innerHTML = motmRows;
       document.getElementById('defenders-tbody').innerHTML = defRows;
-      document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr>';
+      document.getElementById('assisters-tbody').innerHTML = '<tr><td>FROST</td><td>1</td></tr><tr><td>JOY</td><td>1</td></tr><tr><td>OLAMA</td><td>1</td></tr>';
 
       // live time/weather
       function updateLive() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
