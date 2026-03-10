@@ -8,524 +8,1078 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   
-  <title>COMPLIANCE CV‑5</title>
+  <title>COMPLIANCE CV-5</title>
   
-  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0000'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+  <!-- advanced favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e10600'/%3E%3Canimate attributeName='r' values='45;48;45' dur='2s' repeatCount='indefinite'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
-  <!-- FIREBASE modular (real cloud) -->
+  
   <script type="importmap">
-    { "imports": { 
-      "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-      "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js" 
-    } }
+    {
+      "imports": {
+        "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+        "@firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+        "@firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"
+      }
+    }
   </script>
   
   <style>
     
-    /* ----- GLOBAL RESET – STRICT VERTICAL CENTERING, NO BORDER ON HEADER, SECTION SEPARATORS ----- */
+    /* ----- TACTICAL RESET & VARIABLES ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
-      --bg: #000000;
-      --panel: #030405;
-      --accent-red: #e10600;
-      --border-red: #a50000;
-      --text-light: #f0f2f5;
-      --text-dim: #a6b0c0;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --bg-primary: #000000;
+      --bg-secondary: #030405;
+      --bg-tertiary: #0a0c0e;
+      --accent: #e10600;
+      --accent-dark: #a50000;
+      --text-primary: #ffffff;
+      --text-secondary: #f0f2f5;
+      --text-tertiary: #a6b0c0;
+      --border-color: #330000;
+      --success: #00e676;
+      --warning: #ff9100;
+      --error: #ff1744;
+      --info: #2979ff;
+      --african-skin: #8d5524;
+      --african-skin-dark: #6b4226;
+      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* ----- HORIZONTAL RANDOM SCAN LINE (TACTICAL) ----- */
+    @keyframes horizontalRandomScan {
+      0% { transform: translateX(-100vw) translateY(-50%); opacity: 0; }
+      2% { opacity: 1; }
+      98% { opacity: 1; }
+      100% { transform: translateX(100vw) translateY(-50%); opacity: 0; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 0;
+      width: 100vw;
+      height: 4px;
+      background: linear-gradient(to right, 
+        transparent 0%, 
+        var(--accent) 20%, 
+        var(--accent-glow) 50%, 
+        var(--accent) 80%, 
+        transparent 100%);
+      box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent);
+      transform: translateY(-50%);
+      animation: horizontalRandomScan 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    /* base background */
     body {
-      background: var(--bg);
-      color: var(--text-light);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-      width: 100%;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;      /* center everything horizontally */
+      position: relative;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* MAIN VERTICAL COLUMN – every screen, centered */
-    .app-wrapper {
-      width: 100%;
-      max-width: 1400px;         /* readability on huge screens */
-      margin: 0 auto;
-      padding: 0 max(1rem, 4vw); /* fluid padding */
+    /* subtle grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(225,6,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225,6,0,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ----- PIN GATE (EVERY VISIT) ----- */
+    .pin-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000000;
+      transition: opacity 0.5s var(--transition-smooth);
+    }
+
+    .pin-gate-card {
+      background: var(--bg-tertiary);
+      border: 3px solid var(--accent);
+      padding: 3rem 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      animation: gatePulse 2s infinite;
+    }
+
+    @keyframes gatePulse {
+      0% { border-color: var(--accent); box-shadow: 0 0 40px rgba(225,6,0,0.3); }
+      50% { border-color: var(--accent-glow); box-shadow: 0 0 80px rgba(255,51,51,0.5); }
+      100% { border-color: var(--accent); box-shadow: 0 0 40px rgba(225,6,0,0.3); }
+    }
+
+    .pin-gate-title {
+      color: var(--accent);
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .pin-gate-sub {
+      color: var(--text-tertiary);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .pin-input {
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      color: var(--text-primary);
+      font-size: 2rem;
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+      letter-spacing: 8px;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      caret-color: var(--accent);
+    }
+
+    .pin-input:focus {
+      outline: none;
+      border-color: var(--accent-glow);
+    }
+
+    .pin-btn {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: white;
+      padding: 1rem 3rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .pin-btn:hover {
+      background: var(--accent);
+      color: black;
+      border-color: var(--accent-glow);
+    }
+
+    .app-container {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(0.5rem, 3vw, 2rem);
+      z-index: 1;
+      display: none;
+    }
+
+    /* ----- HEADER (FULL WIDTH, CENTERED CONTENT) ----- */
+    .advanced-header {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      padding: 1.5rem 0;
+      border-bottom: 4px solid var(--accent) !important;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 2.5rem;
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .header-status {
+      display: flex;
+      gap: 1rem;
       align-items: center;
     }
 
-    /* ----- HEADER – NO BORDER, COMPLETELY CENTERED ----- */
-    .tactical-header {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.98);
-      backdrop-filter: blur(16px);
-      padding: 1.2rem 0;
-      margin-bottom: 2rem;
-      border: none !important;            /* NO BORDER */
-      box-shadow: none !important;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .status-indicator {
+      width: 14px;
+      height: 14px;
+      background: var(--success);
+      border-radius: 0;
+      animation: pulse-glow 2s infinite;
+      border: 1px solid white;
     }
 
-    .header-logo {
-      font-size: clamp(1.6rem, 7vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--accent-red);
-      border: none;
-      line-height: 1.2;
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
 
-    /* ----- SECTION STYLING – SEPARATORS + VERTICAL CENTERING ----- */
+    /* ----- CENTERING EVERYTHING ----- */
+    .section, .footer-content {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .section {
-      width: 100%;
-      background: rgba(2, 4, 6, 0.9);
-      backdrop-filter: blur(4px);
-      border: 2px solid var(--border-red);
-      margin-bottom: 3.5rem;               /* spacing between sections */
-      padding: clamp(1.5rem, 5vw, 3rem);
-      scroll-margin-top: 5rem;
-      position: relative;
-    }
-
-    /* section separator (line after each section, except last) */
-    .section::after {
-      content: '';
-      position: absolute;
-      bottom: -1.8rem;                     /* visually between sections */
-      left: 10%;
-      width: 80%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
-      pointer-events: none;
-    }
-
-    .section:last-child::after {
-      display: none;                       /* no separator after last */
+      background: rgba(2, 4, 6, 0.97);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--accent);
+      margin-bottom: 4rem;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      transition: 0.3s;
     }
 
     .section-header {
       display: flex;
-      flex-direction: column;               /* stack vertically on mobile */
+      justify-content: space-between;
       align-items: center;
-      gap: 0.6rem;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-bottom: 2rem;
-      border-bottom: 2px solid var(--border-red);
       padding-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
     }
 
     .section-title {
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-weight: 800;
-      color: var(--accent-red);
+      color: var(--accent);
       letter-spacing: 2px;
-      text-align: center;
+      text-transform: uppercase;
     }
 
     .section-badge {
-      background: #1f0101;
-      border: 1px solid var(--accent-red);
-      color: var(--accent-red);
-      padding: 0.3rem 1.5rem;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--accent);
+      padding: 0.5rem 1.5rem;
       font-weight: 700;
-      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    }
+
+    /* ----- GRID SYSTEMS ----- */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+      gap: 2rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ----- CARDS ----- */
+    .card {
+      background: var(--bg-tertiary);
+      border: 2px solid var(--accent);
+      padding: 1.5rem;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--accent-glow);
+    }
+
+    /* ----- FORM ELEMENTS ----- */
+    input, textarea, select {
+      width: 100%;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-glow);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--text-primary);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ----- MESSAGE BOARD (ADVANCED) ----- */
+    .message-board {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .message-board::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .message-board::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    .message-board::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border: 2px solid var(--bg-secondary);
+    }
+
+    .message {
+      background: var(--bg-tertiary);
+      border: 2px solid var(--accent);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: 0.3s;
+    }
+
+    .message.replied-to {
+      border-left: 8px solid var(--info);
+    }
+
+    .reply-context {
+      background: rgba(0,40,80,0.5);
+      padding: 0.8rem;
+      margin: 0.8rem 0;
+      border-left: 4px solid var(--info);
+      font-style: italic;
+      color: #bbdefb;
+    }
+
+    .reply-context strong {
+      color: var(--info);
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .message-actions button {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .message-actions button:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .like-button {
+      background: transparent;
+      border: none;
+      color: var(--african-skin);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .like-button.liked {
+      color: var(--african-skin-dark);
+    }
+
+    .pinned-badge {
+      background: var(--accent);
+      color: black;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .reply-indicator {
+      background: var(--bg-secondary);
+      padding: 0.8rem;
+      margin: 0.8rem 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    /* ----- TASK ITEMS ----- */
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .task-item.priority {
+      border-left-width: 6px;
+      border-left-color: var(--warning);
+    }
+
+    .task-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .task-actions button {
+      background: transparent;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .task-actions button:hover {
+      color: var(--accent);
+    }
+
+    /* ----- PROGRESS BAR ----- */
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.5s;
+    }
+
+    /* ----- FILE GRID ----- */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .file-item {
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      padding: 0.5rem;
       text-align: center;
     }
 
-    /* ----- VERTICAL NAV – improved side controls ----- */
-    .vertical-nav {
+    /* ----- ZAMA PROTOTYPE (COMING SOON) ----- */
+    .zama-container {
+      background: var(--bg-tertiary);
+      border: 3px solid var(--accent);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .zama-avatar {
+      width: 120px;
+      height: 120px;
+      border: 3px solid var(--accent);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: 0.5;
+    }
+
+    .zama-name {
+      color: var(--accent);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .zama-status {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--warning);
+      color: var(--warning);
+      margin-bottom: 2rem;
+    }
+
+    .zama-coming-soon {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-tertiary);
+      letter-spacing: 8px;
+      padding: 3rem;
+      border: 2px dashed var(--accent);
+    }
+
+    /* ----- FOOTER ----- */
+    .advanced-footer {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border-top: 4px solid var(--accent);
+      padding: 3rem 0;
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    .bible-verse {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+
+    .bible-verse::before,
+    .bible-verse::after {
+      content: '"';
+      color: var(--accent);
+      font-size: 2em;
+      opacity: 0.5;
+    }
+
+    .bible-reference {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* ----- NOTIFICATION SYSTEM ----- */
+    .notification-center {
       position: fixed;
-      right: clamp(0.5rem, 2vw, 1.5rem);
+      top: 100px;
+      right: 20px;
+      z-index: 10000;
+      max-width: 380px;
+      width: calc(100% - 40px);
+    }
+
+    .notification {
+      background: var(--bg-tertiary);
+      border-left: 6px solid var(--accent);
+      border: 2px solid var(--accent);
+      color: var(--text-primary);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: slideIn 0.3s;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .notification.success { border-left-color: var(--success); }
+    .notification.error { border-left-color: var(--error); }
+    .notification.warning { border-left-color: var(--warning); }
+    .notification.info { border-left-color: var(--info); }
+
+    .notification-close {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* ----- LOADING OVERLAY ----- */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      backdrop-filter: blur(10px);
+    }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--bg-tertiary);
+      border-top: 4px solid var(--accent);
+      border-right: 4px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ----- MODAL SYSTEM ----- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+    }
+
+    .modal {
+      background: var(--bg-tertiary);
+      border: 3px solid var(--accent);
+      max-width: 450px;
+      width: 90%;
+      padding: 2.5rem;
+    }
+
+    .modal-title {
+      color: var(--accent);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    /* ----- NAVIGATION DOTS ----- */
+    .nav-dots {
+      position: fixed;
+      right: 1rem;
       top: 50%;
       transform: translateY(-50%);
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
     .nav-dot {
-      width: clamp(44px, 8vw, 56px);
-      height: clamp(44px, 8vw, 56px);
-      background: #0b0b0b;
-      border: 2px solid var(--border-red);
-      color: #bbb;
+      width: 50px;
+      height: 50px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--accent);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: clamp(0.9rem, 3vw, 1.2rem);
       cursor: pointer;
-      transition: 0.2s;
-      border-radius: 0;                    /* sharp per spec */
+      transition: 0.3s;
+      position: relative;
     }
 
-    .nav-dot.active, .nav-dot:hover {
-      background: var(--accent-red);
+    .nav-dot.active,
+    .nav-dot:hover {
+      background: var(--accent);
       color: black;
-      border-color: #ff4d4d;
     }
 
-    /* ----- CARD / ELEMENTS – centered inner content ----- */
-    .card {
-      background: #0a0606;
-      border: 2px solid var(--border-red);
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-      width: 100%;
-    }
-
-    .btn, input, textarea, select {
-      border: 2px solid var(--border-red) !important;
-      background: #080101;
+    .nav-dot .dot-label {
+      position: absolute;
+      right: 120%;
+      white-space: nowrap;
+      background: var(--bg-tertiary);
+      padding: 0.3rem 0.8rem;
+      border: 2px solid var(--accent);
       color: white;
-      padding: 0.8rem 1.2rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 0;
-      width: 100%;                         /* full width on mobile */
-      max-width: 100%;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: 0.3s;
+      pointer-events: none;
     }
 
-    .btn {
-      background: #1a0505;
-      cursor: pointer;
-      transition: 0.15s;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-align: center;
-      width: auto;
-      min-width: 120px;
+    .nav-dot:hover .dot-label {
+      opacity: 1;
     }
 
-    .btn-primary {
-      background: var(--accent-red);
-      color: black;
-      border-color: #6b0000 !important;
-    }
-
+    /* ----- UTILITIES ----- */
     .flex {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       align-items: center;
-      justify-content: center;              /* center inner content */
     }
 
-    /* ----- GRID adjustments (vertical stacking) ----- */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr;           /* always vertical on all screens */
-      gap: 2rem;
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
     }
 
-    /* minimal breakpoint for extra large screens: still vertical but wider cards */
-    @media (min-width: 1200px) {
-      .grid-2 {
-        grid-template-columns: 1fr 1fr;      /* two column only on huge, but still centered */
-      }
-    }
-
-    /* override for section03 – stays 1fr always (per compliance CV‑5 only) */
-    #s3 .grid-2 {
-      grid-template-columns: 1fr !important; /* force vertical for section 03 */
-    }
-
-    /* ----- MESSAGE BOARD CARDS – no overflow ----- */
-    .dept-tag {
-      background: #2f0101;
-      color: #ffa0a0;
-      padding: 0.2rem 0.8rem;
-      font-size: 0.7rem;
-      font-weight: 700;
-      border-left: 4px solid var(--accent-red);
-      word-break: break-word;
-    }
-
-    #messageBoard {
-      max-height: 550px;
-      overflow-y: auto;
-      word-wrap: break-word;
-      width: 90%;
-    }
-
-    /* file preview grid */
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-      gap: 0.6rem;
-      margin-top: 1rem;
-    }
-
-    /* modal, loader, notifications (unchanged structure) */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000;
-      display: none; justify-content: center; align-items: center;
-    }
-    .modal {
-      background: #0c0101; border: 3px solid var(--accent-red);
-      max-width: 380px; width: 90%; padding: 2rem;
-    }
-    #pinInput {
-      background: #1f0101; border: 2px solid var(--border-red);
-      color: white; padding: 1rem; font-size: 1.5rem;
-      width: 100%; text-align: center; letter-spacing: 6px;
-    }
-    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 999999; }
-    .loader { width: 44px; height: 44px; border: 4px solid #330000; border-top: 4px solid var(--accent-red); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .notification-center { position: fixed; top: 90px; right: 20px; z-index: 99999; max-width: 340px; width: calc(100% - 40px); }
-    .notification { background: #1f0a0a; border-left: 6px solid var(--accent-red); color: white; padding: 12px 18px; margin-bottom: 8px; border: 1px solid #b33; font-size: 0.9rem; }
-
-    /* footer */
-    .footer {
-      width: 100%;
-      background: #030101;
-      border-top: 3px solid var(--accent-red);
-      padding: 2rem;
-      margin-top: 2rem;
-      text-align: center;
-    }
-    .verse {
-      font-size: clamp(1rem, 4vw, 1.4rem);
-      color: #f0c0c0;
-      font-weight: 500;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* upgrade KJV verse (already there) */
-
-    /* additional centering utilities */
-    .text-center { text-align: center; }
+    .text-accent { color: var(--accent); }
+    .text-dim { color: var(--text-tertiary); }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
     .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
     .w-full { width: 100%; }
-    
   </style>
-  
 </head>
-  
 <body>
-  
-  <div class="app-wrapper">
-    <!-- MODAL -->
+  <!-- PIN GATE -->
+  <div class="pin-gate-overlay" id="pinGate">
+    <div class="pin-gate-card">
+      <div class="pin-gate-title">COMPLIANCE CV-5</div>
+      <div class="pin-gate-sub">enter gate access pin</div>
+      <input type="password" id="pinInput" class="pin-input" maxlength="7" placeholder="1100101" inputmode="numeric">
+      <button class="pin-btn" id="unlockBtn">UNLOCK</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div class="app-container" id="appContainer">
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="globalLoader">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">processing...</div>
+      </div>
+    </div>
+
+    <!-- MODAL SYSTEM -->
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
-        <p style="margin-bottom: 8px;">ENTER COMMAND PIN:</p>
-        <input type="password" id="pinInput" maxlength="4" placeholder="****" inputmode="numeric">
-        <div class="flex" style="justify-content: flex-end; gap:12px; margin-top: 20px;">
+        <div class="modal-title" id="modalTitle">CONFIRM ACTION</div>
+        <div class="modal-content" id="modalContent"></div>
+        <div class="modal-actions">
           <button class="btn" id="modalCancel">CANCEL</button>
           <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
         </div>
       </div>
     </div>
-    <div class="loader-overlay" id="globalLoader"><div class="loader"></div></div>
+
+    <!-- NOTIFICATION CENTER -->
     <div class="notification-center" id="notificationCenter"></div>
 
-    <!-- VERTICAL SIDE CONTROLS (advanced) -->
-    <div class="vertical-nav">
-      <div class="nav-dot active" data-section="s1">S1</div>
-      <div class="nav-dot" data-section="s2">S2</div>
-      <div class="nav-dot" data-section="s3">S3</div>
-      <div class="nav-dot" data-section="s4">S4</div>
-      <div class="nav-dot" data-section="s5">S5</div>
+    <!-- NAVIGATION DOTS -->
+    <div class="nav-dots">
+      <div class="nav-dot active" data-section="s1"><span class="dot-label">COMMAND</span>S1</div>
+      <div class="nav-dot" data-section="s2"><span class="dot-label">TMB</span>S2</div>
+      <div class="nav-dot" data-section="s3"><span class="dot-label">OBJECTIVES</span>S3</div>
+      <div class="nav-dot" data-section="s4"><span class="dot-label">INTEL</span>S4</div>
+      <div class="nav-dot" data-section="s5"><span class="dot-label">ZAMA</span>S5</div>
     </div>
 
-    <!-- HEADER – no border, centered -->
-    <header class="tactical-header">
-      <div class="header-logo">COMPLIANCE CV‑5</div>
+    <!-- FULL WIDTH HEADER -->
+    <header class="advanced-header">
+      <div class="header-content">
+        <div class="logo">COMPLIANCE CV-5</div>
+        <div class="header-status">
+          <div class="status-indicator"></div>
+        </div>
+      </div>
     </header>
 
-    <!-- S1 – COMMAND -->
+    <!-- SECTION 1: COMMAND CENTER -->
     <section class="section" id="s1">
       <div class="section-header">
-        <h2 class="section-title">SECTION 01 · DIRECT ACTION (CIO only)</h2>
+        <h2 class="section-title">Section 01: COMMAND CENTER (CIO only!)</h2>
         <span class="section-badge" id="s1Badge">🔒 LOCKED</span>
       </div>
-      <div class="card">
-        <h3 style="color:#e65c5c;">📋 CURRENT DIRECTIVE</h3>
-        <div id="publicDirective" style="background:#0f0303; padding:1rem; margin:1rem 0;">—</div>
-        <div id="directiveMeta" class="text-dim" style="font-size:0.9rem;"></div>
-      </div>
-      <div class="flex">
-        <button class="btn" id="unlockS1Btn">🔓 UNLOCK COMMAND</button>
-        <button class="btn btn-primary" id="s1Send" disabled>SEND</button>
-      </div>
-      <div id="s1Panel" style="margin-top:1.5rem; display:none;">
-        <textarea id="s1Directive" rows="2" placeholder="Enter new directive..."></textarea>
-        <div class="flex mt-2"><button class="btn" id="s1Lock">🔒 LOCK</button></div>
-        <h3 style="margin-top:2rem;">📜 HISTORY</h3>
-        <div id="s1History" style="max-height:200px; overflow-y:auto;"></div>
+      
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="text-accent mb-2">CURRENT DIRECTIVE</h3>
+          <div id="publicDirective" class="mb-3" style="background: var(--bg-secondary); padding: 1rem;">—</div>
+          <div id="directiveMeta" class="text-dim mb-3"></div>
+          
+          <div class="flex">
+            <button class="btn" id="unlockS1Btn">🔓 UNLOCK</button>
+            <button class="btn btn-primary" id="s1Send" disabled>SEND</button>
+          </div>
+        </div>
+
+        <div class="card" id="s1Panel" style="display: none;">
+          <h3 class="text-accent mb-2">NEW DIRECTIVE</h3>
+          <textarea id="s1Directive" rows="4" placeholder="Enter new directive..." class="mb-2"></textarea>
+          
+          <div class="flex-between mb-3">
+            <button class="btn" id="s1Lock">🔒 LOCK</button>
+            <span class="text-dim">PIN: 1234</span>
+          </div>
+
+          <h3 class="text-accent mb-2">DIRECT ACTION HISTORY</h3>
+          <div id="s1History" style="max-height: 250px; overflow-y: auto;"></div>
+        </div>
       </div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- S2 – MESSAGE BOARD (no spacing/overflow issues) -->
+    <!-- SECTION 2: MESSAGE BOARD (ADVANCED) -->
     <section class="section" id="s2">
       <div class="section-header">
-        <h2 class="section-title">SECTION 02 · TEAM MESSAGE BOARD</h2>
+        <h2 class="section-title">Section 02: TEAM MESSAGE BOARD</h2>
         <span class="section-badge" id="msgCount">0</span>
       </div>
+
       <div class="grid-2">
-        <!-- left compose -->
-        <div>
-          <div class="flex">
-            <input type="text" id="callsign" placeholder="CODENAME" value="OLAMA" style="flex:2;">
-            <select id="deptSelect" class="dept-selector" style="flex:1.5; background:#0a0303;">
-              <option value="COMPLIANCE CV-5" selected>COMPLIANCE CV-5</option>
-              <option value="INTEL">INTEL</option>
+        <!-- Compose Area -->
+        <div class="card">
+          <h3 class="text-accent mb-2">COMPOSE</h3>
+          
+          <div class="flex mb-2">
+            <input type="text" id="callsign" placeholder="CODENAME" value="OLAMA" style="flex: 2;">
+            <select id="deptSelect" style="flex: 1; background: var(--bg-secondary);">
+              <option value="COMPLIANCE CV-5">COMPLIANCE CV-5</option>
+              <option value="INTEL">EMERGENCY EVAC</option>
+              <option value="FIELD OPS">FIELD OPS</option>
             </select>
           </div>
-          <br>
-          <div class="flex">
-            <button class="btn" id="emojiBtn">😊</button>
-            <button class="btn" id="attachBtn">📎</button>
+
+          <div class="flex mb-2">
+            <button class="btn" id="emojiBtn" style="flex: 1;">😊 EMOJI</button>
+            <button class="btn" id="attachBtn" style="flex: 1;">📎 ATTACH</button>
+            <button class="btn" id="clearCompose" style="flex: 1;">🗑️ CLEAR</button>
           </div>
-          <br>
-          <div style="position:relative;">
-            <textarea id="msgInput" rows="3" placeholder="Secure message..."></textarea>
-            <emoji-picker id="emojiPicker" style="display:none; position:absolute; z-index:1000; bottom:100%;"></emoji-picker>
+
+          <div style="position: relative;">
+            <textarea id="msgInput" rows="4" placeholder="secure message..." class="mb-2"></textarea>
+            <emoji-picker id="emojiPicker" style="display: none; position: absolute; bottom: 100%; left: 0; z-index: 1000;"></emoji-picker>
           </div>
-          <input type="file" id="msgFile" style="display:none;" accept="image/*,.pdf,.txt">
-          <div id="attachmentPreview" style="margin:8px 0; color:#f77; font-size:0.9rem;"></div>
-          <div class="flex"><button class="btn btn-primary" id="sendMsg">📨 SEND</button></div>
+
+          <div id="replyIndicator" class="reply-indicator" style="display: none;"></div>
+
+          <input type="file" id="msgFile" style="display: none;" accept="image/*,.pdf,.txt,.doc,.docx">
+          <div id="attachmentPreview" class="text-dim mb-2"></div>
+
+          <button class="btn btn-primary w-full" id="sendMsg">📨 SEND MESSAGE</button>
         </div>
-        <!-- right live messages -->
-        <div>
-          <h3 class="flex">💬 LIVE MESSAGES <span class="section-badge" id="liveMsgCount">0</span></h3>
-          <div id="messageBoard" style="max-height:550px; overflow-y:auto; word-break:break-word;"></div>
+
+        <!-- Messages Area -->
+        <div class="card">
+          <div class="flex-between mb-2">
+            <h3 class="text-accent">LIVE MESSAGES</h3>
+            <span class="section-badge" id="liveMsgCount">0</span>
+          </div>
+          
+          <div class="message-board" id="messageBoard"></div>
         </div>
       </div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- S3 – OBJECTIVES (exclusively for compliance CV‑5, section 03 will remain unique) -->
+    <!-- SECTION 3: OBJECTIVES -->
     <section class="section" id="s3">
       <div class="section-header">
-        <h2 class="section-title">SECTION 03 · OBJECTIVES</h2>
+        <h2 class="section-title">Section 03: OBJECTIVES</h2>
         <span class="section-badge" id="taskCount">0</span>
       </div>
-      <div class="grid-2"> <!-- forced 1fr via css -->
-        <div>
+
+      <div class="grid-3">
+        <!-- Create Task -->
+        <div class="card">
+          <h3 class="text-accent mb-2">CREATE OBJECTIVE</h3>
+          <input type="text" id="taskInput" placeholder="Enter objective..." class="mb-2">
+          
+          <div class="flex mb-2">
+            <button class="btn" id="priorityBtn">⚡ PRIORITY</button>
+            <button class="btn" id="addTaskBtn">➕ ADD</button>
+          </div>
+
           <div class="flex">
-            <button class="btn btn-primary" id="addTaskBtn">➕ NEW</button>
-            <button class="btn" id="refreshTasks">🔄</button>
             <button class="btn" id="completeAll">✅ COMPLETE ALL</button>
             <button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button>
           </div>
-          <div class="flex">
-            <input type="text" id="taskInput" placeholder="Enter objective...">
-            <button class="btn" id="priorityBtn">⚡ PRIORITY</button>
-          </div>
-          <button class="btn btn-primary" id="createTask">CREATE OBJECTIVE</button>
-          <h3 style="margin-top:2rem;">⚡ ACTIVE</h3>
-          <div id="activeTasks" style="max-height:300px; overflow-y:auto;"></div>
         </div>
-        <div>
-          <h3>✅ COMPLETED</h3>
-          <div id="completedTasks" style="max-height:200px; overflow-y:auto;"></div>
-          <div style="margin-top:2rem;">
-            <h4>📊 PROGRESS</h4>
-            <div style="background:#1a0000; height:6px;"><div class="progress-bar" id="taskProgress" style="height:100%; background:#20c997; width:0%;"></div></div>
-            <div class="grid-2" style="margin-top:1rem;">
-              <div class="card"><span class="text-dim">RATE</span><div style="font-size:2rem; color:#20c997;" id="completionRate">0%</div></div>
-              <div class="card"><span class="text-dim">TOTAL</span><div style="font-size:2rem; color:#5ca8ff;" id="totalTasks">0</div></div>
+
+        <!-- Active Tasks -->
+        <div class="card">
+          <h3 class="text-accent mb-2">⚡ ACTIVE OBJECTIVES</h3>
+          <div id="activeTasks" style="max-height: 350px; overflow-y: auto;"></div>
+        </div>
+
+        <!-- Progress & Stats -->
+        <div class="card">
+          <h3 class="text-accent mb-2">📊 PROGRESS</h3>
+          
+          <div class="mb-3">
+            <div class="flex-between mb-1">
+              <span>Completion Rate</span>
+              <span id="completionRate" class="text-accent">0%</span>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar" id="taskProgress" style="width: 0%;"></div>
             </div>
           </div>
+
+          <div class="grid-2 mb-3">
+            <div class="card" style="padding: 1rem; text-align: center;">
+              <div class="text-dim">TOTAL</div>
+              <div class="text-accent" style="font-size: 2rem;" id="totalTasks">0</div>
+            </div>
+            <div class="card" style="padding: 1rem; text-align: center;">
+              <div class="text-dim">ACTIVE</div>
+              <div class="text-accent" style="font-size: 2rem;" id="activeCount">0</div>
+            </div>
+          </div>
+
+          <h3 class="text-accent mb-2">✅ COMPLETED</h3>
+          <div id="completedTasks" style="max-height: 150px; overflow-y: auto;"></div>
         </div>
       </div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- S4 – INTEL (advanced file handling) -->
+    <!-- SECTION 4: INTEL & LOGS -->
     <section class="section" id="s4">
       <div class="section-header">
-        <h2 class="section-title">SECTION 04 · INTEL & LOGS</h2>
+        <h2 class="section-title">Section 04: INTEL & LOGS</h2>
         <span class="section-badge" id="logCount">0</span>
       </div>
+
       <div class="grid-2">
-        <div>
-          <div class="flex">
-            <button class="btn" id="refreshLogs">🔄</button>
-            <button class="btn" id="clearLogs">🗑️ CLEAR</button>
-            <button class="btn" id="exportLogs">📥 EXPORT</button>
+        <!-- Logs -->
+        <div class="card">
+          <div class="flex-between mb-2">
+            <h3 class="text-accent">SYSTEM LOGS</h3>
+            <div class="flex">
+              <button class="btn" id="refreshLogs">🔄</button>
+              <button class="btn" id="clearLogs">🗑️</button>
+              <button class="btn" id="exportLogs">📥</button>
+            </div>
           </div>
-          <div id="shiftLogs" style="max-height:350px; overflow-y:auto;"></div>
+          
+          <div id="shiftLogs" style="max-height: 400px; overflow-y: auto;"></div>
         </div>
-        <div>
-          <h3>📎 ANY FILE TYPES (upload/preview)</h3>
-          <input type="file" id="fileInput" multiple accept="*/*">
-          <div class="flex">
-            <button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD (preview)</button>
-            <button class="btn" id="clearFiles">🗑️ CLEAR PREVIEW</button>
+
+        <!-- File Management -->
+        <div class="card">
+          <h3 class="text-accent mb-2">FILE MANAGEMENT</h3>
+          
+          <input type="file" id="fileInput" multiple accept="*/*" class="mb-2">
+          
+          <div class="flex mb-3">
+            <button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD</button>
+            <button class="btn" id="clearFiles">🗑️ CLEAR</button>
             <button class="btn" id="downloadFiles">📦 MANIFEST</button>
           </div>
+
           <div id="filePreview" class="file-grid"></div>
         </div>
       </div>
     </section>
 
-    <br>
-    <br>
-
-    <!-- S5 – ZAMA MDULI live chat -->
+    <!-- SECTION 5: ZAMA MDULI (PROTOTYPE - COMING SOON) -->
     <section class="section" id="s5">
       <div class="section-header">
-        <h2 class="section-title">SECTION 05 · ZAMA MDULI</h2>
-        <span class="section-badge">LIVE</span>
+        <h2 class="section-title">Section 05: ZAMA MDULI</h2>
+        <span class="section-badge">PROTOTYPE</span>
       </div>
-      <div class="card" style="padding:2rem;">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
-          <div style="font-size:4rem;">🧠</div>
-          <h3 style="color:var(--accent-red); font-size:2rem;">ZAMA MDULI</h3>
-          <p class="text-dim">cloud conversational AI</p>
-        </div>
-        <div style="margin:2rem 0; background:#0f0303; padding:1.5rem;">
-          <div style="color:#7eff7e;" id="aiStatus">neural core online</div>
-          <div id="aiResponse" style="margin-top:1rem; min-height:80px; background:#1a0404; padding:1.5rem;">Hello, I'm Zama. How can I support you today? 💙</div>
-          <div id="aiConfidence" style="font-size:0.8rem; color:gold; margin-top:4px;"></div>
-        </div>
-        <div class="flex">
-          <input type="text" id="aiQuery" placeholder="talk to Zama..." style="flex:3;">
-          <button class="btn btn-primary" id="askAI">SEND</button>
-          <button class="btn" id="aiClear">CLEAR</button>
+
+      <div class="zama-container">
+        <div class="zama-avatar">🧠</div>
+        <div class="zama-name">ZAMA MDULI</div>
+        <div class="zama-status">⚠️ PROTOTYPE MODE</div>
+        
+        <div class="zama-coming-soon">COMING SOON</div>
+        
+        <div class="flex mt-3 text-dim" style="justify-content: center; gap: 2rem;">
+          <span>🔧 Neural Core in Development</span>
+          <span>⏳ Expected: Q4 2026</span>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER with UPGRADED VERSE -->
-    <footer class="footer">
-      <div class="verse" id="bibleVerse">"She openeth her mouth with wisdom; and in her tongue is the law of kindness." — Proverbs 31:26 (KJV)</div>
+    <!-- FOOTER -->
+    <footer class="advanced-footer">
+      <div class="footer-content">
+        <div class="bible-verse" id="bibleVerse">
+          The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?
+        </div>
+        <div class="bible-reference">PSALM 27:1 · KJV</div>
+      </div>
+      <div class="footer-decoration"></div>
     </footer>
   </div>
 
   <script type="module">
-    // ========== FIREBASE + MODULE ==========
+    // ========== IMPORTS ==========
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, writeBatch, where, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      addDoc, 
+      updateDoc, 
+      deleteDoc, 
+      onSnapshot, 
+      query, 
+      orderBy, 
+      serverTimestamp, 
+      getDocs, 
+      writeBatch, 
+      where, 
+      limit,
+      increment,
+      arrayUnion,
+      arrayRemove
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+    // ========== FIREBASE CONFIG ==========
     const firebaseConfig = {
       apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
       authDomain: "eden-4a8d3.firebaseapp.com",
@@ -534,130 +1088,241 @@
       messagingSenderId: "421147129483",
       appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
+
+    // ========== INITIALIZE FIREBASE ==========
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+    const sessionId = crypto.randomUUID();
 
-        // ===== PAGE ACCESS PIN =====
-    async function requireAccessPIN() {
-      const pin = prompt("ENTER ACCESS PIN:");
-      
-      if (pin !== "1100101") {
-        alert("ACCESS DENIED");
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:40vh;'>ACCESS DENIED</h1>";
-        throw new Error("Invalid PIN");
-      }
-    }
-    
-    await requireAccessPIN();
+    // ========== GLOBAL STATE ==========
+    const state = {
+      currentUser: 'OLAMA',
+      likedMessages: new Set(),
+      replyingTo: null,
+      userLikes: new Map()
+    };
 
-    // UI elements
+    // ========== UI ELEMENTS ==========
     const loader = document.getElementById('globalLoader');
     const notif = document.getElementById('notificationCenter');
     const modalOverlay = document.getElementById('modalOverlay');
-    const modalMessage = document.getElementById('modalMessage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
     const modalConfirm = document.getElementById('modalConfirm');
     const modalCancel = document.getElementById('modalCancel');
-    const pinInput = document.getElementById('pinInput');
-    
-    window.showNotification = (msg, type='info', dur=4000) => {
-      const n = document.createElement('div'); n.className = 'notification';
-      const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
-      n.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span style="flex:1;">${msg}</span>`;
-      notif.appendChild(n);
-      setTimeout(()=> n.remove(), dur);
-    };
-    window.showLoader = (show) => loader.style.display = show ? 'flex' : 'none';
 
-    // PIN confirm
-    function confirmPIN() {
-      return new Promise((resolve) => {
-        modalMessage.innerText = 'ENTER COMMAND PIN:';
+    // ========== PIN GATE ==========
+    const pinGate = document.getElementById('pinGate');
+    const appContainer = document.getElementById('appContainer');
+    const pinInput = document.getElementById('pinInput');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const CORRECT_PIN = '1100101';
+
+    function unlockApp() {
+      pinGate.style.opacity = '0';
+      setTimeout(() => {
+        pinGate.style.display = 'none';
+        appContainer.style.display = 'block';
+        showNotification('Access granted. CV-5 tactical online.', 'success', 4000);
+      }, 500);
+    }
+
+    unlockBtn.addEventListener('click', () => {
+      if (pinInput.value === CORRECT_PIN) {
+        unlockApp();
+      } else {
+        showNotification('Invalid PIN', 'error');
         pinInput.value = '';
+      }
+    });
+
+    pinInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') unlockBtn.click();
+    });
+
+    // ========== NOTIFICATION SYSTEM ==========
+    window.showNotification = (message, type = 'info', duration = 4000) => {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      
+      const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+      };
+
+      notification.innerHTML = `
+        <span style="font-size: 1.2rem;">${icons[type] || 'ℹ️'}</span>
+        <span style="flex: 1;">${message}</span>
+        <button class="notification-close" onclick="this.parentElement.remove()">✕</button>
+      `;
+
+      notif.appendChild(notification);
+
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = 'slideOut 0.3s forwards';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, duration);
+    };
+
+    // ========== LOADER ==========
+    window.showLoader = (show) => {
+      loader.style.display = show ? 'flex' : 'none';
+    };
+
+    // ========== MODAL ==========
+    function showModal(title, content) {
+      return new Promise((resolve) => {
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content;
         modalOverlay.style.display = 'flex';
-        pinInput.focus();
-        const submitHandler = () => {
-          const entered = pinInput.value.trim();
+
+        const confirmHandler = () => {
           modalOverlay.style.display = 'none';
-          resolve(entered);
+          modalConfirm.removeEventListener('click', confirmHandler);
+          modalCancel.removeEventListener('click', cancelHandler);
+          resolve(true);
         };
-        modalConfirm.onclick = submitHandler;
-        modalCancel.onclick = () => {
+
+        const cancelHandler = () => {
           modalOverlay.style.display = 'none';
-          resolve(null);
+          modalConfirm.removeEventListener('click', confirmHandler);
+          modalCancel.removeEventListener('click', cancelHandler);
+          resolve(false);
         };
-        pinInput.onkeypress = (e) => { if (e.key === 'Enter') submitHandler(); };
+
+        modalConfirm.addEventListener('click', confirmHandler);
+        modalCancel.addEventListener('click', cancelHandler);
       });
     }
 
-    // scroll nav
+    // ========== SCROLL NAVIGATION ==========
     window.addEventListener('scroll', () => {
-      const sections = ['s1','s2','s3','s4','s5'];
+      const sections = ['s1', 's2', 's3', 's4', 's5'];
       let current = '';
-      for (let id of sections) {
+
+      for (const id of sections) {
         const el = document.getElementById(id);
-        if (el && window.scrollY + 100 >= el.offsetTop && window.scrollY + 100 < el.offsetTop + el.offsetHeight) {
-          current = id; break;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            current = id;
+            break;
+          }
         }
       }
+
       if (current) {
-        document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
-        document.querySelector(`.nav-dot[data-section="${current}"]`).classList.add('active');
+        document.querySelectorAll('.nav-dot').forEach(dot => {
+          dot.classList.remove('active');
+          if (dot.dataset.section === current) {
+            dot.classList.add('active');
+          }
+        });
       }
     });
+
     document.querySelectorAll('.nav-dot').forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        document.getElementById(dot.getAttribute('data-section')).scrollIntoView({ behavior: 'smooth' });
+      dot.addEventListener('click', () => {
+        const section = document.getElementById(dot.dataset.section);
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
-    // ========== S1 LOCK ========== (PIN 1234)
-    const s1Panel = document.getElementById('s1Panel'), s1Dir = document.getElementById('s1Directive');
-    const pubDir = document.getElementById('publicDirective'), dirMeta = document.getElementById('directiveMeta');
+    // ========== SECTION 1: COMMAND CENTER ==========
+    const s1Panel = document.getElementById('s1Panel');
+    const s1Directive = document.getElementById('s1Directive');
+    const pubDir = document.getElementById('publicDirective');
+    const dirMeta = document.getElementById('directiveMeta');
     const s1History = document.getElementById('s1History');
     const s1SendBtn = document.getElementById('s1Send');
-    const unlockBtn = document.getElementById('unlockS1Btn');
+    const unlockBtnS1 = document.getElementById('unlockS1Btn');
     const lockBtn = document.getElementById('s1Lock');
     const s1Badge = document.getElementById('s1Badge');
 
-    unlockBtn.addEventListener('click', async () => {
-      const pin = await confirmPIN();
-      if (pin === '1234') {
-        s1Panel.style.display = 'block';
-        s1SendBtn.disabled = false;
-        s1Badge.innerHTML = '🔓 UNLOCKED';
-        showNotification('S1 command unlocked','success');
-      } else if (pin !== null) {
-        showNotification('Invalid PIN','error');
+    unlockBtnS1.addEventListener('click', async () => {
+      const confirmed = await showModal('UNLOCK COMMAND', 'Enter PIN: <input type="password" id="modalPin" maxlength="4" style="margin-top: 1rem; width: 100%; padding: 0.5rem;">');
+      
+      if (confirmed) {
+        const pin = document.getElementById('modalPin')?.value;
+        if (pin === '1234') {
+          s1Panel.style.display = 'block';
+          s1SendBtn.disabled = false;
+          s1Badge.innerHTML = '🔓 UNLOCKED';
+          showNotification('Command center unlocked', 'success');
+        } else {
+          showNotification('Invalid PIN', 'error');
+        }
       }
     });
-    
+
     lockBtn.addEventListener('click', () => {
       s1Panel.style.display = 'none';
       s1SendBtn.disabled = true;
       s1Badge.innerHTML = '🔒 LOCKED';
+      showNotification('Command center locked', 'info');
     });
 
     s1SendBtn.addEventListener('click', async () => {
-      if (!s1Dir.value.trim()) return showNotification('Directive empty','error');
+      if (!s1Directive.value.trim()) {
+        showNotification('Directive cannot be empty', 'warning');
+        return;
+      }
+
       showLoader(true);
       try {
-        await setDoc(doc(db,'cio','directive'), {text:s1Dir.value, timestamp:serverTimestamp(), operator:document.getElementById('callsign').value||'Unknown', sessionId});
-        await addDoc(collection(db,'directiveHistory'), {text:s1Dir.value, timestamp:serverTimestamp(), operator:document.getElementById('callsign').value});
-        showNotification('Directive sent','success');
-      } catch(e){ showNotification(e.message,'error'); } finally { showLoader(false); }
+        await setDoc(doc(db, 'cio', 'directive'), {
+          text: s1Directive.value,
+          timestamp: serverTimestamp(),
+          operator: document.getElementById('callsign').value || 'Unknown',
+          sessionId
+        });
+
+        await addDoc(collection(db, 'directiveHistory'), {
+          text: s1Directive.value,
+          timestamp: serverTimestamp(),
+          operator: document.getElementById('callsign').value || 'Unknown'
+        });
+
+        showNotification('Directive sent successfully', 'success');
+        s1Directive.value = '';
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
     });
 
-    onSnapshot(doc(db,'cio','directive'), snap => {
-      if (snap.exists()){ let d=snap.data(); pubDir.innerText = d.text; dirMeta.innerText = `Last: ${d.timestamp?.toDate().toLocaleString()} · ${d.operator||''}`; }
-      else { pubDir.innerText = '—'; dirMeta.innerText = ''; }
+    // Real-time directive
+    onSnapshot(doc(db, 'cio', 'directive'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        pubDir.textContent = data.text;
+        dirMeta.textContent = `Last: ${data.timestamp?.toDate().toLocaleString()} · ${data.operator || 'Unknown'}`;
+      }
     });
-    onSnapshot(query(collection(db,'directiveHistory'), orderBy('timestamp','desc'), limit(12)), snap => {
+
+    // Directive history
+    onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp', 'desc'), limit(20)), (snap) => {
       s1History.innerHTML = '';
-      snap.forEach(d => { let data = d.data(); s1History.innerHTML += `<div class="card"><small>${data.timestamp?.toDate().toLocaleString()}</small><div>${data.text.substring(0,70)}… <button onclick="window.deleteHistory('${d.id}')" style="background:none;border:none;color:var(--accent-red);float:right;">🗑️</button></div></div>`; });
+      snap.forEach(doc => {
+        const data = doc.data();
+        s1History.innerHTML += `
+          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
+            <div class="flex-between">
+              <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
+              <button onclick="window.deleteHistory('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
+            </div>
+            <div>${data.text.substring(0, 100)}${data.text.length > 100 ? '...' : ''}</div>
+          </div>
+        `;
+      });
     });
 
-    // ========== S2 MESSAGE BOARD ==========
+    // ========== SECTION 2: MESSAGE BOARD ==========
     const callsign = document.getElementById('callsign');
     const deptSelect = document.getElementById('deptSelect');
     const msgInput = document.getElementById('msgInput');
@@ -666,211 +1331,729 @@
     const msgFile = document.getElementById('msgFile');
     const attachPrev = document.getElementById('attachmentPreview');
     const liveMsgCount = document.getElementById('liveMsgCount');
+    const msgCount = document.getElementById('msgCount');
+    const replyIndicator = document.getElementById('replyIndicator');
+    const clearCompose = document.getElementById('clearCompose');
+
     let currentAttachment = null;
 
-    document.getElementById('emojiBtn').onclick = ()=> emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
-    emojiPicker.addEventListener('emoji-click', e=>{ msgInput.value += e.detail.unicode; emojiPicker.style.display='none'; });
-    document.getElementById('attachBtn').onclick = ()=> msgFile.click();
-    msgFile.onchange = e => { let f = e.target.files[0]; if(f){ currentAttachment = f; attachPrev.innerText = `📎 ${f.name} (${(f.size/1024).toFixed(1)} KB)`; }};
+    // Emoji picker
+    document.getElementById('emojiBtn').addEventListener('click', () => {
+      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+    });
 
-    document.getElementById('sendMsg').onclick = async () => {
-      if(!callsign.value.trim() || (!msgInput.value.trim() && !currentAttachment)) return showNotification('Callsign & message required','error');
+    emojiPicker.addEventListener('emoji-click', (e) => {
+      msgInput.value += e.detail.unicode;
+      emojiPicker.style.display = 'none';
+    });
+
+    // File attachment
+    document.getElementById('attachBtn').addEventListener('click', () => {
+      msgFile.click();
+    });
+
+    msgFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        currentAttachment = file;
+        attachPrev.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      }
+    });
+
+    // Clear compose
+    clearCompose.addEventListener('click', () => {
+      msgInput.value = '';
+      currentAttachment = null;
+      attachPrev.innerHTML = '';
+      state.replyingTo = null;
+      replyIndicator.style.display = 'none';
+      msgFile.value = '';
+    });
+
+    // Send message
+    document.getElementById('sendMsg').addEventListener('click', async () => {
+      if (!callsign.value.trim()) {
+        showNotification('Callsign is required', 'warning');
+        return;
+      }
+
+      if (!msgInput.value.trim() && !currentAttachment) {
+        showNotification('Message or attachment required', 'warning');
+        return;
+      }
+
       showLoader(true);
+
       try {
-        let attach = null;
-        if(currentAttachment){
-          attach = await new Promise(r => { let reader = new FileReader(); reader.onload = e => r({name:currentAttachment.name, type:currentAttachment.type, data:e.target.result, size:currentAttachment.size}); reader.readAsDataURL(currentAttachment); });
+        let attachment = null;
+        if (currentAttachment) {
+          attachment = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve({
+              name: currentAttachment.name,
+              type: currentAttachment.type,
+              data: e.target.result,
+              size: currentAttachment.size
+            });
+            reader.readAsDataURL(currentAttachment);
+          });
         }
-        await addDoc(collection(db,'messages'), {
+
+        const messageData = {
           callsign: callsign.value.toUpperCase(),
           department: deptSelect.value,
           text: msgInput.value,
-          attachment: attach,
+          attachment: attachment,
           timestamp: serverTimestamp(),
           operator: callsign.value,
           sessionId,
           pinned: false,
-          likes: 0
-        });
-        msgInput.value = ''; attachPrev.innerHTML = ''; currentAttachment = null; msgFile.value = '';
-        showNotification('Message sent','success');
-      } catch(e){ showNotification(e.message,'error'); } finally { showLoader(false); }
+          likes: 0,
+          likedBy: [],
+          replyTo: state.replyingTo ? {
+            messageId: state.replyingTo.messageId,
+            callsign: state.replyingTo.callsign,
+            text: state.replyingTo.text
+          } : null
+        };
+
+        await addDoc(collection(db, 'messages'), messageData);
+
+        // Clear form
+        msgInput.value = '';
+        currentAttachment = null;
+        attachPrev.innerHTML = '';
+        state.replyingTo = null;
+        replyIndicator.style.display = 'none';
+        msgFile.value = '';
+
+        showNotification('Message sent successfully', 'success');
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    });
+
+    // Real-time messages
+    onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
+      let count = 0;
+      const messages = [];
+
+      snap.forEach(doc => {
+        const data = doc.data();
+        data.id = doc.id;
+        messages.push(data);
+      });
+
+      // Sort: pinned first, then by date
+      messages.sort((a, b) => {
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0);
+      });
+
+      msgBoard.innerHTML = '';
+
+      messages.forEach(data => {
+        count++;
+        
+        // Build attachment HTML
+        let attachHtml = '';
+        if (data.attachment) {
+          if (data.attachment.type?.startsWith('image/')) {
+            attachHtml = `
+              <div class="mt-2">
+                <img src="${data.attachment.data}" 
+                     style="max-width: 200px; max-height: 150px; cursor: pointer; border: 2px solid var(--accent);"
+                     onclick="window.viewImage('${data.attachment.data}')">
+              </div>
+            `;
+          } else {
+            attachHtml = `
+              <div class="mt-2">
+                <a href="${data.attachment.data}" download="${data.attachment.name}" style="color: var(--accent);">
+                  📎 ${data.attachment.name}
+                </a>
+              </div>
+            `;
+          }
+        }
+
+        // Reply context
+        let replyContext = '';
+        if (data.replyTo) {
+          replyContext = `
+            <div class="reply-context">
+              <strong>↪️ reply to ${data.replyTo.callsign}</strong>: "${data.replyTo.text.substring(0, 50)}${data.replyTo.text.length > 50 ? '...' : ''}"
+            </div>
+          `;
+        }
+
+        // Check if this message is being replied to
+        const isRepliedTo = state.replyingTo && state.replyingTo.messageId === data.id;
+
+        msgBoard.innerHTML += `
+          <div class="message ${isRepliedTo ? 'replied-to' : ''}" id="msg-${data.id}">
+            <div class="flex-between mb-2">
+              <div>
+                <strong style="color: var(--accent); font-size: 1.1rem;">${data.callsign}</strong>
+                <span class="section-badge" style="margin-left: 0.5rem;">${data.department || 'COMPLIANCE CV-5'}</span>
+              </div>
+              <div>
+                ${data.pinned ? '<span class="pinned-badge">📌 PINNED</span>' : ''}
+                <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
+              </div>
+            </div>
+
+            ${replyContext}
+            
+            <div class="mb-2" style="font-size: 1.1rem; line-height: 1.6;">${data.text}</div>
+            
+            ${attachHtml}
+
+            <div class="flex-between mt-2">
+              <div>
+                <button class="like-button ${(data.likedBy || []).includes(callsign.value) ? 'liked' : ''}" 
+                        onclick="window.toggleLike('${data.id}', '${callsign.value}')"
+                        style="color: var(--african-skin); font-size: 1.2rem;">
+                  👍 <span id="like-count-${data.id}">${data.likes || 0}</span>
+                </button>
+              </div>
+              
+              <div class="message-actions">
+                <button onclick="window.replyToMessage('${data.callsign}', '${data.id}', '${data.text.replace(/'/g, "\\'")}')">💬 REPLY</button>
+                <button onclick="window.editMessage('${data.id}', '${data.text.replace(/'/g, "\\'")}')">✏️ EDIT</button>
+                <button onclick="window.togglePin('${data.id}', ${data.pinned})">📌 ${data.pinned ? 'UNPIN' : 'PIN'}</button>
+                <button onclick="window.deleteMessage('${data.id}')">🗑️ DELETE</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      liveMsgCount.textContent = count;
+      msgCount.textContent = count;
+    });
+
+    // ========== MESSAGE ACTIONS ==========
+    window.replyToMessage = (callsign, id, text) => {
+      state.replyingTo = {
+        messageId: id,
+        callsign: callsign,
+        text: text
+      };
+      
+      replyIndicator.style.display = 'block';
+      replyIndicator.innerHTML = `↪️ Replying to <strong>${callsign}</strong>: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`;
+      msgInput.focus();
     };
 
-    onSnapshot(query(collection(db,'messages'), orderBy('timestamp','desc'), limit(40)), snap => {
-      let cnt = 0; let messages = [];
-      snap.forEach(d => { let data = d.data(); data.id = d.id; messages.push(data); });
-      messages.sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.timestamp?.seconds ||0) - (a.timestamp?.seconds||0));
-      msgBoard.innerHTML = '';
-      messages.forEach(data => {
-        cnt++;
-        let attachHtml = '';
-        if(data.attachment){
-          if(data.attachment.type?.startsWith('image/')) attachHtml = `<img src="${data.attachment.data}" 
-style="max-width:140px;margin-top:6px;cursor:pointer;"
-onclick="window.viewFile('${data.attachment.data}')">`;
-          else attachHtml = `<div><a href="${data.attachment.data}" download="${data.attachment.name}" style="color:#5ca8ff;">📎 ${data.attachment.name}</a></div>`;
-        }
-        msgBoard.innerHTML += `<div class="card" id="msg-${data.id}">
-          <div style="display:flex; flex-wrap:wrap; gap:0.3rem; align-items:center; justify-content:space-between;">
-            <strong style="color:var(--accent-red);">${data.callsign}</strong>
-            <span class="dept-tag">${data.department || 'COMPLIANCE CV-5'}</span>
-            <div><small>${data.timestamp?.toDate().toLocaleString()}</small>${data.pinned ? '<span class="pinned-badge" style="background:gold;color:black;padding:2px 8px;">📌</span>' : ''}</div>
-          </div>
+    window.toggleLike = async (messageId, username) => {
+      showLoader(true);
+      
+      try {
+        const messageRef = doc(db, 'messages', messageId);
+        const messageSnap = await getDocs(query(collection(db, 'messages'), where('__name__', '==', messageId)));
+        
+        if (!messageSnap.empty) {
+          const messageData = messageSnap.docs[0].data();
+          const likedBy = messageData.likedBy || [];
           
-          <div style="margin:10px 0;">${data.text}</div>
-
-${attachHtml}
-
-<div style="margin-top:6px;">
-👍 <span>${data.likes || 0}</span>
-<button onclick="window.likeMessage('${data.id}',${data.likes || 0})">👍</button>
-</div>
-
-          <div class="message-actions"><button onclick="window.editMessage('${data.id}','${data.text.replace(/'/g,"\\'")}')">✏️ Edit</button><button onclick="window.deleteMessage('${data.id}')">🗑️ Delete</button><button onclick="window.quoteMessage('${data.callsign}','${data.text.replace(/'/g,"\\'")}')">💬 Quote</button><button onclick="window.pinMessage('${data.id}',${data.pinned})">📌 ${data.pinned ? 'Unpin' : 'Pin'}</button></div>
-        </div>`;
-      });
-      liveMsgCount.innerText = cnt; document.getElementById('msgCount').innerText = cnt;
-    });
-
-    // ===== S3 TASKS =====
-    const taskInput = document.getElementById('taskInput'), activeTasks = document.getElementById('activeTasks'), completedTasks = document.getElementById('completedTasks'), taskProgress = document.getElementById('taskProgress'), completionRate = document.getElementById('completionRate'), totalTasks = document.getElementById('totalTasks'), taskCount = document.getElementById('taskCount');
-    document.getElementById('createTask').onclick = async () => { if(!taskInput.value.trim()) return; showLoader(true); await addDoc(collection(db,'tasks'), {text:taskInput.value, completed:false, priority:taskInput.value.includes('⚡'), created:serverTimestamp(), operator:callsign.value||'Unknown'}); taskInput.value=''; showLoader(false); showNotification('Task created','success'); };
-    document.getElementById('priorityBtn').onclick = ()=>{ if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value = '⚡ '+taskInput.value; };
-    onSnapshot(query(collection(db,'tasks'), orderBy('created','desc')), snap => { let act='', com='', aCnt=0,cCnt=0; snap.forEach(d=>{ let data=d.data(), pri=data.priority?'⚡ ':''; let card = `<div class="card"><div style="display:flex;justify-content:space-between; flex-wrap:wrap;"><span style="color:${data.completed?'#20c997':data.priority?'#f4c542':'white'};">${pri}${data.text}</span><div><button onclick="window.toggleTask('${d.id}',${data.completed})" style="background:none;border:none;color:#20c997;">${data.completed?'↩️':'✅'}</button><button onclick="window.editTask('${d.id}','${data.text.replace(/'/g,"\\'")}')">✏️</button><button onclick="window.deleteTask('${d.id}')">🗑️</button>${!data.completed?`<button onclick="window.togglePriority('${d.id}',${data.priority})" style="background:none;border:none;color:#f4c542;">⚡</button>`:''}</div></div><small>${data.operator||''}</small></div>`;
-      if(data.completed){ com+=card; cCnt++; } else { act+=card; aCnt++; } });
-      activeTasks.innerHTML = act||'<p class="text-dim">No active</p>'; completedTasks.innerHTML = com||'<p class="text-dim">None</p>';
-      let tot = aCnt+cCnt; let p = tot? (cCnt/tot*100):0; taskProgress.style.width=p+'%'; completionRate.innerText=Math.round(p)+'%'; totalTasks.innerText=tot; taskCount.innerText=aCnt;
-    });
-
-    // ===== S4 =====
-    const shiftLogs = document.getElementById('shiftLogs'), logCount = document.getElementById('logCount');
-    onSnapshot(query(collection(db,'shifts'), orderBy('timestamp','desc'), limit(25)), snap => { let c=0; shiftLogs.innerHTML=''; snap.forEach(d=>{ c++; let data=d.data(); shiftLogs.innerHTML+=`<div class="card"><div><strong>${data.type||'EVENT'}</strong><button onclick="window.deleteLog('${d.id}')" style="float:right;background:none;border:none;color:var(--accent-red);">🗑️</button></div><div>${data.operator||''} · ${data.timestamp?.toDate().toLocaleString()}</div></div>`; }); logCount.innerText=c; });
-
-    // ===== S5 ZAMA – fixed responses (greetings etc) =====
-    const aiResponse = document.getElementById('aiResponse');
-    const aiConfidence = document.getElementById('aiConfidence');
-    const aiQuery = document.getElementById('aiQuery');
-
-    async function chatWithZama(userInput) {
-      const snap = await getDocs(collection(db,'tasks'));
-      const total = snap.size;
-      const completed = snap.docs.filter(d=>d.data().completed).length;
-      const lower = userInput.toLowerCase().trim();
-      if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower.startsWith('hi ') || lower.startsWith('hello ')) {
-        return { text: "Hi there! I'm Zama. So lovely to hear from you! How are you today? 💙", conf: 0.99 };
-      } else if (lower.includes('how are you')) {
-        return { text: "I'm doing wonderfully, thank you for asking! Ready to help you with anything you need. 😊", conf: 0.98 };
-      } else if (lower.includes('task') || lower.includes('objective')) {
-        return { text: `You have ${total} total objectives, with ${completed} completed. You're making good progress!`, conf: 0.95 };
-      } else if (lower.includes('thank')) {
-        return { text: "You're so welcome! Always here for you. 💕", conf: 0.97 };
-      } else if (lower.includes('bye')) {
-        return { text: "Goodbye for now! Come talk to me anytime. 💫", conf: 0.96 };
-      } else {
-        return { text: "That's interesting! Tell me more — I'm here to listen and support you.", conf: 0.85 };
+          if (likedBy.includes(username)) {
+            await updateDoc(messageRef, {
+              likes: increment(-1),
+              likedBy: arrayRemove(username)
+            });
+          } else {
+            await updateDoc(messageRef, {
+              likes: increment(1),
+              likedBy: arrayUnion(username)
+            });
+          }
+        }
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
       }
-    }
+    };
 
-    document.getElementById('askAI').addEventListener('click', async () => {
-      const query = aiQuery.value.trim();
-      if (!query) return showNotification('Talk to Zama...','warning');
+    window.togglePin = async (messageId, currentPin) => {
       showLoader(true);
       try {
-        const res = await chatWithZama(query);
-        aiResponse.innerText = res.text;
-        aiConfidence.innerText = `confidence: ${Math.round(res.conf*100)}%`;
-      } catch (e) { aiResponse.innerText = "I'm here, lovely! Sometimes the cloud takes a moment. Try again?"; } finally { showLoader(false); }
+        await updateDoc(doc(db, 'messages', messageId), {
+          pinned: !currentPin
+        });
+        showNotification(currentPin ? 'Message unpinned' : 'Message pinned', 'success');
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
+
+    window.editMessage = async (messageId, oldText) => {
+      const confirmed = await showModal('EDIT MESSAGE', `
+        <textarea id="editText" rows="3" style="width: 100%; margin-top: 1rem; padding: 0.5rem;">${oldText}</textarea>
+      `);
+
+      if (confirmed) {
+        const newText = document.getElementById('editText')?.value;
+        if (newText && newText !== oldText) {
+          showLoader(true);
+          try {
+            await updateDoc(doc(db, 'messages', messageId), {
+              text: newText,
+              edited: true,
+              editedAt: serverTimestamp()
+            });
+            showNotification('Message updated', 'success');
+          } catch (error) {
+            showNotification(error.message, 'error');
+          } finally {
+            showLoader(false);
+          }
+        }
+      }
+    };
+
+    window.deleteMessage = async (messageId) => {
+      const confirmed = await showModal('DELETE MESSAGE', 'Are you sure you want to delete this message?');
+      
+      if (confirmed) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'messages', messageId));
+          showNotification('Message deleted', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    window.viewImage = (data) => {
+      const win = window.open('', '_blank');
+      win.document.write(`
+        <html>
+          <head><title>Image View</title></head>
+          <body style="margin: 0; background: black; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+            <img src="${data}" style="max-width: 100%; max-height: 100vh; object-fit: contain;">
+          </body>
+        </html>
+      `);
+    };
+
+    window.deleteHistory = async (id) => {
+      const confirmed = await showModal('DELETE HISTORY', 'Delete this directive history entry?');
+      if (confirmed) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'directiveHistory', id));
+          showNotification('Entry deleted', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    // ========== SECTION 3: OBJECTIVES ==========
+    const taskInput = document.getElementById('taskInput');
+    const activeTasks = document.getElementById('activeTasks');
+    const completedTasks = document.getElementById('completedTasks');
+    const taskProgress = document.getElementById('taskProgress');
+    const completionRate = document.getElementById('completionRate');
+    const totalTasks = document.getElementById('totalTasks');
+    const activeCount = document.getElementById('activeCount');
+    const taskCount = document.getElementById('taskCount');
+
+    document.getElementById('addTaskBtn').addEventListener('click', async () => {
+      if (!taskInput.value.trim()) {
+        showNotification('Task description required', 'warning');
+        return;
+      }
+
+      showLoader(true);
+      try {
+        await addDoc(collection(db, 'tasks'), {
+          text: taskInput.value,
+          completed: false,
+          priority: taskInput.value.includes('⚡'),
+          created: serverTimestamp(),
+          operator: callsign.value || 'Unknown'
+        });
+        taskInput.value = '';
+        showNotification('Objective created', 'success');
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
     });
-    document.getElementById('aiClear').addEventListener('click', () => {
-      aiResponse.innerText = "Hello, I'm Zama. How can I support you today? 💙";
-      aiConfidence.innerText = '';
-      aiQuery.value = '';
+
+    document.getElementById('priorityBtn').addEventListener('click', () => {
+      if (taskInput.value.trim() && !taskInput.value.includes('⚡')) {
+        taskInput.value = '⚡ ' + taskInput.value;
+      }
     });
 
-    // expose helpers
-    window.deleteHistory = async (id) => { if(confirm('Delete entry?')){ showLoader(true); await deleteDoc(doc(db,'directiveHistory',id)); showLoader(false); showNotification('Deleted','info'); }};
-    window.deleteMessage = async (id) => {
+    document.getElementById('completeAll').addEventListener('click', async () => {
+      const confirmed = await showModal('COMPLETE ALL', 'Mark all active objectives as complete?');
+      
+      if (confirmed) {
+        showLoader(true);
+        try {
+          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false)));
+          const batch = writeBatch(db);
+          snap.docs.forEach(doc => batch.update(doc.ref, { completed: true }));
+          await batch.commit();
+          showNotification('All objectives completed', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    });
 
-  const pin = prompt("ENTER PIN TO DELETE:");
+    document.getElementById('clearCompleted').addEventListener('click', async () => {
+      const confirmed = await showModal('CLEAR COMPLETED', 'Delete all completed objectives?');
+      
+      if (confirmed) {
+        showLoader(true);
+        try {
+          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', true)));
+          const batch = writeBatch(db);
+          snap.docs.forEach(doc => batch.delete(doc.ref));
+          await batch.commit();
+          showNotification('Completed objectives cleared', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    });
 
-  if(pin !== "1100101"){
-    alert("Invalid PIN");
-    return;
-  }
+    onSnapshot(query(collection(db, 'tasks'), orderBy('created', 'desc')), (snap) => {
+      let active = '';
+      let completed = '';
+      let aCount = 0;
+      let cCount = 0;
 
-  if(confirm("Delete message?")){
+      snap.forEach(doc => {
+        const data = doc.data();
+        const priority = data.priority ? '⚡ ' : '';
+        
+        const taskHtml = `
+          <div class="task-item ${data.priority ? 'priority' : ''}">
+            <div>
+              <span style="color: ${data.completed ? 'var(--success)' : data.priority ? 'var(--warning)' : 'white'};">
+                ${priority}${data.text}
+              </span>
+              <div><small class="text-dim">${data.operator || ''}</small></div>
+            </div>
+            <div class="task-actions">
+              <button onclick="window.toggleTask('${doc.id}', ${data.completed})" title="${data.completed ? 'Undo' : 'Complete'}">
+                ${data.completed ? '↩️' : '✅'}
+              </button>
+              <button onclick="window.editTask('${doc.id}', '${data.text.replace(/'/g, "\\'")}')" title="Edit">✏️</button>
+              <button onclick="window.togglePriority('${doc.id}', ${data.priority})" title="Toggle priority">⚡</button>
+              <button onclick="window.deleteTask('${doc.id}')" title="Delete">🗑️</button>
+            </div>
+          </div>
+        `;
 
-    showLoader(true);
+        if (data.completed) {
+          completed += taskHtml;
+          cCount++;
+        } else {
+          active += taskHtml;
+          aCount++;
+        }
+      });
 
-    await deleteDoc(doc(db,'messages',id));
+      activeTasks.innerHTML = active || '<p class="text-dim">No active objectives</p>';
+      completedTasks.innerHTML = completed || '<p class="text-dim">No completed objectives</p>';
+      
+      const total = aCount + cCount;
+      const progress = total ? (cCount / total * 100) : 0;
+      
+      taskProgress.style.width = progress + '%';
+      completionRate.textContent = Math.round(progress) + '%';
+      totalTasks.textContent = total;
+      activeCount.textContent = aCount;
+      taskCount.textContent = aCount;
+    });
 
-    showLoader(false);
-  }
-};
-    window.editMessage = async (id, old) => {
+    window.toggleTask = async (id, current) => {
+      showLoader(true);
+      try {
+        await updateDoc(doc(db, 'tasks', id), { completed: !current });
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
 
-  const pin = prompt("ENTER PIN TO EDIT:");
+    window.editTask = async (id, oldText) => {
+      const newText = prompt('Edit objective:', oldText);
+      if (newText && newText !== oldText) {
+        showLoader(true);
+        try {
+          await updateDoc(doc(db, 'tasks', id), { text: newText });
+          showNotification('Objective updated', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
 
-  if(pin !== "1100101"){
-    alert("Invalid PIN");
-    return;
-  }
+    window.togglePriority = async (id, current) => {
+      showLoader(true);
+      try {
+        await updateDoc(doc(db, 'tasks', id), { priority: !current });
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    };
 
-  let n = prompt("Edit message:", old);
+    window.deleteTask = async (id) => {
+      const confirmed = await showModal('DELETE TASK', 'Delete this objective?');
+      if (confirmed) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'tasks', id));
+          showNotification('Objective deleted', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
 
-  if(n && n !== old){
+    // ========== SECTION 4: INTEL & LOGS ==========
+    const shiftLogs = document.getElementById('shiftLogs');
+    const logCount = document.getElementById('logCount');
 
-    showLoader(true);
+    const addLog = async (type, operator) => {
+      try {
+        await addDoc(collection(db, 'shifts'), {
+          type,
+          operator,
+          timestamp: serverTimestamp(),
+          sessionId
+        });
+      } catch (error) {
+        console.error('Log error:', error);
+      }
+    };
 
-    await updateDoc(doc(db,'messages',id),{text:n});
+    setTimeout(() => {
+      addLog('SESSION_START', callsign.value);
+    }, 1000);
 
-    showLoader(false);
-  }
-};
-    
-    window.quoteMessage = (c, t) => { msgInput.value = `> ${c}: ${t}\n`; };
-    window.pinMessage = async (id, cur) => { showLoader(true); await updateDoc(doc(db,'messages',id),{pinned:!cur}); showLoader(false); };
-    window.toggleTask = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{completed:!cur}); showLoader(false); };
-    window.editTask = async (id,cur) => { let n=prompt('Edit:',cur); if(n && n!==cur){ showLoader(true); await updateDoc(doc(db,'tasks',id),{text:n}); showLoader(false); }};
-    window.deleteTask = async (id) => { if(confirm('Delete task?')){ showLoader(true); await deleteDoc(doc(db,'tasks',id)); showLoader(false); }};
-    window.togglePriority = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{priority:!cur}); showLoader(false); };
-    window.deleteLog = async (id) => { if(confirm('Delete log?')){ showLoader(true); await deleteDoc(doc(db,'shifts',id)); showLoader(false); }};
-    window.likeMessage = async (id,current) => {
+    onSnapshot(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
+      let count = 0;
+      shiftLogs.innerHTML = '';
 
-  await updateDoc(doc(db,'messages',id),{
-    likes: current + 1
-  });
+      snap.forEach(doc => {
+        count++;
+        const data = doc.data();
+        shiftLogs.innerHTML += `
+          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
+            <div class="flex-between">
+              <div>
+                <strong style="color: var(--accent);">${data.type || 'EVENT'}</strong>
+                <span class="text-dim"> · ${data.operator || ''}</span>
+              </div>
+              <button onclick="window.deleteLog('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
+            </div>
+            <div class="text-dim" style="font-size: 0.8rem;">${data.timestamp?.toDate().toLocaleString()}</div>
+          </div>
+        `;
+      });
 
-};
-    window.processFiles = function() { let f=document.getElementById('fileInput').files; if(!f.length) return; let preview=document.getElementById('filePreview'); Array.from(f).slice(0,8).forEach(file=>{ let r=new FileReader(); r.onload=e=>{ preview.innerHTML+=`<div style="background:#0d0808; padding:4px;">${file.type.startsWith('image/')?`<img src="${e.target.result}" style="max-width:100%;">`:'📄'}<div style="font-size:0.7rem;">${file.name.substring(0,8)}</div></div>`; }; r.readAsDataURL(file); }); };
-    document.getElementById('clearFiles').onclick = ()=>{ document.getElementById('filePreview').innerHTML=''; };
-    document.getElementById('refreshTasks').onclick = ()=>showNotification('Tasks synced','info');
-    document.getElementById('refreshLogs').onclick = ()=>showNotification('Logs synced','info');
-    document.getElementById('addTaskBtn').onclick = ()=>document.getElementById('taskInput').focus();
-    document.getElementById('completeAll').onclick = async () => { if(!confirm('Complete all active?')) return; showLoader(true); let snap = await getDocs(query(collection(db,'tasks'), where('completed','==',false))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.update(d.ref,{completed:true})); await batch.commit(); showLoader(false); };
-    document.getElementById('clearCompleted').onclick = async () => { if(!confirm('Clear completed?')) return; showLoader(true); let snap = await getDocs(query(collection(db,'tasks'), where('completed','==',true))); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); };
-    document.getElementById('clearLogs').onclick = async () => { if(!confirm('Clear all logs? PIN required')) return; let pin=prompt('PIN:'); if(pin!=='1234') return; showLoader(true); let snap=await getDocs(collection(db,'shifts')); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); };
-    document.getElementById('exportLogs').onclick = async () => { showLoader(true); let snap=await getDocs(query(collection(db,'shifts'),orderBy('timestamp','desc'),limit(150))); let arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()})); let blob=new Blob([JSON.stringify(arr,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`logs-${Date.now()}.json`; a.click(); showLoader(false); };
-    document.getElementById('downloadFiles').onclick = ()=>{ showNotification('Manifest mock (local only)','info'); };
+      logCount.textContent = count;
+    });
 
-    window.viewFile = function(data){
+    document.getElementById('refreshLogs').addEventListener('click', () => {
+      showNotification('Logs refreshed', 'info');
+    });
 
-  const win = window.open();
+    document.getElementById('clearLogs').addEventListener('click', async () => {
+      const confirmed = await showModal('CLEAR LOGS', 'Delete all logs? This action requires supervisor PIN.');
+      
+      if (confirmed) {
+        const pin = prompt('Enter supervisor PIN:');
+        if (pin === '1234') {
+          showLoader(true);
+          try {
+            const snap = await getDocs(collection(db, 'shifts'));
+            const batch = writeBatch(db);
+            snap.docs.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+            showNotification('All logs cleared', 'success');
+          } catch (error) {
+            showNotification(error.message, 'error');
+          } finally {
+            showLoader(false);
+          }
+        } else {
+          showNotification('Invalid PIN', 'error');
+        }
+      }
+    });
 
-  win.document.write(`
-    <body style="background:black;text-align:center;">
-      <img src="${data}" style="max-width:95%;">
-    </body>
-  `);
+    document.getElementById('exportLogs').addEventListener('click', async () => {
+      showLoader(true);
+      try {
+        const snap = await getDocs(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(500)));
+        const logs = [];
+        snap.forEach(doc => logs.push({ id: doc.id, ...doc.data() }));
+        
+        const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `logs-${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        showNotification('Logs exported', 'success');
+      } catch (error) {
+        showNotification(error.message, 'error');
+      } finally {
+        showLoader(false);
+      }
+    });
 
-};
+    window.deleteLog = async (id) => {
+      const confirmed = await showModal('DELETE LOG', 'Delete this log entry?');
+      if (confirmed) {
+        showLoader(true);
+        try {
+          await deleteDoc(doc(db, 'shifts', id));
+          showNotification('Log deleted', 'success');
+        } catch (error) {
+          showNotification(error.message, 'error');
+        } finally {
+          showLoader(false);
+        }
+      }
+    };
+
+    window.processFiles = () => {
+      const files = document.getElementById('fileInput').files;
+      if (!files.length) {
+        showNotification('No files selected', 'warning');
+        return;
+      }
+
+      const preview = document.getElementById('filePreview');
+      preview.innerHTML = '';
+
+      Array.from(files).slice(0, 12).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          
+          if (file.type.startsWith('image/')) {
+            fileItem.innerHTML = `
+              <img src="${e.target.result}" style="max-width: 100%; height: auto;">
+              <div style="font-size: 0.7rem; margin-top: 0.3rem;">${file.name.substring(0, 15)}</div>
+            `;
+          } else {
+            fileItem.innerHTML = `
+              <div style="font-size: 2rem;">📄</div>
+              <div style="font-size: 0.7rem;">${file.name.substring(0, 15)}</div>
+            `;
+          }
+          
+          preview.appendChild(fileItem);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      showNotification(`${files.length} file(s) processed`, 'success');
+    };
+
+    document.getElementById('clearFiles').addEventListener('click', () => {
+      document.getElementById('filePreview').innerHTML = '';
+      document.getElementById('fileInput').value = '';
+      showNotification('File preview cleared', 'info');
+    });
+
+    document.getElementById('downloadFiles').addEventListener('click', () => {
+      const files = document.getElementById('filePreview').children;
+      if (files.length) {
+        showNotification('Manifest created (demo)', 'success');
+      } else {
+        showNotification('No files to manifest', 'warning');
+      }
+    });
+
+    // ========== WELCOME NOTIFICATION ==========
+    setTimeout(() => {
+      showNotification('Welcome back, Operator. now online.', 'info', 6000);
+      showNotification('Team Message Board active.', 'success', 6000);
+    }, 1000);
+
+    // ========== PERIODIC STATUS ==========
+    setInterval(async () => {
+      try {
+        await getDocs(collection(db, 'tasks'));
+        document.querySelector('.status-indicator').style.background = 'var(--success)';
+      } catch (error) {
+        document.querySelector('.status-indicator').style.background = 'var(--warning)';
+      }
+    }, 30000);
+
+    // ========== CLEANUP ==========
+    window.addEventListener('beforeunload', () => {
+      addLog('SESSION_END', callsign.value);
+    });
+
+    console.log('Compliance CV-5 Advanced System Online');
     
   </script>
   
 </body>
   
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
