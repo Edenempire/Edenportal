@@ -538,6 +538,19 @@
     const db = getFirestore(app);
     const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
 
+        // ===== PAGE ACCESS PIN =====
+    async function requireAccessPIN() {
+      const pin = prompt("ENTER ACCESS PIN:");
+      
+      if (pin !== "1100101") {
+        alert("ACCESS DENIED");
+        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:40vh;'>ACCESS DENIED</h1>";
+        throw new Error("Invalid PIN");
+      }
+    }
+    
+    await requireAccessPIN();
+
     // UI elements
     const loader = document.getElementById('globalLoader');
     const notif = document.getElementById('notificationCenter');
@@ -676,7 +689,8 @@
           timestamp: serverTimestamp(),
           operator: callsign.value,
           sessionId,
-          pinned: false
+          pinned: false,
+          likes: 0
         });
         msgInput.value = ''; attachPrev.innerHTML = ''; currentAttachment = null; msgFile.value = '';
         showNotification('Message sent','success');
@@ -692,7 +706,9 @@
         cnt++;
         let attachHtml = '';
         if(data.attachment){
-          if(data.attachment.type?.startsWith('image/')) attachHtml = `<img src="${data.attachment.data}" style="max-width:120px; margin-top:6px;">`;
+          if(data.attachment.type?.startsWith('image/')) attachHtml = `<img src="${data.attachment.data}" 
+style="max-width:140px;margin-top:6px;cursor:pointer;"
+onclick="window.viewFile('${data.attachment.data}')">`;
           else attachHtml = `<div><a href="${data.attachment.data}" download="${data.attachment.name}" style="color:#5ca8ff;">📎 ${data.attachment.name}</a></div>`;
         }
         msgBoard.innerHTML += `<div class="card" id="msg-${data.id}">
@@ -701,7 +717,16 @@
             <span class="dept-tag">${data.department || 'COMPLIANCE CV-5'}</span>
             <div><small>${data.timestamp?.toDate().toLocaleString()}</small>${data.pinned ? '<span class="pinned-badge" style="background:gold;color:black;padding:2px 8px;">📌</span>' : ''}</div>
           </div>
-          <div style="margin:10px 0;">${data.text}</div>${attachHtml}
+          
+          <div style="margin:10px 0;">${data.text}</div>
+
+${attachHtml}
+
+<div style="margin-top:6px;">
+👍 <span>${data.likes || 0}</span>
+<button onclick="window.likeMessage('${data.id}',${data.likes || 0})">👍</button>
+</div>
+
           <div class="message-actions"><button onclick="window.editMessage('${data.id}','${data.text.replace(/'/g,"\\'")}')">✏️ Edit</button><button onclick="window.deleteMessage('${data.id}')">🗑️ Delete</button><button onclick="window.quoteMessage('${data.callsign}','${data.text.replace(/'/g,"\\'")}')">💬 Quote</button><button onclick="window.pinMessage('${data.id}',${data.pinned})">📌 ${data.pinned ? 'Unpin' : 'Pin'}</button></div>
         </div>`;
       });
@@ -765,8 +790,45 @@
 
     // expose helpers
     window.deleteHistory = async (id) => { if(confirm('Delete entry?')){ showLoader(true); await deleteDoc(doc(db,'directiveHistory',id)); showLoader(false); showNotification('Deleted','info'); }};
-    window.deleteMessage = async (id) => { if(confirm('Delete message?')){ showLoader(true); await deleteDoc(doc(db,'messages',id)); showLoader(false); }};
-    window.editMessage = async (id, old) => { let n=prompt('Edit:',old); if(n && n!==old){ showLoader(true); await updateDoc(doc(db,'messages',id),{text:n}); showLoader(false); }};
+    window.deleteMessage = async (id) => {
+
+  const pin = prompt("ENTER PIN TO DELETE:");
+
+  if(pin !== "1100101"){
+    alert("Invalid PIN");
+    return;
+  }
+
+  if(confirm("Delete message?")){
+
+    showLoader(true);
+
+    await deleteDoc(doc(db,'messages',id));
+
+    showLoader(false);
+  }
+};
+    window.editMessage = async (id, old) => {
+
+  const pin = prompt("ENTER PIN TO EDIT:");
+
+  if(pin !== "1100101"){
+    alert("Invalid PIN");
+    return;
+  }
+
+  let n = prompt("Edit message:", old);
+
+  if(n && n !== old){
+
+    showLoader(true);
+
+    await updateDoc(doc(db,'messages',id),{text:n});
+
+    showLoader(false);
+  }
+};
+    
     window.quoteMessage = (c, t) => { msgInput.value = `> ${c}: ${t}\n`; };
     window.pinMessage = async (id, cur) => { showLoader(true); await updateDoc(doc(db,'messages',id),{pinned:!cur}); showLoader(false); };
     window.toggleTask = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{completed:!cur}); showLoader(false); };
@@ -774,6 +836,13 @@
     window.deleteTask = async (id) => { if(confirm('Delete task?')){ showLoader(true); await deleteDoc(doc(db,'tasks',id)); showLoader(false); }};
     window.togglePriority = async (id,cur) => { showLoader(true); await updateDoc(doc(db,'tasks',id),{priority:!cur}); showLoader(false); };
     window.deleteLog = async (id) => { if(confirm('Delete log?')){ showLoader(true); await deleteDoc(doc(db,'shifts',id)); showLoader(false); }};
+    window.likeMessage = async (id,current) => {
+
+  await updateDoc(doc(db,'messages',id),{
+    likes: current + 1
+  });
+
+};
     window.processFiles = function() { let f=document.getElementById('fileInput').files; if(!f.length) return; let preview=document.getElementById('filePreview'); Array.from(f).slice(0,8).forEach(file=>{ let r=new FileReader(); r.onload=e=>{ preview.innerHTML+=`<div style="background:#0d0808; padding:4px;">${file.type.startsWith('image/')?`<img src="${e.target.result}" style="max-width:100%;">`:'📄'}<div style="font-size:0.7rem;">${file.name.substring(0,8)}</div></div>`; }; r.readAsDataURL(file); }); };
     document.getElementById('clearFiles').onclick = ()=>{ document.getElementById('filePreview').innerHTML=''; };
     document.getElementById('refreshTasks').onclick = ()=>showNotification('Tasks synced','info');
@@ -784,12 +853,25 @@
     document.getElementById('clearLogs').onclick = async () => { if(!confirm('Clear all logs? PIN required')) return; let pin=prompt('PIN:'); if(pin!=='1234') return; showLoader(true); let snap=await getDocs(collection(db,'shifts')); let batch=writeBatch(db); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showLoader(false); };
     document.getElementById('exportLogs').onclick = async () => { showLoader(true); let snap=await getDocs(query(collection(db,'shifts'),orderBy('timestamp','desc'),limit(150))); let arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()})); let blob=new Blob([JSON.stringify(arr,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`logs-${Date.now()}.json`; a.click(); showLoader(false); };
     document.getElementById('downloadFiles').onclick = ()=>{ showNotification('Manifest mock (local only)','info'); };
+
+    window.viewFile = function(data){
+
+  const win = window.open();
+
+  win.document.write(`
+    <body style="background:black;text-align:center;">
+      <img src="${data}" style="max-width:95%;">
+    </body>
+  `);
+
+};
     
   </script>
   
 </body>
   
 </html>
+
 
 
 
