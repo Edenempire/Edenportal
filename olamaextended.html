@@ -1,475 +1,482 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    
 <head>
-    
     <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    
-    <title>Olama Khayyim extended profile</title>
-    <!-- Font Awesome 6 (icons for clean metadata) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIER‑1 // TERMINAL // OLAMA KHAYYIM // EYES ONLY</title>
     <style>
-        
+        /* --------------------------------
+           EXTREME TERMINAL — BLACK / GREEN
+           FULL PAGE TRANSPARENCY, SMOOTH SCROLL
+           NO SHADOWS, NO GLOW, ZERO SIMULATION
+           BUTTONS FUNCTIONAL, SPACED OUT
+        -------------------------------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background: #05131d; /* deep navy background – military database */
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica', Arial, sans-serif;
-            line-height: 1.5;
-            display: flex;
-            justify-content: center;
-            padding: 20px 16px;
-            color: #e0e9f0;
-        }
-
-        /* main container – Wikipedia / database width */
-        .database-entry {
-            max-width: 1000px;
             width: 100%;
-            background: #0e1e2b; /* dark but readable background, same family */
-            border: 1px solid #2d4d65;
-            border-radius: 12px;
-            overflow: hidden;
+            min-height: 100vh;
+            background: #000000;          /* absolute black background for canvas */
+            font-family: 'Courier New', Courier, 'Fira Code', monospace;
+            color: #00ff41;                /* matrix green */
+            line-height: 1.7;
+            font-size: 18px;
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+            text-rendering: optimizeLegibility;
+            position: relative;
         }
 
-        /* header bar – like wikipedia top bar but mil-spec */
-        .db-header {
-            background: #0b1f2d;
-            padding: 16px 24px;
-            border-bottom: 3px solid #3f6d8c;
+        /* CANVAS — SLOW, SPACED OUT NUMBER RAIN (0-9) */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;           /* allows clicking buttons through */
+            opacity: 0.4;                    /* transparent to see through */
+        }
+
+        /* MAIN TERMINAL WINDOW — semi‑transparent so rain shows */
+        .terminal-window {
+            position: relative;
+            z-index: 10;
+            max-width: 1300px;
+            width: 92%;
+            margin: 40px auto 50px auto;
+            border: 4px solid #00ff41;
+            background-color: rgba(0, 0, 0, 0.75);  /* transparent black */
+            padding: 0;
+            backdrop-filter: none;
+            transition: border 0.2s ease;
+        }
+
+        /* HEADER — with functional EDEN button linking to index.html */
+        .win-header {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 15px;
+            border-bottom: 3px solid #00ff41;
+            padding: 18px 30px;
+            background: rgba(0, 0, 0, 0.85);
         }
 
-        .title-section h1 {
-            color: white;
-            font-size: 2.2rem;
-            font-weight: 500;
-            letter-spacing: -0.5px;
-        }
-
-        .title-section .subhead {
-            color: #c3ddf5;
-            font-size: 0.95rem;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-
-        .access-badge {
-            background: #1c3d55;
-            padding: 8px 28px;
-            border-radius: 30px;
-            border-left: 6px solid #dbb05c;
-            font-weight: 600;
-            color: #f0f9ff;
-            font-size: 0.95rem;
-        }
-
-        .access-badge i {
-            color: #71cfbb;
-            margin-right: 8px;
-        }
-
-        /* navigation tabs – wikipedia style */
-        .nav-tabs {
-            background: #0d2536;
-            padding: 8px 24px 0 24px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 20px;
-            border-bottom: 1px solid #2e6380;
-            font-size: 1rem;
-        }
-
-        .nav-tabs span {
-            color: #b6d6f2;
-            padding: 8px 0 6px 0;
-            border-bottom: 3px solid transparent;
-            transition: 0.1s;
-            cursor: default;
-            font-weight: 500;
-        }
-
-        .nav-tabs span.active {
-            color: white;
-            border-bottom-color: #e9c46a;
-            font-weight: 600;
-        }
-
-        /* main two-column layout – exactly like wiki infobox + content */
-        .layout-wiki {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 24px;
-            padding: 28px 24px;
-        }
-
-        /* left column – infobox (military style) */
-        .infobox {
-            background: #0a1e2e;
-            border: 1px solid #2c5a78;
-            border-radius: 12px;
-            padding: 18px 16px;
-            height: fit-content;
-        }
-
-        .infobox-title {
-            background: #143e57;
-            color: #faeec2;
-            padding: 10px 14px;
-            margin: -18px -16px 18px -16px;
-            border-radius: 12px 12px 0 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            border-bottom: 2px solid #c5a150;
+        .win-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 20px;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-weight: bold;
         }
 
-        .infobox-title i {
-            color: #ffd966;
+        .eden-button {
+            background: transparent;
+            border: 3px solid #00ff41;
+            color: #00ff41;
+            font-family: inherit;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 6px 22px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.15s ease, color 0.15s ease;
+            letter-spacing: 4px;
         }
 
-        .img-placeholder {
-            background: #12394d;
-            height: 140px;
-            border-radius: 10px;
+        .eden-button:hover {
+            background: #00ff41;
+            color: #000000;
+        }
+
+        .win-controls {
+            display: flex;
+            gap: 30px;
+            color: #00ff41;
+            font-size: 2.2rem;
+        }
+        .win-controls span {
+            cursor: default;
+        }
+
+        /* MAIN CONTENT — extra spacing, smooth transitions */
+        .term-content {
+            padding: 50px 50px;
+            background: transparent;        /* full transparency */
+        }
+
+        /* PROFILE SECTION — spaced out */
+        .profile-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 60px;
+            border: 3px solid #00ff41;
+            padding: 40px 35px;
+            background: rgba(0, 0, 0, 0.6);
+            transition: border 0.2s;
+        }
+
+        .profile-avatar {
+            flex: 0 0 170px;
+            text-align: center;
+        }
+        .profile-avatar img {
+            width: 170px;
+            height: 170px;
+            border: 4px solid #00ff41;
+            object-fit: cover;
+            background: black;
+        }
+        .avatar-placeholder {
+            width: 170px;
+            height: 170px;
+            border: 4px solid #00ff41;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #b8dff5;
-            font-size: 3rem;
-            border: 1px solid #54809b;
-            margin-bottom: 20px;
-        }
-
-        .info-row {
-            display: flex;
-            padding: 10px 0;
-            border-bottom: 1px dotted #2a5773;
-        }
-
-        .info-label {
-            width: 38%;
-            color: #b7d3ed;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .info-value {
-            width: 62%;
-            color: white;
-            font-weight: 600;
-        }
-
-        .info-value .small-note {
-            font-weight: 400;
-            color: #bedcf5;
-            font-size: 0.85rem;
-        }
-
-        .full-highlight {
-            background: #0e3146;
-            padding: 16px 15px;
-            border-radius: 12px;
-            margin: 20px 0 10px;
-            border-left: 7px solid #dbb158;
-        }
-
-        .full-highlight .label {
-            color: #cfdef5;
-            font-size: 0.8rem;
+            font-size: 1rem;
             text-transform: uppercase;
+            color: #00ff41;
+            background: black;
+            line-height: 1.4;
+            padding: 12px;
+        }
+        .avatar-label {
+            margin-top: 15px;
+            color: #00cc33;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .full-highlight .value {
-            color: white;
-            font-size: 1.4rem;
+        .profile-stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px 35px;
+            align-items: start;
+        }
+
+        .stat-row {
+            display: flex;
+            border-bottom: 2px solid #00aa33;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            width: 140px;
+            color: #00aa33;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        .stat-value {
+            flex: 1;
+            color: #00ff41;
+            font-weight: 700;
+        }
+
+        /* QUICK FACTS PANEL — extra spacing, semi‑transparent */
+        .facts-panel {
+            border: 3px solid #00ff41;
+            padding: 35px 40px;
+            margin: 50px 0 55px 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px 40px;
+        }
+        .fact {
+            display: flex;
+            border-left: 6px solid #00ff41;
+            padding-left: 18px;
+        }
+        .fact .tag {
+            width: 120px;
+            color: #00aa33;
             font-weight: 600;
         }
-
-        /* right column – wikipedia style content sections */
-        .main-content {
-            background: #0a1e2e;
-            border: 1px solid #2c5a78;
-            border-radius: 12px;
-            padding: 24px 26px;
+        .fact .data {
+            color: #00ff41;
+            font-weight: bold;
         }
 
-        .content-section {
-            margin-bottom: 32px;
+        /* SECTION TITLES — heavy border, extra margin */
+        .section-title {
+            font-size: 2.4rem;
+            margin: 70px 0 30px 0;
+            border-bottom: 4px solid #00ff41;
+            padding-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-weight: 700;
         }
 
-        .section-head {
-            color: #f1ddac;
-            font-size: 1.7rem;
-            border-bottom: 2px solid #2b688b;
-            padding-bottom: 6px;
-            margin-bottom: 18px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-head i {
-            color: #f2ca76;
-            font-size: 1.6rem;
-        }
-
-        .meta-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px 25px;
-            background: #0e273b;
+        /* BIO BLOCKS — long, full, nothing omitted */
+        .bio-block {
+            margin-bottom: 38px;
+            text-align: left;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.4);
             padding: 18px 22px;
-            border-radius: 16px;
-            margin-bottom: 20px;
+            border-left: 4px solid #00aa33;
+            transition: border 0.2s;
+        }
+        .bio-block strong {
+            color: #b0ffb0;
+            font-weight: 800;
+            font-size: 1.15rem;
         }
 
-        .meta-item .tag {
-            color: #adcff2;
-            font-size: 0.75rem;
+        /* OPS RIBBON — fully spaced */
+        .ops-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px 40px;
+            border-top: 3px solid #00ff41;
+            border-bottom: 3px solid #00ff41;
+            padding: 26px 0;
+            margin: 55px 0;
+            justify-content: flex-start;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .ops-strip span {
+            font-weight: bold;
             text-transform: uppercase;
-        }
-        .meta-item .data {
-            color: white;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .duty-card {
-            background: #0a2a3f;
-            border-radius: 20px;
-            padding: 22px 25px;
-            margin: 25px 0;
-            border: 1px solid #387599;
-        }
-        .duty-hours {
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: #f9e6b3;
-            line-height: 1.2;
+            border-left: 8px solid #00ff41;
+            padding-left: 18px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
 
-        .ribbon-list {
+        /* SIMPLIFIED, CENTERED FOOTER — clean, advanced */
+        .term-footer {
+            margin-top: 80px;
+            padding: 30px 15px 25px 15px;
+            border-top: 4px solid #00ff41;
+            text-align: center;
+            color: #00cc33;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .footer-main {
             display: flex;
+            justify-content: center;
+            gap: 60px;
             flex-wrap: wrap;
-            gap: 12px;
-            margin: 18px 0 22px;
-        }
-        .ribbon {
-            background: #1b405a;
-            padding: 6px 24px;
-            border-radius: 40px;
-            border-left: 6px solid #cfa95c;
-            color: #f3e5c7;
-            font-weight: 500;
-        }
-
-        .branch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .branch-item {
-            background: #10364b;
-            padding: 14px 16px;
-            border-left: 7px solid #b78c4a;
-            border-radius: 12px;
-        }
-
-        .terminal-block {
-            background: #041b2b;
-            padding: 18px 24px;
-            border-radius: 20px;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #3b779b;
-            margin: 30px 0 20px;
-        }
-
-        .weather-deck {
-            background: #0a2a40;
-            padding: 16px 24px;
-            border-radius: 50px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        /* footer – database style */
-        .database-footer {
-            background: #0c202f;
-            padding: 18px 28px;
-            border-top: 2px solid #2f6885;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            color: #b2d2ea;
-            font-size: 0.9rem;
-        }
-
-        .flag-za {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #163e57;
-            padding: 6px 24px;
-            border-radius: 60px;
-        }
-        .flag-za img {
-            width: 48px;
-            height: 30px;
-            border: 2px solid white;
-            border-radius: 5px;
-        }
-
-        .mobile-app {
-            background: #1b4f6e;
-            padding: 10px 34px;
-            border-radius: 40px;
             font-weight: 600;
-            border: 1px solid #64a6cc;
+            letter-spacing: 2px;
+        }
+        .footer-class {
+            margin-top: 18px;
+            color: #008f2e;
+            font-size: 1rem;
+            border: 2px solid #00aa33;
+            display: inline-block;
+            padding: 8px 35px;
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        /* mobile responsiveness */
-        @media (max-width: 750px) {
-            .layout-wiki {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px 16px;
-            }
-            .title-section h1 { font-size: 1.9rem; }
-            .db-header { flex-direction: column; align-items: start; }
-            .meta-grid { grid-template-columns: 1fr; }
-            .weather-deck { flex-direction: column; align-items: flex-start; }
+        /* no rounding, no shadows */
+        * {
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
         }
 
-        /* misc */
-        hr {
-            border: 1px solid #1d4a66;
-            margin: 22px 0;
+        /* smooth transitions on interactive elements */
+        a, button, .eden-button, .stat-row, .fact, .bio-block {
+            transition: all 0.2s ease;
         }
-        a {
-            color: #f0dfa3;
-            text-decoration: none;
+
+        /* responsive */
+        @media (max-width: 800px) {
+            .term-content { padding: 25px 20px; }
+            .profile-grid { flex-direction: column; align-items: center; }
+            .win-title { font-size: 1.3rem; letter-spacing: 3px; }
+            .footer-main { gap: 30px; flex-direction: column; }
         }
-        
     </style>
-    
 </head>
-    
 <body>
-    
-<div class="database-entry">
 
-    <!-- database header -->
-    <div class="db-header">
-        <div class="title-section">
-            <h1>Philani Fortune Kemele <span style="font-weight:300; color:#b3daf5;">(Olama Khayyim)</span></h1>
-        </div>
-    </div>
+    <!-- SLOW, SPACED OUT NUMBER RAIN (0-9) - ADVANCED -->
+    <canvas id="matrix-canvas"></canvas>
 
-    <!-- wikipedia style tabs -->
-    <div class="nav-tabs">
-        <span class="active">Extended profile</span>
-    </div>
+    <!-- TERMINAL WINDOW - FULL TRANSPARENCY -->
+    <div class="terminal-window">
 
-    <!-- core layout: left infobox, right content (Wikipedia style) -->
-    <div class="layout-wiki">
-        <!-- LEFT INFOBOX (military database) -->
-        <div class="infobox">
-            <div class="infobox-title"><i class="fas fa-id-card"></i> FULL EXTENDED PROFILE</div>
-            <div class="img-placeholder">
-                <i class="fas fa-user-shield"></i>
+        <!-- HEADER with functional EDEN button (links to index.html) -->
+        <div class="win-header">
+            <div class="win-title">
+                <!-- EDEN button takes you to index.html -->
+                <a href="index.html" class="eden-button">EDEN</a>
+                <span>// SECURE://TIER-1</span>
             </div>
-            <div class="info-row"><span class="info-label">Government name</span><span class="info-value">Philani Fortune Kemele</span></div>
-            <div class="info-row"><span class="info-label">Also Known As</span><span class="info-value">Olama Khayyim</span></div>
-            <div class="info-row"><span class="info-label">Born</span><span class="info-value">22 October 1999 <span class="small-note">(age 26)</span></span></div>
-            <div class="info-row"><span class="info-label">Birthplace</span><span class="info-value">Marianhill Hospital (mother Zamandosi Cele)</span></div>
-            <div class="info-row"><span class="info-label">Hometown</span><span class="info-value">Hammarsdale (Mpumalanga Township) Unit 2, Sompisi Rd, B1605</span></div>
-            <div class="info-row"><span class="info-label">Early childhood</span><span class="info-value">Siphamandla Crèche (Gogo Ngidi)</span></div>
-            <div class="info-row"><span class="info-label">Education</span><span class="info-value">Richfield Graduate Institute of Technology</span></div>
-            <div class="info-row"><span class="info-label">Qualifications</span><span class="info-value">Information Technology NQF‑4, HTML, Machine Learning, Natural Language Processing, Python, Java, JavaScript, Data Science (Coursera)</span></div>
-            <div class="info-row"><span class="info-label">Rank</span><span class="info-value">Commander of the Airforce – Tier 1 special Operator SANDF</span></div>
-            <div class="info-row"><span class="info-label">Rugby</span><span class="info-value">Loosehead Prop</span></div>
-            <div class="info-row"><span class="info-label">Current portfolio</span><span class="info-value">EDEN shareholder, Compliance Officer for Eden & Bodyguard (Stainless Steel)</span></div>
+            <div class="win-controls">
+                <span>⏻</span>
+                <span>⎔</span>
+                <span>⤬</span>
+            </div>
         </div>
 
-        <!-- RIGHT CONTENT (the detailed biography) -->
-        <div class="main-content">
-            
-            <!-- narrative biography section -->
-            <div class="content-section">
-                <div class="section-head"><i class="fas fa-book-open"></i> Life & trajectory</div>
-                
-                <p><strong>1999–2006 : early years</strong> – Born at Marianridge Hospital to Zamandosi Cele. Raised at Hammarsdale (Mpumalanga Township, Unit 2, Sompisi Rd, B1605). Attended Siphamandla Crèche under Gogo Ngidi. Started Grade R at Ntendeleni Primary School, then relocated with mother to Clermont. Forced to repeat Grade R at John Wesley Primary (due to birth after June cutoff) – sparked early awareness of institutional absurdity. Quickly absorbed English at John Wesley. Noticed “white flight” as school demographically shifted – an early lesson in social dynamics.</p>
+        <!-- MAIN CONTENT - transparent to see rain -->
+        <div class="term-content">
 
-                <p><strong>2007–2012 : Charles Hugo Primary School (coloured school)</strong> – Transferred after brief St. Teresa’s stint. Excelled academically; taught division by mother and sister Mbali before class introduction – teacher astonished. This forged Olama’s lifelong principle: <em>“always stay ahead, and go beyond the syllabus.”</em> Won a few achievement awards whilst there. Moved to Shallcross Primary (Grade 6–7) after mother bought first house at Savannah Park, Pinetown.</p>
-
-                <p><strong>2013–2017 : Marklands Secondary – ‘the prison years’</strong> – Forced into under-resourced school when mother couldn't secure Wingen Heights Secondary School. Olama mentally checked out, attended only for His mother’s sake. Grade 8 he passed okay; Grade 9 excellently (only because of Mr N. Govendor, form teacher & maths). Grades declined deliberately as silent protest. Met love of his life there as well, Nonhle Ngidi (even though relationship was for ~6 months) – He still holds deep affection for her. Matric 2017: intentionally failed, felt liberated. “I knew I’d be OK once I left Marklands. It was just all about leaving that school for Me”</p>
-
-                <p><strong>2018 : gap year – full self‑reflection</strong> – No work, no study. Dedicated a full year to introspection. Then 2019 enrolled at Richfield. Quickly grew frustrated with overemphasis on communications modules that was basically like the english subject at high school, but yet Olama passed his IT course over there with his buddies. Used the qualification to land a 9‑to‑5 at Altice Optimum (Umhlanga) – which was a Covid‑hit role, and left after 10 months. </p>
-
-                <p><strong>2021 : Rugby immersion</strong> – Devoted entire year to rugby skill development. <strong>2022</strong> – unlocked algorithms, self‑taught Python via Coursera; stacked certificates (HTML, JS, Java, Data Science, Data Analytics). Simultaneously worked at Capita (customer experience). Left August 2022 to pursue dev career. December 2022 hired as junior dev at U‑Connect (MVNO), soon became full‑stack but directionless – mentally disengaged to avoid contract extension. </p>
-
-                <p><strong>2023 : Cape Town & Eden genesis</strong> – Autumn 2023, relocated to Cape Town to bootstrap own software company; returned to KZN sooner than planned. Teamed with Jedeye Moon (designer) on a project that stalled due to payment disputes. Pivoted to advanced JavaScript and, crucially, <strong>cryptography project for SANDF Defence Intelligence</strong> (ongoing). Met Thato; together launched <strong>EDEN</strong> – a parent conglomerate (software, security, aerospace, agriculture, law). </p>
-
-                <p><strong>2024 : divine assignment & aerospace</strong> – Undertook a ‘secret military operation for God / Jesus Christ’ that permanently shaped his identity. Simultaneously dove deep into aerospace engineering. <strong>2025</strong> – Expanded EDEN: Arnold joined as chief supply chain officer. Performed 6‑month espionage‑grade market infiltration at Umhlanga to study target demographics, while maintaining SANDF work. <strong>2026</strong> – Shareholder, compliance officer, Tier 1 special operator (SA Airforce), bodyguard for EDEN’s Stainless Steel, computer scientist & aerospace engineer. And still plays rugby.</p>
-                
+            <!-- PROFILE SECTION with placeholder if image missing -->
+            <div class="profile-grid">
+                <div class="profile-avatar">
+                    <!-- if olama.png missing, show placeholder -->
+                    <object data="olama.png" type="image/png" style="display:block; width:170px; height:170px;">
+                        <div class="avatar-placeholder">[OLAMA] // KHAYYIM</div>
+                    </object>
+                    <div class="avatar-label">>> ACTIVE // TIER-1</div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-row"><span class="stat-label">CALLSIGN</span><span class="stat-value">PHOENIX-TIER1</span></div>
+                    <div class="stat-row"><span class="stat-label">RANK</span><span class="stat-value">CMDR AIRFORCE (SOF)</span></div>
+                    <div class="stat-row"><span class="stat-label">STATUS</span><span class="stat-value">FIELD ACTIVE // 2026</span></div>
+                    <div class="stat-row"><span class="stat-label">CLEARANCE</span><span class="stat-value">TOP SECRET // EDEN</span></div>
+                    <div class="stat-row"><span class="stat-label">DUTY</span><span class="stat-value">SPECIAL OPS / CRYPTO</span></div>
+                    <div class="stat-row"><span class="stat-label">RUGBY</span><span class="stat-value">LOOSEHEAD PROP</span></div>
+                    <div class="stat-row"><span class="stat-label">EDEN</span><span class="stat-value">SHAREHOLDER/COMPLIANCE</span></div>
+                    <div class="stat-row"><span class="stat-label">BODYGUARD</span><span class="stat-value">STAINLESS STEEL</span></div>
+                </div>
             </div>
 
-    <!-- FOOTER: same as reference page, clean & extended -->
-    <div class="database-footer">
-        <div><i class="far fa-registered"></i> © 2026 Eden stealth CV‑1. ALL RIGHTS RESERVED.</div>
+            <!-- QUICK FACTS — spaced out -->
+            <div class="facts-panel">
+                <div class="facts-grid">
+                    <div class="fact"><span class="tag">BIRTH</span><span class="data">1999-10-22 (26)</span></div>
+                    <div class="fact"><span class="tag">BIRTHPLACE</span><span class="data">Marianhill / Zamandosi Cele</span></div>
+                    <div class="fact"><span class="tag">ORIGIN</span><span class="data">Hammarsdale Unit2 B1605</span></div>
+                    <div class="fact"><span class="tag">CRÈCHE</span><span class="data">Siphamandla (Gogo Ngidi)</span></div>
+                    <div class="fact"><span class="tag">PRIMARY</span><span class="data">John Wesley · Charles Hugo · Shallcross</span></div>
+                    <div class="fact"><span class="tag">SECONDARY</span><span class="data">Marklands Secondary (2013–2017)</span></div>
+                    <div class="fact"><span class="tag">HIGHER</span><span class="data">Richfield IT NQF‑4</span></div>
+                    <div class="fact"><span class="tag">SELF‑STACK</span><span class="data">Python, ML, NLP, JS, Java, DataSci, Rust</span></div>
+                    <div class="fact"><span class="tag">PARTNER</span><span class="data">Nonhle Ngidi (2015)</span></div>
+                    <div class="fact"><span class="tag">MENTOR</span><span class="data">Mr N. Govendor</span></div>
+                    <div class="fact"><span class="tag">CURRENT OP</span><span class="data">AETHER / CRYPTO</span></div>
+                    <div class="fact"><span class="tag">RUGBY</span><span class="data">Loosehead prop · 2021 immersion</span></div>
+                </div>
+            </div>
 
-    </div>
+            <!-- FULL BIOGRAPHY — long, nothing omitted, spaced out -->
+            <div class="section-title">› FULL BIOGRAPHY // VERIFIED</div>
 
-</div> <!-- end database entry -->
-        
+            <div class="bio-block"><strong>1999–2006 // ORIGIN & EARLY YEARS</strong> – Born at Marianhill Hospital to Zamandosi Cele. Raised in Hammarsdale (Mpumalanga Township, Unit 2, Sompisi Rd, B1605). Attended Siphamandla Crèche under Gogo Ngidi. Started Grade R at Ntendeleni Primary, then relocated with mother to Clermont. Forced to repeat Grade R at John Wesley Primary (due to birth after June cutoff) – sparked early awareness of institutional absurdity. Quickly absorbed English at John Wesley. Noticed “white flight” as school demographically shifted – early lesson in social dynamics.</div>
+
+            <div class="bio-block"><strong>2007–2012 // CHARLES HUGO PRIMARY</strong> – Transferred after brief St. Teresa’s. Excelled academically; taught division by mother and sister Mbali before class introduction – teacher astonished. Forged lifelong principle: “always stay ahead, and go beyond the syllabus.” Won several achievement awards. Moved to Shallcross Primary (Grade 6–7) after mother bought first house at Savannah Park, Pinetown.</div>
+
+            <div class="bio-block"><strong>2013–2017 // MARKLANDS SECONDARY – ‘THE PRISON YEARS’</strong> – Forced into under-resourced school when mother couldn't secure Wingen Heights. Olama mentally checked out, attended only for mother’s sake. Grade 8 passed okay; Grade 9 excelled (only because of Mr N. Govendor, form teacher & maths). Grades declined deliberately as silent protest. Met love of his life, Nonhle Ngidi (relationship ~6 months) – still holds deep affection. Matric 2017: intentionally failed, felt liberated. “I knew I’d be OK once I left Marklands. It was just all about leaving.”</div>
+
+            <div class="bio-block"><strong>2018 // GAP YEAR – FULL SELF‑REFLECTION</strong> – No work, no study. Dedicated full year to introspection. 2019 enrolled at Richfield. Frustrated with overemphasis on communications modules (repetitive high school English), but passed IT course with buddies. Used qualification to land 9‑to‑5 at Altice Optimum (Umhlanga) – Covid‑hit role, left after 10 months.</div>
+
+            <div class="bio-block"><strong>2021 // RUGBY IMMERSION</strong> – Devoted entire year to rugby skill development. <strong>2022</strong> – unlocked algorithms, self‑taught Python via Coursera; stacked certificates (HTML, JS, Java, Data Science, Data Analytics). Simultaneously worked at Capita (customer experience). Left August 2022 to pursue dev career. December 2022 hired as junior dev at U‑Connect (MVNO), soon became full‑stack but directionless – mentally disengaged to avoid contract extension.</div>
+
+            <div class="bio-block"><strong>2023 // CAPE TOWN & EDEN GENESIS</strong> – Autumn 2023, relocated to Cape Town to bootstrap own software company; returned to KZN sooner. Teamed with Jedeye Moon (designer) on a project that stalled due to payment disputes. Pivoted to advanced JavaScript and, crucially, <strong>cryptography project for SANDF Defence Intelligence</strong> (ongoing). Met Thato; together launched <strong>EDEN</strong> – a parent conglomerate (software, security, aerospace, agriculture, law).</div>
+
+            <div class="bio-block"><strong>2024 // DIVINE ASSIGNMENT & AEROSPACE</strong> – Undertook a ‘secret military operation for God / Jesus Christ’ that permanently shaped identity. Simultaneously dove deep into aerospace engineering. <strong>2025</strong> – Expanded EDEN: Arnold joined as chief supply chain officer. Performed 6‑month espionage‑grade market infiltration at Umhlanga to study target demographics, while maintaining SANDF work. <strong>2026</strong> – Shareholder, compliance officer, Tier‑1 special operator (SA Airforce), bodyguard for EDEN’s Stainless Steel division, computer scientist & aerospace engineer. Active loosehead prop. Also serves as compliance officer for Eden & Bodyguard (Stainless Steel).</div>
+
+            <!-- OPS RIBBON - militant, spaced -->
+            <div class="ops-strip">
+                <span>SANDF TIER‑1</span>
+                <span>DEFENCE CRYPTO</span>
+                <span>AEROSPACE ENG</span>
+                <span>EDEN COMPLIANCE</span>
+                <span>BODYGUARD (STEEL)</span>
+                <span>RUGBY PROP</span>
+            </div>
+
+            <!-- SIMPLIFIED, CENTERED FOOTER (no fingerprint section) -->
+            <div class="term-footer">
+                <div class="footer-main">
+                    <span>EDEN DB // BLACK-01</span>
+                    <span>TOP SECRET // NOFORN</span>
+                    <span>2026-03-10 // 06:32Z</span>
+                </div>
+                <div class="footer-class">
+                    ⏻ UNAUTHORIZED ACCESS PROHIBITED
+                </div>
+                <div style="margin-top:22px; color:#008f2e; font-size:0.9rem; letter-spacing:2px;">
+                    * * * TIER 1 SPECIAL OPERATIONS // TERMINAL LOCKED * * *
+                </div>
+            </div>
+
+        </div> <!-- end term-content -->
+    </div> <!-- end terminal-window -->
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Extra spacing: columns based on 28px per character
+            const columns = Math.floor(canvas.width / 32) + 40;  // more columns, more space
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -canvas.height * 1.8); // very staggered
+            }
+
+            // Digits only: 0-9 — absolutely no letters
+            const digits = "0123456789";
+
+            function drawMatrix() {
+                // extremely slow fade for spaced-out, lingering rain
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.015)';  // very transparent -> super slow trail
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#00ff41';
+                ctx.font = 'bold 26px "Courier New", Courier, monospace';  // larger digits
+
+                for (let i = 0; i < drops.length; i++) {
+                    // pick random digit
+                    const char = digits[Math.floor(Math.random() * digits.length)];
+                    const x = i * 32;          // wide spacing horizontally
+                    const y = drops[i] * 30;    // vertical spacing
+
+                    if (y > 0 && y < canvas.height) {
+                        ctx.fillText(char, x, y);
+                    }
+
+                    // move down extremely slowly
+                    drops[i] += 0.08;   // super slow, spaced out (was 0.12)
+
+                    // reset with random offset to keep columns alive
+                    if (drops[i] * 30 > canvas.height && Math.random() > 0.998) {
+                        drops[i] = 0;
+                    } else if (drops[i] * 30 > canvas.height) {
+                        drops[i] = 0;
+                    }
+                }
+                requestAnimationFrame(drawMatrix);
+            }
+
+            drawMatrix();
+        })();
+    </script>
 </body>
-        
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
