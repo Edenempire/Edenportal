@@ -77,6 +77,56 @@
             transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
+                /* ===============================
+        THEME: RED MODE (BLOOD/RED ALERT)
+        =============================== */
+        body.red-mode {
+            --cyan: #ff0000;
+            --cyan-dim: rgba(255, 0, 0, 0.18);
+            --cyan-glow: 0 0 18px rgba(255, 0, 0, 0.6);
+            --bg-black: #1a0000;
+            --panel-bg: rgba(40, 0, 0, 0.88);
+        }
+        
+        body.red-mode .btn-tactical,
+        body.red-mode #hamburger,
+        body.red-mode .nav-system,
+        body.red-mode .logo-img,
+        body.red-mode .ops-card,
+        body.red-mode .branch-card,
+        body.red-mode #terminal-wrap,
+        body.red-mode #main-header,
+        body.red-mode #main-footer {
+            transition: all 0.4s ease;
+        }
+        
+        body.red-mode .hero-title {
+            text-shadow: 0 0 4px rgba(255, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.25);
+        }
+        
+        body.red-mode .tier-1 {
+            color: #ff9900;
+        }
+        
+        body.red-mode .status-dot {
+            background: #ff0000;
+        }
+        
+        body.red-mode .nav-link:hover,
+        body.red-mode .nav-link.active {
+            background: rgba(255, 0, 0, 0.15);
+            border-left-color: #ff0000;
+        }
+        
+        body.red-mode .splash-title {
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        }
+        
+        body.red-mode .version-number {
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+
         /* ===============================
         THEME TOGGLE BUTTON
         =============================== */
@@ -2128,13 +2178,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         /* ===============================
         THEME SYSTEM
-        ================================ */
+        =============================== */
         function toggleTheme() {
-            document.body.classList.toggle("green-yellow");
-            localStorage.setItem("edenTheme", document.body.classList.contains("green-yellow") ? "green-yellow" : "default");
+            if (document.body.classList.contains("green-yellow")) {
+                document.body.classList.remove("green-yellow");
+                document.body.classList.add("red-mode");
+            } else if (document.body.classList.contains("red-mode")) {
+                document.body.classList.remove("red-mode");
+                // back to default blue
+            } else {
+                document.body.classList.add("green-yellow");
+            }
+            localStorage.setItem("edenTheme", document.body.classList.contains("green-yellow") ? "green-yellow" : document.body.classList.contains("red-mode") ? "red-mode" : "default");
         }
+        
         (function() {
-            if (localStorage.getItem("edenTheme") === "green-yellow") document.body.classList.add("green-yellow");
+            const savedTheme = localStorage.getItem("edenTheme");
+            if (savedTheme === "green-yellow") {
+                document.body.classList.add("green-yellow");
+            } else if (savedTheme === "red-mode") {
+                document.body.classList.add("red-mode");
+            }
         })();
 
         /* ===============================
