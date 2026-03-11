@@ -68,8 +68,6 @@
     body::after {
       content: '';
       position: fixed;
-      top: 50%;
-      left: 0;
       width: 100vw;
       height: 4px;
       background: linear-gradient(to right, 
@@ -78,11 +76,22 @@
         #ff3333 50%, 
         var(--accent) 80%, 
         transparent 100%);
-      transform: translateY(-50%);
-      animation: horizontalRandomScan 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      animation: verticalRandomScan 8s ease-in-out infinite;
       z-index: 9999;
       pointer-events: none;
       opacity: 0.9;
+      left: 0;
+    }
+    
+    @keyframes verticalRandomScan {
+      0% { top: -10%; }
+      10% { top: 15%; }
+      25% { top: 60%; }
+      40% { top: 30%; }
+      55% { top: 85%; }
+      70% { top: 45%; }
+      85% { top: 75%; }
+      100% { top: 110%; }
     }
     
     /* base background */
@@ -239,7 +248,7 @@
       margin: 0 auto;
       padding: 0 clamp(1rem, 4vw, 2rem);
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: clamp(0.5rem, 2vw, 1rem);
@@ -1213,9 +1222,6 @@
     <header class="advanced-header">
       <div class="header-content">
         <div class="logo">SUPPLY CHAIN CV-5</div>
-        <div class="header-status">
-          <div class="status-indicator"></div>
-        </div>
       </div>
     </header>
 
@@ -1253,7 +1259,11 @@
       </div>
     </section>
 
-    <!-- SECTION 2: MESSAGE BOARD (ADVANCED) -->
+    <br>
+    <br>
+    <br>
+
+    <!-- SECTION 2: TEAM MESSAGE BOARD (ADVANCED) -->
     <section class="section" id="s2">
       <div class="section-header">
         <h2 class="section-title">Section 02: TEAM MESSAGE BOARD</h2>
@@ -1305,105 +1315,31 @@
       </div>
     </section>
 
-    <!-- SECTION 3: OBJECTIVES -->
+    <br>
+    <br>
+    <br>
+
+    <!-- SECTION 3: -->
     <section class="section" id="s3">
       <div class="section-header">
-        <h2 class="section-title">Section 03: OBJECTIVES</h2>
-        <span class="section-badge" id="taskCount">0</span>
-      </div>
-
-      <div class="grid-3">
-        <!-- Create Task -->
-        <div class="card">
-          <h3 class="text-accent mb-2">CREATE OBJECTIVE</h3>
-          <input type="text" id="taskInput" placeholder="Enter objective..." class="mb-2">
-          
-          <div class="flex mb-2">
-            <button class="btn" id="priorityBtn">⚡ PRIORITY</button>
-            <button class="btn" id="addTaskBtn">➕ ADD</button>
-          </div>
-
-          <div class="flex">
-            <button class="btn" id="completeAll">✅ COMPLETE ALL</button>
-            <button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button>
-          </div>
-        </div>
-
-        <!-- Active Tasks -->
-        <div class="card">
-          <h3 class="text-accent mb-2">⚡ ACTIVE OBJECTIVES</h3>
-          <div id="activeTasks" style="max-height: 350px; overflow-y: auto;"></div>
-        </div>
-
-        <!-- Progress & Stats -->
-        <div class="card">
-          <h3 class="text-accent mb-2">📊 PROGRESS</h3>
-          
-          <div class="mb-3">
-            <div class="flex-between mb-1">
-              <span>Completion Rate</span>
-              <span id="completionRate" class="text-accent">0%</span>
-            </div>
-            <div class="progress-container">
-              <div class="progress-bar" id="taskProgress" style="width: 0%;"></div>
-            </div>
-          </div>
-
-          <div class="grid-2 mb-3">
-            <div class="card" style="padding: 1rem; text-align: center;">
-              <div class="text-dim">TOTAL</div>
-              <div class="text-accent" style="font-size: 2rem;" id="totalTasks">0</div>
-            </div>
-            <div class="card" style="padding: 1rem; text-align: center;">
-              <div class="text-dim">ACTIVE</div>
-              <div class="text-accent" style="font-size: 2rem;" id="activeCount">0</div>
-            </div>
-          </div>
-
-          <h3 class="text-accent mb-2">✅ COMPLETED</h3>
-          <div id="completedTasks" style="max-height: 150px; overflow-y: auto;"></div>
-        </div>
+        <h2 class="section-title">Section 03: N/A</h2>
       </div>
     </section>
 
-    <!-- SECTION 4: INTEL & LOGS -->
+    <br>
+    <br>
+    <br>
+
+    <!-- SECTION 4: -->
     <section class="section" id="s4">
       <div class="section-header">
-        <h2 class="section-title">Section 04: INTEL & LOGS</h2>
-        <span class="section-badge" id="logCount">0</span>
-      </div>
-
-      <div class="grid-2">
-        <!-- Logs -->
-        <div class="card">
-          <div class="flex-between mb-2">
-            <h3 class="text-accent">SYSTEM LOGS</h3>
-            <div class="flex">
-              <button class="btn" id="refreshLogs">🔄</button>
-              <button class="btn" id="clearLogs">🗑️</button>
-              <button class="btn" id="exportLogs">📥</button>
-            </div>
-          </div>
-          
-          <div id="shiftLogs" style="max-height: 400px; overflow-y: auto;"></div>
-        </div>
-
-        <!-- File Management -->
-        <div class="card">
-          <h3 class="text-accent mb-2">FILE MANAGEMENT</h3>
-          
-          <input type="file" id="fileInput" multiple accept="*/*" class="mb-2">
-          
-          <div class="flex mb-3">
-            <button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD</button>
-            <button class="btn" id="clearFiles">🗑️ CLEAR</button>
-            <button class="btn" id="downloadFiles">📦 MANIFEST</button>
-          </div>
-
-          <div id="filePreview" class="file-grid"></div>
-        </div>
+        <h2 class="section-title">Section 04: N/A</h2>
       </div>
     </section>
+
+    <br>
+    <br>
+    <br>
 
     <!-- SECTION 5: ZAMA MDULI (PROTOTYPE - COMING SOON) -->
     <section class="section" id="s5">
@@ -2225,168 +2161,6 @@
       }
     };
 
-    // ========== SECTION 4: INTEL & LOGS ==========
-    const shiftLogs = document.getElementById('shiftLogs');
-    const logCount = document.getElementById('logCount');
-
-    const addLog = async (type, operator) => {
-      try {
-        await addDoc(collection(db, 'shifts'), {
-          type,
-          operator,
-          timestamp: serverTimestamp(),
-          sessionId
-        });
-      } catch (error) {
-        console.error('Log error:', error);
-      }
-    };
-
-    setTimeout(() => {
-      addLog('SESSION_START', callsign.value);
-    }, 1000);
-
-    onSnapshot(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      let count = 0;
-      shiftLogs.innerHTML = '';
-
-      snap.forEach(doc => {
-        count++;
-        const data = doc.data();
-        shiftLogs.innerHTML += `
-          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
-            <div class="flex-between">
-              <div>
-                <strong style="color: var(--accent);">${data.type || 'EVENT'}</strong>
-                <span class="text-dim"> · ${data.operator || ''}</span>
-              </div>
-              <button onclick="window.deleteLog('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
-            </div>
-            <div class="text-dim" style="font-size: 0.8rem;">${data.timestamp?.toDate().toLocaleString()}</div>
-          </div>
-        `;
-      });
-
-      logCount.textContent = count;
-    });
-
-    document.getElementById('refreshLogs').addEventListener('click', () => {
-      showNotification('Logs refreshed', 'info');
-    });
-
-    document.getElementById('clearLogs').addEventListener('click', async () => {
-      const confirmed = await showModal('CLEAR LOGS', 'Delete all logs? This action requires supervisor PIN.');
-      
-      if (confirmed) {
-        const pin = prompt('Enter supervisor PIN:');
-        if (pin === '1234') {
-          showLoader(true);
-          try {
-            const snap = await getDocs(collection(db, 'shifts'));
-            const batch = writeBatch(db);
-            snap.docs.forEach(doc => batch.delete(doc.ref));
-            await batch.commit();
-            showNotification('All logs cleared', 'success');
-          } catch (error) {
-            showNotification(error.message, 'error');
-          } finally {
-            showLoader(false);
-          }
-        } else {
-          showNotification('Invalid PIN', 'error');
-        }
-      }
-    });
-
-    document.getElementById('exportLogs').addEventListener('click', async () => {
-      showLoader(true);
-      try {
-        const snap = await getDocs(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(500)));
-        const logs = [];
-        snap.forEach(doc => logs.push({ id: doc.id, ...doc.data() }));
-        
-        const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `logs-${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        showNotification('Logs exported', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    window.deleteLog = async (id) => {
-      const confirmed = await showModal('DELETE LOG', 'Delete this log entry?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'shifts', id));
-          showNotification('Log deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.processFiles = () => {
-      const files = document.getElementById('fileInput').files;
-      if (!files.length) {
-        showNotification('No files selected', 'warning');
-        return;
-      }
-
-      const preview = document.getElementById('filePreview');
-      preview.innerHTML = '';
-
-      Array.from(files).slice(0, 12).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const fileItem = document.createElement('div');
-          fileItem.className = 'file-item';
-          
-          if (file.type.startsWith('image/')) {
-            fileItem.innerHTML = `
-              <img src="${e.target.result}" style="max-width: 100%; height: auto;">
-              <div style="font-size: 0.7rem; margin-top: 0.3rem;">${file.name.substring(0, 15)}</div>
-            `;
-          } else {
-            fileItem.innerHTML = `
-              <div style="font-size: 2rem;">📄</div>
-              <div style="font-size: 0.7rem;">${file.name.substring(0, 15)}</div>
-            `;
-          }
-          
-          preview.appendChild(fileItem);
-        };
-        reader.readAsDataURL(file);
-      });
-
-      showNotification(`${files.length} file(s) processed`, 'success');
-    };
-
-    document.getElementById('clearFiles').addEventListener('click', () => {
-      document.getElementById('filePreview').innerHTML = '';
-      document.getElementById('fileInput').value = '';
-      showNotification('File preview cleared', 'info');
-    });
-
-    document.getElementById('downloadFiles').addEventListener('click', () => {
-      const files = document.getElementById('filePreview').children;
-      if (files.length) {
-        showNotification('Manifest created (demo)', 'success');
-      } else {
-        showNotification('No files to manifest', 'warning');
-      }
-    });
-
     // ========== WELCOME NOTIFICATION ==========
     setTimeout(() => {
       showNotification('Welcome back, Operator. now online.', 'info', 6000);
@@ -2415,6 +2189,11 @@
 </body>
   
 </html>
+
+
+
+
+
 
 
 
