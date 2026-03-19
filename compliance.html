@@ -265,22 +265,6 @@
       word-break: break-word;
     }
     
-    .header-status {
-      display: flex;
-      gap: clamp(0.5rem, 1vw, 1rem);
-      align-items: center;
-      flex-shrink: 0;
-    }
-    
-    .status-indicator {
-      width: clamp(10px, 2vw, 14px);
-      height: clamp(10px, 2vw, 14px);
-      background: var(--success);
-      border-radius: 0;
-      animation: pulse-glow 2s infinite;
-      border: 1px solid white;
-    }
-    
     @keyframes pulse-glow {
       0%, 100% { opacity: 0.5; }
       50% { opacity: 1; }
@@ -1221,7 +1205,7 @@
     <!-- FULL WIDTH HEADER -->
     <header class="advanced-header">
       <div class="header-content">
-        <div class="logo">COMPLIANCE CV-5</div>
+        <div class="logo"><a href="index.html" style="color: var(--accent);">COMPLIANCE CV-5</a></div>
       </div>
     </header>
 
