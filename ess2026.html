@@ -770,7 +770,7 @@
                 h = Math.floor((diff % 86400000) / 3600000), 
                 m = Math.floor((diff % 3600000) / 60000), 
                 s = Math.floor((diff % 60000) / 1000);
-          cd.innerText = `${d}D ${h.toString().padStart(2, '0')}H ${m.toString().padStart(2, '0')}M ${s.toString().padStart(2, '0')}S`;
+          cd.innerText = `${d}D ${h.toString().padStart(2, '0')}H ${m.toString().padStart(2, '0')}M ${s.toString().padStart(3, '0')}S`;
         }
       }
       setInterval(updateCountdown, 500); 
