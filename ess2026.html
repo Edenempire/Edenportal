@@ -301,7 +301,7 @@
     }
 
     .ops-card {
-      width: 80%;
+      width: 100%;
       background: rgba(0, 20, 30, 0.65);
       border: 2px solid var(--border-light);          /* thinner */
       border-left: 6px solid var(--strike-blue);      /* thinner */
@@ -332,8 +332,6 @@
       margin-right: auto;
       font-size: 20px;
     }
-
-    
 
     /* TEAMS grid */
     .teams-grid {
@@ -549,11 +547,11 @@
           <!-- games: only first two played (completed), third is "next", rest upcoming. Locations: fixed -->
           <tr class="completed-row"><td>M01</td><td>01 Mar 2026</td><td>HARBOUR</td></tr>
           <tr class="completed-row"><td>M02</td><td>08 Mar 2026</td><td>HARBOUR</td></tr>
-          <tr class="next-row"><td>M03</td><td>15 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="completed-row"><td>M03</td><td>15 Mar 2026</td><td>HARBOUR</td></tr>
           
           <!-- remaining 35 games: upcoming, location TBD -->
           
-          <tr class="upcoming-row"><td>M04</td><td>22 Mar 2026</td><td>TBD</td></tr>
+          <tr class="next-row"><td>M04</td><td>22 Mar 2026</td><td>TBD</td></tr>
           <tr class="upcoming-row"><td>M05</td><td>29 Mar 2026</td><td>TBD</td></tr>
           <tr class="upcoming-row"><td>M06</td><td>05 Apr 2026</td><td>TBD</td></tr>
           <tr class="upcoming-row"><td>M07</td><td>12 Apr 2026</td><td>TBD</td></tr>
@@ -592,7 +590,6 @@
       </table></div>
     </section>
 
-    <!-- SUMMARY now includes LOCATION column (INTEL remains) – only first two matches filled, rest TBD -->
     <section id="match-summary" class="ops-card">
       <div class="section-command"><h2>OPERATION SUMMARY</h2></div>
       <div class="table-container">
@@ -703,8 +700,7 @@
   </footer>
 
   <script>
-    // ONLY minimal functions for RADAR dots, COUNTDOWN, footer clock.
-
+    
     (function() {
       // BACKGROUND TRACK – robust forever (autoplay + retry)
       const audio = document.getElementById('bgTrack');
@@ -773,7 +769,7 @@
                 h = Math.floor((diff % 86400000) / 3600000), 
                 m = Math.floor((diff % 3600000) / 60000), 
                 s = Math.floor((diff % 60000) / 1000);
-          cd.innerText = `${d}D ${h.toString().padStart(2, '0')}H ${m.toString().padStart(2, '0')}M ${s.toString().padStart(3, '0')}S`;
+          cd.innerText = `${d}D ${h.toString().padStart(2, '0')}H ${m.toString().padStart(2, '0')}M ${s.toString().padStart(2, '0')}S`;
         }
       }
       setInterval(updateCountdown, 500); 
@@ -792,7 +788,6 @@
     })();
   </script>
 
-  <!-- logo home link already present in HTML; hover title via container -->
 </body>
 </html>
 
