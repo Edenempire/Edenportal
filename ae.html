@@ -1,21 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    
 <head>
-    
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    
-    <title>EU · ETERNAL UNIVERSITY</title>
-    
+    <title>AEROSPACE ENGINEERING · MISSILE LOCK · FIGHTER JET 101</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <style>
-        
-        /* ---------- RESET / TACTICAL BASE ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -25,31 +16,34 @@
         html, body {
             width: 100%;
             min-height: 100vh;
-            background: #0c120e;  /* deep military green-black */
-            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            color: #f0f6f2;
+            background: #000000; /* pure black foundation */
+            font-family: 'Inter', 'Segoe UI', 'Roboto', 'Courier New', monospace;
+            color: #ffddbb;
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
         }
 
-        /* ---------- FIXED HEADER (DOES NOT MOVE) ---------- */
+        /* ---------- RED & BLACK THEME - MISSILE LOCK VIBE ---------- */
+        body {
+            background: radial-gradient(circle at center, #1a0303 0%, #000000 100%);
+        }
+
+        /* FIXED HEADER - TACTICAL RED/BLACK */
         .fixed-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 9999;
-            background: #0b1a14;
-            background: linear-gradient(180deg, #10261e 0%, #07130e 100%);
-            border-bottom: 6px solid #de3831; /* SA red */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 0 2px #002395 inset;
-            padding: 0.5rem 2rem 0.3rem;
+            background: #0a0000;
+            background: linear-gradient(135deg, #1f0505 0%, #000000 100%);
+            border-bottom: 4px solid #ff1100;
+            box-shadow: 0 0 25px rgba(255, 20, 0, 0.4), inset 0 1px 0 rgba(255, 80, 40, 0.3);
+            padding: 0.7rem 2rem 0.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            backdrop-filter: none; /* solid, no blur */
         }
 
         .header-left {
@@ -58,232 +52,213 @@
             gap: 1.2rem;
         }
 
-        .black-cap-logo {
-            background: #1e2b24;
+        .fighter-badge {
+            background: #1e0808;
             width: 70px;
             height: 70px;
-            border-radius: 20px 30px 20px 30px; /* military cap shape */
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 5px solid #002395; /* SA blue */
-            box-shadow: 0 0 0 3px #de3831, 0 0 0 6px #fcb514;
-            transform: rotate(-1deg);
+            border: 3px solid #ff3300;
+            box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300;
+            animation: pulseRed 1.8s infinite;
         }
-
-        .black-cap-logo i {
+        @keyframes pulseRed {
+            0% { box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300; }
+            50% { box-shadow: 0 0 0 5px #cc2200, 0 0 0 10px #ff5500; }
+            100% { box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300; }
+        }
+        .fighter-badge i {
             font-size: 2.8rem;
-            color: #ffffff;
-            filter: drop-shadow(0 0 5px #aadfc5);
+            color: #ff4422;
+            filter: drop-shadow(0 0 6px #ff0000);
         }
 
-        .eu-title {
-            font-size: 3.2rem;
+        .page-title {
+            font-size: 2.6rem;
             font-weight: 800;
-            letter-spacing: 10px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #f2fcf5;
-            text-shadow: 3px 3px 0 #002395, 6px 6px 0 #de3831, 0 0 20px #fcb514;
-            line-height: 1.1;
+            background: linear-gradient(135deg, #ff5555, #ff2200, #aa0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px rgba(255,0,0,0.4);
         }
 
         .header-right {
             display: flex;
-            gap: 1.5rem;
-            align-items: center;
+            gap: 1.2rem;
         }
 
-        .tactical-badge {
-            background: #002f1d;
-            border: 3px solid #fcb514;
-            padding: 0.5rem 1.5rem;
-            border-radius: 60px;
-            font-weight: 700;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .tactical-badge i {
-            color: #de3831;
-            margin-right: 8px;
-        }
-
-        /* campus strip inside header (compact) */
-        .campus-strip-header {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin-top: 0.3rem;
-            width: 100%;
-            border-top: 2px solid #007749;
-            padding-top: 0.4rem;
-        }
-        .campus-tag {
-            background: #1d3d30;
-            color: white;
-            border: 2px solid #de3831;
+        .flight-status {
+            background: #1e0808;
+            border: 2px solid #ff3300;
+            padding: 0.4rem 1.4rem;
             border-radius: 40px;
-            padding: 0.2rem 1.2rem;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #ff8866;
         }
-        .campus-tag.obsolete {
-            background: #2d2d2d;
-            border-color: #a13b3b;
-            text-decoration: line-through 2px #fcb514;
-            opacity: 0.9;
+        .flight-status i {
+            color: #ff4422;
+            margin-right: 8px;
+            animation: blinkWarning 1s infinite;
+        }
+        @keyframes blinkWarning {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
         }
 
-        /* ---------- BODY PADDING (FIXED HEADER OFFSET) ---------- */
-        .main-body {
-            max-width: 1400px;
-            margin: 140px auto 0;  /* enough space for fixed header */
-            padding: 1rem 2rem 3rem;
+        .cockpit-strip {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
             width: 100%;
+            border-top: 1px solid #ff3300;
+            padding-top: 0.5rem;
+        }
+        .mfd-tag {
+            background: #110101;
+            border-left: 4px solid #ff2200;
+            padding: 0.2rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #ffaa88;
+        }
+
+        /* MAIN BODY - CENTERED EVERYTHING */
+        .flight-deck {
+            max-width: 1300px;
+            margin: 150px auto 0;
+            padding: 1rem 2rem 3rem;
+            width: 90%;
             position: relative;
             z-index: 10;
         }
 
-        /* every section clearly divided */
-        .section-block {
-            margin: 3rem 0;
-            border: 3px solid transparent;
-            border-image: repeating-linear-gradient(45deg, #007749, #fcb514, #de3831, #002395) 30;
-            border-image-slice: 1;
-            background: rgba(0, 20, 15, 0.8);
-            backdrop-filter: blur(4px);
-            padding: 2.5rem 2rem;
-            border-radius: 50px;
-            box-shadow: 0 0 35px rgba(0,0,0,0.7), 0 0 15px #002395;
+        /* all sections centered, spaced, red/black elegance */
+        .step-section {
+            margin: 3rem auto;
+            background: rgba(10, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 50, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 15px rgba(255, 30, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            border-left: 15px solid #fcb514;
-            padding-left: 1.5rem;
-            margin-bottom: 2rem;
-            color: #ffffff;
-            text-transform: uppercase;
+        .step-header {
+            background: linear-gradient(95deg, #1f0505, #0a0101);
+            padding: 1.3rem 2rem;
+            border-bottom: 3px solid #ff3300;
             display: flex;
             align-items: center;
             gap: 1.2rem;
+            flex-wrap: wrap;
         }
-
-        .section-title i {
-            font-size: 2.5rem;
-            color: #de3831;
-        }
-
-        /* ----- STINCH CARD (strict schedule) ----- */
-        .stinch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-        }
-
-        .stinch-item {
-            background: #0d281e;
-            border: 4px solid #007749;
-            border-radius: 40px;
-            padding: 1.8rem;
-        }
-
-        .big-hour {
-            font-size: 4rem;
+        .step-number {
+            font-size: 2.8rem;
             font-weight: 800;
-            color: #fcb514;
-            text-shadow: 4px 4px 0 #002395;
-        }
-
-        /* ----- ATPL COURSE GRID (our own syllabus) ----- */
-        .atpl-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .course-card {
-            background: #10261d;
-            border: 4px solid #002395;
-            border-radius: 40px;
-            padding: 2rem 1.5rem;
-            transition: 0.15s;
-        }
-
-        .course-card:hover {
-            border-color: #fcb514;
-        }
-
-        .card-header {
-            display: flex;
+            background: #ff2200;
+            color: #000000;
+            width: 65px;
+            height: 65px;
+            border-radius: 60px;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 4px #ff8855;
+            font-family: monospace;
+        }
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #ffaa77;
+            text-transform: uppercase;
+        }
+        .step-content {
+            padding: 2rem 2.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .step-text {
+            font-size: 1.05rem;
+            border-left: 5px solid #ff4422;
+            padding-left: 1.3rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 0 20px 20px 0;
+        }
+        .checklist-bullet {
+            display: flex;
             gap: 1rem;
-            border-bottom: 4px solid #de3831;
-            padding-bottom: 0.7rem;
-            margin-bottom: 1rem;
+            align-items: baseline;
+            margin: 0.7rem 0;
+            font-family: 'Courier New', monospace;
         }
-
-        .card-header i {
-            font-size: 2.2rem;
-            background: #00462b;
-            padding: 0.6rem;
-            border-radius: 30px;
+        .checklist-bullet i {
+            width: 28px;
+            color: #ff5533;
         }
-
-        /* ----- PROMOTION ZONE (TIER 3 → TIER 1) ----- */
-        .promotion-divider {
+        .hot-key {
+            background: #2c0a0a;
+            border-radius: 12px;
+            padding: 0.2rem 0.8rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: #ff8844;
+            border: 1px solid #ff4411;
+        }
+        .instrument-panel {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            background: #092016;
-            border-radius: 90px;
-            padding: 2rem 2rem;
-            border: 6px solid #de3831;
+            gap: 1.2rem;
+            margin-top: 0.8rem;
+            background: #050000;
+            border-radius: 32px;
+            padding: 1.2rem;
+            border: 1px solid #aa3300;
         }
-
-        .tier-box {
-            text-align: center;
-            min-width: 180px;
+        .gauge {
+            background: #130202;
+            border-radius: 24px;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #ff4422;
+            font-weight: bold;
+            color: #ffccaa;
         }
-        .tier-box .tier {
-            font-size: 2.5rem;
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 0.8rem 0;
+        }
+        .engine-card {
+            background: #140303;
+            border-radius: 28px;
+            padding: 1.4rem;
+            border-top: 4px solid #ff3300;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.5);
+        }
+        .warning-flash {
+            border-left: 8px solid #ff1100;
+            background: #1f0606;
+        }
+        .bold-gold {
+            color: #ff8855;
             font-weight: 800;
-            background: #002395;
-            display: inline-block;
-            padding: 0.3rem 2rem;
-            border-radius: 60px;
-            border: 4px solid #fcb514;
-        }
-        .tier-box .label {
-            font-size: 1.3rem;
-            margin-top: 0.7rem;
         }
 
-        .arrow-big {
-            font-size: 4rem;
-            color: #de3831;
-        }
-
-        /* audio element - tactical, subtle */
-        #atcAudio {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 260px;
-            height: 44px;
-            opacity: 0.3;
-            z-index: 10000;
-            border: 3px solid #fcb514;
-            border-radius: 40px;
-            background: #00150c;
-        }
-        #atcAudio:hover { opacity: 1; }
-
-        /* aerospace background (fixed, militant) */
-        .airforce-bg {
+        /* ---------- MISSILE LOCK FIGHTER JET BACKGROUND (RED/BLACK THEME) ---------- */
+        .missile-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -292,189 +267,426 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+            background: radial-gradient(circle at 30% 40%, #2a0303, #000000);
         }
-        .airforce-bg video {
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
-            opacity: 0.2;
-            filter: grayscale(0.8) contrast(1.4) brightness(0.5);
+        .missile-bg canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            opacity: 0.55;
+        }
+        /* radar sweep + missile lock rings animation */
+        .lock-overlay {
+            position: absolute;
+            bottom: 10%;
+            right: 5%;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 40, 0, 0.8);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            animation: lockPulse 1.2s infinite;
+            pointer-events: none;
+        }
+        @keyframes lockPulse {
+            0% { transform: scale(0.9); opacity: 0.7; border-color: #ff2200; }
+            100% { transform: scale(1.2); opacity: 0.2; border-color: #ff8800; }
         }
 
-        /* footer militant */
-        .footer-tactical {
+        /* FOOTER DOPE RED/BLACK */
+        .footer-afterburner {
             margin-top: 4rem;
-            background: #05120d;
-            border-top: 8px solid #007749;
-            border-bottom: 8px solid #de3831;
-            border-left: 8px solid #fcb514;
-            border-right: 8px solid #002395;
-            border-radius: 70px 70px 30px 30px;
-            padding: 2.5rem 2rem 2rem;
-            color: white;
+            background: #070000;
+            border-radius: 50px 50px 30px 30px;
+            border-top: 4px solid #ff2200;
+            border-bottom: 4px solid #cc3300;
+            padding: 2rem 2rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 -5px 25px rgba(255, 0, 0, 0.2);
         }
-
-        .footer-grid {
+        .footer-flex {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 2rem;
         }
-
-        .flag-compact {
-            display: flex;
-            height: 38px;
-            width: 100%;
-            border-radius: 60px;
-            overflow: hidden;
-            border: 3px solid white;
+        .hr-glow {
+            height: 3px;
+            background: linear-gradient(90deg, #ff2200, #ff6633, #ff2200);
+            border: none;
             margin: 1.5rem 0;
         }
-
-        /* responsiveness */
-        @media (max-width: 800px) {
-            .fixed-header {
-                padding: 0.5rem 1rem;
-            }
-            .eu-title { font-size: 2.2rem; letter-spacing: 5px; }
-            .black-cap-logo { width: 55px; height: 55px; }
-            .black-cap-logo i { font-size: 2.2rem; }
-            .main-body { margin-top: 160px; padding: 1rem 1rem; }
+        @media (max-width: 780px) {
+            .page-title { font-size: 1.6rem; letter-spacing: 2px; }
+            .fighter-badge { width: 55px; height: 55px; }
+            .fighter-badge i { font-size: 2rem; }
+            .flight-deck { margin-top: 160px; padding: 1rem; width: 95%; }
+            .step-title { font-size: 1.3rem; }
+            .step-number { width: 52px; height: 52px; font-size: 2rem; }
         }
-
-        /* extra military touches */
-        .hr-tactical {
-            height: 5px;
-            background: linear-gradient(90deg, #007749, #fcb514, #de3831, #002395, #007749);
-            border: none;
-            margin: 2rem 0;
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10001;
+            background: #1f0505cc;
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.2rem 1rem;
+            border: 1px solid #ff4422;
+            font-size: 0.7rem;
+            color: #ffaa88;
+            font-family: monospace;
+            pointer-events: auto;
+            cursor: pointer;
         }
-        
+        .audio-control i {
+            margin-right: 6px;
+        }
     </style>
-    
 </head>
-    
 <body>
-    
-    <!-- FIXED HEADER - DOES NOT MOVE (militant) -->
+
+    <!-- FIXED HEADER - RED/BLACK AEROSPACE COMMAND -->
     <header class="fixed-header">
         <div class="header-left">
-            <div class="black-cap-logo">
-                <i class="fas fa-cap"></i> <!-- military cap -->
+            <div class="fighter-badge">
+                <i class="fas fa-fighter-jet"></i>
             </div>
-            <div class="eu-title">EU</div>
+            <div class="page-title">AEROSPACE ENGINEERING</div>
         </div>
         <div class="header-right">
-            <span class="tactical-badge"><i class="fas fa-shield-alt"></i> SAAFE</span>
+            <span class="flight-status"><i class="fas fa-bullseye"></i> MISSILE LOCK · MANUAL FLIGHT</span>
+        </div>
+        <div class="cockpit-strip">
+            <span class="mfd-tag"><i class="fas fa-crosshairs"></i> LOCK ACQUIRED · TARGET TRACKING</span>
+            <span class="mfd-tag"><i class="fas fa-tachometer-alt"></i> STEP 101: FIGHTER JET MANUAL FLOW</span>
         </div>
     </header>
 
-    <!-- AEROSPACE BACKGROUND (militant low-contrast) -->
-    <div class="airforce-bg">
-        <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1584433144859-1fc3ab64c957?w=800">
-            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
-        </video>
+    <!-- MISSILE LOCK FIGHTER JET BACKGROUND (CANVAS ANIMATION) RED/BLACK THEME -->
+    <div class="missile-bg">
+        <canvas id="fighterMissileCanvas"></canvas>
+        <div class="lock-overlay"></div>
     </div>
 
-    <!-- MAIN BODY (offset for fixed header) -->
-    <div class="main-body">
+    <!-- MAIN FLIGHT DECK - CENTERED, SPACED -->
+    <div class="flight-deck">
+        <!-- INTRO BADGE -->
+        <div style="margin-bottom: 2rem; text-align: center;">
+            <span class="flight-status" style="background:#1f0505; font-size:1.1rem; display:inline-block;"><i class="fas fa-crosshairs"></i> STEP-BY-STEP 101: MANUAL FLYING A FIGHTER JET</span>
+            <p style="margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; color:#ffaa88;">Pilot manual flight protocol — missile lock environment. Fly without restrictions, pure stick & rudder supremacy.</p>
+        </div>
 
-        <!-- SECTION 1: STINCH (strict schedule) -->
-        <section class="section-block">
-            <div class="section-title">
-                <i class="fas fa-clock"></i> STRICT OPERATIONAL DAILY EU SCHEDULE (STINCH)
+        <!-- STEP 1 -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">01</div><div class="step-title">COCKPIT PREFLIGHT & MECHANICAL CHECKS</div></div>
+            <div class="step-content">
+                <div class="step-text"><i class="fas fa-check-circle" style="color:#ff5533;"></i> <strong class="bold-gold">MANUAL FLIGHT PREREQUISITE:</strong> Verify mechanical flight controls (stick, rudder pedals, throttle). Full reversion mode — no electronic aids.</div>
+                <div class="instrument-panel">
+                    <div class="gauge"><i class="fas fa-cogs"></i> Hydraulic pressure (manual pumps)</div>
+                    <div class="gauge"><i class="fas fa-battery-full"></i> Battery & backup bus ON</div>
+                    <div class="gauge"><i class="fas fa-tachometer-alt"></i> Control surfaces free movement</div>
+                </div>
+                <div class="checklist-bullet"><i class="fas fa-skull-crosswalk"></i> <span><span class="hot-key">CRITICAL:</span> Ejection seat pin removed. Missile lock environment requires rapid response.</span></div>
             </div>
-            <div class="stinch-grid">
-                <div class="stinch-item">
-                    <div class="big-hour">10H</div>
-                    <div>total shift</div>
-                    <div style="background:#002f22; border-radius:30px; padding:0.4rem; margin:1rem 0; border:2px solid #fcb514;">FIRST BREAK AFTER 5H</div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">02</div><div class="step-title">ENGINE START & MANUAL THROTTLE</div></div>
+            <div class="step-content">
+                <div class="step-text">JFS start → throttle to IDLE cutoff → monitor RPM >20% → introduce fuel. Afterburner armed after idle stabilization.</div>
+                <div class="engine-grid">
+                    <div class="engine-card"><i class="fas fa-fan"></i> <strong>Throttle IDLE @25% RPM</strong><br><span class="hot-key">manual friction lock</span></div>
+                    <div class="engine-card"><i class="fas fa-temperature-high"></i> <strong>EGT stabilization</strong><br>max 720°C</div>
+                    <div class="engine-card"><i class="fas fa-waveform"></i> <strong>Oil pressure & nozzle check</strong></div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- SECTION 2: ATPL COURSE (our own syllabus) -->
-        <section class="section-block">
-            <div class="section-title">
-                <i class="fas fa-infinity"></i> AVIATION TRANSPORT PILOT LICENSE (ATPL) · SYLLABUS
-            </div>
-            <div class="atpl-grid">
-                <div class="course-card">
-
-            </div>
-        </section>
-
-        <!-- AUDIO: atc.mp3 (robust infinite) -->
-        <audio id="atcAudio" controls autoplay loop preload="auto" playsinline>
-            <source src="atc.mp3" type="audio/mpeg">
-            <source src="ATC.MP3" type="audio/mpeg">
-            Your browser does not support ATC audio.
-        </audio>
-
-        <!-- SECTION 4: TACTICAL FOOTER (already below, but we put extra) -->
-    </div> <!-- end main-body -->
-
-    <!-- TACTICAL MILITANT FOOTER -->
-    <footer class="footer-tactical">
-        <div class="footer-grid">
-            <div>
-                <i class="fas fa-cap" style="font-size:2rem;"></i> <strong style="font-size:1.5rem;">EU</strong>
-                <p>eternal university · airforce wing<br>CCI campus officially obsolete</p>
-            </div>
-            <div>
-                <h4>STINCH</h4>
-                <p>10h shift · break @5h<br>1h30 total · LOGOFF mandatory</p>
-            </div>
-            <div>
-                <h4>CAMPUSES</h4>
-                <p>Pretoria · Bloem · Cape Town<br>Durban · Hoedspruit · Makhado</p>
-            </div>
-            <div>
-                <h4>TIERS</h4>
-                <p>Tier3 operative → Tier1 operator<br>ATPL gateway</p>
+        <!-- STEP 3 -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">03</div><div class="step-title">TAXI & CONTROL SURFACE SWEEP</div></div>
+            <div class="step-content">
+                <div class="step-text">Differential braking + rudder. While taxiing, full stick deflection (aileron/elevator/rudder) verify symmetry.</div>
+                <div class="instrument-panel">
+                    <div class="gauge"><i class="fas fa-arrows-alt"></i> Aileron ±20° deflection</div>
+                    <div class="gauge"><i class="fas fa-arrow-up"></i> Elevator full aft/nose down</div>
+                    <div class="gauge"><i class="fas fa-ship"></i> Rudder sweep 30° each side</div>
+                </div>
+                <div class="step-text warning-flash" style="padding: 0.8rem;"><i class="fas fa-bell"></i> <strong>MANUAL FLIGHT RULE:</strong> Use manual trim hat. No FBW assist.</div>
             </div>
         </div>
-        <!-- flag strip (clean) -->
-        <div class="flag-compact">
-            <div style="flex:1; background:#007749;"></div>
-            <div style="flex:1; background:#fcb514;"></div>
-            <div style="flex:1; background:#de3831;"></div>
-            <div style="flex:1; background:#002395;"></div>
-            <div style="flex:1; background:#000;"></div>
-            <div style="flex:1; background:#fff;"></div>
+
+        <!-- STEP 4 TAKEOFF -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">04</div><div class="step-title">TAKEOFF & MANUAL ROTATION</div></div>
+            <div class="step-content">
+                <div class="step-text">Mil power, release brakes, afterburner (if tactical). Rotate at Vr 140-165 knots, smooth stick back 2-3°/sec to 10° nose-up.</div>
+                <div class="checklist-bullet"><i class="fas fa-gripfire"></i> Positive climb → gear up manually → flaps retract at 400ft AGL.</div>
+                <div class="step-text">Accelerate to climb speed 350 knots, coordinated rudder input. Maintain centerline.</div>
+            </div>
         </div>
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
-            <span><i class="fas fa-cloud-sun"></i> CAPE TOWN AFB: 20°C · 11km/h · 15:39</span>
-            <span><i class="fas fa-shield-alt"></i> EDEN stealth CV-1</span>
-            <span>© 2026 EU · eternal</span>
+
+        <!-- STEP 5 BASIC AIRWORK -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">05</div><div class="step-title">STICK & RUDDER COORDINATION</div></div>
+            <div class="step-content">
+                <div class="step-text">At 10,000ft practice level turns, steep turns (60° bank). Maintain ball centered, rudder coordination essential.</div>
+                <div class="engine-grid">
+                    <div class="engine-card"><i class="fas fa-sync-alt"></i> <strong>Coordinated turn:</strong> aileron + rudder same direction, back pressure adds G-force.</div>
+                    <div class="engine-card"><i class="fas fa-chart-simple"></i> <strong>Slow flight:</strong> speedbrakes manual, gear down, flaps mid, maintain 180 knots.</div>
+                </div>
+            </div>
         </div>
-        <div style="text-align: center; margin-top: 1.2rem; font-size:0.8rem;">
-            <i class="fas fa-headset"></i> ATC.MP3 active (infinite loop)
+
+        <!-- STEP 6 COMBAT MANEUVERS -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">06</div><div class="step-title">HIGH-G MANEUVERS & EMERGENCY</div></div>
+            <div class="step-content">
+                <div class="step-text">Max performance turns up to 9G, monitor AOA (max 25 units). Spin recovery: power idle, rudder opposite, stick forward.</div>
+                <div class="instrument-panel">
+                    <div class="gauge"><i class="fas fa-gauge-high"></i> AOA indexer: keep within limits</div>
+                    <div class="gauge"><i class="fas fa-heartbeat"></i> Emergency manual reversion mode</div>
+                </div>
+                <div class="step-text warning-flash"><i class="fas fa-fire-extinguisher"></i> <strong>Missile lock context:</strong> execute defensive break turn, chaff/flare manual release.</div>
+            </div>
         </div>
-    </footer>
+
+        <!-- STEP 7 LANDING -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">07</div><div class="step-title">PRECISION APPROACH & MANUAL LANDING</div></div>
+            <div class="step-content">
+                <div class="step-text">Overhead break or straight-in. Gear down, flaps FULL, on-speed AOA 11-14 units. Final approach 140 knots.</div>
+                <div class="checklist-bullet"><i class="fas fa-plane-arrival"></i> Flare at 30ft, reduce power idle, pitch 3-5° for main wheel touchdown. Deploy drag chute manual.</div>
+                <div class="step-text">After landing, throttle cutoff, battery off, post-flight inspection.</div>
+            </div>
+        </div>
+
+        <!-- STEP 8 POST FLIGHT -->
+        <div class="step-section">
+            <div class="step-header"><div class="step-number">08</div><div class="step-title">POST-FLIGHT & DEBRIEF</div></div>
+            <div class="step-content">
+                <div class="step-text">Perform cooldown (3 min idle), record G loads, fuel consumption, manual flight data.</div>
+                <div class="engine-grid">
+                    <div class="engine-card"><i class="fas fa-clipboard-list"></i> Inspect flight control rods</div>
+                    <div class="engine-card"><i class="fas fa-tools"></i> Manual flight forces & trim</div>
+                    <div class="engine-card"><i class="fas fa-chalkboard-user"></i> Review AOA & approach deviations</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXTRA AEROSPACE NOTES -->
+        <div class="step-section" style="background: rgba(20, 0, 0, 0.9);">
+            <div class="step-header" style="background:#1f0202;"><div class="step-number" style="background:#ff4411;">+</div><div class="step-title">MISSILE LOCK TACTICS · MANUAL FLIGHT EDGE</div></div>
+            <div class="step-content">
+                <div class="step-text"><i class="fas fa-chart-line"></i> <strong>Stick force gradients:</strong> At high speed, manual control forces increase. Essential for supersonic defensive maneuvers.</div>
+                <div class="step-text"><i class="fas fa-microchip"></i> <strong>Radar warning & lock:</strong> Manual evasive action — break turn, energy bleed, notch.</div>
+            </div>
+        </div>
+        
+        <!-- DOPE FOOTER (red/black, missile lock vibe) -->
+        <footer class="footer-afterburner">
+            <div class="footer-flex">
+                <div>
+                    <i class="fas fa-fighter-jet" style="font-size:2rem; color:#ff4422;"></i>
+                    <h3 style="color:#ff8866;">AEROSPACE ENGINEERING</h3>
+                    <p>Manual Flight Division · Missile Lock Ready<br>Step-by-Step 101 syllabus</p>
+                </div>
+                <div>
+                    <h4><i class="fas fa-bullseye"></i> LOCK MODE</h4>
+                    <p>Radar Cross Section · Defensive<br>Maneuvers · Kinetic Energy Mgmt</p>
+                </div>
+                <div>
+                    <h4><i class="fas fa-map-pin"></i> TACTICAL AIR BASES</h4>
+                    <p>Red Flag · Nellis · Top Gun<br>Fighter Weapons School</p>
+                </div>
+                <div>
+                    <h4><i class="fas fa-certificate"></i> ENDORSEMENT</h4>
+                    <p>Missile Lock Badge (MLB-101)<br>Aerospace Engineering Elite</p>
+                </div>
+            </div>
+            <div class="hr-glow"></div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+                <span><i class="fas fa-crosshairs"></i> LOCK STATUS: ACTIVE · RWR: SPIKE 12 O'CLOCK</span>
+                <span><i class="fas fa-headset"></i> TOWER FREQ: 133.5 · MANUAL FLIGHT MODE</span>
+                <span>© 2026 AEROSPACE ENGINEERING · MISSILE LOCK FIGHTER PROTOCOL</span>
+            </div>
+            <div style="text-align: center; margin-top: 1.2rem; font-size:0.75rem;">
+                <i class="fas fa-dragon"></i> Pure manual flight — missile lock environment, full control. Red & black supremacy.
+            </div>
+        </footer>
+    </div>
+
+    <!-- AUDIO: ae.mp3 AUTOPLAY FOREVER ROBUST -->
+    <audio id="bgAudio" loop preload="auto" style="display: none;"></audio>
+    <div class="audio-control" id="audioControlBtn">
+        <i class="fas fa-volume-up"></i> AEROSPACE AUDIO · ae.mp3
+    </div>
 
     <script>
-        (function() {
-            const audio = document.getElementById('atcAudio');
-            if (audio) {
-                let playAttempt = audio.play();
-                if (playAttempt !== undefined) {
-                    playAttempt.catch(() => {
-                        // autoplay blocked — show small message but remain militant
-                        const msg = document.createElement('div');
-                        msg.innerText = '🎧 click to enable ATC';
-                        msg.style.position = 'fixed'; msg.style.bottom = '80px'; msg.style.right = '30px';
-                        msg.style.background = '#001f14'; msg.style.padding = '0.3rem 1.2rem';
-                        msg.style.borderRadius = '60px'; msg.style.border = '3px solid #fcb514';
-                        msg.style.zIndex = '10001'; msg.style.color = 'white';
-                        msg.addEventListener('click', () => { audio.play(); msg.remove(); });
-                        document.body.appendChild(msg);
-                    });
-                }
-                audio.volume = 0.4;
-                audio.loop = true;
+        // ---------- MISSILE LOCK FIGHTER JET CANVAS ANIMATION (RED/BLACK) ----------
+        const canvas = document.getElementById('fighterMissileCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let fighters = [];
+        let missiles = [];
+        let lockParticles = [];
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Fighter jet class (silhouette style)
+        class FighterJet {
+            constructor(x, y, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.size = 38;
+                this.angle = 0;
             }
-        })();
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x + this.size < 0) this.x = width + 20;
+                if (this.x - this.size > width) this.x = -20;
+                if (this.y + this.size < 0) this.y = height + 20;
+                if (this.y - this.size > height) this.y = -20;
+                this.angle = Math.atan2(this.speedY, this.speedX);
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = "#ff2200";
+                ctx.beginPath();
+                ctx.moveTo(20, 0);
+                ctx.lineTo(-12, -10);
+                ctx.lineTo(-6, 0);
+                ctx.lineTo(-12, 10);
+                ctx.closePath();
+                ctx.fillStyle = "#ff3311cc";
+                ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(-6, 0);
+                ctx.lineTo(-18, -4);
+                ctx.lineTo(-18, 4);
+                ctx.fillStyle = "#ff6644";
+                ctx.fill();
+                ctx.restore();
+                // afterburner effect
+                ctx.beginPath();
+                ctx.arc(this.x - 16, this.y, 8, 0, Math.PI * 2);
+                ctx.fillStyle = "#ff4400aa";
+                ctx.fill();
+            }
+        }
+
+        // Missile trail / lock cross
+        class MissileLock {
+            constructor(x, y, targetX, targetY) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.life = 1.0;
+            }
+            update() {
+                this.life -= 0.015;
+                return this.life > 0;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.targetX, this.targetY);
+                ctx.strokeStyle = `rgba(255, 60, 30, ${this.life * 0.7})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(this.targetX, this.targetY, 8 * (1 - this.life), 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 40, 0, ${this.life})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+        }
+
+        // init fighters
+        for (let i = 0; i < 4; i++) {
+            fighters.push(new FighterJet(Math.random() * width, Math.random() * height, (Math.random() - 0.5) * 1.2, (Math.random() - 0.5) * 1.1));
+        }
+        setInterval(() => {
+            if (fighters.length < 6) {
+                fighters.push(new FighterJet(Math.random() * width, Math.random() * height, (Math.random() - 0.5) * 1.3, (Math.random() - 0.5) * 1.2));
+            }
+            for (let f of fighters) {
+                missiles.push(new MissileLock(f.x + 20, f.y + 5, f.x - 12, f.y));
+            }
+        }, 1800);
+
+        function animateBackground() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = "rgba(0,0,0,0.25)";
+            ctx.fillRect(0, 0, width, height);
+            // radar grid effect
+            ctx.strokeStyle = "#ff331155";
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 8; i++) {
+                ctx.beginPath();
+                ctx.arc(width/2, height/2, 50 + i*55, 0, Math.PI*2);
+                ctx.stroke();
+            }
+            for (let i = 0; i < fighters.length; i++) {
+                fighters[i].update();
+                fighters[i].draw();
+            }
+            for (let i = missiles.length-1; i >= 0; i--) {
+                let alive = missiles[i].update();
+                missiles[i].draw();
+                if (!alive) missiles.splice(i,1);
+            }
+            requestAnimationFrame(animateBackground);
+        }
+        animateBackground();
+
+        // ---------- AUDIO: ae.mp3 ROBUST AUTOPLAY + FOREVER LOOP ----------
+        const audio = document.getElementById('bgAudio');
+        const audioBtn = document.getElementById('audioControlBtn');
+        audio.loop = true;
+        audio.volume = 0.45;
+        audio.src = "ae.mp3";
+
+        let playAttempt = audio.play();
+        if (playAttempt !== undefined) {
+            playAttempt.catch(() => {
+                audioBtn.style.cursor = "pointer";
+                audioBtn.style.background = "#aa2222cc";
+                audioBtn.innerHTML = '<i class="fas fa-play-circle"></i> CLICK TO ENABLE AE.MP3 (MISSILE LOCK AUDIO)';
+                audioBtn.addEventListener('click', function enableAudio() {
+                    audio.play().then(() => {
+                        audioBtn.innerHTML = '<i class="fas fa-volume-up"></i> AEROSPACE AUDIO · ae.mp3 (ACTIVE)';
+                        audioBtn.style.background = "#1f0505cc";
+                    }).catch(e => console.log("audio error", e));
+                    audioBtn.removeEventListener('click', enableAudio);
+                });
+            });
+        } else {
+            audioBtn.innerHTML = '<i class="fas fa-volume-up"></i> AEROSPACE AUDIO · LOCK TRACK ACTIVE';
+        }
+        // extra insurance: ensure looping forever
+        audio.addEventListener('ended', function() { this.currentTime = 0; this.play().catch(e=>{}); });
     </script>
 </body>
 </html>
-
