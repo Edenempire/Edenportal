@@ -53,35 +53,6 @@
             flex-wrap: wrap;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-
-        .fighter-badge {
-            background: #1e0808;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid #ff3300;
-            box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300;
-            animation: pulseRed 1.8s infinite;
-        }
-        @keyframes pulseRed {
-            0% { box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300; }
-            50% { box-shadow: 0 0 0 5px #cc2200, 0 0 0 10px #ff5500; }
-            100% { box-shadow: 0 0 0 3px #8b0000, 0 0 0 6px #ff3300; }
-        }
-        .fighter-badge i {
-            font-size: 2.8rem;
-            color: #ff4422;
-            filter: drop-shadow(0 0 6px #ff0000);
-        }
-
         .page-title {
             font-size: 2.6rem;
             font-weight: 800;
@@ -91,52 +62,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 12px rgba(255,0,0,0.4);
-        }
-
-        .header-right {
-            display: flex;
-            gap: 1.2rem;
-        }
-
-        .flight-status {
-            background: #1e0808;
-            border: 2px solid #ff3300;
-            padding: 0.4rem 1.4rem;
-            border-radius: 40px;
-            font-weight: 700;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #ff8866;
-        }
-        .flight-status i {
-            color: #ff4422;
-            margin-right: 8px;
-            animation: blinkWarning 1s infinite;
-        }
-        @keyframes blinkWarning {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-
-        .cockpit-strip {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-            width: 100%;
-            border-top: 1px solid #ff3300;
-            padding-top: 0.5rem;
-        }
-        .mfd-tag {
-            background: #110101;
-            border-left: 4px solid #ff2200;
-            padding: 0.2rem 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #ffaa88;
+            text-align: center;
         }
 
         /* MAIN BODY - CENTERED EVERYTHING */
@@ -156,7 +82,6 @@
             backdrop-filter: blur(8px);
             border-radius: 48px;
             border: 1px solid rgba(255, 50, 0, 0.6);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 15px rgba(255, 30, 0, 0.3);
             overflow: hidden;
             transition: transform 0.2s ease;
         }
@@ -181,7 +106,6 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 0 4px #ff8855;
             font-family: monospace;
         }
         .step-title {
@@ -253,7 +177,6 @@
             border-radius: 28px;
             padding: 1.4rem;
             border-top: 4px solid #ff3300;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.5);
         }
         .warning-flash {
             border-left: 8px solid #ff1100;
@@ -294,7 +217,6 @@
             height: 180px;
             border-radius: 50%;
             border: 3px solid rgba(255, 40, 0, 0.8);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
             animation: lockPulse 1.2s infinite;
             pointer-events: none;
         }
@@ -312,7 +234,6 @@
             border-bottom: 4px solid #cc3300;
             padding: 2rem 2rem;
             backdrop-filter: blur(5px);
-            box-shadow: 0 -5px 25px rgba(255, 0, 0, 0.2);
         }
         .footer-flex {
             display: grid;
@@ -352,8 +273,11 @@
         .audio-control i {
             margin-right: 6px;
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
     <!-- FIXED HEADER - RED/BLACK AEROSPACE COMMAND -->
