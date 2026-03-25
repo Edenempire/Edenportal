@@ -326,8 +326,8 @@
                (relative path, must be same directory)
             =============================================*/
             const CONFIG = {
-                pdfUrl: 'the-holy-bible-king-james-version.pdf',   // main PDF for iframe
-                fallbackUrl: 'the-holy-bible-king-james-version.pdf', // same file for download
+                pdfUrl: 'documents/general_documents/the-holy-bible-king-james-version.pdf',   // main PDF for iframe
+                fallbackUrl: 'documents/general_documents/the-holy-bible-king-james-version.pdf', // same file for download
                 hqUrl: 'index.html',                                 // return button destination
                 rainDensity: 15000,
                 maxDrops: 150
@@ -496,7 +496,7 @@
                     }
                     const link = document.createElement('a');
                     link.href = CONFIG.fallbackUrl;
-                    link.download = 'the-holy-bible-king-james-version.pdf';
+                    link.download = 'documents/general_documents/the-holy-bible-king-james-version.pdf';
                     link.rel = 'noopener noreferrer';
                     document.body.appendChild(link);
                     link.click();
