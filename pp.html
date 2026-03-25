@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-  
   <meta charset="UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Parables & Platters</title>
-  
-  <!-- Poppins & subtle fire / soul vibe -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for subtle icons (optional but adds richness) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Parables & Platters | Sacred Braai · Soul Sync</title>
+  <!-- Google Fonts + Fire Vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
   <style>
-    
     * {
       margin: 0;
       padding: 0;
@@ -24,678 +15,703 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #0f0f0f; /* deep charcoal */
-      color: #f5f2e8;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: radial-gradient(circle at 10% 20%, #0c0a07, #020100);
+      font-family: 'Inter', sans-serif;
+      color: #fef3e2;
+      scroll-behavior: smooth;
     }
 
-    /* ===== NICE HEADER ===== */
-    .soul-header {
-      background: linear-gradient(145deg, #1e1a14 0%, #2b241c 100%);
-      border-bottom: 2px solid #d4af37;
-      padding: 1rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    /* fire ember glow utility */
+    .glow-gold {
+      text-shadow: 0 0 6px #d9aa33, 0 0 2px #ffcf7a;
     }
 
-    .brand {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-main {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    .brand-main span {
-      color: #d4af37; /* gold */
-      font-style: italic;
-    }
-
-    .brand-tagline {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: #c0b28a;
-      margin-top: -5px;
-      letter-spacing: 1px;
-    }
-
-    .shisanyama-badge {
-      background: #b87c4b;
-      color: #0f0f0f;
-      font-weight: 700;
-      padding: 0.5rem 1.3rem;
-      border-radius: 40px;
-      font-size: 1.4rem;
-      border: 2px solid #efc580;
-      box-shadow: 0 0 15px #ffb34780;
-      text-transform: uppercase;
-    }
-
-    /* ===== CONTAINER + VERTICAL MENU CARDS ===== */
-    .main-container {
-      flex: 1;
-      max-width: 1300px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-      width: 100%;
-    }
-
-    .menu-section-title {
-      font-size: 2rem;
-      font-weight: 600;
-      border-left: 8px solid #d4af37;
-      padding-left: 1.2rem;
-      margin-bottom: 2rem;
-      color: #f5e7c8;
-      text-shadow: 2px 2px 0 #00000040;
-    }
-
-    .menu-grid {
-      display: flex;
-      flex-direction: column;  /* VERTICAL MENU CARDS */
-      gap: 1.4rem;
-    }
-
-    /* individual menu card – unique style */
-    .menu-card {
-      background: #1d1a15;
-      border-radius: 28px;
-      padding: 1.2rem 1.8rem;
+    /* header — sacred flames */
+    .sanctum-header {
+      background: #0a0804dd;
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #e6b13e;
+      padding: 0.9rem 2rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #4a3f33;
-      box-shadow: 0 15px 25px -10px black;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(2px);
+      box-shadow: 0 12px 28px -8px black;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .menu-card:hover {
-      border-color: #d4af37;
-      transform: scale(1.01) translateY(-3px);
-      background: #262016;
-    }
-
-    .card-info {
+    .logo-area {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
-      min-width: 200px;
     }
 
-    .card-info h3 {
+    .logo-main {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff2cf, #e6b85e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .logo-main i {
+      background: none;
+      -webkit-background-clip: unset;
+      color: #e6b13e;
       font-size: 1.8rem;
-      font-weight: 600;
-      color: #fadfad;
-      letter-spacing: 0.5px;
     }
 
-    .card-desc {
-      font-size: 0.9rem;
-      color: #aa9f87;
+    .logo-sub {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #c7af7a;
+      margin-top: 2px;
+    }
+
+    .braai-tag {
+      background: #b45f2b;
+      padding: 0.45rem 1.3rem;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 0 10px #ff9933;
+      border: 1px solid #ffcd7e;
     }
 
-    .card-desc i {
-      color: #b48b5a;
-      width: 18px;
+    /* container */
+    .sacred-container {
+      max-width: 1280px;
+      margin: 2rem auto;
+      padding: 0 1.8rem;
     }
 
-    .price-tag {
-      font-size: 2rem;
+    .menu-head {
+      font-size: 2.2rem;
       font-weight: 700;
-      color: #e6c273;
+      border-left: 7px solid #e6b13e;
+      padding-left: 1.2rem;
+      margin-bottom: 2rem;
       display: flex;
       align-items: center;
+      gap: 12px;
+    }
+
+    /* vertical menu cards - elevated */
+    .vertical-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .feast-card {
+      background: linear-gradient(115deg, #19140e, #120f0a);
+      border-radius: 2rem;
+      padding: 1rem 1.8rem 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #4c3c2a;
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+    }
+
+    .feast-card:hover {
+      border-color: #e6b13e;
+      transform: translateY(-4px);
+      background: #211b13;
+      box-shadow: 0 22px 28px -16px #e6b13e30;
+    }
+
+    .dish-details {
+      flex: 2;
+    }
+
+    .dish-details h3 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffeaaf;
+    }
+
+    .dish-meta {
+      font-size: 0.85rem;
+      color: #b9a579;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 5px;
+    }
+
+    .parable-tag {
+      background: #2b241c;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
       gap: 5px;
-      background: #2e281f;
-      padding: 0.2rem 1rem;
+      border-left: 3px solid #e6b13e;
+    }
+
+    .price-hearth {
+      font-size: 2rem;
+      font-weight: 800;
+      background: #1e1811;
+      padding: 0.2rem 1.2rem;
       border-radius: 60px;
-      border: 1px solid #6a5d48;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      border: 1px solid #5b4d36;
+      margin: 0 1rem;
     }
 
-    .price-tag small {
-      font-size: 1rem;
-      font-weight: 300;
-      color: #bba88b;
-    }
-
-    /* UNIQUE ORDERING ON EACH CARD */
-    .card-order-area {
+    .order-controls {
       display: flex;
       align-items: center;
       gap: 1rem;
-      background: #2b241c;
-      padding: 0.3rem 0.8rem 0.3rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #5f4f39;
+      background: #201b14;
+      padding: 0.3rem 0.8rem 0.3rem 1rem;
+      border-radius: 60px;
+      border: 1px solid #6b5a41;
     }
 
-    .item-qty {
+    .qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #2c241c;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+    }
+
+    .qty-stepper button {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #f5cf8a;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-stepper button:hover {
+      background: #e6b13e;
+      color: #1f180f;
+    }
+
+    .qty-number {
+      font-size: 1.4rem;
+      font-weight: 700;
+      min-width: 32px;
+      text-align: center;
+    }
+
+    .add-soul-btn {
+      background: #e6b13e;
+      border: none;
+      font-weight: 700;
+      padding: 0.6rem 1.4rem;
+      border-radius: 40px;
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .item-qty button {
-      background: #3e3529;
-      border: none;
-      color: #fadfad;
-      width: 30px;
-      height: 30px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 1px solid #7a684e;
-    }
-
-    .item-qty button:hover {
-      background: #d4af37;
-      color: #1d1a15;
-      border-color: #fff2c0;
-    }
-
-    .qty-num {
-      font-size: 1.3rem;
-      font-weight: 600;
-      min-width: 30px;
-      text-align: center;
-      color: #f5d98f;
-    }
-
-    .add-unique-btn {
-      background: #d4af37;
-      border: none;
-      color: #1a150e;
-      font-weight: 700;
-      padding: 0.5rem 1.5rem;
-      border-radius: 30px;
       font-size: 0.9rem;
-      letter-spacing: 0.5px;
       cursor: pointer;
       transition: 0.2s;
-      display: flex;
+      color: #1b140c;
+      letter-spacing: 0.3px;
+    }
+
+    .add-soul-btn:hover {
+      background: #ffce70;
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px #e6b13e80;
+    }
+
+    /* firestore sync badge */
+    .baas-badge {
+      display: inline-flex;
       align-items: center;
+      background: #17130e;
+      border-radius: 50px;
+      padding: 0.2rem 1rem;
       gap: 8px;
-      border: 1px solid #f5cf6e;
-      box-shadow: 0 4px 10px #d4af3730;
+      font-size: 0.7rem;
+      border: 1px solid #c49a44;
+      font-weight: 500;
     }
 
-    .add-unique-btn:hover {
-      background: #edc867;
-      transform: scale(1.05);
+    /* cart cathedral */
+    .cart-cathedral {
+      background: #0c0906e6;
+      backdrop-filter: blur(10px);
+      border-top: 3px solid #e6b13e;
+      margin-top: 3rem;
+      padding: 1.8rem 2rem 1.5rem;
     }
 
-    /* ===== NICE CART / FOOTER ===== */
-    .nice-footer {
-      background: #13110e;
-      border-top: 3px solid #c9a449;
-      padding: 1.5rem 2rem 1rem;
-      margin-top: 2rem;
-      box-shadow: 0 -10px 30px #00000080;
-    }
-
-    .cart-panel {
-      max-width: 1300px;
+    .cart-wrapper {
+      max-width: 1280px;
       margin: 0 auto;
     }
 
-    .cart-header {
+    .cart-title {
       display: flex;
       align-items: center;
-      gap: 15px;
-      color: #e6c273;
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.2rem;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
     }
 
-    .cart-header i {
-      background: #2f281f;
-      padding: 12px;
-      border-radius: 50%;
+    .cart-items-display {
+      background: #1a140e;
+      border-radius: 2rem;
+      padding: 1.2rem 1.6rem;
+      min-height: 100px;
+      margin-bottom: 1rem;
+      border: 1px solid #4f3f2c;
+      font-size: 0.95rem;
     }
 
-    #cart-items {
-      background: #1f1b16;
-      border-radius: 30px;
-      padding: 1.2rem 1.8rem;
-      min-height: 80px;
-      color: #f0dbc0;
-      font-size: 1rem;
-      border: 1px dashed #7b6b52;
-      margin-bottom: 1.2rem;
-      line-height: 1.8;
-    }
-
-    .cart-summary {
+    .cart-summary-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      background: #1e1913;
-      border-radius: 50px;
-      padding: 0.8rem 2rem;
-      margin-bottom: 1.5rem;
+      gap: 18px;
+      background: #18120b;
+      border-radius: 80px;
+      padding: 0.7rem 1.8rem;
+      margin-bottom: 1.2rem;
     }
 
-    .total-amount {
+    .grand-total {
       font-size: 2rem;
-      font-weight: 700;
-      color: #fad874;
+      font-weight: 800;
+      color: #f7d98c;
     }
 
-    .total-amount span {
-      font-size: 1.2rem;
-      color: #b8a27b;
-      font-weight: 400;
-    }
-
-    .checkout-form {
+    .checkout-field-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
       align-items: flex-end;
     }
 
-    .input-field {
-      flex: 1 1 180px;
-      background: #2d271f;
-      border: 1px solid #5b4d36;
-      border-radius: 40px;
-      padding: 0.8rem 1.2rem;
-      color: white;
-      font-family: 'Poppins', sans-serif;
+    .sacred-input {
+      background: #2d241b;
+      border: 1px solid #6b583d;
+      border-radius: 50px;
+      padding: 0.7rem 1.2rem;
+      color: #faeecd;
+      font-family: 'Inter', sans-serif;
       outline: none;
       transition: 0.2s;
+      min-width: 150px;
     }
 
-    .input-field:focus {
-      border-color: #d4af37;
-      background: #342d23;
+    .sacred-input:focus {
+      border-color: #e6b13e;
+      background: #3b2f22;
     }
 
-    .input-field::placeholder {
-      color: #a19178;
-      font-weight: 300;
-    }
-
-    .btn-checkout {
-      background: #2b8f4c;
+    .btn-divine-order {
+      background: #2a7845;
       border: none;
-      padding: 0.9rem 2.2rem;
-      border-radius: 40px;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
       font-weight: 700;
-      color: white;
-      font-size: 1.1rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      font-size: 1rem;
       cursor: pointer;
-      border: 1px solid #5cb85c;
       transition: 0.2s;
-      box-shadow: 0 5px 15px #1f9940a0;
+      color: white;
+      box-shadow: 0 5px 12px #1f6e3e80;
     }
 
-    .btn-checkout:hover {
-      background: #36a85e;
+    .btn-divine-order:hover {
+      background: #3e9b5c;
       transform: scale(1.02);
     }
 
-    .footer-note {
+    .footer-benediction {
       text-align: center;
-      margin-top: 2rem;
-      color: #7a6f5b;
-      font-size: 0.9rem;
-      border-top: 1px solid #3b3328;
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #8b7b62;
+      border-top: 1px solid #352c21;
       padding-top: 1rem;
     }
 
-    /* Firestore sync note (UI only, simulation) */
-    .sync-badge {
-      display: inline-flex;
-      align-items: center;
-      background: #313131;
-      border-radius: 30px;
-      padding: 0.2rem 1rem 0.2rem 0.7rem;
-      color: #b9aa8b;
-      gap: 6px;
-      border: 1px solid #5f5340;
-    }
-
-    /* responsive */
-    @media (max-width: 750px) {
-      .menu-card {
+    @media (max-width: 780px) {
+      .feast-card {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+        align-items: stretch;
+        gap: 14px;
       }
-      .card-order-area {
-        width: 100%;
+      .price-hearth {
+        align-self: flex-start;
+        margin: 0 0 0.5rem 0;
+      }
+      .order-controls {
         justify-content: space-between;
       }
     }
-    
   </style>
-  
 </head>
-  
 <body>
-  <!-- NICE HEADER : Parables & Platters / Shisanyama -->
-  <header class="soul-header">
-    <div class="brand">
-      <div class="brand-main">Parables <span>&</span> Platters</div>
-      <div class="brand-tagline"><i class="fas fa-dove"></i> Feeding the soul.</div>
-    </div>
-    <div class="shisanyama-badge">
-      <i class="fas fa-fire"></i> SHISANYAMA
-    </div>
-  </header>
 
-  <!-- MAIN BODY with VERTICAL MENU CARDS + unique ordering -->
-  <main class="main-container">
-    <h2 class="menu-section-title"><i class="fas fa-utensils" style="margin-right: 10px;"></i> braai · bread · blessings</h2>
+<header class="sanctum-header">
+  <div class="logo-area">
+    <div class="logo-main"><i class="fas fa-fire"></i> PARABLES <span style="color:#e6b13e;">&</span> PLATTERS</div>
+    <div class="logo-sub"><i class="fas fa-hands-praying"></i> where bread meets testimony</div>
+  </div>
+  <div class="braai-tag">
+    <i class="fas fa-drumstick-bite"></i> SHISANYAMA SOUL
+  </div>
+</header>
+
+<main class="sacred-container">
+  <div class="menu-head">
+    <i class="fas fa-utensils"></i> BRAAI · BLESSINGS · COMMUNION
+    <div class="baas-badge" id="baasSyncStatus">
+      <i class="fas fa-cloud-upload-alt"></i> BAAS · FIRESTORE READY
+    </div>
+  </div>
+
+  <div class="vertical-menu" id="dynamicMenuRoot"></div>
+  <div style="text-align: right; margin-top: 1rem;">
+    <span class="baas-badge"><i class="fas fa-database"></i> live simulation · firestore integrated</span>
+  </div>
+</main>
+
+<footer class="cart-cathedral">
+  <div class="cart-wrapper">
+    <div class="cart-title">
+      <i class="fas fa-basket-shopping"></i> 
+      <span>your offering basket</span>
+      <span id="cartItemBadge" style="font-size:0.9rem; background:#34281c; padding:0.2rem 0.8rem; border-radius: 40px;">(0)</span>
+    </div>
+    <div class="cart-items-display" id="sacredCartList">
+      ✦ the altar awaits — add a plate ✦
+    </div>
+    <div class="cart-summary-row">
+      <div class="grand-total">R<span id="totalCostSpan">0</span></div>
+      <div class="checkout-field-group">
+        <input type="text" id="customerName" class="sacred-input" placeholder="🕯️ your name / testimony">
+        <input type="tel" id="customerPhone" class="sacred-input" placeholder="📞 phone (for blessing)">
+        <input type="text" id="customerAddress" class="sacred-input" placeholder="📍 gathering place">
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <button id="divineCheckoutBtn" class="btn-divine-order"><i class="fas fa-scroll"></i> seal order · fire offering</button>
+      <span style="font-size:0.7rem; color:#b99e6e;"><i class="fas fa-sync-alt"></i> auto-sync to BAAS (emulated Firestore)</span>
+    </div>
+    <div class="footer-benediction">
+      <i class="fas fa-cross"></i> parables & platters — every meal feeds more than hunger · shalom <i class="fas fa-heart" style="color:#e6b13e;"></i>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------------------------
+  // ADVANCED SIMULATION: BAAS / FIRESTORE READY
+  // Full cart logic + menu + order persistence with real-time sync simulation
+  // ---------------------------
+  
+  // MENU — enriched with sacred narrative
+  const FEAST_MENU = [
+    { id: "wing_soul", name: "🐔 SPIRIT WINGS", desc: "ancestral glaze · peri-peri breath", price: 60, proverb: "as you share, wings rise" },
+    { id: "shisa_plate", name: "🔥 SHISANYAMA THRONE", desc: "grilled sirloin + pap & chakalaka", price: 120, proverb: "where elders break bread" },
+    { id: "samaritan_burger", name: "🍔 GOOD SAMARITAN BURGER", desc: "wagyu-style beef · holy cheese", price: 50, proverb: "love your neighbour, feed them well" },
+    { id: "loaded_parable", name: "🍟 LOADED FRIES (blessed)", desc: "brisket bits · garlic aioli · fire dust", price: 45, proverb: "abundance overflows" },
+    { id: "wellspring_drink", name: "🥤 WELLSPRING ELIXIR", desc: "ginger beer / rooibos spark", price: 20, proverb: "living water quenches" },
+    { id: "lamb_joy", name: "🍖 LAMB OF JOY", desc: "slow roasted lamb shank · rosemary smoke", price: 140, proverb: "peace that surpasses" }
+  ];
+
+  // Global cart state (objects with id, name, price, quantity)
+  let sacredCart = [];
+
+  // Per-item quantity buffer (independent for each menu card)
+  let itemQuantities = new Array(FEAST_MENU.length).fill(1);
+
+  // Helper: update UI for cart & total
+  function updateCartSanctuary() {
+    const cartContainer = document.getElementById("sacredCartList");
+    const totalSpan = document.getElementById("totalCostSpan");
+    const badgeSpan = document.getElementById("cartItemBadge");
+
+    if (!sacredCart.length) {
+      cartContainer.innerHTML = '<i class="fas fa-dove" style="opacity:0.6;"></i> your basket awaits a parable plate...';
+      totalSpan.innerText = "0";
+      badgeSpan.innerText = "(0)";
+      return;
+    }
+
+    let totalAmount = 0;
+    let totalItems = 0;
+    let cartHtml = `<div style="display:flex; flex-direction:column; gap:6px;">`;
+    sacredCart.forEach((item, idx) => {
+      const subtotal = item.price * item.quantity;
+      totalAmount += subtotal;
+      totalItems += item.quantity;
+      cartHtml += `<div style="display:flex; justify-content:space-between; border-bottom:1px dashed #4f3f2c; padding:6px 0;">
+        <span><i class="fas fa-utensil-spoon"></i> ${item.name} <strong style="color:#e6b13e;">x${item.quantity}</strong> <span style="font-size:0.7rem;">— ${item.proverb || 'blessing'}</span></span>
+        <span>R${subtotal}</span>
+      </div>`;
+    });
+    cartHtml += `</div>`;
+    cartContainer.innerHTML = cartHtml;
+    totalSpan.innerText = totalAmount;
+    badgeSpan.innerText = `(${totalItems})`;
+  }
+
+  // Firestore simulation (BAAS) — this mimics writing to Firestore collection 'orders' & 'cart_snapshots'
+  // In real production: import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
+  // For now, it logs + triggers UI indicator.
+  let baasEventCount = 0;
+  function syncToBaas(actionType, payload) {
+    baasEventCount++;
+    const baasIndicator = document.getElementById("baasSyncStatus");
+    // Emulate Firestore write
+    console.log(`🔥🔥 BAAS [FIRESTORE] ${actionType} @${new Date().toISOString()}`, payload);
     
-    <div class="menu-grid" id="menuContainer">
-      <!-- menu cards will be dynamically injected from javascript -->
-    </div>
+    // Visual feedback: show last sync + pulse
+    if (baasIndicator) {
+      baasIndicator.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> BAAS · synced (${actionType})`;
+      baasIndicator.style.transition = "0.2s";
+      baasIndicator.style.borderColor = "#ffd966";
+      setTimeout(() => {
+        baasIndicator.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> BAAS · FIRESTORE READY`;
+        baasIndicator.style.borderColor = "#c49a44";
+      }, 1800);
+    }
+    // In full BAAS integration we would have:
+    // await addDoc(collection(db, "live_orders_simulation"), { ...payload, timestamp: serverTimestamp() });
+  }
 
-    <!-- hidden field / sync simulation note (firestore integration context) -->
-    <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
-      <span class="sync-badge"><i class="fas fa-cloud-sun" style="color:#d4af37;"></i> firestore sync · live</span>
-    </div>
-  </main>
+  // Add to cart with BAAS integration (every add triggers firestore simulation)
+  function addItemToCart(menuItem, quantity) {
+    if (!quantity || quantity <= 0) return;
+    const existing = sacredCart.find(item => item.id === menuItem.id);
+    if (existing) {
+      existing.quantity += quantity;
+      syncToBaas("UPDATE_CART_ITEM", { item: menuItem.name, newQty: existing.quantity, action: "increment" });
+    } else {
+      const newEntry = {
+        id: menuItem.id,
+        name: menuItem.name,
+        price: menuItem.price,
+        quantity: quantity,
+        proverb: menuItem.proverb,
+        desc: menuItem.desc
+      };
+      sacredCart.push(newEntry);
+      syncToBaas("ADD_TO_CART", { item: menuItem.name, quantity, price: menuItem.price });
+    }
+    updateCartSanctuary();
+  }
 
-  <!-- NICE FOOTER (CART + ORDER DETAILS) -->
-  <footer class="nice-footer">
-    <div class="cart-panel">
-      <div class="cart-header">
-        <i class="fas fa-basket-shopping"></i> 
-        <span>your offering</span>
-        <span style="flex:1; text-align:right; font-size: 1rem;" id="cart-counter">(0 items)</span>
-      </div>
+  // Remove / clear cart after order
+  function resetCartAfterOrder() {
+    if (sacredCart.length === 0) return false;
+    const oldCartSnapshot = [...sacredCart];
+    sacredCart = [];
+    updateCartSanctuary();
+    syncToBaas("ORDER_COMPLETED_CLEAR", { clearedCart: oldCartSnapshot, timestamp: new Date().toISOString() });
+    return true;
+  }
 
-      <!-- Cart items display -->
-      <div id="cart-items">
-        <i class="fas fa-leaf" style="opacity:0.5;"></i> your basket is empty... add a parable plate
-      </div>
-
-      <!-- total + quick fields -->
-      <div class="cart-summary">
-        <div class="total-amount">
-          <span>total</span> R<span id="totalValue">0</span>
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <input type="text" id="name" class="input-field" placeholder="🙏 your name">
-          <input type="tel" id="phone" class="input-field" placeholder="📞 phone">
-          <input type="text" id="address" class="input-field" placeholder="📍 delivery address">
-        </div>
-      </div>
-      
-      <!-- Checkout button + firestore hint -->
-      <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-        <button class="btn-checkout" id="checkoutBtn"><i class="fas fa-scroll"></i> place order · soul fire</button>
-        <span style="font-size:0.8rem; color:#7a6f5b;"><i class="fas fa-database"></i> auto-sync to Firestore (emulated)</span>
-      </div>
-      
-      <div class="footer-note">
-        <i class="fas fa-cross"></i> parables & platters — every meal feeds more than hunger <i class="fas fa-hands-praying"></i>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // ---------------------- FIREBASE / FIRESTORE INTEGRATION (simulated + ready) ----------------------
-    // For demo, we use a mock but structure shows how you'd connect.
-    // In real app, you'd import firebase. Here we simulate with localstorage + sync messages.
-    
-    // ** MENU DATA (enriched with parables / platters theme) **
-    const menu = [
-      { id: 'p1', name: '🐔 SPIRIT WINGS', description: 'soul-glazed chicken wings', basePrice: 60, price: 60, parable: 'generosity takes flight' },
-      { id: 'p2', name: '🔥 SHISANYAMA PLATE', description: 'beef steak + pap / chakalaka', basePrice: 120, price: 120, parable: 'bread broken together' },
-      { id: 'p3', name: '🍔 THE GOOD SAMARITAN BURGER', description: 'beef patty, caramelized onion, holy cheese', basePrice: 50, price: 50, parable: 'share with a stranger' },
-      { id: 'p4', name: '🍟 LOADED FRIES (parable style)', description: 'with brisket & garlic aioli', basePrice: 45, price: 45, parable: 'abundance' },
-      { id: 'p5', name: '🥤 WELLSPRING DRINK', description: 'artisanal ginger beer / cold drink', basePrice: 20, price: 20, parable: 'living water' },
-      { id: 'p6', name: '🍖 LAMB OF JOY', description: 'slow roasted lamb shank', basePrice: 140, price: 140, parable: 'peace' }
-    ];
-
-    // CART array (holds items with quantity)
-    let cart = [];
-
-    // ----- UNIQUE: each menu card has its own quantity selector (per item) -----
-    // We'll store temporary quantities separately, not affecting cart until "add" clicked.
-    // Create a map for quantities per menu index
-    let itemQtys = new Array(menu.length).fill(1);  // default qty 1
-
-    // Render all menu cards vertically
-    function renderMenu() {
-      const container = document.getElementById('menuContainer');
-      let htmlStr = '';
-      menu.forEach((item, idx) => {
-        htmlStr += `
-          <div class="menu-card" data-index="${idx}">
-            <div class="card-info">
-              <h3>${item.name}</h3>
-              <div class="card-desc">
-                <i class="fas fa-seedling"></i> ${item.description} · <span style="color:#b6995c;">${item.parable}</span>
-              </div>
-            </div>
-            <div class="price-tag">
-              R${item.price} <small>each</small>
-            </div>
-            <div class="card-order-area" data-index="${idx}">
-              <div class="item-qty">
-                <button class="qty-decr" data-index="${idx}">−</button>
-                <span class="qty-num" id="qtyDisplay-${idx}">${itemQtys[idx]}</span>
-                <button class="qty-incr" data-index="${idx}">+</button>
-              </div>
-              <button class="add-unique-btn" data-index="${idx}"><i class="fas fa-hand-holding-heart"></i> add to cart</button>
+  // Render vertical cards with independent quantity controls
+  function renderMenuCards() {
+    const container = document.getElementById("dynamicMenuRoot");
+    if (!container) return;
+    let cardsHtml = "";
+    FEAST_MENU.forEach((item, idx) => {
+      cardsHtml += `
+        <div class="feast-card" data-menu-idx="${idx}">
+          <div class="dish-details">
+            <h3>${item.name}</h3>
+            <div class="dish-meta">
+              <span><i class="fas fa-drumstick-bite"></i> ${item.desc}</span>
+              <span class="parable-tag"><i class="fas fa-feather-alt"></i> ${item.proverb}</span>
             </div>
           </div>
-        `;
+          <div class="price-hearth">
+            R${item.price}
+          </div>
+          <div class="order-controls">
+            <div class="qty-stepper">
+              <button class="qtyMinusBtn" data-idx="${idx}">−</button>
+              <span class="qty-number" id="menuQty_${idx}">${itemQuantities[idx]}</span>
+              <button class="qtyPlusBtn" data-idx="${idx}">+</button>
+            </div>
+            <button class="add-soul-btn" data-idx="${idx}"><i class="fas fa-hand-holding-heart"></i> add to platter</button>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = cardsHtml;
+
+    // attach quantity +/- events
+    document.querySelectorAll(".qtyPlusBtn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute("data-idx"));
+        if (!isNaN(idx) && idx >= 0) {
+          itemQuantities[idx] = (itemQuantities[idx] || 1) + 1;
+          const qtySpan = document.getElementById(`menuQty_${idx}`);
+          if (qtySpan) qtySpan.innerText = itemQuantities[idx];
+        }
       });
-      container.innerHTML = htmlStr;
-
-      // Attach quantity button events
-      document.querySelectorAll('.qty-incr').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idx = btn.dataset.index;
-          itemQtys[idx] = (itemQtys[idx] || 1) + 1;
-          document.getElementById(`qtyDisplay-${idx}`).innerText = itemQtys[idx];
-        });
-      });
-
-      document.querySelectorAll('.qty-decr').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idx = btn.dataset.index;
-          if (itemQtys[idx] > 1) {
-            itemQtys[idx]--;
-            document.getElementById(`qtyDisplay-${idx}`).innerText = itemQtys[idx];
-          }
-        });
-      });
-
-      // Unique add-to-cart per card (pushes item with current qty)
-      document.querySelectorAll('.add-unique-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idx = btn.dataset.index;
-          const qty = itemQtys[idx];
-          const menuItem = menu[idx];
-          // Add item multiple times? better store as object with quantity to keep cart tidy
-          // But we want unique entries: we can combine same items? For simplicity we'll push as separate or combine
-          // Let's combine if same id exists (update quantity)
-          const existing = cart.find(item => item.id === menuItem.id);
-          if (existing) {
-            existing.quantity += qty;
-          } else {
-            cart.push({ 
-              id: menuItem.id, 
-              name: menuItem.name, 
-              price: menuItem.price, 
-              quantity: qty,
-              parable: menuItem.parable
-            });
-          }
-          // reset qty to 1 after adding (optional, friendly)
-          itemQtys[idx] = 1;
-          document.getElementById(`qtyDisplay-${idx}`).innerText = 1;
-
-          // Update cart UI + FIRESTORE sync simulation
-          updateCartUI();
-          simulateFirestoreSync('add', menuItem);
-        });
-      });
-    }
-
-    // Update cart panel
-    function updateCartUI() {
-      const cartDiv = document.getElementById('cart-items');
-      const totalSpan = document.getElementById('totalValue');
-      const counterSpan = document.getElementById('cart-counter');
-      if (!cart.length) {
-        cartDiv.innerHTML = '<i class="fas fa-leaf" style="opacity:0.6;"></i> your basket is empty... add a parable plate';
-        totalSpan.innerText = '0';
-        counterSpan.innerText = '(0 items)';
-        return;
-      }
-
-      let lines = '';
-      let total = 0;
-      let itemCount = 0;
-      cart.forEach(item => {
-        const sub = item.price * item.quantity;
-        total += sub;
-        itemCount += item.quantity;
-        lines += `<i class="fas fa-utensil-spoon" style="color:#c1a05b;"></i> ${item.name} ×${item.quantity} — R${sub} <span style="color:#ad9e83; font-size:0.8rem;"> (${item.parable || 'blessing'})</span><br>`;
-      });
-      cartDiv.innerHTML = lines;
-      totalSpan.innerText = total;
-      counterSpan.innerText = `(${itemCount} item${itemCount>1?'s':''})`;
-    }
-
-    // Simulate Firestore sync (in real app: firebase.firestore().collection('orders')... add)
-    function simulateFirestoreSync(action, item) {
-      console.log(`🔥 FIRESTORE: ${action} -`, item);
-      // In real integration you'd have:
-      // db.collection("liveOrders").add({...cart, timestamp: firebase.firestore.FieldValue.serverTimestamp()})
-      // For now we just show a subtle console log (UI shows sync badge)
-      const syncMsg = document.querySelector('.sync-badge');
-      if (syncMsg) {
-        syncMsg.style.opacity = '0.7';
-        syncMsg.innerHTML = '<i class="fas fa-cloud-upload-alt" style="color:#d4af37;"></i> synced · ' + new Date().toLocaleTimeString();
-        setTimeout(() => {
-          syncMsg.innerHTML = '<i class="fas fa-cloud-sun" style="color:#d4af37;"></i> firestore sync · live';
-        }, 2000);
-      }
-    }
-
-    // Checkout: validate, alert, then send to Firestore (simulated) and clear cart
-    function handleCheckout() {
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const address = document.getElementById('address').value.trim();
-
-      if (cart.length === 0) {
-        alert('🕯️ your basket is empty — add a parable plate first.');
-        return;
-      }
-      if (!name || !phone || !address) {
-        alert('✋ please fill in all fields: name, phone, delivery address.');
-        return;
-      }
-
-      // build order object
-      const order = {
-        customer: { name, phone, address },
-        items: cart.map(i => ({ id: i.id, name: i.name, quantity: i.quantity, price: i.price })),
-        total: cart.reduce((acc, i) => acc + (i.price * i.quantity), 0),
-        timestamp: new Date().toISOString(),
-        status: 'received (soul kitchen)'
-      };
-
-      // ---- FIRESTORE INTEGRATION (demo) ----
-      console.log('📦 FIRESTORE: order placed', order);
-      // In production: firebase.firestore().collection('orders').add(order).then(...)
-      simulateFirestoreSync('ORDER PLACED', order);
-
-      alert(`✅ Order placed, ${name}! Your food will be prepared. (Check console for Firestore simulation)`);
-
-      // Clear cart
-      cart = [];
-      // reset qty displays? keep qtys as 1 (already some may be 1)
-      menu.forEach((_, idx) => { itemQtys[idx] = 1; });
-      // update displayed qtys
-      menu.forEach((_, idx) => {
-        const qtySpan = document.getElementById(`qtyDisplay-${idx}`);
-        if (qtySpan) qtySpan.innerText = '1';
-      });
-      updateCartUI();
-      // clear fields? optional
-      // document.getElementById('name').value = ''; etc – but leave for convenience
-    }
-
-    // Initial load
-    renderMenu();
-    updateCartUI();
-
-    // Checkout button event
-    document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
-
-    // additional: simulate initial Firestore listener (for UI)
-    window.addEventListener('load', () => {
-      // pretend we listen to firestore changes (passive)
-      console.log('🔥 Firestore listener active (simulated) — real integration ready.');
     });
 
-    // ---- firestore integration note: in real app you'd import Firebase and init:
-    // const db = firebase.firestore();
-    // db.collection("menu").onSnapshot(...) but we use static menu.
-    // This structure shows how ordering and firestore sync would work.
+    document.querySelectorAll(".qtyMinusBtn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute("data-idx"));
+        if (!isNaN(idx) && idx >= 0 && itemQuantities[idx] > 1) {
+          itemQuantities[idx]--;
+          const qtySpan = document.getElementById(`menuQty_${idx}`);
+          if (qtySpan) qtySpan.innerText = itemQuantities[idx];
+        }
+      });
+    });
+
+    // Unique add-to-cart per card
+    document.querySelectorAll(".add-soul-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute("data-idx"));
+        if (isNaN(idx)) return;
+        const selectedQty = itemQuantities[idx];
+        const menuItem = FEAST_MENU[idx];
+        addItemToCart(menuItem, selectedQty);
+        // Optional: reset that card quantity back to 1 (better UX)
+        itemQuantities[idx] = 1;
+        const qtySpan = document.getElementById(`menuQty_${idx}`);
+        if (qtySpan) qtySpan.innerText = "1";
+        // Show micro BAAS feedback
+        const addBtnEl = btn;
+        addBtnEl.style.transform = "scale(0.96)";
+        setTimeout(() => { addBtnEl.style.transform = ""; }, 120);
+      });
+    });
+  }
+
+  // CHECKOUT (ORDER PLACEMENT) with full BAAS simulation & validation
+  function placeDivineOrder() {
+    const nameInput = document.getElementById("customerName");
+    const phoneInput = document.getElementById("customerPhone");
+    const addressInput = document.getElementById("customerAddress");
+    const customerName = nameInput?.value.trim();
+    const customerPhone = phoneInput?.value.trim();
+    const customerAddress = addressInput?.value.trim();
+
+    if (sacredCart.length === 0) {
+      alert("🙏 your basket is empty — add a plate of blessing before ordering.");
+      return;
+    }
+    if (!customerName || !customerPhone || !customerAddress) {
+      alert("✋ please fill in all three fields: name, phone, delivery address — as testimony of faith.");
+      return;
+    }
+
+    // Build order payload for BAAS (Firestore collection)
+    const orderItems = sacredCart.map(i => ({
+      id: i.id,
+      name: i.name,
+      quantity: i.quantity,
+      unitPrice: i.price,
+      subtotal: i.price * i.quantity,
+      proverb: i.proverb
+    }));
+    const totalOrder = sacredCart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+    const orderPayload = {
+      orderId: `ORDER_${Date.now()}_${Math.floor(Math.random() * 10000)}`,
+      customer: {
+        name: customerName,
+        phone: customerPhone,
+        address: customerAddress
+      },
+      items: orderItems,
+      totalAmount: totalOrder,
+      status: "received · soul kitchen",
+      timestamp: new Date().toISOString(),
+      source: "Parables & Platters UI (BAAS integrated)"
+    };
+
+    // Simulate Firestore write with full order
+    syncToBaas("NEW_ORDER_PLACED", orderPayload);
     
-  </script>
-  
+    // Show success with BAAS note
+    alert(`✨ BLESSINGS, ${customerName}! ✨\nYour order (R${totalOrder}) has been transmitted to the sacred kitchen.\n(Check console for BAAS / Firestore simulation)`);
+    
+    // clear cart & reset quantity buffers
+    sacredCart = [];
+    // reset all item quantities to 1 (interface)
+    for (let i = 0; i < FEAST_MENU.length; i++) {
+      itemQuantities[i] = 1;
+      const qtySpan = document.getElementById(`menuQty_${i}`);
+      if (qtySpan) qtySpan.innerText = "1";
+    }
+    updateCartSanctuary();
+    
+    // Optionally clear inputs but leave for next order
+    // but we keep for convenience but we can clear name as a gentle reset? better keep but not mandatory
+    // resetting name field? optional but to respect privacy we keep but not auto clear.
+    // we just leave user data as is but it's fine.
+  }
+
+  // Additional: load dummy listener for realtime BAAS simulation (show incoming sync)
+  function simulateBaasLiveRealtime() {
+    setInterval(() => {
+      // just for demo: firestore presence ping — shows BAAS is active
+      const badgeStatus = document.getElementById("baasSyncStatus");
+      if (badgeStatus && !badgeStatus.innerHTML.includes("synced")) {
+        // subtle heartbeat
+        badgeStatus.style.opacity = "0.9";
+        setTimeout(() => { if(badgeStatus) badgeStatus.style.opacity = "1"; }, 300);
+      }
+    }, 15000);
+    console.log("📡 BAAS live listener (Firestore emulation) active — orders will be synced to cloud collection 'orders'.");
+    syncToBaas("BAAS_SESSION_START", { message: "Parables & Platters session active", timestamp: new Date().toISOString() });
+  }
+
+  // Init everything
+  function initSanctum() {
+    renderMenuCards();
+    updateCartSanctuary();
+    const checkoutBtn = document.getElementById("divineCheckoutBtn");
+    if (checkoutBtn) checkoutBtn.addEventListener("click", placeDivineOrder);
+    simulateBaasLiveRealtime();
+    // small style to indicate that BAAS backend simulation is ready (Firestore hooks in comments)
+    console.log("🔥 BAAS ready — plugging Firestore is trivial. All cart actions simulate real sync.");
+  }
+
+  initSanctum();
+</script>
 </body>
-  
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
