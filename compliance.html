@@ -586,7 +586,7 @@
   <!-- SECTION 1: COMMANDER-IN-CHIEF COMMAND PROTOCOL ALPHA-1 -->
   <section class="section-card" id="secCommand">
     <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-crown"></i> 01. COMMANDER-IN-CHIEF DIRECTIVE</h2>
+      <h2 class="section-title"><i class="fas fa-crown"></i> 01. PROTOCOL ALPHA-1</h2>
       <span class="badge" id="cmdBadge">PROTOCOL LOCKED</span>
     </div>
     <div class="grid-2">
@@ -596,22 +596,22 @@
         <div id="directiveMeta" style="font-size: 0.7rem; margin-top: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="card" id="cmdPanel" style="display: none;">
-        <h3 style="color: var(--red);">✍️ ISSUE NEW DIRECTIVE</h3>
+        <h3 style="color: var(--red);">ISSUE NEW DIRECT ACTION</h3>
         <textarea id="newDirective" rows="4" placeholder="Commander's orders..."></textarea>
         <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-          <button class="btn" id="lockCmdBtn">LOCK PANEL</button>
+          <button class="btn" id="lockCmdBtn">LOCK PROTOCOL</button>
           <button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT ORDER</button>
         </div>
-        <h4 style="color: var(--red); margin-top: 1.2rem;">DIRECTIVE HISTORY</h4>
+        <h4 style="color: var(--red); margin-top: 1.2rem;">CV-5 HISTORY LOG</h4>
         <div id="directiveHistory" style="max-height: 200px; overflow-y: auto;"></div>
       </div>
-      <button class="btn" id="unlockCmdBtn" style="grid-column: 1/-1;"><i class="fas fa-key"></i> UNLOCK COMMANDER PANEL</button>
+      <button class="btn" id="unlockCmdBtn" style="grid-column: 1/-1;"><i class="fas fa-key"></i> UNLOCK PROTOCOL</button>
     </div>
   </section>
 
   <section class="section-card" id="secMessages">
     <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-comments"></i> 02. TACTICAL MESSAGE BOARD</h2>
+      <h2 class="section-title"><i class="fas fa-comments"></i> 02. TEAM MESSAGE BOARD</h2>
       <span class="badge" id="msgCountBadge">0 active</span>
     </div>
     <div class="grid-2">
@@ -680,38 +680,19 @@
 
   <section class="section-card" id="secLogs">
     <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-database"></i> 04. INTELLIGENCE & LOGS</h2>
-      <span class="badge" id="logCounter">0 entries</span>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-          <h3 style="color: var(--red);">SYSTEM LOGS</h3>
-          <div><button class="btn" id="exportLogsBtn"><i class="fas fa-download"></i></button><button class="btn" id="clearLogsBtn"><i class="fas fa-trash"></i></button></div>
-        </div>
-        <div id="logEntries" style="max-height: 400px; overflow-y: auto;"></div>
-      </div>
-      <div class="card">
-        <h3 style="color: var(--red);">FILE MANAGEMENT</h3>
-        <input type="file" id="fileUpload" multiple accept="*/*">
-        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-          <button class="btn btn-primary" id="processFilesBtn"><i class="fas fa-upload"></i> STAGE FILES</button>
-          <button class="btn" id="clearFilesBtn"><i class="fas fa-ban"></i> CLEAR</button>
-        </div>
-        <div id="filePreviewGrid" class="file-grid"></div>
-      </div>
+      <h2 class="section-title"><i class="fas fa-database"></i> 04. COMING SOON!</h2>
     </div>
   </section>
 
   <section class="section-card" id="secZama">
     <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-microchip"></i> 05. ZAMA MDULI • NEURAL INTERFACE</h2>
+      <h2 class="section-title"><i class="fas fa-microchip"></i> 05. SARAH MNGUNI (AI) • NEURAL INTERFACE</h2>
       <span class="badge">PROTOTYPE v0.9</span>
     </div>
     <div style="text-align: center; padding: 2rem; border: 2px dashed var(--red); background: rgba(255,0,0,0.05);">
       <div style="font-size: 3rem;">🧠</div>
       <div style="color: var(--red); font-size: 1.3rem;">NEURAL CORE INITIALIZING</div>
-      <div style="color: var(--text-dim); margin-top: 0.5rem;">Quantum processing • Expected Q1 2027</div>
+      <div style="color: var(--text-dim); margin-top: 0.5rem;">Quantum processing • Expected Q4 2026</div>
       <div style="margin-top: 1rem;"><span class="pulse-dot" style="display: inline-block;"></span> DEVELOPMENT PHASE</div>
     </div>
   </section>
