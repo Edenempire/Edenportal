@@ -8,283 +8,228 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   
+  <meta name="description" content="CV-5 Tactical Operations Hub - Classified">
+  
+  <script>
+
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+          (e.ctrlKey && e.key === 'U') ||
+          (e.metaKey && e.altKey && e.key === 'I')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener('selectstart', function(e) { e.preventDefault(); return false; });
+
+    setInterval(function() {
+      debugger;
+    }, 1000);
+
+    if (window.console) {
+      window.console.log = function() {};
+      window.console.info = function() {};
+      window.console.warn = function() {};
+      window.console.error = function() {};
+      window.console.debug = function() {};
+    }
+
+    document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
+    
+  </script>
+  
   <title>COMPLIANCE CV-5</title>
   
-  <!-- advanced favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e10600'/%3E%3Canimate attributeName='r' values='45;48;45' dur='2s' repeatCount='indefinite'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0000'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='monospace' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
   
   <script type="importmap">
+    
     {
       "imports": {
         "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
-        "@firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
-        "@firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"
+        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
       }
     }
+    
   </script>
   
   <style>
-
-        /* ----- TACTICAL RESET & VARIABLES ----- */
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
     }
     
     :root {
-      --bg-primary: #000000;
-      --bg-secondary: #030405;
-      --bg-tertiary: #0a0c0e;
-      --accent: #e10600;
-      --accent-dark: #a50000;
-      --text-primary: #ffffff;
-      --text-secondary: #f0f2f5;
-      --text-tertiary: #a6b0c0;
-      --border-color: #330000;
-      --success: #00e676;
-      --warning: #ff9100;
-      --error: #ff1744;
-      --info: #2979ff;
-      --african-skin: #8d5524;
-      --african-skin-dark: #6b4226;
-      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --bg: #000000;
+      --bg-translucent: rgba(0, 0, 0, 0.92);
+      --bg-card: rgba(0, 0, 0, 0.85);
+      --red: #ff0000;
+      --red-dark: #cc0000;
+      --red-glow: rgba(255, 0, 0, 0.3);
+      --text: #ff0000;
+      --text-dim: #aa0000;
+      --border: #ff0000;
+      --success: #ff4444;
+      --warning: #ff8800;
+      --info: #ff3366;
+      --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
     
-    /* ----- HORIZONTAL RANDOM SCAN LINE ----- */
-    @keyframes horizontalRandomScan {
-      0% { transform: translateX(-100vw) translateY(-50%); opacity: 0; }
-      2% { opacity: 1; }
-      98% { opacity: 1; }
-      100% { transform: translateX(100vw) translateY(-50%); opacity: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Inter', monospace;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    
+    /* Animated scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 0, 0, 0.03) 0px,
+        rgba(255, 0, 0, 0.03) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+      pointer-events: none;
+      z-index: 9998;
     }
     
     body::after {
       content: '';
       position: fixed;
-      width: 100vw;
-      height: 4px;
-      background: linear-gradient(to right, 
-        transparent 0%, 
-        var(--accent) 20%, 
-        #ff3333 50%, 
-        var(--accent) 80%, 
-        transparent 100%);
-      animation: verticalRandomScan 8s ease-in-out infinite;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.9;
+      top: 0;
       left: 0;
-    }
-    
-    @keyframes verticalRandomScan {
-      0% { top: -10%; }
-      10% { top: 15%; }
-      25% { top: 60%; }
-      40% { top: 30%; }
-      55% { top: 85%; }
-      70% { top: 45%; }
-      85% { top: 75%; }
-      100% { top: 110%; }
-    }
-    
-    /* base background */
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
-    }
-    
-    /* subtle grid */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(225,6,0,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(225,6,0,0.02) 1px, transparent 1px);
-      background-size: clamp(20px, 4vw, 40px) clamp(20px, 4vw, 40px);
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.05) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 0;
+      z-index: 9997;
+      animation: pulseGlow 4s infinite;
     }
     
-    /* ----- PIN GATE (EVERY VISIT) ----- */
-    .pin-gate-overlay {
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    
+    @keyframes scanMove {
+      0% { top: -10%; opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { top: 110%; opacity: 0; }
+    }
+    
+    .scan-line {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.98);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000000;
-      transition: opacity 0.5s var(--transition-smooth);
-      padding: clamp(1rem, 5vw, 2rem);
-    }
-    
-    .pin-gate-card {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      padding: clamp(2rem, 6vw, 3rem) clamp(1.5rem, 5vw, 2.5rem);
-      max-width: min(400px, 90%);
       width: 100%;
-      text-align: center;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--red), #ff6666, var(--red), transparent);
+      left: 0;
+      animation: scanMove 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 9999;
     }
     
-    @keyframes gatePulse {
-      0% { border-color: var(--accent); }
-      50% { border-color: #ff3333; }
-      100% { border-color: var(--accent); }
-    }
-    
-    .pin-gate-card {
-      animation: gatePulse 2s infinite;
-    }
-    
-    .pin-gate-title {
-      color: var(--accent);
-      font-size: clamp(1.2rem, 5.4vw, 2rem);
-      font-weight: 800;
-      letter-spacing: clamp(2px, 1vw, 6px);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      line-height: 1.2;
-      word-break: break-word;
-    }
-    
-    .pin-gate-sub {
-      color: var(--text-tertiary);
-      margin-bottom: 2rem;
-      font-size: clamp(0.805rem, 2.8vw, 1rem);
-    }
-    
-    .pin-input {
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-size: clamp(1.3rem, 4.6vw, 1.8rem);
-      padding: clamp(0.75rem, 2vw, 1rem);
-      width: 100%;
-      text-align: center;
-      letter-spacing: clamp(4px, 2vw, 8px);
-      font-weight: 600;
-      margin-bottom: 2rem;
-      caret-color: var(--accent);
-    }
-    
-    .pin-input:focus {
-      outline: none;
-      border-color: #ff3333;
-    }
-    
-    .pin-btn {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: white;
-      padding: clamp(0.75rem, 2vw, 1rem) clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
-      letter-spacing: clamp(1px, 0.5vw, 2px);
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-      display: block;
-    }
-    
-    .pin-btn:hover {
-      background: var(--accent);
-      color: black;
-      border-color: #ff3333;
-    }
-    
-    .pin-btn:active {
-      transform: scale(0.98);
-    }
-    
-    /* ----- MAIN APP CONTAINER ----- */
     .app-container {
-      position: relative;
-      max-width: 1440px;
+      max-width: 1600px;
       margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
+      padding: 0 1.5rem;
+      position: relative;
       z-index: 1;
       display: none;
-      width: 100%;
     }
     
-    /* ----- HEADER (FULL WIDTH, CENTERED CONTENT) ----- */
-    .advanced-header {
+    .command-header {
       width: 100vw;
       position: relative;
       left: 50%;
       right: 50%;
       margin-left: -50vw;
       margin-right: -50vw;
-      padding: clamp(1rem, 3vh, 1.5rem) 0;
-      border-bottom: 4px solid var(--accent) !important;
-      background: rgba(0,0,0,0.95);
+      background: var(--bg-translucent);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+      border-bottom: 3px solid var(--red);
+      padding: 1.2rem 0;
+      margin-bottom: 2rem;
     }
     
     .header-content {
-      max-width: 1440px;
+      max-width: 1600px;
       margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
+      padding: 0 1.5rem;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      width: 100%;
+      gap: 1rem;
     }
     
     .logo {
-      font-size: clamp(1.2rem, 5vw, 2.8rem);
-      font-weight: 900;
-      letter-spacing: clamp(2px, 1vw, 6px);
-      color: var(--accent);
-      text-transform: uppercase;
-      line-height: 1.2;
-      word-break: break-word;
+      font-size: clamp(1.2rem, 5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
     }
     
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
+    .status-pulse {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
     }
     
-    /* ----- CENTERED SECTIONS ----- */
-    .section {
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: clamp(2rem, 6vh, 4rem);
-      width: 100%;
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
     }
     
-    .section {
-      background: rgba(2, 4, 6, 0.97);
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .section-card {
+      background: var(--bg-card);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 2px solid var(--accent);
-      padding: clamp(1.5rem, 4vw, 3.5rem);
+      border: 2px solid var(--red);
+      margin-bottom: 2rem;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      transition: var(--transition);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+    }
+    
+    .section-card:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+      border-color: var(--red-dark);
     }
     
     .section-header {
@@ -292,850 +237,310 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: clamp(0.75rem, 2vw, 1rem);
-      margin-bottom: clamp(1.5rem, 4vh, 2rem);
-      padding-bottom: clamp(0.75rem, 2vh, 1rem);
-      border-bottom: 2px solid var(--accent);
+      gap: 0.8rem;
+      border-bottom: 2px solid var(--red);
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.5rem;
     }
     
     .section-title {
-      font-size: clamp(1.2rem, 4vw, 2.2rem);
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: clamp(1px, 0.5vw, 2px);
-      text-transform: uppercase;
-      line-height: 1.3;
-      word-break: break-word;
-    }
-    
-    .section-badge {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 3vw, 1.5rem);
+      font-size: clamp(1.1rem, 4vw, 1.7rem);
       font-weight: 700;
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
-      white-space: nowrap;
+      color: var(--red);
+      letter-spacing: 2px;
+      font-family: 'Share Tech Mono', monospace;
     }
     
-    /* ----- GRID SYSTEMS (FULLY RESPONSIVE) ----- */
-    .grid-2 {
+    .badge {
+      background: rgba(255, 0, 0, 0.15);
+      border: 1px solid var(--red);
+      padding: 0.3rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--red);
+    }
+    
+    .grid-2, .grid-3, .grid-4 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: clamp(1rem, 3vw, 2rem);
+      gap: 1.5rem;
     }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-      gap: clamp(1rem, 2.5vw, 1.5rem);
-    }
-    
-    /* ----- CARDS ----- */
     .card {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(1.2rem, 3vw, 1.5rem);
-      width: 100%;
-      height: fit-content;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid var(--red);
+      padding: 1.2rem;
+      backdrop-filter: blur(4px);
     }
     
-    /* ----- FORM ELEMENTS ----- */
     input, textarea, select {
       width: 100%;
-      padding: clamp(0.75rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: clamp(0.875rem, 2vw, 1rem);
+      background: #0a0000;
+      border: 1px solid var(--red);
+      padding: 0.75rem;
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
     }
     
     input:focus, textarea:focus, select:focus {
       outline: none;
-      border-color: #ff3333;
-    }
-    
-    textarea {
-      resize: vertical;
-      min-height: clamp(80px, 20vh, 100px);
-    }
-    
-    select {
-      cursor: pointer;
+      border-color: var(--red-dark);
+      box-shadow: 0 0 5px var(--red-glow);
     }
     
     .btn {
-      padding: clamp(0.75rem, 2vw, 1rem) clamp(1.2rem, 3vw, 2rem);
       background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-weight: 700;
+      border: 1.5px solid var(--red);
+      color: var(--red);
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
+      transition: var(--transition);
+      font-size: 0.8rem;
       letter-spacing: 1px;
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
-      white-space: nowrap;
-    }
-    
-    .btn:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-    }
-    
-    .btn:active {
-      transform: scale(0.98);
-    }
-    
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
+      font-family: 'Share Tech Mono', monospace;
     }
     
     .btn-primary {
-      background: var(--accent);
-      color: var(--bg-primary);
+      background: var(--red);
+      color: #000000;
+      border-color: var(--red);
     }
     
-    /* ----- MESSAGE BOARD (ADVANCED, PERFECT SPACING) ----- */
+    .btn-primary:hover {
+      background: var(--red-dark);
+      box-shadow: 0 0 12px var(--red-glow);
+    }
+    
+    .btn:hover {
+      background: rgba(255, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+    
+    .btn:active {
+      transform: translateY(1px);
+    }
+    
     .message-board {
-      max-height: 600px;
+      max-height: 550px;
       overflow-y: auto;
-      padding-right: 0.5rem;
       display: flex;
       flex-direction: column;
-      gap: clamp(1rem, 2vh, 1.5rem);
+      gap: 1rem;
     }
     
     .message-board::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    .message-board::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
+      width: 6px;
+      background: #1a0000;
     }
     
     .message-board::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border: 2px solid var(--bg-secondary);
+      background: var(--red);
+      border-radius: 3px;
     }
     
-    .message {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(1.2rem, 3vw, 1.5rem);
-      margin-bottom: 0;
-      width: 100%;
-      word-break: break-word;
+    .message-item {
+      background: rgba(20, 0, 0, 0.7);
+      border-left: 4px solid var(--red);
+      padding: 1rem;
+      transition: var(--transition);
     }
     
-    .message.replied-to {
-      border-left: 8px solid var(--info);
+    .message-item:hover {
+      background: rgba(40, 0, 0, 0.8);
+      transform: translateX(3px);
     }
     
     .reply-context {
-      background: rgba(0,40,80,0.5);
-      padding: clamp(0.6rem, 2vw, 0.8rem);
-      margin: clamp(0.6rem, 2vh, 0.8rem) 0;
-      border-left: 4px solid var(--info);
-      font-style: italic;
-      color: #bbdefb;
-      font-size: clamp(0.85rem, 2vw, 0.95rem);
-      line-height: 1.5;
+      background: rgba(255, 0, 0, 0.1);
+      border-left: 3px solid var(--info);
+      padding: 0.6rem;
+      margin: 0.6rem 0;
+      font-size: 0.8rem;
     }
     
-    .reply-context strong {
-      color: var(--info);
+    .typing-indicator {
+      color: var(--red-dark);
+      font-size: 0.7rem;
+      margin-top: 0.3rem;
+      animation: blink 1s infinite;
     }
     
-    .message-actions {
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    
+    .reaction-bar {
       display: flex;
-      gap: clamp(0.3rem, 1vw, 0.5rem);
-      flex-wrap: wrap;
-      margin-top: clamp(0.8rem, 2vh, 1rem);
-    }
-    
-    .message-actions button {
-      padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.6rem, 2vw, 1rem);
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-      transition: 0.2s;
-    }
-    
-    .message-actions button:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-    }
-    
-    .message-actions button:active {
-      transform: scale(0.95);
-    }
-    
-    .like-button {
-      background: transparent;
-      border: none;
-      color: var(--african-skin);
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      cursor: pointer;
-      padding: clamp(0.3rem, 1vw, 0.5rem);
-      display: inline-flex;
-      align-items: center;
       gap: 0.3rem;
+      margin-top: 0.5rem;
     }
     
-    .like-button.liked {
-      color: var(--african-skin-dark);
-    }
-    
-    .like-button:active {
-      transform: scale(0.95);
-    }
-    
-    .pinned-badge {
-      background: var(--accent);
-      color: black;
+    .reaction-btn {
+      background: rgba(255, 0, 0, 0.15);
+      border: 1px solid var(--red);
       padding: 0.2rem 0.5rem;
       font-size: 0.7rem;
-      font-weight: 700;
-      display: inline-block;
-      margin-right: 0.5rem;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: var(--transition);
     }
     
-    .reply-indicator {
-      background: var(--bg-secondary);
-      padding: clamp(0.6rem, 2vw, 0.8rem);
-      margin: clamp(0.6rem, 2vh, 0.8rem) 0;
-      border-left: 4px solid var(--accent);
-      font-size: clamp(0.85rem, 2vw, 0.95rem);
-      word-break: break-word;
+    .reaction-btn:hover {
+      background: var(--red);
+      color: black;
     }
     
-    /* ----- TASK ITEMS ----- */
     .task-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(0.75rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      margin-bottom: 0.5rem;
-      gap: clamp(0.5rem, 2vw, 1rem);
+      background: rgba(20, 0, 0, 0.6);
+      border: 1px solid var(--red);
+      padding: 0.8rem;
+      margin-bottom: 0.6rem;
       flex-wrap: wrap;
+      gap: 0.5rem;
     }
     
-    .task-item.priority {
-      border-left-width: 6px;
-      border-left-color: var(--warning);
+    .progress-track {
+      background: rgba(255, 0, 0, 0.2);
+      height: 10px;
+      border: 1px solid var(--red);
     }
     
-    .task-actions {
-      display: flex;
-      gap: clamp(0.3rem, 1.5vw, 0.5rem);
-      flex-wrap: wrap;
-    }
-    
-    .task-actions button {
-      background: transparent;
-      border: none;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      font-size: clamp(1rem, 2.5vw, 1.1rem);
-      padding: 0.3rem;
-      transition: 0.2s;
-    }
-    
-    .task-actions button:hover {
-      color: var(--accent);
-    }
-    
-    .task-actions button:active {
-      transform: scale(0.9);
-    }
-    
-    /* ----- PROGRESS BAR ----- */
-    .progress-container {
-      width: 100%;
-      height: clamp(6px, 1.5vh, 8px);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .progress-bar {
+    .progress-fill {
       height: 100%;
-      background: var(--accent);
-      transition: width 0.5s ease;
+      background: var(--red);
+      width: 0%;
+      transition: width 0.3s;
     }
     
-    /* ----- FILE GRID ----- */
     .file-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: clamp(0.5rem, 2vw, 1rem);
+      gap: 0.8rem;
       margin-top: 1rem;
     }
     
-    .file-item {
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
+    .file-preview-item {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--red);
       padding: 0.5rem;
       text-align: center;
-      word-break: break-word;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
     
-    .file-item img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    
-    .zama-container {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2rem);
-      text-align: center;
-      width: 100%;
-    }
-    
-    .zama-avatar {
-      width: clamp(80px, 20vw, 120px);
-      height: clamp(80px, 20vw, 120px);
-      border: 3px solid var(--accent);
-      margin: 0 auto clamp(1rem, 3vh, 1.5rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(2.5rem, 8vw, 4rem);
-      opacity: 0.5;
-    }
-    
-    .zama-name {
-      color: var(--accent);
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      font-weight: 800;
-      margin-bottom: clamp(0.8rem, 2vh, 1rem);
-      word-break: break-word;
-    }
-    
-    .zama-status {
-      display: inline-block;
-      padding: clamp(0.2rem, 1vw, 0.3rem) clamp(0.8rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--warning);
-      color: var(--warning);
-      margin-bottom: clamp(1.5rem, 4vh, 2rem);
-      font-size: clamp(0.8rem, 2vw, 1rem);
-    }
-    
-    .zama-coming-soon {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      font-weight: 900;
-      color: var(--text-tertiary);
-      letter-spacing: clamp(2px, 1vw, 8px);
-      padding: clamp(1.5rem, 4vw, 3rem);
-      border: 2px dashed var(--accent);
-      word-break: break-word;
-    }
-    
-    /* ----- FOOTER (FULL WIDTH, ENHANCED) ----- */
-    .advanced-footer {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      background: var(--bg-tertiary);
-      border-top: 4px solid var(--accent);
-      padding: clamp(2rem, 6vh, 3rem) 0;
-      margin-top: clamp(3rem, 8vh, 4rem);
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
-      text-align: center;
-    }
-    
-    .bible-verse {
-      font-size: clamp(1rem, 3vw, 1.8rem);
-      color: var(--text-primary);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      padding: 0;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .bible-verse::before,
-    .bible-verse::after {
-      content: '"';
-      color: var(--accent);
-      font-size: 2em;
-      opacity: 0.5;
-    }
-    
-    .bible-reference {
-      color: var(--accent);
-      font-weight: 700;
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      letter-spacing: 1px;
-    }
-    
-    .footer-decoration {
-      margin-top: 2rem;
-      border-top: 2px solid var(--accent);
-      width: 100px;
-      margin-left: auto;
-      margin-right: auto;
-      opacity: 0.5;
-    }
-    
-    .notification-center {
+    .notification-stack {
       position: fixed;
-      top: clamp(20px, 5vh, 100px);
-      right: clamp(10px, 3vw, 20px);
-      z-index: 10000;
-      max-width: min(380px, 90vw);
-      width: calc(100% - 40px);
+      top: 1rem;
+      right: 1rem;
+      z-index: 20000;
+      max-width: 380px;
+      width: calc(100% - 2rem);
     }
     
     .notification {
-      background: var(--bg-tertiary);
-      border-left: 6px solid var(--accent);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      padding: clamp(0.8rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
-      margin-bottom: 1rem;
+      background: rgba(0, 0, 0, 0.95);
+      border-left: 4px solid var(--red);
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.8rem;
       display: flex;
+      gap: 0.8rem;
       align-items: center;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      animation: slideIn 0.3s ease;
-      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-      word-break: break-word;
+      backdrop-filter: blur(8px);
+      animation: slideInRight 0.25s ease;
+      font-size: 0.85rem;
     }
     
-    @keyframes slideIn {
+    @keyframes slideInRight {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(100%); opacity: 0; }
-    }
-    
-    .notification.success { border-left-color: var(--success); }
-    .notification.error { border-left-color: var(--error); }
-    .notification.warning { border-left-color: var(--warning); }
-    .notification.info { border-left-color: var(--info); }
-    
-    .notification-close {
-      margin-left: auto;
-      background: transparent;
-      border: none;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      font-size: 1.2rem;
-      padding: 0.2rem 0.5rem;
-    }
-    
-    .notification-close:hover {
-      color: var(--accent);
-    }
-    
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.98);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999999;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 1rem;
-    }
-    
-    .loading-content {
-      text-align: center;
-      max-width: 90%;
-    }
-    
-    .loading-spinner {
-      width: clamp(40px, 10vw, 60px);
-      height: clamp(40px, 10vw, 60px);
-      border: 4px solid var(--bg-tertiary);
-      border-top: 4px solid var(--accent);
-      border-right: 4px solid var(--accent);
-      border-radius: 50%;
-      animation: spin 1s infinite linear;
-      margin: 0 auto 1rem;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .loading-text {
-      color: var(--accent);
-      font-size: clamp(0.9rem, 3vw, 1.2rem);
-      text-transform: uppercase;
-      letter-spacing: 2px;
     }
     
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.98);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       display: none;
-      justify-content: center;
       align-items: center;
-      z-index: 100000;
-      padding: 1rem;
+      justify-content: center;
+      z-index: 30000;
     }
     
-    .modal {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      max-width: min(450px, 95%);
-      width: 100%;
-      padding: clamp(1.5rem, 4vw, 2.5rem);
-      max-height: 90vh;
-      overflow-y: auto;
+    .modal-box {
+      background: #000000;
+      border: 2px solid var(--red);
+      max-width: 450px;
+      width: 90%;
+      padding: 2rem;
     }
     
-    .modal-title {
-      color: var(--accent);
-      font-size: clamp(1.2rem, 4vw, 1.5rem);
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      word-break: break-word;
-    }
-    
-    .modal-content {
-      margin-bottom: 1.5rem;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      line-height: 1.6;
-      word-break: break-word;
-    }
-    
-    .modal-actions {
-      display: flex;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-    
-    .nav-dots {
+    .pin-gate {
       position: fixed;
-      right: clamp(0.5rem, 2vw, 1rem);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1000;
+      inset: 0;
+      background: #000000;
+      backdrop-filter: blur(20px);
       display: flex;
-      flex-direction: column;
-      gap: clamp(0.5rem, 1.5vh, 1rem);
-    }
-    
-    .nav-dot {
-      width: clamp(35px, 8vw, 50px);
-      height: clamp(35px, 8vw, 50px);
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      color: white;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.3s;
-      position: relative;
-      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      align-items: center;
+      z-index: 50000;
+      transition: opacity 0.5s;
     }
     
-    .nav-dot.active,
-    .nav-dot:hover {
-      background: var(--accent);
+    .pin-card {
+      border: 2px solid var(--red);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 2rem;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .commander-badge {
+      background: linear-gradient(135deg, #ff0000, #990000);
       color: black;
-    }
-    
-    .nav-dot .dot-label {
-      position: absolute;
-      right: 120%;
-      white-space: nowrap;
-      background: var(--bg-tertiary);
-      padding: 0.3rem 0.8rem;
-      border: 2px solid var(--accent);
-      color: white;
-      font-size: clamp(0.7rem, 1.8vw, 0.8rem);
-      opacity: 0;
-      transition: 0.3s;
-      pointer-events: none;
-    }
-    
-    .nav-dot:hover .dot-label {
-      opacity: 1;
-      right: 130%;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
     }
     
     @media (max-width: 768px) {
-      .nav-dots {
-        right: 0.5rem;
-      }
-      
-      .nav-dot {
-        width: 30px;
-        height: 30px;
-        font-size: 0.7rem;
-      }
-      
-      .nav-dot .dot-label {
-        display: none;
-      }
+      .app-container { padding: 0 1rem; }
+      .section-card { padding: 1rem; }
+      .btn { width: 100%; text-align: center; margin-top: 0.3rem; }
+      .grid-2, .grid-3, .grid-4 { gap: 1rem; }
+      .header-content { flex-direction: column; text-align: center; }
     }
     
     @media (max-width: 480px) {
-      .nav-dots {
-        display: none;
-      }
-    }
-    
-    .flex {
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      align-items: center;
-    }
-    
-    .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      flex-wrap: wrap;
-    }
-    
-    .text-accent { color: var(--accent); }
-    .text-dim { color: var(--text-tertiary); }
-    .mb-1 { margin-bottom: 0.5rem; }
-    .mb-2 { margin-bottom: clamp(0.75rem, 2vh, 1rem); }
-    .mb-3 { margin-bottom: clamp(1rem, 3vh, 1.5rem); }
-    .mt-1 { margin-top: 0.5rem; }
-    .mt-2 { margin-top: clamp(0.75rem, 2vh, 1rem); }
-    .mt-3 { margin-top: clamp(1rem, 3vh, 1.5rem); }
-    .w-full { width: 100%; }
-    .text-center { text-align: center; }
-    
-    #replyIndicator {
-      margin: clamp(0.5rem, 2vh, 1rem) 0;
-    }
-    
-    emoji-picker {
-      max-width: 100%;
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-    }
-    
-    #attachmentPreview {
-      padding: 0.5rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--accent);
-      margin: 0.5rem 0;
-      word-break: break-word;
-      font-size: clamp(0.8rem, 2vw, 0.9rem);
-    }
-    
-    .message .mb-2 {
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      line-height: 1.6;
-      word-break: break-word;
-    }
-    
-    .message img {
-      max-width: 100%;
-      height: auto;
-      border: 2px solid var(--accent);
-      cursor: pointer;
-    }
-    
-    .card .grid-2 .card {
-      padding: clamp(0.8rem, 2vw, 1rem);
-    }
-    
-    .card .grid-2 .card .text-accent {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      line-height: 1.2;
-    }
-    
-    @media (max-width: 640px) {
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .section-header {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .message-actions {
-        justify-content: center;
-      }
-      
-      .message .flex-between {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-      
-      .btn {
-        width: 100%;
-      }
-      
-      .flex {
-        flex-direction: column;
-      }
-      
-      .flex .btn {
-        width: 100%;
-      }
-      
-      .modal-actions {
-        flex-direction: column;
-      }
-      
-      .modal-actions .btn {
-        width: 100%;
-      }
-      
-      .pin-gate-card {
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 360px) {
-      .logo {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-      }
-      
-      .section-title {
-        font-size: 1.2rem;
-      }
-      
-      .section-badge {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.8rem;
-      }
-      
-      .message-actions button {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
-      }
-      
-      .task-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .task-actions {
-        width: 100%;
-        justify-content: flex-end;
-      }
+      .section-title { font-size: 1rem; }
+      .badge { font-size: 0.6rem; }
+      .message-item { padding: 0.7rem; }
     }
     
     @media (min-width: 1920px) {
-      .app-container {
-        max-width: 1600px;
-      }
-      
-      .section {
-        max-width: 1400px;
-      }
-      
-      .logo {
-        font-size: 3rem;
-      }
-      
-      .section-title {
-        font-size: 2.5rem;
-      }
-      
-      .message {
-        padding: 2rem;
-      }
+      .app-container { max-width: 1800px; }
+      .section-card { padding: 2.5rem; }
     }
     
-    @media (min-width: 2560px) {
-      .app-container {
-        max-width: 2000px;
-      }
-      
-      .section {
-        max-width: 1800px;
-        padding: 4rem;
-      }
-      
-      .grid-2 {
-        gap: 3rem;
-      }
-      
-      .grid-3 {
-        gap: 2.5rem;
-      }
-      
-      .message {
-        padding: 2.5rem;
-      }
-      
-      .message .mb-2 {
-        font-size: 1.3rem;
-      }
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
     }
     
-    @media print {
-      .nav-dots,
-      .pin-gate-overlay,
-      .notification-center,
-      .loading-overlay,
-      .modal-overlay,
-      .btn,
-      .message-actions,
-      .task-actions {
-        display: none !important;
-      }
-      
-      body {
-        background: white;
-        color: black;
-      }
-      
-      .section {
-        border: 1px solid #ccc;
-        page-break-inside: avoid;
-      }
-      
-      .advanced-header,
-      .advanced-footer {
-        border-color: #ccc;
-      }
-      
-      .logo {
-        color: black;
-      }
+    ::-webkit-scrollbar-track {
+      background: #1a0000;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--red);
     }
     
   </style>
@@ -1143,1292 +548,304 @@
 </head>
   
 <body>
+  
+<div class="scan-line"></div>
 
-  <div class="pin-gate-overlay" id="pinGate">
-    <div class="pin-gate-card">
-      <div class="pin-gate-title">COMPLIANCE CV-5</div>
-      <div class="pin-gate-sub">enter gate access pin</div>
-      <input type="password" id="pinInput" class="pin-input" maxlength="7" inputmode="numeric">
-      <button class="pin-btn" id="unlockBtn">UNLOCK</button>
+<div class="pin-gate" id="pinGate">
+  <div class="pin-card">
+    <div class="logo" style="font-size: 1.8rem;">COMPLIANCE CV-5</div>
+    <div style="margin: 1rem 0 1.5rem; color: var(--red);">CLASSIFIED ACCESS</div>
+    <input type="password" id="pinInput" placeholder="ENTER PIN" maxlength="7" style="text-align: center; letter-spacing: 4px;">
+    <button class="btn btn-primary" id="unlockBtn" style="margin-top: 1.5rem; width: 100%;">AUTHENTICATE</button>
+  </div>
+</div>
+
+<div class="app-container" id="appContainer">
+  <div class="notification-stack" id="notifyStack"></div>
+  <div class="modal-overlay" id="globalModal">
+    <div class="modal-box">
+      <div id="modalTitle" style="color: var(--red); font-size: 1.3rem; margin-bottom: 1rem;"></div>
+      <div id="modalContent"></div>
+      <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end;">
+        <button class="btn" id="modalCancel">CANCEL</button>
+        <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
+      </div>
     </div>
   </div>
-
-  <!-- MAIN APP -->
-  <div class="app-container" id="appContainer">
-    <!-- LOADING OVERLAY -->
-    <div class="loading-overlay" id="globalLoader">
-      <div class="loading-content">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">processing...</div>
-      </div>
-    </div>
-
-    <!-- MODAL SYSTEM -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal">
-        <div class="modal-title" id="modalTitle">CONFIRM ACTION</div>
-        <div class="modal-content" id="modalContent"></div>
-        <div class="modal-actions">
-          <button class="btn" id="modalCancel">CANCEL</button>
-          <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- NOTIFICATION CENTER -->
-    <div class="notification-center" id="notificationCenter"></div>
-
-    <!-- NAVIGATION DOTS -->
-    <div class="nav-dots">
-      <div class="nav-dot active" data-section="s1"><span class="dot-label">COMMAND</span>S1</div>
-      <div class="nav-dot" data-section="s2"><span class="dot-label">TMB</span>S2</div>
-      <div class="nav-dot" data-section="s3"><span class="dot-label">OBJECTIVES</span>S3</div>
-      <div class="nav-dot" data-section="s4"><span class="dot-label">INTEL</span>S4</div>
-      <div class="nav-dot" data-section="s5"><span class="dot-label">ZAMA</span>S5</div>
-    </div>
-
-    <!-- FULL WIDTH HEADER -->
-    <header class="advanced-header">
-      <div class="header-content">
-        <div class="logo"><a href="index.html" style="color: var(--accent); text-decoration: none;">COMPLIANCE CV-5</a></div>
-      </div>
-    </header>
-
-    <!-- SECTION 1: COMMAND CENTER -->
-    <section class="section" id="s1">
-      <div class="section-header">
-        <h2 class="section-title">Section 01: COMMAND CENTER (CIO only!)</h2>
-        <span class="section-badge" id="s1Badge">🔒 LOCKED</span>
-      </div>
-      
-      <div class="grid-2">
-        <div class="card">
-          <h3 class="text-accent mb-2">CURRENT DIRECTIVE</h3>
-          <div id="publicDirective" class="mb-3" style="background: var(--bg-secondary); padding: 1rem;">—</div>
-          <div id="directiveMeta" class="text-dim mb-3"></div>
-          
-          <div class="flex">
-            <button class="btn" id="unlockS1Btn">🔓 UNLOCK</button>
-            <button class="btn btn-primary" id="s1Send" disabled>SEND</button>
-          </div>
-        </div>
-
-        <div class="card" id="s1Panel" style="display: none;">
-          <h3 class="text-accent mb-2">NEW DIRECTIVE</h3>
-          <textarea id="s1Directive" rows="4" placeholder="Enter new directive..." class="mb-2"></textarea>
-          
-          <div class="flex-between mb-3">
-            <button class="btn" id="s1Lock">🔒 LOCK</button>
-            <span class="text-dim">Hoss</span>
-          </div>
-
-          <h3 class="text-accent mb-2">DIRECT ACTION HISTORY</h3>
-          <div id="s1History" style="max-height: 250px; overflow-y: auto;"></div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 2: TEAM MESSAGE BOARD (ADVANCED) -->
-    <section class="section" id="s2">
-      <div class="section-header">
-        <h2 class="section-title">Section 02: TEAM MESSAGE BOARD</h2>
-        <span class="section-badge" id="msgCount">0</span>
-      </div>
-
-      <div class="grid-2">
-        <!-- Compose Area -->
-        <div class="card">
-          <h3 class="text-accent mb-2">COMPOSE</h3>
-          
-          <div class="flex mb-2">
-            <input type="text" id="callsign" placeholder="CODENAME" value="OLAMA" style="flex: 2;">
-            <select id="deptSelect" style="flex: 1; background: var(--bg-secondary);">
-              <option value="COMPLIANCE CV-5">COMPLIANCE CV-5</option>
-              <option value="INTEL">EMERGENCY EVAC</option>
-              <option value="FIELD OPS">FIELD OPS</option>
-            </select>
-          </div>
-
-          <div class="flex mb-2">
-            <button class="btn" id="emojiBtn" style="flex: 1;">😊 EMOJI</button>
-            <button class="btn" id="attachBtn" style="flex: 1;">📎 ATTACH</button>
-            <button class="btn" id="clearCompose" style="flex: 1;">🗑️ CLEAR</button>
-          </div>
-
-          <div style="position: relative;">
-            <textarea id="msgInput" rows="4" placeholder="secure message..." class="mb-2"></textarea>
-            <emoji-picker id="emojiPicker" style="display: none; position: absolute; bottom: 100%; left: 0; z-index: 1000;"></emoji-picker>
-          </div>
-
-          <div id="replyIndicator" class="reply-indicator" style="display: none;"></div>
-
-          <input type="file" id="msgFile" style="display: none;" accept="image/*,.pdf,.txt,.doc,.docx">
-          <div id="attachmentPreview" class="text-dim mb-2"></div>
-
-          <button class="btn btn-primary w-full" id="sendMsg">📨 SEND MESSAGE</button>
-        </div>
-
-        <!-- Messages Area -->
-        <div class="card">
-          <div class="flex-between mb-2">
-            <h3 class="text-accent">LIVE MESSAGES</h3>
-            <span class="section-badge" id="liveMsgCount">0</span>
-          </div>
-          
-          <div class="message-board" id="messageBoard"></div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 3: OBJECTIVES -->
-    <section class="section" id="s3">
-      <div class="section-header">
-        <h2 class="section-title">Section 03: OBJECTIVES</h2>
-        <span class="section-badge" id="taskCount">0</span>
-      </div>
-
-      <div class="grid-3">
-        <!-- Create Task -->
-        <div class="card">
-          <h3 class="text-accent mb-2">CREATE OBJECTIVE</h3>
-          <input type="text" id="taskInput" placeholder="Enter objective..." class="mb-2">
-          
-          <div class="flex mb-2">
-            <button class="btn" id="priorityBtn">⚡ PRIORITY</button>
-            <button class="btn" id="addTaskBtn">➕ ADD</button>
-          </div>
-
-          <div class="flex">
-            <button class="btn" id="completeAll">✅ COMPLETE ALL</button>
-            <button class="btn" id="clearCompleted">🗑️ CLEAR DONE</button>
-          </div>
-        </div>
-
-        <!-- Active Tasks -->
-        <div class="card">
-          <h3 class="text-accent mb-2">⚡ ACTIVE OBJECTIVES</h3>
-          <div id="activeTasks" style="max-height: 350px; overflow-y: auto;"></div>
-        </div>
-
-        <!-- Progress & Stats -->
-        <div class="card">
-          <h3 class="text-accent mb-2">📊 PROGRESS</h3>
-          
-          <div class="mb-3">
-            <div class="flex-between mb-1">
-              <span>Completion Rate</span>
-              <span id="completionRate" class="text-accent">0%</span>
-            </div>
-            <div class="progress-container">
-              <div class="progress-bar" id="taskProgress" style="width: 0%;"></div>
-            </div>
-          </div>
-
-          <div class="grid-2 mb-3">
-            <div class="card" style="padding: 1rem; text-align: center;">
-              <div class="text-dim">TOTAL</div>
-              <div class="text-accent" style="font-size: 2rem;" id="totalTasks">0</div>
-            </div>
-            <div class="card" style="padding: 1rem; text-align: center;">
-              <div class="text-dim">ACTIVE</div>
-              <div class="text-accent" style="font-size: 2rem;" id="activeCount">0</div>
-            </div>
-          </div>
-
-          <h3 class="text-accent mb-2">✅ COMPLETED</h3>
-          <div id="completedTasks" style="max-height: 150px; overflow-y: auto;"></div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 4: INTEL & LOGS -->
-    <section class="section" id="s4">
-      <div class="section-header">
-        <h2 class="section-title">Section 04: INTEL & LOGS</h2>
-        <span class="section-badge" id="logCount">0</span>
-      </div>
-
-      <div class="grid-2">
-        <!-- Logs -->
-        <div class="card">
-          <div class="flex-between mb-2">
-            <h3 class="text-accent">SYSTEM LOGS</h3>
-            <div class="flex">
-              <button class="btn" id="refreshLogs">🔄</button>
-              <button class="btn" id="clearLogs">🗑️</button>
-              <button class="btn" id="exportLogs">📥</button>
-            </div>
-          </div>
-          
-          <div id="shiftLogs" style="max-height: 400px; overflow-y: auto;"></div>
-        </div>
-
-        <!-- File Management -->
-        <div class="card">
-          <h3 class="text-accent mb-2">FILE MANAGEMENT</h3>
-          
-          <input type="file" id="fileInput" multiple accept="*/*" class="mb-2">
-          
-          <div class="flex mb-3">
-            <button class="btn btn-primary" onclick="window.processFiles()">📤 UPLOAD</button>
-            <button class="btn" id="clearFiles">🗑️ CLEAR</button>
-            <button class="btn" id="downloadFiles">📦 MANIFEST</button>
-          </div>
-
-          <div id="filePreview" class="file-grid"></div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 5: ZAMA MDULI (PROTOTYPE - COMING SOON) -->
-    <section class="section" id="s5">
-      <div class="section-header">
-        <h2 class="section-title">Section 05: ZAMA MDULI</h2>
-        <span class="section-badge">PROTOTYPE</span>
-      </div>
-
-      <div class="zama-container">
-        <div class="zama-avatar">🧠</div>
-        <div class="zama-name">ZAMA MDULI</div>
-        <div class="zama-status">⚠️ PROTOTYPE MODE</div>
-        
-        <div class="zama-coming-soon">COMING SOON</div>
-        
-        <div class="flex mt-3 text-dim" style="justify-content: center; gap: 2rem;">
-          <span>🔧 Neural Core in Development</span>
-          <span>⏳ Expected: Q4 2026</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="advanced-footer">
-      <div class="footer-content">
-        <div class="bible-verse" id="bibleVerse">
-          The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?
-        </div>
-        <div class="bible-reference">PSALM 27:1 · KJV</div>
-      </div>
-      <div class="footer-decoration"></div>
-    </footer>
+  <div id="loaderOverlay" style="position: fixed; inset: 0; background: black; display: none; align-items: center; justify-content: center; z-index: 40000;">
+    <div style="text-align: center;"><div style="width: 40px; height: 40px; border: 2px solid var(--red); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;"></div><div style="margin-top: 1rem;">PROCESSING</div></div>
   </div>
 
-  <script type="module">
-    // ========== IMPORTS ==========
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      doc, 
-      setDoc, 
-      addDoc, 
-      updateDoc, 
-      deleteDoc, 
-      onSnapshot, 
-      query, 
-      orderBy, 
-      serverTimestamp, 
-      getDocs, 
-      writeBatch, 
-      where, 
-      limit,
-      increment,
-      arrayUnion,
-      arrayRemove
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <header class="command-header">
+    <div class="header-content">
+      <div class="logo">COMPLIANCE CV-5</div>
+      <div class="status-pulse"><span class="pulse-dot"></span><span>ACTIVE • SECURE CHANNEL</span></div>
+    </div>
+  </header>
 
-    // ========== FIREBASE CONFIG ==========
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-      authDomain: "eden-4a8d3.firebaseapp.com",
-      projectId: "eden-4a8d3",
-      storageBucket: "eden-4a8d3.firebasestorage.app",
-      messagingSenderId: "421147129483",
-      appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-    };
+  <!-- SECTION 1: COMMANDER-IN-CHIEF COMMAND PROTOCOL ALPHA-1 -->
+  <section class="section-card" id="secCommand">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-crown"></i> 01. COMMANDER-IN-CHIEF DIRECTIVE</h2>
+      <span class="badge" id="cmdBadge">PROTOCOL LOCKED</span>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="color: var(--red); margin-bottom: 0.8rem;">ACTIVE DIRECT ACTION</h3>
+        <div id="directiveText" style="background: #0a0000; padding: 1rem; min-height: 100px; font-family: monospace;">—</div>
+        <div id="directiveMeta" style="font-size: 0.7rem; margin-top: 0.8rem; color: var(--text-dim);"></div>
+      </div>
+      <div class="card" id="cmdPanel" style="display: none;">
+        <h3 style="color: var(--red);">✍️ ISSUE NEW DIRECTIVE</h3>
+        <textarea id="newDirective" rows="4" placeholder="Commander's orders..."></textarea>
+        <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+          <button class="btn" id="lockCmdBtn">LOCK PANEL</button>
+          <button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT ORDER</button>
+        </div>
+        <h4 style="color: var(--red); margin-top: 1.2rem;">DIRECTIVE HISTORY</h4>
+        <div id="directiveHistory" style="max-height: 200px; overflow-y: auto;"></div>
+      </div>
+      <button class="btn" id="unlockCmdBtn" style="grid-column: 1/-1;"><i class="fas fa-key"></i> UNLOCK COMMANDER PANEL</button>
+    </div>
+  </section>
 
-    // ========== INITIALIZE FIREBASE ==========
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const sessionId = crypto.randomUUID();
+  <section class="section-card" id="secMessages">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-comments"></i> 02. TACTICAL MESSAGE BOARD</h2>
+      <span class="badge" id="msgCountBadge">0 active</span>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="color: var(--red);">COMPOSE MESSAGE</h3>
+        <input type="text" id="callsignField" placeholder="CODENAME / CALLSIGN" value="OLAMA">
+        <select id="deptField" style="margin-top: 0.5rem;">
+          <option>COMPLIANCE CV-5</option><option>INTEL DIVISION</option><option>FIELD OPERATIONS</option><option>COMMAND STAFF</option>
+        </select>
+        <div id="replyIndicatorBox" style="display: none; background: rgba(255,0,0,0.1); padding: 0.5rem; margin: 0.5rem 0;"></div>
+        <textarea id="messageText" rows="4" placeholder="Secure transmission..."></textarea>
+        <div id="typingStatus" class="typing-indicator" style="display: none;">✍️ operator typing...</div>
+        <div style="display: flex; gap: 0.5rem; margin: 0.8rem 0; flex-wrap: wrap;">
+          <button class="btn" id="emojiBtn"><i class="far fa-smile"></i> EMOJI</button>
+          <button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i> ATTACH</button>
+          <button class="btn" id="gifBtn"><i class="fas fa-film"></i> GIF</button>
+          <button class="btn" id="clearComposeBtn"><i class="fas fa-trash"></i> CLEAR</button>
+        </div>
+        <input type="file" id="attachFileInput" style="display: none;" accept="image/*,.pdf,.txt">
+        <div id="attachPreview" style="font-size: 0.75rem; color: var(--text-dim);"></div>
+        <div id="gifPreview" style="display: none; margin: 0.5rem 0;"></div>
+        <button class="btn btn-primary" id="sendMsgBtn" style="width: 100%;"><i class="fas fa-bolt"></i> ENCRYPT & SEND</button>
+      </div>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+          <h3 style="color: var(--red);"><i class="fas fa-rss"></i> LIVE FEED</h3>
+          <button class="btn" id="refreshMessagesBtn" style="padding: 0.3rem 0.8rem;"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="message-board" id="messageBoard"></div>
+      </div>
+    </div>
+  </section>
 
-    // ========== GLOBAL STATE ==========
-    const state = {
-      currentUser: 'OLAMA',
-      likedMessages: new Set(),
-      replyingTo: null,
-      userLikes: new Map()
-    };
+  <section class="section-card" id="secTasks">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-tasks"></i> 03. OPERATIONAL OBJECTIVES</h2>
+      <span class="badge" id="taskActiveBadge">0 active</span>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <h3 style="color: var(--red);">CREATE OBJECTIVE</h3>
+        <input type="text" id="taskInput" placeholder="Enter objective...">
+        <div style="display: flex; gap: 0.5rem; margin-top: 0.8rem;">
+          <button class="btn" id="priorityTaskBtn"><i class="fas fa-bolt"></i> PRIORITY</button>
+          <button class="btn btn-primary" id="addTaskBtn"><i class="fas fa-plus"></i> ADD</button>
+        </div>
+        <div style="margin-top: 1rem;">
+          <button class="btn" id="completeAllBtn" style="width: 100%;"><i class="fas fa-check-double"></i> COMPLETE ALL ACTIVE</button>
+          <button class="btn" id="clearCompletedBtn" style="width: 100%; margin-top: 0.5rem;"><i class="fas fa-eraser"></i> CLEAR COMPLETED</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--red);"><i class="fas fa-play-circle"></i> ACTIVE OBJECTIVES</h3>
+        <div id="activeTasksList" style="max-height: 300px; overflow-y: auto;"></div>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--red);"><i class="fas fa-chart-line"></i> PROGRESS METRICS</h3>
+        <div style="display: flex; justify-content: space-between;"><span>COMPLETION RATE</span><span id="progressPercent">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div style="margin-top: 1rem;"><span>TOTAL: </span><span id="totalTasksSpan">0</span> &nbsp;|&nbsp; <span>ACTIVE: </span><span id="activeTasksSpan">0</span></div>
+        <h4 style="color: var(--red); margin-top: 1rem;"><i class="fas fa-check-circle"></i> COMPLETED</h4>
+        <div id="completedTasksList" style="max-height: 150px; overflow-y: auto;"></div>
+      </div>
+    </div>
+  </section>
 
-    // ========== UI ELEMENTS ==========
-    const loader = document.getElementById('globalLoader');
-    const notif = document.getElementById('notificationCenter');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const modalCancel = document.getElementById('modalCancel');
+  <section class="section-card" id="secLogs">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-database"></i> 04. INTELLIGENCE & LOGS</h2>
+      <span class="badge" id="logCounter">0 entries</span>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+          <h3 style="color: var(--red);">SYSTEM LOGS</h3>
+          <div><button class="btn" id="exportLogsBtn"><i class="fas fa-download"></i></button><button class="btn" id="clearLogsBtn"><i class="fas fa-trash"></i></button></div>
+        </div>
+        <div id="logEntries" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--red);">FILE MANAGEMENT</h3>
+        <input type="file" id="fileUpload" multiple accept="*/*">
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+          <button class="btn btn-primary" id="processFilesBtn"><i class="fas fa-upload"></i> STAGE FILES</button>
+          <button class="btn" id="clearFilesBtn"><i class="fas fa-ban"></i> CLEAR</button>
+        </div>
+        <div id="filePreviewGrid" class="file-grid"></div>
+      </div>
+    </div>
+  </section>
 
-    // ========== PIN GATE ==========
-    const pinGate = document.getElementById('pinGate');
-    const appContainer = document.getElementById('appContainer');
-    const pinInput = document.getElementById('pinInput');
-    const unlockBtn = document.getElementById('unlockBtn');
-    const CORRECT_PIN = '7';
+  <section class="section-card" id="secZama">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-microchip"></i> 05. ZAMA MDULI • NEURAL INTERFACE</h2>
+      <span class="badge">PROTOTYPE v0.9</span>
+    </div>
+    <div style="text-align: center; padding: 2rem; border: 2px dashed var(--red); background: rgba(255,0,0,0.05);">
+      <div style="font-size: 3rem;">🧠</div>
+      <div style="color: var(--red); font-size: 1.3rem;">NEURAL CORE INITIALIZING</div>
+      <div style="color: var(--text-dim); margin-top: 0.5rem;">Quantum processing • Expected Q1 2027</div>
+      <div style="margin-top: 1rem;"><span class="pulse-dot" style="display: inline-block;"></span> DEVELOPMENT PHASE</div>
+    </div>
+  </section>
 
-    function unlockApp() {
+  <footer style="margin-top: 2rem; padding: 1.5rem; text-align: center; border-top: 1px solid var(--red);">
+    <div style="font-size: 0.8rem; color: var(--text-dim);">EDEN RESERVATION</div>
+  </footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from "@firebase/app";
+  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, writeBatch, where, increment, arrayUnion, arrayRemove, limit } from "@firebase/firestore";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+    authDomain: "eden-4a8d3.firebaseapp.com",
+    projectId: "eden-4a8d3",
+    storageBucket: "eden-4a8d3.firebasestorage.app",
+    messagingSenderId: "421147129483",
+    appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const sessionId = crypto.randomUUID();
+
+  const showLoader = (show) => document.getElementById('loaderOverlay').style.display = show ? 'flex' : 'none';
+  const notify = (msg, type = 'info', dur = 4000) => {
+    const stack = document.getElementById('notifyStack');
+    const n = document.createElement('div');
+    n.className = 'notification';
+    n.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span><span style="flex:1">${msg}</span><button style="background:none; border:none; color:red; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
+    stack.appendChild(n);
+    setTimeout(() => n?.remove(), dur);
+  };
+
+  let modalResolve = null;
+  const modal = document.getElementById('globalModal');
+  const showModal = (title, content) => new Promise(resolve => {
+    document.getElementById('modalTitle').innerHTML = title;
+    document.getElementById('modalContent').innerHTML = content;
+    modal.style.display = 'flex';
+    const confirm = () => { modal.style.display = 'none'; cleanup(); resolve(true); };
+    const cancel = () => { modal.style.display = 'none'; cleanup(); resolve(false); };
+    const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); };
+    const confirmBtn = document.getElementById('modalConfirm');
+    const cancelBtn = document.getElementById('modalCancel');
+    confirmBtn.addEventListener('click', confirm);
+    cancelBtn.addEventListener('click', cancel);
+  });
+
+  const pinGate = document.getElementById('pinGate');
+  const appContainer = document.getElementById('appContainer');
+  document.getElementById('unlockBtn').addEventListener('click', () => {
+    if (document.getElementById('pinInput').value === '7') {
       pinGate.style.opacity = '0';
-      setTimeout(() => {
-        pinGate.style.display = 'none';
-        appContainer.style.display = 'block';
-        showNotification('Access granted. CV-5 tactical online.', 'success', 4000);
-      }, 500);
-    }
-
-    unlockBtn.addEventListener('click', () => {
-      if (pinInput.value === CORRECT_PIN) {
-        unlockApp();
-      } else {
-        showNotification('Invalid PIN', 'error');
-        pinInput.value = '';
-      }
-    });
-
-    pinInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') unlockBtn.click();
-    });
-
-    // ========== NOTIFICATION SYSTEM ==========
-    window.showNotification = (message, type = 'info', duration = 4000) => {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      
-      const icons = {
-        success: '✅',
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
-      };
-
-      notification.innerHTML = `
-        <span style="font-size: 1.2rem;">${icons[type] || 'ℹ️'}</span>
-        <span style="flex: 1;">${message}</span>
-        <button class="notification-close" onclick="this.parentElement.remove()">✕</button>
-      `;
-
-      notif.appendChild(notification);
-
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.style.animation = 'slideOut 0.3s forwards';
-          setTimeout(() => notification.remove(), 300);
-        }
-      }, duration);
-    };
-
-    // ========== LOADER ==========
-    window.showLoader = (show) => {
-      loader.style.display = show ? 'flex' : 'none';
-    };
-
-    // ========== MODAL ==========
-    function showModal(title, content) {
-      return new Promise((resolve) => {
-        modalTitle.textContent = title;
-        modalContent.innerHTML = content;
-        modalOverlay.style.display = 'flex';
-
-        const confirmHandler = () => {
-          modalOverlay.style.display = 'none';
-          modalConfirm.removeEventListener('click', confirmHandler);
-          modalCancel.removeEventListener('click', cancelHandler);
-          resolve(true);
-        };
-
-        const cancelHandler = () => {
-          modalOverlay.style.display = 'none';
-          modalConfirm.removeEventListener('click', confirmHandler);
-          modalCancel.removeEventListener('click', cancelHandler);
-          resolve(false);
-        };
-
-        modalConfirm.addEventListener('click', confirmHandler);
-        modalCancel.addEventListener('click', cancelHandler);
-      });
-    }
-
-    // ========== SCROLL NAVIGATION ==========
-    window.addEventListener('scroll', () => {
-      const sections = ['s1', 's2', 's3', 's4', 's5'];
-      let current = '';
-
-      for (const id of sections) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            current = id;
-            break;
-          }
-        }
-      }
-
-      if (current) {
-        document.querySelectorAll('.nav-dot').forEach(dot => {
-          dot.classList.remove('active');
-          if (dot.dataset.section === current) {
-            dot.classList.add('active');
-          }
-        });
-      }
-    });
-
-    document.querySelectorAll('.nav-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        const section = document.getElementById(dot.dataset.section);
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    // ========== SECTION 1: COMMAND CENTER ==========
-    const s1Panel = document.getElementById('s1Panel');
-    const s1Directive = document.getElementById('s1Directive');
-    const pubDir = document.getElementById('publicDirective');
-    const dirMeta = document.getElementById('directiveMeta');
-    const s1History = document.getElementById('s1History');
-    const s1SendBtn = document.getElementById('s1Send');
-    const unlockBtnS1 = document.getElementById('unlockS1Btn');
-    const lockBtn = document.getElementById('s1Lock');
-    const s1Badge = document.getElementById('s1Badge');
-
-    unlockBtnS1.addEventListener('click', async () => {
-      const confirmed = await showModal('UNLOCK COMMAND', 'Enter PIN: <input type="password" id="modalPin" maxlength="4" style="margin-top: 1rem; width: 100%; padding: 0.5rem;">');
-      
-      if (confirmed) {
-        const pin = document.getElementById('modalPin')?.value;
-        if (pin === '1234') {
-          s1Panel.style.display = 'block';
-          s1SendBtn.disabled = false;
-          s1Badge.innerHTML = '🔓 UNLOCKED';
-          showNotification('Command center unlocked', 'success');
-        } else {
-          showNotification('Invalid PIN', 'error');
-        }
-      }
-    });
-
-    lockBtn.addEventListener('click', () => {
-      s1Panel.style.display = 'none';
-      s1SendBtn.disabled = true;
-      s1Badge.innerHTML = '🔒 LOCKED';
-      showNotification('Command center locked', 'info');
-    });
-
-    s1SendBtn.addEventListener('click', async () => {
-      if (!s1Directive.value.trim()) {
-        showNotification('Directive cannot be empty', 'warning');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        await setDoc(doc(db, 'cio', 'directive'), {
-          text: s1Directive.value,
-          timestamp: serverTimestamp(),
-          operator: document.getElementById('callsign').value || 'Unknown',
-          sessionId
-        });
-
-        await addDoc(collection(db, 'directiveHistory'), {
-          text: s1Directive.value,
-          timestamp: serverTimestamp(),
-          operator: document.getElementById('callsign').value || 'Unknown'
-        });
-
-        showNotification('Directive sent successfully', 'success');
-        s1Directive.value = '';
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    // Real-time directive
-    onSnapshot(doc(db, 'cio', 'directive'), (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        pubDir.textContent = data.text;
-        dirMeta.textContent = `Last: ${data.timestamp?.toDate().toLocaleString()} · ${data.operator || 'Unknown'}`;
-      }
-    });
-
-    // Directive history
-    onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp', 'desc'), limit(20)), (snap) => {
-      s1History.innerHTML = '';
-      snap.forEach(doc => {
-        const data = doc.data();
-        s1History.innerHTML += `
-          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
-            <div class="flex-between">
-              <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
-              <button onclick="window.deleteHistory('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
-            </div>
-            <div>${data.text.substring(0, 100)}${data.text.length > 100 ? '...' : ''}</div>
-          </div>
-        `;
-      });
-    });
-
-    // ========== SECTION 2: MESSAGE BOARD ==========
-    const callsign = document.getElementById('callsign');
-    const deptSelect = document.getElementById('deptSelect');
-    const msgInput = document.getElementById('msgInput');
-    const msgBoard = document.getElementById('messageBoard');
-    const emojiPicker = document.getElementById('emojiPicker');
-    const msgFile = document.getElementById('msgFile');
-    const attachPrev = document.getElementById('attachmentPreview');
-    const liveMsgCount = document.getElementById('liveMsgCount');
-    const msgCount = document.getElementById('msgCount');
-    const replyIndicator = document.getElementById('replyIndicator');
-    const clearCompose = document.getElementById('clearCompose');
-
-    let currentAttachment = null;
-
-    // Emoji picker
-    document.getElementById('emojiBtn').addEventListener('click', () => {
-      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
-    });
-
-    emojiPicker.addEventListener('emoji-click', (e) => {
-      msgInput.value += e.detail.unicode;
-      emojiPicker.style.display = 'none';
-    });
-
-    // File attachment
-    document.getElementById('attachBtn').addEventListener('click', () => {
-      msgFile.click();
-    });
-
-    msgFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        currentAttachment = file;
-        attachPrev.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-      }
-    });
-
-    // Clear compose
-    clearCompose.addEventListener('click', () => {
-      msgInput.value = '';
-      currentAttachment = null;
-      attachPrev.innerHTML = '';
-      state.replyingTo = null;
-      replyIndicator.style.display = 'none';
-      msgFile.value = '';
-    });
-
-    // Send message
-    document.getElementById('sendMsg').addEventListener('click', async () => {
-      if (!callsign.value.trim()) {
-        showNotification('Callsign is required', 'warning');
-        return;
-      }
-
-      if (!msgInput.value.trim() && !currentAttachment) {
-        showNotification('Message or attachment required', 'warning');
-        return;
-      }
-
-      showLoader(true);
-
-      try {
-        let attachment = null;
-        if (currentAttachment) {
-          attachment = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (e) => resolve({
-              name: currentAttachment.name,
-              type: currentAttachment.type,
-              data: e.target.result,
-              size: currentAttachment.size
-            });
-            reader.readAsDataURL(currentAttachment);
-          });
-        }
-
-        const messageData = {
-          callsign: callsign.value.toUpperCase(),
-          department: deptSelect.value,
-          text: msgInput.value,
-          attachment: attachment,
-          timestamp: serverTimestamp(),
-          operator: callsign.value,
-          sessionId,
-          pinned: false,
-          likes: 0,
-          likedBy: [],
-          replyTo: state.replyingTo ? {
-            messageId: state.replyingTo.messageId,
-            callsign: state.replyingTo.callsign,
-            text: state.replyingTo.text
-          } : null
-        };
-
-        await addDoc(collection(db, 'messages'), messageData);
-
-        // Clear form
-        msgInput.value = '';
-        currentAttachment = null;
-        attachPrev.innerHTML = '';
-        state.replyingTo = null;
-        replyIndicator.style.display = 'none';
-        msgFile.value = '';
-
-        showNotification('Message sent successfully', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    // Real-time messages
-    onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      let count = 0;
-      const messages = [];
-
-      snap.forEach(doc => {
-        const data = doc.data();
-        data.id = doc.id;
-        messages.push(data);
-      });
-
-      // Sort: pinned first, then by date
-      messages.sort((a, b) => {
-        if (a.pinned && !b.pinned) return -1;
-        if (!a.pinned && b.pinned) return 1;
-        return (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0);
-      });
-
-      msgBoard.innerHTML = '';
-
-      messages.forEach(data => {
-        count++;
-        
-        // Build attachment HTML
-        let attachHtml = '';
-        if (data.attachment) {
-          if (data.attachment.type?.startsWith('image/')) {
-            attachHtml = `
-              <div class="mt-2">
-                <img src="${data.attachment.data}" 
-                     style="max-width: 200px; max-height: 150px; cursor: pointer; border: 2px solid var(--accent);"
-                     onclick="window.viewImage('${data.attachment.data}')">
-              </div>
-            `;
-          } else {
-            attachHtml = `
-              <div class="mt-2">
-                <a href="${data.attachment.data}" download="${data.attachment.name}" style="color: var(--accent);">
-                  📎 ${data.attachment.name}
-                </a>
-              </div>
-            `;
-          }
-        }
-
-        // Reply context
-        let replyContext = '';
-        if (data.replyTo) {
-          replyContext = `
-            <div class="reply-context">
-              <strong>↪️ reply to ${data.replyTo.callsign}</strong>: "${data.replyTo.text.substring(0, 50)}${data.replyTo.text.length > 50 ? '...' : ''}"
-            </div>
-          `;
-        }
-
-        // Check if this message is being replied to
-        const isRepliedTo = state.replyingTo && state.replyingTo.messageId === data.id;
-
-        msgBoard.innerHTML += `
-          <div class="message ${isRepliedTo ? 'replied-to' : ''}" id="msg-${data.id}">
-            <div class="flex-between mb-2">
-              <div>
-                <strong style="color: var(--accent); font-size: 1.1rem;">${data.callsign}</strong>
-                <span class="section-badge" style="margin-left: 0.5rem;">${data.department || 'COMPLIANCE CV-5'}</span>
-              </div>
-              <div>
-                ${data.pinned ? '<span class="pinned-badge">📌 PINNED</span>' : ''}
-                <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
-              </div>
-            </div>
-
-            ${replyContext}
-            
-            <div class="mb-2" style="font-size: 1.1rem; line-height: 1.6;">${data.text}</div>
-            
-            ${attachHtml}
-
-            <div class="flex-between mt-2">
-              <div>
-                <button class="like-button ${(data.likedBy || []).includes(callsign.value) ? 'liked' : ''}" 
-                        onclick="window.toggleLike('${data.id}', '${callsign.value}')"
-                        style="color: var(--african-skin); font-size: 1.2rem;">
-                  👍 <span id="like-count-${data.id}">${data.likes || 0}</span>
-                </button>
-              </div>
-              
-              <div class="message-actions">
-                <button onclick="window.replyToMessage('${data.callsign}', '${data.id}', '${data.text.replace(/'/g, "\\'")}')">💬 REPLY</button>
-                <button onclick="window.editMessage('${data.id}', '${data.text.replace(/'/g, "\\'")}')">✏️ EDIT</button>
-                <button onclick="window.togglePin('${data.id}', ${data.pinned})">📌 ${data.pinned ? 'UNPIN' : 'PIN'}</button>
-                <button onclick="window.deleteMessage('${data.id}')">🗑️ DELETE</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      liveMsgCount.textContent = count;
-      msgCount.textContent = count;
-    });
-
-    // ========== MESSAGE ACTIONS ==========
-    window.replyToMessage = (callsign, id, text) => {
-      state.replyingTo = {
-        messageId: id,
-        callsign: callsign,
-        text: text
-      };
-      
-      replyIndicator.style.display = 'block';
-      replyIndicator.innerHTML = `↪️ Replying to <strong>${callsign}</strong>: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`;
-      msgInput.focus();
-    };
-
-    window.toggleLike = async (messageId, username) => {
-      showLoader(true);
-      
-      try {
-        const messageRef = doc(db, 'messages', messageId);
-        const messageSnap = await getDocs(query(collection(db, 'messages'), where('__name__', '==', messageId)));
-        
-        if (!messageSnap.empty) {
-          const messageData = messageSnap.docs[0].data();
-          const likedBy = messageData.likedBy || [];
-          
-          if (likedBy.includes(username)) {
-            await updateDoc(messageRef, {
-              likes: increment(-1),
-              likedBy: arrayRemove(username)
-            });
-          } else {
-            await updateDoc(messageRef, {
-              likes: increment(1),
-              likedBy: arrayUnion(username)
-            });
-          }
-        }
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.togglePin = async (messageId, currentPin) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'messages', messageId), {
-          pinned: !currentPin
-        });
-        showNotification(currentPin ? 'Message unpinned' : 'Message pinned', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.editMessage = async (messageId, oldText) => {
-      const confirmed = await showModal('EDIT MESSAGE', `
-        <textarea id="editText" rows="3" style="width: 100%; margin-top: 1rem; padding: 0.5rem;">${oldText}</textarea>
-      `);
-
-      if (confirmed) {
-        const newText = document.getElementById('editText')?.value;
-        if (newText && newText !== oldText) {
-          showLoader(true);
-          try {
-            await updateDoc(doc(db, 'messages', messageId), {
-              text: newText,
-              edited: true,
-              editedAt: serverTimestamp()
-            });
-            showNotification('Message updated', 'success');
-          } catch (error) {
-            showNotification(error.message, 'error');
-          } finally {
-            showLoader(false);
-          }
-        }
-      }
-    };
-
-    window.deleteMessage = async (messageId) => {
-      const confirmed = await showModal('DELETE MESSAGE', 'Are you sure you want to delete this message?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'messages', messageId));
-          showNotification('Message deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.viewImage = (data) => {
-      const win = window.open('', '_blank');
-      win.document.write(`
-        <html>
-          <head><title>Image View</title></head>
-          <body style="margin: 0; background: black; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-            <img src="${data}" style="max-width: 100%; max-height: 100vh; object-fit: contain;">
-          </body>
-        </html>
-      `);
-    };
-
-    window.deleteHistory = async (id) => {
-      const confirmed = await showModal('DELETE HISTORY', 'Delete this directive history entry?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'directiveHistory', id));
-          showNotification('Entry deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ========== SECTION 3: OBJECTIVES ==========
-    const taskInput = document.getElementById('taskInput');
-    const activeTasks = document.getElementById('activeTasks');
-    const completedTasks = document.getElementById('completedTasks');
-    const taskProgress = document.getElementById('taskProgress');
-    const completionRate = document.getElementById('completionRate');
-    const totalTasks = document.getElementById('totalTasks');
-    const activeCount = document.getElementById('activeCount');
-    const taskCount = document.getElementById('taskCount');
-
-    document.getElementById('addTaskBtn').addEventListener('click', async () => {
-      if (!taskInput.value.trim()) {
-        showNotification('Task description required', 'warning');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        await addDoc(collection(db, 'tasks'), {
-          text: taskInput.value,
-          completed: false,
-          priority: taskInput.value.includes('⚡'),
-          created: serverTimestamp(),
-          operator: callsign.value || 'Unknown'
-        });
-        taskInput.value = '';
-        showNotification('Objective created', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    document.getElementById('priorityBtn').addEventListener('click', () => {
-      if (taskInput.value.trim() && !taskInput.value.includes('⚡')) {
-        taskInput.value = '⚡ ' + taskInput.value;
-      }
-    });
-
-    document.getElementById('completeAll').addEventListener('click', async () => {
-      const confirmed = await showModal('COMPLETE ALL', 'Mark all active objectives as complete?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false)));
-          const batch = writeBatch(db);
-          snap.docs.forEach(doc => batch.update(doc.ref, { completed: true }));
-          await batch.commit();
-          showNotification('All objectives completed', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    });
-
-    document.getElementById('clearCompleted').addEventListener('click', async () => {
-      const confirmed = await showModal('CLEAR COMPLETED', 'Delete all completed objectives?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', true)));
-          const batch = writeBatch(db);
-          snap.docs.forEach(doc => batch.delete(doc.ref));
-          await batch.commit();
-          showNotification('Completed objectives cleared', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    });
-
-    onSnapshot(query(collection(db, 'tasks'), orderBy('created', 'desc')), (snap) => {
-      let active = '';
-      let completed = '';
-      let aCount = 0;
-      let cCount = 0;
-
-      snap.forEach(doc => {
-        const data = doc.data();
-        const priority = data.priority ? '⚡ ' : '';
-        
-        const taskHtml = `
-          <div class="task-item ${data.priority ? 'priority' : ''}">
-            <div>
-              <span style="color: ${data.completed ? 'var(--success)' : data.priority ? 'var(--warning)' : 'white'};">
-                ${priority}${data.text}
-              </span>
-              <div><small class="text-dim">${data.operator || ''}</small></div>
-            </div>
-            <div class="task-actions">
-              <button onclick="window.toggleTask('${doc.id}', ${data.completed})" title="${data.completed ? 'Undo' : 'Complete'}">
-                ${data.completed ? '↩️' : '✅'}
-              </button>
-              <button onclick="window.editTask('${doc.id}', '${data.text.replace(/'/g, "\\'")}')" title="Edit">✏️</button>
-              <button onclick="window.togglePriority('${doc.id}', ${data.priority})" title="Toggle priority">⚡</button>
-              <button onclick="window.deleteTask('${doc.id}')" title="Delete">🗑️</button>
-            </div>
-          </div>
-        `;
-
-        if (data.completed) {
-          completed += taskHtml;
-          cCount++;
-        } else {
-          active += taskHtml;
-          aCount++;
-        }
-      });
-
-      activeTasks.innerHTML = active || '<p class="text-dim">No active objectives</p>';
-      completedTasks.innerHTML = completed || '<p class="text-dim">No completed objectives</p>';
-      
-      const total = aCount + cCount;
-      const progress = total ? (cCount / total * 100) : 0;
-      
-      taskProgress.style.width = progress + '%';
-      completionRate.textContent = Math.round(progress) + '%';
-      totalTasks.textContent = total;
-      activeCount.textContent = aCount;
-      taskCount.textContent = aCount;
-    });
-
-    window.toggleTask = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { completed: !current });
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.editTask = async (id, oldText) => {
-      const newText = prompt('Edit objective:', oldText);
-      if (newText && newText !== oldText) {
-        showLoader(true);
-        try {
-          await updateDoc(doc(db, 'tasks', id), { text: newText });
-          showNotification('Objective updated', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.togglePriority = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { priority: !current });
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.deleteTask = async (id) => {
-      const confirmed = await showModal('DELETE TASK', 'Delete this objective?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'tasks', id));
-          showNotification('Objective deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ========== SECTION 4: INTEL & LOGS ==========
-    const shiftLogs = document.getElementById('shiftLogs');
-    const logCount = document.getElementById('logCount');
-
-    const addLog = async (type, operator) => {
-      try {
-        await addDoc(collection(db, 'shifts'), {
-          type,
-          operator,
-          timestamp: serverTimestamp(),
-          sessionId
-        });
-      } catch (error) {
-        console.error('Log error:', error);
-      }
-    };
-
-    setTimeout(() => {
-      addLog('SESSION_START', callsign.value);
-    }, 1000);
-
-    onSnapshot(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      let count = 0;
-      shiftLogs.innerHTML = '';
-
-      snap.forEach(doc => {
-        count++;
-        const data = doc.data();
-        shiftLogs.innerHTML += `
-          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
-            <div class="flex-between">
-              <div>
-                <strong style="color: var(--accent);">${data.type || 'EVENT'}</strong>
-                <span class="text-dim"> · ${data.operator || ''}</span>
-              </div>
-              <button onclick="window.deleteLog('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
-            </div>
-            <div class="text-dim" style="font-size: 0.8rem;">${data.timestamp?.toDate().toLocaleString()}</div>
-          </div>
-        `;
-      });
-
-      logCount.textContent = count;
-    });
-
-    document.getElementById('refreshLogs').addEventListener('click', () => {
-      showNotification('Logs refreshed', 'info');
-    });
-
-    document.getElementById('clearLogs').addEventListener('click', async () => {
-      const confirmed = await showModal('CLEAR LOGS', 'Delete all logs? This action requires supervisor PIN.');
-      
-      if (confirmed) {
-        const pin = prompt('Enter supervisor PIN:');
-        if (pin === '1234') {
-          showLoader(true);
-          try {
-            const snap = await getDocs(collection(db, 'shifts'));
-            const batch = writeBatch(db);
-            snap.docs.forEach(doc => batch.delete(doc.ref));
-            await batch.commit();
-            showNotification('All logs cleared', 'success');
-          } catch (error) {
-            showNotification(error.message, 'error');
-          } finally {
-            showLoader(false);
-          }
-        } else {
-          showNotification('Invalid PIN', 'error');
-        }
-      }
-    });
-
-    document.getElementById('exportLogs').addEventListener('click', async () => {
-      showLoader(true);
-      try {
-        const snap = await getDocs(query(collection(db, 'shifts'), orderBy('timestamp', 'desc'), limit(500)));
-        const logs = [];
-        snap.forEach(doc => logs.push({ id: doc.id, ...doc.data() }));
-        
-        const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `logs-${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        showNotification('Logs exported', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    window.deleteLog = async (id) => {
-      const confirmed = await showModal('DELETE LOG', 'Delete this log entry?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'shifts', id));
-          showNotification('Log deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.processFiles = () => {
-      const files = document.getElementById('fileInput').files;
-      if (!files.length) {
-        showNotification('No files selected', 'warning');
-        return;
-      }
-
-      const preview = document.getElementById('filePreview');
-      preview.innerHTML = '';
-
-      Array.from(files).slice(0, 12).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const fileItem = document.createElement('div');
-          fileItem.className = 'file-item';
-          
-          if (file.type.startsWith('image/')) {
-            fileItem.innerHTML = `
-              <img src="${e.target.result}" style="max-width: 100%; height: auto;">
-              <div style="font-size: 0.7rem; margin-top: 0.3rem;">${file.name.substring(0, 15)}</div>
-            `;
-          } else {
-            fileItem.innerHTML = `
-              <div style="font-size: 2rem;">📄</div>
-              <div style="font-size: 0.7rem;">${file.name.substring(0, 15)}</div>
-            `;
-          }
-          
-          preview.appendChild(fileItem);
-        };
-        reader.readAsDataURL(file);
-      });
-
-      showNotification(`${files.length} file(s) processed`, 'success');
-    };
-
-    document.getElementById('clearFiles').addEventListener('click', () => {
-      document.getElementById('filePreview').innerHTML = '';
-      document.getElementById('fileInput').value = '';
-      showNotification('File preview cleared', 'info');
-    });
-
-    document.getElementById('downloadFiles').addEventListener('click', () => {
-      const files = document.getElementById('filePreview').children;
-      if (files.length) {
-        showNotification('Manifest created (demo)', 'success');
-      } else {
-        showNotification('No files to manifest', 'warning');
-      }
-    });
-
-    // ========== WELCOME NOTIFICATION ==========
-    setTimeout(() => {
-      showNotification('Welcome back, Operator. now online.', 'info', 6000);
-      showNotification('Team Message Board active.', 'success', 6000);
-    }, 1000);
-
-    // ========== PERIODIC STATUS ==========
-    setInterval(async () => {
-      try {
-        await getDocs(collection(db, 'tasks'));
-        document.querySelector('.status-indicator').style.background = 'var(--success)';
-      } catch (error) {
-        document.querySelector('.status-indicator').style.background = 'var(--warning)';
-      }
-    }, 30000);
-
-    // ========== CLEANUP ==========
-    window.addEventListener('beforeunload', () => {
-      addLog('SESSION_END', callsign.value);
-    });
-
-    console.log('Compliance CV-5 Advanced System Online');
-    
-  </script>
+      setTimeout(() => { pinGate.style.display = 'none'; appContainer.style.display = 'block'; notify('ACCESS GRANTED. CV-5 ONLINE.', 'success'); }, 400);
+    } else { notify('INVALID ACCESS CODE', 'error'); document.getElementById('pinInput').value = ''; }
+  });
+
+  const cmdBadge = document.getElementById('cmdBadge');
+  const cmdPanel = document.getElementById('cmdPanel');
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => {
+    const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPin" placeholder="CIC OVERRIDE CODE" style="width:100%; margin-top:0.5rem;">');
+    if (ok && document.getElementById('cmdPin')?.value === '1234') { cmdPanel.style.display = 'block'; cmdBadge.innerHTML = 'CIC ACTIVE'; notify('Commander panel unlocked', 'success'); }
+    else if (ok) notify('Invalid override', 'error');
+  });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { cmdPanel.style.display = 'none'; cmdBadge.innerHTML = 'CIC LOCKED'; });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
+    const txt = document.getElementById('newDirective').value.trim();
+    if (!txt) return notify('Directive required', 'warning');
+    showLoader(true);
+    try {
+      await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' });
+      await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' });
+      document.getElementById('newDirective').value = '';
+      notify('Directive transmitted', 'success');
+    } catch(e) { notify(e.message, 'error'); } finally { showLoader(false); }
+  });
+  onSnapshot(doc(db, 'cio', 'directive'), snap => { if(snap.exists()){ const d=snap.data(); document.getElementById('directiveText').innerHTML = d.text; document.getElementById('directiveMeta').innerHTML = `Issued: ${d.timestamp?.toDate().toLocaleString()}`; } });
+  onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(10)), snap => { const div = document.getElementById('directiveHistory'); div.innerHTML = ''; snap.forEach(d => { div.innerHTML += `<div style="border-bottom:1px solid red; padding:0.3rem;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div>${d.data().text.substring(0,80)}</div></div>`; }); });
+
+  let replyingTo = null, currentAttach = null;
+  const callsign = document.getElementById('callsignField');
+  const msgText = document.getElementById('messageText');
+  const msgBoard = document.getElementById('messageBoard');
+  const replyBox = document.getElementById('replyIndicatorBox');
+  const attachInput = document.getElementById('attachFileInput');
+  const attachPreview = document.getElementById('attachPreview');
+  document.getElementById('attachBtn').addEventListener('click', () => attachInput.click());
+  attachInput.addEventListener('change', e => { if(e.target.files[0]){ currentAttach = e.target.files[0]; attachPreview.innerText = `📎 ${currentAttach.name}`; } });
+  document.getElementById('clearComposeBtn').addEventListener('click', () => { msgText.value = ''; currentAttach = null; attachPreview.innerText = ''; replyingTo = null; replyBox.style.display = 'none'; attachInput.value = ''; });
+  document.getElementById('sendMsgBtn').addEventListener('click', async () => {
+    if(!callsign.value.trim()) return notify('Callsign required','warning');
+    if(!msgText.value.trim() && !currentAttach) return notify('Message or attachment required','warning');
+    showLoader(true);
+    let attachData = null;
+    if(currentAttach) attachData = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r({ name:currentAttach.name, type:currentAttach.type, data:fr.result }); fr.readAsDataURL(currentAttach); });
+    const msgObj = { callsign:callsign.value.toUpperCase(), department:document.getElementById('deptField').value, text:msgText.value, attachment:attachData, timestamp:serverTimestamp(), operator:callsign.value, sessionId, pinned:false, likes:0, likedBy:[], reactions:{}, replyTo: replyingTo ? { messageId:replyingTo.id, callsign:replyingTo.callsign, text:replyingTo.text.substring(0,80) } : null };
+    try { await addDoc(collection(db,'messages'), msgObj); msgText.value=''; currentAttach=null; attachPreview.innerText=''; replyingTo=null; replyBox.style.display='none'; attachInput.value=''; notify('Message sent','success'); } catch(e){ notify(e.message,'error'); } finally { showLoader(false); }
+  });
+  window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; replyBox.style.display='block'; replyBox.innerHTML = `↪️ REPLYING TO ${callsign}: "${text.substring(0,60)}"`; };
+  window.toggleLikeMsg = async (id, username) => { try{ const ref=doc(db,'messages',id); const snap=await getDocs(query(collection(db,'messages'),where('__name__','==',id))); if(!snap.empty){ const likedBy=snap.docs[0].data().likedBy||[]; if(likedBy.includes(username)) await updateDoc(ref,{ likes:increment(-1), likedBy:arrayRemove(username) }); else await updateDoc(ref,{ likes:increment(1), likedBy:arrayUnion(username) }); } } catch(e){ notify(e.message,'error'); } };
+  window.deleteMsgItem = async (id) => { if(await showModal('Delete Message','Permanently delete this transmission?')){ showLoader(true); try{ await deleteDoc(doc(db,'messages',id)); notify('Deleted','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } };
+  window.togglePinMsg = async (id, current) => { try{ await updateDoc(doc(db,'messages',id),{ pinned: !current }); notify(current?'Unpinned':'Pinned','info'); }catch(e){ notify(e.message,'error'); } };
+  onSnapshot(query(collection(db,'messages'), orderBy('timestamp','desc'), limit(80)), snap => { let msgs=[]; snap.forEach(d=>{ let m=d.data(); m.id=d.id; msgs.push(m); }); msgs.sort((a,b)=>(a.pinned&&!b.pinned)?-1:(!a.pinned&&b.pinned)?1:(b.timestamp?.seconds||0)-(a.timestamp?.seconds||0)); msgBoard.innerHTML=''; let cnt=0; msgs.forEach(m=>{ cnt++; const liked = (m.likedBy||[]).includes(callsign.value); let attachHtml=''; if(m.attachment){ if(m.attachment.type?.startsWith('image/')) attachHtml=`<div class="mt-2"><img src="${m.attachment.data}" style="max-width:150px; max-height:100px; border:1px solid red; cursor:pointer;" onclick="window.open('${m.attachment.data}','_blank')"></div>`; else attachHtml=`<div><a href="${m.attachment.data}" download style="color:red;">📎 ${m.attachment.name}</a></div>`; } let replyCtx=''; if(m.replyTo) replyCtx=`<div class="reply-context"><strong>↪️ in reply to ${m.replyTo.callsign}</strong>: "${m.replyTo.text.substring(0,50)}"</div>`; msgBoard.innerHTML+=`<div class="message-item"><div style="display:flex; justify-content:space-between;"><div><strong style="color:red">${m.callsign}</strong> <span class="badge">${m.department}</span>${m.pinned?' 📌':''}</div><small>${m.timestamp?.toDate().toLocaleString()}</small></div>${replyCtx}<div style="margin:0.5rem 0;">${m.text}</div>${attachHtml}<div style="display:flex; justify-content:space-between; margin-top:0.5rem;"><button class="like-btn" style="background:none; border:none; color:red; cursor:pointer;" onclick="window.toggleLikeMsg('${m.id}','${callsign.value}')">👍 <span id="like-${m.id}">${m.likes||0}</span></button><div><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.replyMessage('${m.callsign}','${m.id}','${m.text.replace(/'/g,"\\'")}')">💬 REPLY</button><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.togglePinMsg('${m.id}',${m.pinned})">📌</button><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.deleteMsgItem('${m.id}')">🗑️</button></div></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
+
+  const taskInput = document.getElementById('taskInput');
+  document.getElementById('addTaskBtn').addEventListener('click', async () => { if(!taskInput.value.trim()) return; showLoader(true); try{ await addDoc(collection(db,'tasks'),{ text:taskInput.value, completed:false, priority:taskInput.value.includes('⚡'), created:serverTimestamp(), operator:callsign.value }); taskInput.value=''; notify('Objective added','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } });
+  document.getElementById('priorityTaskBtn').addEventListener('click',()=>{ if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value='⚡ '+taskInput.value; });
+  document.getElementById('completeAllBtn').addEventListener('click', async () => { if(await showModal('Complete All','Mark all active objectives as complete?')){ showLoader(true); try{ const snap=await getDocs(query(collection(db,'tasks'), where('completed','==',false))); const batch=writeBatch(db); snap.forEach(d=>batch.update(d.ref,{completed:true})); await batch.commit(); notify('All completed','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } });
+  document.getElementById('clearCompletedBtn').addEventListener('click', async () => { if(await showModal('Clear Completed','Delete all completed objectives?')){ showLoader(true); try{ const snap=await getDocs(query(collection(db,'tasks'), where('completed','==',true))); const batch=writeBatch(db); snap.forEach(d=>batch.delete(d.ref)); await batch.commit(); notify('Cleared','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } });
+  window.toggleTaskComplete = async (id, current) => { try{ await updateDoc(doc(db,'tasks',id),{ completed:!current }); }catch(e){ notify(e.message,'error'); } };
+  window.deleteTask = async (id) => { if(await showModal('Delete Task','Delete this objective?')){ showLoader(true); try{ await deleteDoc(doc(db,'tasks',id)); notify('Deleted','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } };
+  onSnapshot(query(collection(db,'tasks'), orderBy('created','desc')), snap => { let active='', comp='', aC=0,cC=0; snap.forEach(d=>{ const data=d.data(); const priority=data.priority?'⚡ ':''; const html=`<div class="task-item"><div>${priority}${data.text}<div><small>${data.operator||''}</small></div></div><div><button onclick="window.toggleTaskComplete('${d.id}',${data.completed})">${data.completed?'↩️':'✅'}</button><button onclick="window.deleteTask('${d.id}')">🗑️</button></div></div>`; if(data.completed){ comp+=html; cC++; } else { active+=html; aC++; } }); document.getElementById('activeTasksList').innerHTML=active||'<div class="text-dim">—</div>'; document.getElementById('completedTasksList').innerHTML=comp||'<div class="text-dim">—</div>'; const total=aC+cC; const percent=total?Math.round((cC/total)*100):0; document.getElementById('progressFill').style.width=percent+'%'; document.getElementById('progressPercent').innerText=percent+'%'; document.getElementById('totalTasksSpan').innerText=total; document.getElementById('activeTasksSpan').innerText=aC; document.getElementById('taskActiveBadge').innerText=`${aC} active`; });
+
+  const addLog = (type) => addDoc(collection(db,'shifts'),{ type, operator:callsign.value, timestamp:serverTimestamp(), sessionId });
+  setTimeout(()=>addLog('SESSION_START'), 500);
+  onSnapshot(query(collection(db,'shifts'), orderBy('timestamp','desc'), limit(60)), snap => { const div=document.getElementById('logEntries'); div.innerHTML=''; let cnt=0; snap.forEach(d=>{ cnt++; const data=d.data(); div.innerHTML+=`<div style="border-bottom:1px solid #330000; padding:0.5rem;"><strong style="color:red">${data.type||'LOG'}</strong> · ${data.operator}<div><small>${data.timestamp?.toDate().toLocaleString()}</small></div></div>`; }); document.getElementById('logCounter').innerHTML=`${cnt} entries`; });
+  document.getElementById('clearLogsBtn').addEventListener('click', async () => { if(await showModal('Clear Logs','PIN required','<input id="clearPin" type="password">') && document.getElementById('clearPin')?.value==='1234'){ showLoader(true); try{ const snap=await getDocs(collection(db,'shifts')); const batch=writeBatch(db); snap.forEach(d=>batch.delete(d.ref)); await batch.commit(); notify('Logs cleared','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } else notify('Invalid PIN','error'); });
+  document.getElementById('exportLogsBtn').addEventListener('click', async () => { showLoader(true); try{ const snap=await getDocs(query(collection(db,'shifts'), limit(1000))); const data=[]; snap.forEach(d=>data.push(d.data())); const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`cv5_logs_${Date.now()}.json`; a.click(); notify('Export complete','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } });
+  window.processFiles = () => { const files=document.getElementById('fileUpload').files; if(!files.length) return; const grid=document.getElementById('filePreviewGrid'); grid.innerHTML=''; Array.from(files).slice(0,12).forEach(f=>{ const reader=new FileReader(); reader.onload=e=>{ const div=document.createElement('div'); div.className='file-preview-item'; if(f.type.startsWith('image/')) div.innerHTML=`<img src="${e.target.result}" style="max-width:100%"><div>${f.name.slice(0,12)}</div>`; else div.innerHTML=`<div>📄</div><div>${f.name.slice(0,12)}</div>`; grid.appendChild(div); }; reader.readAsDataURL(f); }); notify(`${files.length} file(s) staged`,'success'); };
+  document.getElementById('processFilesBtn').addEventListener('click', window.processFiles);
+  document.getElementById('clearFilesBtn').addEventListener('click', () => { document.getElementById('filePreviewGrid').innerHTML=''; document.getElementById('fileUpload').value=''; notify('Cleared','info'); });
+  document.getElementById('refreshMessagesBtn').addEventListener('click', () => notify('Feed refreshed','info'));
+  document.getElementById('emojiBtn').addEventListener('click', () => { const picker = document.createElement('emoji-picker'); picker.style.position='absolute'; picker.style.zIndex=1000; document.body.appendChild(picker); picker.addEventListener('emoji-click', e=>{ msgText.value += e.detail.unicode; picker.remove(); }); setTimeout(()=>picker.remove(), 10000); });
+  document.getElementById('gifBtn').addEventListener('click', () => { const gifUrls = ['https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif','https://media.giphy.com/media/l0HlNQ3JjR1y3PpSU/giphy.gif']; const url = gifUrls[Math.floor(Math.random()*gifUrls.length)]; msgText.value += ` [GIF: ${url}] `; notify('GIF link added','info'); });
+  
+  notify('CV-5 OPERATIONAL. COMMANDER-IN-CHIEF ONLINE.', 'success', 5000);
+  
+</script>
   
 </body>
   
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
