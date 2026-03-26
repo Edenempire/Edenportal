@@ -155,8 +155,8 @@
     
     .pin-gate-title {
       color: var(--accent);
-      font-size: clamp(1.5rem, 5.8vw, 2.3rem);
-      font-weight: 900;
+      font-size: clamp(1.2rem, 5.4vw, 2rem);
+      font-weight: 800;
       letter-spacing: clamp(2px, 1vw, 6px);
       margin-bottom: 1.5rem;
       text-transform: uppercase;
@@ -167,19 +167,19 @@
     .pin-gate-sub {
       color: var(--text-tertiary);
       margin-bottom: 2rem;
-      font-size: clamp(0.875rem, 3vw, 1rem);
+      font-size: clamp(0.805rem, 2.8vw, 1rem);
     }
     
     .pin-input {
       background: var(--bg-secondary);
       border: 2px solid var(--accent);
       color: var(--text-primary);
-      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-size: clamp(1.3rem, 4.6vw, 1.8rem);
       padding: clamp(0.75rem, 2vw, 1rem);
       width: 100%;
       text-align: center;
       letter-spacing: clamp(4px, 2vw, 8px);
-      font-weight: 700;
+      font-weight: 600;
       margin-bottom: 2rem;
       caret-color: var(--accent);
     }
@@ -195,7 +195,7 @@
       color: white;
       padding: clamp(0.75rem, 2vw, 1rem) clamp(2rem, 5vw, 3rem);
       font-weight: 800;
-      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
       cursor: pointer;
       transition: 0.3s;
       text-transform: uppercase;
@@ -596,7 +596,6 @@
       margin-bottom: 0.3rem;
     }
     
-    /* ----- ZAMA PROTOTYPE (COMING SOON) ----- */
     .zama-container {
       background: var(--bg-tertiary);
       border: 3px solid var(--accent);
@@ -701,7 +700,6 @@
       opacity: 0.5;
     }
     
-    /* ----- NOTIFICATION SYSTEM ----- */
     .notification-center {
       position: fixed;
       top: clamp(20px, 5vh, 100px);
@@ -755,7 +753,6 @@
       color: var(--accent);
     }
     
-    /* ----- LOADING OVERLAY ----- */
     .loading-overlay {
       position: fixed;
       inset: 0;
@@ -796,7 +793,6 @@
       letter-spacing: 2px;
     }
     
-    /* ----- MODAL SYSTEM ----- */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -843,7 +839,6 @@
       flex-wrap: wrap;
     }
     
-    /* ----- NAVIGATION DOTS (RESPONSIVE) ----- */
     .nav-dots {
       position: fixed;
       right: clamp(0.5rem, 2vw, 1rem);
@@ -918,7 +913,6 @@
       }
     }
     
-    /* ----- UTILITIES (ENHANCED) ----- */
     .flex {
       display: flex;
       flex-wrap: wrap;
@@ -945,7 +939,6 @@
     .w-full { width: 100%; }
     .text-center { text-align: center; }
     
-    /* ----- COMPOSE AREA SPECIFIC ----- */
     #replyIndicator {
       margin: clamp(0.5rem, 2vh, 1rem) 0;
     }
@@ -956,7 +949,6 @@
       border: 2px solid var(--accent);
     }
     
-    /* ----- ATTACHMENT PREVIEW ----- */
     #attachmentPreview {
       padding: 0.5rem;
       background: var(--bg-secondary);
@@ -966,14 +958,12 @@
       font-size: clamp(0.8rem, 2vw, 0.9rem);
     }
     
-    /* ----- MESSAGE CONTENT ----- */
     .message .mb-2 {
       font-size: clamp(0.9rem, 2.5vw, 1.1rem);
       line-height: 1.6;
       word-break: break-word;
     }
     
-    /* ----- IMAGE ATTACHMENTS ----- */
     .message img {
       max-width: 100%;
       height: auto;
@@ -981,7 +971,6 @@
       cursor: pointer;
     }
     
-    /* ----- TASK STATS CARDS ----- */
     .card .grid-2 .card {
       padding: clamp(0.8rem, 2vw, 1rem);
     }
@@ -991,7 +980,6 @@
       line-height: 1.2;
     }
     
-    /* ----- SMALL SCREEN OPTIMIZATIONS ----- */
     @media (max-width: 640px) {
       .header-content {
         flex-direction: column;
@@ -1038,7 +1026,6 @@
       }
     }
     
-    /* ----- TINY SCREEN OPTIMIZATIONS (under 360px) ----- */
     @media (max-width: 360px) {
       .logo {
         font-size: 1.2rem;
@@ -1070,7 +1057,6 @@
       }
     }
     
-    /* ----- LARGE SCREEN OPTIMIZATIONS (over 1920px) ----- */
     @media (min-width: 1920px) {
       .app-container {
         max-width: 1600px;
@@ -1093,7 +1079,6 @@
       }
     }
     
-    /* ----- ULTRA-WIDE SCREEN OPTIMIZATIONS (over 2560px) ----- */
     @media (min-width: 2560px) {
       .app-container {
         max-width: 2000px;
@@ -1121,7 +1106,6 @@
       }
     }
     
-    /* ----- PRINT STYLES ----- */
     @media print {
       .nav-dots,
       .pin-gate-overlay,
@@ -1154,11 +1138,12 @@
       }
     }
     
-
   </style>
+  
 </head>
+  
 <body>
-  <!-- PIN GATE -->
+
   <div class="pin-gate-overlay" id="pinGate">
     <div class="pin-gate-card">
       <div class="pin-gate-title">COMPLIANCE CV-5</div>
