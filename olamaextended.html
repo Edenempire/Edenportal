@@ -6,483 +6,550 @@
     
     <meta charset="UTF-8">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <title>OLAMA KHAYYIM OFFICIAL EXTENDED PROFILE</title>
+    <title>FULL OFFICIAL EXTENDED PROFILE</title>
     
     <style>
         
-        /* --------------------------------
-           EXTREME TERMINAL — BLACK / GREEN
-           FULL PAGE TRANSPARENCY, SMOOTH SCROLL
-           NO SHADOWS, NO GLOW, ZERO SIMULATION
-           BUTTONS FUNCTIONAL, SPACED OUT
-        -------------------------------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            border-radius: 0px !important;
+            text-shadow: none !important;
+            box-shadow: none !important;
         }
 
         body {
-            width: 100%;
-            min-height: 100vh;
-            background: #000000;          /* absolute black background for canvas */
-            font-family: 'Courier New', Courier, 'Fira Code', monospace;
-            color: #00ff41;                /* matrix green */
-            line-height: 1.7;
-            font-size: 18px;
+            background: #000000;          /* absolute black tactical background */
+            font-family: 'Courier New', 'Fira Code', 'IBM Plex Mono', monospace;
+            color: #ff1a1a;               /* aggressive red — high alert */
+            line-height: 1.65;
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
             -webkit-font-smoothing: none;
             font-smooth: never;
-            text-rendering: optimizeLegibility;
+            padding: 0;
+            margin: 0;
             position: relative;
         }
 
-        /* CANVAS — SLOW, SPACED OUT NUMBER RAIN (0-9) */
-        #matrix-canvas {
+        /* RED SCANLINES — tactical overlay */
+        body::before {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            pointer-events: none;           /* allows clicking buttons through */
-            opacity: 0.4;                    /* transparent to see through */
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 30, 30, 0.02) 0px,
+                rgba(255, 30, 30, 0.02) 2px,
+                transparent 2px,
+                transparent 6px
+            );
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* MAIN TERMINAL WINDOW — semi‑transparent so rain shows */
-        .terminal-window {
+        .gov-container {
+            max-width: 1400px;
+            margin: 28px auto 40px auto;
+            padding: 0 24px;
             position: relative;
             z-index: 10;
-            max-width: 1300px;
-            width: 92%;
-            margin: 40px auto 50px auto;
-            border: 4px solid #00ff41;
-            background-color: rgba(0, 0, 0, 0.75);  /* transparent black */
-            padding: 0;
-            backdrop-filter: none;
-            transition: border 0.2s ease;
         }
 
-        /* HEADER — with functional EDEN button linking to index.html */
-        .win-header {
+        .header-gov {
+            border: 2px solid #cc0000;
+            background: #0a0000;
+            padding: 20px 28px;
+            margin-bottom: 28px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            border-bottom: 3px solid #00ff41;
-            padding: 18px 30px;
-            background: rgba(0, 0, 0, 0.85);
-        }
-
-        .win-title {
-            display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 1.6rem;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            font-weight: bold;
-        }
-
-        .eden-button {
-            background: transparent;
-            border: 3px solid #00ff41;
-            color: #00ff41;
-            font-family: inherit;
-            font-size: 1.6rem;
-            font-weight: bold;
-            padding: 6px 22px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.15s ease, color 0.15s ease;
-            letter-spacing: 4px;
-        }
-
-        .eden-button:hover {
-            background: #00ff41;
-            color: #000000;
-        }
-
-        .win-controls {
-            display: flex;
-            gap: 30px;
-            color: #00ff41;
-            font-size: 2.2rem;
-        }
-        .win-controls span {
-            cursor: default;
-        }
-
-        /* MAIN CONTENT — extra spacing, smooth transitions */
-        .term-content {
-            padding: 50px 50px;
-            background: transparent;        /* full transparency */
-        }
-
-        /* PROFILE SECTION — spaced out */
-        .profile-grid {
-            display: flex;
             flex-wrap: wrap;
-            gap: 50px;
-            margin-bottom: 60px;
-            border: 3px solid #00ff41;
-            padding: 40px 35px;
-            background: rgba(0, 0, 0, 0.6);
-            transition: border 0.2s;
+            gap: 20px;
         }
 
-        .profile-avatar {
-            flex: 0 0 170px;
-            text-align: center;
-        }
-        .profile-avatar img {
-            width: 170px;
-            height: 170px;
-            border: 4px solid #00ff41;
-            object-fit: cover;
-            background: black;
-        }
-        .avatar-placeholder {
-            width: 170px;
-            height: 170px;
-            border: 4px solid #00ff41;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
+        .title-section h1 {
+            font-size: 2rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #00ff41;
-            background: black;
-            line-height: 1.4;
-            padding: 12px;
+            color: #ff3a3a;
+            font-weight: 800;
+            border-left: 6px solid #ff0000;
+            padding-left: 18px;
         }
-        .avatar-label {
-            margin-top: 15px;
-            color: #00cc33;
-            font-size: 0.95rem;
+
+        .title-section p {
+            font-size: 0.85rem;
+            color: #aa2222;
+            margin-top: 8px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .profile-stats {
+        .clearance-badge {
+            background: #1f0000;
+            border: 2px solid #ff3333;
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .clearance-badge span {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ff4d4d;
+            display: block;
+        }
+
+        .clearance-badge small {
+            color: #aa3a3a;
+            font-size: 0.7rem;
+        }
+
+        .profile-core {
+            border: 2px solid #cc3333;
+            background: #030000;
+            padding: 28px 30px;
+            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .identity-photo {
+            flex: 0 0 180px;
+            text-align: center;
+        }
+
+        .gov-photo {
+            width: 180px;
+            height: 180px;
+            border: 3px solid #ff0000;
+            background: #1a0101;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ff5e5e;
+            font-size: 0.9rem;
+        }
+
+        .gov-photo .badge-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .photo-caption {
+            margin-top: 12px;
+            font-size: 0.7rem;
+            color: #aa3a3a;
+            letter-spacing: 1px;
+        }
+
+        .stats-red {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px 35px;
-            align-items: start;
+            gap: 16px 32px;
         }
 
-        .stat-row {
+        .stat-item {
+            border-bottom: 1px solid #aa3333;
+            padding-bottom: 6px;
             display: flex;
-            border-bottom: 2px solid #00aa33;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
+            justify-content: space-between;
+            align-items: baseline;
         }
+
         .stat-label {
-            width: 140px;
-            color: #00aa33;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            color: #dd5555;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
         }
+
         .stat-value {
-            flex: 1;
-            color: #00ff41;
-            font-weight: 700;
-        }
-
-        /* QUICK FACTS PANEL — extra spacing, semi‑transparent */
-        .facts-panel {
-            border: 3px solid #00ff41;
-            padding: 35px 40px;
-            margin: 50px 0 55px 0;
-            background: rgba(0, 0, 0, 0.6);
-        }
-        .facts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px 40px;
-        }
-        .fact {
-            display: flex;
-            border-left: 6px solid #00ff41;
-            padding-left: 18px;
-        }
-        .fact .tag {
-            width: 120px;
-            color: #00aa33;
-            font-weight: 600;
-        }
-        .fact .data {
-            color: #00ff41;
-            font-weight: bold;
-        }
-
-        /* SECTION TITLES — heavy border, extra margin */
-        .section-title {
-            font-size: 2.4rem;
-            margin: 70px 0 30px 0;
-            border-bottom: 4px solid #00ff41;
-            padding-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            font-weight: 700;
-        }
-
-        /* BIO BLOCKS — long, full, nothing omitted */
-        .bio-block {
-            margin-bottom: 38px;
-            text-align: left;
-            font-size: 1.1rem;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 18px 22px;
-            border-left: 4px solid #00aa33;
-            transition: border 0.2s;
-        }
-        .bio-block strong {
-            color: #b0ffb0;
             font-weight: 800;
-            font-size: 1.15rem;
+            color: #ff5e5e;
+            font-size: 1rem;
         }
 
-        /* OPS RIBBON — fully spaced */
-        .ops-strip {
+        .section-mod {
+            border-left: 5px solid #ff0000;
+            margin: 42px 0 28px 0;
+            padding-left: 22px;
+        }
+
+        .section-mod h2 {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            color: #ff4d4d;
+            letter-spacing: 3px;
+            margin-bottom: 22px;
+        }
+
+        .bio-timeline {
+            background: #030202;
+            border: 1px solid #990000;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+        }
+
+        .bio-entry {
+            margin-bottom: 28px;
+            border-left: 3px solid #cc3333;
+            padding-left: 20px;
+        }
+
+        .bio-year {
+            font-weight: 800;
+            color: #ff6666;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .bio-text {
+            color: #ff8a8a;
+            line-height: 1.6;
+        }
+
+        .future-statement {
+            background: #080101;
+            border: 1px solid #ff3333;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .future-statement p {
+            color: #ffa0a0;
+            font-weight: 500;
+        }
+
+        .compliance-band {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px 40px;
-            border-top: 3px solid #00ff41;
-            border-bottom: 3px solid #00ff41;
-            padding: 26px 0;
-            margin: 55px 0;
-            justify-content: flex-start;
-            background: rgba(0, 0, 0, 0.5);
+            justify-content: space-between;
+            gap: 20px;
+            background: #0f0101;
+            border-top: 3px solid #ff0000;
+            border-bottom: 3px solid #ff0000;
+            padding: 20px 28px;
+            margin: 40px 0 40px 0;
         }
-        .ops-strip span {
+
+        .comp-item {
             font-weight: bold;
             text-transform: uppercase;
-            border-left: 8px solid #00ff41;
-            padding-left: 18px;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+            color: #ff5e5e;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
         }
 
-        /* SIMPLIFIED, CENTERED FOOTER — clean, advanced */
-        .term-footer {
-            margin-top: 80px;
-            padding: 30px 15px 25px 15px;
-            border-top: 4px solid #00ff41;
-            text-align: center;
-            color: #00cc33;
-            font-size: 1.1rem;
-            background: rgba(0, 0, 0, 0.3);
+        .footer-logos {
+            position: relative;
+            margin-top: 60px;
+            min-height: 140px;
+            border-top: 2px solid #aa2a2a;
+            padding: 28px 18px 20px 18px;
+            background: #030000;
         }
-        .footer-main {
+
+        .dod-logo-container {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
             display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0a0101;
+            padding: 8px 20px 8px 16px;
+            border: 1px solid #aa2a2a;
+        }
+
+        .dod-emblem {
+            width: 52px;
+            height: 52px;
+            background: #2a0000;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-        .footer-class {
-            margin-top: 18px;
-            color: #008f2e;
-            font-size: 1rem;
-            border: 2px solid #00aa33;
-            display: inline-block;
-            padding: 8px 35px;
-            background: rgba(0, 0, 0, 0.7);
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #cc3333;
+            border: 1px solid #ff5555;
         }
 
-        /* no rounding, no shadows */
-        * {
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            text-shadow: none !important;
+        .dod-text {
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ff7777;
+            font-size: 0.85rem;
+            letter-spacing: 1.2px;
         }
 
-        /* smooth transitions on interactive elements */
-        a, button, .eden-button, .stat-row, .fact, .bio-block {
-            transition: all 0.2s ease;
+        .coat-of-arms {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            text-align: right;
         }
 
-        /* responsive */
-        @media (max-width: 800px) {
-            .term-content { padding: 25px 20px; }
-            .profile-grid { flex-direction: column; align-items: center; }
-            .win-title { font-size: 1.3rem; letter-spacing: 3px; }
-            .footer-main { gap: 30px; flex-direction: column; }
+        .za-crest {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #b33b3b;
+            background: #170101;
+            padding: 12px 22px;
         }
+
+        .za-crest .crest-symbol {
+            font-size: 3.5rem;
+            line-height: 1;
+            letter-spacing: 6px;
+            color: #dd4444;
+        }
+
+        .za-crest .crest-text {
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #bb5555;
+            text-transform: uppercase;
+        }
+
+        .footer-stamp {
+            text-align: center;
+            margin-top: 100px;
+            padding: 20px 0 25px;
+            border-top: 1px solid #aa2a2a;
+            font-size: 0.8rem;
+            color: #aa5555;
+        }
+
+        a, button {
+            transition: all 0.1s linear;
+        }
+
+        @media (max-width: 750px) {
+            .gov-container {
+                padding: 0 12px;
+            }
+            .stats-red {
+                grid-template-columns: 1fr;
+            }
+            .footer-logos {
+                min-height: 200px;
+            }
+            .dod-logo-container {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin-bottom: 20px;
+                display: inline-flex;
+                width: fit-content;
+            }
+            .coat-of-arms {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 20px;
+                text-align: left;
+            }
+            .footer-logos {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+
+        button, .gov-photo, .clearance-badge, .stats-red, .bio-timeline {
+            border-radius: 0px;
+        }
+        
     </style>
+    
 </head>
+    
 <body>
 
-    <!-- SLOW, SPACED OUT NUMBER RAIN (0-9) - ADVANCED -->
-    <canvas id="matrix-canvas"></canvas>
+<div class="gov-container">
 
-    <!-- TERMINAL WINDOW - FULL TRANSPARENCY -->
-    <div class="terminal-window">
+    <div class="header-gov">
+        <div class="title-section">
+            <h1>PHILANI KEMELE</h1>
+            <p>COMPLIANCE OFFICER</p>
+            <p style="font-size:0.7rem; margin-top:6px;">FULL OFFICIAL EXTENDED PROFILE · LIFETIME TRACE</p>
+        </div>
+        <div class="clearance-badge">
+            <span>★★★★★★+</span>
+        </div>
+    </div>
 
-        <!-- HEADER with functional EDEN button (links to index.html) -->
-        <div class="win-header">
-            <div class="win-title">
-                <!-- EDEN button takes you to index.html -->
-                <a href="index.html" class="eden-button">BIG JOE</a>
+    <div class="profile-core">
+        <div class="identity-photo">
+            <div class="gov-photo">
+                <div class="badge-icon">⚔️</div>
+                <div>PHILANI KEMELE</div>
+                <div style="font-size:0.7rem;">TIER 1 OPERATOR</div>
             </div>
-            <div class="win-controls">
-                <span>⏻</span>
-                <span>⎔</span>
-                <span>⤬</span>
+        </div>
+        
+        <div class="stats-red">
+            <div class="stat-item"><span class="stat-label">FULL NAME</span><span class="stat-value">PHILANI FORTUNE KEMELE</span></div>
+            <div class="stat-item"><span class="stat-label">CALLSIGN</span><span class="stat-value">OLAMA/BIG-JOE</span></div>
+            <div class="stat-item"><span class="stat-label">MILITARY RANK</span><span class="stat-value">COMMANDER OF THE AIRFORCE (SAAF)</span></div>
+            <div class="stat-item"><span class="stat-label">CLEARANCE LEVEL</span><span class="stat-value">TIER 1</span></div>
+            <div class="stat-item"><span class="stat-label">RUGBY POSITION</span><span class="stat-value">FLYHALF</span></div>
+        </div>
+    </div>
+
+    <div class="section-mod">
+        <h2>⤞ FULL LIFETIME PROFILE · BIRTH → PRESENT → FUTURE ⤝</h2>
+        <div class="bio-timeline">
+            <div class="bio-entry">
+                <div class="bio-year">[1999] — ORIGIN / BIRTH</div>
+                <div class="bio-text">Born 22 OCTOBER 1999 at Marianhill Hospital, Durban. Maternal lineage: Zamandosi Cele. First residence: Hammarsdale, Mpumalanga Township, Unit 2 B1605. Early developmental years shaped by Gogo Ngidi at Siphamandla Crèche. Foundation of resilience forged in post-apartheid transition.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2005–2012] — PRIMARY FORMATION</div>
+                <div class="bio-text">John Wesley Primary (repeat Grade R due to cutoff — early institutional defiance). Transferred to Charles Hugo Primary: academic acceleration, self-taught syllabus superiority. Final primary phase at Shallcross Primary — mother’s first home purchase at Savannah Park, Pinetown. Recognised pattern of structural inequality.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2013–2017] — MARKLANDS SECONDARY · “THE CRUCIBLE”</div>
+                <div class="bio-text">Enrolled at under-resourced Marklands Secondary. Mentored by Mr N. Govendor (mathematics, form teacher) — only academic anchor. Deliberate academic disengagement as protest against systemic neglect. Matric 2017: intentional failure, strategic exit. Met Nonhle Ngidi, long-term partner since 2015, cementing emotional stability. “Marklands was a prison; I walked out knowing my mind was free.”</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2018–2020] — GAP YEAR & IT FOUNDATIONS</div>
+                <div class="bio-text">Full year of introspection and mental restructuring (2018). 2019: Richfield IT (NQF‑4), built foundational tech stack. Employed at Altice Optimum (Umhlanga) during early pandemic; contract ended. Early exposure to corporate fragility.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2021–2022] — RUGBY IMMERSION & FULL STACK EMERGENCE</div>
+                <div class="bio-text">Dedicated 2021 to mastering loosehead prop mechanics — physical discipline. 2022: Self‑accelerated into Python, ML, NLP, JavaScript, Java, Data Science, Rust. Certified via Coursera & self‑directed modules. Junior dev at U‑Connect (MVNO), pivoted to full‑stack, strategically disengaged to avoid contract lock‑in. Cryptography side projects begin.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2023] — CAPE TOWN EXPEDITION & EDEN GENESIS</div>
+                <div class="bio-text">Relocated to Cape Town to bootstrap software venture. Returned KZN after design partnership complications. Initiated classified SANDF Defence Intelligence cryptographic project. Cofounded EDEN — parent conglomerate (software, security, aerospace, agriculture, legal) alongside Thato. Vision: sovereign self-sufficiency.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2024–2025] — DIVINE MANDATE & AEROSPACE EXPANSION</div>
+                <div class="bio-text">Executed classified military-adjacent operation (codename: SACRED EDGE). Deep immersion in aerospace engineering fundamentals. 2025: Arnold joins EDEN as Chief Supply Chain Officer. Conducted 6-month espionage‑grade market infiltration (Umhlanga) to study demographic targeting for EDEN expansion. Simultaneous SANDF crypto‑development.</div>
+            </div>
+            <div class="bio-entry">
+                <div class="bio-year">[2026] — PRESENT: COMPLIANCE OFFICER / FULL GOVERNMENT PROFILE</div>
+                <div class="bio-text">Current appointment: Compliance Officer for EDEN Group (legal, regulatory, strategic oversight). Active bodyguard for Stainless Steel division. Tier‑1 special operator (SA Airforce Special Operations). Computer scientist, aerospace engineer, loosehead prop. Shareholder and principal architect of EDEN’s compliance architecture. Holds dual mandate: state-level security protocols & private sector governance.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="future-statement">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <span style="color:#ff4444; font-size:1.8rem;">⟁</span>
+            <h3 style="color:#ff6a6a; text-transform:uppercase;">FUTURE OPERATIONAL DIRECTIVE</h3>
+        </div>
+        <p>N/A</p>
+    </div>
+
+    <div class="profile-core" style="margin-top:0;">
+        <div style="width:100%;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 18px;">
+                <div class="stat-item"><span class="stat-label">BIRTHPLACE</span><span class="stat-value">Marianhill / Hammarsdale Unit2</span></div>
+                <div class="stat-item"><span class="stat-label">EDUCATION STACK</span><span class="stat-value">Richfield IT · Self-Stack: AI/ML/Rust/Java</span></div>
+                <div class="stat-item"><span class="stat-label">PARTNER</span><span class="stat-value">Nonhle Ngidi (since 2015)</span></div>
+                <div class="stat-item"><span class="stat-label">MENTOR</span><span class="stat-value">Mr N. Govendor (Strategic)</span></div>
+                <div class="stat-item"><span class="stat-label">CURRENT OP ZONE</span><span class="stat-value">AETHER / CRYPTO / EDEN HQ</span></div>
+                <div class="stat-item"><span class="stat-label">LANGUAGES</span><span class="stat-value">English, isiZulu, Tech Fluency</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-logos">
+
+        <div class="dod-logo-container">
+            <div class="dod-emblem">
+                <span>⚔️🛡️</span>
+            </div>
+            <div class="dod-text">
+                DEPARTMENT OF DEFENCE<br>
+                REPUBLIC OF SOUTH AFRICA<br>
+                <span style="font-size:0.65rem;">OFFICIAL LIAISON · BIG JOE PROFILE</span>
             </div>
         </div>
 
-        <!-- MAIN CONTENT - transparent to see rain -->
-        <div class="term-content">
-
-            <!-- PROFILE SECTION with placeholder if image missing -->
-            <div class="profile-grid">
-                <div class="profile-avatar">
-                    <!-- if olama.png missing, show placeholder -->
-                    <object data="olama.png" type="image/png" style="display:block; width:170px; height:170px;">
-                        <div class="avatar-placeholder">[OLAMA] // KHAYYIM</div>
-                    </object>
-                    <div class="avatar-label">>> ACTIVE // TIER-1</div>
-                </div>
-                <div class="profile-stats">
-                    <div class="stat-row"><span class="stat-label">CALLSIGN</span><span class="stat-value">PHOENIX-TIER1</span></div>
-                    <div class="stat-row"><span class="stat-label">RANK</span><span class="stat-value">CMDR AIRFORCE (SOF)</span></div>
-                    <div class="stat-row"><span class="stat-label">STATUS</span><span class="stat-value">FIELD ACTIVE // 2026</span></div>
-                    <div class="stat-row"><span class="stat-label">CLEARANCE</span><span class="stat-value">TOP SECRET // EDEN</span></div>
-                    <div class="stat-row"><span class="stat-label">DUTY</span><span class="stat-value">SPECIAL OPS / CRYPTO</span></div>
-                    <div class="stat-row"><span class="stat-label">RUGBY</span><span class="stat-value">LOOSEHEAD PROP</span></div>
-                    <div class="stat-row"><span class="stat-label">EDEN</span><span class="stat-value">SHAREHOLDER/COMPLIANCE</span></div>
-                    <div class="stat-row"><span class="stat-label">BODYGUARD</span><span class="stat-value">STAINLESS STEEL</span></div>
-                </div>
+        <div class="coat-of-arms">
+            <div class="za-crest">
+                <div class="crest-symbol">✠ 𓅪 ☥</div>
+                <div class="crest-text">SOUTH AFRICAN COAT OF ARMS</div>
+                <div class="crest-text" style="font-size:0.6rem;">!KE E: /XARRA //KE</div>
+                <div class="crest-text" style="font-size:0.55rem; margin-top:4px;">UNITY · DIVERSITY · REPUBLIC</div>
             </div>
+        </div>
+    </div>
 
-            <!-- QUICK FACTS — spaced out -->
-            <div class="facts-panel">
-                <div class="facts-grid">
-                    <div class="fact"><span class="tag">BIRTH</span><span class="data">1999-10-22 (26)</span></div>
-                    <div class="fact"><span class="tag">BIRTHPLACE</span><span class="data">Marianhill / Zamandosi Cele</span></div>
-                    <div class="fact"><span class="tag">ORIGIN</span><span class="data">Hammarsdale Unit2 B1605</span></div>
-                    <div class="fact"><span class="tag">CRÈCHE</span><span class="data">Siphamandla (Gogo Ngidi)</span></div>
-                    <div class="fact"><span class="tag">PRIMARY</span><span class="data">John Wesley · Charles Hugo · Shallcross</span></div>
-                    <div class="fact"><span class="tag">SECONDARY</span><span class="data">Marklands Secondary (2013–2017)</span></div>
-                    <div class="fact"><span class="tag">HIGHER</span><span class="data">Richfield IT NQF‑4</span></div>
-                    <div class="fact"><span class="tag">SELF‑STACK</span><span class="data">Python, ML, NLP, JS, Java, DataSci, Rust</span></div>
-                    <div class="fact"><span class="tag">PARTNER</span><span class="data">Nonhle Ngidi (2015)</span></div>
-                    <div class="fact"><span class="tag">MENTOR</span><span class="data">Mr N. Govendor</span></div>
-                    <div class="fact"><span class="tag">CURRENT OP</span><span class="data">AETHER / CRYPTO</span></div>
-                    <div class="fact"><span class="tag">RUGBY</span><span class="data">Loosehead prop · 2021 immersion</span></div>
-                </div>
-            </div>
+    <div class="footer-stamp">
+        <span>🔒 VERIFIED GOVERNMENT DOSSIER — COMPLIANCE OFFICER BIG JOE — FULL VIEW BIRTH TO FUTURE 🔒</span><br>
+        <span style="font-size:0.7rem;">DEPARTMENT OF DEFENCE REGISTRY #SA-DOD-EDEN-0226 | CLASSIFIED UNTIL 2040</span>
+        <div style="margin-top: 16px; letter-spacing: 2px;">⧫ TACTICAL COMPLIANCE DIRECTIVE · ACTIVE 2026 ⧫</div>
+    </div>
+</div>
 
-            <!-- FULL BIOGRAPHY — long, nothing omitted, spaced out -->
-            <div class="section-title">› FULL BIOGRAPHY // VERIFIED</div>
+<script>
+    
+    (function(){
+        
+        let bodyEl = document.body;
+        let toggle = false;
+        setInterval(() => {
 
-            <div class="bio-block"><strong>1999–2006 // ORIGIN & EARLY YEARS</strong> – Born at Marianhill Hospital to Zamandosi Cele. Raised in Hammarsdale (Mpumalanga Township, Unit 2, Sompisi Rd, B1605). Attended Siphamandla Crèche under Gogo Ngidi. Started Grade R at Ntendeleni Primary, then relocated with mother to Clermont. Forced to repeat Grade R at John Wesley Primary (due to birth after June cutoff) – sparked early awareness of institutional absurdity. Quickly absorbed English at John Wesley. Noticed “white flight” as school demographically shifted – early lesson in social dynamics.</div>
-
-            <div class="bio-block"><strong>2007–2012 // CHARLES HUGO PRIMARY</strong> – Transferred after brief St. Teresa’s. Excelled academically; taught division by mother and sister Mbali before class introduction – teacher astonished. Forged lifelong principle: “always stay ahead, and go beyond the syllabus.” Won several achievement awards. Moved to Shallcross Primary (Grade 6–7) after mother bought first house at Savannah Park, Pinetown.</div>
-
-            <div class="bio-block"><strong>2013–2017 // MARKLANDS SECONDARY – ‘THE PRISON YEARS’</strong> – Forced into under-resourced school when mother couldn't secure Wingen Heights. Olama mentally checked out, attended only for mother’s sake. Grade 8 passed okay; Grade 9 excelled (only because of Mr N. Govendor, form teacher & maths). Grades declined deliberately as silent protest. Met love of his life, Nonhle Ngidi (relationship ~6 months) – still holds deep affection. Matric 2017: intentionally failed, felt liberated. “I knew I’d be OK once I left Marklands. It was just all about leaving.”</div>
-
-            <div class="bio-block"><strong>2018 // GAP YEAR – FULL SELF‑REFLECTION</strong> – No work, no study. Dedicated full year to introspection. 2019 enrolled at Richfield. Frustrated with overemphasis on communications modules (repetitive high school English), but passed IT course with buddies. Used qualification to land 9‑to‑5 at Altice Optimum (Umhlanga) – Covid‑hit role, left after 10 months.</div>
-
-            <div class="bio-block"><strong>2021 // RUGBY IMMERSION</strong> – Devoted entire year to rugby skill development. <strong>2022</strong> – unlocked algorithms, self‑taught Python via Coursera; stacked certificates (HTML, JS, Java, Data Science, Data Analytics). Simultaneously worked at Capita (customer experience). Left August 2022 to pursue dev career. December 2022 hired as junior dev at U‑Connect (MVNO), soon became full‑stack but directionless – mentally disengaged to avoid contract extension.</div>
-
-            <div class="bio-block"><strong>2023 // CAPE TOWN & EDEN GENESIS</strong> – Autumn 2023, relocated to Cape Town to bootstrap own software company; returned to KZN sooner. Teamed with Jedeye Moon (designer) on a project that stalled due to payment disputes. Pivoted to advanced JavaScript and, crucially, <strong>cryptography project for SANDF Defence Intelligence</strong> (ongoing). Met Thato; together launched <strong>EDEN</strong> – a parent conglomerate (software, security, aerospace, agriculture, law).</div>
-
-            <div class="bio-block"><strong>2024 // DIVINE ASSIGNMENT & AEROSPACE</strong> – Undertook a ‘secret military operation for God / Jesus Christ’ that permanently shaped identity. Simultaneously dove deep into aerospace engineering. <strong>2025</strong> – Expanded EDEN: Arnold joined as chief supply chain officer. Performed 6‑month espionage‑grade market infiltration at Umhlanga to study target demographics, while maintaining SANDF work. <strong>2026</strong> – Shareholder, compliance officer, Tier‑1 special operator (SA Airforce), bodyguard for EDEN’s Stainless Steel division, computer scientist & aerospace engineer. Active loosehead prop. Also serves as compliance officer for Eden & Bodyguard (Stainless Steel).</div>
-
-            <!-- OPS RIBBON - militant, spaced -->
-            <div class="ops-strip">
-                <span>SANDF TIER‑1</span>
-                <span>DEFENCE CRYPTO</span>
-                <span>AEROSPACE ENG</span>
-                <span>EDEN COMPLIANCE</span>
-                <span>BODYGUARD (STEEL)</span>
-                <span>RUGBY PROP</span>
-            </div>
-
-            <!-- SIMPLIFIED, CENTERED FOOTER (no fingerprint section) -->
-            <div class="term-footer">
-                <div class="footer-main">
-                    <span>EDEN DB // BLACK-01</span>
-                    <span>TOP SECRET // NOFORN</span>
-                    <span>2026-03-10 // 06:32Z</span>
-                </div>
-                <div class="footer-class">
-                    ⏻ UNAUTHORIZED ACCESS PROHIBITED
-                </div>
-                <div style="margin-top:22px; color:#008f2e; font-size:0.9rem; letter-spacing:2px;">
-                    * * * TIER 1 SPECIAL OPERATIONS // TERMINAL LOCKED * * *
-                </div>
-            </div>
-
-        </div> <!-- end term-content -->
-    </div> <!-- end terminal-window -->
-
-    <script>
-        (function() {
-            const canvas = document.getElementById('matrix-canvas');
-            const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+            let current = bodyEl.style.backgroundColor;
+            if(toggle){
+                bodyEl.style.backgroundColor = '#000000';
+                toggle = false;
+            } else {
+                bodyEl.style.backgroundColor = '#030000';
+                toggle = true;
             }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
+        }, 3800);
 
-            // Extra spacing: columns based on 28px per character
-            const columns = Math.floor(canvas.width / 32) + 40;  // more columns, more space
-            const drops = [];
-            for (let i = 0; i < columns; i++) {
-                drops[i] = Math.floor(Math.random() * -canvas.height * 1.8); // very staggered
-            }
-
-            // Digits only: 0-9 — absolutely no letters
-            const digits = "0123456789";
-
-            function drawMatrix() {
-                // extremely slow fade for spaced-out, lingering rain
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.015)';  // very transparent -> super slow trail
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = '#00ff41';
-                ctx.font = 'bold 26px "Courier New", Courier, monospace';  // larger digits
-
-                for (let i = 0; i < drops.length; i++) {
-                    // pick random digit
-                    const char = digits[Math.floor(Math.random() * digits.length)];
-                    const x = i * 32;          // wide spacing horizontally
-                    const y = drops[i] * 30;    // vertical spacing
-
-                    if (y > 0 && y < canvas.height) {
-                        ctx.fillText(char, x, y);
-                    }
-
-                    // move down extremely slowly
-                    drops[i] += 0.08;   // super slow, spaced out (was 0.12)
-
-                    // reset with random offset to keep columns alive
-                    if (drops[i] * 30 > canvas.height && Math.random() > 0.998) {
-                        drops[i] = 0;
-                    } else if (drops[i] * 30 > canvas.height) {
-                        drops[i] = 0;
-                    }
-                }
-                requestAnimationFrame(drawMatrix);
-            }
-
-            drawMatrix();
-        })();
-    </script>
+        setInterval(() => {
+            bodyEl.style.backgroundColor = '#000000';
+        }, 4000);
+    })();
+    
+</script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
