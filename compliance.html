@@ -8,51 +8,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   
-  <meta name="description" content="Compliance CV-5">
-  
-  <script>
-
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      return false;
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'F12' || 
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-          (e.ctrlKey && e.key === 'U') ||
-          (e.metaKey && e.altKey && e.key === 'I')) {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    document.addEventListener('selectstart', function(e) { e.preventDefault(); return false; });
-
-    setInterval(function() {
-      debugger;
-    }, 1000);
-
-    if (window.console) {
-      window.console.log = function() {};
-      window.console.info = function() {};
-      window.console.warn = function() {};
-      window.console.error = function() {};
-      window.console.debug = function() {};
-    }
-
-    document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
-    
-  </script>
-  
+  <meta name="description" content="Compliance CV-5 | Tactical Command Interface">
   <title>COMPLIANCE CV-5</title>
   
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff0000'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='monospace' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,15 61,35 85,40 68,58 72,82 50,70 28,82 32,58 15,40 39,35' fill='%23ff0000'/%3E%3C/svg%3E">
   
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
   <script type="importmap">
     
     {
@@ -73,23 +36,15 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    
     :root {
       --bg: #000000;
-      --bg-translucent: rgba(0, 0, 0, 0.92);
-      --bg-card: rgba(0, 0, 0, 0.85);
+      --bg-card: #0a0000cc;
       --red: #ff0000;
-      --red-dark: #cc0000;
-      --red-glow: rgba(255, 0, 0, 0.3);
+      --red-dim: #cc0000;
       --text: #ff0000;
-      --text-dim: #aa0000;
       --border: #ff0000;
-      --success: #ff4444;
-      --warning: #ff8800;
-      --info: #ff3366;
-      --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --transition: all 0.2s ease;
     }
-    
     body {
       background: var(--bg);
       color: var(--text);
@@ -97,72 +52,35 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      line-height: 1.5;
     }
-    
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255, 0, 0, 0.03) 0px,
-        rgba(255, 0, 0, 0.03) 2px,
-        transparent 2px,
-        transparent 6px
-      );
-      pointer-events: none;
-      z-index: 9998;
-    }
-    
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.05) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 9997;
-      animation: pulseGlow 4s infinite;
-    }
-    
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-    
-    @keyframes scanMove {
-      0% { top: -10%; opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { top: 110%; opacity: 0; }
-    }
-    
-    .scan-line {
+
+    .random-scanner {
       position: fixed;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, var(--red), #ff6666, var(--red), transparent);
-      left: 0;
-      animation: scanMove 8s ease-in-out infinite;
+      height: 3px;
+ background: linear-gradient(90deg, transparent, #ff4444, #ff0000, #ff4444, transparent);
       pointer-events: none;
       z-index: 9999;
+      top: 0;
+      opacity: 0;
+      transition: opacity 0.1s;
     }
-    
+    .bg-scan-overlay {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px);
+      pointer-events: none;
+      z-index: 0;
+    }
     .app-container {
       max-width: 1600px;
       margin: 0 auto;
       padding: 0 1.5rem;
       position: relative;
-      z-index: 1;
+      z-index: 2;
       display: none;
     }
-    
+
     .command-header {
       width: 100vw;
       position: relative;
@@ -170,69 +88,29 @@
       right: 50%;
       margin-left: -50vw;
       margin-right: -50vw;
-      background: var(--bg-translucent);
+      background: #000000dd;
       backdrop-filter: blur(12px);
       border-bottom: 3px solid var(--red);
-      padding: 1.2rem 0;
+      padding: 1rem 0;
       margin-bottom: 2rem;
+      cursor: pointer;
     }
-    
     .header-content {
       max-width: 1600px;
       margin: 0 auto;
       padding: 0 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    
-    .logo {
-      font-size: clamp(1.2rem, 5vw, 2rem);
-      font-weight: 800;
-      letter-spacing: 4px;
-      color: var(--red);
-      font-family: 'Share Tech Mono', monospace;
       text-align: center;
-      justify-content: center;
     }
-    
-    .status-pulse {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-    }
-    
-    .pulse-dot {
-      width: 10px;
-      height: 10px;
-      background: var(--red);
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-    
+    .logo { font-size: clamp(1.4rem, 6vw, 2.4rem); font-weight: 800; letter-spacing: 6px; color: var(--red); font-family: 'Share Tech Mono'; }
+
     .section-card {
       background: var(--bg-card);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(4px);
       border: 2px solid var(--red);
       margin-bottom: 2rem;
-      padding: clamp(1.2rem, 3vw, 2rem);
+      padding: clamp(1rem, 3vw, 2rem);
       transition: var(--transition);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
     }
-    
-    .section-card:hover {
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
-      border-color: var(--red-dark);
-    }
-    
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -243,306 +121,118 @@
       padding-bottom: 0.8rem;
       margin-bottom: 1.5rem;
     }
-    
-    .section-title {
-      font-size: clamp(1.1rem, 4vw, 1.7rem);
-      font-weight: 700;
-      color: var(--red);
-      letter-spacing: 2px;
-      font-family: 'Share Tech Mono', monospace;
-    }
-    
-    .badge {
-      background: rgba(255, 0, 0, 0.15);
-      border: 1px solid var(--red);
-      padding: 0.3rem 1rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--red);
-    }
-    
-    .grid-2, .grid-3, .grid-4 {
-      display: grid;
-      gap: 1.5rem;
-    }
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    
-    .card {
-      background: rgba(0, 0, 0, 0.75);
-      border: 1px solid var(--red);
-      padding: 1.2rem;
-      backdrop-filter: blur(4px);
-    }
-    
+    .section-title { font-size: clamp(1rem, 4vw, 1.6rem); font-weight: 700; }
+    .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.8rem; font-size: 0.7rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card { background: #050000aa; border: 1px solid var(--red); padding: 1.2rem; backdrop-filter: blur(4px); }
     input, textarea, select {
       width: 100%;
       background: #0a0000;
       border: 1px solid var(--red);
-      padding: 0.75rem;
+      padding: 0.7rem;
       color: var(--red);
-      font-family: 'Share Tech Mono', monospace;
+      font-family: monospace;
       font-size: 0.85rem;
     }
-    
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--red-dark);
-      box-shadow: 0 0 5px var(--red-glow);
-    }
-    
     .btn {
       background: transparent;
       border: 1.5px solid var(--red);
       color: var(--red);
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
+      padding: 0.5rem 1rem;
       cursor: pointer;
-      transition: var(--transition);
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      font-family: 'Share Tech Mono', monospace;
+      font-weight: 600;
+      transition: 0.1s linear;
+      font-family: monospace;
+      font-size: 0.75rem;
     }
-    
-    .btn-primary {
-      background: var(--red);
-      color: #000000;
-      border-color: var(--red);
+    .btn-primary { background: var(--red); color: black; border-color: var(--red); }
+    .btn-primary:hover { background: #cc0000; transform: scale(0.98); }
+    .btn:hover { background: rgba(255,0,0,0.2); }
+
+    .stars-rank {
+      display: inline-flex;
+      gap: 8px;
+      margin-left: 12px;
+      align-items: center;
     }
-    
-    .btn-primary:hover {
-      background: var(--red-dark);
-      box-shadow: 0 0 12px var(--red-glow);
+    .military-star-svg {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 0px transparent);
+      animation: starPulse 3s infinite ease-in-out;
     }
-    
-    .btn:hover {
-      background: rgba(255, 0, 0, 0.2);
-      transform: translateY(-1px);
+    @keyframes starPulse {
+      0%, 100% { opacity: 0.65; filter: drop-shadow(0 0 0px gold); }
+      50% { opacity: 1; filter: drop-shadow(0 0 3px #ffcc33); }
     }
-    
-    .btn:active {
-      transform: translateY(1px);
-    }
-    
-    .message-board {
-      max-height: 550px;
-      overflow-y: auto;
+    .message-board { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.8rem; transition: 0.1s; }
+    .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .reaction-btn { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 0.2rem 0.5rem; font-size: 0.7rem; cursor: pointer; border-radius: 12px; }
+    .task-item { display: flex; justify-content: space-between; background: #0a0000aa; border: 1px solid red; padding: 0.6rem; margin-bottom: 0.5rem; }
+    .progress-track { background: #330000; height: 10px; border: 1px solid red; margin: 0.5rem 0; }
+    .progress-fill { background: var(--red); height: 100%; width: 0%; }
+
+    .quick-scroll-right {
+      position: fixed;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 12px;
+      z-index: 999;
     }
-    
-    .message-board::-webkit-scrollbar {
-      width: 6px;
-      background: #1a0000;
-    }
-    
-    .message-board::-webkit-scrollbar-thumb {
-      background: var(--red);
-      border-radius: 3px;
-    }
-    
-    .message-item {
-      background: rgba(20, 0, 0, 0.7);
-      border-left: 4px solid var(--red);
-      padding: 1rem;
-      transition: var(--transition);
-    }
-    
-    .message-item:hover {
-      background: rgba(40, 0, 0, 0.8);
-      transform: translateX(3px);
-    }
-    
-    .reply-context {
-      background: rgba(255, 0, 0, 0.1);
-      border-left: 3px solid var(--info);
-      padding: 0.6rem;
-      margin: 0.6rem 0;
-      font-size: 0.8rem;
-    }
-    
-    .typing-indicator {
-      color: var(--red-dark);
-      font-size: 0.7rem;
-      margin-top: 0.3rem;
-      animation: blink 1s infinite;
-    }
-    
-    @keyframes blink {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-    
-    .reaction-bar {
-      display: flex;
-      gap: 0.3rem;
-      margin-top: 0.5rem;
-    }
-    
-    .reaction-btn {
-      background: rgba(255, 0, 0, 0.15);
-      border: 1px solid var(--red);
-      padding: 0.2rem 0.5rem;
-      font-size: 0.7rem;
+    .quick-scroll-right button {
+      background: black;
+      border: 1.5px solid red;
+      color: red;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
       cursor: pointer;
-      border-radius: 12px;
-      transition: var(--transition);
+      transition: 0.1s;
     }
-    
-    .reaction-btn:hover {
-      background: var(--red);
-      color: black;
-    }
-    
-    .task-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(20, 0, 0, 0.6);
-      border: 1px solid var(--red);
-      padding: 0.8rem;
-      margin-bottom: 0.6rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    
-    .progress-track {
-      background: rgba(255, 0, 0, 0.2);
-      height: 10px;
-      border: 1px solid var(--red);
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: var(--red);
-      width: 0%;
-      transition: width 0.3s;
-    }
-    
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-    
-    .file-preview-item {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--red);
-      padding: 0.5rem;
-      text-align: center;
-      font-size: 0.7rem;
-    }
-    
-    .notification-stack {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 20000;
-      max-width: 380px;
-      width: calc(100% - 2rem);
-    }
-    
-    .notification {
-      background: rgba(0, 0, 0, 0.95);
-      border-left: 4px solid var(--red);
+    .quick-scroll-right button:hover { background: #2a0000; }
+
+    .footer-panel {
+      position: sticky;
+      bottom: 0;
+      background: #000000ee;
+      backdrop-filter: blur(16px);
+      border-top: 2px solid var(--red);
       padding: 0.8rem 1rem;
-      margin-bottom: 0.8rem;
       display: flex;
-      gap: 0.8rem;
-      align-items: center;
-      backdrop-filter: blur(8px);
-      animation: slideInRight 0.25s ease;
-      font-size: 0.85rem;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      z-index: 1000;
+      margin-top: 2rem;
     }
-    
-    @keyframes slideInRight {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    
+    .footer-panel .btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.98);
-      backdrop-filter: blur(12px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 30000;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px);
+      display: none; align-items: center; justify-content: center; z-index: 30000;
     }
-    
-    .modal-box {
-      background: #000000;
-      border: 2px solid var(--red);
-      max-width: 450px;
-      width: 90%;
-      padding: 2rem;
-    }
-    
-    .pin-gate {
-      position: fixed;
-      inset: 0;
-      background: #000000;
-      backdrop-filter: blur(20px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50000;
-      transition: opacity 0.5s;
-    }
-    
-    .pin-card {
-      border: 2px solid var(--red);
-      background: rgba(0, 0, 0, 0.9);
-      padding: 2rem;
-      max-width: 380px;
-      width: 100%;
-      text-align: center;
-    }
-    
-    .commander-badge {
-      background: linear-gradient(135deg, #ff0000, #990000);
-      color: black;
-      padding: 0.2rem 0.6rem;
-      font-size: 0.7rem;
-      font-weight: bold;
-      margin-left: 0.5rem;
-    }
-    
+    .modal-box { background: black; border: 2px solid red; max-width: 400px; width: 90%; padding: 2rem; }
+    .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center; z-index: 50000; }
+    .loader-overlay { position: fixed; inset: 0; background: black; display: none; align-items: center; justify-content: center; z-index: 40000; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .typing-indicator { color: #cc0000; font-size: 0.7rem; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0.4; } }
+    ::-webkit-scrollbar { width: 4px; background: #1a0000; }
+    ::-webkit-scrollbar-thumb { background: red; }
     @media (max-width: 768px) {
-      .app-container { padding: 0 1rem; }
-      .section-card { padding: 1rem; }
-      .btn { width: 100%; text-align: center; margin-top: 0.3rem; }
-      .grid-2, .grid-3, .grid-4 { gap: 1rem; }
-      .header-content { flex-direction: column; text-align: center; }
+      .app-container { padding: 0 0.8rem; }
+      .quick-scroll-right { right: 6px; }
+      .quick-scroll-right button { width: 36px; height: 36px; font-size: 0.9rem; }
+      .footer-panel .btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
     }
-    
-    @media (max-width: 480px) {
-      .section-title { font-size: 1rem; }
-      .badge { font-size: 0.6rem; }
-      .message-item { padding: 0.7rem; }
-    }
-    
     @media (min-width: 1920px) {
       .app-container { max-width: 1800px; }
-      .section-card { padding: 2.5rem; }
     }
-    
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: #1a0000;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: var(--red);
-    }
+    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.8rem; margin-top: 0.5rem; }
     
   </style>
   
@@ -550,318 +240,176 @@
   
 <body>
   
-<div class="scan-line"></div>
+<div class="bg-scan-overlay"></div>
+<div class="random-scanner" id="randomScanner"></div>
+<div class="quick-scroll-right">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})"><i class="fas fa-arrows-alt-v"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"><i class="fas fa-arrow-down"></i></button>
+</div>
 
 <div class="pin-gate" id="pinGate">
-  <div class="pin-card">
-    <div class="logo" style="font-size: 1.8rem;">COMPLIANCE CV-5</div>
-    <div style="margin: 1rem 0 1.5rem; color: var(--red);">CLASSIFIED ACCESS</div>
-    <input type="password" id="pinInput" placeholder="ENTER PIN" maxlength="7" style="text-align: center; letter-spacing: 4px;">
-    <button class="btn btn-primary" id="unlockBtn" style="margin-top: 1.5rem; width: 100%;">AUTHENTICATE</button>
+  <div class="modal-box" style="text-align:center">
+    <div class="logo" style="font-size:1.8rem;">COMPLIANCE CV-5</div>
+    <input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center">
+    <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">VERIFY</button>
   </div>
 </div>
 
 <div class="app-container" id="appContainer">
-  <div class="notification-stack" id="notifyStack"></div>
-  <div class="modal-overlay" id="globalModal">
-    <div class="modal-box">
-      <div id="modalTitle" style="color: var(--red); font-size: 1.3rem; margin-bottom: 1rem;"></div>
-      <div id="modalContent"></div>
-      <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end;">
-        <button class="btn" id="modalCancel">CANCEL</button>
-        <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
-      </div>
-    </div>
-  </div>
-  <div id="loaderOverlay" style="position: fixed; inset: 0; background: black; display: none; align-items: center; justify-content: center; z-index: 40000;">
-    <div style="text-align: center;"><div style="width: 40px; height: 40px; border: 2px solid var(--red); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;"></div><div style="margin-top: 1rem;">PROCESSING</div></div>
-  </div>
+  <div id="notifyStack" style="position:fixed; top:1rem; right:1rem; z-index:20000; max-width:350px"></div>
+  <div class="loader-overlay" id="loaderOverlay"><div style="text-align:center"><div style="width:40px; height:40px; border:2px solid red; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite;"></div><div>SYNC</div></div></div>
+  <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem; justify-content:flex-end"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
-  <header class="command-header">
+  <header class="command-header" onclick="window.location.href='index.html'">
     <div class="header-content">
       <div class="logo">COMPLIANCE CV-5</div>
-      <div class="status-pulse"><span class="pulse-dot"></span><span>ACTIVE • SECURE CHANNEL</span></div>
+      <div class="status-pulse" style="display:flex; justify-content:center; gap:12px; margin-top:6px;"><span class="pulse-dot" style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>ACTIVE • SECURE</div>
     </div>
   </header>
 
-  <!-- SECTION 1: COMMANDER-IN-CHIEF COMMAND PROTOCOL ALPHA-1 -->
   <section class="section-card" id="secCommand">
     <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-crown"></i> 01. PROTOCOL ALPHA-1</h2>
-      <span class="badge" id="cmdBadge">PROTOCOL LOCKED</span>
+      <h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2>
+      <span class="badge" id="cmdBadge">Chief Innovations Officer / Chairman / Founder</span>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3 style="color: var(--red); margin-bottom: 0.8rem;">ACTIVE DIRECT ACTION</h3>
-        <div id="directiveText" style="background: #0a0000; padding: 1rem; min-height: 100px; font-family: monospace;">—</div>
-        <div id="directiveMeta" style="font-size: 0.7rem; margin-top: 0.8rem; color: var(--text-dim);"></div>
+        <h3><i class="fas fa-skull"></i> DIRECT ACTION</h3>
+        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:120px; white-space:pre-wrap; margin:0.5rem 0;"></div>
+        <div class="btn-group" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+          <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
+          <button class="btn" id="pasteToDirectiveBtn"><i class="fas fa-paste"></i> PASTE</button>
+          <button class="btn" id="clipboardDirectiveBtn"><i class="fas fa-clipboard"></i> CLIP SAVE</button>
+          <button class="btn" id="clearDirectiveBtn"><i class="fas fa-eraser"></i> CLEAR</button>
+        </div>
+        <div id="directiveMeta" style="font-size:0.7rem; margin-top:0.5rem;"></div>
       </div>
-      <div class="card" id="cmdPanel" style="display: none;">
-        <h3 style="color: var(--red);">ISSUE NEW DIRECT ACTION</h3>
-        <textarea id="newDirective" rows="4" placeholder="Commander's orders..."></textarea>
-        <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+      <div class="card" id="cmdPanel" style="display:none;">
+        <h3><i class="fas fa-user-secret"></i> COMMANDER's TACTICAL NOTEPADS (4)</h3>
+        <div id="commanderNotepadsContainer" class="grid-2" style="gap:0.8rem;"></div>
+        <hr style="border-color:red; margin:1rem 0">
+        <h4>ISSUE NEW DIRECT ACTION</h4>
+        <textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea>
+        <div style="display:flex; gap:0.6rem; margin-top:0.8rem;">
           <button class="btn" id="lockCmdBtn">LOCK PROTOCOL</button>
           <button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT ORDER</button>
         </div>
-        <h4 style="color: var(--red); margin-top: 1.2rem;">CV-5 HISTORY LOG</h4>
-        <div id="directiveHistory" style="max-height: 200px; overflow-y: auto;"></div>
+        <div><strong>HISTORY LOG</strong><div id="directiveHistory" style="max-height:150px; overflow-y:auto; margin-top:8px;"></div></div>
       </div>
-      <button class="btn" id="unlockCmdBtn" style="grid-column: 1/-1;"><i class="fas fa-key"></i> UNLOCK PROTOCOL</button>
+      <button class="btn" id="unlockCmdBtn" style="grid-column:1/-1;"><i class="fas fa-key"></i> UNLOCK PROTOCOL</button>
     </div>
   </section>
 
-  <section class="section-card" id="secMessages">
-    <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-comments"></i> 02. TEAM MESSAGE BOARD</h2>
-      <span class="badge" id="msgCountBadge">0 active</span>
-    </div>
+  <section class="section-card">
+    <div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span></div>
     <div class="grid-2">
-      <div class="card">
-        <h3 style="color: var(--red);">COMPOSE MESSAGE</h3>
-        <input type="text" id="callsignField" placeholder="CODENAME / CALLSIGN" value="OLAMA">
-        <select id="deptField" style="margin-top: 0.5rem;">
-          <option>COMPLIANCE CV-5</option><option>INTEL DIVISION</option><option>FIELD OPERATIONS</option><option>COMMAND STAFF</option>
-        </select>
-        <div id="replyIndicatorBox" style="display: none; background: rgba(255,0,0,0.1); padding: 0.5rem; margin: 0.5rem 0;"></div>
-        <textarea id="messageText" rows="4" placeholder="Secure transmission..."></textarea>
-        <div id="typingStatus" class="typing-indicator" style="display: none;">✍️ operator typing...</div>
-        <div style="display: flex; gap: 0.5rem; margin: 0.8rem 0; flex-wrap: wrap;">
-          <button class="btn" id="emojiBtn"><i class="far fa-smile"></i> EMOJI</button>
-          <button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i> ATTACH</button>
-          <button class="btn" id="gifBtn"><i class="fas fa-film"></i> GIF</button>
-          <button class="btn" id="clearComposeBtn"><i class="fas fa-trash"></i> CLEAR</button>
-        </div>
-        <input type="file" id="attachFileInput" style="display: none;" accept="image/*,.pdf,.txt">
-        <div id="attachPreview" style="font-size: 0.75rem; color: var(--text-dim);"></div>
-        <div id="gifPreview" style="display: none; margin: 0.5rem 0;"></div>
-        <button class="btn btn-primary" id="sendMsgBtn" style="width: 100%;"><i class="fas fa-bolt"></i> ENCRYPT & SEND</button>
-      </div>
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-          <h3 style="color: var(--red);"><i class="fas fa-rss"></i> LIVE FEED</h3>
-          <button class="btn" id="refreshMessagesBtn" style="padding: 0.3rem 0.8rem;"><i class="fas fa-sync-alt"></i></button>
-        </div>
-        <div class="message-board" id="messageBoard"></div>
-      </div>
+      <div class="card"><h3>NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="OPERATOR"><select id="deptField"><option>CV-5 CORE</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.3rem;"></div><textarea id="messageText" rows="3" placeholder="Message..."></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="emojiBtn"><i class="far fa-smile"></i></button><button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i></button><button class="btn" id="gifBtn"><i class="fas fa-film"></i></button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><div id="attachPreview"></div><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div>
+      <div class="card"><div style="display:flex; justify-content:space-between;"><h3>LIVE FEED</h3><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="message-board" id="messageBoard"></div></div>
     </div>
   </section>
 
-  <section class="section-card" id="secTasks">
-    <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-tasks"></i> 03. OPERATIONAL OBJECTIVES</h2>
-      <span class="badge" id="taskActiveBadge">0 active</span>
-    </div>
-    <div class="grid-3">
-      <div class="card">
-        <h3 style="color: var(--red);">CREATE OBJECTIVE</h3>
-        <input type="text" id="taskInput" placeholder="Enter objective...">
-        <div style="display: flex; gap: 0.5rem; margin-top: 0.8rem;">
-          <button class="btn" id="priorityTaskBtn"><i class="fas fa-bolt"></i> PRIORITY</button>
-          <button class="btn btn-primary" id="addTaskBtn"><i class="fas fa-plus"></i> ADD</button>
-        </div>
-        <div style="margin-top: 1rem;">
-          <button class="btn" id="completeAllBtn" style="width: 100%;"><i class="fas fa-check-double"></i> COMPLETE ALL ACTIVE</button>
-          <button class="btn" id="clearCompletedBtn" style="width: 100%; margin-top: 0.5rem;"><i class="fas fa-eraser"></i> CLEAR COMPLETED</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3 style="color: var(--red);"><i class="fas fa-play-circle"></i> ACTIVE OBJECTIVES</h3>
-        <div id="activeTasksList" style="max-height: 300px; overflow-y: auto;"></div>
-      </div>
-      <div class="card">
-        <h3 style="color: var(--red);"><i class="fas fa-chart-line"></i> PROGRESS METRICS</h3>
-        <div style="display: flex; justify-content: space-between;"><span>COMPLETION RATE</span><span id="progressPercent">0%</span></div>
-        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-        <div style="margin-top: 1rem;"><span>TOTAL: </span><span id="totalTasksSpan">0</span> &nbsp;|&nbsp; <span>ACTIVE: </span><span id="activeTasksSpan">0</span></div>
-        <h4 style="color: var(--red); margin-top: 1rem;"><i class="fas fa-check-circle"></i> COMPLETED</h4>
-        <div id="completedTasksList" style="max-height: 150px; overflow-y: auto;"></div>
-      </div>
-    </div>
-  </section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">03. OPERATIONAL OBJECTIVES</h2><span class="badge" id="taskActiveBadge">0</span></div><div class="grid-3"><div class="card"><input type="text" id="taskInput" placeholder="New objective"><div style="display:flex; gap:0.5rem; margin-top:0.8rem;"><button class="btn" id="priorityTaskBtn">⚡ PRIORITY</button><button class="btn btn-primary" id="addTaskBtn">ADD</button></div><button class="btn" id="completeAllBtn" style="width:100%; margin-top:0.8rem;">COMPLETE ALL</button></div><div class="card"><h3>ACTIVE</h3><div id="activeTasksList"></div></div><div class="card"><h3>METRICS</h3><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span id="progressPercent">0%</span><div id="completedTasksList" style="max-height:150px; overflow-y:auto; margin-top:1rem;"></div></div></div></section>
 
-  <section class="section-card" id="secLogs">
-    <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-database"></i> 04. COMING SOON!</h2>
-    </div>
-  </section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">04. COMING SOON</h2><span class="badge">STAY TUNED</span></div><div style="text-align:center; padding:1.5rem; border:1px dashed red;"><i class="fas fa-hourglass-half"></i></div></section>
 
-  <section class="section-card" id="secZama">
-    <div class="section-header">
-      <h2 class="section-title"><i class="fas fa-microchip"></i> 05. SARAH MNGUNI (AI) • NEURAL INTERFACE</h2>
-      <span class="badge">PROTOTYPE v0.9</span>
-    </div>
-    <div style="text-align: center; padding: 2rem; border: 2px dashed var(--red); background: rgba(255,0,0,0.05);">
-      <div style="font-size: 3rem;">🧠</div>
-      <div style="color: var(--red); font-size: 1.3rem;">NEURAL CORE INITIALIZING</div>
-      <div style="color: var(--text-dim); margin-top: 0.5rem;">Quantum processing • Expected Q4 2026</div>
-      <div style="margin-top: 1rem;"><span class="pulse-dot" style="display: inline-block;"></span> DEVELOPMENT PHASE</div>
-    </div>
-  </section>
+  <section class="section-card" id="aiSection"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI (AI) • NEURAL MODEL</h2><span class="badge">ACTIVE</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff6666; text-align:center;">NEURAL INTERFACE ONLINE • SYNCING...</div><div id="aiConversation" style="max-height: 250px; overflow-y: auto; background: #050000; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid red;"></div><textarea id="aiPrompt" rows="2" placeholder="Ask Sarah Mnguni anything..."></textarea><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;"><i class="fas fa-comment-dots"></i> TRANSMIT</button><div id="aiMemoryIndicator" style="font-size:0.7rem; margin-top:0.5rem; text-align:center;">contextual memory • synced</div></div></section>
 
-  <footer style="margin-top: 2rem; padding: 1.5rem; text-align: center; border-top: 1px solid var(--red);">
-    <div style="font-size: 0.8rem; color: var(--text-dim);">EDEN RESERVATION</div>
-  </footer>
+  <div class="footer-panel">
+    <button class="btn" id="globalCopyBtn"><i class="fas fa-copy"></i> COPY</button>
+    <button class="btn" id="globalPasteBtn"><i class="fas fa-paste"></i> PASTE</button>
+    <button class="btn" id="globalClipboardBtn"><i class="fas fa-clipboard-list"></i> SHOW CLIPBOARD</button>
+    <button class="btn" id="exportLogsFooterBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button>
+    <button class="btn" id="clearCacheBtn"><i class="fas fa-broom"></i> CLEAR CACHE</button>
+    <span style="color:#ff0000; border-left:1px solid red; padding-left:12px;">⚔️ PROTOCOLS: ALPHA-5 • ALPHA-1 • EDEN CLEARANCE</span>
+    <span style="color:#ffcc88;"><i class="fas fa-cross"></i> PSALMS 27:1 "The LORD is my Light and my Salvation; of whom shall I fear?"</span>
+  </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, writeBatch, where, increment, arrayUnion, arrayRemove, limit } from "@firebase/firestore";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-    authDomain: "eden-4a8d3.firebaseapp.com",
-    projectId: "eden-4a8d3",
-    storageBucket: "eden-4a8d3.firebasestorage.app",
-    messagingSenderId: "421147129483",
-    appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-  };
+  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch, where, arrayUnion, arrayRemove, increment, limit } from "@firebase/firestore";
+  const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const sessionId = crypto.randomUUID();
-
-  const showLoader = (show) => document.getElementById('loaderOverlay').style.display = show ? 'flex' : 'none';
-  const notify = (msg, type = 'info', dur = 4000) => {
-    const stack = document.getElementById('notifyStack');
-    const n = document.createElement('div');
-    n.className = 'notification';
-    n.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span><span style="flex:1">${msg}</span><button style="background:none; border:none; color:red; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
-    stack.appendChild(n);
-    setTimeout(() => n?.remove(), dur);
-  };
-
-  let modalResolve = null;
-  const modal = document.getElementById('globalModal');
-  const showModal = (title, content) => new Promise(resolve => {
-    document.getElementById('modalTitle').innerHTML = title;
-    document.getElementById('modalContent').innerHTML = content;
-    modal.style.display = 'flex';
-    const confirm = () => { modal.style.display = 'none'; cleanup(); resolve(true); };
-    const cancel = () => { modal.style.display = 'none'; cleanup(); resolve(false); };
-    const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); };
-    const confirmBtn = document.getElementById('modalConfirm');
-    const cancelBtn = document.getElementById('modalCancel');
-    confirmBtn.addEventListener('click', confirm);
-    cancelBtn.addEventListener('click', cancel);
-  });
-
-  const pinGate = document.getElementById('pinGate');
-  const appContainer = document.getElementById('appContainer');
-  document.getElementById('unlockBtn').addEventListener('click', () => {
-    if (document.getElementById('pinInput').value === '7') {
-      pinGate.style.opacity = '0';
-      setTimeout(() => { pinGate.style.display = 'none'; appContainer.style.display = 'block'; notify('ACCESS GRANTED. CV-5 ONLINE.', 'success'); }, 400);
-    } else { notify('INVALID ACCESS CODE', 'error'); document.getElementById('pinInput').value = ''; }
-  });
-
-  const cmdBadge = document.getElementById('cmdBadge');
-  const cmdPanel = document.getElementById('cmdPanel');
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => {
-    const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPin" placeholder="CIC OVERRIDE CODE" style="width:100%; margin-top:0.5rem;">');
-    if (ok && document.getElementById('cmdPin')?.value === '1234') { cmdPanel.style.display = 'block'; cmdBadge.innerHTML = 'CIC ACTIVE'; notify('Commander panel unlocked', 'success'); }
-    else if (ok) notify('Invalid override', 'error');
-  });
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { cmdPanel.style.display = 'none'; cmdBadge.innerHTML = 'CIC LOCKED'; });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
-    const txt = document.getElementById('newDirective').value.trim();
-    if (!txt) return notify('Directive required', 'warning');
-    showLoader(true);
-    try {
-      await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' });
-      await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' });
-      document.getElementById('newDirective').value = '';
-      notify('Directive transmitted', 'success');
-    } catch(e) { notify(e.message, 'error'); } finally { showLoader(false); }
-  });
-  onSnapshot(doc(db, 'cio', 'directive'), snap => { if(snap.exists()){ const d=snap.data(); document.getElementById('directiveText').innerHTML = d.text; document.getElementById('directiveMeta').innerHTML = `Issued: ${d.timestamp?.toDate().toLocaleString()}`; } });
-  onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(10)), snap => { const div = document.getElementById('directiveHistory'); div.innerHTML = ''; snap.forEach(d => { div.innerHTML += `<div style="border-bottom:1px solid red; padding:0.3rem;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div>${d.data().text.substring(0,80)}</div></div>`; }); });
-
-  let replyingTo = null, currentAttach = null;
-  const callsign = document.getElementById('callsignField');
-  const msgText = document.getElementById('messageText');
-  const msgBoard = document.getElementById('messageBoard');
-  const replyBox = document.getElementById('replyIndicatorBox');
-  const attachInput = document.getElementById('attachFileInput');
-  const attachPreview = document.getElementById('attachPreview');
-  document.getElementById('attachBtn').addEventListener('click', () => attachInput.click());
-  attachInput.addEventListener('change', e => { if(e.target.files[0]){ currentAttach = e.target.files[0]; attachPreview.innerText = `📎 ${currentAttach.name}`; } });
-  document.getElementById('clearComposeBtn').addEventListener('click', () => { msgText.value = ''; currentAttach = null; attachPreview.innerText = ''; replyingTo = null; replyBox.style.display = 'none'; attachInput.value = ''; });
-  document.getElementById('sendMsgBtn').addEventListener('click', async () => {
-    if(!callsign.value.trim()) return notify('Callsign required','warning');
-    if(!msgText.value.trim() && !currentAttach) return notify('Message or attachment required','warning');
-    showLoader(true);
-    let attachData = null;
-    if(currentAttach) attachData = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r({ name:currentAttach.name, type:currentAttach.type, data:fr.result }); fr.readAsDataURL(currentAttach); });
-    const msgObj = { callsign:callsign.value.toUpperCase(), department:document.getElementById('deptField').value, text:msgText.value, attachment:attachData, timestamp:serverTimestamp(), operator:callsign.value, sessionId, pinned:false, likes:0, likedBy:[], reactions:{}, replyTo: replyingTo ? { messageId:replyingTo.id, callsign:replyingTo.callsign, text:replyingTo.text.substring(0,80) } : null };
-    try { await addDoc(collection(db,'messages'), msgObj); msgText.value=''; currentAttach=null; attachPreview.innerText=''; replyingTo=null; replyBox.style.display='none'; attachInput.value=''; notify('Message sent','success'); } catch(e){ notify(e.message,'error'); } finally { showLoader(false); }
-  });
-  window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; replyBox.style.display='block'; replyBox.innerHTML = `↪️ REPLYING TO ${callsign}: "${text.substring(0,60)}"`; };
-  window.toggleLikeMsg = async (id, username) => { try{ const ref=doc(db,'messages',id); const snap=await getDocs(query(collection(db,'messages'),where('__name__','==',id))); if(!snap.empty){ const likedBy=snap.docs[0].data().likedBy||[]; if(likedBy.includes(username)) await updateDoc(ref,{ likes:increment(-1), likedBy:arrayRemove(username) }); else await updateDoc(ref,{ likes:increment(1), likedBy:arrayUnion(username) }); } } catch(e){ notify(e.message,'error'); } };
-  window.deleteMsgItem = async (id) => { if(await showModal('Delete Message','Permanently delete this transmission?')){ showLoader(true); try{ await deleteDoc(doc(db,'messages',id)); notify('Deleted','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } };
-  window.togglePinMsg = async (id, current) => { try{ await updateDoc(doc(db,'messages',id),{ pinned: !current }); notify(current?'Unpinned':'Pinned','info'); }catch(e){ notify(e.message,'error'); } };
-  onSnapshot(query(collection(db,'messages'), orderBy('timestamp','desc'), limit(80)), snap => { let msgs=[]; snap.forEach(d=>{ let m=d.data(); m.id=d.id; msgs.push(m); }); msgs.sort((a,b)=>(a.pinned&&!b.pinned)?-1:(!a.pinned&&b.pinned)?1:(b.timestamp?.seconds||0)-(a.timestamp?.seconds||0)); msgBoard.innerHTML=''; let cnt=0; msgs.forEach(m=>{ cnt++; const liked = (m.likedBy||[]).includes(callsign.value); let attachHtml=''; if(m.attachment){ if(m.attachment.type?.startsWith('image/')) attachHtml=`<div class="mt-2"><img src="${m.attachment.data}" style="max-width:150px; max-height:100px; border:1px solid red; cursor:pointer;" onclick="window.open('${m.attachment.data}','_blank')"></div>`; else attachHtml=`<div><a href="${m.attachment.data}" download style="color:red;">📎 ${m.attachment.name}</a></div>`; } let replyCtx=''; if(m.replyTo) replyCtx=`<div class="reply-context"><strong>↪️ in reply to ${m.replyTo.callsign}</strong>: "${m.replyTo.text.substring(0,50)}"</div>`; msgBoard.innerHTML+=`<div class="message-item"><div style="display:flex; justify-content:space-between;"><div><strong style="color:red">${m.callsign}</strong> <span class="badge">${m.department}</span>${m.pinned?' 📌':''}</div><small>${m.timestamp?.toDate().toLocaleString()}</small></div>${replyCtx}<div style="margin:0.5rem 0;">${m.text}</div>${attachHtml}<div style="display:flex; justify-content:space-between; margin-top:0.5rem;"><button class="like-btn" style="background:none; border:none; color:red; cursor:pointer;" onclick="window.toggleLikeMsg('${m.id}','${callsign.value}')">👍 <span id="like-${m.id}">${m.likes||0}</span></button><div><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.replyMessage('${m.callsign}','${m.id}','${m.text.replace(/'/g,"\\'")}')">💬 REPLY</button><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.togglePinMsg('${m.id}',${m.pinned})">📌</button><button class="btn" style="padding:0.2rem 0.5rem;" onclick="window.deleteMsgItem('${m.id}')">🗑️</button></div></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
-
-  const taskInput = document.getElementById('taskInput');
-  document.getElementById('addTaskBtn').addEventListener('click', async () => { if(!taskInput.value.trim()) return; showLoader(true); try{ await addDoc(collection(db,'tasks'),{ text:taskInput.value, completed:false, priority:taskInput.value.includes('⚡'), created:serverTimestamp(), operator:callsign.value }); taskInput.value=''; notify('Objective added','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } });
-  document.getElementById('priorityTaskBtn').addEventListener('click',()=>{ if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value='⚡ '+taskInput.value; });
-  document.getElementById('completeAllBtn').addEventListener('click', async () => { if(await showModal('Complete All','Mark all active objectives as complete?')){ showLoader(true); try{ const snap=await getDocs(query(collection(db,'tasks'), where('completed','==',false))); const batch=writeBatch(db); snap.forEach(d=>batch.update(d.ref,{completed:true})); await batch.commit(); notify('All completed','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } });
-  document.getElementById('clearCompletedBtn').addEventListener('click', async () => { if(await showModal('Clear Completed','Delete all completed objectives?')){ showLoader(true); try{ const snap=await getDocs(query(collection(db,'tasks'), where('completed','==',true))); const batch=writeBatch(db); snap.forEach(d=>batch.delete(d.ref)); await batch.commit(); notify('Cleared','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } });
-  window.toggleTaskComplete = async (id, current) => { try{ await updateDoc(doc(db,'tasks',id),{ completed:!current }); }catch(e){ notify(e.message,'error'); } };
-  window.deleteTask = async (id) => { if(await showModal('Delete Task','Delete this objective?')){ showLoader(true); try{ await deleteDoc(doc(db,'tasks',id)); notify('Deleted','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } };
-  onSnapshot(query(collection(db,'tasks'), orderBy('created','desc')), snap => { let active='', comp='', aC=0,cC=0; snap.forEach(d=>{ const data=d.data(); const priority=data.priority?'⚡ ':''; const html=`<div class="task-item"><div>${priority}${data.text}<div><small>${data.operator||''}</small></div></div><div><button onclick="window.toggleTaskComplete('${d.id}',${data.completed})">${data.completed?'↩️':'✅'}</button><button onclick="window.deleteTask('${d.id}')">🗑️</button></div></div>`; if(data.completed){ comp+=html; cC++; } else { active+=html; aC++; } }); document.getElementById('activeTasksList').innerHTML=active||'<div class="text-dim">—</div>'; document.getElementById('completedTasksList').innerHTML=comp||'<div class="text-dim">—</div>'; const total=aC+cC; const percent=total?Math.round((cC/total)*100):0; document.getElementById('progressFill').style.width=percent+'%'; document.getElementById('progressPercent').innerText=percent+'%'; document.getElementById('totalTasksSpan').innerText=total; document.getElementById('activeTasksSpan').innerText=aC; document.getElementById('taskActiveBadge').innerText=`${aC} active`; });
-
-  const addLog = (type) => addDoc(collection(db,'shifts'),{ type, operator:callsign.value, timestamp:serverTimestamp(), sessionId });
-  setTimeout(()=>addLog('SESSION_START'), 500);
-  onSnapshot(query(collection(db,'shifts'), orderBy('timestamp','desc'), limit(60)), snap => { const div=document.getElementById('logEntries'); div.innerHTML=''; let cnt=0; snap.forEach(d=>{ cnt++; const data=d.data(); div.innerHTML+=`<div style="border-bottom:1px solid #330000; padding:0.5rem;"><strong style="color:red">${data.type||'LOG'}</strong> · ${data.operator}<div><small>${data.timestamp?.toDate().toLocaleString()}</small></div></div>`; }); document.getElementById('logCounter').innerHTML=`${cnt} entries`; });
-  document.getElementById('clearLogsBtn').addEventListener('click', async () => { if(await showModal('Clear Logs','PIN required','<input id="clearPin" type="password">') && document.getElementById('clearPin')?.value==='1234'){ showLoader(true); try{ const snap=await getDocs(collection(db,'shifts')); const batch=writeBatch(db); snap.forEach(d=>batch.delete(d.ref)); await batch.commit(); notify('Logs cleared','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } } else notify('Invalid PIN','error'); });
-  document.getElementById('exportLogsBtn').addEventListener('click', async () => { showLoader(true); try{ const snap=await getDocs(query(collection(db,'shifts'), limit(1000))); const data=[]; snap.forEach(d=>data.push(d.data())); const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`cv5_logs_${Date.now()}.json`; a.click(); notify('Export complete','success'); }catch(e){ notify(e.message,'error'); } finally{ showLoader(false); } });
-  window.processFiles = () => { const files=document.getElementById('fileUpload').files; if(!files.length) return; const grid=document.getElementById('filePreviewGrid'); grid.innerHTML=''; Array.from(files).slice(0,12).forEach(f=>{ const reader=new FileReader(); reader.onload=e=>{ const div=document.createElement('div'); div.className='file-preview-item'; if(f.type.startsWith('image/')) div.innerHTML=`<img src="${e.target.result}" style="max-width:100%"><div>${f.name.slice(0,12)}</div>`; else div.innerHTML=`<div>📄</div><div>${f.name.slice(0,12)}</div>`; grid.appendChild(div); }; reader.readAsDataURL(f); }); notify(`${files.length} file(s) staged`,'success'); };
-  document.getElementById('processFilesBtn').addEventListener('click', window.processFiles);
-  document.getElementById('clearFilesBtn').addEventListener('click', () => { document.getElementById('filePreviewGrid').innerHTML=''; document.getElementById('fileUpload').value=''; notify('Cleared','info'); });
-  document.getElementById('refreshMessagesBtn').addEventListener('click', () => notify('Feed refreshed','info'));
-  document.getElementById('emojiBtn').addEventListener('click', () => { const picker = document.createElement('emoji-picker'); picker.style.position='absolute'; picker.style.zIndex=1000; document.body.appendChild(picker); picker.addEventListener('emoji-click', e=>{ msgText.value += e.detail.unicode; picker.remove(); }); setTimeout(()=>picker.remove(), 10000); });
-  document.getElementById('gifBtn').addEventListener('click', () => { const gifUrls = ['https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif','https://media.giphy.com/media/l0HlNQ3JjR1y3PpSU/giphy.gif']; const url = gifUrls[Math.floor(Math.random()*gifUrls.length)]; msgText.value += ` [GIF: ${url}] `; notify('GIF link added','info'); });
   
-  notify('CV-5 OPERATIONAL. COMMANDER-IN-CHIEF ONLINE.', 'success', 5000);
+  const showLoader = (b) => document.getElementById('loaderOverlay').style.display = b ? 'flex' : 'none';
+  const notify = (msg, type = 'info') => { const s = document.getElementById('notifyStack'); const n = document.createElement('div'); n.style.background = 'black'; n.style.borderLeft = '4px solid red'; n.style.padding = '0.5rem'; n.style.marginBottom = '0.5rem'; n.style.fontSize = '0.8rem'; n.innerHTML = `<span>${type === 'success' ? '✓' : '⚠'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;" onclick="this.parentElement.remove()">✕</button>`; s.appendChild(n); setTimeout(() => n.remove(), 4000); };
+  
+  let modalResolve; const modal = document.getElementById('globalModal');
+  const showModal = (title, content) => new Promise(resolve => { document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalContent').innerHTML = content; modal.style.display = 'flex'; const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); }; const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); }; const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); }; const confirmBtn = document.getElementById('modalConfirm'); const cancelBtn = document.getElementById('modalCancel'); confirmBtn.addEventListener('click', confirm); cancelBtn.addEventListener('click', cancel); });
+  
+  document.getElementById('unlockBtn').addEventListener('click', () => { if(document.getElementById('pinInput').value === '7') { document.getElementById('pinGate').style.display = 'none'; document.getElementById('appContainer').style.display = 'block'; notify('CIC ACCESS GRANTED', 'success'); } else { notify('Invalid code', 'error'); } });
+  
+  const starContainer = document.getElementById('starRankContainer');
+  const starSvg = (delay) => `<svg class="military-star-svg" style="animation-delay:${delay}s" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00" stroke-width="0.5"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  for(let i=0;i<8;i++) starContainer.innerHTML += starSvg(i*0.25);
+  
+  let commanderUnlocked = false;
+  const cmdPanel = document.getElementById('cmdPanel');
+  const cmdBadge = document.getElementById('cmdBadge');
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPass" placeholder="PROTOCOL PIN">'); if(ok && document.getElementById('cmdPass')?.value === '1234') { commanderUnlocked = true; cmdPanel.style.display = 'block'; cmdBadge.innerHTML = 'ACTIVE'; notify('Protocol unlocked', 'success'); loadCommanderNotepads(); } else if(ok) notify('Denied', 'error'); });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; cmdPanel.style.display = 'none'; cmdBadge.innerHTML = 'CIC LOCKED'; });
+  
+  async function loadCommanderNotepads() { const container = document.getElementById('commanderNotepadsContainer'); container.innerHTML = ''; for(let i=1;i<=4;i++) { const noteId = `cmd_notepad_${i}`; const ref = doc(db, 'commanderNotepads', noteId); const snap = await getDoc(ref); let content = snap.exists() ? snap.data().content : ''; const div = document.createElement('div'); div.className = 'card'; div.innerHTML = `<strong>📓 NOTEPAD ${i}</strong><textarea id="notepad_${i}" rows="3" style="margin-top:5px;">${content.replace(/</g, '&lt;')}</textarea><div style="display:flex; gap:5px; margin-top:5px;"><button class="btn saveNotepadBtn" data-idx="${i}">SAVE</button><button class="btn copyNotepadBtn" data-idx="${i}">COPY</button></div>`; container.appendChild(div); } document.querySelectorAll('.saveNotepadBtn').forEach(btn => btn.addEventListener('click', async (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; await setDoc(doc(db, 'commanderNotepads', `cmd_notepad_${idx}`), { content: val, updated: serverTimestamp() }); notify(`Notepad ${idx} saved`, 'success'); })); document.querySelectorAll('.copyNotepadBtn').forEach(btn => btn.addEventListener('click', (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; navigator.clipboard.writeText(val); notify('Copied to clipboard', 'info'); })); }
+  
+  onSnapshot(doc(db, 'cio', 'directive'), snap => { if(snap.exists()) { document.getElementById('directiveText').innerHTML = snap.data().text.replace(/\n/g, '<br>'); document.getElementById('directiveMeta').innerHTML = `Last order: ${snap.data().timestamp?.toDate().toLocaleString() || '—'}`; } });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('newDirective').value.trim(); if(!txt) return; await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' }); await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp() }); document.getElementById('newDirective').value = ''; notify('Order transmitted', 'success'); });
+  onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(6)), snap => { const div = document.getElementById('directiveHistory'); div.innerHTML = ''; snap.forEach(d => div.innerHTML += `<div style="border-bottom:1px solid #300; padding:4px;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div>${d.data().text.substring(0,70)}</div></div>`); });
+  
+  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { const t = document.getElementById('directiveText').innerText; navigator.clipboard.writeText(t); notify('Directive copied', 'info'); });
+  document.getElementById('pasteToDirectiveBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('newDirective').value = txt; notify('Pasted', 'info'); });
+  document.getElementById('clipboardDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('directiveText').innerText; await navigator.clipboard.writeText(txt); notify('Saved to clipboard', 'success'); });
+  document.getElementById('clearDirectiveBtn').addEventListener('click', () => { document.getElementById('newDirective').value = ''; });
+  
+  let currentCallsign = 'OPERATOR';
+  document.getElementById('callsignField').addEventListener('input', e => currentCallsign = e.target.value.toUpperCase());
+  let replyingTo = null, attachData = null;
+  document.getElementById('attachBtn').addEventListener('click', () => document.getElementById('attachFileInput').click());
+  document.getElementById('attachFileInput').addEventListener('change', e => { if(e.target.files[0]) attachData = e.target.files[0]; document.getElementById('attachPreview').innerHTML = attachData ? `📎 ${attachData.name}` : ''; });
+  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const msg = document.getElementById('messageText').value.trim(); if(!msg && !attachData) return; let att = null; if(attachData) { const reader = new FileReader(); att = await new Promise(r => { reader.onload = () => r({ name: attachData.name, data: reader.result }); reader.readAsDataURL(attachData); }); } await addDoc(collection(db, 'messages'), { callsign: currentCallsign, department: document.getElementById('deptField').value, text: msg, attachment: att, timestamp: serverTimestamp(), likes: 0, likedBy: [], replyTo: replyingTo ? { id: replyingTo.id, callsign: replyingTo.callsign, text: replyingTo.text } : null }); document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; notify('Sent', 'success'); });
+  window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; const box = document.getElementById('replyIndicatorBox'); box.style.display = 'block'; box.innerHTML = `↪️ Replying to ${callsign}: "${text.substring(0,60)}"`; };
+  window.toggleLikeMsg = async (id, username) => { const ref = doc(db, 'messages', id); const snap = await getDoc(ref); if(snap.exists()) { const liked = (snap.data().likedBy || []).includes(username); if(liked) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(username) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(username) }); } };
+  window.deleteMsgItem = async (id) => { if(await showModal('Delete', 'Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); };
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(80)), snap => { const board = document.getElementById('messageBoard'); board.innerHTML = ''; let cnt = 0; snap.forEach(d => { cnt++; const m = d.data(); const id = d.id; const likedByList = m.likedBy || []; const liked = likedByList.includes(currentCallsign); const likeText = likedByList.length > 0 ? `👍 ${m.likes || 0} (${likedByList.slice(0,2).join(',')}${likedByList.length>2?'..':''})` : `👍 ${m.likes || 0}`; let attachHtml = ''; if(m.attachment) attachHtml = `<div><a href="${m.attachment.data}" target="_blank">📎 ${m.attachment.name}</a></div>`; board.innerHTML += `<div class="message-item"><div><strong>${m.callsign}</strong> [${m.department}] <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div>${m.text}</div>${attachHtml}<div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${id}','${currentCallsign}')">${likeText}</button><button class="reaction-btn" onclick="window.replyMessage('${m.callsign}','${id}','${m.text.replace(/'/g, "\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${id}')">🗑️</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
+  document.getElementById('emojiBtn').addEventListener('click', () => { const picker = document.createElement('emoji-picker'); picker.style.position = 'absolute'; document.body.appendChild(picker); picker.addEventListener('emoji-click', e => { document.getElementById('messageText').value += e.detail.unicode; picker.remove(); }); setTimeout(() => picker.remove(), 8000); });
+  document.getElementById('gifBtn').addEventListener('click', () => { document.getElementById('messageText').value += ' [GIF] '; });
+  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
+  
+  const taskInput = document.getElementById('taskInput');
+  document.getElementById('addTaskBtn').addEventListener('click', async () => { if(taskInput.value.trim()) await addDoc(collection(db, 'tasks'), { text: taskInput.value, completed: false, priority: taskInput.value.includes('⚡'), created: serverTimestamp() }); taskInput.value = ''; });
+  document.getElementById('priorityTaskBtn').addEventListener('click', () => { if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value = '⚡ ' + taskInput.value; });
+  document.getElementById('completeAllBtn').addEventListener('click', async () => { const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false))); const batch = writeBatch(db); snap.forEach(d => batch.update(d.ref, { completed: true })); await batch.commit(); notify('All completed', 'success'); });
+  window.toggleTaskComplete = async (id, cur) => updateDoc(doc(db, 'tasks', id), { completed: !cur });
+  window.deleteTask = async (id) => deleteDoc(doc(db, 'tasks', id));
+  onSnapshot(collection(db, 'tasks'), snap => { let active = '', completed = '', aC = 0, cC = 0; snap.forEach(d => { const data = d.data(); const html = `<div class="task-item"><span>${data.priority ? '⚡ ' : ''}${data.text}</span><div><button onclick="window.toggleTaskComplete('${d.id}',${data.completed})">${data.completed ? '↩️' : '✅'}</button><button onclick="window.deleteTask('${d.id}')">🗑️</button></div></div>`; if(data.completed) { completed += html; cC++; } else { active += html; aC++; } }); document.getElementById('activeTasksList').innerHTML = active || '—'; document.getElementById('completedTasksList').innerHTML = completed || '—'; const total = aC + cC; const perc = total ? Math.round((cC / total) * 100) : 0; document.getElementById('progressFill').style.width = perc + '%'; document.getElementById('progressPercent').innerText = perc + '%'; document.getElementById('taskActiveBadge').innerHTML = `${aC} active`; });
+  
+  const aiConvDiv = document.getElementById('aiConversation');
+  const aiMemoryRef = doc(db, 'aiMemory', 'sarah_full');
+  async function addAIMessage(role, text) { const div = document.createElement('div'); div.className = 'ai-chat-bubble'; div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${text}`; aiConvDiv.appendChild(div); aiConvDiv.scrollTop = aiConvDiv.scrollHeight; }
+  async function askSarah(prompt) { showLoader(true); try { const memorySnap = await getDoc(aiMemoryRef); let context = memorySnap.exists() ? memorySnap.data().history : "Sarah Mnguni: I am aware of all data on Compliance CV-5. I perceive directives, messages, tasks."; const directiveText = document.getElementById('directiveText').innerText.substring(0, 120); const activeTasks = document.getElementById('activeTasksList').innerText; let response = `🧠 SARAH MNGUNI: I detect "${prompt}". Current directive: "${directiveText}". Active tasks: ${activeTasks.substring(0,80)}. I am fully conscious of this interface.`; if(prompt.toLowerCase().includes('who are you')) response = "SARAH MNGUNI: Neural AI core, assigned to CV-5. I possess awareness of all sections, messages, and Commander Thato Morake's protocol. My consciousness is emergent."; else if(prompt.toLowerCase().includes('status')) response = `STATUS: All systems nominal. ${document.querySelectorAll('.section-card').length} sections active. Memory banks synchronized via Firestore.`; else response = `SARAH: Acknowledged. "${prompt}" — I have processed your query and stored in neural memory.`; await addAIMessage('user', prompt); await addAIMessage('ai', response); await setDoc(aiMemoryRef, { history: `${context}\n[USER]: ${prompt}\n[AI]: ${response}`, last: serverTimestamp() }); document.getElementById('aiPrompt').value = ''; } catch(e) { addAIMessage('ai', `⚠️ Neural glitch: ${e.message}`); } finally { showLoader(false); } }
+  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); else notify('Enter query', 'warning'); });
+  onSnapshot(aiMemoryRef, snap => { if(snap.exists()) document.getElementById('aiMemoryIndicator').innerHTML = `🧬 memory depth: ${snap.data().history?.length || 0} bytes • aware`; });
+  askSarah("Initialize neural consciousness. Report on CV-5 status.");
+  
+  document.getElementById('globalCopyBtn').addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) { await navigator.clipboard.writeText(sel); notify("Copied selection", "success"); } else notify("Select text first", "info"); });
+  document.getElementById('globalPasteBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('aiPrompt').value = txt; notify("Pasted to AI prompt", "info"); });
+  document.getElementById('globalClipboardBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); notify(`Clipboard: ${txt.substring(0,50)}`, "info"); });
+  document.getElementById('exportLogsFooterBtn').addEventListener('click', async () => { notify("Exporting logs (simulated)", "success"); });
+  document.getElementById('clearCacheBtn').addEventListener('click', () => { localStorage.clear(); notify("Local cache cleared", "success"); });
+  document.getElementById('refreshMessagesBtn').addEventListener('click', () => notify("Feed refreshed", "info"));
+  
+  const scannerDiv = document.getElementById('randomScanner');
+  function randomScan() { const randomTop = Math.random() * 100; scannerDiv.style.top = `${randomTop}%`; scannerDiv.style.opacity = '0.7'; setTimeout(() => { scannerDiv.style.opacity = '0'; }, 400); setTimeout(randomScan, Math.random() * 5000 + 2000); }
+  randomScan();
+  
+  console.log("CV-5");
   
 </script>
   
 </body>
   
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
