@@ -2391,275 +2391,401 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 
 <script>
-// =============================================
-// ENHANCED SOURCE CODE PROTECTION - MAXIMUM SECURITY
-// =============================================
-
 (function() {
     'use strict';
     
-    // Function to immediately close the tab without warning
-    function killTab() {
-        document.body.innerHTML = '';
-        window.location.href = 'about:blank';
-        setTimeout(() => { window.close(); }, 10);
-    }
+    // =============================================
+    // BALANCED SECURITY - PROTECTS WITHOUT BREAKING
+    // =============================================
     
-    // Prevent ALL right-click
+    // Block right-click on document (prevents inspect element)
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-        e.stopPropagation();
-        killTab();
         return false;
     });
     
-    // Prevent ALL keyboard shortcuts that could expose source
+    // Block specific key combinations that reveal source
     document.addEventListener('keydown', function(e) {
-        // Block ALL function keys
-        if (e.keyCode >= 112 && e.keyCode <= 123) {
-            e.preventDefault();
-            killTab();
-            return false;
-        }
-        
-        // Block Ctrl+Shift+ combinations
-        if (e.ctrlKey && e.shiftKey) {
-            e.preventDefault();
-            killTab();
-            return false;
-        }
-        
-        // Block Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'U' || e.key === 'S' || e.key === 'P')) {
-            e.preventDefault();
-            killTab();
-            return false;
-        }
-        
-        // Block Ctrl+Shift+I (DevTools)
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
-            e.preventDefault();
-            killTab();
-            return false;
-        }
-        
-        // Block F12 specifically
+        // Block F12 (DevTools)
         if (e.key === 'F12') {
             e.preventDefault();
-            killTab();
+            alert("🔒 Source code viewing is protected.");
+            return false;
+        }
+        
+        // Block Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspect)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+            alert("🔒 Developer tools are disabled.");
+            return false;
+        }
+        
+        // Block Ctrl+U (View Source)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            e.preventDefault();
+            alert("🔒 View source is disabled.");
+            return false;
+        }
+        
+        // Block Ctrl+S (Save page)
+        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+            e.preventDefault();
+            alert("🔒 Save page is disabled.");
+            return false;
+        }
+        
+        // Block Ctrl+P (Print)
+        if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
+            e.preventDefault();
+            alert("🔒 Print is disabled.");
             return false;
         }
     });
     
-    // Aggressive DevTools detection
-    let devtools = false;
-    
-    // Method 1: Element inspection
+    // Detect DevTools opening (passive detection)
+    let devToolsOpen = false;
     const element = new Image();
     Object.defineProperty(element, 'id', {
         get: function() {
-            devtools = true;
-            killTab();
+            devToolsOpen = true;
+            alert("🔒 Developer tools detected. Please close them to continue.");
+            return '';
         }
     });
     
-    // Method 2: Debugger statement trap
-    setInterval(function() {
-        debugger;
-        if (devtools) killTab();
-    }, 100);
-    
-    // Method 3: Window size detection (more aggressive)
-    setInterval(function() {
-        const threshold = 100;
+    setInterval(() => {
+        devToolsOpen = false;
+        console.log(element);
+        console.clear();
+        
+        // Detect via window size changes
         const widthDiff = window.outerWidth - window.innerWidth;
         const heightDiff = window.outerHeight - window.innerHeight;
-        
-        if (widthDiff > threshold || heightDiff > threshold) {
-            killTab();
+        if (widthDiff > 160 || heightDiff > 160) {
+            if (!devToolsOpen) {
+                alert("🔒 Developer tools detected. Please close them.");
+            }
         }
-        
-        // Check if devtools is open by measuring
-        if (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) {
-            killTab();
-        }
-        
-        // Check for console opening
-        if (typeof console !== 'undefined' && console.clear && console.clear.toString().includes('native')) {
-            // Could be devtools
-        }
-    }, 500);
+    }, 3000);
     
-    // Method 4: Prevent selection
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        killTab();
-    });
-    
-    // Method 5: Prevent copy/paste/cut
-    document.addEventListener('copy', function(e) {
-        e.preventDefault();
-        killTab();
-    });
-    
-    document.addEventListener('cut', function(e) {
-        e.preventDefault();
-        killTab();
-    });
-    
-    document.addEventListener('paste', function(e) {
-        e.preventDefault();
-        killTab();
-    });
-    
-    // Method 6: Disable all console methods
-    const noop = function() {};
-    console.log = noop;
-    console.warn = noop;
-    console.error = noop;
-    console.info = noop;
-    console.debug = noop;
-    console.table = noop;
-    console.dir = noop;
-    console.group = noop;
-    console.groupEnd = noop;
-    console.groupCollapsed = noop;
-    console.trace = noop;
-    
-    // Override console.clear to do nothing
-    if (console.clear) console.clear = noop;
-    
-    // Method 7: Frame busting
-    if (window.self !== window.top) {
-        killTab();
-    }
-    
-    // Method 8: Disable dragging of images/elements
-    document.querySelectorAll('img, a').forEach(el => {
-        el.setAttribute('draggable', 'false');
-    });
-    
-    // Method 9: Override devtools opening via key combination detection
-    document.addEventListener('keydown', function(e) {
-        // Block Ctrl+Shift+J (Console)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
-            e.preventDefault();
-            killTab();
-        }
-        // Block Ctrl+Shift+C (Inspect)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
-            e.preventDefault();
-            killTab();
-        }
-    });
-    
-    // Method 10: Block F5 and refresh
-    window.addEventListener('beforeunload', function(e) {
-        if (window.event) {
-            window.event.returnValue = '';
-        }
-    });
-    
-    // Method 11: Disable right-click globally
-    window.oncontextmenu = function(e) {
-        e.preventDefault();
-        killTab();
-        return false;
-    };
-    
-    // Method 12: Hide source from view-source
-    if (window.location.protocol === 'view-source:') {
-        killTab();
-    }
-    
-    console.clear();
-})();
-</script>
-
-<script>
-// =============================================
-// FIXED ANALYTICS DISPLAY
-// =============================================
-
-(function() {
-    'use strict';
-    
-    // Force create analytics container if not present
-    setTimeout(() => {
-        let analyticsContainer = document.getElementById('liveAnalyticsContainer');
-        if (!analyticsContainer) {
-            const footer = document.getElementById('main-footer');
-            if (footer) {
-                analyticsContainer = document.createElement('div');
-                analyticsContainer.id = 'liveAnalyticsContainer';
-                analyticsContainer.style.cssText = `
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 30px auto;
-                    padding: 20px;
-                `;
-                const footerChildren = Array.from(footer.children);
-                const installBtn = document.getElementById('installBtn');
-                if (installBtn) {
-                    footer.insertBefore(analyticsContainer, installBtn);
-                } else {
-                    footer.appendChild(analyticsContainer);
+    // Disable console methods but keep site functional
+    if (window.location.hostname !== 'localhost') {
+        const noop = () => {};
+        console.log = noop;
+        console.warn = noop;
+        console.info = noop;
+        console.debug = noop;
+        const originalError = console.error;
+        console.error = function() {
+            const args = Array.from(arguments);
+            const sanitized = args.map(arg => {
+                if (typeof arg === 'string' && arg.includes('AIza')) {
+                    return '[REDACTED]';
                 }
-            }
-        }
-    }, 100);
-    
-    // Force analytics to show loading state immediately
-    function showLoadingAnalytics() {
-        const container = document.getElementById('liveAnalyticsContainer');
-        if (container && !document.getElementById('liveAnalytics')) {
-            const loadingDiv = document.createElement('div');
-            loadingDiv.id = 'liveAnalytics';
-            loadingDiv.style.cssText = `
-                background: rgba(0, 255, 255, 0.08);
-                padding: 20px;
-                border: 2px solid var(--cyan);
-                border-radius: 4px;
-                font-family: var(--font-mono);
-                text-align: center;
-                backdrop-filter: blur(5px);
-            `;
-            loadingDiv.innerHTML = `
-                <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i class="fas fa-shield-alt"></i> 
-                    <span style="font-family: var(--font-tactical); font-size: 0.9rem;">SECURE ANALYTICS</span>
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <i class="fas fa-sync-alt fa-spin"></i>
-                    <span style="font-size: 0.8rem;">INITIALIZING SECURE LINK...</span>
-                </div>
-            `;
-            container.appendChild(loadingDiv);
-        }
-    }
-    
-    showLoadingAnalytics();
-    
-    // Override the updateStatsDisplay function to ensure container exists
-    const originalUpdate = window.updateStatsDisplay;
-    if (originalUpdate) {
-        window.updateStatsDisplay = async function() {
-            const container = document.getElementById('liveAnalyticsContainer');
-            if (!container) {
-                setTimeout(() => window.updateStatsDisplay(), 500);
-                return;
-            }
-            await originalUpdate();
+                return arg;
+            });
+            originalError.apply(console, sanitized);
         };
     }
     
-    // Force analytics update every 15 seconds
+    // Frame busting (prevents iframe embedding)
+    if (window.self !== window.top) {
+        window.top.location = window.self.location;
+    }
+    
+    // =============================================
+    // ANALYTICS SYSTEM
+    // =============================================
+    
+    // Create analytics container in footer
+    function createAnalyticsContainer() {
+        let container = document.getElementById('liveAnalyticsContainer');
+        if (!container) {
+            const footer = document.getElementById('main-footer');
+            if (footer) {
+                container = document.createElement('div');
+                container.id = 'liveAnalyticsContainer';
+                container.style.cssText = `
+                    width: 100%;
+                    max-width: 600px;
+                    margin: 30px auto 20px auto;
+                    padding: 0;
+                `;
+                footer.insertBefore(container, footer.firstChild);
+            }
+        }
+        return container;
+    }
+    
+    // Show loading state immediately
+    function showAnalyticsLoading() {
+        const container = createAnalyticsContainer();
+        if (container) {
+            let analyticsDiv = document.getElementById('liveAnalytics');
+            if (!analyticsDiv) {
+                analyticsDiv = document.createElement('div');
+                analyticsDiv.id = 'liveAnalytics';
+                analyticsDiv.style.cssText = `
+                    background: rgba(0, 255, 255, 0.08);
+                    padding: 20px;
+                    border: 2px solid var(--cyan);
+                    border-radius: 4px;
+                    font-family: var(--font-mono);
+                    text-align: center;
+                `;
+                analyticsDiv.innerHTML = `
+                    <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fas fa-shield-alt"></i> 
+                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">SECURE ANALYTICS</span>
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <i class="fas fa-sync-alt fa-spin"></i>
+                        <span style="font-size: 0.8rem;">CONNECTING TO SECURE NODE...</span>
+                    </div>
+                `;
+                container.appendChild(analyticsDiv);
+            }
+        }
+    }
+    
+    showAnalyticsLoading();
+    
+    // Update stats display function
+    window.updateStatsDisplay = async function() {
+        if (!window.db) return;
+        
+        try {
+            const statsDocRef = window.db.collection("visitorStats").doc("siteAnalytics");
+            const docSnap = await statsDocRef.get();
+            
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                const today = new Date().toISOString().split('T')[0];
+                const dailyCount = data.dailyVisits?.[today] || 0;
+                const totalCount = data.totalVisits || 0;
+                const uniqueCount = data.uniqueVisitors || 0;
+                
+                let analyticsDiv = document.getElementById('liveAnalytics');
+                const container = document.getElementById('liveAnalyticsContainer');
+                
+                if (!analyticsDiv && container) {
+                    analyticsDiv = document.createElement('div');
+                    analyticsDiv.id = 'liveAnalytics';
+                    analyticsDiv.style.cssText = `
+                        background: rgba(0, 255, 255, 0.08);
+                        padding: 20px;
+                        border: 2px solid var(--cyan);
+                        border-radius: 4px;
+                        font-family: var(--font-mono);
+                        text-align: center;
+                    `;
+                    container.appendChild(analyticsDiv);
+                }
+                
+                if (analyticsDiv) {
+                    analyticsDiv.innerHTML = `
+                        <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-shield-alt"></i> 
+                            <span style="font-family: var(--font-tactical); font-size: 0.9rem;">SECURE ANALYTICS</span>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
+                            <div>
+                                <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Today</div>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${dailyCount.toLocaleString()}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Total</div>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${totalCount.toLocaleString()}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Unique</div>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${uniqueCount.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.6rem; opacity: 0.5;">
+                            <i class="fas fa-lock"></i> Encrypted • Protected • Live
+                        </div>
+                    `;
+                }
+            }
+        } catch (error) {
+            // Silent fail - analytics will retry
+        }
+    };
+    
+    // Track visitor function
+    window.trackVisitor = async function() {
+        if (!window.db || window.hasTracked) return;
+        
+        const today = new Date().toISOString().split('T')[0];
+        const statsDocRef = window.db.collection("visitorStats").doc("siteAnalytics");
+        const sessionId = window.sessionId || Math.random().toString(36).substr(2, 9);
+        const sessionRef = window.db.collection("visitorSessions").doc(sessionId);
+        
+        try {
+            const sessionSnap = await sessionRef.get();
+            if (sessionSnap.exists && sessionSnap.data().tracked) {
+                await window.updateStatsDisplay();
+                return;
+            }
+            
+            const docSnap = await statsDocRef.get();
+            
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                const updates = {
+                    totalVisits: window.firebase.firestore.FieldValue.increment(1)
+                };
+                
+                if (data.dailyVisits && data.dailyVisits[today]) {
+                    updates[`dailyVisits.${today}`] = window.firebase.firestore.FieldValue.increment(1);
+                } else {
+                    updates[`dailyVisits.${today}`] = 1;
+                }
+                
+                if (!data.uniqueVisitors) updates.uniqueVisitors = 1;
+                else updates.uniqueVisitors = window.firebase.firestore.FieldValue.increment(1);
+                
+                updates.lastUpdated = window.firebase.firestore.FieldValue.serverTimestamp();
+                await statsDocRef.update(updates);
+            } else {
+                await statsDocRef.set({
+                    totalVisits: 1,
+                    dailyVisits: { [today]: 1 },
+                    uniqueVisitors: 1,
+                    lastUpdated: window.firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+            
+            await sessionRef.set({
+                tracked: true,
+                timestamp: window.firebase.firestore.FieldValue.serverTimestamp(),
+                userAgent: navigator.userAgent.substring(0, 100)
+            });
+            
+            window.hasTracked = true;
+            await window.updateStatsDisplay();
+            
+        } catch (error) {
+            // Silent fail
+        }
+    };
+    
+    window.refreshAnalytics = function() {
+        if (window.db) {
+            window.updateStatsDisplay();
+            window.trackVisitor();
+        }
+    };
+    
+    // Generate session ID
+    function generateSessionId() {
+        let hash = 0;
+        const str = `${screen.width}x${screen.height}|${navigator.language}|${navigator.platform}|${Date.now()}`;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash).toString(16);
+    }
+    
+    window.sessionId = generateSessionId();
+    
+    // Firebase config (encrypted)
+    const ENCRYPTION_KEY = 'EDEN_CV5_SECURE_2026';
+    
+    const encryptedConfig = {
+        apiKey: "L0c8LwUxLygaKiYpVUYvJg==",
+        authDomain: "L0k8LzI+KzwxKjA6VUYvKicrKjk=",
+        projectId: "L0k8LzI+KzwxKjA6VUYvKicrKjk=",
+        storageBucket: "L0k8LzI+KzwxKjA6VUYvKicrKjk9KSQp",
+        messagingSenderId: "L0k8LzI+KzwxKjA6VUYvKicrKjk=",
+        appId: "L0k8LzI+KzwxKjA6VUYvKicrKjk8LyUrJj0="
+    };
+    
+    function decryptConfig(encrypted, key) {
+        try {
+            let decoded = atob(encrypted);
+            let result = '';
+            for (let i = 0; i < decoded.length; i++) {
+                result += String.fromCharCode(decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+            }
+            return result;
+        } catch(e) {
+            return encrypted;
+        }
+    }
+    
+    const firebaseConfig = {
+        apiKey: decryptConfig(encryptedConfig.apiKey, ENCRYPTION_KEY),
+        authDomain: decryptConfig(encryptedConfig.authDomain, ENCRYPTION_KEY),
+        projectId: decryptConfig(encryptedConfig.projectId, ENCRYPTION_KEY),
+        storageBucket: decryptConfig(encryptedConfig.storageBucket, ENCRYPTION_KEY),
+        messagingSenderId: decryptConfig(encryptedConfig.messagingSenderId, ENCRYPTION_KEY),
+        appId: decryptConfig(encryptedConfig.appId, ENCRYPTION_KEY)
+    };
+    
+    // Load Firebase
+    function loadFirebase() {
+        return new Promise((resolve, reject) => {
+            const delay = Math.random() * 300 + 200;
+            setTimeout(() => {
+                const firebaseScript = document.createElement('script');
+                firebaseScript.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+                firebaseScript.onload = () => {
+                    const firestoreScript = document.createElement('script');
+                    firestoreScript.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+                    firestoreScript.onload = () => {
+                        if (typeof firebase !== 'undefined') {
+                            try {
+                                if (!firebase.apps.length) {
+                                    window.firebase = firebase.initializeApp(firebaseConfig);
+                                } else {
+                                    window.firebase = firebase.apps[0];
+                                }
+                                window.db = window.firebase.firestore();
+                                resolve();
+                            } catch(e) {
+                                reject(e);
+                            }
+                        } else {
+                            reject(new Error('Firebase not loaded'));
+                        }
+                    };
+                    firestoreScript.onerror = reject;
+                    document.head.appendChild(firestoreScript);
+                };
+                firebaseScript.onerror = reject;
+                document.head.appendChild(firebaseScript);
+            }, delay);
+        });
+    }
+    
+    // Initialize everything
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loadFirebase().then(() => {
+                setTimeout(() => { 
+                    window.trackVisitor(); 
+                }, 500);
+                setInterval(() => { 
+                    window.updateStatsDisplay(); 
+                }, 30000);
+            }).catch(() => {});
+        }, 1500);
+    });
+    
+    // Force analytics refresh every 30 seconds
     setInterval(() => {
         if (window.refreshAnalytics) {
             window.refreshAnalytics();
         }
-    }, 15000);
+    }, 30000);
+    
+    console.log("✅ Security active - regular navigation works normally");
 })();
 </script>
     
