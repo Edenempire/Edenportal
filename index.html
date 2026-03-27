@@ -2386,120 +2386,126 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 
 <script>
-(function() {
-    'use strict';
     
-    // =============================================
-    // ENHANCED SOURCE CODE PROTECTION
-    // =============================================
-    
-    // Block view-source: protocol entirely
-    if (window.location.protocol === 'view-source:') {
-        window.location.href = window.location.href.replace('view-source:', '');
-    }
-    
-    // Prevent viewing source via keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-        // Block Ctrl+U (View Source)
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-            e.preventDefault();
-            alert("🔒 Source code viewing is disabled.");
-            return false;
-        }
-        
-        // Block Ctrl+Shift+U
-        if (e.ctrlKey && e.shiftKey && (e.key === 'U' || e.key === 'u')) {
-            e.preventDefault();
-            alert("🔒 Source code viewing is disabled.");
-            return false;
-        }
-        
-        // Block F12 (DevTools)
-        if (e.key === 'F12') {
-            e.preventDefault();
-            alert("🔒 Developer tools are disabled.");
-            return false;
-        }
-        
-        // Block Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspect)
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-            e.preventDefault();
-            alert("🔒 Developer tools are disabled.");
-            return false;
-        }
-        
-        // Block Ctrl+S (Save page)
-        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
-            e.preventDefault();
-            alert("🔒 Page saving is disabled.");
-            return false;
-        }
-        
-        // Block Ctrl+P (Print)
-        if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
-            e.preventDefault();
-            alert("🔒 Printing is disabled.");
-            return false;
-        }
-    });
-    
-    // Prevent right-click (context menu)
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // Detect DevTools opening via window size difference
-    let devToolsDetected = false;
-    setInterval(function() {
-        const widthDiff = window.outerWidth - window.innerWidth;
-        const heightDiff = window.outerHeight - window.innerHeight;
-        if (widthDiff > 200 || heightDiff > 200) {
-            if (!devToolsDetected) {
-                devToolsDetected = true;
-                alert("🔒 Developer tools detected. Please close them.");
-            }
-        } else {
-            devToolsDetected = false;
-        }
-    }, 2000);
-    
-    // Anti-debugging via toString override
     (function() {
-        const element = new Image();
-        Object.defineProperty(element, 'id', {
-            get: function() {
-                alert("🔒 Debugging detected. Console access blocked.");
-                throw new Error("Debugging not allowed");
+        'use strict';
+        
+        // =============================================
+        // BLOCK view-source: PROTOCOL
+        // =============================================
+        
+        // Redirect if page is accessed via view-source:
+        if (window.location.protocol === 'view-source:') {
+            window.location.href = window.location.href.replace('view-source:', '');
+        }
+        
+        // =============================================
+        // BLOCK KEYBOARD SHORTCUTS
+        // =============================================
+        
+        document.addEventListener('keydown', function(e) {
+            // Block Ctrl+U (View Source)
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                alert("🔒 Source code viewing is disabled.");
+                return false;
+            }
+            
+            // Block Ctrl+Shift+U
+            if (e.ctrlKey && e.shiftKey && (e.key === 'U' || e.key === 'u')) {
+                e.preventDefault();
+                alert("🔒 Source code viewing is disabled.");
+                return false;
+            }
+            
+            // Block F12 (DevTools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert("🔒 Developer tools are disabled.");
+                return false;
+            }
+            
+            // Block Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspect)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                e.preventDefault();
+                alert("🔒 Developer tools are disabled.");
+                return false;
+            }
+            
+            // Block Ctrl+S (Save page)
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                alert("🔒 Page saving is disabled.");
+                return false;
+            }
+            
+            // Block Ctrl+P (Print)
+            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                alert("🔒 Printing is disabled.");
+                return false;
             }
         });
-        setInterval(() => { console.log(element); console.clear(); }, 1000);
-    })();
-    
-    // Disable console methods on production
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        const noop = () => {};
-        console.log = noop;
-        console.warn = noop;
-        console.info = noop;
-        console.debug = noop;
-        const originalError = console.error;
-        console.error = function() {
-            const args = Array.from(arguments);
-            const sanitized = args.map(arg => {
-                if (typeof arg === 'string' && (arg.includes('AIza') || arg.includes('firebase'))) {
-                    return '[REDACTED]';
+        
+        // =============================================
+        // BLOCK RIGHT-CLICK (Context Menu)
+        // =============================================
+        
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // =============================================
+        // DETECT DEVTOOLS OPENING (Optional)
+        // =============================================
+        
+        let devToolsDetected = false;
+        setInterval(function() {
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            if (widthDiff > 200 || heightDiff > 200) {
+                if (!devToolsDetected) {
+                    devToolsDetected = true;
+                    alert("🔒 Developer tools detected. Please close them for full functionality.");
                 }
-                return arg;
-            });
-            originalError.apply(console, sanitized);
-        };
-    }
-    
-    // Frame busting (prevents iframe embedding)
-    if (window.self !== window.top) {
-        window.top.location = window.self.location;
-    }
+            } else {
+                devToolsDetected = false;
+            }
+        }, 3000);
+        
+        // =============================================
+        // DISABLE CONSOLE LOGGING (Production)
+        // =============================================
+        
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            const noop = () => {};
+            console.log = noop;
+            console.warn = noop;
+            console.info = noop;
+            console.debug = noop;
+            console.table = noop;
+            console.trace = noop;
+        }
+        
+        // =============================================
+        // FRAME BUSTING (Prevent iframe embedding)
+        // =============================================
+        
+        if (window.self !== window.top) {
+            window.top.location = window.self.location;
+        }
+        
+        // =============================================
+        // PREVENT DRAG & SELECT (Text selection)
+        // =============================================
+        
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+        document.body.style.msUserSelect = 'none';
+        
+        console.log("✅ Source protection active | view-source blocked");
+    })();
     
     // =============================================
     // LIVE ANALYTICS SYSTEM - REAL DATA
@@ -2562,7 +2568,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 analyticsDiv.innerHTML = `
                     <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <i class="fas fa-shield-alt"></i> 
-                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">SECURE ANALYTICS</span>
+                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">LIVE ANALYTICS</span>
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
