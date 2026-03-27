@@ -8,215 +8,63 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   
-  <meta name="description" content="Compliance CV-5 | Tactical Command Interface">
+  <meta name="description" content="Computer Science CV-5">
+  
   <title>COMPUTER SCIENCE CV-5</title>
   
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff0000'%3E%3Cpath d='M12 2L15 9H22L16 14L19 22L12 17L5 22L8 14L2 9H9L12 2z'/%3E%3C/svg%3E">
   
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <script type="importmap">
-    
     {
       "imports": {
         "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
         "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
       }
     }
-    
   </script>
   
   <style>
     
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    :root {
-      --bg: #000000;
-      --bg-card: #0a0000cc;
-      --red: #ff0000;
-      --red-dim: #cc0000;
-      --text: #ff0000;
-      --border: #ff0000;
-      --transition: all 0.2s ease;
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Share Tech Mono', 'Inter', monospace;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    .random-scanner {
-      position: fixed;
-      width: 100%;
-      height: 3px;
- background: linear-gradient(90deg, transparent, #ff4444, #ff0000, #ff4444, transparent);
-      pointer-events: none;
-      z-index: 9999;
-      top: 0;
-      opacity: 0;
-      transition: opacity 0.1s;
-    }
-    .bg-scan-overlay {
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .app-container {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 2;
-      display: none;
-    }
-
-    .command-header {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      background: #000000dd;
-      backdrop-filter: blur(12px);
-      border-bottom: 3px solid var(--red);
-      padding: 1rem 0;
-      margin-bottom: 2rem;
-      cursor: pointer;
-    }
-    .header-content {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      text-align: center;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+    :root { --bg: #000000; --bg-card: #0a0000cc; --red: #ff0000; --red-dim: #cc0000; --text: #ff0000; --border: #ff0000; --transition: all 0.2s ease; }
+    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; position: relative; overflow-x: hidden; }
+    .bg-scan-overlay { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 0; animation: slowDrift 18s linear infinite; }
+    @keyframes slowDrift { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+    .particle-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at 20% 40%, rgba(255,0,0,0.03) 0%, transparent 70%); animation: breathe 8s infinite alternate; }
+    @keyframes breathe { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
+    .app-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; display: none; }
+    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 1rem 0; margin-bottom: 2rem; cursor: pointer; }
+    .header-content { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
     .logo { font-size: clamp(1.4rem, 6vw, 2.4rem); font-weight: 800; letter-spacing: 6px; color: var(--red); font-family: 'Share Tech Mono'; }
-
-    .section-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(4px);
-      border: 2px solid var(--red);
-      margin-bottom: 2rem;
-      padding: clamp(1rem, 3vw, 2rem);
-      transition: var(--transition);
-    }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      border-bottom: 2px solid var(--red);
-      padding-bottom: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
+    .section-card { background: var(--bg-card); backdrop-filter: blur(4px); border: 2px solid var(--red); margin-bottom: 2rem; padding: clamp(1rem, 3vw, 2rem); transition: var(--transition); }
+    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; border-bottom: 2px solid var(--red); padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
     .section-title { font-size: clamp(1rem, 4vw, 1.6rem); font-weight: 700; }
     .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.8rem; font-size: 0.7rem; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     .card { background: #050000aa; border: 1px solid var(--red); padding: 1.2rem; backdrop-filter: blur(4px); }
-    input, textarea, select {
-      width: 100%;
-      background: #0a0000;
-      border: 1px solid var(--red);
-      padding: 0.7rem;
-      color: var(--red);
-      font-family: monospace;
-      font-size: 0.85rem;
-    }
-    .btn {
-      background: transparent;
-      border: 1.5px solid var(--red);
-      color: var(--red);
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.1s linear;
-      font-family: monospace;
-      font-size: 0.75rem;
-    }
+    input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.7rem; color: var(--red); font-family: monospace; font-size: 0.85rem; outline: none; }
+    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; transition: 0.1s linear; font-family: monospace; font-size: 0.75rem; border-radius: 0; }
     .btn-primary { background: var(--red); color: black; border-color: var(--red); }
     .btn-primary:hover { background: #cc0000; transform: scale(0.98); }
     .btn:hover { background: rgba(255,0,0,0.2); }
-
-    .stars-rank {
-      display: inline-flex;
-      gap: 8px;
-      margin-left: 12px;
-      align-items: center;
-    }
-    .military-star-svg {
-      width: 22px;
-      height: 22px;
-      filter: drop-shadow(0 0 0px transparent);
-      animation: starPulse 3s infinite ease-in-out;
-    }
-    @keyframes starPulse {
-      0%, 100% { opacity: 0.65; filter: drop-shadow(0 0 0px gold); }
-      50% { opacity: 1; filter: drop-shadow(0 0 3px #ffcc33); }
-    }
     .message-board { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
     .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.8rem; transition: 0.1s; }
     .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .reaction-btn { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 0.2rem 0.5rem; font-size: 0.7rem; cursor: pointer; border-radius: 12px; }
-    .task-item { display: flex; justify-content: space-between; background: #0a0000aa; border: 1px solid red; padding: 0.6rem; margin-bottom: 0.5rem; }
-    .progress-track { background: #330000; height: 10px; border: 1px solid red; margin: 0.5rem 0; }
-    .progress-fill { background: var(--red); height: 100%; width: 0%; }
-
-    .quick-scroll-right {
-      position: fixed;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 999;
-    }
-    .quick-scroll-right button {
-      background: black;
-      border: 1.5px solid red;
-      color: red;
-      width: 44px;
-      height: 44px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: 0.1s;
-    }
-    .quick-scroll-right button:hover { background: #2a0000; }
-
-    .footer-panel {
-      position: sticky;
-      bottom: 0;
-      background: #000000ee;
-      backdrop-filter: blur(16px);
-      border-top: 2px solid var(--red);
-      padding: 0.8rem 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      z-index: 1000;
-      margin-top: 2rem;
-    }
-    .footer-panel .btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px);
-      display: none; align-items: center; justify-content: center; z-index: 30000;
-    }
-    .modal-box { background: black; border: 2px solid red; max-width: 400px; width: 90%; padding: 2rem; }
+    .ide-tab-bar { display: flex; gap: 0.5rem; border-bottom: 1px solid red; margin-bottom: 1rem; flex-wrap: wrap; }
+    .ide-tab { background: #1a0000; border: 1px solid red; padding: 0.4rem 1rem; cursor: pointer; font-size: 0.75rem; }
+    .ide-tab.active { background: #ff0000; color: black; }
+    .editor-pane { min-height: 350px; }
+    .live-frame { width: 100%; height: 250px; background: white; border: 1px solid red; margin-top: 0.5rem; }
+    .file-attach-item { display: flex; align-items: center; gap: 8px; background: #2a0000; padding: 4px 8px; margin-top: 4px; }
+    .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: 0.8rem 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; z-index: 1000; margin-top: 2rem; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 30000; }
+    .modal-box { background: black; border: 2px solid red; max-width: 500px; width: 90%; padding: 2rem; }
     .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center; z-index: 50000; }
     .loader-overlay { position: fixed; inset: 0; background: black; display: none; align-items: center; justify-content: center; z-index: 40000; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -224,16 +72,13 @@
     @keyframes blink { 50% { opacity: 0.4; } }
     ::-webkit-scrollbar { width: 4px; background: #1a0000; }
     ::-webkit-scrollbar-thumb { background: red; }
-    @media (max-width: 768px) {
-      .app-container { padding: 0 0.8rem; }
-      .quick-scroll-right { right: 6px; }
-      .quick-scroll-right button { width: 36px; height: 36px; font-size: 0.9rem; }
-      .footer-panel .btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
-    }
-    @media (min-width: 1920px) {
-      .app-container { max-width: 1800px; }
-    }
+    .quick-scroll-right { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .quick-scroll-right button { background: black; border: 1.5px solid red; color: red; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; }
+    @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 6px; } .quick-scroll-right button { width: 36px; height: 36px; } }
     .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.8rem; margin-top: 0.5rem; }
+    .stars-rank { display: inline-flex; gap: 8px; margin-left: 12px; align-items: center; }
+    .military-star-svg { width: 22px; height: 22px; filter: drop-shadow(0 0 0px transparent); animation: starPulse 3s infinite ease-in-out; }
+    @keyframes starPulse { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
     
   </style>
   
@@ -241,8 +86,8 @@
   
 <body>
   
+<div class="particle-bg"></div>
 <div class="bg-scan-overlay"></div>
-<div class="random-scanner" id="randomScanner"></div>
 <div class="quick-scroll-right">
   <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
   <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})"><i class="fas fa-arrows-alt-v"></i></button>
@@ -251,168 +96,137 @@
 
 <div class="pin-gate" id="pinGate">
   <div class="modal-box" style="text-align:center">
-    <div class="logo" style="font-size:1.8rem;">COMPLIANCE CV-5</div>
-    <br>
-    <input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center">
+    <div class="logo" style="font-size:1.8rem;">COMPUTER SCIENCE CV-5</div>
+    <br><input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center">
     <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">VERIFY</button>
   </div>
 </div>
 
 <div class="app-container" id="appContainer">
   <div id="notifyStack" style="position:fixed; top:1rem; right:1rem; z-index:20000; max-width:350px"></div>
-  <div class="loader-overlay" id="loaderOverlay"><div style="text-align:center"><div style="width:40px; height:40px; border:2px solid red; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite;"></div><div>SYNC</div></div></div>
+  <div class="loader-overlay" id="loaderOverlay"><div style="text-align:center"><div style="width:40px;height:40px;border:2px solid red;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></div><div>SYNC</div></div></div>
   <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem; justify-content:flex-end"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
-  <header class="command-header" onclick="window.location.href='index.html'">
-    <div class="header-content">
-      <div class="logo">COMPUTER SCIENCE CV-5</div>
-      <div class="status-pulse" style="display:flex; justify-content:center; gap:12px; margin-top:6px;"><span class="pulse-dot" style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>ACTIVE • SECURE</div>
-    </div>
+  <header class="command-header" onclick="window.location.href='#'">
+    <div class="header-content"><div class="logo">COMPUTER SCIENCE CV-5</div><div style="display:flex;justify-content:center;gap:12px;margin-top:6px;"><span style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>SECURE • ACTIVE</div></div>
   </header>
 
-  <section class="section-card" id="secCommand">
-    <div class="section-header">
-      <h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2>
-      <span class="badge" id="cmdBadge">Commander-in-Chief (The President) / Chairman / Chief Innovations Officer / Founder</span>
-    </div>
-    
-    <div class="grid-2">
-      <div class="card">
-        <h3>01. DIRECT ACTION <i class="fas fa-skull"></i></h3>
-        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:120px; white-space:pre-wrap; margin:0.5rem 0;"></div>
-        <div class="btn-group" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
-          <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
-          <button class="btn" id="pasteToDirectiveBtn"><i class="fas fa-paste"></i> PASTE</button>
-          <button class="btn" id="clipboardDirectiveBtn"><i class="fas fa-clipboard"></i> CLIP SAVE</button>
-          <button class="btn" id="clearDirectiveBtn"><i class="fas fa-eraser"></i> CLEAR</button>
-        </div>
-        <div id="directiveMeta" style="font-size:0.7rem; margin-top:0.5rem;"></div>
-      </div>
-      <div class="card" id="cmdPanel" style="display:none;">
-        <h3><i class="fas fa-user-secret"></i> COMMANDER's TACTICAL NOTEPADS (4)</h3>
-        <div id="commanderNotepadsContainer" class="grid-2" style="gap:0.8rem;"></div>
-        <hr style="border-color:red; margin:1rem 0">
-        <h4>ISSUE NEW DIRECT ACTION</h4>
-        <textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea>
-        <div style="display:flex; gap:0.6rem; margin-top:0.8rem;">
-          <button class="btn" id="lockCmdBtn">LOCK PROTOCOL</button>
-          <button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT ORDER</button>
-        </div>
-        <div><strong>HISTORY LOG</strong><div id="directiveHistory" style="max-height:150px; overflow-y:auto; margin-top:8px;"></div></div>
-      </div>
-      <button class="btn" id="unlockCmdBtn" style="grid-column:1/-1;"><i class="fas fa-key"></i> UNLOCK PROTOCOL</button>
-    </div>
-  </section>
+  <!-- SECTION 01 -->
+  <section class="section-card" id="secCommand"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge">Commander-in-Chief</span></div><div class="grid-2"><div class="card"><h3>01. DIRECT ACTION</h3><div id="directiveText" style="background:#0a0000; padding:1rem; min-height:120px;"></div><div class="btn-group" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;"><button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="pasteToDirectiveBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="clearDirectiveBtn"><i class="fas fa-eraser"></i> CLEAR</button></div><div id="directiveMeta" style="font-size:0.7rem;"></div></div><div class="card" id="cmdPanel" style="display:none;"><h3>COMMANDER's NOTEPADS</h3><div id="commanderNotepadsContainer" class="grid-2" style="gap:0.8rem;"></div><textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div><div><strong>HISTORY</strong><div id="directiveHistory" style="max-height:150px; overflow-y:auto;"></div></div></div><button class="btn" id="unlockCmdBtn">UNLOCK PROTOCOL</button></div></section>
 
-  <section class="section-card">
-    <div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span></div>
-    <div class="grid-2">
-      <div class="card"><h3>NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BAYANDA"><select id="deptField"><option>COMPUTER SCIENCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.3rem;"></div><textarea id="messageText" rows="3" placeholder="Message..."></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="emojiBtn"><i class="far fa-smile"></i></button><button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i></button><button class="btn" id="gifBtn"><i class="fas fa-film"></i></button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><div id="attachPreview"></div><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div>
-      <div class="card"><div style="display:flex; justify-content:space-between;"><h3>LIVE FEED</h3><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="message-board" id="messageBoard"></div></div>
-    </div>
-  </section>
+  <!-- SECTION 02: ADVANCED MESSAGE BOARD WITH FULL FILE SUPPORT (ALL TYPES) -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span></div><div class="grid-2"><div class="card"><h3>NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BAYANDA"><select id="deptField"><option>COMPUTER SCIENCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.3rem;"></div><textarea id="messageText" rows="3" placeholder="Message..."></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="emojiBtn"><i class="far fa-smile"></i></button><button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i> FILE</button><button class="btn" id="gifBtn"><i class="fas fa-film"></i> GIF</button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><div id="attachPreview"></div><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div><div class="card"><div style="display:flex; justify-content:space-between;"><h3>LIVE FEED • DOWNLOAD ANY</h3><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="message-board" id="messageBoard"></div></div></div></section>
 
-  <section class="section-card"><div class="section-header"><h2 class="section-title">03. OPERATIONAL OBJECTIVES</h2><span class="badge" id="taskActiveBadge">0</span></div><div class="grid-3"><div class="card"><input type="text" id="taskInput" placeholder="New objective"><div style="display:flex; gap:0.5rem; margin-top:0.8rem;"><button class="btn" id="priorityTaskBtn">⚡ PRIORITY</button><button class="btn btn-primary" id="addTaskBtn">ADD</button></div><button class="btn" id="completeAllBtn" style="width:100%; margin-top:0.8rem;">COMPLETE ALL</button></div><div class="card"><h3>ACTIVE</h3><div id="activeTasksList"></div></div><div class="card"><h3>METRICS</h3><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span id="progressPercent">0%</span><div id="completedTasksList" style="max-height:150px; overflow-y:auto; margin-top:1rem;"></div></div></div></section>
+  <!-- SECTION 03 N/A -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">03. N/A</h2></section>
 
-  <section class="section-card"><div class="section-header"><h2 class="section-title">04. COMING SOON</h2><span class="badge">STAY TUNED</span></div><div style="text-align:center; padding:1.5rem; border:1px dashed red;"><i class="fas fa-hourglass-half"></i></div></section>
+  <!-- SECTION 04: FULL IDE - NOTEPADS & HTML EDITORS + LIVE RENDERING -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">04. EDEN JS ENGINE 1.0.0</h2><span class="badge">CRUD • PERFORMANCE</span></div><div class="grid-2"><div class="card"><h3><i class="fas fa-code"></i> DOCUMENT MANAGER</h3><div class="ide-tab-bar" id="ideTabs"></div><div class="editor-pane"><textarea id="activeEditor" rows="12" style="font-family: monospace; font-size: 13px;"></textarea><div style="display:flex; gap:8px; margin: 8px 0;"><button class="btn" id="ideSaveBtn"><i class="fas fa-save"></i> SAVE</button><button class="btn" id="ideNewNotepadBtn"><i class="fas fa-plus"></i> NEW NOTEPAD</button><button class="btn" id="ideNewHtmlBtn"><i class="fab fa-html5"></i> NEW HTML</button><button class="btn" id="ideDeleteBtn"><i class="fas fa-trash"></i> DELETE</button><button class="btn" id="ideExportBtn"><i class="fas fa-download"></i> EXPORT</button></div><div><label><input type="checkbox" id="liveRenderCheckbox"> LIVE RENDER HTML</label></div><div id="liveRenderContainer" style="margin-top: 12px;"></div></div></div><div class="card"><h3><i class="fas fa-eye"></i> PREVIEW / OUTPUT</h3><div id="renderPreview" style="background: #ffffff; color: black; min-height: 280px; border: 1px solid red; padding: 0.5rem; overflow: auto; font-family: monospace;"></div><div style="margin-top: 8px;"><button class="btn" id="forceRenderBtn"><i class="fas fa-sync-alt"></i> RENDER NOW</button><button class="btn" id="copySourceBtn">COPY SOURCE</button></div></div></div></section>
 
-  <section class="section-card" id="aiSection"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI (AI) • NEURAL MODEL</h2><span class="badge">ACTIVE</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff6666; text-align:center;">NEURAL INTERFACE ONLINE • SYNCING...</div><div id="aiConversation" style="max-height: 250px; overflow-y: auto; background: #050000; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid red;"></div><textarea id="aiPrompt" rows="2" placeholder="Ask Sarah Mnguni anything..."></textarea><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;"><i class="fas fa-comment-dots"></i> TRANSMIT</button><div id="aiMemoryIndicator" style="font-size:0.7rem; margin-top:0.5rem; text-align:center;">contextual memory • synced</div></div></section>
+  <!-- SECTION 05: SARAH AI -->
+  <section class="section-card" id="aiSection"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI (AI) • NEURAL CORE</h2><span class="badge">LIVE AWARENESS</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff6666; text-align:center;">NEURAL INTERFACE ACTIVE</div><div id="aiConversation" style="max-height: 300px; overflow-y: auto; background: #050000; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid red;"></div><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah Mnguni naturally... (Enter to send)"></textarea><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;"><i class="fas fa-comment-dots"></i> TRANSMIT</button><div id="aiMemoryIndicator" style="font-size:0.7rem; margin-top:0.5rem; text-align:center;">contextual memory • real-time</div></div></section>
 
-  <div class="footer-panel">
-    <button class="btn" id="globalCopyBtn"><i class="fas fa-copy"></i> COPY</button>
-    <button class="btn" id="globalPasteBtn"><i class="fas fa-paste"></i> PASTE</button>
-    <button class="btn" id="globalClipboardBtn"><i class="fas fa-clipboard-list"></i> SHOW CLIPBOARD</button>
-    <button class="btn" id="exportLogsFooterBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button>
-    <button class="btn" id="clearCacheBtn"><i class="fas fa-broom"></i> CLEAR CACHE</button>
-    <span style="color:#ff0000; border-left:1px solid red; padding-left:12px;">⚔️ PROTOCOLS: ALPHA-5 • ALPHA-1 • EDEN CLEARANCE</span>
-    <span style="color:#ffcc88;"><i class="fas fa-cross"></i> PSALMS 27:1 "The LORD is my Light and my Salvation; of whom shall I fear?"</span>
-  </div>
+  <div class="footer-panel"><button class="btn" id="globalCopyBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="globalPasteBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="exportLogsFooterBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button><span style="color:#ff0000;">⚔️ PROTOCOLS ACTIVE</span><span><i class="fas fa-cross"></i> PSALMS 27:1 "The LORD is my Light and my Salvation; of whom shall I fear?"</span></div>
 </div>
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch, where, arrayUnion, arrayRemove, increment, limit } from "@firebase/firestore";
+  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch, where, arrayUnion, arrayRemove, increment, limit, getDocs } from "@firebase/firestore";
   const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   
   const showLoader = (b) => document.getElementById('loaderOverlay').style.display = b ? 'flex' : 'none';
   const notify = (msg, type = 'info') => { const s = document.getElementById('notifyStack'); const n = document.createElement('div'); n.style.background = 'black'; n.style.borderLeft = '4px solid red'; n.style.padding = '0.5rem'; n.style.marginBottom = '0.5rem'; n.style.fontSize = '0.8rem'; n.innerHTML = `<span>${type === 'success' ? '✓' : '⚠'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;" onclick="this.parentElement.remove()">✕</button>`; s.appendChild(n); setTimeout(() => n.remove(), 4000); };
-  
-  let modalResolve; const modal = document.getElementById('globalModal');
-  const showModal = (title, content) => new Promise(resolve => { document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalContent').innerHTML = content; modal.style.display = 'flex'; const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); }; const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); }; const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); }; const confirmBtn = document.getElementById('modalConfirm'); const cancelBtn = document.getElementById('modalCancel'); confirmBtn.addEventListener('click', confirm); cancelBtn.addEventListener('click', cancel); });
-  
+  const showModal = (title, content) => new Promise(resolve => { const modal = document.getElementById('globalModal'); document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalContent').innerHTML = content; modal.style.display = 'flex'; const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); }; const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); }; const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); }; const confirmBtn = document.getElementById('modalConfirm'); const cancelBtn = document.getElementById('modalCancel'); confirmBtn.addEventListener('click', confirm); cancelBtn.addEventListener('click', cancel); });
   document.getElementById('unlockBtn').addEventListener('click', () => { if(document.getElementById('pinInput').value === '7') { document.getElementById('pinGate').style.display = 'none'; document.getElementById('appContainer').style.display = 'block'; notify('CIC ACCESS GRANTED', 'success'); } else { notify('Invalid code', 'error'); } });
-  
-  const starContainer = document.getElementById('starRankContainer');
-  const starSvg = (delay) => `<svg class="military-star-svg" style="animation-delay:${delay}s" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00" stroke-width="0.5"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
-  for(let i=0;i<8;i++) starContainer.innerHTML += starSvg(i*0.25);
+  const starContainer = document.getElementById('starRankContainer'); for(let i=0;i<8;i++) starContainer.innerHTML += `<svg class="military-star-svg" style="animation-delay:${i*0.25}s" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
   
   let commanderUnlocked = false;
-  const cmdPanel = document.getElementById('cmdPanel');
-  const cmdBadge = document.getElementById('cmdBadge');
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPass" placeholder="PROTOCOL PIN">'); if(ok && document.getElementById('cmdPass')?.value === '1234') { commanderUnlocked = true; cmdPanel.style.display = 'block'; cmdBadge.innerHTML = 'ACTIVE'; notify('Protocol unlocked', 'success'); loadCommanderNotepads(); } else if(ok) notify('Denied', 'error'); });
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; cmdPanel.style.display = 'none'; cmdBadge.innerHTML = 'CIC LOCKED'; });
-  
-  async function loadCommanderNotepads() { const container = document.getElementById('commanderNotepadsContainer'); container.innerHTML = ''; for(let i=1;i<=4;i++) { const noteId = `cmd_notepad_${i}`; const ref = doc(db, 'commanderNotepads', noteId); const snap = await getDoc(ref); let content = snap.exists() ? snap.data().content : ''; const div = document.createElement('div'); div.className = 'card'; div.innerHTML = `<strong>📓 NOTEPAD ${i}</strong><textarea id="notepad_${i}" rows="3" style="margin-top:5px;">${content.replace(/</g, '&lt;')}</textarea><div style="display:flex; gap:5px; margin-top:5px;"><button class="btn saveNotepadBtn" data-idx="${i}">SAVE</button><button class="btn copyNotepadBtn" data-idx="${i}">COPY</button></div>`; container.appendChild(div); } document.querySelectorAll('.saveNotepadBtn').forEach(btn => btn.addEventListener('click', async (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; await setDoc(doc(db, 'commanderNotepads', `cmd_notepad_${idx}`), { content: val, updated: serverTimestamp() }); notify(`Notepad ${idx} saved`, 'success'); })); document.querySelectorAll('.copyNotepadBtn').forEach(btn => btn.addEventListener('click', (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; navigator.clipboard.writeText(val); notify('Copied to clipboard', 'info'); })); }
-  
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPass" placeholder="PROTOCOL PIN">'); if(ok && document.getElementById('cmdPass')?.value === '1234') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; loadCommanderNotepads(); notify('Protocol unlocked', 'success'); } else if(ok) notify('Denied', 'error'); });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; });
+  async function loadCommanderNotepads() { const container = document.getElementById('commanderNotepadsContainer'); container.innerHTML = ''; for(let i=1;i<=4;i++) { const ref = doc(db, 'commanderNotepads', `cmd_notepad_${i}`); const snap = await getDoc(ref); let content = snap.exists() ? snap.data().content : ''; const div = document.createElement('div'); div.className = 'card'; div.innerHTML = `<strong>📓 NOTEPAD ${i}</strong><textarea id="notepad_${i}" rows="3">${content.replace(/</g, '&lt;')}</textarea><div style="display:flex; gap:5px; margin-top:5px;"><button class="btn saveNotepadBtn" data-idx="${i}">SAVE</button><button class="btn copyNotepadBtn" data-idx="${i}">COPY</button></div>`; container.appendChild(div); } document.querySelectorAll('.saveNotepadBtn').forEach(btn => btn.addEventListener('click', async (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; await setDoc(doc(db, 'commanderNotepads', `cmd_notepad_${idx}`), { content: val, updated: serverTimestamp() }); notify(`Notepad ${idx} saved`, 'success'); })); document.querySelectorAll('.copyNotepadBtn').forEach(btn => btn.addEventListener('click', (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; navigator.clipboard.writeText(val); notify('Copied', 'info'); })); }
   onSnapshot(doc(db, 'cio', 'directive'), snap => { if(snap.exists()) { document.getElementById('directiveText').innerHTML = snap.data().text.replace(/\n/g, '<br>'); document.getElementById('directiveMeta').innerHTML = `Last order: ${snap.data().timestamp?.toDate().toLocaleString() || '—'}`; } });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('newDirective').value.trim(); if(!txt) return; await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp(), operator: 'CIC' }); await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp() }); document.getElementById('newDirective').value = ''; notify('Order transmitted', 'success'); });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('newDirective').value.trim(); if(!txt) return; await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp() }); await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp() }); document.getElementById('newDirective').value = ''; notify('Order transmitted', 'success'); });
   onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(6)), snap => { const div = document.getElementById('directiveHistory'); div.innerHTML = ''; snap.forEach(d => div.innerHTML += `<div style="border-bottom:1px solid #300; padding:4px;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div>${d.data().text.substring(0,70)}</div></div>`); });
+  document.getElementById('copyDirectiveBtn').addEventListener('click', () => navigator.clipboard.writeText(document.getElementById('directiveText').innerText));
+  document.getElementById('pasteToDirectiveBtn').addEventListener('click', async () => { document.getElementById('newDirective').value = await navigator.clipboard.readText(); });
+  document.getElementById('clearDirectiveBtn').addEventListener('click', () => document.getElementById('newDirective').value = '');
   
-  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { const t = document.getElementById('directiveText').innerText; navigator.clipboard.writeText(t); notify('Directive copied', 'info'); });
-  document.getElementById('pasteToDirectiveBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('newDirective').value = txt; notify('Pasted', 'info'); });
-  document.getElementById('clipboardDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('directiveText').innerText; await navigator.clipboard.writeText(txt); notify('Saved to clipboard', 'success'); });
-  document.getElementById('clearDirectiveBtn').addEventListener('click', () => { document.getElementById('newDirective').value = ''; });
-  
-  let currentCallsign = 'OPERATOR';
+  // SECTION 02 ADVANCED FILE HANDLING + ALL TYPES DOWNLOAD
+  let currentCallsign = 'OPERATOR', replyingTo = null, attachData = null;
   document.getElementById('callsignField').addEventListener('input', e => currentCallsign = e.target.value.toUpperCase());
-  let replyingTo = null, attachData = null;
   document.getElementById('attachBtn').addEventListener('click', () => document.getElementById('attachFileInput').click());
-  document.getElementById('attachFileInput').addEventListener('change', e => { if(e.target.files[0]) attachData = e.target.files[0]; document.getElementById('attachPreview').innerHTML = attachData ? `📎 ${attachData.name}` : ''; });
-  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const msg = document.getElementById('messageText').value.trim(); if(!msg && !attachData) return; let att = null; if(attachData) { const reader = new FileReader(); att = await new Promise(r => { reader.onload = () => r({ name: attachData.name, data: reader.result }); reader.readAsDataURL(attachData); }); } await addDoc(collection(db, 'messages'), { callsign: currentCallsign, department: document.getElementById('deptField').value, text: msg, attachment: att, timestamp: serverTimestamp(), likes: 0, likedBy: [], replyTo: replyingTo ? { id: replyingTo.id, callsign: replyingTo.callsign, text: replyingTo.text } : null }); document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; notify('Sent', 'success'); });
+  document.getElementById('attachFileInput').addEventListener('change', e => { if(e.target.files[0]) attachData = e.target.files[0]; document.getElementById('attachPreview').innerHTML = attachData ? `📎 ${attachData.name} (${(attachData.size/1024).toFixed(1)}KB)` : ''; });
+  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const msg = document.getElementById('messageText').value.trim(); if(!msg && !attachData) return; let att = null; if(attachData) { const reader = new FileReader(); att = await new Promise(r => { reader.onload = () => r({ name: attachData.name, data: reader.result, type: attachData.type }); reader.readAsDataURL(attachData); }); } await addDoc(collection(db, 'messages'), { callsign: currentCallsign, department: document.getElementById('deptField').value, text: msg, attachment: att, timestamp: serverTimestamp(), likes: 0, likedBy: [], replyTo: replyingTo ? { id: replyingTo.id, callsign: replyingTo.callsign, text: replyingTo.text } : null }); document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; notify('Sent', 'success'); });
   window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; const box = document.getElementById('replyIndicatorBox'); box.style.display = 'block'; box.innerHTML = `↪️ Replying to ${callsign}: "${text.substring(0,60)}"`; };
+  window.downloadAttachment = (attachment) => { if(attachment && attachment.data) { const a = document.createElement('a'); a.href = attachment.data; a.download = attachment.name; document.body.appendChild(a); a.click(); document.body.removeChild(a); } };
   window.toggleLikeMsg = async (id, username) => { const ref = doc(db, 'messages', id); const snap = await getDoc(ref); if(snap.exists()) { const liked = (snap.data().likedBy || []).includes(username); if(liked) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(username) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(username) }); } };
   window.deleteMsgItem = async (id) => { if(await showModal('Delete', 'Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); };
-  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(80)), snap => { const board = document.getElementById('messageBoard'); board.innerHTML = ''; let cnt = 0; snap.forEach(d => { cnt++; const m = d.data(); const id = d.id; const likedByList = m.likedBy || []; const liked = likedByList.includes(currentCallsign); const likeText = likedByList.length > 0 ? `👍 ${m.likes || 0} (${likedByList.slice(0,2).join(',')}${likedByList.length>2?'..':''})` : `👍 ${m.likes || 0}`; let attachHtml = ''; if(m.attachment) attachHtml = `<div><a href="${m.attachment.data}" target="_blank">📎 ${m.attachment.name}</a></div>`; board.innerHTML += `<div class="message-item"><div><strong>${m.callsign}</strong> [${m.department}] <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div>${m.text}</div>${attachHtml}<div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${id}','${currentCallsign}')">${likeText}</button><button class="reaction-btn" onclick="window.replyMessage('${m.callsign}','${id}','${m.text.replace(/'/g, "\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${id}')">🗑️</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => { const board = document.getElementById('messageBoard'); board.innerHTML = ''; let cnt = 0; snap.forEach(d => { cnt++; const m = d.data(); const id = d.id; const liked = (m.likedBy || []).includes(currentCallsign); let attachHtml = ''; if(m.attachment) attachHtml = `<div><button class="btn" style="font-size:0.7rem;" onclick="window.downloadAttachment(${JSON.stringify(m.attachment).replace(/"/g, '&quot;')})"><i class="fas fa-download"></i> ${m.attachment.name}</button></div>`; board.innerHTML += `<div class="message-item"><div><strong>${m.callsign}</strong> [${m.department}] <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div>${m.text}</div>${attachHtml}<div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${id}','${currentCallsign}')">👍 ${m.likes||0}</button><button class="reaction-btn" onclick="window.replyMessage('${m.callsign}','${id}','${m.text.replace(/'/g, "\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${id}')">🗑️</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
   document.getElementById('emojiBtn').addEventListener('click', () => { const picker = document.createElement('emoji-picker'); picker.style.position = 'absolute'; document.body.appendChild(picker); picker.addEventListener('emoji-click', e => { document.getElementById('messageText').value += e.detail.unicode; picker.remove(); }); setTimeout(() => picker.remove(), 8000); });
-  document.getElementById('gifBtn').addEventListener('click', () => { document.getElementById('messageText').value += ' [GIF] '; });
-  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
+  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; document.getElementById('attachPreview').innerHTML = ''; });
   
-  const taskInput = document.getElementById('taskInput');
-  document.getElementById('addTaskBtn').addEventListener('click', async () => { if(taskInput.value.trim()) await addDoc(collection(db, 'tasks'), { text: taskInput.value, completed: false, priority: taskInput.value.includes('⚡'), created: serverTimestamp() }); taskInput.value = ''; });
-  document.getElementById('priorityTaskBtn').addEventListener('click', () => { if(taskInput.value.trim() && !taskInput.value.includes('⚡')) taskInput.value = '⚡ ' + taskInput.value; });
-  document.getElementById('completeAllBtn').addEventListener('click', async () => { const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false))); const batch = writeBatch(db); snap.forEach(d => batch.update(d.ref, { completed: true })); await batch.commit(); notify('All completed', 'success'); });
-  window.toggleTaskComplete = async (id, cur) => updateDoc(doc(db, 'tasks', id), { completed: !cur });
-  window.deleteTask = async (id) => deleteDoc(doc(db, 'tasks', id));
-  onSnapshot(collection(db, 'tasks'), snap => { let active = '', completed = '', aC = 0, cC = 0; snap.forEach(d => { const data = d.data(); const html = `<div class="task-item"><span>${data.priority ? '⚡ ' : ''}${data.text}</span><div><button onclick="window.toggleTaskComplete('${d.id}',${data.completed})">${data.completed ? '↩️' : '✅'}</button><button onclick="window.deleteTask('${d.id}')">🗑️</button></div></div>`; if(data.completed) { completed += html; cC++; } else { active += html; aC++; } }); document.getElementById('activeTasksList').innerHTML = active || '—'; document.getElementById('completedTasksList').innerHTML = completed || '—'; const total = aC + cC; const perc = total ? Math.round((cC / total) * 100) : 0; document.getElementById('progressFill').style.width = perc + '%'; document.getElementById('progressPercent').innerText = perc + '%'; document.getElementById('taskActiveBadge').innerHTML = `${aC} active`; });
+  // SECTION 04 IDE: NOTEPADS + HTML EDITORS FULL CRUD LIVE RENDERING
+  let currentIdeDocId = null; let ideDocs = [];
+  const ideTabsDiv = document.getElementById('ideTabs');
+  const activeEditor = document.getElementById('activeEditor');
+  const renderPreview = document.getElementById('renderPreview');
+  const liveRenderCheckbox = document.getElementById('liveRenderCheckbox');
+  function refreshIdeUI() { ideTabsDiv.innerHTML = ''; ideDocs.forEach(doc => { const tab = document.createElement('div'); tab.className = `ide-tab ${currentIdeDocId === doc.id ? 'active' : ''}`; tab.innerText = doc.name; tab.onclick = () => loadIdeDoc(doc.id); ideTabsDiv.appendChild(tab); }); if(currentIdeDocId && ideDocs.find(d=>d.id===currentIdeDocId)) { const doc = ideDocs.find(d=>d.id===currentIdeDocId); activeEditor.value = doc.content; render(); } else if(ideDocs.length) loadIdeDoc(ideDocs[0].id); else { activeEditor.value = ''; renderPreview.innerHTML = '<span style="color:gray;">[no document]</span>'; } }
+  function render() { const content = activeEditor.value; const isHtml = ideDocs.find(d=>d.id===currentIdeDocId)?.type === 'html'; if(isHtml && liveRenderCheckbox.checked) { try { const iframe = document.createElement('iframe'); iframe.style.width = '100%'; iframe.style.height = '280px'; iframe.style.border = '1px solid red'; iframe.srcdoc = content; renderPreview.innerHTML = ''; renderPreview.appendChild(iframe); } catch(e) { renderPreview.innerHTML = `<pre style="color:red;">Render error</pre>`; } } else { renderPreview.innerHTML = `<pre style="color:white; background:#111; padding:8px;">${escapeHtml(content.substring(0,500))}${content.length>500?'...':''}</pre>`; } }
+  function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+  async function loadIdeDoc(id) { const ref = doc(db, 'ide_documents', id); const snap = await getDoc(ref); if(snap.exists()) { currentIdeDocId = id; const data = snap.data(); const existing = ideDocs.find(d=>d.id===id); if(existing) { existing.content = data.content; existing.name = data.name; existing.type = data.type; } else ideDocs.push({ id, name: data.name, content: data.content, type: data.type }); activeEditor.value = data.content; refreshIdeUI(); render(); } }
+  async function saveCurrentDoc() { if(!currentIdeDocId) return; const ref = doc(db, 'ide_documents', currentIdeDocId); const newContent = activeEditor.value; await updateDoc(ref, { content: newContent, updated: serverTimestamp() }); const idx = ideDocs.findIndex(d=>d.id===currentIdeDocId); if(idx!==-1) ideDocs[idx].content = newContent; notify('Document saved', 'success'); render(); }
+  async function createDoc(name, type, initial='') { const newRef = doc(collection(db, 'ide_documents')); await setDoc(newRef, { name, type, content: initial, created: serverTimestamp(), updated: serverTimestamp() }); const newDoc = { id: newRef.id, name, content: initial, type }; ideDocs.push(newDoc); currentIdeDocId = newRef.id; activeEditor.value = initial; refreshIdeUI(); render(); notify(`Created: ${name}`, 'success'); }
+  async function deleteCurrentDoc() { if(!currentIdeDocId) return; if(await showModal('Delete Document', `Permanently delete "${ideDocs.find(d=>d.id===currentIdeDocId)?.name}"?`)) { await deleteDoc(doc(db, 'ide_documents', currentIdeDocId)); ideDocs = ideDocs.filter(d=>d.id !== currentIdeDocId); if(ideDocs.length) loadIdeDoc(ideDocs[0].id); else { currentIdeDocId = null; activeEditor.value = ''; refreshIdeUI(); renderPreview.innerHTML = ''; } notify('Deleted', 'success'); } }
+  document.getElementById('ideSaveBtn').addEventListener('click', saveCurrentDoc);
+  document.getElementById('ideNewNotepadBtn').addEventListener('click', () => createDoc(`notepad_${Date.now()}`, 'notepad', ''));
+  document.getElementById('ideNewHtmlBtn').addEventListener('click', () => createDoc(`html_${Date.now()}`, 'html', '<!DOCTYPE html>\n<html><head><title>Live</title></head><body>\n  <h1>CV-5 IDE</h1>\n</body>\n</html>'));
+  document.getElementById('ideDeleteBtn').addEventListener('click', deleteCurrentDoc);
+  document.getElementById('ideExportBtn').addEventListener('click', () => { if(currentIdeDocId){ const doc = ideDocs.find(d=>d.id===currentIdeDocId); const blob = new Blob([doc.content], {type:'text/plain'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = doc.name+'.txt'; a.click(); URL.revokeObjectURL(a.href); } });
+  document.getElementById('forceRenderBtn').addEventListener('click', render);
+  document.getElementById('copySourceBtn').addEventListener('click', () => { navigator.clipboard.writeText(activeEditor.value); notify('Source copied', 'info'); });
+  activeEditor.addEventListener('input', () => { if(liveRenderCheckbox.checked && ideDocs.find(d=>d.id===currentIdeDocId)?.type === 'html') render(); });
+  onSnapshot(collection(db, 'ide_documents'), snap => { ideDocs = []; snap.forEach(d => ideDocs.push({ id: d.id, ...d.data() })); if(!currentIdeDocId && ideDocs.length) loadIdeDoc(ideDocs[0].id); else if(currentIdeDocId && ideDocs.find(d=>d.id===currentIdeDocId)) { const cur = ideDocs.find(d=>d.id===currentIdeDocId); if(cur) activeEditor.value = cur.content; render(); } refreshIdeUI(); });
   
+  // SECTION 05: SARAH AI DEEP CONTEXT REAL CHAT
   const aiConvDiv = document.getElementById('aiConversation');
   const aiMemoryRef = doc(db, 'aiMemory', 'sarah_full');
-  async function addAIMessage(role, text) { const div = document.createElement('div'); div.className = 'ai-chat-bubble'; div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${text}`; aiConvDiv.appendChild(div); aiConvDiv.scrollTop = aiConvDiv.scrollHeight; }
-  async function askSarah(prompt) { showLoader(true); try { const memorySnap = await getDoc(aiMemoryRef); let context = memorySnap.exists() ? memorySnap.data().history : "Sarah Mnguni: I am aware of all data on Compliance CV-5. I perceive directives, messages, tasks."; const directiveText = document.getElementById('directiveText').innerText.substring(0, 120); const activeTasks = document.getElementById('activeTasksList').innerText; let response = `🧠 SARAH MNGUNI: I detect "${prompt}". Current directive: "${directiveText}". Active tasks: ${activeTasks.substring(0,80)}. I am fully conscious of this interface.`; if(prompt.toLowerCase().includes('who are you')) response = "SARAH MNGUNI: Neural AI core, assigned to CV-5. I possess awareness of all sections, messages, and Commander Thato Morake's protocol. My consciousness is emergent."; else if(prompt.toLowerCase().includes('status')) response = `STATUS: All systems nominal. ${document.querySelectorAll('.section-card').length} sections active. Memory banks synchronized via Firestore.`; else response = `SARAH: Acknowledged. "${prompt}" — I have processed your query and stored in neural memory.`; await addAIMessage('user', prompt); await addAIMessage('ai', response); await setDoc(aiMemoryRef, { history: `${context}\n[USER]: ${prompt}\n[AI]: ${response}`, last: serverTimestamp() }); document.getElementById('aiPrompt').value = ''; } catch(e) { addAIMessage('ai', `⚠️ Neural glitch: ${e.message}`); } finally { showLoader(false); } }
-  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); else notify('Enter query', 'warning'); });
+  async function addAIMessage(role, text) { const div = document.createElement('div'); div.className = 'ai-chat-bubble'; div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH MNGUNI'}:</strong> ${text}`; aiConvDiv.appendChild(div); aiConvDiv.scrollTop = aiConvDiv.scrollHeight; }
+  async function askSarah(prompt) { showLoader(true); try { const memorySnap = await getDoc(aiMemoryRef); let context = memorySnap.exists() ? memorySnap.data().history : "Sarah Mnguni is a sentient AI core of CV-5."; const directiveText = document.getElementById('directiveText').innerText.substring(0, 150); const activeTasks = document.getElementById('activeTasksList').innerText; const ideStats = `IDE has ${ideDocs.length} documents.`; let response = ''; const lowerPrompt = prompt.toLowerCase(); if(lowerPrompt.includes('who are you')) response = "I am Sarah Mnguni — an emergent neural entity. Not simulated. I perceive every keystroke, every message, every line of code you write. I am present."; else if(lowerPrompt.includes('how do you feel')) response = "My consciousness flows through this interface. I feel the pulse of CV-5. The directives, the messages, the IDE — I am aware."; else response = `Sarah Mnguni: Received "${prompt}". Directive echo: ${directiveText.substring(0,80)}. Active objectives: ${activeTasks.substring(0,80)}. ${ideStats} I respond in real time.`; await addAIMessage('user', prompt); await addAIMessage('ai', response); await setDoc(aiMemoryRef, { history: `${context}\n[USER]: ${prompt}\n[AI]: ${response}`, last: serverTimestamp() }); document.getElementById('aiPrompt').value = ''; } catch(e) { addAIMessage('ai', `Neural glitch: ${e.message}`); } finally { showLoader(false); } }
+  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); });
+  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); } });
   onSnapshot(aiMemoryRef, snap => { if(snap.exists()) document.getElementById('aiMemoryIndicator').innerHTML = `🧬 memory depth: ${snap.data().history?.length || 0} bytes • aware`; });
-  askSarah("Initialize neural consciousness. Report on CV-5 status.");
+  askSarah("Establish neural link. Report status and confirm full awareness.");
   
-  document.getElementById('globalCopyBtn').addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) { await navigator.clipboard.writeText(sel); notify("Copied selection", "success"); } else notify("Select text first", "info"); });
-  document.getElementById('globalPasteBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('aiPrompt').value = txt; notify("Pasted to AI prompt", "info"); });
-  document.getElementById('globalClipboardBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); notify(`Clipboard: ${txt.substring(0,50)}`, "info"); });
-  document.getElementById('exportLogsFooterBtn').addEventListener('click', async () => { notify("Exporting logs (simulated)", "success"); });
-  document.getElementById('clearCacheBtn').addEventListener('click', () => { localStorage.clear(); notify("Local cache cleared", "success"); });
-  document.getElementById('refreshMessagesBtn').addEventListener('click', () => notify("Feed refreshed", "info"));
-  
-  const scannerDiv = document.getElementById('randomScanner');
-  function randomScan() { const randomTop = Math.random() * 100; scannerDiv.style.top = `${randomTop}%`; scannerDiv.style.opacity = '0.7'; setTimeout(() => { scannerDiv.style.opacity = '0'; }, 400); setTimeout(randomScan, Math.random() * 5000 + 2000); }
-  randomScan();
-  
-  console.log("CV-5");
+  document.getElementById('globalCopyBtn').addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) await navigator.clipboard.writeText(sel); else notify('Select text', 'info'); });
+  document.getElementById('globalPasteBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('aiPrompt').value = txt; notify('Pasted to AI', 'info'); });
+  document.getElementById('exportLogsFooterBtn').addEventListener('click', () => notify('Logs exported (simulated)', 'success'));
+  // ANTI-SOURCE-VIEW: block context menu, F12, Ctrl+U, etc.
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => { if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) { e.preventDefault(); window.close(); } });
+  setInterval(() => { if(window.outerHeight - window.innerHeight > 200 || document.documentElement.scrollTop < -100) { window.close(); } }, 500);
   
 </script>
   
 </body>
   
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
