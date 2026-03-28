@@ -515,9 +515,10 @@
       <div class="section-command"><h2>LEAGUE TABLE · WEEK 03</h2><span>2026</span></div>
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
         <tbody id="league-tbody">
-          <!-- STATIC HTML: two games played, Alpha both wins -->
-          <tr><td style="color:#darkred;">EDEN ALPHA</td><td>3</td><td>3</td><td>0</td><td>0</td><td>9</td></tr>
-          <tr><td style="color:#darkgreen;">EDEN DELTA</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
+          
+          <tr><td style="color:#darkred;">EDEN ALPHA</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td></tr>
+          <tr><td style="color:#darkgreen;">EDEN DELTA</td><td>4</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
+          
         </tbody>
       </table></div>
     </section>
@@ -579,7 +580,7 @@
     <section id="match-summary" class="ops-card">
       <div class="section-command"><h2>OPERATION SUMMARY</h2></div>
       <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead>
+        <table><thead><tr><th>DIRECT ACTION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead>
         <tbody id="summary-tbody">
           <tr><td>DA01</td><td>2-1</td><td>BAYANDA (1), HOSS (1), VUYO (1)</td><td>QUEENER</td><td>HARBOUR</td><td>alpha comeback</td></tr>
           
@@ -660,68 +661,225 @@
       </table>
     </div></section>
 
-    <!-- other tables (scorers, motm, defenders, assisters) remain static / dummy data, all HTML -->
-    <section id="scorers" class="ops-card"><div class="section-command"><h2>TOP SNIPERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead><tbody id="scorers-tbody"><tr><td>VUYO</td><td>8</td></tr>
+    <section id="scorers" class="ops-card">
+      
+      <div class="section-command"><h2>TOP SNIPERS</h2></div>
+      
+      <div class="table-container">
+      
+      <table><thead><tr><th>OPERATOR</th><th>GOALS</th></tr></thead>
+      
+      <tbody id="scorers-tbody">
+      
+      <tr><td>VUYO</td><td>8</td></tr>
       <tr><td>QUEENER</td><td>4</td></tr>
-      <tr><td>SPHE</td><td>3</td></tr>
       <tr><td>JONATHAN</td><td>3</td></tr>
+      <tr><td>SPHE</td><td>3</td></tr>
+      <tr><td>XAN</td><td>2</td></tr>
       <tr><td>OLAMA</td><td>1</td></tr>
+      <tr><td>JOY</td><td>1</td></tr>
       <tr><td>BAYANDA</td><td>1</td></tr>
-      <tr><td>XAN</td><td>1</td></tr>
-      <tr><td>HOSS</td><td>1</td></tr></tbody></table></div></section>
+      <tr><td>HOSS</td><td>1</td></tr>
+    
+    </tbody></table></div></section>
 
-    <section id="motm" class="ops-card"><div class="section-command"><h2>MAN OF THE MATCH</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"><tr><td>M01</td><td>QUEENER</td></tr><tr><td>M02</td><td>JONATHAN</td></tr><tr><td>M03</td><td>VUYO</td></tr><tr><td>M04</td><td>TBD</td></tr><tr><td>M05</td><td>TBD</td></tr><tr><td>M06</td><td>TBD</td></tr><tr><td>M07</td><td>TBD</td></tr><tr><td>M08</td><td>TBD</td></tr><tr><td>M09</td><td>TBD</td></tr><tr><td>M10</td><td>TBD</td></tr><tr><td>M11</td><td>TBD</td></tr><tr><td>M12</td><td>TBD</td></tr><tr><td>M13</td><td>TBD</td></tr><tr><td>M14</td><td>TBD</td></tr><tr><td>M15</td><td>TBD</td></tr><tr><td>M16</td><td>TBD</td></tr><tr><td>M17</td><td>TBD</td></tr><tr><td>M18</td><td>TBD</td></tr><tr><td>M19</td><td>TBD</td></tr><tr><td>M20</td><td>TBD</td></tr><tr><td>M21</td><td>TBD</td></tr><tr><td>M22</td><td>TBD</td></tr><tr><td>M23</td><td>TBD</td></tr><tr><td>M24</td><td>TBD</td></tr><tr><td>M25</td><td>TBD</td></tr><tr><td>M26</td><td>TBD</td></tr><tr><td>M27</td><td>TBD</td></tr><tr><td>M28</td><td>TBD</td></tr><tr><td>M29</td><td>TBD</td></tr><tr><td>M30</td><td>TBD</td></tr><tr><td>M31</td><td>TBD</td></tr><tr><td>M32</td><td>TBD</td></tr><tr><td>M33</td><td>TBD</td></tr><tr><td>M34</td><td>TBD</td></tr><tr><td>M35</td><td>TBD</td></tr><tr><td>M36</td><td>TBD</td></tr><tr><td>M37</td><td>TBD</td></tr><tr><td>M38</td><td>TBD</td></tr></tbody></table></div></section>
+    <section id="motm" class="ops-card"><div class="section-command"><h2>MAN OF THE MATCH</h2></div><div class="table-container"><table><thead><tr><th>DIRECT ACTION</th><th>OPERATOR</th></tr></thead><tbody id="motm-tbody"><tr><td>DA01</td><td>QUEENER</td></tr><tr><td>DA02</td><td>JONATHAN</td></tr><tr><td>DA03</td><td>VUYO</td></tr><tr><td>DA04</td><td>TBD</td></tr><tr><td>DA05</td><td>TBD</td></tr><tr><td>DA06</td><td>TBD</td></tr><tr><td>DA07</td><td>TBD</td></tr><tr><td>DA08</td><td>TBD</td></tr><tr><td>DA09</td><td>TBD</td></tr><tr><td>DA10</td><td>TBD</td></tr><tr><td>DA11</td><td>TBD</td></tr><tr><td>DA12</td><td>TBD</td></tr><tr><td>DA13</td><td>TBD</td></tr><tr><td>DA14</td><td>TBD</td></tr><tr><td>DA15</td><td>TBD</td></tr><tr><td>DA16</td><td>TBD</td></tr><tr><td>DA17</td><td>TBD</td></tr><tr><td>DA18</td><td>TBD</td></tr><tr><td>DA19</td><td>TBD</td></tr><tr><td>DA20</td><td>TBD</td></tr><tr><td>DA21</td><td>TBD</td></tr><tr><td>DA22</td><td>TBD</td></tr><tr><td>DA23</td><td>TBD</td></tr><tr><td>DA24</td><td>TBD</td></tr><tr><td>DA25</td><td>TBD</td></tr><tr><td>DA26</td><td>TBD</td></tr><tr><td>DA27</td><td>TBD</td></tr><tr><td>DA28</td><td>TBD</td></tr><tr><td>DA29</td><td>TBD</td></tr><tr><td>DA30</td><td>TBD</td></tr><tr><td>DA31</td><td>TBD</td></tr><tr><td>DA32</td><td>TBD</td></tr><tr><td>DA33</td><td>TBD</td></tr><tr><td>DA34</td><td>TBD</td></tr><tr><td>DA35</td><td>TBD</td></tr><tr><td>DA36</td><td>TBD</td></tr><tr><td>DA37</td><td>TBD</td></tr><tr><td>DA38</td><td>TBD</td></tr></tbody></table></div></section>
 
-    <section id="defenders" class="ops-card"><div class="section-command"><h2>DEFENDER OF THE GAME</h2></div><div class="table-container"><table><thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead><tbody id="defenders-tbody"><tr><td>M01</td><td>QUEENER</td></tr><tr><td>M02</td><td>JONATHAN</td></tr><tr><td>M03</td><td>HOSS</td></tr><tr><td>M04</td><td>TBD</td></tr><tr><td>M05</td><td>TBD</td></tr><tr><td>M06</td><td>TBD</td></tr><tr><td>M07</td><td>TBD</td></tr><tr><td>M08</td><td>TBD</td></tr><tr><td>M09</td><td>TBD</td></tr><tr><td>M10</td><td>TBD</td></tr><tr><td>M11</td><td>TBD</td></tr><tr><td>M12</td><td>TBD</td></tr><tr><td>M13</td><td>TBD</td></tr><tr><td>M14</td><td>TBD</td></tr><tr><td>M15</td><td>TBD</td></tr><tr><td>M16</td><td>TBD</td></tr><tr><td>M17</td><td>TBD</td></tr><tr><td>M18</td><td>TBD</td></tr><tr><td>M19</td><td>TBD</td></tr><tr><td>M20</td><td>TBD</td></tr><tr><td>M21</td><td>TBD</td></tr><tr><td>M22</td><td>TBD</td></tr><tr><td>M23</td><td>TBD</td></tr><tr><td>M24</td><td>TBD</td></tr><tr><td>M25</td><td>TBD</td></tr><tr><td>M26</td><td>TBD</td></tr><tr><td>M27</td><td>TBD</td></tr><tr><td>M28</td><td>TBD</td></tr><tr><td>M29</td><td>TBD</td></tr><tr><td>M30</td><td>TBD</td></tr><tr><td>M31</td><td>TBD</td></tr><tr><td>M32</td><td>TBD</td></tr><tr><td>M33</td><td>TBD</td></tr><tr><td>M34</td><td>TBD</td></tr><tr><td>M35</td><td>TBD</td></tr><tr><td>M36</td><td>TBD</td></tr><tr><td>M37</td><td>TBD</td></tr><tr><td>M38</td><td>TBD</td></tr></tbody></table></div></section>
+    <section id="defenders" class="ops-card">
+      
+      <div class="section-command"><h2>DEFENDER OF THE GAME</h2></div>
+      
+      <div class="table-container"><table>
+      
+      <thead><tr><th>MISSION</th><th>OPERATOR</th></tr></thead>
+      
+      <tbody id="defenders-tbody">
+      
+      <tr><td>DA01</td><td>QUEENER</td></tr>
+        
+        <tr><td>DA02</td><td>JONATHAN</td></tr>
+        
+        <tr><td>DA03</td><td>HOSS</td></tr>
+        
+        <tr><td>DA04</td><td>JOY</td></tr>
+        
+        <tr><td>DA05</td><td>TBD</td></tr>
+        
+        <tr><td>DA06</td><td>TBD</td></tr>
+        
+        <tr><td>DA07</td><td>TBD</td></tr>
+        
+        <tr><td>DA08</td><td>TBD</td></tr>
+        
+        <tr><td>DA09</td><td>TBD</td></tr>
+        
+        <tr><td>DA10</td><td>TBD</td></tr>
+        
+        <tr><td>DA11</td><td>TBD</td></tr>
+        
+        <tr><td>DA12</td><td>TBD</td></tr>
+        
+        <tr><td>DA13</td><td>TBD</td></tr>
+        
+        <tr><td>DA14</td><td>TBD</td></tr>
+        
+        <tr><td>DA15</td><td>TBD</td></tr>
+        
+        <tr><td>DA16</td><td>TBD</td></tr>
+        
+        <tr><td>DA17</td><td>TBD</td></tr>
+        
+        <tr><td>DA18</td><td>TBD</td></tr>
+        
+        <tr><td>DA19</td><td>TBD</td></tr>
+        
+        <tr><td>DA20</td><td>TBD</td></tr>
+        
+        <tr><td>DA21</td><td>TBD</td></tr>
+        
+        <tr><td>DA22</td><td>TBD</td></tr>
+        
+        <tr><td>DA23</td><td>TBD</td></tr>
+        
+        <tr><td>DA24</td><td>TBD</td></tr>
+        
+        <tr><td>DA25</td><td>TBD</td></tr>
+        
+        <tr><td>DA26</td><td>TBD</td></tr>
+        
+        <tr><td>DA27</td><td>TBD</td></tr>
+        
+        <tr><td>DA28</td><td>TBD</td></tr>
+        
+        <tr><td>DA29</td><td>TBD</td></tr>
+        
+        <tr><td>DA30</td><td>TBD</td></tr>
+        
+        <tr><td>DA31</td><td>TBD</td></tr>
+        
+        <tr><td>DA32</td><td>TBD</td></tr>
+        
+        <tr><td>DA33</td><td>TBD</td></tr>
+        
+        <tr><td>DA34</td><td>TBD</td></tr>
+        
+        <tr><td>DA35</td><td>TBD</td></tr>
+        
+        <tr><td>DA36</td><td>TBD</td></tr>
+        
+        <tr><td>DA37</td><td>TBD</td></tr>
+        
+        <tr><td>DA38</td><td>TBD</td></tr>
+      
+      </tbody>
+      
+      </table>
+      
+      </div>
+    
+    </section>
 
-    <section id="assisters" class="ops-card"><div class="section-command"><h2>TOP ASSISTERS</h2></div><div class="table-container"><table><thead><tr><th>OPERATOR</th><th>ASSISTS</th></tr></thead><tbody id="assisters-tbody"><tr><td>FROST</td><td>1</td></tr>
+    <section id="assisters" class="ops-card">
+      
+      <div class="section-command">
+        
+        <h2>TOP ASSISTERS</h2>
+      
+      </div>
+      
+      <div class="table-container">
+        
+        <table>
+          
+          <thead>
+            
+            <tr><th>OPERATOR</th><th>ASSISTS</th></tr>
+          
+          </thead>
+          
+          <tbody id="assisters-tbody">
+      
+      <tr><td>JONATHAN</td><td>2</td></tr>
+      
+      <tr><td>FROST</td><td>1</td></tr>
+            
       <tr><td>JOY</td><td>1</td></tr>
       
       <tr><td>OLAMA</td><td>1</td></tr>
       
       <tr><td>BAYANDA</td><td>1</td></tr>
       
-    <tr><td>JONATHAN</td><td>1</td></tr>
+    
     </tbody></table></div></section>
 
     <section id="teams" class="ops-card">
       <div class="section-command"><h2>TEAMS · 5v5 TACTICAL</h2></div>
       <div class="teams-grid">
+        
         <div class="team-card"><div class="team-role">⚔️ ALPHA SQUAD</div><div class="starting-five"><div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#10</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div><div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#12</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
-        <div class="team-card delta-force"><div class="team-role">🎯 DELTA FORCE</div><div class="starting-five"><div class="player-row"><span class="player-number">#05</span><span class="player-name">JOY</span><span class="player-position">DEF MID · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#07</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#14</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div><div class="player-row"><span class="player-number">#03</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#06</span><span class="player-name">MASIYA</span><span class="player-position">MIDFIELDER</span></div></div></div>
+        
+        <div class="team-card delta-force">
+          
+          <div class="team-role">🎯 DELTA FORCE</div>
+          
+          <div class="starting-five">
+            
+            <div class="player-row"><span class="player-number">#05</span><span class="player-name">JOY</span><span class="player-position">ATT MID · C</span><span class="player-captain">CAPTAIN</span></div>
+
+            <div class="player-row"><span class="player-number">#03</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div>
+
+            <div class="player-row"><span class="player-number">#02</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK + COVER ATTACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div>
+
+             <div class="player-row"><span class="player-number">#07</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING + COVER DEFENCE · VC</span><span class="player-captain">VICE</span></div>
+
+              <div class="player-row"><span class="player-number">#00</span><span class="player-name">MASIYA</span><span class="player-position">ATT MID</span></div></div></div>
+            
+            <div class="player-row"><span class="player-number">#33</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div>
+            
       </div>
+      
     </section>
 
-    <!-- AWARDS unchanged -->
     <section id="awards" class="ops-card">
+      
       <div class="section-command"><h2>END OF OPERATION AWARDS</h2></div>
+      
       <div class="table-container">
-        <table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead><tbody id="awards-tbody"><tr><td>MVP</td><td>—</td></tr><tr><td>GOLDEN BOOT</td><td>—</td></tr><tr><td>SILVER BOOT</td><td>—</td></tr><tr><td>BRONZE BOOT</td><td>—</td></tr><tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr><tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr><tr><td>GOAL OF THE OPERATION</td><td>—</td></tr></tbody></table>
+        
+        <table><thead><tr><th>HONOUR</th><th>RECIPIENT</th></tr></thead>
+          
+          <tbody id="awards-tbody">
+            
+            <tr><td>BEST OPERATOR OF THE OPERATION</td><td>—</td></tr>
+
+            <tr><td>THE PPsH-41 + AK-47 + AR-15 + SVD DRAGUNOV SNIPER RIFLE + BLACK GLOCK 17 + PLATINUM COLT M1911 + BLACK STEALTH KNIFE</td><td>—</td></tr>
+            
+            <tr><td>THE BRONZE BOOT</td><td>—</td></tr>
+            
+            <tr><td>DEFENDER OF THE OPERATION</td><td>—</td></tr>
+            
+            <tr><td>PLAYMAKER OF THE OPERATION</td><td>—</td></tr>
+
+            <tr><td>MOST TACTICAL OF THE OPERATION</td><td>—</td></tr>
+
+            <tr><td>BEST LEADER OF THE OPERATION</td><td>—</td></tr>
+            
+            <tr><td>GOAL OF THE OPERATION</td><td>—</td></tr>
+
+            <tr><td>TEAM OF THE OPERATION</td><td>—</td></tr>
+          
+          </tbody>
+        
+        </table>
       </div>
     </section>
 
-    <!-- SETTINGS – more buttons & controls -->
-    <section id="audio-panel" class="ops-card">
-      <div class="section-command"><h2>SETTINGS · COMMS</h2></div>
-      <div class="advanced-settings-grid">
-        <div class="audio-controls" style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').play()">▶️ ARM</span>
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').pause()">⏸️ MUTE</span>
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.5">50%</span>
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=0.2">20%</span>
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').volume=1.0">100%</span>
-          <span class="audio-btn" onclick="let a=document.getElementById('bgTrack'); a.loop=!a.loop; this.innerText=a.loop?'🔁 LOOP ON':'🔁 LOOP OFF';">🔁 LOOP ON</span>
-          <span class="audio-btn" onclick="document.getElementById('bgTrack').currentTime=0;">⏮️ RESTART</span>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- ADVANCED FOOTER -->
   <footer>
     <div class="footer-grid">
       <div class="live-data"><div><span>TIME:</span><span id="liveTime"></span></div><div><span>WEATHER:</span><span id="liveWeather">18°C · CLEAR</span></div><div><span>WIND:</span><span>12km/h NW</span></div></div>
-      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div><div><span>MISSION:</span><span>M04 · HARBOUR</span></div></div>
+      <div class="live-data"><div><span>RADAR:</span><span>ACTIVE SWEEP</span></div><div><span>CONTACTS:</span><span id="dotCount">16</span></div><div><span>THREAT:</span><span>LOW</span></div><div><span>MISSION:</span><span>DA05 · HARBOUR</span></div></div>
     </div>
     <div class="copyright">© <span>EDEN</span> · 2026 · ALL INTELLECTUAL PROPERTY</div>
   </footer>
@@ -729,7 +887,7 @@
   <script>
     
     (function() {
-      // BACKGROUND TRACK – robust forever (autoplay + retry)
+
       const audio = document.getElementById('bgTrack');
       if (audio) {
         audio.volume = 0.25;
@@ -737,7 +895,7 @@
         let playPromise = audio.play();
         if (playPromise !== undefined) {
           playPromise.catch(() => {
-            // retry on first user interaction
+
             const retryPlay = function() {
               audio.play();
               document.removeEventListener('click', retryPlay);
@@ -749,7 +907,6 @@
         }
       }
 
-      // RADAR DOTS
       const radarGrid = document.getElementById('radarGrid');
       function generateDots() {
         const existing = document.querySelectorAll('.contact-dot');
@@ -767,7 +924,6 @@
       generateDots();
       setInterval(generateDots, 2200);
 
-      // COUNTDOWN (only visual, doesn't affect table data)
       const matches = [];
       let base = new Date(2026, 2, 1, 14, 0, 0);
       for (let i = 0; i < 38; i++) { 
@@ -802,7 +958,6 @@
       setInterval(updateCountdown, 500); 
       updateCountdown();
 
-      // live time/weather in footer
       function updateLive() { 
         document.getElementById('liveTime').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false }); 
       }
@@ -813,9 +968,11 @@
         document.getElementById('liveWeather').innerText = w[Math.floor(Math.random() * w.length)];
       }, 15000);
     })();
+    
   </script>
 
 </body>
+  
 </html>
 
 
