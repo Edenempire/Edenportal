@@ -37,7 +37,7 @@
       --panel-bg: rgba(0, 25, 35, 0.7);
       --header-solid: #000f18;
       --header-height: clamp(150px, 22vh, 200px);     
-      --rail-width: clamp(68px, 6.8vw, 98px);
+      --rail-width: clamp(65px, 6.5vw, 95px);
     }
 
     html { scroll-behavior: smooth; width: 100%; height: 100%; }
@@ -381,13 +381,13 @@
       border: 2px solid var(--strike-blue);         
       background: rgba(0, 15, 20, 0.7);
     }
-    table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    table { width: 100%; border-collapse: collapse; min-width: 400px; }
     th, td { border: 2px solid var(--strike-blue); padding: 0.6rem; color: var(--text-primary); }
     th { background: rgba(0, 40, 60, 0.8); color: var(--strike-blue); }
 
-    .completed-row { background: rgba(74, 222, 128, 0.15); } 
-    .next-row { background: rgba(96, 165, 250, 0.25); }    
-    .upcoming-row { background: rgba(251, 146, 60, 0.1); }    
+    .completed-row { background: green; } 
+    .next-row { background: blue; }    
+    .upcoming-row { background: orange; }    
 
     footer {
       background: rgba(0, 15, 25, 0.85);
@@ -452,6 +452,7 @@
       .menu-panel-perm { width: 220px; }
       #champion-story { width: 95%; }
     }
+    
     @media (min-width: 2000px) {
       :root { --rail-width: 110px; }
     }
@@ -516,8 +517,8 @@
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
         <tbody id="league-tbody">
           
-          <tr><td style="color:#darkred;">EDEN ALPHA</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td></tr>
-          <tr><td style="color:#darkgreen;">EDEN DELTA</td><td>4</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
+          <tr><td style="color: darkred;">EDEN ALPHA</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td></tr>
+          <tr><td style="color: darkgreen;">EDEN DELTA</td><td>4</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
           
         </tbody>
       </table></div>
@@ -588,7 +589,7 @@
           
           <tr><td>DA03</td><td>4-1</td><td>VUYO (2), JONATHAN (1), XAN (1)</td><td>VUYO</td><td>HARBOUR</td><td>NIL-NIL DRAW AT HALFTIME, AND OLAMA HAD TO COME OFF DUE TO ILLNESS, AND HENCE ALPHA THEN JUST COMPLETELY DISMANTLED DELTA WITH 4 GOALS.</td></tr>
           
-          <tr><td>DA04</td><td>1-1</td><td>JOY (1), XAN (1)</td><td>JOY</td><td>HARBOUR</td><td>EXCITING SCENES. SOME REALLY EXCITING SCENES. BOTH IN AND OUT OF THE GAME. LIEUTENANT COMMANDER JOYSON IS BACK - MR. 5 STARS HIMSELF. XAN SCORED POSSIBLY THE GOAL OF THE SEASON. DIRECT ACTIONS ARE NOW SOON TO BE POSTED ON OUR LOVELY YOUTUBE PAGE, STAY TUNED, AS OF DA05 - LEGGO!</td></tr>
+          <tr><td>DA04</td><td>1-1</td><td>JOY (1), XAN (1)</td><td>JOY</td><td>HARBOUR</td><td>EXCITING SCENES. SOME REALLY EXCITING SCENES. BOTH IN AND OUT OF THE GAME. LIEUTENANT COMMANDER JOYSON IS BACK - MR. 5 STARS HIMSELF. XAN SCORED POSSIBLY THE GOAL OF THE SEASON. DIRECT ACTIONS ARE NOW SOON TO BE POSTED ON OUR LOVELY YOUTUBE PAGE, STAY TUNED, AS OF DA05 - LEGGO! DELTA SCORED FIRST.</td></tr>
           
           <tr><td>DA05</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
           
@@ -816,7 +817,27 @@
       <div class="section-command"><h2>TEAMS · 5v5 TACTICAL</h2></div>
       <div class="teams-grid">
         
-        <div class="team-card"><div class="team-role">⚔️ ALPHA SQUAD</div><div class="starting-five"><div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div><div class="player-row"><span class="player-number">#10</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div><div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div><div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div><div class="player-row"><span class="player-number">#11</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div><div class="player-row"><span class="player-number">#12</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
+        <div class="team-card">
+          
+          <div class="team-role">⚔️ ALPHA SQUAD</div>
+          
+          <div class="starting-five">
+            
+            <div class="player-row"><span class="player-number">#09</span><span class="player-name">HOSS</span><span class="player-position">FORWARD · C</span><span class="player-captain">CAPTAIN</span></div>
+            
+            <div class="player-row"><span class="player-number">#10</span><span class="player-name">VUYO</span><span class="player-position">STRIKER</span></div>
+            
+            <div class="player-row"><span class="player-number">#08</span><span class="player-name">XAN</span><span class="player-position">CENTER MID</span></div>
+            
+            <div class="player-row"><span class="player-number">#06</span><span class="player-name">FROST</span><span class="player-position">DEF MID</span></div>
+            
+            <div class="player-row"><span class="player-number">#11</span><span class="player-name">QUEENER</span><span class="player-position">LEFT WING · VC</span><span class="player-captain">VICE</span></div></div>
+          
+          <div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div>
+              
+              <div class="player-row"><span class="player-number">#12</span><span class="player-name">JONATHAN</span><span class="player-position">STRIKER</span></div></div></div>
+
+        <!-- delta -->
         
         <div class="team-card delta-force">
           
@@ -828,11 +849,15 @@
 
             <div class="player-row"><span class="player-number">#03</span><span class="player-name">JUNIOR</span><span class="player-position">RIGHT WING</span></div>
 
-            <div class="player-row"><span class="player-number">#02</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK + COVER ATTACK</span></div></div><div class="reserve-section"><div class="reserve-title">🔰 RESERVES</div>
+            <div class="player-row"><span class="player-number">#02</span><span class="player-name">BAYANDA</span><span class="player-position">CENTER BACK + COVER ATTACK</span></div></div>
 
-             <div class="player-row"><span class="player-number">#07</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING + COVER DEFENCE · VC</span><span class="player-captain">VICE</span></div>
+          <div class="player-row"><span class="player-number">#07</span><span class="player-name">OLAMA</span><span class="player-position">LEFT WING + COVER DEFENCE · VC</span><span class="player-captain">VICE</span></div>
 
-              <div class="player-row"><span class="player-number">#00</span><span class="player-name">MASIYA</span><span class="player-position">ATT MID</span></div></div></div>
+          <div class="player-row"><span class="player-number">#00</span><span class="player-name">MASIYA</span><span class="player-position">ATT MID</span></div></div></div>
+          
+          <div class="reserve-section">
+              
+              <div class="reserve-title">🔰 RESERVES</div>
             
             <div class="player-row"><span class="player-number">#33</span><span class="player-name">S'PHE</span><span class="player-position">STRIKER</span></div>
             
