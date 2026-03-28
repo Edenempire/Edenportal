@@ -37,7 +37,7 @@
       --panel-bg: rgba(0, 25, 35, 0.7);
       --header-solid: #000f18;
       --header-height: clamp(150px, 22vh, 200px);     
-      --rail-width: clamp(70px, 7vw, 100px);          /* slightly wider for controls */
+      --rail-width: clamp(68px, 6.8vw, 98px);
     }
 
     html { scroll-behavior: smooth; width: 100%; height: 100%; }
@@ -120,13 +120,11 @@
       z-index: 1;
     }
 
-    /* ===== MAIN CONTENT ===== */
     main, footer, .tactical-menu-permanent, .quick-scroll-permanent, .command-center {
       position: relative;
       z-index: 10;
     }
 
-    /* HEADER – solid, fully responsive, with home link on logo */
     .command-center {
       position: fixed;
       top: 0;
@@ -165,7 +163,7 @@
       height: 80%;
       object-fit: cover;
       border-radius: 50%;
-      border: 3px solid var(--strike-blue);           /* thinner border */
+      border: 3px solid var(--strike-blue);          
       background: #001c28;
       display: block;
       cursor: pointer;
@@ -176,7 +174,7 @@
     }
 
     .countdown-timer {
-      font-size: clamp(1.2rem, 4vw, 2.5rem);
+      font-size: clamp(1rem, 3.8vw, 2.2rem);
       font-weight: 700;
       color: var(--strike-blue);
       font-family: 'Courier New', monospace;
@@ -185,13 +183,13 @@
       letter-spacing: 4px;
       border: none;
       white-space: nowrap;
+      text-align: center;
     }
 
-    /* ===== SIDE CONTROLS – LOWERED (shifted down a bit) ===== */
     .tactical-menu-permanent {
       position: fixed;
       left: 0;
-      top: 55vh;                          /* slightly lower than 50% */
+      top: 55vh;                    
       transform: translateY(-50%);
       width: var(--rail-width);
       z-index: 10001;
@@ -206,7 +204,7 @@
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
-      border: 2px solid var(--strike-blue);           /* thinner border */
+      border: 2px solid var(--strike-blue);       
       border-left: none;
       display: flex;
       align-items: center;
@@ -225,7 +223,7 @@
       transform: translateY(-50%) translateX(-30px);
       width: min(320px, 80vw);            
       background: rgba(0, 20, 30, 0.98);
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);         
       border-left: none;
       padding: 1rem;
       opacity: 0;
@@ -246,7 +244,7 @@
     .menu-item {
       padding: 0.8rem;
       margin: 0.4rem 0;
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);          
       color: var(--strike-blue);
       font-weight: 700;
       text-transform: uppercase;
@@ -257,11 +255,10 @@
     }
     .menu-item:hover { background: var(--strike-blue); color: black; }
 
-    /* RIGHT SIDE – also lowered */
     .quick-scroll-permanent {
       position: fixed;
       right: 0;
-      top: 55vh;                          /* same shift down */
+      top: 55vh;                        
       transform: translateY(-50%);
       width: var(--rail-width);
       z-index: 10001;
@@ -276,7 +273,7 @@
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);         
       border-right: none;
       display: flex;
       align-items: center;
@@ -288,7 +285,6 @@
     }
     .scroll-btn-perm:hover { background: var(--strike-blue); color: #000; }
 
-    /* MAIN – spacing */
     main {
       width: 100%;
       margin: calc(var(--header-height) + 2rem) 0 2rem 0;
@@ -303,8 +299,8 @@
     .ops-card {
       width: 100%;
       background: rgba(0, 20, 30, 0.65);
-      border: 2px solid var(--border-light);          /* thinner */
-      border-left: 5px solid var(--strike-blue);      /* thinner */
+      border: 2px solid var(--border-light);       
+      border-left: 5px solid var(--strike-blue);   
       border-right: 2px solid var(--strike-blue);
       padding: clamp(1rem, 3vw, 2rem);
     }
@@ -313,7 +309,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 3px solid var(--strike-blue);    /* thinner */
+      border-bottom: 3px solid var(--strike-blue);  
       margin-bottom: 1.5rem;
       padding-bottom: 0.5rem;
       flex-wrap: wrap;
@@ -325,7 +321,6 @@
       letter-spacing: 2px;
     }
 
-    /* champion section: 80% width + centered */
     #champion-story {
       width: 80%;
       margin-left: auto;
@@ -333,7 +328,6 @@
       font-size: 20px;
     }
 
-    /* TEAMS grid */
     .teams-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -342,7 +336,7 @@
 
     .team-card {
       background: rgba(0, 30, 40, 0.7);
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);         
       border-left: 10px solid var(--alpha-red);
       padding: 1.2rem;
     }
@@ -362,7 +356,7 @@
       align-items: center;
       gap: 0.8rem;
       background: rgba(0, 20, 30, 0.8);
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);        
       padding: 0.5rem 0.8rem;
       margin: 0.5rem 0;
       flex-wrap: wrap;
@@ -381,26 +375,23 @@
     }
     .delta-force .player-captain { background: var(--delta-green); }
 
-    /* TABLES – location column added */
     .table-container {
       width: 100%;
       overflow-x: auto;
-      border: 2px solid var(--strike-blue);           /* thinner */
+      border: 2px solid var(--strike-blue);         
       background: rgba(0, 15, 20, 0.7);
     }
     table { width: 100%; border-collapse: collapse; min-width: 500px; }
     th, td { border: 2px solid var(--strike-blue); padding: 0.6rem; color: var(--text-primary); }
     th { background: rgba(0, 40, 60, 0.8); color: var(--strike-blue); }
 
-    /* color key highlighting for schedule rows */
-    .completed-row { background: rgba(74, 222, 128, 0.15); }  /* soft green */
-    .next-row { background: rgba(96, 165, 250, 0.25); }       /* blue */
-    .upcoming-row { background: rgba(251, 146, 60, 0.1); }     /* orange tint */
+    .completed-row { background: rgba(74, 222, 128, 0.15); } 
+    .next-row { background: rgba(96, 165, 250, 0.25); }    
+    .upcoming-row { background: rgba(251, 146, 60, 0.1); }    
 
-    /* FOOTER – advanced, fully responsive */
     footer {
       background: rgba(0, 15, 25, 0.85);
-      border-top: 6px solid var(--strike-blue);        /* thinner */
+      border-top: 6px solid var(--strike-blue);      
       padding: 2rem 1rem 1rem;
       margin-top: 3rem;
       width: 100%;
@@ -415,7 +406,7 @@
     }
     .live-data {
       background: rgba(0, 20, 28, 0.7);
-      border: 2px solid var(--strike-blue);            /* thinner */
+      border: 2px solid var(--strike-blue);          
       padding: 0.8rem 1.2rem;
       min-width: 200px;
     }
@@ -428,7 +419,7 @@
     .copyright {
       text-align: center;
       color: var(--text-dim);
-      border-top: 2px solid var(--strike-blue);        /* thinner */
+      border-top: 2px solid var(--strike-blue);   
       padding-top: 1.5rem;
       font-size: clamp(0.6rem, 1.5vw, 0.8rem);
     }
@@ -436,7 +427,6 @@
 
     * { box-shadow: none !important; filter: none !important; text-shadow: none !important; }
 
-    /* extra controls panel inside settings */
     .advanced-settings-grid {
       display: flex;
       flex-wrap: wrap;
@@ -467,23 +457,24 @@
     }
     
   </style>
+  
 </head>
+  
 <body>
-  <!-- RADAR – uniform dots (all 8px) -->
+
   <div class="radar-grid" id="radarGrid">
     <div class="f22-radar"></div>
     <div class="scan-arm"></div>
     <div class="radar-noise"></div>
   </div>
 
-  <!-- AUDIO: ROBUST, AUTO, LOOP FOREVER – RETRY ON INTERACTION IF NEEDED -->
   <audio id="bgTrack" loop preload="auto" autoplay style="display:none;">
     <source src="1.mp3" type="audio/mpeg">
   </audio>
 
   <header class="command-center">
     <div class="header-emblem">
-      <!-- Logo now links to index.html with hover title -->
+
       <div class="logo-container" onclick="window.location.href='index.html';" title="back to home..." style="cursor: pointer;">
         <img src="images/esslogo1.png" alt="ESS" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23000%22 stroke=%22%231e90ff%22 stroke-width=%226%22/><text x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22%231e90ff%22 font-family=%22monospace%22>ESS</text></svg>';">
       </div>
@@ -491,7 +482,6 @@
     </div>
   </header>
 
-  <!-- LEFT MENU – lowered a bit (55vh) -->
   <nav class="tactical-menu-permanent">
     <div class="menu-trigger-perm">☰</div>
     <div class="menu-panel-perm">
@@ -508,7 +498,6 @@
     </div>
   </nav>
 
-  <!-- RIGHT SCROLL – lowered -->
   <div class="quick-scroll-permanent">
     <div class="scroll-btn-perm" onclick="window.scrollTo({top:0, behavior:'smooth'})">🔼</div>
     <div class="scroll-btn-perm" onclick="window.scrollTo({top: window.innerHeight * 1.8, behavior:'smooth'})">⏺️</div>
@@ -516,7 +505,7 @@
   </div>
 
   <main>
-    <!-- 80% width, centered -->
+
     <section id="champion-story" class="ops-card">
       <div class="story-title"><h2 style="color:var(--strike-blue);">🏆 REIGNING CHAMPIONS: <span style="color: var(--alpha-red);">EDEN ALPHA</span></h2></div>
       <p style="color:var(--text-dim);">Can Alpha, as ancient Spartan warriors, retain their trophy against a 'full' modern airborne militant Delta Force side? | E.S.S 2026: locked and loaded.</p>
@@ -527,13 +516,12 @@
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
         <tbody id="league-tbody">
           <!-- STATIC HTML: two games played, Alpha both wins -->
-          <tr><td style="color:#d32f2f;">EDEN ALPHA</td><td>3</td><td>3</td><td>0</td><td>0</td><td>9</td></tr>
-          <tr><td style="color:#2e7d32;">EDEN DELTA</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
+          <tr><td style="color:#darkred;">EDEN ALPHA</td><td>3</td><td>3</td><td>0</td><td>0</td><td>9</td></tr>
+          <tr><td style="color:#darkgreen;">EDEN DELTA</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
         </tbody>
       </table></div>
     </section>
 
-    <!-- SCHEDULE with LOCATION column – fully static, only 2 games completed, rest TBD -->
     <section id="schedule" class="ops-card">
       <div class="section-command"><h2>OPERATION SCHEDULE · 38 GAMES</h2></div>
       <div class="color-key" style="display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
@@ -542,50 +530,48 @@
         <span><span style="background:#fb923c; width:16px; height:16px; display:inline-block;"></span> UPCOMING</span>
       </div>
       <div class="table-container">
-        <table><thead><tr><th>MISSION</th><th>DATE (14:00)</th><th>LOCATION</th></tr></thead>
+        <table><thead><tr><th>DIRECT ACTION</th><th>DATE (14:00)</th><th>LOCATION</th></tr></thead>
         <tbody id="schedule-tbody">
-          <!-- games: only first two played (completed), third is "next", rest upcoming. Locations: fixed -->
-          <tr class="completed-row"><td>M01</td><td>01 Mar 2026</td><td>HARBOUR</td></tr>
-          <tr class="completed-row"><td>M02</td><td>08 Mar 2026</td><td>HARBOUR</td></tr>
-          <tr class="completed-row"><td>M03</td><td>15 Mar 2026</td><td>HARBOUR</td></tr>
+
+          <tr class="completed-row"><td>DA01</td><td>01 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="completed-row"><td>DA02</td><td>08 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="completed-row"><td>DA03</td><td>15 Mar 2026</td><td>HARBOUR</td></tr>
           
-          <!-- remaining 35 games: upcoming, location TBD -->
-          
-          <tr class="next-row"><td>M04</td><td>22 Mar 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M05</td><td>29 Mar 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M06</td><td>05 Apr 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M07</td><td>12 Apr 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M08</td><td>19 Apr 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M09</td><td>26 Apr 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M10</td><td>03 May 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M11</td><td>10 May 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M12</td><td>17 May 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M13</td><td>24 May 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M14</td><td>31 May 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M15</td><td>07 Jun 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M16</td><td>14 Jun 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M17</td><td>21 Jun 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M18</td><td>28 Jun 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M19</td><td>05 Jul 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M20</td><td>12 Jul 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M21</td><td>19 Jul 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M22</td><td>26 Jul 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M23</td><td>02 Aug 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M24</td><td>09 Aug 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M25</td><td>16 Aug 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M26</td><td>23 Aug 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M27</td><td>30 Aug 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M28</td><td>06 Sep 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M29</td><td>13 Sep 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M30</td><td>20 Sep 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M31</td><td>27 Sep 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M32</td><td>04 Oct 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M33</td><td>11 Oct 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M34</td><td>18 Oct 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M35</td><td>25 Oct 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M36</td><td>01 Nov 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M37</td><td>08 Nov 2026</td><td>TBD</td></tr>
-          <tr class="upcoming-row"><td>M38</td><td>15 Nov 2026</td><td>TBD</td></tr>
+          <tr class="completed-row"><td>DA04</td><td>22 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="next-row"><td>DA05</td><td>29 Mar 2026</td><td>HARBOUR</td></tr>
+          <tr class="upcoming-row"><td>DA06</td><td>05 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA07</td><td>12 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA08</td><td>19 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA09</td><td>26 Apr 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA10</td><td>03 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA11</td><td>10 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA12</td><td>17 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA13</td><td>24 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA14</td><td>31 May 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA15</td><td>07 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA16</td><td>14 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA17</td><td>21 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA18</td><td>28 Jun 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA19</td><td>05 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA20</td><td>12 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA21</td><td>19 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA22</td><td>26 Jul 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA23</td><td>02 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA24</td><td>09 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA25</td><td>16 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA26</td><td>23 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA27</td><td>30 Aug 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA28</td><td>06 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA29</td><td>13 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA30</td><td>20 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA31</td><td>27 Sep 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA32</td><td>04 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA33</td><td>11 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA34</td><td>18 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA35</td><td>25 Oct 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA36</td><td>01 Nov 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA37</td><td>08 Nov 2026</td><td>TBD</td></tr>
+          <tr class="upcoming-row"><td>DA38</td><td>15 Nov 2026</td><td>TBD</td></tr>
         </tbody>
       </table></div>
     </section>
@@ -595,48 +581,81 @@
       <div class="table-container">
         <table><thead><tr><th>MISSION</th><th>RESULT</th><th>SCORERS</th><th>MOTM</th><th>LOCATION</th><th>INTEL</th></tr></thead>
         <tbody id="summary-tbody">
-          <!-- completed games: M01 and M02 -->
-          <tr><td>M01</td><td>2-1</td><td>BAYANDA (1), HOSS (1), VUYO (1)</td><td>QUEENER</td><td>HARBOUR</td><td>alpha comeback</td></tr>
-          <tr><td>M02</td><td>11-4</td><td>VUYO (5), JONATHAN (2), QUEENER (4), SPHE (3), OLAMA (1)</td><td>JONATHAN</td><td>HARBOUR</td><td>alpha just completely embarrased delta. the score was 2-2 at one point, but alpha just ran away with it, with no one being able to defend jonathan.</td></tr>
-          <!-- games 3 to 38: TBD -->
-          <tr><td>M03</td><td>4-1</td><td>VUYO (2), JONATHAN (1), XAN (1)</td><td>VUYO</td><td>HARBOUR</td><td>NIL-NIL DRAW AT HALFTIME, AND OLAMA HAD TO COME OFF DUE TO ILLNESS, AND HENCE ALPHA THEN JUST COMPLETELY DISMANTLED DELTA WITH 4 GOALS.</td></tr>
-          <tr><td>M04</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M05</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M06</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M07</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M08</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M09</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <!-- abbreviating for brevity, but keeping the first 9 to show pattern – rest are same -->
-          <tr><td>M10</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M11</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M12</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M13</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M14</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M15</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M16</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M17</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M18</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M19</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M20</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <!-- ... continue the pattern, for space we keep total rows to 38 -->
-          <tr><td>M21</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M22</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M23</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M24</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M25</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M26</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M27</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M28</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M29</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M30</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M31</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M32</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M33</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M34</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M35</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M36</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M37</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
-          <tr><td>M38</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          <tr><td>DA01</td><td>2-1</td><td>BAYANDA (1), HOSS (1), VUYO (1)</td><td>QUEENER</td><td>HARBOUR</td><td>alpha comeback</td></tr>
+          
+          <tr><td>DA02</td><td>11-4</td><td>VUYO (5), JONATHAN (2), QUEENER (4), SPHE (3), OLAMA (1)</td><td>JONATHAN</td><td>HARBOUR</td><td>alpha just completely embarrased delta. the score was 2-2 at one point, but alpha just ran away with it, with no one being able to defend jonathan.</td></tr>
+          
+          <tr><td>DA03</td><td>4-1</td><td>VUYO (2), JONATHAN (1), XAN (1)</td><td>VUYO</td><td>HARBOUR</td><td>NIL-NIL DRAW AT HALFTIME, AND OLAMA HAD TO COME OFF DUE TO ILLNESS, AND HENCE ALPHA THEN JUST COMPLETELY DISMANTLED DELTA WITH 4 GOALS.</td></tr>
+          
+          <tr><td>DA04</td><td>1-1</td><td>JOY (1), XAN (1)</td><td>JOY</td><td>HARBOUR</td><td>EXCITING SCENES. SOME REALLY EXCITING SCENES. BOTH IN AND OUT OF THE GAME. LIEUTENANT COMMANDER JOYSON IS BACK - MR. 5 STARS HIMSELF. XAN SCORED POSSIBLY THE GOAL OF THE SEASON. DIRECT ACTIONS ARE NOW SOON TO BE POSTED ON OUR LOVELY YOUTUBE PAGE, STAY TUNED, AS OF DA05 - LEGGO!</td></tr>
+          
+          <tr><td>DA05</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA06</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA07</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA08</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA09</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+
+          <tr><td>DA10</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA11</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA12</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA13</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA14</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA15</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA16</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA17</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA18</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA19</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA20</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+
+          <tr><td>DA21</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA22</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA23</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA24</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA25</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA26</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA27</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA28</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA29</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA30</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA31</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA32</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA33</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA34</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA35</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA36</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA37</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
+          
+          <tr><td>DA38</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td><td>—</td></tr>
         </tbody>
       </table>
     </div></section>
