@@ -1,194 +1,399 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    
 <head>
-    
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    
-    <title>AEROSPACE ENGINEERING</title>
-    <!-- Font Awesome 6 (free) -->
+    <title>AEROSPACE ENGINEERING | MANUAL FLIGHT OPERATIONS</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <!-- Google Fonts - Professional Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-red: #dc2626;
+            --primary-red-dark: #b91c1c;
+            --accent-orange: #f97316;
+            --dark-bg: #0a0a0a;
+            --card-bg: #111111;
+            --border-glow: rgba(220, 38, 38, 0.3);
+            --text-primary: #e5e7eb;
+            --text-secondary: #9ca3af;
+            --text-accent: #f97316;
+        }
+
         html, body {
             width: 100%;
             min-height: 100vh;
-            background: #000000; /* pure black foundation */
-            font-family: 'Inter', 'Segoe UI', 'Roboto', 'Courier New', monospace;
-            color: #ffddbb;
+            background: var(--dark-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
         }
 
-        /* ---------- RED & BLACK THEME - MISSILE LOCK VIBE ---------- */
         body {
-            background: radial-gradient(circle at center, #1a0303 0%, #000000 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
         }
 
-        /* FIXED HEADER - TACTICAL RED/BLACK */
+        /* Professional Fixed Header */
         .fixed-header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            z-index: 9999;
-            background: #0a0000;
-            background: linear-gradient(135deg, #1f0505 0%, #000000 100%);
-            border-bottom: 4px solid #ff1100;
-            box-shadow: 0 0 25px rgba(255, 20, 0, 0.4), inset 0 1px 0 rgba(255, 80, 40, 0.3);
-            padding: 0.7rem 2rem 0.5rem;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 1rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--primary-red);
         }
 
         .page-title {
-            font-size: 2.6rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ff5555, #ff2200, #aa0000);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-red) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-align: center;
         }
 
-        /* MAIN BODY - CENTERED EVERYTHING */
-        .flight-deck {
-            max-width: 1300px;
-            margin: 150px auto 0;
-            padding: 1rem 2rem 3rem;
-            width: 90%;
+        .badge {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1280px;
+            margin: 100px auto 0;
+            padding: 2rem;
             position: relative;
             z-index: 10;
         }
 
-        /* all sections centered, spaced, red/black elegance */
-        .step-section {
-            margin: 3rem auto;
-            background: rgba(10, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            border-radius: 48px;
-            border: 1px solid rgba(255, 50, 0, 0.6);
-            overflow: hidden;
-            transition: transform 0.2s ease;
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+            border-radius: 24px;
         }
 
-        .step-header {
-            background: linear-gradient(95deg, #1f0505, #0a0101);
-            padding: 1.3rem 2rem;
-            border-bottom: 3px solid #ff3300;
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-orange) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Flight Data Panel - Professional Instrumentation */
+        .instrument-panel-main {
+            background: var(--card-bg);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .instrument {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            border-left: 3px solid var(--primary-red);
+        }
+
+        .instrument-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .instrument-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .instrument-unit {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
+        /* Procedure Cards - Professional Layout */
+        .procedure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .procedure-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(220, 38, 38, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .procedure-card:hover {
+            border-color: rgba(220, 38, 38, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: rgba(220, 38, 38, 0.1);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.2);
             display: flex;
             align-items: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
+            gap: 0.75rem;
         }
+
         .step-number {
-            font-size: 2.8rem;
-            font-weight: 800;
-            background: #ff2200;
-            color: #000000;
-            width: 65px;
-            height: 65px;
-            border-radius: 60px;
-            display: inline-flex;
+            background: var(--primary-red);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            font-family: monospace;
-        }
-        .step-title {
-            font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #ffaa77;
-            text-transform: uppercase;
-        }
-        .step-content {
-            padding: 2rem 2.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-        .step-text {
-            font-size: 1.05rem;
-            border-left: 5px solid #ff4422;
-            padding-left: 1.3rem;
-            background: rgba(0,0,0,0.5);
-            border-radius: 0 20px 20px 0;
-        }
-        .checklist-bullet {
-            display: flex;
-            gap: 1rem;
-            align-items: baseline;
-            margin: 0.7rem 0;
-            font-family: 'Courier New', monospace;
-        }
-        .checklist-bullet i {
-            width: 28px;
-            color: #ff5533;
-        }
-        .hot-key {
-            background: #2c0a0a;
-            border-radius: 12px;
-            padding: 0.2rem 0.8rem;
-            font-weight: bold;
-            font-family: monospace;
-            color: #ff8844;
-            border: 1px solid #ff4411;
-        }
-        .instrument-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin-top: 0.8rem;
-            background: #050000;
-            border-radius: 32px;
-            padding: 1.2rem;
-            border: 1px solid #aa3300;
-        }
-        .gauge {
-            background: #130202;
-            border-radius: 24px;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid #ff4422;
-            font-weight: bold;
-            color: #ffccaa;
-        }
-        .engine-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin: 0.8rem 0;
-        }
-        .engine-card {
-            background: #140303;
-            border-radius: 28px;
-            padding: 1.4rem;
-            border-top: 4px solid #ff3300;
-        }
-        .warning-flash {
-            border-left: 8px solid #ff1100;
-            background: #1f0606;
-        }
-        .bold-gold {
-            color: #ff8855;
-            font-weight: 800;
+            font-size: 0.9rem;
         }
 
-        /* ---------- MISSILE LOCK FIGHTER JET BACKGROUND (RED/BLACK THEME) ---------- */
-        .missile-bg {
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .procedure-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .spec-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .spec-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+        }
+
+        .spec-value {
+            color: var(--accent-orange);
+            font-weight: 500;
+        }
+
+        .warning-note {
+            background: rgba(220, 38, 38, 0.1);
+            border-left: 3px solid var(--primary-red);
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .warning-note i {
+            color: var(--primary-red);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Form - Professional */
+        .contact-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary-red);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+
+        .submit-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-red-dark);
+            transform: translateY(-1px);
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(220, 38, 38, 0.2);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section {
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+        }
+
+        /* Background Canvas - Subtle */
+        .bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -196,418 +401,522 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            overflow: hidden;
-            background: radial-gradient(circle at 30% 40%, #2a0303, #000000);
-        }
-        .missile-bg canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            opacity: 0.55;
-        }
-        /* radar sweep + missile lock rings animation */
-        .lock-overlay {
-            position: absolute;
-            bottom: 10%;
-            right: 5%;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 40, 0, 0.8);
-            animation: lockPulse 1.2s infinite;
-            pointer-events: none;
-        }
-        @keyframes lockPulse {
-            0% { transform: scale(0.9); opacity: 0.7; border-color: #ff2200; }
-            100% { transform: scale(1.2); opacity: 0.2; border-color: #ff8800; }
+            opacity: 0.3;
         }
 
-        /* FOOTER DOPE RED/BLACK */
-        .footer-afterburner {
-            margin-top: 4rem;
-            background: #070000;
-            border-radius: 50px 50px 30px 30px;
-            border-top: 4px solid #ff2200;
-            border-bottom: 4px solid #cc3300;
-            padding: 2rem 2rem;
-            backdrop-filter: blur(5px);
-        }
-        .footer-flex {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2rem;
-        }
-        .hr-glow {
-            height: 3px;
-            background: linear-gradient(90deg, #ff2200, #ff6633, #ff2200);
-            border: none;
-            margin: 1.5rem 0;
-        }
-        @media (max-width: 780px) {
-            .page-title { font-size: 1.6rem; letter-spacing: 2px; }
-            .fighter-badge { width: 55px; height: 55px; }
-            .fighter-badge i { font-size: 2rem; }
-            .flight-deck { margin-top: 160px; padding: 1rem; width: 95%; }
-            .step-title { font-size: 1.3rem; }
-            .step-number { width: 52px; height: 52px; font-size: 2rem; }
-        }
+        /* Audio Control */
         .audio-control {
             position: fixed;
             bottom: 20px;
-            left: 20px;
-            z-index: 10001;
-            background: #1f0505cc;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(8px);
-            border-radius: 60px;
-            padding: 0.2rem 1rem;
-            border: 1px solid #ff4422;
-            font-size: 0.7rem;
-            color: #ffaa88;
-            font-family: monospace;
-            pointer-events: auto;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            font-size: 0.75rem;
             cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
         }
+
         .audio-control i {
-            margin-right: 6px;
+            color: var(--primary-red);
+            margin-right: 0.5rem;
         }
-        
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+                margin-top: 120px;
+            }
+            .procedure-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .instrument-value {
+                font-size: 1.4rem;
+            }
+        }
     </style>
-    
 </head>
-    
 <body>
 
-    <!-- FIXED HEADER - RED/BLACK AEROSPACE COMMAND -->
-    <header class="fixed-header">
-        <div class="header-left">
-            <div class="page-title">AEROSPACE ENGINEERING</div>
-        </div>
-    </header>
+<header class="fixed-header">
+    <div class="logo-area">
+        <i class="fas fa-fighter-jet logo-icon"></i>
+        <span class="page-title">AEROSPACE ENGINEERING</span>
+    </div>
+    <div class="badge">
+        <i class="fas fa-cog"></i> MANUAL FLIGHT MODE · NO FBW
+    </div>
+</header>
 
-    <!-- MISSILE LOCK FIGHTER JET BACKGROUND (CANVAS ANIMATION) RED/BLACK THEME -->
-    <div class="missile-bg">
-        <canvas id="fighterMissileCanvas"></canvas>
-        <div class="lock-overlay"></div>
+<canvas id="bgCanvas" class="bg-canvas"></canvas>
+
+<main class="main-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">Manual Flight Operations</h1>
+        <p class="hero-subtitle">Complete procedural guide for stick & rudder piloting — pure mechanical flight control systems, no electronic assistance.</p>
     </div>
 
-    <!-- MAIN FLIGHT DECK - CENTERED, SPACED -->
-    <div class="flight-deck">
-        <!-- INTRO BADGE -->
-        <div style="margin-bottom: 2rem; text-align: center;">
-            <span class="flight-status" style="background:#1f0505; font-size:1.1rem; display:inline-block;"><i class="fas fa-crosshairs"></i> STEP-BY-STEP 101: MANUAL FLYING A FIGHTER JET</span>
-            <p style="margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; color:#ffaa88;">Pilot manual flight protocol — missile lock environment. Fly without restrictions, pure stick & rudder supremacy.</p>
+    <!-- Instrument Panel -->
+    <div class="instrument-panel-main">
+        <div class="instrument">
+            <div class="instrument-label">AIRSPEED</div>
+            <div class="instrument-value"><span id="airspeed">385</span><span class="instrument-unit">KIAS</span></div>
         </div>
+        <div class="instrument">
+            <div class="instrument-label">ANGLE OF ATTACK</div>
+            <div class="instrument-value"><span id="aoa">8.2</span><span class="instrument-unit">°</span></div>
+        </div>
+        <div class="instrument">
+            <div class="instrument-label">G-LOAD</div>
+            <div class="instrument-value"><span id="gload">1.3</span><span class="instrument-unit">G</span></div>
+        </div>
+        <div class="instrument">
+            <div class="instrument-label">RADAR STATUS</div>
+            <div class="instrument-value"><span id="radarStatus">CLEAR</span></div>
+        </div>
+    </div>
 
-        <!-- STEP 1 -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">01</div><div class="step-title">COCKPIT PREFLIGHT & MECHANICAL CHECKS</div></div>
-            <div class="step-content">
-                <div class="step-text"><i class="fas fa-check-circle" style="color:#ff5533;"></i> <strong class="bold-gold">MANUAL FLIGHT PREREQUISITE:</strong> Verify mechanical flight controls (stick, rudder pedals, throttle). Full reversion mode — no electronic aids.</div>
-                <div class="instrument-panel">
-                    <div class="gauge"><i class="fas fa-cogs"></i> Hydraulic pressure (manual pumps)</div>
-                    <div class="gauge"><i class="fas fa-battery-full"></i> Battery & backup bus ON</div>
-                    <div class="gauge"><i class="fas fa-tachometer-alt"></i> Control surfaces free movement</div>
-                </div>
-                <div class="checklist-bullet"><i class="fas fa-skull-crosswalk"></i> <span><span class="hot-key">CRITICAL:</span> Ejection seat pin removed. Missile lock environment requires rapid response.</span></div>
+    <!-- Procedure Grid -->
+    <div class="procedure-grid">
+        <!-- Step 1 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">01</div>
+                <div class="card-title">COCKPIT PREFLIGHT</div>
             </div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">02</div><div class="step-title">ENGINE START & MANUAL THROTTLE</div></div>
-            <div class="step-content">
-                <div class="step-text">JFS start → throttle to IDLE cutoff → monitor RPM >20% → introduce fuel. Afterburner armed after idle stabilization.</div>
-                <div class="engine-grid">
-                    <div class="engine-card"><i class="fas fa-fan"></i> <strong>Throttle IDLE @25% RPM</strong><br><span class="hot-key">manual friction lock</span></div>
-                    <div class="engine-card"><i class="fas fa-temperature-high"></i> <strong>EGT stabilization</strong><br>max 720°C</div>
-                    <div class="engine-card"><i class="fas fa-waveform"></i> <strong>Oil pressure & nozzle check</strong></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">03</div><div class="step-title">TAXI & CONTROL SURFACE SWEEP</div></div>
-            <div class="step-content">
-                <div class="step-text">Differential braking + rudder. While taxiing, full stick deflection (aileron/elevator/rudder) verify symmetry.</div>
-                <div class="instrument-panel">
-                    <div class="gauge"><i class="fas fa-arrows-alt"></i> Aileron ±20° deflection</div>
-                    <div class="gauge"><i class="fas fa-arrow-up"></i> Elevator full aft/nose down</div>
-                    <div class="gauge"><i class="fas fa-ship"></i> Rudder sweep 30° each side</div>
-                </div>
-                <div class="step-text warning-flash" style="padding: 0.8rem;"><i class="fas fa-bell"></i> <strong>MANUAL FLIGHT RULE:</strong> Use manual trim hat. No FBW assist.</div>
-            </div>
-        </div>
-
-        <!-- STEP 4 TAKEOFF -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">04</div><div class="step-title">TAKEOFF & MANUAL ROTATION</div></div>
-            <div class="step-content">
-                <div class="step-text">Mil power, release brakes, afterburner (if tactical). Rotate at Vr 140-165 knots, smooth stick back 2-3°/sec to 10° nose-up.</div>
-                <div class="checklist-bullet"><i class="fas fa-gripfire"></i> Positive climb → gear up manually → flaps retract at 400ft AGL.</div>
-                <div class="step-text">Accelerate to climb speed 350 knots, coordinated rudder input. Maintain centerline.</div>
-            </div>
-        </div>
-
-        <!-- STEP 5 BASIC AIRWORK -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">05</div><div class="step-title">STICK & RUDDER COORDINATION</div></div>
-            <div class="step-content">
-                <div class="step-text">At 10,000ft practice level turns, steep turns (60° bank). Maintain ball centered, rudder coordination essential.</div>
-                <div class="engine-grid">
-                    <div class="engine-card"><i class="fas fa-sync-alt"></i> <strong>Coordinated turn:</strong> aileron + rudder same direction, back pressure adds G-force.</div>
-                    <div class="engine-card"><i class="fas fa-chart-simple"></i> <strong>Slow flight:</strong> speedbrakes manual, gear down, flaps mid, maintain 180 knots.</div>
+            <div class="card-content">
+                <div class="procedure-text">Mechanical flight control verification — manual reversion mode active. All hydraulic accumulators pressurized, backup systems armed.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Hydraulic Pressure:</span><span class="spec-value" id="hydPressure">3200 PSI</span></li>
+                    <li><span class="spec-label">Battery Bus:</span><span class="spec-value" id="battery">98%</span></li>
+                    <li><span class="spec-label">Control Surfaces:</span><span class="spec-value" id="controls">FREE</span></li>
+                </ul>
+                <div class="warning-note">
+                    <i class="fas fa-exclamation-triangle"></i> Ejection seat pin removed · Manual flight controls verified
                 </div>
             </div>
         </div>
 
-        <!-- STEP 6 COMBAT MANEUVERS -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">06</div><div class="step-title">HIGH-G MANEUVERS & EMERGENCY</div></div>
-            <div class="step-content">
-                <div class="step-text">Max performance turns up to 9G, monitor AOA (max 25 units). Spin recovery: power idle, rudder opposite, stick forward.</div>
-                <div class="instrument-panel">
-                    <div class="gauge"><i class="fas fa-gauge-high"></i> AOA indexer: keep within limits</div>
-                    <div class="gauge"><i class="fas fa-heartbeat"></i> Emergency manual reversion mode</div>
+        <!-- Step 2 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">02</div>
+                <div class="card-title">ENGINE START SEQUENCE</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Jet Fuel Starter (JFS) engagement → throttle idle cutoff → introduce fuel at 20% RPM. Monitor EGT and oil pressure.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">RPM:</span><span class="spec-value" id="rpm">25%</span></li>
+                    <li><span class="spec-label">EGT:</span><span class="spec-value" id="egt">620°C</span></li>
+                    <li><span class="spec-label">Oil Pressure:</span><span class="spec-value" id="oilPress">85 PSI</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">03</div>
+                <div class="card-title">TAXI & CONTROL SWEEP</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Differential braking, rudder pedals. Full control surface deflection check — aileron, elevator, rudder sweep.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Aileron:</span><span class="spec-value">±20°</span></li>
+                    <li><span class="spec-label">Elevator:</span><span class="spec-value">+15°/-12°</span></li>
+                    <li><span class="spec-label">Rudder:</span><span class="spec-value">±28°</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">04</div>
+                <div class="card-title">TAKEOFF & ROTATION</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Military power, release brakes. Rotate at Vr, maintain 10-12° nose-up attitude. Gear up at positive rate.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Rotation Speed:</span><span class="spec-value" id="vrSpeed">160 KIAS</span></li>
+                    <li><span class="spec-label">Initial Pitch:</span><span class="spec-value">12° NU</span></li>
+                    <li><span class="spec-label">Flaps:</span><span class="spec-value">UP @ 400ft</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">05</div>
+                <div class="card-title">BASIC AIRWORK</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Coordinated flight maneuvers — level turns, climbs, descents. Maintain coordinated ball centered with rudder input.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Turn Coordination:</span><span class="spec-value" id="slipBall">0.0</span></li>
+                    <li><span class="spec-label">Slow Flight:</span><span class="spec-value">180 KIAS</span></li>
+                    <li><span class="spec-label">Speedbrakes:</span><span class="spec-value">MANUAL</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">06</div>
+                <div class="card-title">COMBAT MANEUVERS</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">High-G defensive maneuvers. Maximum performance turns, energy management, and missile evasion tactics.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Max G-Load:</span><span class="spec-value">9.0 G</span></li>
+                    <li><span class="spec-label">AOA Limit:</span><span class="spec-value">25 Units</span></li>
+                    <li><span class="spec-label">Chaff/Flare:</span><span class="spec-value" id="cmCount">32 REMAINING</span></li>
+                </ul>
+                <div class="warning-note">
+                    <i class="fas fa-bullseye"></i> Defensive break turn · Energy management critical
                 </div>
-                <div class="step-text warning-flash"><i class="fas fa-fire-extinguisher"></i> <strong>Missile lock context:</strong> execute defensive break turn, chaff/flare manual release.</div>
             </div>
         </div>
 
-        <!-- STEP 7 LANDING -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">07</div><div class="step-title">PRECISION APPROACH & MANUAL LANDING</div></div>
-            <div class="step-content">
-                <div class="step-text">Overhead break or straight-in. Gear down, flaps FULL, on-speed AOA 11-14 units. Final approach 140 knots.</div>
-                <div class="checklist-bullet"><i class="fas fa-plane-arrival"></i> Flare at 30ft, reduce power idle, pitch 3-5° for main wheel touchdown. Deploy drag chute manual.</div>
-                <div class="step-text">After landing, throttle cutoff, battery off, post-flight inspection.</div>
+        <!-- Step 7 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">07</div>
+                <div class="card-title">PRECISION LANDING</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Overhead break or straight-in approach. Maintain on-speed AOA, flare at 30ft, drag chute deployment.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Approach Speed:</span><span class="spec-value">140 KIAS</span></li>
+                    <li><span class="spec-label">On-Speed AOA:</span><span class="spec-value" id="landingAoa">12.5°</span></li>
+                    <li><span class="spec-label">Flare Height:</span><span class="spec-value">30 FT</span></li>
+                </ul>
             </div>
         </div>
 
-        <!-- STEP 8 POST FLIGHT -->
-        <div class="step-section">
-            <div class="step-header"><div class="step-number">08</div><div class="step-title">POST-FLIGHT & DEBRIEF</div></div>
-            <div class="step-content">
-                <div class="step-text">Perform cooldown (3 min idle), record G loads, fuel consumption, manual flight data.</div>
-                <div class="engine-grid">
-                    <div class="engine-card"><i class="fas fa-clipboard-list"></i> Inspect flight control rods</div>
-                    <div class="engine-card"><i class="fas fa-tools"></i> Manual flight forces & trim</div>
-                    <div class="engine-card"><i class="fas fa-chalkboard-user"></i> Review AOA & approach deviations</div>
+        <!-- Step 8 -->
+        <div class="procedure-card">
+            <div class="card-header">
+                <div class="step-number">08</div>
+                <div class="card-title">POST-FLIGHT PROCEDURES</div>
+            </div>
+            <div class="card-content">
+                <div class="procedure-text">Engine cooldown, systems shutdown, post-flight inspection, and debrief data recording.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Cooldown:</span><span class="spec-value">3 MIN IDLE</span></li>
+                    <li><span class="spec-label">Flight Time:</span><span class="spec-value" id="flightTime">1.4 HRS</span></li>
+                    <li><span class="spec-label">Fuel Remaining:</span><span class="spec-value" id="fuelRemaining">1850 LBS</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact / Mission Report Form -->
+    <div class="contact-section">
+        <div class="section-title">
+            <i class="fas fa-paper-plane"></i>
+            <span>MISSION REPORT · PILOT DEBRIEF</span>
+        </div>
+        <form id="contactForm" action="https://formspree.io/f/xlgodvda" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>CALLSIGN / FULL NAME</label>
+                    <input type="text" name="name" placeholder="Enter callsign or full name" required>
+                </div>
+                <div class="form-group">
+                    <label>EMAIL ADDRESS</label>
+                    <input type="email" name="email" placeholder="tactical@email.com" required>
+                </div>
+                <div class="form-group full-width">
+                    <label>AIRCRAFT TYPE</label>
+                    <input type="text" name="aircraft" placeholder="F-16C / F/A-18E / etc">
+                </div>
+                <div class="form-group full-width">
+                    <label>MISSION REPORT / DEBRIEF NOTES</label>
+                    <textarea name="message" rows="4" placeholder="Flight details, maneuvers performed, system performance notes..." required></textarea>
                 </div>
             </div>
-        </div>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-upload"></i> SUBMIT MISSION REPORT
+            </button>
+            <div id="formStatus" class="form-status"></div>
+        </form>
+    </div>
 
-        <!-- EXTRA AEROSPACE NOTES -->
-        <div class="step-section" style="background: rgba(20, 0, 0, 0.9);">
-            <div class="step-header" style="background:#1f0202;"><div class="step-number" style="background:#ff4411;">+</div><div class="step-title">MISSILE LOCK TACTICS · MANUAL FLIGHT EDGE</div></div>
-            <div class="step-content">
-                <div class="step-text"><i class="fas fa-chart-line"></i> <strong>Stick force gradients:</strong> At high speed, manual control forces increase. Essential for supersonic defensive maneuvers.</div>
-                <div class="step-text"><i class="fas fa-microchip"></i> <strong>Radar warning & lock:</strong> Manual evasive action — break turn, energy bleed, notch.</div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>AEROSPACE ENGINEERING</h4>
+                <p>Manual Flight Division<br>Tactical Operations Manual</p>
+            </div>
+            <div class="footer-section">
+                <h4>REFERENCE</h4>
+                <p>Fighter Weapons School<br>Red Flag Procedures</p>
+            </div>
+            <div class="footer-section">
+                <h4>CERTIFICATION</h4>
+                <p>MLB-101 · Manual Flight Qualified<br>Stick & Rudder Endorsement</p>
             </div>
         </div>
+        <div class="copyright">
+            <i class="fas fa-crosshairs"></i> MANUAL FLIGHT PROTOCOL · PURE MECHANICAL CONTROL SYSTEMS
+        </div>
+    </footer>
+</main>
+
+<div class="audio-control" id="audioToggle">
+    <i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE
+</div>
+<audio id="bgAudio" loop preload="auto" style="display: none;"></audio>
+
+<script>
+    // Professional Canvas Animation - Subtle Fighter Silhouettes
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let fighters = [];
+    
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    class Fighter {
+        constructor(x, y, vx, vy) {
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.size = 28;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x + this.size < 0) this.x = width + this.size;
+            if (this.x - this.size > width) this.x = -this.size;
+            if (this.y + this.size < 0) this.y = height + this.size;
+            if (this.y - this.size > height) this.y = -this.size;
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            let angle = Math.atan2(this.vy, this.vx);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(18, 0);
+            ctx.lineTo(-10, -6);
+            ctx.lineTo(-4, 0);
+            ctx.lineTo(-10, 6);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(220, 38, 38, 0.25)';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(-4, 0);
+            ctx.lineTo(-14, -3);
+            ctx.lineTo(-14, 3);
+            ctx.fillStyle = 'rgba(220, 38, 38, 0.4)';
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+    
+    // Initialize fighters
+    for (let i = 0; i < 6; i++) {
+        fighters.push(new Fighter(
+            Math.random() * width,
+            Math.random() * height,
+            (Math.random() - 0.5) * 0.6,
+            (Math.random() - 0.5) * 0.6
+        ));
+    }
+    
+    function animateCanvas() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+        ctx.fillRect(0, 0, width, height);
         
-        <!-- DOPE FOOTER (red/black, missile lock vibe) -->
-        <footer class="footer-afterburner">
-            <div class="footer-flex">
-                <div>
-                    <i class="fas fa-fighter-jet" style="font-size:2rem; color:#ff4422;"></i>
-                    <h3 style="color:#ff8866;">AEROSPACE ENGINEERING</h3>
-                    <p>Manual Flight Division · Missile Lock Ready<br>Step-by-Step 101 syllabus</p>
-                </div>
-                <div>
-                    <h4><i class="fas fa-bullseye"></i> LOCK MODE</h4>
-                    <p>Radar Cross Section · Defensive<br>Maneuvers · Kinetic Energy Mgmt</p>
-                </div>
-                <div>
-                    <h4><i class="fas fa-map-pin"></i> TACTICAL AIR BASES</h4>
-                    <p>Red Flag · Nellis · Top Gun<br>Fighter Weapons School</p>
-                </div>
-                <div>
-                    <h4><i class="fas fa-certificate"></i> ENDORSEMENT</h4>
-                    <p>Missile Lock Badge (MLB-101)<br>Aerospace Engineering Elite</p>
-                </div>
-            </div>
-            <div class="hr-glow"></div>
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
-                <span><i class="fas fa-crosshairs"></i> LOCK STATUS: ACTIVE · RWR: SPIKE 12 O'CLOCK</span>
-                <span><i class="fas fa-headset"></i> TOWER FREQ: 133.5 · MANUAL FLIGHT MODE</span>
-                <span>© 2026 AEROSPACE ENGINEERING · MISSILE LOCK FIGHTER PROTOCOL</span>
-            </div>
-            <div style="text-align: center; margin-top: 1.2rem; font-size:0.75rem;">
-                <i class="fas fa-dragon"></i> Pure manual flight — missile lock environment, full control. Red & black supremacy.
-            </div>
-        </footer>
-    </div>
-
-    <!-- AUDIO: ae.mp3 AUTOPLAY FOREVER ROBUST -->
-    <audio id="bgAudio" loop preload="auto" style="display: none;"></audio>
-    <div class="audio-control" id="audioControlBtn">
-        <i class="fas fa-volume-up"></i> AEROSPACE AUDIO · ae.mp3
-    </div>
-
-    <script>
-        // ---------- MISSILE LOCK FIGHTER JET CANVAS ANIMATION (RED/BLACK) ----------
-        const canvas = document.getElementById('fighterMissileCanvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let fighters = [];
-        let missiles = [];
-        let lockParticles = [];
-
-        function resizeCanvas() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(220, 38, 38, 0.08)';
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < width; i += 80) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, i % height);
+            ctx.lineTo(width, i % height);
+            ctx.stroke();
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        // Fighter jet class (silhouette style)
-        class FighterJet {
-            constructor(x, y, speedX, speedY) {
-                this.x = x;
-                this.y = y;
-                this.speedX = speedX;
-                this.speedY = speedY;
-                this.size = 38;
-                this.angle = 0;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x + this.size < 0) this.x = width + 20;
-                if (this.x - this.size > width) this.x = -20;
-                if (this.y + this.size < 0) this.y = height + 20;
-                if (this.y - this.size > height) this.y = -20;
-                this.angle = Math.atan2(this.speedY, this.speedX);
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.shadowBlur = 12;
-                ctx.shadowColor = "#ff2200";
-                ctx.beginPath();
-                ctx.moveTo(20, 0);
-                ctx.lineTo(-12, -10);
-                ctx.lineTo(-6, 0);
-                ctx.lineTo(-12, 10);
-                ctx.closePath();
-                ctx.fillStyle = "#ff3311cc";
-                ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(-6, 0);
-                ctx.lineTo(-18, -4);
-                ctx.lineTo(-18, 4);
-                ctx.fillStyle = "#ff6644";
-                ctx.fill();
-                ctx.restore();
-                // afterburner effect
-                ctx.beginPath();
-                ctx.arc(this.x - 16, this.y, 8, 0, Math.PI * 2);
-                ctx.fillStyle = "#ff4400aa";
-                ctx.fill();
-            }
+        
+        for (let f of fighters) {
+            f.update();
+            f.draw();
         }
-
-        // Missile trail / lock cross
-        class MissileLock {
-            constructor(x, y, targetX, targetY) {
-                this.x = x;
-                this.y = y;
-                this.targetX = targetX;
-                this.targetY = targetY;
-                this.life = 1.0;
-            }
-            update() {
-                this.life -= 0.015;
-                return this.life > 0;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.targetX, this.targetY);
-                ctx.strokeStyle = `rgba(255, 60, 30, ${this.life * 0.7})`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(this.targetX, this.targetY, 8 * (1 - this.life), 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(255, 40, 0, ${this.life})`;
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            }
-        }
-
-        // init fighters
-        for (let i = 0; i < 4; i++) {
-            fighters.push(new FighterJet(Math.random() * width, Math.random() * height, (Math.random() - 0.5) * 1.2, (Math.random() - 0.5) * 1.1));
-        }
-        setInterval(() => {
-            if (fighters.length < 6) {
-                fighters.push(new FighterJet(Math.random() * width, Math.random() * height, (Math.random() - 0.5) * 1.3, (Math.random() - 0.5) * 1.2));
-            }
-            for (let f of fighters) {
-                missiles.push(new MissileLock(f.x + 20, f.y + 5, f.x - 12, f.y));
-            }
-        }, 1800);
-
-        function animateBackground() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, width, height);
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = "rgba(0,0,0,0.25)";
-            ctx.fillRect(0, 0, width, height);
-            // radar grid effect
-            ctx.strokeStyle = "#ff331155";
-            ctx.lineWidth = 1;
-            for (let i = 0; i < 8; i++) {
-                ctx.beginPath();
-                ctx.arc(width/2, height/2, 50 + i*55, 0, Math.PI*2);
-                ctx.stroke();
-            }
-            for (let i = 0; i < fighters.length; i++) {
-                fighters[i].update();
-                fighters[i].draw();
-            }
-            for (let i = missiles.length-1; i >= 0; i--) {
-                let alive = missiles[i].update();
-                missiles[i].draw();
-                if (!alive) missiles.splice(i,1);
-            }
-            requestAnimationFrame(animateBackground);
-        }
-        animateBackground();
-
-        // ---------- AUDIO: ae.mp3 ROBUST AUTOPLAY + FOREVER LOOP ----------
-        const audio = document.getElementById('bgAudio');
-        const audioBtn = document.getElementById('audioControlBtn');
-        audio.loop = true;
-        audio.volume = 0.45;
-        audio.src = "ae.mp3";
-
-        let playAttempt = audio.play();
-        if (playAttempt !== undefined) {
-            playAttempt.catch(() => {
-                audioBtn.style.cursor = "pointer";
-                audioBtn.style.background = "#aa2222cc";
-                audioBtn.innerHTML = '<i class="fas fa-play-circle"></i> CLICK TO ENABLE AE.MP3 (MISSILE LOCK AUDIO)';
-                audioBtn.addEventListener('click', function enableAudio() {
-                    audio.play().then(() => {
-                        audioBtn.innerHTML = '<i class="fas fa-volume-up"></i> AEROSPACE AUDIO · ae.mp3 (ACTIVE)';
-                        audioBtn.style.background = "#1f0505cc";
-                    }).catch(e => console.log("audio error", e));
-                    audioBtn.removeEventListener('click', enableAudio);
-                });
-            });
+        requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+    
+    // Dynamic Instrument Updates - Smooth Professional Randomization
+    function updateInstruments() {
+        // Smooth variations within realistic ranges
+        let airspeed = 385 + (Math.sin(Date.now() / 3000) * 15) + (Math.random() - 0.5) * 8;
+        airspeed = Math.min(620, Math.max(120, airspeed));
+        document.getElementById('airspeed').innerText = Math.floor(airspeed);
+        
+        let aoaVal = 8.2 + (Math.sin(Date.now() / 2500) * 1.2) + (Math.random() - 0.5) * 0.6;
+        aoaVal = Math.min(22, Math.max(2, aoaVal));
+        document.getElementById('aoa').innerText = aoaVal.toFixed(1);
+        
+        let gloadVal = 1.3 + (Math.sin(Date.now() / 2000) * 0.8) + (Math.random() - 0.5) * 0.3;
+        gloadVal = Math.min(7.5, Math.max(0.8, gloadVal));
+        document.getElementById('gload').innerText = gloadVal.toFixed(1);
+        
+        // Radar status based on flight conditions
+        let radarStates = ['CLEAR', 'CONTACT', 'TRACKING', 'LOCK', 'SEARCH'];
+        let radarIndex = Math.floor(Math.abs(Math.sin(Date.now() / 8000)) * 4);
+        document.getElementById('radarStatus').innerText = radarStates[radarIndex];
+        
+        // Engine parameters
+        document.getElementById('rpm').innerText = Math.floor(25 + Math.abs(Math.sin(Date.now() / 4000)) * 75) + '%';
+        document.getElementById('egt').innerText = Math.floor(550 + Math.sin(Date.now() / 3000) * 80) + '°C';
+        document.getElementById('oilPress').innerText = Math.floor(75 + Math.sin(Date.now() / 3500) * 15);
+        
+        // Hydraulic pressure with slight variation
+        let hydPress = 3200 + (Math.sin(Date.now() / 5000) * 50);
+        document.getElementById('hydPressure').innerText = Math.floor(hydPress) + ' PSI';
+        
+        // Battery discharge simulation
+        let batteryVal = 98 - (Date.now() / 3600000) % 15;
+        document.getElementById('battery').innerText = Math.floor(batteryVal) + '%';
+        
+        // Control surfaces status
+        let controlStates = ['FREE', 'NOMINAL', 'OPERATIONAL'];
+        document.getElementById('controls').innerText = controlStates[Math.floor(Math.abs(Math.sin(Date.now() / 10000)) * 2.5)];
+        
+        // Vr speed variation with conditions
+        let vrBase = 160 + (Math.sin(Date.now() / 6000) * 5);
+        document.getElementById('vrSpeed').innerText = Math.floor(vrBase);
+        
+        // Slip ball
+        document.getElementById('slipBall').innerText = ((Math.sin(Date.now() / 2500) * 0.3) + (Math.random() - 0.5) * 0.2).toFixed(1);
+        
+        // Countermeasures count decreases slowly
+        let cmCount = 32 - (Date.now() / 300000) % 32;
+        document.getElementById('cmCount').innerHTML = Math.floor(cmCount) + ' REMAINING';
+        
+        // Landing AOA
+        let landingAoA = 12.5 + (Math.sin(Date.now() / 4000) * 1);
+        document.getElementById('landingAoa').innerHTML = landingAoA.toFixed(1) + '°';
+        
+        // Flight time increment
+        let flightHrs = 1.4 + (Date.now() / 3600000) % 2;
+        document.getElementById('flightTime').innerHTML = flightHrs.toFixed(1) + ' HRS';
+        
+        // Fuel burn
+        let fuel = 1850 - (Date.now() / 180000) % 1200;
+        document.getElementById('fuelRemaining').innerHTML = Math.floor(Math.max(150, fuel)) + ' LBS';
+    }
+    
+    setInterval(updateInstruments, 800);
+    
+    // Audio Setup - Professional with user interaction fallback
+    const audio = document.getElementById('bgAudio');
+    const audioToggle = document.getElementById('audioToggle');
+    audio.loop = true;
+    audio.volume = 0.3;
+    audio.src = "ae.mp3";
+    
+    let audioEnabled = false;
+    
+    function enableAudio() {
+        audio.play().then(() => {
+            audioEnabled = true;
+            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE';
+        }).catch(() => {
+            audioToggle.innerHTML = '<i class="fas fa-volume-mute"></i> CLICK TO ENABLE AUDIO';
+        });
+    }
+    
+    audioToggle.addEventListener('click', () => {
+        if (!audioEnabled) {
+            enableAudio();
+        } else if (audio.paused) {
+            audio.play();
+            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE';
         } else {
-            audioBtn.innerHTML = '<i class="fas fa-volume-up"></i> AEROSPACE AUDIO · LOCK TRACK ACTIVE';
+            audio.pause();
+            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AUDIO PAUSED';
         }
-        // extra insurance: ensure looping forever
-        audio.addEventListener('ended', function() { this.currentTime = 0; this.play().catch(e=>{}); });
-    </script>
+    });
+    
+    // Auto attempt play (will fail without interaction, but that's fine)
+    audio.play().catch(() => {
+        audioToggle.innerHTML = '<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO';
+    });
+    
+    audio.addEventListener('ended', () => {
+        if (audioEnabled) {
+            audio.currentTime = 0;
+            audio.play();
+        }
+    });
+    
+    // Form Submission Handler
+    const form = document.getElementById('contactForm');
+    const statusDiv = document.getElementById('formStatus');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        statusDiv.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Transmitting mission report...';
+        statusDiv.style.color = '#9ca3af';
+        
+        try {
+            const response = await fetch('https://formspree.io/f/xlgodvda', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Mission report transmitted successfully. Command acknowledged.';
+                statusDiv.style.color = '#10b981';
+                form.reset();
+                setTimeout(() => {
+                    statusDiv.innerHTML = '';
+                }, 5000);
+            } else {
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Transmission failed. Please verify connection and retry.';
+                statusDiv.style.color = '#ef4444';
+            }
+        } catch (error) {
+            statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Communication error. Verify network status.';
+            statusDiv.style.color = '#ef4444';
+        }
+    });
+</script>
 </body>
 </html>
