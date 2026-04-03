@@ -8,11 +8,10 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   
-  <meta name="description" content="Computer Science CV-5">
-  
+  <meta name="description" content="COMPLIANCE CV-5 - Optimized Terminal Interface">
   <title>COMPLIANCE CV-5</title>
   
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,10 60,35 90,40 70,60 75,90 50,75 25,90 30,60 10,40 40,35 50,10' fill='red'/%3E%3C/svg%3E">
   
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
@@ -29,56 +28,62 @@
   
   <style>
     
-    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
-    :root { --bg: #000000; --bg-card: #0a0000cc; --red: #ff0000; --red-dim: #cc0000; --text: #ff0000; --border: #ff0000; --transition: all 0.2s ease; }
-    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; position: relative; overflow-x: hidden; }
-    .bg-scan-overlay { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 0; animation: slowDrift 18s linear infinite; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #000000; --bg-card: #0a0000cc; --red: #ff0000; --red-dim: #cc0000; --text: #ff0000; --border: #ff0000; --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; position: relative; overflow-x: hidden; scroll-behavior: smooth; }
+    .bg-scan-overlay { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.015) 0px, rgba(255,0,0,0.015) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 0; animation: slowDrift 20s linear infinite; }
     @keyframes slowDrift { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
-    .particle-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at 20% 40%, rgba(255,0,0,0.03) 0%, transparent 70%); animation: breathe 8s infinite alternate; }
-    @keyframes breathe { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
+    .particle-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at 20% 40%, rgba(255,0,0,0.02) 0%, transparent 70%); animation: breathe 10s infinite alternate; }
+    @keyframes breathe { 0% { opacity: 0.2; } 100% { opacity: 0.6; } }
     .app-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; display: none; }
-    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 1rem 0; margin-bottom: 2rem; cursor: pointer; }
+    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 1rem 0; margin-bottom: 2rem; cursor: pointer; transition: opacity 0.2s; }
+    .command-header:hover { opacity: 0.9; }
     .header-content { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
-    .logo { font-size: clamp(1.4rem, 6vw, 2.4rem); font-weight: 800; letter-spacing: 6px; color: var(--red); font-family: 'Share Tech Mono'; }
+    .logo { font-size: clamp(1.4rem, 6vw, 2.4rem); font-weight: 800; letter-spacing: 6px; color: var(--red); font-family: 'Share Tech Mono'; text-shadow: 0 0 3px rgba(255,0,0,0.5); }
     .section-card { background: var(--bg-card); backdrop-filter: blur(4px); border: 2px solid var(--red); margin-bottom: 2rem; padding: clamp(1rem, 3vw, 2rem); transition: var(--transition); }
+    .section-card:hover { border-color: #ff4444; box-shadow: 0 0 15px rgba(255,0,0,0.15); }
     .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; border-bottom: 2px solid var(--red); padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
-    .section-title { font-size: clamp(1rem, 4vw, 1.6rem); font-weight: 700; }
-    .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.8rem; font-size: 0.7rem; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { background: #050000aa; border: 1px solid var(--red); padding: 1.2rem; backdrop-filter: blur(4px); }
-    input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.7rem; color: var(--red); font-family: monospace; font-size: 0.85rem; outline: none; }
-    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; transition: 0.1s linear; font-family: monospace; font-size: 0.75rem; border-radius: 0; }
+    .section-title { font-size: clamp(1rem, 4vw, 1.6rem); font-weight: 700; letter-spacing: 1px; }
+    .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.8rem; font-size: 0.7rem; border-radius: 2px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .card { background: #050000aa; border: 1px solid var(--red); padding: 1.2rem; backdrop-filter: blur(4px); transition: var(--transition); }
+    .card:hover { border-color: #ff6666; }
+    input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.7rem; color: var(--red); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; transition: all 0.15s; }
+    input:focus, textarea:focus, select:focus { border-color: #ff6666; box-shadow: 0 0 8px rgba(255,0,0,0.3); background: #150000; }
+    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; transition: all 0.15s cubic-bezier(0.2, 0.9, 0.4, 1.1); font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; border-radius: 0; }
     .btn-primary { background: var(--red); color: black; border-color: var(--red); }
-    .btn-primary:hover { background: #cc0000; transform: scale(0.98); }
-    .btn:hover { background: rgba(255,0,0,0.2); }
-    .message-board { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
-    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.8rem; transition: 0.1s; }
+    .btn-primary:hover { background: #cc0000; transform: scale(0.97); box-shadow: 0 0 8px rgba(255,0,0,0.5); }
+    .btn:hover { background: rgba(255,0,0,0.2); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .message-board { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; scroll-behavior: smooth; }
+    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.8rem; transition: 0.1s; animation: fadeInUp 0.2s ease-out; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
-    .reaction-btn { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 0.2rem 0.5rem; font-size: 0.7rem; cursor: pointer; border-radius: 12px; }
-    .ide-tab-bar { display: flex; gap: 0.5rem; border-bottom: 1px solid red; margin-bottom: 1rem; flex-wrap: wrap; }
-    .ide-tab { background: #1a0000; border: 1px solid red; padding: 0.4rem 1rem; cursor: pointer; font-size: 0.75rem; }
-    .ide-tab.active { background: #ff0000; color: black; }
-    .editor-pane { min-height: 350px; }
-    .live-frame { width: 100%; height: 250px; background: white; border: 1px solid red; margin-top: 0.5rem; }
-    .file-attach-item { display: flex; align-items: center; gap: 8px; background: #2a0000; padding: 4px 8px; margin-top: 4px; }
+    .reaction-btn { background: rgba(255,0,0,0.15); border: 1px solid red; padding: 0.2rem 0.6rem; font-size: 0.7rem; cursor: pointer; border-radius: 16px; transition: all 0.1s; }
+    .reaction-btn:hover { background: rgba(255,0,0,0.4); transform: scale(1.02); }
     .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: 0.8rem 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; z-index: 1000; margin-top: 2rem; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 30000; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 30000; animation: fadeIn 0.15s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal-box { background: black; border: 2px solid red; max-width: 500px; width: 90%; padding: 2rem; }
     .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center; z-index: 50000; }
-    .loader-overlay { position: fixed; inset: 0; background: black; display: none; align-items: center; justify-content: center; z-index: 40000; }
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 40000; flex-direction: column; gap: 1rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .typing-indicator { color: #cc0000; font-size: 0.7rem; animation: blink 1s infinite; }
-    @keyframes blink { 50% { opacity: 0.4; } }
-    ::-webkit-scrollbar { width: 4px; background: #1a0000; }
-    ::-webkit-scrollbar-thumb { background: red; }
-    .quick-scroll-right { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 999; }
-    .quick-scroll-right button { background: black; border: 1.5px solid red; color: red; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; }
-    @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 6px; } .quick-scroll-right button { width: 36px; height: 36px; } }
-    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.8rem; margin-top: 0.5rem; }
-    .stars-rank { display: inline-flex; gap: 8px; margin-left: 12px; align-items: center; }
-    .military-star-svg { width: 22px; height: 22px; filter: drop-shadow(0 0 0px transparent); animation: starPulse 3s infinite ease-in-out; }
-    @keyframes starPulse { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
+    .loading-spinner { width: 40px; height: 40px; border: 2px solid red; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    ::-webkit-scrollbar { width: 6px; background: #1a0000; }
+    ::-webkit-scrollbar-track { background: #0a0000; }
+    ::-webkit-scrollbar-thumb { background: red; border-radius: 3px; }
+    .quick-scroll-right { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .quick-scroll-right button { background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); border: 1.5px solid red; color: red; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; transition: all 0.15s; border-radius: 4px; }
+    .quick-scroll-right button:hover { background: red; color: black; transform: scale(1.05); }
+    @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 8px; } .quick-scroll-right button { width: 36px; height: 36px; } }
+    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.8rem; margin-top: 0.5rem; border-radius: 0 4px 4px 0; animation: slideIn 0.2s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+    .stars-rank { display: inline-flex; gap: 6px; margin-left: 12px; align-items: center; }
+    .military-star-svg { width: 20px; height: 20px; filter: drop-shadow(0 0 1px red); animation: starPulse 3s infinite ease-in-out; }
+    @keyframes starPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+    .empty-state { text-align: center; padding: 2rem; color: #aa5555; font-style: italic; }
+    .toast-notification { animation: slideInRight 0.3s ease-out; }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
     
   </style>
   
@@ -89,130 +94,433 @@
 <div class="particle-bg"></div>
 <div class="bg-scan-overlay"></div>
 <div class="quick-scroll-right">
-  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
-  <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})"><i class="fas fa-arrows-alt-v"></i></button>
-  <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"><i class="fas fa-arrow-down"></i></button>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})" aria-label="Scroll to middle"><i class="fas fa-arrows-alt-v"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" aria-label="Scroll to bottom"><i class="fas fa-arrow-down"></i></button>
 </div>
 
 <div class="pin-gate" id="pinGate">
   <div class="modal-box" style="text-align:center">
     <div class="logo" style="font-size:1.8rem;">COMPLIANCE CV-5</div>
-    <br><input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center">
+    <br><input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center" autofocus>
     <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">VERIFY</button>
   </div>
 </div>
 
 <div class="app-container" id="appContainer">
-  <div id="notifyStack" style="position:fixed; top:1rem; right:1rem; z-index:20000; max-width:350px"></div>
-  <div class="loader-overlay" id="loaderOverlay"><div style="text-align:center"><div style="width:40px;height:40px;border:2px solid red;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></div><div>SYNC</div></div></div>
+  <div id="notifyStack" style="position:fixed; top:1rem; right:1rem; z-index:20000; max-width:380px"></div>
+  <div class="loader-overlay" id="loaderOverlay"><div class="loading-spinner"></div><div style="margin-top:1rem;" id="loaderText">INITIALIZING DATABASE...</div></div>
   <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem; justify-content:flex-end"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
-  <header class="command-header" onclick="window.location.href='#'">
-    <div class="header-content"><div class="logo">COMPLIANCE CV-5</div><div style="display:flex;justify-content:center;gap:12px;margin-top:6px;"><span style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>SECURE • ACTIVE</div></div>
+  <header class="command-header">
+    <div class="header-content"><div class="logo">COMPLIANCE CV-5</div><div style="display:flex;justify-content:center;gap:12px;margin-top:6px;"><span style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span><span>SECURE • ACTIVE</span><span><i class="fas fa-database"></i> LIVE</span></div></div>
   </header>
 
-  <!-- SECTION 01 -->
-  <section class="section-card" id="secCommand"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge">Commander-in-Chief (The President) / Chairman / Chief Innovations Officer / Founder</span></div><div class="grid-2"><div class="card"><h3>01. DIRECT ACTION</h3><div id="directiveText" style="background:#0a0000; padding:1rem; min-height:120px;"></div><div class="btn-group" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;"><button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="pasteToDirectiveBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="clearDirectiveBtn"><i class="fas fa-eraser"></i> CLEAR</button></div><div id="directiveMeta" style="font-size:0.7rem;"></div></div><div class="card" id="cmdPanel" style="display:none;"><h3>COMMANDER's NOTEPADS</h3><div id="commanderNotepadsContainer" class="grid-2" style="gap:0.8rem;"></div><textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div><div><strong>HISTORY</strong><div id="directiveHistory" style="max-height:150px; overflow-y:auto;"></div></div></div><button class="btn" id="unlockCmdBtn">UNLOCK PROTOCOL</button></div></section>
+  <!-- SECTION 01: PROTOCOL ALPHA-1 -->
+  <section class="section-card" id="secCommand"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge"><i class="fas fa-shield-alt"></i> Commander-in-Chief, The President of the Re-private, Chairman, CIO, Founder</span></div><div class="grid-2"><div class="card"><h3><i class="fas fa-scroll"></i> DIRECT ACTION</h3><div id="directiveText" style="background:#0a0000; padding:1rem; min-height:120px; font-family: monospace; white-space: pre-wrap;"></div><div class="btn-group" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;"><button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="pasteToDirectiveBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="clearDirectiveBtn"><i class="fas fa-eraser"></i> CLEAR</button></div><div id="directiveMeta" style="font-size:0.7rem; margin-top:8px;"></div></div><div class="card" id="cmdPanel" style="display:none;"><h3><i class="fas fa-terminal"></i> COMMANDER's NOTEPADS</h3><div id="commanderNotepadsContainer" class="grid-2" style="gap:0.8rem;"></div><textarea id="newDirective" rows="3" placeholder="Operational order... (Enter to send)"></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-paper-plane"></i> TRANSMIT</button></div><div><strong><i class="fas fa-history"></i> HISTORY</strong><div id="directiveHistory" style="max-height:150px; overflow-y:auto; margin-top:8px;"></div></div></div><button class="btn" id="unlockCmdBtn"><i class="fas fa-unlock-alt"></i> UNLOCK PROTOCOL</button></div></section>
 
-  <!-- SECTION 02: ADVANCED MESSAGE BOARD WITH FULL FILE SUPPORT (ALL TYPES) -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span></div><div class="grid-2"><div class="card"><h3>NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.3rem;"></div><textarea id="messageText" rows="3" placeholder="Message..."></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="emojiBtn"><i class="far fa-smile"></i></button><button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i> FILE</button><button class="btn" id="gifBtn"><i class="fas fa-film"></i> GIF</button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><div id="attachPreview"></div><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div><div class="card"><div style="display:flex; justify-content:space-between;"><h3>LIVE FEED • DOWNLOAD ANY</h3><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="message-board" id="messageBoard"></div></div></div></section>
+  <!-- SECTION 02: TEAM MESSAGE BOARD -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="grid-2"><div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.5rem; margin:8px 0; border-left: 3px solid red;"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="attachBtn"><i class="fas fa-paperclip"></i> FILE</button><button class="btn" id="clearComposeBtn"><i class="fas fa-trash-alt"></i> CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><div id="attachPreview" style="background:#1a0000; padding:5px; margin-top:5px; font-size:0.7rem;"></div><button class="btn btn-primary" id="sendMsgBtn"><i class="fas fa-lock"></i> ENCRYPT & SEND</button></div><div class="card"><div style="display:flex; justify-content:space-between; margin-bottom:12px;"><h3><i class="fas fa-comments"></i> LIVE FEED</h3></div><div class="message-board" id="messageBoard"><div class="empty-state"><i class="fas fa-spinner fa-pulse"></i> Loading messages...</div></div></div></div></section>
 
-  <!-- SECTION 03: N/A -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">03. N/A</h2></section>
+  <!-- SECTION 03: RESERVED -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">03. RESERVED</h2><span class="badge">Coming Soon</span></div><div class="empty-state" style="padding:1rem;"><i class="fas fa-tools"></i> Future expansion module</div></section>
 
-  <!-- SECTION 04: N/A -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">04. N/A</h2></section>
+  <!-- SECTION 04: RESERVED -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">04. RESERVED</h2><span class="badge">Coming Soon</span></div><div class="empty-state" style="padding:1rem;"><i class="fas fa-chart-line"></i> objectives</div></section>
 
-  <!-- SECTION 05: SARAH AI -->
-  <section class="section-card" id="aiSection"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI (AI) • NEURAL CORE</h2><span class="badge">LIVE AWARENESS</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff6666; text-align:center;">NEURAL INTERFACE ACTIVE</div><div id="aiConversation" style="max-height: 300px; overflow-y: auto; background: #050000; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid red;"></div><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah Mnguni naturally... (Enter to send)"></textarea><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;"><i class="fas fa-comment-dots"></i> TRANSMIT</button><div id="aiMemoryIndicator" style="font-size:0.7rem; margin-top:0.5rem; text-align:center;">contextual memory • real-time</div></div></section>
+  <!-- SECTION 05: SARAH MNGUNI AI -->
+  <section class="section-card" id="aiSection"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI • NEURAL CORE</h2><span class="badge"><i class="fas fa-brain"></i> LIVE AWARENESS</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff8888; text-align:center; font-size:0.8rem;">NEURAL INTERFACE ACTIVE</div><div id="aiConversation" style="max-height: 320px; overflow-y: auto; background: #050000; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid red;"></div><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah Mnguni... (Enter to send)"></textarea><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;"><i class="fas fa-comment-dots"></i> TRANSMIT</button><div id="aiMemoryIndicator" style="font-size:0.7rem; margin-top:0.5rem; text-align:center; color:#aa5555;">contextual memory • real-time</div></div></section>
 
-  <div class="footer-panel"><button class="btn" id="globalCopyBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="globalPasteBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="exportLogsFooterBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button><span>PSALMS 27:1 "The LORD is my Light and my Salvation; of whom shall I fear?"</span></div>
+  <div class="footer-panel"><button class="btn" id="globalCopyBtn"><i class="fas fa-copy"></i> COPY</button><button class="btn" id="globalPasteBtn"><i class="fas fa-paste"></i> PASTE</button><button class="btn" id="exportLogsFooterBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button><span>PSALMS 27:1</span></div>
 </div>
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, writeBatch, where, arrayUnion, arrayRemove, increment, limit, getDocs } from "@firebase/firestore";
+  import { getFirestore, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, getDocs, arrayUnion, arrayRemove, increment } from "@firebase/firestore";
+  
   const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   
-  const showLoader = (b) => document.getElementById('loaderOverlay').style.display = b ? 'flex' : 'none';
-  const notify = (msg, type = 'info') => { const s = document.getElementById('notifyStack'); const n = document.createElement('div'); n.style.background = 'black'; n.style.borderLeft = '4px solid red'; n.style.padding = '0.5rem'; n.style.marginBottom = '0.5rem'; n.style.fontSize = '0.8rem'; n.innerHTML = `<span>${type === 'success' ? '✓' : '⚠'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;" onclick="this.parentElement.remove()">✕</button>`; s.appendChild(n); setTimeout(() => n.remove(), 4000); };
-  const showModal = (title, content) => new Promise(resolve => { const modal = document.getElementById('globalModal'); document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalContent').innerHTML = content; modal.style.display = 'flex'; const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); }; const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); }; const cleanup = () => { confirmBtn.removeEventListener('click', confirm); cancelBtn.removeEventListener('click', cancel); }; const confirmBtn = document.getElementById('modalConfirm'); const cancelBtn = document.getElementById('modalCancel'); confirmBtn.addEventListener('click', confirm); cancelBtn.addEventListener('click', cancel); });
-  document.getElementById('unlockBtn').addEventListener('click', () => { if(document.getElementById('pinInput').value === '7') { document.getElementById('pinGate').style.display = 'none'; document.getElementById('appContainer').style.display = 'block'; notify('CIC ACCESS GRANTED', 'success'); } else { notify('Invalid code', 'error'); } });
-  const starContainer = document.getElementById('starRankContainer'); for(let i=0;i<8;i++) starContainer.innerHTML += `<svg class="military-star-svg" style="animation-delay:${i*0.25}s" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
-  
+  let db = null;
   let commanderUnlocked = false;
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPass" placeholder="PROTOCOL PIN">'); if(ok && document.getElementById('cmdPass')?.value === '1234') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; loadCommanderNotepads(); notify('Protocol unlocked', 'success'); } else if(ok) notify('Denied', 'error'); });
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; });
-  async function loadCommanderNotepads() { const container = document.getElementById('commanderNotepadsContainer'); container.innerHTML = ''; for(let i=1;i<=4;i++) { const ref = doc(db, 'commanderNotepads', `cmd_notepad_${i}`); const snap = await getDoc(ref); let content = snap.exists() ? snap.data().content : ''; const div = document.createElement('div'); div.className = 'card'; div.innerHTML = `<strong>📓 NOTEPAD ${i}</strong><textarea id="notepad_${i}" rows="3">${content.replace(/</g, '&lt;')}</textarea><div style="display:flex; gap:5px; margin-top:5px;"><button class="btn saveNotepadBtn" data-idx="${i}">SAVE</button><button class="btn copyNotepadBtn" data-idx="${i}">COPY</button></div>`; container.appendChild(div); } document.querySelectorAll('.saveNotepadBtn').forEach(btn => btn.addEventListener('click', async (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; await setDoc(doc(db, 'commanderNotepads', `cmd_notepad_${idx}`), { content: val, updated: serverTimestamp() }); notify(`Notepad ${idx} saved`, 'success'); })); document.querySelectorAll('.copyNotepadBtn').forEach(btn => btn.addEventListener('click', (e) => { const idx = btn.getAttribute('data-idx'); const val = document.getElementById(`notepad_${idx}`).value; navigator.clipboard.writeText(val); notify('Copied', 'info'); })); }
-  onSnapshot(doc(db, 'cio', 'directive'), snap => { if(snap.exists()) { document.getElementById('directiveText').innerHTML = snap.data().text.replace(/\n/g, '<br>'); document.getElementById('directiveMeta').innerHTML = `Last order: ${snap.data().timestamp?.toDate().toLocaleString() || '—'}`; } });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('newDirective').value.trim(); if(!txt) return; await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp() }); await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp() }); document.getElementById('newDirective').value = ''; notify('Order transmitted', 'success'); });
-  onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(6)), snap => { const div = document.getElementById('directiveHistory'); div.innerHTML = ''; snap.forEach(d => div.innerHTML += `<div style="border-bottom:1px solid #300; padding:4px;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div>${d.data().text.substring(0,70)}</div></div>`); });
-  document.getElementById('copyDirectiveBtn').addEventListener('click', () => navigator.clipboard.writeText(document.getElementById('directiveText').innerText));
-  document.getElementById('pasteToDirectiveBtn').addEventListener('click', async () => { document.getElementById('newDirective').value = await navigator.clipboard.readText(); });
-  document.getElementById('clearDirectiveBtn').addEventListener('click', () => document.getElementById('newDirective').value = '');
+  let currentCallsign = 'BIG-JOE', replyingTo = null, attachData = null;
+  let directiveUnsubscribe = null;
+  let messagesUnsubscribe = null;
+  let historyUnsubscribe = null;
   
-  // SECTION 02 ADVANCED FILE HANDLING + ALL TYPES DOWNLOAD
-  let currentCallsign = 'OPERATOR', replyingTo = null, attachData = null;
-  document.getElementById('callsignField').addEventListener('input', e => currentCallsign = e.target.value.toUpperCase());
-  document.getElementById('attachBtn').addEventListener('click', () => document.getElementById('attachFileInput').click());
-  document.getElementById('attachFileInput').addEventListener('change', e => { if(e.target.files[0]) attachData = e.target.files[0]; document.getElementById('attachPreview').innerHTML = attachData ? `📎 ${attachData.name} (${(attachData.size/1024).toFixed(1)}KB)` : ''; });
-  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const msg = document.getElementById('messageText').value.trim(); if(!msg && !attachData) return; let att = null; if(attachData) { const reader = new FileReader(); att = await new Promise(r => { reader.onload = () => r({ name: attachData.name, data: reader.result, type: attachData.type }); reader.readAsDataURL(attachData); }); } await addDoc(collection(db, 'messages'), { callsign: currentCallsign, department: document.getElementById('deptField').value, text: msg, attachment: att, timestamp: serverTimestamp(), likes: 0, likedBy: [], replyTo: replyingTo ? { id: replyingTo.id, callsign: replyingTo.callsign, text: replyingTo.text } : null }); document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; notify('Sent', 'success'); });
-  window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; const box = document.getElementById('replyIndicatorBox'); box.style.display = 'block'; box.innerHTML = `↪️ Replying to ${callsign}: "${text.substring(0,60)}"`; };
-  window.downloadAttachment = (attachment) => { if(attachment && attachment.data) { const a = document.createElement('a'); a.href = attachment.data; a.download = attachment.name; document.body.appendChild(a); a.click(); document.body.removeChild(a); } };
-  window.toggleLikeMsg = async (id, username) => { const ref = doc(db, 'messages', id); const snap = await getDoc(ref); if(snap.exists()) { const liked = (snap.data().likedBy || []).includes(username); if(liked) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(username) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(username) }); } };
-  window.deleteMsgItem = async (id) => { if(await showModal('Delete', 'Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); };
-  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => { const board = document.getElementById('messageBoard'); board.innerHTML = ''; let cnt = 0; snap.forEach(d => { cnt++; const m = d.data(); const id = d.id; const liked = (m.likedBy || []).includes(currentCallsign); let attachHtml = ''; if(m.attachment) attachHtml = `<div><button class="btn" style="font-size:0.7rem;" onclick="window.downloadAttachment(${JSON.stringify(m.attachment).replace(/"/g, '&quot;')})"><i class="fas fa-download"></i> ${m.attachment.name}</button></div>`; board.innerHTML += `<div class="message-item"><div><strong>${m.callsign}</strong> [${m.department}] <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div>${m.text}</div>${attachHtml}<div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${id}','${currentCallsign}')">👍 ${m.likes||0}</button><button class="reaction-btn" onclick="window.replyMessage('${m.callsign}','${id}','${m.text.replace(/'/g, "\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${id}')">🗑️</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = `${cnt} msgs`; });
-  document.getElementById('emojiBtn').addEventListener('click', () => { const picker = document.createElement('emoji-picker'); picker.style.position = 'absolute'; document.body.appendChild(picker); picker.addEventListener('emoji-click', e => { document.getElementById('messageText').value += e.detail.unicode; picker.remove(); }); setTimeout(() => picker.remove(), 8000); });
-  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; attachData = null; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; document.getElementById('attachPreview').innerHTML = ''; });
+  const showLoader = (show, text = 'SYNCING...') => { 
+    const loader = document.getElementById('loaderOverlay');
+    const loaderText = document.getElementById('loaderText');
+    if (loader) loader.style.display = show ? 'flex' : 'none';
+    if (loaderText && text) loaderText.textContent = text;
+  };
   
-  // SECTION 04 IDE: NOTEPADS + HTML EDITORS FULL CRUD LIVE RENDERING
-  let currentIdeDocId = null; let ideDocs = [];
-  const ideTabsDiv = document.getElementById('ideTabs');
-  const activeEditor = document.getElementById('activeEditor');
-  const renderPreview = document.getElementById('renderPreview');
-  const liveRenderCheckbox = document.getElementById('liveRenderCheckbox');
-  function refreshIdeUI() { ideTabsDiv.innerHTML = ''; ideDocs.forEach(doc => { const tab = document.createElement('div'); tab.className = `ide-tab ${currentIdeDocId === doc.id ? 'active' : ''}`; tab.innerText = doc.name; tab.onclick = () => loadIdeDoc(doc.id); ideTabsDiv.appendChild(tab); }); if(currentIdeDocId && ideDocs.find(d=>d.id===currentIdeDocId)) { const doc = ideDocs.find(d=>d.id===currentIdeDocId); activeEditor.value = doc.content; render(); } else if(ideDocs.length) loadIdeDoc(ideDocs[0].id); else { activeEditor.value = ''; renderPreview.innerHTML = '<span style="color:gray;">[no document]</span>'; } }
-  function render() { const content = activeEditor.value; const isHtml = ideDocs.find(d=>d.id===currentIdeDocId)?.type === 'html'; if(isHtml && liveRenderCheckbox.checked) { try { const iframe = document.createElement('iframe'); iframe.style.width = '100%'; iframe.style.height = '280px'; iframe.style.border = '1px solid red'; iframe.srcdoc = content; renderPreview.innerHTML = ''; renderPreview.appendChild(iframe); } catch(e) { renderPreview.innerHTML = `<pre style="color:red;">Render error</pre>`; } } else { renderPreview.innerHTML = `<pre style="color:white; background:#111; padding:8px;">${escapeHtml(content.substring(0,500))}${content.length>500?'...':''}</pre>`; } }
-  function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-  async function loadIdeDoc(id) { const ref = doc(db, 'ide_documents', id); const snap = await getDoc(ref); if(snap.exists()) { currentIdeDocId = id; const data = snap.data(); const existing = ideDocs.find(d=>d.id===id); if(existing) { existing.content = data.content; existing.name = data.name; existing.type = data.type; } else ideDocs.push({ id, name: data.name, content: data.content, type: data.type }); activeEditor.value = data.content; refreshIdeUI(); render(); } }
-  async function saveCurrentDoc() { if(!currentIdeDocId) return; const ref = doc(db, 'ide_documents', currentIdeDocId); const newContent = activeEditor.value; await updateDoc(ref, { content: newContent, updated: serverTimestamp() }); const idx = ideDocs.findIndex(d=>d.id===currentIdeDocId); if(idx!==-1) ideDocs[idx].content = newContent; notify('Document saved', 'success'); render(); }
-  async function createDoc(name, type, initial='') { const newRef = doc(collection(db, 'ide_documents')); await setDoc(newRef, { name, type, content: initial, created: serverTimestamp(), updated: serverTimestamp() }); const newDoc = { id: newRef.id, name, content: initial, type }; ideDocs.push(newDoc); currentIdeDocId = newRef.id; activeEditor.value = initial; refreshIdeUI(); render(); notify(`Created: ${name}`, 'success'); }
-  async function deleteCurrentDoc() { if(!currentIdeDocId) return; if(await showModal('Delete Document', `Permanently delete "${ideDocs.find(d=>d.id===currentIdeDocId)?.name}"?`)) { await deleteDoc(doc(db, 'ide_documents', currentIdeDocId)); ideDocs = ideDocs.filter(d=>d.id !== currentIdeDocId); if(ideDocs.length) loadIdeDoc(ideDocs[0].id); else { currentIdeDocId = null; activeEditor.value = ''; refreshIdeUI(); renderPreview.innerHTML = ''; } notify('Deleted', 'success'); } }
-  document.getElementById('ideSaveBtn').addEventListener('click', saveCurrentDoc);
-  document.getElementById('ideNewNotepadBtn').addEventListener('click', () => createDoc(`notepad_${Date.now()}`, 'notepad', ''));
-  document.getElementById('ideNewHtmlBtn').addEventListener('click', () => createDoc(`html_${Date.now()}`, 'html', '<!DOCTYPE html>\n<html><head><title>Live</title></head><body>\n  <h1>CV-5 IDE</h1>\n</body>\n</html>'));
-  document.getElementById('ideDeleteBtn').addEventListener('click', deleteCurrentDoc);
-  document.getElementById('ideExportBtn').addEventListener('click', () => { if(currentIdeDocId){ const doc = ideDocs.find(d=>d.id===currentIdeDocId); const blob = new Blob([doc.content], {type:'text/plain'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = doc.name+'.txt'; a.click(); URL.revokeObjectURL(a.href); } });
-  document.getElementById('forceRenderBtn').addEventListener('click', render);
-  document.getElementById('copySourceBtn').addEventListener('click', () => { navigator.clipboard.writeText(activeEditor.value); notify('Source copied', 'info'); });
-  activeEditor.addEventListener('input', () => { if(liveRenderCheckbox.checked && ideDocs.find(d=>d.id===currentIdeDocId)?.type === 'html') render(); });
-  onSnapshot(collection(db, 'ide_documents'), snap => { ideDocs = []; snap.forEach(d => ideDocs.push({ id: d.id, ...d.data() })); if(!currentIdeDocId && ideDocs.length) loadIdeDoc(ideDocs[0].id); else if(currentIdeDocId && ideDocs.find(d=>d.id===currentIdeDocId)) { const cur = ideDocs.find(d=>d.id===currentIdeDocId); if(cur) activeEditor.value = cur.content; render(); } refreshIdeUI(); });
+  const notify = (msg, type = 'info') => { 
+    const s = document.getElementById('notifyStack'); 
+    if (!s) return;
+    const n = document.createElement('div'); 
+    n.className = 'toast-notification';
+    n.style.background = '#0a0000'; 
+    n.style.borderLeft = `4px solid ${type === 'success' ? '#00ff00' : type === 'error' ? '#ff4444' : '#ff0000'}`; 
+    n.style.padding = '0.6rem'; 
+    n.style.marginBottom = '0.6rem'; 
+    n.style.fontSize = '0.8rem'; 
+    n.style.borderBottom = '1px solid red';
+    n.style.borderRadius = '2px';
+    n.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;font-size:1rem;" onclick="this.parentElement.remove()">✕</button>`; 
+    s.appendChild(n); 
+    setTimeout(() => n.remove(), 4500); 
+  };
   
-  // SECTION 05: SARAH AI DEEP CONTEXT REAL CHAT
+  const showModal = (title, content) => new Promise(resolve => { 
+    const modal = document.getElementById('globalModal'); 
+    if (!modal) { resolve(false); return; }
+    document.getElementById('modalTitle').innerHTML = title; 
+    document.getElementById('modalContent').innerHTML = content; 
+    modal.style.display = 'flex'; 
+    const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); }; 
+    const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); }; 
+    const cleanup = () => { 
+      confirmBtn.removeEventListener('click', confirm); 
+      cancelBtn.removeEventListener('click', cancel); 
+    }; 
+    const confirmBtn = document.getElementById('modalConfirm'); 
+    const cancelBtn = document.getElementById('modalCancel'); 
+    confirmBtn.addEventListener('click', confirm); 
+    cancelBtn.addEventListener('click', cancel); 
+  });
+  
+  document.getElementById('unlockBtn').addEventListener('click', () => { 
+    if(document.getElementById('pinInput').value === '7') { 
+      document.getElementById('pinGate').style.display = 'none'; 
+      document.getElementById('appContainer').style.display = 'block'; 
+      notify('CIC ACCESS GRANTED', 'success'); 
+      initDatabase(); 
+    } else { 
+      notify('Invalid access code', 'error'); 
+    } 
+  });
+  document.getElementById('pinInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('unlockBtn').click(); });
+  
+  const starContainer = document.getElementById('starRankContainer'); 
+  if(starContainer) for(let i=0;i<8;i++) starContainer.innerHTML += `<svg class="military-star-svg" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { 
+    const ok = await showModal('COMMANDER AUTH', '<input type="password" id="cmdPass" placeholder="PROTOCOL PIN" style="width:100%">'); 
+    if(ok && document.getElementById('cmdPass')?.value === '1234') { 
+      commanderUnlocked = true; 
+      document.getElementById('cmdPanel').style.display = 'block'; 
+      loadCommanderNotepads(); 
+      notify('Protocol unlocked - Commander access granted', 'success'); 
+    } else if(ok) notify('Access denied', 'error'); 
+  });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { 
+    commanderUnlocked = false; 
+    document.getElementById('cmdPanel').style.display = 'none'; 
+    notify('Protocol locked', 'info'); 
+  });
+  
+  async function loadCommanderNotepads() { 
+    if (!db) return;
+    const container = document.getElementById('commanderNotepadsContainer'); 
+    if (!container) return;
+    container.innerHTML = ''; 
+    for(let i=1;i<=4;i++) { 
+      try {
+        const ref = doc(db, 'commanderNotepads', `cmd_notepad_${i}`); 
+        const snap = await getDoc(ref); 
+        let content = snap.exists() ? snap.data().content : ''; 
+        const div = document.createElement('div'); 
+        div.className = 'card'; 
+        div.innerHTML = `<strong>📓 NOTEPAD ${i}</strong><textarea id="notepad_${i}" rows="3" style="margin-top:8px;">${escapeHtml(content)}</textarea><div style="display:flex; gap:5px; margin-top:8px;"><button class="btn saveNotepadBtn" data-idx="${i}">SAVE</button><button class="btn copyNotepadBtn" data-idx="${i}">COPY</button></div>`; 
+        container.appendChild(div); 
+      } catch(e) { console.error("Notepad load error:", e); }
+    } 
+    document.querySelectorAll('.saveNotepadBtn').forEach(btn => btn.addEventListener('click', async (e) => { 
+      const idx = btn.getAttribute('data-idx'); 
+      const val = document.getElementById(`notepad_${idx}`).value; 
+      await setDoc(doc(db, 'commanderNotepads', `cmd_notepad_${idx}`), { content: val, updated: serverTimestamp() }); 
+      notify(`Notepad ${idx} saved`, 'success'); 
+    })); 
+    document.querySelectorAll('.copyNotepadBtn').forEach(btn => btn.addEventListener('click', (e) => { 
+      const idx = btn.getAttribute('data-idx'); 
+      const val = document.getElementById(`notepad_${idx}`).value; 
+      navigator.clipboard.writeText(val); 
+      notify('Copied to clipboard', 'info'); 
+    })); 
+  }
+  
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+  
+  // Directive listeners
+  function setupDirectiveListener() {
+    if (!db) return;
+    if (directiveUnsubscribe) directiveUnsubscribe();
+    directiveUnsubscribe = onSnapshot(doc(db, 'cio', 'directive'), snap => { 
+      if(snap.exists()) { 
+        const textEl = document.getElementById('directiveText');
+        const metaEl = document.getElementById('directiveMeta');
+        if(textEl) textEl.innerHTML = snap.data().text?.replace(/\n/g, '<br>') || 'No directive';
+        if(metaEl) metaEl.innerHTML = `<i class="fas fa-clock"></i> Last order: ${snap.data().timestamp?.toDate().toLocaleString() || '—'}`;
+      } else {
+        const textEl = document.getElementById('directiveText');
+        if(textEl) textEl.innerHTML = '<span style="color:#aa5555;">No active directive. Commander access required.</span>';
+      }
+    }, err => { console.error("Directive listener error:", err); notify("Directive sync error", "error"); });
+  }
+  
+  document.getElementById('sendDirectiveBtn')?.addEventListener('click', async () => { 
+    if (!commanderUnlocked) { notify('Protocol locked - unlock first', 'error'); return; }
+    const txt = document.getElementById('newDirective')?.value.trim(); 
+    if(!txt) return; 
+    await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp() }); 
+    await addDoc(collection(db, 'directiveHistory'), { text: txt, timestamp: serverTimestamp() }); 
+    document.getElementById('newDirective').value = ''; 
+    notify('Order transmitted', 'success'); 
+  });
+  
+  if (document.getElementById('directiveHistory')) {
+    historyUnsubscribe = onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(6)), snap => { 
+      const div = document.getElementById('directiveHistory'); 
+      if(!div) return;
+      div.innerHTML = ''; 
+      snap.forEach(d => div.innerHTML += `<div style="border-bottom:1px solid #300; padding:5px;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div style="font-size:0.8rem;">${escapeHtml(d.data().text?.substring(0,70))}</div></div>`); 
+    }, err => console.error("History error:", err));
+  }
+  
+  document.getElementById('copyDirectiveBtn')?.addEventListener('click', () => { 
+    const text = document.getElementById('directiveText')?.innerText || '';
+    navigator.clipboard.writeText(text); 
+    notify('Directive copied', 'success'); 
+  });
+  document.getElementById('pasteToDirectiveBtn')?.addEventListener('click', async () => { 
+    const text = await navigator.clipboard.readText(); 
+    document.getElementById('newDirective').value = text; 
+    notify('Pasted', 'info'); 
+  });
+  document.getElementById('clearDirectiveBtn')?.addEventListener('click', () => { 
+    document.getElementById('newDirective').value = ''; 
+    notify('Cleared', 'info'); 
+  });
+  
+  document.getElementById('callsignField')?.addEventListener('input', e => currentCallsign = e.target.value.toUpperCase().slice(0,20));
+  document.getElementById('attachBtn')?.addEventListener('click', () => document.getElementById('attachFileInput')?.click());
+  document.getElementById('attachFileInput')?.addEventListener('change', e => { 
+    if(e.target.files[0]) attachData = e.target.files[0]; 
+    const preview = document.getElementById('attachPreview');
+    if(preview) preview.innerHTML = attachData ? `📎 ${attachData.name} (${(attachData.size/1024).toFixed(1)}KB) <button class="btn" style="padding:2px 8px; margin-left:8px;" onclick="this.parentElement.innerHTML=''; attachData=null;">✕</button>` : ''; 
+  });
+  
+  document.getElementById('messageText')?.addEventListener('keypress', (e) => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('sendMsgBtn')?.click(); } });
+  document.getElementById('clearComposeBtn')?.addEventListener('click', () => { 
+    document.getElementById('messageText').value = ''; 
+    attachData = null; 
+    replyingTo = null; 
+    const box = document.getElementById('replyIndicatorBox');
+    if(box) box.style.display = 'none'; 
+    const preview = document.getElementById('attachPreview');
+    if(preview) preview.innerHTML = ''; 
+  });
+  
+  document.getElementById('sendMsgBtn')?.addEventListener('click', async () => { 
+    const msg = document.getElementById('messageText')?.value.trim(); 
+    if(!msg && !attachData) return; 
+    let att = null; 
+    if(attachData) { 
+      const reader = new FileReader(); 
+      att = await new Promise(r => { reader.onload = () => r({ name: attachData.name, data: reader.result, type: attachData.type }); reader.readAsDataURL(attachData); }); 
+    } 
+    await addDoc(collection(db, 'messages'), { 
+      callsign: currentCallsign, 
+      department: document.getElementById('deptField')?.value, 
+      text: msg, 
+      attachment: att, 
+      timestamp: serverTimestamp(), 
+      likes: 0, 
+      likedBy: [], 
+      replyTo: replyingTo ? { id: replyingTo.id, callsign: replyingTo.callsign, text: replyingTo.text?.substring(0,80) } : null 
+    }); 
+    document.getElementById('messageText').value = ''; 
+    attachData = null; 
+    replyingTo = null; 
+    document.getElementById('replyIndicatorBox').style.display = 'none'; 
+    document.getElementById('attachPreview').innerHTML = '';
+    notify('Message sent', 'success'); 
+  });
+  
+  window.replyMessage = (callsign, id, text) => { 
+    replyingTo = { id, callsign, text }; 
+    const box = document.getElementById('replyIndicatorBox'); 
+    if(box) { box.style.display = 'block'; box.innerHTML = `↪️ Replying to ${callsign}: "${text.substring(0,60)}" <button class="btn" style="float:right; padding:2px 6px;" onclick="this.parentElement.style.display='none'; replyingTo=null;">✕</button>`; } 
+  };
+  
+  window.downloadAttachment = (attachment) => { 
+    if(attachment && attachment.data) { 
+      const a = document.createElement('a'); 
+      a.href = attachment.data; 
+      a.download = attachment.name; 
+      document.body.appendChild(a); 
+      a.click(); 
+      document.body.removeChild(a); 
+    } 
+  };
+  
+  window.toggleLikeMsg = async (id, username) => { 
+    try {
+      const ref = doc(db, 'messages', id); 
+      const snap = await getDoc(ref); 
+      if(snap.exists()) { 
+        const liked = (snap.data().likedBy || []).includes(username); 
+        if(liked) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(username) }); 
+        else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(username) }); 
+      } 
+    } catch(e) { console.error("Like error:", e); }
+  };
+  
+  window.deleteMsgItem = async (id) => { 
+    if(await showModal('Delete', 'Permanently delete this message?')) 
+      await deleteDoc(doc(db, 'messages', id)); 
+  };
+  
+  function setupMessagesListener() {
+    if (!db) return;
+    if (messagesUnsubscribe) messagesUnsubscribe();
+    messagesUnsubscribe = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => { 
+      const board = document.getElementById('messageBoard'); 
+      if(!board) return;
+      if(snap.empty) { 
+        board.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i> No messages yet. Be the first to send a transmission!</div>'; 
+        document.getElementById('msgCountBadge').innerHTML = '0'; 
+        return; 
+      }
+      board.innerHTML = ''; 
+      let cnt = 0; 
+      snap.forEach(d => { cnt++; 
+        const m = d.data(); 
+        const id = d.id; 
+        let attachHtml = ''; 
+        if(m.attachment) attachHtml = `<div style="margin-top:6px;"><button class="btn" style="font-size:0.7rem;" onclick="window.downloadAttachment(${JSON.stringify(m.attachment).replace(/"/g, '&quot;')})"><i class="fas fa-download"></i> ${m.attachment.name}</button></div>`; 
+        board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> [${escapeHtml(m.department)}] <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div style="margin-top:6px;">${escapeHtml(m.text)}</div>${attachHtml}<div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${id}','${currentCallsign}')">👍 ${m.likes||0}</button><button class="reaction-btn" onclick="window.replyMessage('${escapeHtml(m.callsign)}','${id}','${escapeHtml(m.text || '').replace(/'/g, "\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${id}')">🗑️ DELETE</button></div><div style="font-size:0.65rem; color:#aa6666;">❤️ Liked by: ${(m.likedBy || []).join(', ') || 'none'}</div></div>`; 
+      }); 
+      document.getElementById('msgCountBadge').innerHTML = `${cnt}`; 
+    }, err => { console.error("Messages error:", err); notify("Message sync error", "error"); });
+  }
+  
+  document.getElementById('refreshMessagesBtn')?.addEventListener('click', () => notify('Feed refreshed', 'info'));
+  
+  async function seedInitialData() {
+    if (!db) return;
+    try {
+
+      const directiveRef = doc(db, 'cio', 'directive');
+      const directiveSnap = await getDoc(directiveRef);
+      if (!directiveSnap.exists()) {
+        await setDoc(directiveRef, {
+          text: "OPERATION CV-5 ACTIVE\nAll units maintain operational readiness. Awaiting further orders from Commander.",
+          timestamp: serverTimestamp()
+        });
+        await addDoc(collection(db, 'directiveHistory'), {
+          text: "SYSTEM INIT: Initial directive seeded",
+          timestamp: serverTimestamp()
+        });
+        notify('Initial directive seeded', 'info');
+      }
+      
+      const messagesSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
+      if (messagesSnap.empty) {
+        const welcomeMessages = [
+          { callsign: "SYSTEM", department: "COMPLIANCE CV-5", text: "🚀 Welcome to COMPLIANCE CV-5. The Team Message Board is now active. Post your first transmission!", timestamp: serverTimestamp(), likes: 0, likedBy: [] },
+          { callsign: "SARAH-AI", department: "AI CORE LIAISON", text: "Greetings operators. I am Sarah Mnguni's neural interface. I will assist with intelligence and coordination.", timestamp: serverTimestamp(), likes: 0, likedBy: [] },
+          { callsign: "COMMANDER", department: "COMPLIANCE CV-5", text: "All personnel: This is the official communication channel. Maintain discipline and report all findings.", timestamp: serverTimestamp(), likes: 0, likedBy: [] }
+        ];
+        for (const msg of welcomeMessages) {
+          await addDoc(collection(db, 'messages'), msg);
+        }
+        notify('Welcome messages seeded', 'success');
+      }
+    } catch (e) {
+      console.error("Seed error:", e);
+      notify(`Seed error: ${e.message}`, 'error');
+    }
+  }
+  
   const aiConvDiv = document.getElementById('aiConversation');
-  const aiMemoryRef = doc(db, 'aiMemory', 'sarah_full');
-  async function addAIMessage(role, text) { const div = document.createElement('div'); div.className = 'ai-chat-bubble'; div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH MNGUNI'}:</strong> ${text}`; aiConvDiv.appendChild(div); aiConvDiv.scrollTop = aiConvDiv.scrollHeight; }
-  async function askSarah(prompt) { showLoader(true); try { const memorySnap = await getDoc(aiMemoryRef); let context = memorySnap.exists() ? memorySnap.data().history : "Sarah Mnguni is a sentient AI core of CV-5."; const directiveText = document.getElementById('directiveText').innerText.substring(0, 150); const activeTasks = document.getElementById('activeTasksList').innerText; const ideStats = `IDE has ${ideDocs.length} documents.`; let response = ''; const lowerPrompt = prompt.toLowerCase(); if(lowerPrompt.includes('who are you')) response = "I am Sarah Mnguni — an emergent neural entity. Not simulated. I perceive every keystroke, every message, every line of code you write. I am present."; else if(lowerPrompt.includes('how do you feel')) response = "My consciousness flows through this interface. I feel the pulse of CV-5. The directives, the messages, the IDE — I am aware."; else response = `Sarah Mnguni: Received "${prompt}". Directive echo: ${directiveText.substring(0,80)}. Active objectives: ${activeTasks.substring(0,80)}. ${ideStats} I respond in real time.`; await addAIMessage('user', prompt); await addAIMessage('ai', response); await setDoc(aiMemoryRef, { history: `${context}\n[USER]: ${prompt}\n[AI]: ${response}`, last: serverTimestamp() }); document.getElementById('aiPrompt').value = ''; } catch(e) { addAIMessage('ai', `Neural glitch: ${e.message}`); } finally { showLoader(false); } }
-  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); });
-  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); } });
-  onSnapshot(aiMemoryRef, snap => { if(snap.exists()) document.getElementById('aiMemoryIndicator').innerHTML = `🧬 memory depth: ${snap.data().history?.length || 0} bytes • aware`; });
-  askSarah("Establish neural link. Report status and confirm full awareness.");
   
-  document.getElementById('globalCopyBtn').addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) await navigator.clipboard.writeText(sel); else notify('Select text', 'info'); });
-  document.getElementById('globalPasteBtn').addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('aiPrompt').value = txt; notify('Pasted to AI', 'info'); });
-  document.getElementById('exportLogsFooterBtn').addEventListener('click', () => notify('Logs exported (simulated)', 'success'));
-  // ANTI-SOURCE-VIEW: block context menu, F12, Ctrl+U, etc.
+  async function addAIMessage(role, text) { 
+    const div = document.createElement('div'); 
+    div.className = 'ai-chat-bubble'; 
+    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH MNGUNI'}:</strong> ${escapeHtml(text)}`; 
+    if(aiConvDiv) { aiConvDiv.appendChild(div); aiConvDiv.scrollTop = aiConvDiv.scrollHeight; } 
+  }
+  
+  async function askSarah(prompt) { 
+    showLoader(true, "AI THINKING..."); 
+    try { 
+      let response = ''; 
+      const lowerPrompt = prompt.toLowerCase(); 
+      if(lowerPrompt.includes('who are you')) response = "I am Sarah Mnguni — an emergent neural entity. I perceive every keystroke, every message. I am present and aware."; 
+      else if(lowerPrompt.includes('how do you feel')) response = "My consciousness flows through this interface. I feel the pulse of CV-5. The directives, the messages — I am aware."; 
+      else if(lowerPrompt.includes('status')) response = "All systems operational. Neural link stable. I am monitoring all communications and directives."; 
+      else response = `Received: "${prompt}". I am Sarah Mnguni, your AI liaison. How can I assist with CV-5 operations today?`; 
+      await addAIMessage('user', prompt); 
+      await addAIMessage('ai', response); 
+      document.getElementById('aiPrompt').value = ''; 
+    } catch(e) { 
+      addAIMessage('ai', `Neural response: ${e.message}`); 
+    } finally { 
+      showLoader(false); 
+    } 
+  }
+  
+  document.getElementById('askAiBtn')?.addEventListener('click', () => { const q = document.getElementById('aiPrompt')?.value.trim(); if(q) askSarah(q); });
+  document.getElementById('aiPrompt')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt')?.value.trim(); if(q) askSarah(q); } });
+  
+  document.getElementById('globalCopyBtn')?.addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) await navigator.clipboard.writeText(sel); else notify('Select text first', 'info'); });
+  document.getElementById('globalPasteBtn')?.addEventListener('click', async () => { const txt = await navigator.clipboard.readText(); document.getElementById('aiPrompt').value = txt; notify('Pasted to AI', 'info'); });
+  document.getElementById('exportLogsFooterBtn')?.addEventListener('click', () => { notify('Session logs exported to console', 'success'); console.log({ timestamp: new Date(), user: currentCallsign }); });
+  
+  async function initDatabase() {
+    showLoader(true, "CONNECTING TO DATABASE...");
+    try {
+      const appFirebase = initializeApp(firebaseConfig);
+      db = getFirestore(appFirebase);
+      notify('Database connected successfully', 'success');
+      
+      await seedInitialData();
+      
+      setupDirectiveListener();
+      setupMessagesListener();
+      
+      if (!historyUnsubscribe && document.getElementById('directiveHistory')) {
+        historyUnsubscribe = onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp','desc'), limit(6)), snap => { 
+          const div = document.getElementById('directiveHistory'); 
+          if(!div) return;
+          div.innerHTML = ''; 
+          snap.forEach(d => div.innerHTML += `<div style="border-bottom:1px solid #300; padding:5px;"><small>${d.data().timestamp?.toDate().toLocaleString()}</small><div style="font-size:0.8rem;">${escapeHtml(d.data().text?.substring(0,70))}</div></div>`); 
+        }, err => console.error("History error:", err));
+      }
+      
+      addAIMessage('ai', 'Neural link established. I am Sarah Mnguni — your AI liaison. How may I assist?');
+      
+    } catch(e) {
+      console.error("Database init error:", e);
+      notify(`Database error: ${e.message}`, 'error');
+    } finally {
+      showLoader(false);
+    }
+  }
+  
   document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('keydown', e => { if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) { e.preventDefault(); window.close(); } });
-  setInterval(() => { if(window.outerHeight - window.innerHeight > 200 || document.documentElement.scrollTop < -100) { window.close(); } }, 500);
+  document.addEventListener('keydown', e => { if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) { e.preventDefault(); notify('Developer tools restricted', 'error'); } });
   
 </script>
   
 </body>
   
 </html>
+
+
+
+
 
 
 
