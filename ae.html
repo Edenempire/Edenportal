@@ -19,12 +19,15 @@
     <style>
         
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         :root {
+            
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --accent-orange: #f97316;
@@ -34,9 +37,11 @@
             --text-primary: #e5e7eb;
             --text-secondary: #9ca3af;
             --text-accent: #f97316;
+            
         }
 
         html, body {
+            
             width: 100%;
             min-height: 100vh;
             background: var(--dark-bg);
@@ -44,13 +49,17 @@
             color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
+            
         }
 
         body {
+            
             background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
+            
         }
 
         .fixed-header {
+            
             position: fixed;
             top: 0;
             left: 0;
@@ -65,12 +74,15 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
+            
         }
 
         .logo-area {
+            
             display: flex;
             align-items: center;
             gap: 1rem;
+            
         }
 
         .logo-icon {
@@ -432,18 +444,23 @@
                 padding: 1rem;
                 margin-top: 120px;
             }
+            
             .procedure-grid {
                 grid-template-columns: 1fr;
             }
+            
             .form-grid {
                 grid-template-columns: 1fr;
             }
+            
             .form-group.full-width {
                 grid-column: span 1;
             }
+            
             .hero-title {
                 font-size: 1.8rem;
             }
+            
             .instrument-value {
                 font-size: 1.4rem;
             }
@@ -459,7 +476,7 @@
 <header class="fixed-header">
     <div class="logo-area">
         <i class="fas fa-fighter-jet logo-icon"></i>
-        <span class="page-title">AEROSPACE ENGINEERING</span>
+        <a href="index.html" style="text-decoration: none; color: transparent;"><span class="page-title">AEROSPACE ENGINEERING</span></a>
     </div>
 </header>
 
