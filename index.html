@@ -1205,11 +1205,164 @@
                 min-width: auto;
             }
         }
+
+        @media screen and (max-width: 480px) {
+            
+            .hero-title {
+                font-size: clamp(1.8rem, 6vw, 2.3rem);
+                letter-spacing: clamp(2px, 0.8vw, 4px);
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            
+            .btn-tactical {
+                padding: 10px 25px;
+                font-size: 0.8rem;
+            }
+            
+            .Operator-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .ops-header {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .ops-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .ops-stats {
+                padding: 15px 20px;
+                font-size: 0.8rem;
+            }
+            
+            .branch-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 60px 5%;
+            }
+            
+            .section-header {
+                margin-bottom: 40px;
+                gap: 10px;
+            }
+            
+            #terminal-wrap {
+                padding: 15px;
+            }
+            
+            #terminal-output {
+                height: 200px;
+                font-size: 0.9rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .hud-nav {
+                right: 15px;
+                bottom: 15px;
+            }
+            
+            .hud-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .brand-text h1 {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .logo-frame {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .logo-ring {
+                width: 55px;
+                height: 55px;
+                top: -5px;
+                left: -5px;
+            }
+            
+            #hamburger {
+                width: 42px;
+                height: 42px;
+            }
+            
+            #hamburger i {
+                font-size: 1.5rem;
+            }
+            
+            .nav-system {
+                width: 260px;
+            }
+            
+            .cta-group {
+                gap: 12px;
+                margin-top: 35px;
+            }
+            
+            .stat-line {
+                font-size: 0.75rem;
+            }
+            
+            .weather-panel {
+                padding: 15px;
+            }
+            
+            #sys-clock {
+                font-size: 1.5rem;
+            }
+            
+            .theme-toggle {
+                padding: 8px 20px;
+                font-size: 0.8rem;
+            }
+            
+            .modal-body {
+                padding: 25px;
+            }
+            
+            .branch-logo-frame {
+                width: 90px;
+                height: 90px;
+            }
+            
+            #installBtn {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+                min-width: 200px;
+            }
+            
+        }
+        
     </style>
+    
 </head>
 
 <body>
+    
     <!-- ELITE SPLASH SCREEN -->
+    
     <div id="eliteSplash">
         <div class="splash-core">
             <div class="splash-hex-bg"></div>
