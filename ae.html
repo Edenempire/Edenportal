@@ -1,14 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>AEROSPACE ENGINEERING | MANUAL FLIGHT OPERATIONS</title>
-    <!-- Font Awesome 6 -->
+    
+    <title>AEROSPACE ENGINEERING</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts - Professional Typography -->
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
+        
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +50,6 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
         }
 
-        /* Professional Fixed Header */
         .fixed-header {
             position: fixed;
             top: 0;
@@ -54,7 +62,7 @@
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -91,7 +99,6 @@
             color: var(--text-secondary);
         }
 
-        /* Main Container */
         .main-container {
             max-width: 1280px;
             margin: 100px auto 0;
@@ -100,7 +107,6 @@
             z-index: 10;
         }
 
-        /* Hero Section */
         .hero-section {
             text-align: center;
             margin-bottom: 3rem;
@@ -126,7 +132,6 @@
             font-size: 1.1rem;
         }
 
-        /* Flight Data Panel - Professional Instrumentation */
         .instrument-panel-main {
             background: var(--card-bg);
             border: 1px solid rgba(220, 38, 38, 0.2);
@@ -168,7 +173,6 @@
             margin-left: 0.25rem;
         }
 
-        /* Procedure Cards - Professional Layout */
         .procedure-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -266,7 +270,6 @@
             margin-right: 0.5rem;
         }
 
-        /* Contact Form - Professional */
         .contact-section {
             background: var(--card-bg);
             border: 1px solid rgba(220, 38, 38, 0.2);
@@ -354,7 +357,6 @@
             font-size: 0.85rem;
         }
 
-        /* Footer */
         .footer {
             margin-top: 3rem;
             padding: 2rem;
@@ -392,7 +394,6 @@
             padding-top: 1.5rem;
         }
 
-        /* Background Canvas - Subtle */
         .bg-canvas {
             position: fixed;
             top: 0;
@@ -404,7 +405,6 @@
             opacity: 0.3;
         }
 
-        /* Audio Control */
         .audio-control {
             position: fixed;
             bottom: 20px;
@@ -427,6 +427,7 @@
         }
 
         @media (max-width: 768px) {
+            
             .main-container {
                 padding: 1rem;
                 margin-top: 120px;
@@ -446,9 +447,13 @@
             .instrument-value {
                 font-size: 1.4rem;
             }
+            
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
 <header class="fixed-header">
@@ -456,21 +461,17 @@
         <i class="fas fa-fighter-jet logo-icon"></i>
         <span class="page-title">AEROSPACE ENGINEERING</span>
     </div>
-    <div class="badge">
-        <i class="fas fa-cog"></i> MANUAL FLIGHT MODE · NO FBW
-    </div>
 </header>
 
 <canvas id="bgCanvas" class="bg-canvas"></canvas>
 
 <main class="main-container">
-    <!-- Hero Section -->
+
     <div class="hero-section">
         <h1 class="hero-title">Manual Flight Operations</h1>
         <p class="hero-subtitle">Complete procedural guide for stick & rudder piloting — pure mechanical flight control systems, no electronic assistance.</p>
     </div>
 
-    <!-- Instrument Panel -->
     <div class="instrument-panel-main">
         <div class="instrument">
             <div class="instrument-label">AIRSPEED</div>
@@ -490,9 +491,8 @@
         </div>
     </div>
 
-    <!-- Procedure Grid -->
     <div class="procedure-grid">
-        <!-- Step 1 -->
+
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">01</div>
@@ -511,7 +511,6 @@
             </div>
         </div>
 
-        <!-- Step 2 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">02</div>
@@ -527,7 +526,6 @@
             </div>
         </div>
 
-        <!-- Step 3 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">03</div>
@@ -543,7 +541,6 @@
             </div>
         </div>
 
-        <!-- Step 4 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">04</div>
@@ -559,7 +556,6 @@
             </div>
         </div>
 
-        <!-- Step 5 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">05</div>
@@ -575,7 +571,6 @@
             </div>
         </div>
 
-        <!-- Step 6 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">06</div>
@@ -594,7 +589,6 @@
             </div>
         </div>
 
-        <!-- Step 7 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">07</div>
@@ -610,7 +604,6 @@
             </div>
         </div>
 
-        <!-- Step 8 -->
         <div class="procedure-card">
             <div class="card-header">
                 <div class="step-number">08</div>
@@ -627,7 +620,6 @@
         </div>
     </div>
 
-    <!-- Contact / Mission Report Form -->
     <div class="contact-section">
         <div class="section-title">
             <i class="fas fa-paper-plane"></i>
@@ -659,7 +651,6 @@
         </form>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -687,7 +678,7 @@
 <audio id="bgAudio" loop preload="auto" style="display: none;"></audio>
 
 <script>
-    // Professional Canvas Animation - Subtle Fighter Silhouettes
+
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -741,7 +732,6 @@
         }
     }
     
-    // Initialize fighters
     for (let i = 0; i < 6; i++) {
         fighters.push(new Fighter(
             Math.random() * width,
@@ -757,7 +747,6 @@
         ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
         ctx.fillRect(0, 0, width, height);
         
-        // Subtle grid
         ctx.strokeStyle = 'rgba(220, 38, 38, 0.08)';
         ctx.lineWidth = 0.5;
         for (let i = 0; i < width; i += 80) {
@@ -779,9 +768,8 @@
     }
     animateCanvas();
     
-    // Dynamic Instrument Updates - Smooth Professional Randomization
     function updateInstruments() {
-        // Smooth variations within realistic ranges
+
         let airspeed = 385 + (Math.sin(Date.now() / 3000) * 15) + (Math.random() - 0.5) * 8;
         airspeed = Math.min(620, Math.max(120, airspeed));
         document.getElementById('airspeed').innerText = Math.floor(airspeed);
@@ -793,56 +781,44 @@
         let gloadVal = 1.3 + (Math.sin(Date.now() / 2000) * 0.8) + (Math.random() - 0.5) * 0.3;
         gloadVal = Math.min(7.5, Math.max(0.8, gloadVal));
         document.getElementById('gload').innerText = gloadVal.toFixed(1);
-        
-        // Radar status based on flight conditions
+
         let radarStates = ['CLEAR', 'CONTACT', 'TRACKING', 'LOCK', 'SEARCH'];
         let radarIndex = Math.floor(Math.abs(Math.sin(Date.now() / 8000)) * 4);
         document.getElementById('radarStatus').innerText = radarStates[radarIndex];
-        
-        // Engine parameters
+
         document.getElementById('rpm').innerText = Math.floor(25 + Math.abs(Math.sin(Date.now() / 4000)) * 75) + '%';
         document.getElementById('egt').innerText = Math.floor(550 + Math.sin(Date.now() / 3000) * 80) + '°C';
         document.getElementById('oilPress').innerText = Math.floor(75 + Math.sin(Date.now() / 3500) * 15);
         
-        // Hydraulic pressure with slight variation
         let hydPress = 3200 + (Math.sin(Date.now() / 5000) * 50);
         document.getElementById('hydPressure').innerText = Math.floor(hydPress) + ' PSI';
         
-        // Battery discharge simulation
         let batteryVal = 98 - (Date.now() / 3600000) % 15;
         document.getElementById('battery').innerText = Math.floor(batteryVal) + '%';
         
-        // Control surfaces status
         let controlStates = ['FREE', 'NOMINAL', 'OPERATIONAL'];
         document.getElementById('controls').innerText = controlStates[Math.floor(Math.abs(Math.sin(Date.now() / 10000)) * 2.5)];
         
-        // Vr speed variation with conditions
         let vrBase = 160 + (Math.sin(Date.now() / 6000) * 5);
         document.getElementById('vrSpeed').innerText = Math.floor(vrBase);
-        
-        // Slip ball
+
         document.getElementById('slipBall').innerText = ((Math.sin(Date.now() / 2500) * 0.3) + (Math.random() - 0.5) * 0.2).toFixed(1);
         
-        // Countermeasures count decreases slowly
         let cmCount = 32 - (Date.now() / 300000) % 32;
         document.getElementById('cmCount').innerHTML = Math.floor(cmCount) + ' REMAINING';
         
-        // Landing AOA
         let landingAoA = 12.5 + (Math.sin(Date.now() / 4000) * 1);
         document.getElementById('landingAoa').innerHTML = landingAoA.toFixed(1) + '°';
         
-        // Flight time increment
         let flightHrs = 1.4 + (Date.now() / 3600000) % 2;
         document.getElementById('flightTime').innerHTML = flightHrs.toFixed(1) + ' HRS';
         
-        // Fuel burn
         let fuel = 1850 - (Date.now() / 180000) % 1200;
         document.getElementById('fuelRemaining').innerHTML = Math.floor(Math.max(150, fuel)) + ' LBS';
     }
     
     setInterval(updateInstruments, 800);
     
-    // Audio Setup - Professional with user interaction fallback
     const audio = document.getElementById('bgAudio');
     const audioToggle = document.getElementById('audioToggle');
     audio.loop = true;
@@ -872,7 +848,6 @@
         }
     });
     
-    // Auto attempt play (will fail without interaction, but that's fine)
     audio.play().catch(() => {
         audioToggle.innerHTML = '<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO';
     });
@@ -884,7 +859,6 @@
         }
     });
     
-    // Form Submission Handler
     const form = document.getElementById('contactForm');
     const statusDiv = document.getElementById('formStatus');
     
@@ -917,6 +891,49 @@
             statusDiv.style.color = '#ef4444';
         }
     });
+    
 </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
