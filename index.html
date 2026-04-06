@@ -20,25 +20,20 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ===== CIRCLE FAVICON ===== -->
     <link rel="icon" type="image/png" href="logo.png" sizes="16x16">
     <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
     <link rel="icon" type="image/png" href="logo.png" sizes="48x48">
     <link rel="icon" type="image/png" href="logo.png" sizes="96x96">
     <link rel="icon" type="image/png" href="logo.png" sizes="192x192">
     
-    <!-- Apple Touch Icons -->
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="apple-touch-icon-precomposed" href="logo.png">
     
-    <!-- Microsoft Tiles -->
     <meta name="msapplication-TileImage" content="logo.png">
     <meta name="msapplication-TileColor" content="#000000">
 
-    <!-- Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Theme and PWA meta tags -->
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -58,9 +53,6 @@
             --header-h: 90px;
         }
 
-        /* ===============================
-        THEME: GREEN-YELLOW MODE
-        =============================== */
         body.green-yellow {
             --cyan: #d4ff00;
             --cyan-dim: rgba(212, 255, 0, 0.18);
@@ -77,9 +69,6 @@
             transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
-                /* ===============================
-        THEME: RED MODE (BLOOD/RED ALERT)
-        =============================== */
         body.red-mode {
             --cyan: #ff0000;
             --cyan-dim: rgba(255, 0, 0, 0.18);
@@ -127,9 +116,6 @@
             border: 1px solid rgba(255, 0, 0, 0.3);
         }
 
-        /* ===============================
-        THEME TOGGLE BUTTON
-        =============================== */
         .theme-toggle {
             margin-top: 25px;
             background: transparent;
@@ -148,7 +134,6 @@
             box-shadow: var(--cyan-glow);
         }
 
-        /* --- BASE STYLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
         
@@ -161,7 +146,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Tactical Scrollbar */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
@@ -176,7 +160,6 @@
             pointer-events: none;
         }
 
-        /* --- ADVANCED HEADER --- */
         #main-header {
             position: fixed;
             top: 0;
@@ -248,11 +231,6 @@
             opacity: 0.7;
         }
 
-        /* ===============================
-        CLEAN MENU - NO BLUR
-        =============================== */
-        
-        /* Overlay - ONLY outside, NO blur */
         .nav-overlay {
             position: fixed;
             top: 0;
@@ -263,23 +241,22 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
             z-index: 3500;
-            pointer-events: none; /* Important: clicks pass through when hidden */
+            pointer-events: none; 
         }
         
         .nav-overlay.active {
             opacity: 1;
             visibility: visible;
-            pointer-events: auto; /* Clicks captured when active */
+            pointer-events: auto;
         }
         
-        /* Menu - NO blur inside */
         .nav-system {
             position: fixed;
             top: var(--header-h);
             right: -350px;
             width: 300px;
             height: calc(100svh - var(--header-h));
-            background: #000; /* Solid black, no blur */
+            background: #000; 
             border-left: 2px solid var(--cyan);
             display: flex;
             flex-direction: column;
@@ -293,7 +270,6 @@
             right: 0;
         }
         
-        /* Header */
         .nav-header {
             padding: 0 20px 15px 20px;
             border-bottom: 1px solid var(--cyan-dim);
@@ -306,14 +282,12 @@
             letter-spacing: 2px;
         }
         
-        /* Menu Links Container */
         .nav-links {
             flex: 1;
             padding: 15px 0;
             overflow-y: auto;
         }
         
-        /* Menu Items */
         .nav-link {
             display: block;
             padding: 15px 25px;
@@ -342,7 +316,6 @@
             border-left-color: var(--cyan);
         }
         
-        /* Footer */
         .nav-footer {
             padding: 15px 20px;
             border-top: 1px solid var(--cyan-dim);
@@ -370,7 +343,6 @@
             opacity: 0.8;
         }
         
-        /* Hamburger button */
         #hamburger {
             display: flex;
             align-items: center;
@@ -406,7 +378,6 @@
             transform: rotate(90deg);
         }
         
-        /* Mobile */
         @media (max-width: 768px) {
             .nav-system {
                 width: 280px;
@@ -725,9 +696,6 @@
             z-index: -1;
         }
 
-        /* ============================
-        ELITE SPLASH SCREEN - CLEAN VERSION
-        ============================ */
         #eliteSplash {
             position: fixed;
             inset: 0;
@@ -928,11 +896,8 @@
         .status-active { color: #00ff00; }
         .status-pending { color: #ffff00; }
 
-        /* ===============================
-        IMPROVED INSTALL BUTTON STYLES
-        ================================== */
         #installBtn {
-            display: inline-block !important; /* Force display */
+            display: inline-block !important;
             background: transparent;
             border: 3px solid var(--cyan);
             color: var(--cyan);
@@ -998,7 +963,6 @@
             content: "✓ ";
         }
         
-        /* Mobile responsive */
         @media (max-width: 600px) {
             #installBtn {
                 padding: 15px 25px;
@@ -1008,7 +972,6 @@
             }
         }
         
-        /* Position in footer */
         #main-footer {
             display: flex;
             flex-direction: column;
@@ -1016,13 +979,10 @@
         }
         
         #installBtn {
-            order: 999; /* Push to bottom */
+            order: 999;
             margin-top: 50px;
         }
 
-        /* ============================
-        HAMBURGER FIXES
-        ============================ */
         * {
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
@@ -1032,9 +992,6 @@
             pointer-events: none;
         }
 
-        /* ===============================
-        REFRESH NOTIFICATION SYSTEM
-        =============================== */
         #refresh-notification {
             position: fixed;
             top: 100px;
@@ -1105,9 +1062,6 @@
             opacity: 0.8;
         }
 
-        /* ===============================
-        AUDIO STATUS INDICATOR
-        =============================== */
         .audio-status {
             position: fixed;
             bottom: 20px;
@@ -1163,7 +1117,6 @@
 
         .audio-text { color: #fff; letter-spacing: 1px; }
 
-        /* Flag playing state */
         #rsaFlag {
             position: fixed;
             bottom: 18px;
@@ -1189,7 +1142,6 @@
             100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); }
         }
 
-        /* Mobile responsive */
         @media (max-width: 600px) {
             .splash-logo-container { width: 120px; height: 120px; }
             .splash-title { font-size: 2rem; letter-spacing: 4px; }
@@ -1209,7 +1161,7 @@
         @media screen and (max-width: 480px) {
             
             .hero-title {
-                font-size: clamp(1.8rem, 6vw, 2.3rem);
+                font-size: clamp(1.5rem, 6vw, 2rem);
                 letter-spacing: clamp(2px, 0.8vw, 4px);
             }
             
@@ -1361,8 +1313,6 @@
 
 <body>
     
-    <!-- ELITE SPLASH SCREEN -->
-    
     <div id="eliteSplash">
         <div class="splash-core">
             <div class="splash-hex-bg"></div>
@@ -1406,7 +1356,6 @@
     <canvas id="snowCanvas"></canvas>
     <div class="scanlines"></div>
 
-    <!-- HUD Navigation -->
     <div class="hud-nav">
         <button class="hud-btn" onclick="window.internalRefresh()" title="Internal Refresh">
             <i class="fas fa-sync-alt"></i>
@@ -1422,7 +1371,6 @@
         </button>
     </div>
 
-    <!-- Header -->
     <header id="main-header">
         <div class="header-container">
             <a href="javascript:location.reload()" class="brand-unit">
@@ -1434,19 +1382,17 @@
                     <h1>Tier 1</h1>
                 </div>
             </a>
-            <!-- Hamburger Button -->
+
             <button id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
             
-            <!-- Navigation System -->
             <nav class="nav-system" id="navSystem">
-                <!-- Simple Header -->
+
                 <div class="nav-header">
                     <div class="nav-title">NAVIGATION</div>
                 </div>
             
-                <!-- YOUR MENU ITEMS - Clearly visible -->
                 <div class="nav-links">
                     <a href="#board" class="nav-link">Team profile</a>
                     <a href="#subsidiaries" class="nav-link">Branches</a>
@@ -1456,7 +1402,6 @@
                     <a href="help.html" class="nav-link">Help Desk</a>
                 </div>
             
-                <!-- Simple Footer -->
                 <div class="nav-footer">
                     <div class="nav-status">
                         <span class="status-dot"></span>
@@ -1467,7 +1412,6 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
         <section id="hero" style="opacity: 1; transform: none;">
             <div id="offline-banner" style="display:none;position:fixed;top:90px;width:100%;background:#ff0055;color:#fff;text-align:center;padding:5px;z-index:5000;">
@@ -1502,7 +1446,7 @@
                 <i class="fas fa-crosshairs" style="font-size: 2rem;"></i>
             </div>
             <div class="Operator-grid">
-                <!-- Operator cards (keep your existing ones) -->
+
                 <div class="ops-card">
                     <div class="ops-header">
                         <img src="images/hoss.png" class="ops-img" alt="Hoss">
@@ -1535,8 +1479,6 @@
                             <div class="stat-line"><span>SHIFT:</span><span> // Mon to Sat :: 05:00am - 14:00pm // Sunday - 20:00pm - 22:00pm</span></div>
                         </div>
                     </div>
-                
-                <!-- remaining cards here... -->
                 
                     <div class="ops-card">
                         <div class="ops-header">
@@ -1644,7 +1586,7 @@
                 <div class="separator"></div>
             </div>
             <div class="branch-grid">
-                <!-- Branch cards (keep your existing ones) -->
+
                 <div class="branch-card">
                     <div class="branch-logo-frame">
                         <img src="images/parables.png" alt="Parables & Platters" class="branch-logo">
@@ -1655,7 +1597,7 @@
                     <div class="stat-line" style="margin-top:15px"><span>CIPC Status:</span><span class="tier-1">ACTIVE</span></div>
                     <div class="stat-line" style="margin-top:15px"><span>main entrance:</span><button style="background-color: orange;"><a href="pp.html" style="text-decoration: none; color: black"><span title="click...">click to access </span></a></button></div>
                 </div>
-                <!-- Add remaining branch cards here... -->
+
                     <div class="branch-card">
                         <div class="branch-logo-frame">
                         <img src="images/hopco.jpg" alt="HopCo Transportation" class="branch-logo">
@@ -1713,7 +1655,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer id="main-footer">
         <div class="footer-grid">
             <div>
@@ -1765,7 +1706,6 @@
         
     </footer>
 
-    <!-- Modals -->
     <div class="modal-overlay" id="visionModal">
         <div class="modal-body">
             <span class="close-modal" onclick="closeModal('visionModal')">&times;</span>
@@ -1776,7 +1716,6 @@
         </div>
     </div>
 
-    <!-- Audio System -->
     <audio id="bgAudio" loop preload="auto" style="display:none">
         <source src="background.mp3" type="audio/mpeg">
         <source src="background.ogg" type="audio/ogg">
@@ -1790,20 +1729,15 @@
         <span class="audio-text">SYSTEM READY</span>
     </div>
 
-    <!-- Flag -->
     <img src="images/RSA_Flag1.jpg" id="rsaFlag" alt="South African Flag">
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <script>
 
-        // EDEN JS ENGINE 1.0.0
+        // EDEN AUTO-JS ENGINE 1.0.0
         
-        /* ===============================
-        FORCE PAGE TO LOAD FROM TOP
-        ================================ */
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
@@ -1812,9 +1746,6 @@
             window.scrollTo({ top: 0, left: 0, behavior: "auto" });
         });
 
-        /* ===============================
-        CORE ENGINE
-        ================================ */
         const sysTime = document.getElementById('sys-clock');
         const yearSpan = document.getElementById('year');
         const termInput = document.getElementById('term-input');
@@ -1830,7 +1761,6 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Reveal Animations
         const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1839,9 +1769,6 @@
         }, observerOptions);
         document.querySelectorAll('section').forEach(sec => observer.observe(sec));
 
-        /* ===============================
-        TERMINAL LOGIC
-        ================================ */
         function printToTerm(text, color = "inherit") {
             const div = document.createElement('div');
             div.style.color = color;
@@ -1895,9 +1822,6 @@
             }
         });
 
-        /* ===============================
-        SNOW ENGINE
-        ================================ */
         const snowCanvas = document.getElementById("snowCanvas");
         const ctx = snowCanvas.getContext("2d");
         let snowflakes = [];
@@ -1959,9 +1883,6 @@
             else animateSnow();
         });
 
-        /* ===============================
-        WEATHER ENGINE
-        ================================ */
         async function fetchWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.92&longitude=18.42&current_weather=true');
@@ -1975,9 +1896,6 @@
         }
         fetchWeather();
 
-        /* ===============================
-        CAPE TOWN CLOCK
-        ================================ */
         function updateClockCapeTown() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-ZA', { timeZone: 'Africa/Johannesburg', hour12: false });
@@ -1990,9 +1908,6 @@
         updateClockCapeTown();
         setInterval(updateClockCapeTown, 1000);
 
-        /* ===============================
-        TYPEWRITER EFFECT
-        ================================ */
         function initTypewriter() {
             const el = document.querySelector('.typing-effect');
             if (!el) return;
@@ -2003,9 +1918,6 @@
             type();
         }
 
-/* ===============================
-MENU SYSTEM - PURE HTML NAVIGATION
-================================== */
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById("hamburger");
     const nav = document.querySelector(".nav-system");
@@ -2013,7 +1925,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!hamburger || !nav) return;
 
-    // Menu toggle functions
     function openMenu() {
         nav.classList.add("open");
         if (overlay) overlay.classList.add("active");
@@ -2028,33 +1939,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = "";
     }
 
-    // Hamburger click
     hamburger.onclick = function(e) {
         e.preventDefault();
         nav.classList.contains("open") ? closeMenu() : openMenu();
     };
 
-    // Overlay click
     if (overlay) {
         overlay.onclick = closeMenu;
     }
 
-    // Close on escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && nav.classList.contains('open')) {
             closeMenu();
         }
     });
-
-    // LET THE BROWSER DO ITS JOB - NO LINK HANDLING AT ALL!
-    // The browser naturally handles <a href="..."> navigation
     
     console.log("✅ Menu toggles only - navigation handled by browser");
 });
         
-        /* ===============================
-        INTERNAL REFRESH
-        ================================ */
         window.internalRefresh = function() {
             console.log("⚡ INTERNAL REFRESH ACTIVATED");
             
@@ -2152,9 +2054,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.ctrlKey && e.shiftKey && e.key === 'R') { e.preventDefault(); window.internalRefresh(); }
         });
 
-        /* ===============================
-        PWA INSTALL - ALWAYS VISIBLE & 100% WORKING
-        ================================== */
         let deferredPrompt = null;
         let appInstalled = false;
         
@@ -2543,18 +2442,9 @@ document.addEventListener('DOMContentLoaded', function() {
     (function() {
         'use strict';
         
-        // =============================================
-        // BLOCK view-source: PROTOCOL
-        // =============================================
-        
-        // Redirect if page is accessed via view-source:
         if (window.location.protocol === 'view-source:') {
             window.location.href = window.location.href.replace('view-source:', '');
         }
-        
-        // =============================================
-        // BLOCK KEYBOARD SHORTCUTS
-        // =============================================
         
         document.addEventListener('keydown', function(e) {
             // Block Ctrl+U (View Source)
@@ -2600,18 +2490,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // =============================================
-        // BLOCK RIGHT-CLICK (Context Menu)
-        // =============================================
-        
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
-        
-        // =============================================
-        // DETECT DEVTOOLS OPENING (Optional)
-        // =============================================
         
         let devToolsDetected = false;
         setInterval(function() {
@@ -2627,10 +2509,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 3000);
         
-        // =============================================
-        // DISABLE CONSOLE LOGGING (Production)
-        // =============================================
-        
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             const noop = () => {};
             console.log = noop;
@@ -2641,17 +2519,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.trace = noop;
         }
         
-        // =============================================
-        // FRAME BUSTING (Prevent iframe embedding)
-        // =============================================
-        
         if (window.self !== window.top) {
             window.top.location = window.self.location;
         }
-        
-        // =============================================
-        // PREVENT DRAG & SELECT (Text selection)
-        // =============================================
         
         document.body.style.userSelect = 'none';
         document.body.style.webkitUserSelect = 'none';
@@ -2660,11 +2530,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("✅ Source protection active | view-source blocked");
     })();
     
-    // =============================================
-    // LIVE ANALYTICS SYSTEM - REAL DATA
-    // =============================================
-    
-    // Create analytics container
     function createAnalyticsContainer() {
         let container = document.getElementById('liveAnalyticsContainer');
         if (!container) {
@@ -2689,7 +2554,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return container;
     }
     
-    // Generate unique session ID
     function generateSessionId() {
         let hash = 0;
         const str = `${screen.width}x${screen.height}|${navigator.language}|${navigator.platform}|${Date.now()}|${Math.random()}`;
@@ -2702,7 +2566,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.sessionId = generateSessionId();
     
-    // Show loading state
     function showAnalyticsLoading() {
         const container = createAnalyticsContainer();
         if (container) {
@@ -2736,7 +2599,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     showAnalyticsLoading();
     
-    // Update stats display with REAL data
     window.updateStatsDisplay = async function() {
         if (!window.db) return;
         
@@ -2795,7 +2657,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                 }
             } else {
-                // If no data yet, show zeros
                 let analyticsDiv = document.getElementById('liveAnalytics');
                 if (analyticsDiv) {
                     analyticsDiv.innerHTML = `
@@ -2825,11 +2686,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         } catch (error) {
-            // Silent fail - analytics will retry
         }
     };
     
-    // Track visitor with REAL data
     window.trackVisitor = async function() {
         if (!window.db || window.hasTracked) return;
         
@@ -2839,7 +2698,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const sessionRef = window.db.collection("visitorSessions").doc(sessionId);
         
         try {
-            // Check if already tracked this session
+
             const sessionSnap = await sessionRef.get();
             if (sessionSnap.exists && sessionSnap.data().tracked === true) {
                 await window.updateStatsDisplay();
@@ -2888,7 +2747,6 @@ document.addEventListener('DOMContentLoaded', function() {
             await window.updateStatsDisplay();
             
         } catch (error) {
-            // Silent fail
         }
     };
     
@@ -2899,7 +2757,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Firebase config (encrypted)
     const ENCRYPTION_KEY = 'EDEN_CV5_SECURE_2026';
     
     const encryptedConfig = {
@@ -2933,7 +2790,6 @@ document.addEventListener('DOMContentLoaded', function() {
         appId: decryptConfig(encryptedConfig.appId, ENCRYPTION_KEY)
     };
     
-    // Load Firebase
     function loadFirebase() {
         return new Promise((resolve, reject) => {
             const delay = Math.random() * 300 + 200;
@@ -2969,7 +2825,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize everything
     window.addEventListener('load', () => {
         setTimeout(() => {
             loadFirebase().then(() => {
@@ -3013,7 +2868,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1500);
     });
     
-    // Force analytics refresh on page visibility change
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden && window.refreshAnalytics) {
             setTimeout(() => window.refreshAnalytics(), 500);
@@ -3022,6 +2876,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log("✅ Security active | Analytics ready for live data");
 })();
+    
 </script>
     
 </body>
