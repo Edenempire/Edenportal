@@ -1,717 +1,860 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Parables & Platters | Sacred Braai · Soul Sync</title>
-  <!-- Google Fonts + Fire Vibe -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      background: radial-gradient(circle at 10% 20%, #0c0a07, #020100);
-      font-family: 'Inter', sans-serif;
-      color: #fef3e2;
-      scroll-behavior: smooth;
-    }
+    <meta charset="UTF-8">
 
-    /* fire ember glow utility */
-    .glow-gold {
-      text-shadow: 0 0 6px #d9aa33, 0 0 2px #ffcf7a;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* header — sacred flames */
-    .sanctum-header {
-      background: #0a0804dd;
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid #e6b13e;
-      padding: 0.9rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 12px 28px -8px black;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    <title>Parables & Platters</title>
 
-    .logo-area {
-      display: flex;
-      flex-direction: column;
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    .logo-main {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #fff2cf, #e6b85e);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+    <link rel="icon" href="01. images/jesuslogo_enef.png" type="image/x-icon">
 
-    .logo-main i {
-      background: none;
-      -webkit-background-clip: unset;
-      color: #e6b13e;
-      font-size: 1.8rem;
-    }
+    <style>
 
-    .logo-sub {
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 2px;
-      color: #c7af7a;
-      margin-top: 2px;
-    }
+        body {
 
-    .braai-tag {
-      background: #b45f2b;
-      padding: 0.45rem 1.3rem;
-      border-radius: 60px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 0 10px #ff9933;
-      border: 1px solid #ffcd7e;
-    }
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            animation: glow 1.5s infinite alternate;
 
-    /* container */
-    .sacred-container {
-      max-width: 1280px;
-      margin: 2rem auto;
-      padding: 0 1.8rem;
-    }
+        }
 
-    .menu-head {
-      font-size: 2.2rem;
-      font-weight: 700;
-      border-left: 7px solid #e6b13e;
-      padding-left: 1.2rem;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        header {
 
-    /* vertical menu cards - elevated */
-    .vertical-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+            background: #e3c5a3;
+            width: 100%;
+            padding: 14px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
 
-    .feast-card {
-      background: linear-gradient(115deg, #19140e, #120f0a);
-      border-radius: 2rem;
-      padding: 1rem 1.8rem 1rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #4c3c2a;
-      transition: all 0.25s ease;
-      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.8);
-      backdrop-filter: blur(4px);
-    }
+        }
 
-    .feast-card:hover {
-      border-color: #e6b13e;
-      transform: translateY(-4px);
-      background: #211b13;
-      box-shadow: 0 22px 28px -16px #e6b13e30;
-    }
+        .bodylogoimage {
 
-    .dish-details {
-      flex: 2;
-    }
+            position: fixed;
+            width: 15%;
+            bottom: 0;
+            right: 0;
+            margin-right: 40px;
+            margin-bottom: 105px;
+            border: 10px solid #e3c5a3;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
 
-    .dish-details h3 {
-      font-size: 1.9rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #ffeaaf;
-    }
+        }
 
-    .dish-meta {
-      font-size: 0.85rem;
-      color: #b9a579;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      margin-top: 5px;
-    }
+        .header-link {
 
-    .parable-tag {
-      background: #2b241c;
-      padding: 0.2rem 0.8rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      border-left: 3px solid #e6b13e;
-    }
+            text-decoration: none; 
+            color: inherit; 
 
-    .price-hearth {
-      font-size: 2rem;
-      font-weight: 800;
-      background: #1e1811;
-      padding: 0.2rem 1.2rem;
-      border-radius: 60px;
-      display: inline-flex;
-      align-items: baseline;
-      gap: 4px;
-      border: 1px solid #5b4d36;
-      margin: 0 1rem;
-    }
+        }
 
-    .order-controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: #201b14;
-      padding: 0.3rem 0.8rem 0.3rem 1rem;
-      border-radius: 60px;
-      border: 1px solid #6b5a41;
-    }
+        .header-link img {
 
-    .qty-stepper {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #2c241c;
-      padding: 0.2rem 0.8rem;
-      border-radius: 40px;
-    }
+            width: 15%;
 
-    .qty-stepper button {
-      background: none;
-      border: none;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #f5cf8a;
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      transition: 0.15s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+        }
 
-    .qty-stepper button:hover {
-      background: #e6b13e;
-      color: #1f180f;
-    }
+        .header-link {
 
-    .qty-number {
-      font-size: 1.4rem;
-      font-weight: 700;
-      min-width: 32px;
-      text-align: center;
-    }
+            text-decoration: none; 
+            color: inherit; 
 
-    .add-soul-btn {
-      background: #e6b13e;
-      border: none;
-      font-weight: 700;
-      padding: 0.6rem 1.4rem;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: 0.2s;
-      color: #1b140c;
-      letter-spacing: 0.3px;
-    }
+        }
 
-    .add-soul-btn:hover {
-      background: #ffce70;
-      transform: scale(1.02);
-      box-shadow: 0 4px 12px #e6b13e80;
-    }
+        .header-link:hover {
 
-    /* firestore sync badge */
-    .baas-badge {
-      display: inline-flex;
-      align-items: center;
-      background: #17130e;
-      border-radius: 50px;
-      padding: 0.2rem 1rem;
-      gap: 8px;
-      font-size: 0.7rem;
-      border: 1px solid #c49a44;
-      font-weight: 500;
-    }
+            cursor: pointer; 
 
-    /* cart cathedral */
-    .cart-cathedral {
-      background: #0c0906e6;
-      backdrop-filter: blur(10px);
-      border-top: 3px solid #e6b13e;
-      margin-top: 3rem;
-      padding: 1.8rem 2rem 1.5rem;
-    }
+        }
 
-    .cart-wrapper {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+        h1 {
 
-    .cart-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
+            font-size: 45px;
+            text-align: center;
 
-    .cart-items-display {
-      background: #1a140e;
-      border-radius: 2rem;
-      padding: 1.2rem 1.6rem;
-      min-height: 100px;
-      margin-bottom: 1rem;
-      border: 1px solid #4f3f2c;
-      font-size: 0.95rem;
-    }
+        }
 
-    .cart-summary-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      background: #18120b;
-      border-radius: 80px;
-      padding: 0.7rem 1.8rem;
-      margin-bottom: 1.2rem;
-    }
+        footer {
 
-    .grand-total {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #f7d98c;
-    }
+            background: #e3c5a3;
+            color: black;
+            width: 80%;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            left: 0;
 
-    .checkout-field-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: flex-end;
-    }
+        }
 
-    .sacred-input {
-      background: #2d241b;
-      border: 1px solid #6b583d;
-      border-radius: 50px;
-      padding: 0.7rem 1.2rem;
-      color: #faeecd;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      transition: 0.2s;
-      min-width: 150px;
-    }
+        .menu {
 
-    .sacred-input:focus {
-      border-color: #e6b13e;
-      background: #3b2f22;
-    }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 230px;
+            margin-bottom: 70px;
+            font-size: 20px;
+            color: black;
+            animation: none;
 
-    .btn-divine-order {
-      background: #2a7845;
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
-      color: white;
-      box-shadow: 0 5px 12px #1f6e3e80;
-    }
+        }
 
-    .btn-divine-order:hover {
-      background: #3e9b5c;
-      transform: scale(1.02);
-    }
+        .menu-item {
 
-    .footer-benediction {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.75rem;
-      color: #8b7b62;
-      border-top: 1px solid #352c21;
-      padding-top: 1rem;
-    }
+            background: #e3c5a3;
+            border-radius: 10px;
+            margin: 25px;
+            padding: 20px;
+            width: 270px;
+            transition: transform 0.3s;
 
-    @media (max-width: 780px) {
-      .feast-card {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 14px;
-      }
-      .price-hearth {
-        align-self: flex-start;
-        margin: 0 0 0.5rem 0;
-      }
-      .order-controls {
-        justify-content: space-between;
-      }
-    }
-  </style>
+        }
+
+        .menu-item:hover {
+
+            transform: scale(1.05);
+
+        }
+
+        .price {
+
+            color: green; /* Makes the price text green */
+            font-weight: bold; /* Optional: Make the price text bold */
+
+        }
+
+
+        img {
+
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+
+        }
+
+        button {
+
+            background: #3cd3de;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 22px;
+
+        }
+
+        button:hover {
+
+            background: #3cd3de79;
+
+        }
+
+        .menupage {
+
+            background: #e3c5a3;
+            width: 10%;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            margin-right: 40px;
+            margin-bottom: 30px;
+            color: black;
+            font-size: 15px;
+
+        }
+
+        .menupage:hover {
+
+            background: #e3c5a379;
+
+        }
+
+        .popup {
+
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            text-align: left;
+            width: 500px;
+            height: 500px;
+            overflow-y: auto; /* Add scroll when content overflows */
+
+        }
+
+        .close-btn {
+
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+
+        }
+
+        .close-btn:hover {
+
+            color: #e3c5a3;
+
+        }
+
+        .popup input,
+        .popup textarea {
+
+            width: 80%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+        }
+
+        .popup button {
+
+            color: black;
+            background: #3cd3de;
+            margin-top: 10px;
+
+        }
+
+        .popup.failure {
+
+            background: #f8d7da;
+
+        }
+
+        .popup.success {
+
+            background: #d4edda;
+
+        }
+
+        #backToTop {
+
+            background: #e3c5a3;
+            position: fixed;
+            width: 10%;
+            bottom: 0;
+            right: 0;
+            margin-right: 200px;
+            margin-bottom: 30px;
+            box-shadow: 0 -1px 20px #ffefcb80;
+            display: none;
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            z-index: 1000;
+
+        }
+
+        #backToTop:hover {
+
+            background-color: #e3c5a379;
+
+        }
+
+        /* Style for the dropdown labels */
+        label {
+
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+
+        }
+
+        /* Style for the dropdowns (Company and Time) */
+        select {
+
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+
+        }
+
+        /* Focus state for dropdowns */
+        select:focus {
+
+            border-color: #007bff;
+            background-color: #e7f3ff;
+            outline: none;
+
+        }
+
+        /* Error message style */
+        .error-message {
+
+            font-size: 14px;
+            color: red;
+            display: none;
+
+        }
+
+        /* Style for the submit button */
+        button[type="submit"] {
+            
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+
+        /* Hover effect for submit button */
+        button[type="submit"]:hover {
+
+            background-color: #0056b3;
+
+        }
+
+        /* Style for cancel button */
+        button[type="button"] {
+
+            padding: 12px 20px;
+            background-color: #f44336;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+
+        /* Hover effect for cancel button */
+        button[type="button"]:hover {
+
+            background-color: #d32f2f;
+
+        }
+
+        .fade-image {
+
+            transition: opacity 1s ease-in-out;
+            opacity: 1;
+
+        }
+
+        @media (max-width: 768px) {
+
+            body {
+
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                text-align: center;
+                animation: glow 1.5s infinite alternate;
+
+            }
+
+            .bodylogoimage {
+
+                display: none;
+
+            }
+
+            header {
+
+                background: #e3c5a3;
+                width: 100%;
+                padding: 15px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+
+            }
+            
+            .header-link img {
+
+                width: 170px;
+                margin-right: 33px;
+                margin-top: -22px;
+
+            }
+
+            footer {
+
+                background: #e3c5a3;
+                width: 80%;
+                padding: 10px;
+                position: relative;
+                bottom: 0;
+                left: 0;
+                font-size: 13px;
+
+            }
+
+            .menu {
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 180px;
+                margin-bottom: 70px;
+                font-size: 20px;
+                color: black;
+
+            }
+
+            .menu-item {
+
+                background: #e3c5a3;
+                border-radius: 10px;
+                margin: 25px;
+                padding: 20px;
+                width: 200px;
+                transition: transform 0.3s;
+
+            }
+
+            .menu-item:hover {
+
+                transform: scale(1.05);
+
+            }
+
+            .menu-item p {
+
+                font-size: 18px;
+
+            }
+
+            img {
+
+                width: 100%;
+                height: 160px;
+                border-radius: 10px;
+
+            }
+
+            button {
+
+                background: #3cd3de;
+                color: black;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s;
+                font-size: 17px;
+
+            }
+
+            button:hover {
+
+                background: #3cd3de79;
+
+            }
+
+            h2 {
+
+                font-size: 23px;
+            }
+
+            .popup {
+
+                max-height: 70vh; /* Limit max height on mobile */
+                width: 80%;
+
+            }
+
+            .popup input,
+            .popup textarea {
+
+                width: 70%;
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+
+            }
+
+            .popup button {
+
+                color: black;
+                background: #3cd3de;
+                margin-top: 10px;
+
+            }
+
+            .popup.failure {
+
+                background: #f8d7da;
+
+            }
+
+            .popup.success {
+
+                background: #d4edda;
+
+            }
+
+            #backToTop {
+
+                background: #e3c5a3;
+                position: fixed;
+                width: 11%;
+                bottom: 0;
+                right: 0;
+                margin-right: 17px;
+                margin-bottom: 190px;
+                display: none;
+                color: black;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 9px;
+                z-index: 1000;
+
+            }
+
+            #backToTop:hover {
+
+                background-color: #e3c5a379;
+
+            }
+
+            .menupage {
+
+                background: #e3c5a3;
+                position: fixed;
+                width: 11%;
+                bottom: 0;
+                right: 0;
+                margin-right: 17px;
+                margin-bottom: 140px;
+                color: black;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 9px;
+                z-index: 1000;
+
+            }
+
+            .menuupage:hover {
+
+                background: #e3c5a379;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-
-<header class="sanctum-header">
-  <div class="logo-area">
-    <div class="logo-main"><i class="fas fa-fire"></i> PARABLES <span style="color:#e6b13e;">&</span> PLATTERS</div>
-    <div class="logo-sub"><i class="fas fa-hands-praying"></i> where bread meets testimony</div>
-  </div>
-  <div class="braai-tag">
-    <i class="fas fa-drumstick-bite"></i> SHISANYAMA SOUL
-  </div>
-</header>
-
-<main class="sacred-container">
-  <div class="menu-head">
-    <i class="fas fa-utensils"></i> BRAAI · BLESSINGS · COMMUNION
-    <div class="baas-badge" id="baasSyncStatus">
-      <i class="fas fa-cloud-upload-alt"></i> BAAS · FIRESTORE READY
-    </div>
-  </div>
-
-  <div class="vertical-menu" id="dynamicMenuRoot"></div>
-  <div style="text-align: right; margin-top: 1rem;">
-    <span class="baas-badge"><i class="fas fa-database"></i> live simulation · firestore integrated</span>
-  </div>
-</main>
-
-<footer class="cart-cathedral">
-  <div class="cart-wrapper">
-    <div class="cart-title">
-      <i class="fas fa-basket-shopping"></i> 
-      <span>your offering basket</span>
-      <span id="cartItemBadge" style="font-size:0.9rem; background:#34281c; padding:0.2rem 0.8rem; border-radius: 40px;">(0)</span>
-    </div>
-    <div class="cart-items-display" id="sacredCartList">
-      ✦ the altar awaits — add a plate ✦
-    </div>
-    <div class="cart-summary-row">
-      <div class="grand-total">R<span id="totalCostSpan">0</span></div>
-      <div class="checkout-field-group">
-        <input type="text" id="customerName" class="sacred-input" placeholder="🕯️ your name / testimony">
-        <input type="tel" id="customerPhone" class="sacred-input" placeholder="📞 phone (for blessing)">
-        <input type="text" id="customerAddress" class="sacred-input" placeholder="📍 gathering place">
-      </div>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-      <button id="divineCheckoutBtn" class="btn-divine-order"><i class="fas fa-scroll"></i> seal order · fire offering</button>
-      <span style="font-size:0.7rem; color:#b99e6e;"><i class="fas fa-sync-alt"></i> auto-sync to BAAS (emulated Firestore)</span>
-    </div>
-    <div class="footer-benediction">
-      <i class="fas fa-cross"></i> parables & platters — every meal feeds more than hunger · shalom <i class="fas fa-heart" style="color:#e6b13e;"></i>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // ---------------------------
-  // ADVANCED SIMULATION: BAAS / FIRESTORE READY
-  // Full cart logic + menu + order persistence with real-time sync simulation
-  // ---------------------------
-  
-  // MENU — enriched with sacred narrative
-  const FEAST_MENU = [
-    { id: "wing_soul", name: "🐔 SPIRIT WINGS", desc: "ancestral glaze · peri-peri breath", price: 60, proverb: "as you share, wings rise" },
-    { id: "shisa_plate", name: "🔥 SHISANYAMA THRONE", desc: "grilled sirloin + pap & chakalaka", price: 120, proverb: "where elders break bread" },
-    { id: "samaritan_burger", name: "🍔 GOOD SAMARITAN BURGER", desc: "wagyu-style beef · holy cheese", price: 50, proverb: "love your neighbour, feed them well" },
-    { id: "loaded_parable", name: "🍟 LOADED FRIES (blessed)", desc: "brisket bits · garlic aioli · fire dust", price: 45, proverb: "abundance overflows" },
-    { id: "wellspring_drink", name: "🥤 WELLSPRING ELIXIR", desc: "ginger beer / rooibos spark", price: 20, proverb: "living water quenches" },
-    { id: "lamb_joy", name: "🍖 LAMB OF JOY", desc: "slow roasted lamb shank · rosemary smoke", price: 140, proverb: "peace that surpasses" }
-  ];
-
-  // Global cart state (objects with id, name, price, quantity)
-  let sacredCart = [];
-
-  // Per-item quantity buffer (independent for each menu card)
-  let itemQuantities = new Array(FEAST_MENU.length).fill(1);
-
-  // Helper: update UI for cart & total
-  function updateCartSanctuary() {
-    const cartContainer = document.getElementById("sacredCartList");
-    const totalSpan = document.getElementById("totalCostSpan");
-    const badgeSpan = document.getElementById("cartItemBadge");
-
-    if (!sacredCart.length) {
-      cartContainer.innerHTML = '<i class="fas fa-dove" style="opacity:0.6;"></i> your basket awaits a parable plate...';
-      totalSpan.innerText = "0";
-      badgeSpan.innerText = "(0)";
-      return;
-    }
-
-    let totalAmount = 0;
-    let totalItems = 0;
-    let cartHtml = `<div style="display:flex; flex-direction:column; gap:6px;">`;
-    sacredCart.forEach((item, idx) => {
-      const subtotal = item.price * item.quantity;
-      totalAmount += subtotal;
-      totalItems += item.quantity;
-      cartHtml += `<div style="display:flex; justify-content:space-between; border-bottom:1px dashed #4f3f2c; padding:6px 0;">
-        <span><i class="fas fa-utensil-spoon"></i> ${item.name} <strong style="color:#e6b13e;">x${item.quantity}</strong> <span style="font-size:0.7rem;">— ${item.proverb || 'blessing'}</span></span>
-        <span>R${subtotal}</span>
-      </div>`;
-    });
-    cartHtml += `</div>`;
-    cartContainer.innerHTML = cartHtml;
-    totalSpan.innerText = totalAmount;
-    badgeSpan.innerText = `(${totalItems})`;
-  }
-
-  // Firestore simulation (BAAS) — this mimics writing to Firestore collection 'orders' & 'cart_snapshots'
-  // In real production: import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore"
-  // For now, it logs + triggers UI indicator.
-  let baasEventCount = 0;
-  function syncToBaas(actionType, payload) {
-    baasEventCount++;
-    const baasIndicator = document.getElementById("baasSyncStatus");
-    // Emulate Firestore write
-    console.log(`🔥🔥 BAAS [FIRESTORE] ${actionType} @${new Date().toISOString()}`, payload);
     
-    // Visual feedback: show last sync + pulse
-    if (baasIndicator) {
-      baasIndicator.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> BAAS · synced (${actionType})`;
-      baasIndicator.style.transition = "0.2s";
-      baasIndicator.style.borderColor = "#ffd966";
-      setTimeout(() => {
-        baasIndicator.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> BAAS · FIRESTORE READY`;
-        baasIndicator.style.borderColor = "#c49a44";
-      }, 1800);
-    }
-    // In full BAAS integration we would have:
-    // await addDoc(collection(db, "live_orders_simulation"), { ...payload, timestamp: serverTimestamp() });
-  }
+    <header>
 
-  // Add to cart with BAAS integration (every add triggers firestore simulation)
-  function addItemToCart(menuItem, quantity) {
-    if (!quantity || quantity <= 0) return;
-    const existing = sacredCart.find(item => item.id === menuItem.id);
-    if (existing) {
-      existing.quantity += quantity;
-      syncToBaas("UPDATE_CART_ITEM", { item: menuItem.name, newQty: existing.quantity, action: "increment" });
-    } else {
-      const newEntry = {
-        id: menuItem.id,
-        name: menuItem.name,
-        price: menuItem.price,
-        quantity: quantity,
-        proverb: menuItem.proverb,
-        desc: menuItem.desc
-      };
-      sacredCart.push(newEntry);
-      syncToBaas("ADD_TO_CART", { item: menuItem.name, quantity, price: menuItem.price });
-    }
-    updateCartSanctuary();
-  }
+        <a href="index.html" class="header-link">
 
-  // Remove / clear cart after order
-  function resetCartAfterOrder() {
-    if (sacredCart.length === 0) return false;
-    const oldCartSnapshot = [...sacredCart];
-    sacredCart = [];
-    updateCartSanctuary();
-    syncToBaas("ORDER_COMPLETED_CLEAR", { clearedCart: oldCartSnapshot, timestamp: new Date().toISOString() });
-    return true;
-  }
+            <img src="01. images/jesuslogo_enef.png" title="Jesus loves food">
 
-  // Render vertical cards with independent quantity controls
-  function renderMenuCards() {
-    const container = document.getElementById("dynamicMenuRoot");
-    if (!container) return;
-    let cardsHtml = "";
-    FEAST_MENU.forEach((item, idx) => {
-      cardsHtml += `
-        <div class="feast-card" data-menu-idx="${idx}">
-          <div class="dish-details">
-            <h3>${item.name}</h3>
-            <div class="dish-meta">
-              <span><i class="fas fa-drumstick-bite"></i> ${item.desc}</span>
-              <span class="parable-tag"><i class="fas fa-feather-alt"></i> ${item.proverb}</span>
-            </div>
-          </div>
-          <div class="price-hearth">
-            R${item.price}
-          </div>
-          <div class="order-controls">
-            <div class="qty-stepper">
-              <button class="qtyMinusBtn" data-idx="${idx}">−</button>
-              <span class="qty-number" id="menuQty_${idx}">${itemQuantities[idx]}</span>
-              <button class="qtyPlusBtn" data-idx="${idx}">+</button>
-            </div>
-            <button class="add-soul-btn" data-idx="${idx}"><i class="fas fa-hand-holding-heart"></i> add to platter</button>
-          </div>
-        </div>
-      `;
-    });
-    container.innerHTML = cardsHtml;
+        </a>
 
-    // attach quantity +/- events
-    document.querySelectorAll(".qtyPlusBtn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const idx = parseInt(btn.getAttribute("data-idx"));
-        if (!isNaN(idx) && idx >= 0) {
-          itemQuantities[idx] = (itemQuantities[idx] || 1) + 1;
-          const qtySpan = document.getElementById(`menuQty_${idx}`);
-          if (qtySpan) qtySpan.innerText = itemQuantities[idx];
+    </header>
+
+    <div class="menu">
+
+        Performing site maintenance. We will be back shortly!
+        <br>
+
+      <!--  <div class="menu-item">
+
+            <img id="slideshowImage" class="fade-image" src="01. images/pap_wors_beans.jpg" alt="Pap, Wors & Beans Curry" title="hmmm... yummy!">
+            <h2>Pap, Steak & Wors</h2>
+            <p class="price">price: R25</p>
+            <p>details: pap, steak, wors, chilli, sambles & coleslaw</p>
+            <button onclick="showOrderForm('pap, steak & wors', 'R25', 'pap, steak, wors, chilli, sambles & coleslaw., '01. images/pap_wors_beans.jpg')" id="ordernow" title="click to order now">order now</button>
+
+        </div> -->
+
+    <div class="popup" id="orderForm">
+        <h2>Order Details</h2>
+
+        <button type="button" class="close-btn" onclick="closeForm()" title="Close">X</button>
+    
+        <form id="orderDetails" action="https://formspree.io/f/manqrkpv" method="POST" onsubmit="return validateForm()">
+            <input type="hidden" name="item" id="item">
+            <input type="hidden" name="price" id="price">
+            <input type="hidden" name="details" id="details">
+    
+            <!-- Name Field -->
+            <label for="name">Your Name:</label>
+            <input type="text" name="name" id="name" required>
+            <br>
+            <span id="nameError" class="error-message" style="color: red; display: none;">Please enter your name.</span>
+    
+            <!-- Phone Field -->
+            <label for="phone">Your Phone Number:</label>
+            <input type="text" name="phone" id="phone" required>
+            <br>
+            <span id="phoneError" class="error-message" style="color: red; display: none;">Please enter a valid phone number (only numbers).</span>
+    
+            <!-- Email Field -->
+            <label for="email">Your Email:</label>
+            <input type="email" name="email" id="email" required>
+            <br>
+            <span id="emailError" class="error-message" style="color: red; display: none;">Please enter a valid email address.</span>
+    
+            <!-- Location -->
+            <label for="company">Location:</label>
+            <p>on our next update, you will be able to choose your precise location. please be patient with us as our software development team fine-tunes this. meanwhile, please choose from the list of options down below on the dropdown, and we will contact you for a precise location.</p>
+            <select name="company" id="company" required>
+                <option value="cbd">Durban CBD - The Market</option>
+                <option value="cbd">Durban CBD - Harbour Side</option>
+                <option value="cbd">Durban CBD - Workshop Side</option>
+            </select>
+            <br>
+            <span id="companyError" class="error-message" style="color: red; display: none;">Please select a company.</span>
+
+            <!-- Quantity Field -->
+            <label for="quantity">Quantity/How Many?:</label>
+            <input type="number" name="quantity" id="quantity" required>
+            <br>
+            <span id="quantity" class="error-message" style="color: red; display: none;">How many of this do you want to order?</span>
+    
+            <!-- Additional Details -->
+            <label for="details">Anything else?/Personalisation:</label>
+            <input type="text" name="details" id="details" required>
+            <br>
+            <span id="detailsError" class="error-message" style="color: red; display: none;">Please enter any additional details.</span>
+
+            <p>Disclaimer: CASH-ONLY (for now)</p>
+    
+            <!-- Submit and Cancel Buttons -->
+            <button type="submit" title="Click now to submit your order">Submit Order</button>
+            <button type="button" onclick="closeForm()" title="Cancel">Cancel</button>
+
+            <input type="hidden" name="orderNumber" id="orderNumber">
+
+        </form>
+    </div>
+    
+    <!-- Popup message for submission feedback -->
+    <div class="popup" id="popupMessage" style="display:none;"></div>
+
+        <a href="menupage.html">
+        
+            <!-- <button class="menupage" title="menu page">main menu</button> -->
+    
+            </a>
+
+            <button id="backToTop" title="back to top">back to top</button>
+
+            <img src="01. images/jesuslogo_black.png" class="bodylogoimage" title="peace be still">
+
+            <!-- // reload page -->
+
+        <audio autoplay src="03. music/gladiator1.mp3" type="audio/mp3"></audio>
+
+    <footer> &copy; 2025 parables & platters (pty) ltd. all rights reserved. </footer>
+
+    <script>
+
+        // Function to show the order form popup
+        
+        function showOrderForm(itemName, itemPrice, itemDetails, itemImage) {
+
+            document.getElementById('item').value = itemName;
+            document.getElementById('price').value = itemPrice;
+            document.getElementById('details').value = itemDetails;
+            document.getElementById('orderForm').style.display = 'block';
+
         }
-      });
-    });
 
-    document.querySelectorAll(".qtyMinusBtn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const idx = parseInt(btn.getAttribute("data-idx"));
-        if (!isNaN(idx) && idx >= 0 && itemQuantities[idx] > 1) {
-          itemQuantities[idx]--;
-          const qtySpan = document.getElementById(`menuQty_${idx}`);
-          if (qtySpan) qtySpan.innerText = itemQuantities[idx];
+        // Function to close the order form popup
+        function closeForm() {
+
+            document.getElementById('orderForm').style.display = 'none';
+
         }
-      });
-    });
 
-    // Unique add-to-cart per card
-    document.querySelectorAll(".add-soul-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const idx = parseInt(btn.getAttribute("data-idx"));
-        if (isNaN(idx)) return;
-        const selectedQty = itemQuantities[idx];
-        const menuItem = FEAST_MENU[idx];
-        addItemToCart(menuItem, selectedQty);
-        // Optional: reset that card quantity back to 1 (better UX)
-        itemQuantities[idx] = 1;
-        const qtySpan = document.getElementById(`menuQty_${idx}`);
-        if (qtySpan) qtySpan.innerText = "1";
-        // Show micro BAAS feedback
-        const addBtnEl = btn;
-        addBtnEl.style.transform = "scale(0.96)";
-        setTimeout(() => { addBtnEl.style.transform = ""; }, 120);
-      });
-    });
-  }
+        // Function to handle form submission
 
-  // CHECKOUT (ORDER PLACEMENT) with full BAAS simulation & validation
-  function placeDivineOrder() {
-    const nameInput = document.getElementById("customerName");
-    const phoneInput = document.getElementById("customerPhone");
-    const addressInput = document.getElementById("customerAddress");
-    const customerName = nameInput?.value.trim();
-    const customerPhone = phoneInput?.value.trim();
-    const customerAddress = addressInput?.value.trim();
+        document.getElementById('orderDetails').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-    if (sacredCart.length === 0) {
-      alert("🙏 your basket is empty — add a plate of blessing before ordering.");
-      return;
-    }
-    if (!customerName || !customerPhone || !customerAddress) {
-      alert("✋ please fill in all three fields: name, phone, delivery address — as testimony of faith.");
-      return;
-    }
+            // Generate unique order number
+            const now = new Date();
+            const datePart = now.toISOString().slice(2, 10).replace(/-/g, ''); // e.g. "250518"
+            const randomPart = Math.floor(1000 + Math.random() * 9000); // random 4-digit number
+            const orderNum = `PP-${datePart}-${randomPart}`; // e.g. "PP-250518-4829"
 
-    // Build order payload for BAAS (Firestore collection)
-    const orderItems = sacredCart.map(i => ({
-      id: i.id,
-      name: i.name,
-      quantity: i.quantity,
-      unitPrice: i.price,
-      subtotal: i.price * i.quantity,
-      proverb: i.proverb
-    }));
-    const totalOrder = sacredCart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
-    const orderPayload = {
-      orderId: `ORDER_${Date.now()}_${Math.floor(Math.random() * 10000)}`,
-      customer: {
-        name: customerName,
-        phone: customerPhone,
-        address: customerAddress
-      },
-      items: orderItems,
-      totalAmount: totalOrder,
-      status: "received · soul kitchen",
-      timestamp: new Date().toISOString(),
-      source: "Parables & Platters UI (BAAS integrated)"
-    };
+            document.getElementById('orderNumber').value = orderNum;
 
-    // Simulate Firestore write with full order
-    syncToBaas("NEW_ORDER_PLACED", orderPayload);
-    
-    // Show success with BAAS note
-    alert(`✨ BLESSINGS, ${customerName}! ✨\nYour order (R${totalOrder}) has been transmitted to the sacred kitchen.\n(Check console for BAAS / Firestore simulation)`);
-    
-    // clear cart & reset quantity buffers
-    sacredCart = [];
-    // reset all item quantities to 1 (interface)
-    for (let i = 0; i < FEAST_MENU.length; i++) {
-      itemQuantities[i] = 1;
-      const qtySpan = document.getElementById(`menuQty_${i}`);
-      if (qtySpan) qtySpan.innerText = "1";
-    }
-    updateCartSanctuary();
-    
-    // Optionally clear inputs but leave for next order
-    // but we keep for convenience but we can clear name as a gentle reset? better keep but not mandatory
-    // resetting name field? optional but to respect privacy we keep but not auto clear.
-    // we just leave user data as is but it's fine.
-  }
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    showPopup("Order placed successfully! Your order number is: " + orderNum, false, orderNum);
+                    this.reset(); // Reset form
+                    closeForm(); // Close form after successful submission
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            }).catch(error => {
+                showPopup("There was a problem with your submission. Please try again.", true);
+            });
+        });
 
-  // Additional: load dummy listener for realtime BAAS simulation (show incoming sync)
-  function simulateBaasLiveRealtime() {
-    setInterval(() => {
-      // just for demo: firestore presence ping — shows BAAS is active
-      const badgeStatus = document.getElementById("baasSyncStatus");
-      if (badgeStatus && !badgeStatus.innerHTML.includes("synced")) {
-        // subtle heartbeat
-        badgeStatus.style.opacity = "0.9";
-        setTimeout(() => { if(badgeStatus) badgeStatus.style.opacity = "1"; }, 300);
-      }
-    }, 15000);
-    console.log("📡 BAAS live listener (Firestore emulation) active — orders will be synced to cloud collection 'orders'.");
-    syncToBaas("BAAS_SESSION_START", { message: "Parables & Platters session active", timestamp: new Date().toISOString() });
-  }
 
-  // Init everything
-  function initSanctum() {
-    renderMenuCards();
-    updateCartSanctuary();
-    const checkoutBtn = document.getElementById("divineCheckoutBtn");
-    if (checkoutBtn) checkoutBtn.addEventListener("click", placeDivineOrder);
-    simulateBaasLiveRealtime();
-    // small style to indicate that BAAS backend simulation is ready (Firestore hooks in comments)
-    console.log("🔥 BAAS ready — plugging Firestore is trivial. All cart actions simulate real sync.");
-  }
+        // Function to show success and failure popups
+        function showPopup(message, isFailure, orderNum = '') {
+            const popup = document.getElementById('popupMessage');
+            popup.innerHTML = isFailure
+                ? `<p>${message}</p>`
+                : `<p>${message}</p>
+                <p><strong>Order Number:</strong> <span id="copyOrderNum">${orderNum}</span></p>
+                <button onclick="copyOrderNumber()">Copy Order Number</button>`;
+            
+            popup.className = isFailure ? 'popup failure' : 'popup success';
+            popup.style.display = 'block';
 
-  initSanctum();
-</script>
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 30000); // show a bit longer for copy time
+        }
+
+        function copyOrderNumber() {
+            const orderNumElement = document.getElementById('copyOrderNum');
+            const text = orderNumElement.innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Order number copied to clipboard: " + text);
+            }).catch(err => {
+                alert("Failed to copy order number.");
+            });
+        }
+
+        const backToTopButton = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+            backToTopButton.style.display = "block";
+            } else {
+            backToTopButton.style.display = "none";
+            }
+        });
+
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+            });
+        });
+
+
+        const slideshowImages = [
+            "01. images/pap_wors_beans.jpg",
+            "01. images/bnw.jpg"
+        ];
+
+        let currentIndex = 0;
+        const slideshowElement = document.getElementById("slideshowImage");
+
+        function fadeToNextImage() {
+            // Fade out
+            slideshowElement.style.opacity = 0;
+
+            setTimeout(() => {
+                // Change image when faded out
+                currentIndex = (currentIndex + 1) % slideshowImages.length;
+                slideshowElement.src = slideshowImages[currentIndex];
+
+                // Fade in
+                slideshowElement.style.opacity = 1;
+            }, 1000); // matches transition time
+        }
+
+
+        function startSlideshow() {
+            setInterval(fadeToNextImage, 5000);
+        }
+
+        window.addEventListener("DOMContentLoaded", startSlideshow);
+        
+    </script>
+
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
