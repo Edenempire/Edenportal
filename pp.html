@@ -507,7 +507,7 @@
 
             .popup {
 
-                max-height: 70vh; /* Limit max height on mobile */
+                max-height: 70vh;
                 width: 80%;
 
             }
@@ -606,7 +606,7 @@
 
         <a href="index.html" class="header-link">
 
-            <img src="01. images/jesuslogo_enef.png" title="Jesus loves food">
+            <img src="images/jesuslogo_enef.png" title="Jesus loves food">
 
         </a>
 
@@ -614,10 +614,7 @@
 
     <div class="menu">
 
-        Performing site maintenance. We will be back shortly!
-        <br>
-
-      <!--  <div class="menu-item">
+        <div class="menu-item">
 
             <img id="slideshowImage" class="fade-image" src="01. images/pap_wors_beans.jpg" alt="Pap, Wors & Beans Curry" title="hmmm... yummy!">
             <h2>Pap, Steak & Wors</h2>
@@ -637,25 +634,21 @@
             <input type="hidden" name="price" id="price">
             <input type="hidden" name="details" id="details">
     
-            <!-- Name Field -->
             <label for="name">Your Name:</label>
             <input type="text" name="name" id="name" required>
             <br>
             <span id="nameError" class="error-message" style="color: red; display: none;">Please enter your name.</span>
     
-            <!-- Phone Field -->
             <label for="phone">Your Phone Number:</label>
             <input type="text" name="phone" id="phone" required>
             <br>
             <span id="phoneError" class="error-message" style="color: red; display: none;">Please enter a valid phone number (only numbers).</span>
     
-            <!-- Email Field -->
             <label for="email">Your Email:</label>
             <input type="email" name="email" id="email" required>
             <br>
             <span id="emailError" class="error-message" style="color: red; display: none;">Please enter a valid email address.</span>
     
-            <!-- Location -->
             <label for="company">Location:</label>
             <p>on our next update, you will be able to choose your precise location. please be patient with us as our software development team fine-tunes this. meanwhile, please choose from the list of options down below on the dropdown, and we will contact you for a precise location.</p>
             <select name="company" id="company" required>
@@ -666,13 +659,11 @@
             <br>
             <span id="companyError" class="error-message" style="color: red; display: none;">Please select a company.</span>
 
-            <!-- Quantity Field -->
             <label for="quantity">Quantity/How Many?:</label>
             <input type="number" name="quantity" id="quantity" required>
             <br>
             <span id="quantity" class="error-message" style="color: red; display: none;">How many of this do you want to order?</span>
     
-            <!-- Additional Details -->
             <label for="details">Anything else?/Personalisation:</label>
             <input type="text" name="details" id="details" required>
             <br>
@@ -680,7 +671,6 @@
 
             <p>Disclaimer: CASH-ONLY (for now)</p>
     
-            <!-- Submit and Cancel Buttons -->
             <button type="submit" title="Click now to submit your order">Submit Order</button>
             <button type="button" onclick="closeForm()" title="Cancel">Cancel</button>
 
@@ -700,9 +690,8 @@
 
             <button id="backToTop" title="back to top">back to top</button>
 
-            <img src="01. images/jesuslogo_black.png" class="bodylogoimage" title="peace be still">
+            <img src="images/jesuslogo_enef.png" class="bodylogoimage" title="peace be still">
 
-            <!-- // reload page -->
 
         <audio autoplay src="03. music/gladiator1.mp3" type="audio/mp3"></audio>
 
@@ -710,7 +699,6 @@
 
     <script>
 
-        // Function to show the order form popup
         
         function showOrderForm(itemName, itemPrice, itemDetails, itemImage) {
 
@@ -721,23 +709,20 @@
 
         }
 
-        // Function to close the order form popup
         function closeForm() {
 
             document.getElementById('orderForm').style.display = 'none';
 
         }
 
-        // Function to handle form submission
 
         document.getElementById('orderDetails').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            // Generate unique order number
             const now = new Date();
-            const datePart = now.toISOString().slice(2, 10).replace(/-/g, ''); // e.g. "250518"
-            const randomPart = Math.floor(1000 + Math.random() * 9000); // random 4-digit number
-            const orderNum = `PP-${datePart}-${randomPart}`; // e.g. "PP-250518-4829"
+            const datePart = now.toISOString().slice(2, 10).replace(/-/g, ''); 
+            const randomPart = Math.floor(1000 + Math.random() * 9000); 
+            const orderNum = `PP-${datePart}-${randomPart}`; 
 
             document.getElementById('orderNumber').value = orderNum;
 
@@ -750,8 +735,8 @@
             }).then(response => {
                 if (response.ok) {
                     showPopup("Order placed successfully! Your order number is: " + orderNum, false, orderNum);
-                    this.reset(); // Reset form
-                    closeForm(); // Close form after successful submission
+                    this.reset(); 
+                    closeForm(); 
                 } else {
                     throw new Error('Network response was not ok.');
                 }
@@ -761,7 +746,6 @@
         });
 
 
-        // Function to show success and failure popups
         function showPopup(message, isFailure, orderNum = '') {
             const popup = document.getElementById('popupMessage');
             popup.innerHTML = isFailure
@@ -775,7 +759,7 @@
 
             setTimeout(() => {
                 popup.style.display = 'none';
-            }, 30000); // show a bit longer for copy time
+            }, 30000); 
         }
 
         function copyOrderNumber() {
@@ -792,7 +776,7 @@
         const backToTopButton = document.getElementById("backToTop");
 
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) { // Show button after scrolling 300px
+            if (window.scrollY > 300) { 
             backToTopButton.style.display = "block";
             } else {
             backToTopButton.style.display = "none";
@@ -820,13 +804,12 @@
             slideshowElement.style.opacity = 0;
 
             setTimeout(() => {
-                // Change image when faded out
+
                 currentIndex = (currentIndex + 1) % slideshowImages.length;
                 slideshowElement.src = slideshowImages[currentIndex];
 
-                // Fade in
                 slideshowElement.style.opacity = 1;
-            }, 1000); // matches transition time
+            }, 1000); 
         }
 
 
