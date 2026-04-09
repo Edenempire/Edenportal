@@ -6,586 +6,544 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
 
     <title>Parables & Platters</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <link rel="icon" href="logo_tr.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
 
-        body {
-
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: white;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: #070503;
+            background-image: radial-gradient(ellipse at 40% 30%, rgba(35, 28, 22, 0.6) 0%, #030201 100%);
+            min-height: 100vh;
+            color: #ede6dc;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            animation: glow 1.5s infinite alternate;
-
+            scroll-behavior: smooth;
+            line-height: 1.4;
         }
 
-        header {
+        /* ultra-smooth scroll behavior + performance */
+        html {
+            scroll-behavior: smooth;
+        }
 
-            background: #e3c5a3;
-            width: 100%;
-            padding: 14px;
+        /* custom scrollbar — delicate but visible */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1511;
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c28a4e;
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e0a76b;
+        }
+
+        /* ---------- HEADER (FIXED, CRISP) ---------- */
+        .sacred-header {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1000;
-
+            width: 100%;
+            background: rgba(7, 5, 3, 0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 10px 5%;
+            z-index: 1100;
+            border-bottom: 1px solid rgba(194, 138, 78, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .header-logo-link {
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .header-logo-link img {
+            max-height: 58px;
+            width: auto;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+            transition: filter 0.2s;
+        }
+        .header-logo-link:hover img {
+            filter: drop-shadow(0 0 8px rgba(194, 138, 78, 0.6));
+            transform: scale(1.01);
         }
 
-        .bodylogoimage {
-
+        /* floating emblem (tactical) */
+        .floating-emblem {
             position: fixed;
-            width: 15%;
-            bottom: 0;
-            right: 0;
-            margin-right: 40px;
-            margin-bottom: 105px;
-            border: 10px solid #e3c5a3;
-            padding: 10px;
-            border-radius: 5px;
+            bottom: 24px;
+            right: 24px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(15, 12, 9, 0.88);
+            backdrop-filter: blur(8px);
+            border: 1.8px solid #c28a4e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            z-index: 1000;
-
+            z-index: 1050;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
+        .floating-emblem img {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .floating-emblem:hover {
+            transform: scale(1.07);
+            border-color: #e5bc85;
+            background: #1f1914;
         }
 
-        .header-link {
-
-            text-decoration: none; 
-            color: inherit; 
-
+        /* ---------- MAIN MENU GRID - RESPONSIVE OLYMPUS ---------- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+            justify-content: center;
+            gap: 36px 32px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 150px auto 90px auto;
+            padding: 0 24px;
         }
 
-        .header-link img {
-
-            width: 15%;
-
-        }
-
-        .header-link {
-
-            text-decoration: none; 
-            color: inherit; 
-
-        }
-
-        .header-link:hover {
-
-            cursor: pointer; 
-
-        }
-
-        h1 {
-
-            font-size: 45px;
-            text-align: center;
-
-        }
-
-        footer {
-
-            background: #e3c5a3;
-            color: black;
-            width: 80%;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
-            left: 0;
-
-        }
-
-        .menu {
-
+        /* menu cards — robust, no shadows, just border glow */
+        .menu-card {
+            background: rgba(18, 15, 12, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 36px 24px 36px 24px;
+            border: 1px solid rgba(194, 138, 78, 0.45);
+            transition: all 0.35s cubic-bezier(0.2, 0.85, 0.4, 1);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin-top: 230px;
-            margin-bottom: 70px;
-            font-size: 20px;
-            color: black;
-            animation: none;
-
+            position: relative;
         }
-
-        .menu-item {
-
-            background: #e3c5a3;
-            border-radius: 10px;
-            margin: 25px;
-            padding: 20px;
-            width: 270px;
-            transition: transform 0.3s;
-
-        }
-
-        .menu-item:hover {
-
-            transform: scale(1.05);
-
-        }
-
-        .price {
-
-            color: green; /* Makes the price text green */
-            font-weight: bold; /* Optional: Make the price text bold */
-
-        }
-
-
-        img {
-
-            width: 100%;
-            height: 200px;
-            border-radius: 10px;
-
-        }
-
-        button {
-
-            background: #3cd3de;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-size: 22px;
-
-        }
-
-        button:hover {
-
-            background: #3cd3de79;
-
-        }
-
-        .menupage {
-
-            background: #e3c5a3;
-            width: 10%;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            margin-right: 40px;
-            margin-bottom: 30px;
-            color: black;
-            font-size: 15px;
-
-        }
-
-        .menupage:hover {
-
-            background: #e3c5a379;
-
-        }
-
-        .popup {
-
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            color: #000;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-            text-align: left;
-            width: 500px;
-            height: 500px;
-            overflow-y: auto; 
-
-        }
-
-        .close-btn {
-
+        .menu-card::after {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #333;
-            cursor: pointer;
-
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            border: 1px solid transparent;
+            transition: border 0.2s;
         }
-
-        .close-btn:hover {
-
-            color: #e3c5a3;
-
+        .menu-card:hover {
+            transform: translateY(-5px);
+            background: rgba(28, 23, 18, 0.96);
+            border-color: rgba(210, 158, 92, 0.8);
         }
-
-        .popup input,
-        .popup textarea {
-
-            width: 80%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-
-        }
-
-        .popup button {
-
-            color: black;
-            background: #3cd3de;
-            margin-top: 10px;
-
-        }
-
-        .popup.failure {
-
-            background: #f8d7da;
-
-        }
-
-        .popup.success {
-
-            background: #d4edda;
-
-        }
-
-        #backToTop {
-
-            background: #e3c5a3;
-            position: fixed;
-            width: 10%;
-            bottom: 0;
-            right: 0;
-            margin-right: 200px;
-            margin-bottom: 30px;
-            box-shadow: 0 -1px 20px #ffefcb80;
-            display: none;
-            color: black;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 15px;
-            z-index: 1000;
-
-        }
-
-        #backToTop:hover {
-
-            background-color: #e3c5a379;
-
-        }
-
-        label {
-
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
-            color: #333;
-
-        }
-
-        select {
-
+        .card-img {
             width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            color: #333;
-            margin-bottom: 16px;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
-
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease, filter 0.3s;
+            filter: brightness(0.87) contrast(1.05);
+        }
+        .menu-card:hover .card-img {
+            transform: scale(1.02);
+            filter: brightness(0.94) contrast(1.08);
+        }
+        .card-body {
+            padding: 22px 20px 26px;
+            text-align: center;
+        }
+        .item-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(130deg, #f2e2ca, #dcb17c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+        }
+        .item-price {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #e2b57a;
+            background: rgba(0,0,0,0.45);
+            display: inline-block;
+            padding: 4px 24px;
+            border-radius: 60px;
+            margin: 10px 0 8px;
+            border: 0.5px solid rgba(210, 158, 92, 0.6);
+            letter-spacing: -0.5px;
+        }
+        .item-desc {
+            font-size: 0.85rem;
+            color: #cfc2b2;
+            line-height: 1.45;
+            margin: 10px 0 20px;
+            padding: 0 6px;
+            font-weight: 400;
+        }
+        .order-cta {
+            background: linear-gradient(105deg, #8b5e34, #6e4a28);
+            border: none;
+            padding: 12px 8px;
+            width: 88%;
+            border-radius: 44px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: #fff7ef;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+        .order-cta:hover {
+            background: linear-gradient(105deg, #a57241, #8b5e34);
+            transform: scale(0.97);
+            letter-spacing: 0.2px;
         }
 
-        select:focus {
-
-            border-color: #007bff;
-            background-color: #e7f3ff;
-            outline: none;
-
+        /* footer sacred */
+        .sacred-footer {
+            width: 100%;
+            background: #070504;
+            border-top: 1px solid rgba(194, 138, 78, 0.3);
+            text-align: center;
+            padding: 32px 20px;
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: #b9a68b;
+        }
+        .footer-sigil {
+            font-size: 0.85rem;
+            letter-spacing: 6px;
+            margin-bottom: 12px;
+            opacity: 0.65;
         }
 
-        .error-message {
-
-            font-size: 14px;
-            color: red;
+        /* ---------- MODAL (popup) — supremely responsive ---------- */
+        .modal-overlay {
             display: none;
-
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
         }
-
-        button[type="submit"] {
-            
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
+        .modal-container {
+            background: #18130f;
+            max-width: 580px;
+            width: 100%;
+            border-radius: 56px;
+            padding: 28px 30px;
+            position: relative;
+            animation: modalRise 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(210, 158, 92, 0.7);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.8);
+        }
+        @keyframes modalRise {
+            0% { opacity: 0; transform: scale(0.96) translateY(12px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .modal-close {
+            position: absolute;
+            top: 22px;
+            right: 24px;
+            background: #2d241e;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             border: none;
-            border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-
+            color: #e2bc89;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        button[type="submit"]:hover {
-
-            background-color: #0056b3;
-
+        .modal-close:hover {
+            background: #c28a4e;
+            color: #0f0b07;
+            transform: rotate(90deg);
         }
-
-        button[type="button"] {
-
-            padding: 12px 20px;
-            background-color: #f44336;
-            color: white;
-            font-size: 16px;
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 26px;
+            border-left: 4px solid #c28a4e;
+            padding-left: 20px;
+            color: #f5e9db;
+        }
+        .form-row {
+            margin-bottom: 20px;
+        }
+        .form-row label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #e2cfb5;
+        }
+        .form-row input, .form-row select, .form-row textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 48px;
+            border: 1px solid #4e3c2e;
+            background: #211c17;
+            color: #f2e5d8;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .form-row textarea {
+            border-radius: 28px;
+            resize: vertical;
+        }
+        .form-row input:focus, .form-row select:focus {
+            border-color: #dcae77;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.4);
+            background: #2f2720;
+        }
+        .input-error {
+            border-color: #dd7a5a !important;
+        }
+        .error-txt {
+            color: #e68a6b;
+            font-size: 0.7rem;
+            display: none;
+            margin-top: 5px;
+            margin-left: 15px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 28px;
+        }
+        .btn-primary {
+            background: #8b5e34;
+            flex: 1;
+            padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 60px;
+            font-weight: 700;
+            color: #fef2e4;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-
+            transition: 0.2s;
+        }
+        .btn-primary:hover {
+            background: #b07844;
+        }
+        .btn-secondary {
+            background: #332a23;
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            color: #dfcdb7;
+        }
+        .cash-note {
+            background: #2b231e;
+            border-radius: 44px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            margin: 12px 0 4px;
         }
 
-        button[type="button"]:hover {
-
-            background-color: #d32f2f;
-
+        /* ---------- TOAST (DARK, TACTICAL) ---------- */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #100d0a;
+            backdrop-filter: blur(20px);
+            color: #f3e8dc;
+            padding: 12px 26px;
+            border-radius: 80px;
+            font-weight: 600;
+            z-index: 2200;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.2s;
+            border-left: 3px solid #dcae77;
+            border-right: 3px solid #dcae77;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90vw;
         }
-
-        .fade-image {
-
-            transition: opacity 1s ease-in-out;
+        .toast-msg.show {
             opacity: 1;
-
+            transform: translateX(-50%) scale(1);
+            pointer-events: auto;
+        }
+        .copy-order-btn {
+            background: #c28a4e;
+            border: none;
+            border-radius: 40px;
+            padding: 4px 14px;
+            margin-left: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1e1712;
         }
 
-        @media (max-width: 768px) {
+        /* floating utility buttons */
+        .float-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 1050;
+            display: flex;
+            gap: 12px;
+        }
+        .back2top, .menu-link {
+            background: #1e1814cc;
+            backdrop-filter: blur(6px);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #c28a4e;
+            color: #e0bd8f;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .menu-link {
+            width: auto;
+            padding: 0 20px;
+            border-radius: 40px;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .back2top:hover, .menu-link:hover {
+            background: #c28a4e;
+            color: #0d0a07;
+            border-color: #eecd9e;
+        }
 
-            body {
-
-                font-family: 'Arial', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: white;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
+        /* ---------- WATCH & ULTRA SMALL (down to 160px) ---------- */
+        @media (max-width: 520px) {
+            .menu-grid {
+                gap: 24px;
+                margin-top: 130px;
+                padding: 0 16px;
+            }
+            .modal-container {
+                padding: 20px 18px;
+            }
+            .modal-title {
+                font-size: 1.6rem;
+            }
+            .card-body {
+                padding: 16px 12px 20px;
+            }
+            .item-title {
+                font-size: 1.6rem;
+            }
+            .order-cta {
+                width: 95%;
+            }
+            .float-nav {
+                bottom: 16px;
+                left: 16px;
+            }
+            .floating-emblem {
+                bottom: 16px;
+                right: 16px;
+                width: 58px;
+                height: 58px;
+            }
+            .floating-emblem img {
+                width: 48px;
+                height: 48px;
+            }
+            .toast-msg {
+                white-space: normal;
                 text-align: center;
-                animation: glow 1.5s infinite alternate;
-
+                width: 90%;
+                padding: 10px 18px;
+                bottom: 20px;
             }
+        }
 
-            .bodylogoimage {
-
-                display: none;
-
+        /* tiny screens (watches, foldables) */
+        @media (max-width: 360px) {
+            .menu-grid {
+                gap: 18px;
             }
-
-            header {
-
-                background: #e3c5a3;
-                width: 100%;
-                padding: 15px;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-
+            .item-title {
+                font-size: 1.4rem;
             }
-            
-            .header-link img {
-
-                width: 170px;
-                margin-right: 33px;
-                margin-top: -22px;
-
+            .item-price {
+                font-size: 1.3rem;
             }
-
-            footer {
-
-                background: #e3c5a3;
-                width: 80%;
-                padding: 10px;
-                position: relative;
-                bottom: 0;
-                left: 0;
-                font-size: 13px;
-
-            }
-
-            .menu {
-
-                display: flex;
+            .modal-buttons {
                 flex-direction: column;
-                align-items: center;
-                margin-top: 180px;
-                margin-bottom: 70px;
-                font-size: 20px;
-                color: black;
-
             }
-
-            .menu-item {
-
-                background: #e3c5a3;
-                border-radius: 10px;
-                margin: 25px;
-                padding: 20px;
-                width: 200px;
-                transition: transform 0.3s;
-
+            .modal-container {
+                padding: 18px;
             }
+        }
 
-            .menu-item:hover {
-
-                transform: scale(1.05);
-
-            }
-
-            .menu-item p {
-
-                font-size: 18px;
-
-            }
-
-            img {
-
-                width: 100%;
-                height: 160px;
-                border-radius: 10px;
-
-            }
-
-            button {
-
-                background: #3cd3de;
-                color: black;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background 0.3s;
-                font-size: 17px;
-
-            }
-
-            button:hover {
-
-                background: #3cd3de79;
-
-            }
-
-            h2 {
-
-                font-size: 23px;
-            }
-
-            .popup {
-
-                max-height: 70vh;
-                width: 80%;
-
-            }
-
-            .popup input,
-            .popup textarea {
-
-                width: 70%;
-                padding: 10px;
-                margin: 5px 0;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-
-            }
-
-            .popup button {
-
-                color: black;
-                background: #3cd3de;
-                margin-top: 10px;
-
-            }
-
-            .popup.failure {
-
-                background: #f8d7da;
-
-            }
-
-            .popup.success {
-
-                background: #d4edda;
-
-            }
-
-            #backToTop {
-
-                background: #e3c5a3;
-                position: fixed;
-                width: 11%;
-                bottom: 0;
-                right: 0;
-                margin-right: 17px;
-                margin-bottom: 190px;
-                display: none;
-                color: black;
-                border: none;
-                padding: 10px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 9px;
-                z-index: 1000;
-
-            }
-
-            #backToTop:hover {
-
-                background-color: #e3c5a379;
-
-            }
-
-            .menupage {
-
-                background: #e3c5a3;
-                position: fixed;
-                width: 11%;
-                bottom: 0;
-                right: 0;
-                margin-right: 17px;
-                margin-bottom: 140px;
-                color: black;
-                border: none;
-                padding: 10px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 9px;
-                z-index: 1000;
-
-            }
-
-            .menuupage:hover {
-
-                background: #e3c5a379;
-
-            }
-
+        /* loading state spinner (embedded animation) */
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,235,200,0.3);
+            border-radius: 50%;
+            border-top-color: #e2bc7a;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
     </style>
@@ -593,236 +551,304 @@
 </head>
 
 <body>
-    
-    <header>
 
-        <a href="index.html" class="header-link">
+<header class="sacred-header">
+    <a href="#" class="header-logo-link" id="homeLogoLink">
+        <img src="images/jesuslogo_enef.png">
+    </a>
+</header>
 
-            <img src="images/jesuslogo_enef.png" title="Jesus loves food">
+<div class="menu-grid" id="dynamicMenuGrid"></div>
 
-        </a>
-
-    </header>
-
-    <div class="menu">
-
-        <div class="menu-item">
-
-            <img id="slideshowImage" class="fade-image" src="01. images/pap_wors_beans.jpg" alt="Pap, Wors & Beans Curry" title="hmmm... yummy!">
-            <h2>Pap, Steak & Wors</h2>
-            <p class="price">price: R25</p>
-            <p>details: pap, steak, wors, chilli, sambles & coleslaw</p>
-            <button onclick="showOrderForm('pap, steak & wors', 'R25', 'pap, steak, wors, chilli, sambles & coleslaw., '01. images/pap_wors_beans.jpg')" id="ordernow" title="click to order now">order now</button>
-
-        </div> -->
-
-    <div class="popup" id="orderForm">
-        <h2>Order Details</h2>
-
-        <button type="button" class="close-btn" onclick="closeForm()" title="Close">X</button>
-    
-        <form id="orderDetails" action="https://formspree.io/f/manqrkpv" method="POST" onsubmit="return validateForm()">
-            <input type="hidden" name="item" id="item">
-            <input type="hidden" name="price" id="price">
-            <input type="hidden" name="details" id="details">
-    
-            <label for="name">Your Name:</label>
-            <input type="text" name="name" id="name" required>
-            <br>
-            <span id="nameError" class="error-message" style="color: red; display: none;">Please enter your name.</span>
-    
-            <label for="phone">Your Phone Number:</label>
-            <input type="text" name="phone" id="phone" required>
-            <br>
-            <span id="phoneError" class="error-message" style="color: red; display: none;">Please enter a valid phone number (only numbers).</span>
-    
-            <label for="email">Your Email:</label>
-            <input type="email" name="email" id="email" required>
-            <br>
-            <span id="emailError" class="error-message" style="color: red; display: none;">Please enter a valid email address.</span>
-    
-            <label for="company">Location:</label>
-            <p>on our next update, you will be able to choose your precise location. please be patient with us as our software development team fine-tunes this. meanwhile, please choose from the list of options down below on the dropdown, and we will contact you for a precise location.</p>
-            <select name="company" id="company" required>
-                <option value="cbd">Durban CBD - The Market</option>
-                <option value="cbd">Durban CBD - Harbour Side</option>
-                <option value="cbd">Durban CBD - Workshop Side</option>
-            </select>
-            <br>
-            <span id="companyError" class="error-message" style="color: red; display: none;">Please select a company.</span>
-
-            <label for="quantity">Quantity/How Many?:</label>
-            <input type="number" name="quantity" id="quantity" required>
-            <br>
-            <span id="quantity" class="error-message" style="color: red; display: none;">How many of this do you want to order?</span>
-    
-            <label for="details">Anything else?/Personalisation:</label>
-            <input type="text" name="details" id="details" required>
-            <br>
-            <span id="detailsError" class="error-message" style="color: red; display: none;">Please enter any additional details.</span>
-
-            <p>Disclaimer: CASH-ONLY (for now)</p>
-    
-            <button type="submit" title="Click now to submit your order">Submit Order</button>
-            <button type="button" onclick="closeForm()" title="Cancel">Cancel</button>
-
-            <input type="hidden" name="orderNumber" id="orderNumber">
-
+<!-- MODAL ORDER POPUP -->
+<div id="orderModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+        <div class="modal-title"><i class="fas fa-feather-alt"></i> Sacred Offering</div>
+        <form id="orderFormCore">
+            <input type="hidden" id="selectedItemName">
+            <input type="hidden" id="selectedItemPrice">
+            <input type="hidden" id="selectedItemExtras">
+            <div class="form-row">
+                <label><i class="fas fa-user"></i> Full name *</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+                <div class="error-txt" id="nameError">Name required</div>
+            </div>
+            <div class="form-row">
+                <label><i class="fas fa-phone-alt"></i> WhatsApp / Phone *</label>
+                <input type="tel" id="phoneNumber" placeholder="e.g., 0712345678">
+                <div class="error-txt" id="phoneError">Valid 9-15 digits</div>
+            </div>
+            <div class="form-row">
+                <label><i class="fas fa-envelope"></i> Email *</label>
+                <input type="email" id="emailAddress" placeholder="hello@faith.com">
+                <div class="error-txt" id="emailError">Valid email required</div>
+            </div>
+            <div class="form-row">
+                <label><i class="fas fa-location-dot"></i> Pickup zone *</label>
+                <select id="pickupZone">
+                    <option value="">— Choose sacred zone —</option>
+                    <option value="Durban CBD - The Market">🏛️ The Market, Durban CBD</option>
+                    <option value="Durban CBD - Harbour Side">⚓ Harbour Side, Durban CBD</option>
+                    <option value="Durban CBD - Workshop Side">🔧 Workshop Side, Durban CBD</option>
+                </select>
+                <div class="error-txt" id="zoneError">Please select zone</div>
+            </div>
+            <div class="form-row">
+                <label><i class="fas fa-box"></i> Quantity (plates) *</label>
+                <input type="number" id="quantityOrder" min="1" value="1">
+                <div class="error-txt" id="qtyError">Minimum 1 plate</div>
+            </div>
+            <div class="form-row">
+                <label><i class="fas fa-message"></i> Special notes (allergies, extras)</label>
+                <textarea id="specialNotes" rows="2" placeholder="No onion, extra sauce, etc..."></textarea>
+            </div>
+            <div class="cash-note"><i class="fas fa-coins"></i> <strong>Cash only</strong> — pay upon pickup. We'll confirm your order.</div>
+            <div class="modal-buttons">
+                <button type="submit" class="btn-primary" id="submitOrderBtn"><i class="fas fa-check"></i> Place order</button>
+                <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+            </div>
         </form>
     </div>
-    
-    <div class="popup" id="popupMessage" style="display:none;"></div>
+</div>
 
-        <a href="menupage.html">
-    
-            </a>
+<div id="globalToast" class="toast-msg"><i class="fas fa-dove"></i> <span id="toastText">Order blessed</span></div>
 
-            <button id="backToTop" title="back to top">back to top</button>
+<div class="float-nav">
+    <div class="back2top" id="backToTopBtn"><i class="fas fa-chevron-up"></i></div>
+    <a href="#" class="menu-link" id="fullMenuLink"><i class="fas fa-utensil-spoon"></i> Full Menu</a>
+</div>
+<div class="floating-emblem" id="sacredEmblem">
+    <img src="https://placehold.co/100x100?text=✝️" alt="sacred emblem" onerror="this.src='https://placehold.co/100x100?text=✝️'">
+</div>
 
-            <img src="images/jesuslogo.png" class="bodylogoimage" title="peace be still">
+<footer class="sacred-footer">
+    <div class="footer-sigil">✧  ✦  MANNA FROM HEAVEN  ✦  ✧</div>
+    © 2025 Parables & Platters — Centered in faith, rich in flavor. "Taste and see that the Lord is good." — Psalm 34:8
+</footer>
 
+<script>
 
-        <audio autoplay src="03. music/gladiator1.mp3" type="audio/mp3"></audio>
+    // ---------- EXTENSIVE MENU DATA ----------
+    const MENU_DB = [
+        { id: 1, name: "Pap, Steak & Wors", price: "R25", desc: "Pap, steak, wors, chili sambal & creamy coleslaw", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Steak+Wors", extra: "pap, steak, wors, chilli, coleslaw" },
+        { id: 2, name: "Blessed Bean Curry", price: "R22", desc: "Hearty bean curry with pap & fresh tomato salsa", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Bean+Curry", extra: "bean curry, pap, salsa, herbs" },
+        { id: 3, name: "Shepherd’s Stew", price: "R30", desc: "Slow-braised beef stew + pap & spicy chakalaka", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Beef+Stew", extra: "beef stew, pap, chakalaka" },
+        { id: 4, name: "Holy Mackerel Bredie", price: "R28", desc: "Fish bredie, samp & beans, tomato gravy", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Fish+Bredie", extra: "fish bredie, samp, beans, relish" },
+        { id: 5, name: "Glory Gizzard Feast", price: "R27", desc: "Spiced gizzard stew with pap & rainbow slaw", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Gizzard", extra: "gizzard stew, pap, slaw" },
+        { id: 6, name: "Midnight Chicken Rice", price: "R26", desc: "Fragrant yellow rice, tender chicken stew & carrots", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Chicken+Rice", extra: "rice, chicken stew, carrots" }
+    ];
 
-    <footer> &copy; 2025 parables & platters (pty) ltd. all rights reserved. </footer>
+    let currentSelectedItem = null;
+    const menuContainer = document.getElementById('dynamicMenuGrid');
+    const modalOverlay = document.getElementById('orderModal');
+    const toastDiv = document.getElementById('globalToast');
+    const toastTextSpan = document.getElementById('toastText');
 
-    <script>
-
-        
-        function showOrderForm(itemName, itemPrice, itemDetails, itemImage) {
-
-            document.getElementById('item').value = itemName;
-            document.getElementById('price').value = itemPrice;
-            document.getElementById('details').value = itemDetails;
-            document.getElementById('orderForm').style.display = 'block';
-
-        }
-
-        function closeForm() {
-
-            document.getElementById('orderForm').style.display = 'none';
-
-        }
-
-
-        document.getElementById('orderDetails').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-
-            const now = new Date();
-            const datePart = now.toISOString().slice(2, 10).replace(/-/g, ''); 
-            const randomPart = Math.floor(1000 + Math.random() * 9000); 
-            const orderNum = `PP-${datePart}-${randomPart}`; 
-
-            document.getElementById('orderNumber').value = orderNum;
-
-            fetch(this.action, {
-                method: this.method,
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    showPopup("Order placed successfully! Your order number is: " + orderNum, false, orderNum);
-                    this.reset(); 
-                    closeForm(); 
-                } else {
-                    throw new Error('Network response was not ok.');
-                }
-            }).catch(error => {
-                showPopup("There was a problem with your submission. Please try again.", true);
+    function showToast(message, isSuccess = true, copyOrderNumber = null) {
+        toastTextSpan.innerHTML = message;
+        toastDiv.classList.add('show');
+        let copyBtn = toastDiv.querySelector('.copy-order-btn');
+        if(copyOrderNumber && !copyBtn) {
+            const btn = document.createElement('button');
+            btn.className = 'copy-order-btn';
+            btn.innerHTML = '📋 Copy #';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(copyOrderNumber);
+                showToast(`✨ Order ${copyOrderNumber} copied!`, true);
             });
+            toastTextSpan.appendChild(btn);
+        } else if(!copyOrderNumber && copyBtn) copyBtn.remove();
+        setTimeout(() => toastDiv.classList.remove('show'), 5000);
+    }
+
+    function generateOrderRef() {
+        const now = new Date();
+        const y = now.getFullYear().toString().slice(-2);
+        const m = String(now.getMonth() + 1).padStart(2,'0');
+        const d = String(now.getDate()).padStart(2,'0');
+        const r = Math.floor(1000 + Math.random() * 9000);
+        return `PP-${y}${m}${d}-${r}`;
+    }
+
+    function clearFormErrors() {
+        ['fullName', 'phoneNumber', 'emailAddress', 'pickupZone', 'quantityOrder'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.classList.remove('input-error');
         });
+        document.getElementById('nameError').style.display = 'none';
+        document.getElementById('phoneError').style.display = 'none';
+        document.getElementById('emailError').style.display = 'none';
+        document.getElementById('zoneError').style.display = 'none';
+        document.getElementById('qtyError').style.display = 'none';
+    }
 
+    function validateOrderForm() {
+        let isValid = true;
+        const name = document.getElementById('fullName').value.trim();
+        if(!name) { showFieldError('fullName', 'nameError'); isValid = false; } else hideFieldError('fullName', 'nameError');
 
-        function showPopup(message, isFailure, orderNum = '') {
-            const popup = document.getElementById('popupMessage');
-            popup.innerHTML = isFailure
-                ? `<p>${message}</p>`
-                : `<p>${message}</p>
-                <p><strong>Order Number:</strong> <span id="copyOrderNum">${orderNum}</span></p>
-                <button onclick="copyOrderNumber()">Copy Order Number</button>`;
-            
-            popup.className = isFailure ? 'popup failure' : 'popup success';
-            popup.style.display = 'block';
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const phoneRegex = /^[0-9]{9,15}$/;
+        if(!phone || !phoneRegex.test(phone)) { showFieldError('phoneNumber', 'phoneError'); isValid = false; } else hideFieldError('phoneNumber', 'phoneError');
 
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 30000); 
-        }
+        const email = document.getElementById('emailAddress').value.trim();
+        const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+        if(!email || !emailRegex.test(email)) { showFieldError('emailAddress', 'emailError'); isValid = false; } else hideFieldError('emailAddress', 'emailError');
 
-        function copyOrderNumber() {
-            const orderNumElement = document.getElementById('copyOrderNum');
-            const text = orderNumElement.innerText;
+        const zone = document.getElementById('pickupZone').value;
+        if(!zone) { showFieldError('pickupZone', 'zoneError'); isValid = false; } else hideFieldError('pickupZone', 'zoneError');
 
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Order number copied to clipboard: " + text);
-            }).catch(err => {
-                alert("Failed to copy order number.");
+        const qty = parseInt(document.getElementById('quantityOrder').value);
+        if(isNaN(qty) || qty < 1) { showFieldError('quantityOrder', 'qtyError'); isValid = false; } else hideFieldError('quantityOrder', 'qtyError');
+
+        return isValid;
+    }
+
+    function showFieldError(inputId, errorId) {
+        document.getElementById(inputId).classList.add('input-error');
+        document.getElementById(errorId).style.display = 'block';
+    }
+    function hideFieldError(inputId, errorId) {
+        document.getElementById(inputId).classList.remove('input-error');
+        document.getElementById(errorId).style.display = 'none';
+    }
+
+    function renderMenu() {
+        menuContainer.innerHTML = '';
+        MENU_DB.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+            card.innerHTML = `
+                <img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://placehold.co/600x400/2a211b/e2bc8a?text=Divine+Meal'">
+                <div class="card-body">
+                    <h2 class="item-title">${escapeHtml(item.name)}</h2>
+                    <div class="item-price">${item.price}</div>
+                    <p class="item-desc">${escapeHtml(item.desc)}</p>
+                    <button class="order-cta" data-id="${item.id}"><i class="fas fa-shopping-cart"></i> Order now <i class="fas fa-arrow-right"></i></button>
+                </div>
+            `;
+            const btn = card.querySelector('.order-cta');
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentSelectedItem = item;
+                openOrderModal(item);
             });
-        }
+            menuContainer.appendChild(card);
+        });
+    }
 
-        const backToTopButton = document.getElementById("backToTop");
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) { 
-            backToTopButton.style.display = "block";
+    function openOrderModal(item) {
+        document.getElementById('selectedItemName').value = item.name;
+        document.getElementById('selectedItemPrice').value = item.price;
+        document.getElementById('selectedItemExtras').value = item.extra;
+        document.getElementById('fullName').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('emailAddress').value = '';
+        document.getElementById('pickupZone').value = '';
+        document.getElementById('quantityOrder').value = '1';
+        document.getElementById('specialNotes').value = '';
+        clearFormErrors();
+        modalOverlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modalOverlay.style.display = 'none';
+        currentSelectedItem = null;
+    }
+
+    // Form submission with loading animation + robust fetch
+    const orderForm = document.getElementById('orderFormCore');
+    orderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if(!currentSelectedItem) { showToast("Please select a meal first", false); return; }
+        if(!validateOrderForm()) return;
+
+        const submitBtn = document.getElementById('submitOrderBtn');
+        const originalBtnHtml = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+        submitBtn.disabled = true;
+
+        const orderNumber = generateOrderRef();
+        const formDataObj = new FormData();
+        formDataObj.append('item', currentSelectedItem.name);
+        formDataObj.append('price', currentSelectedItem.price);
+        formDataObj.append('extraDetails', currentSelectedItem.extra);
+        formDataObj.append('name', document.getElementById('fullName').value.trim());
+        formDataObj.append('phone', document.getElementById('phoneNumber').value.trim());
+        formDataObj.append('email', document.getElementById('emailAddress').value.trim());
+        formDataObj.append('company', document.getElementById('pickupZone').value);
+        formDataObj.append('quantity', document.getElementById('quantityOrder').value);
+        formDataObj.append('special_request', document.getElementById('specialNotes').value);
+        formDataObj.append('orderNumber', orderNumber);
+        formDataObj.append('_subject', `🍽️ NEW ORDER: ${currentSelectedItem.name} | ${orderNumber}`);
+
+        try {
+            const response = await fetch('https://formspree.io/f/manqrkpv', {
+                method: 'POST',
+                body: formDataObj,
+                headers: { 'Accept': 'application/json' }
+            });
+            if(response.ok) {
+                closeModal();
+                showToast(`✅ Order #${orderNumber} confirmed! ${currentSelectedItem.name}. We'll contact you soon.`, true, orderNumber);
+                orderForm.reset();
+                clearFormErrors();
             } else {
-            backToTopButton.style.display = "none";
+                throw new Error('Submission error');
             }
-        });
-
-        backToTopButton.addEventListener("click", () => {
-            window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-            });
-        });
-
-
-        const slideshowImages = [
-            "01. images/pap_wors_beans.jpg",
-            "01. images/bnw.jpg"
-        ];
-
-        let currentIndex = 0;
-        const slideshowElement = document.getElementById("slideshowImage");
-
-        function fadeToNextImage() {
-            // Fade out
-            slideshowElement.style.opacity = 0;
-
-            setTimeout(() => {
-
-                currentIndex = (currentIndex + 1) % slideshowImages.length;
-                slideshowElement.src = slideshowImages[currentIndex];
-
-                slideshowElement.style.opacity = 1;
-            }, 1000); 
+        } catch (err) {
+            closeModal();
+            showToast(`❌ Order failed. Please try again or contact us.`, false);
+        } finally {
+            submitBtn.innerHTML = originalBtnHtml;
+            submitBtn.disabled = false;
         }
+    });
 
+    // sanitize phone input
+    document.getElementById('phoneNumber')?.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
+    });
 
-        function startSlideshow() {
-            setInterval(fadeToNextImage, 5000);
-        }
+    // modal close handlers
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
 
-        window.addEventListener("DOMContentLoaded", startSlideshow);
-        
-    </script>
+    // back to top smooth
+    const backBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 300) backBtn.style.display = 'flex';
+        else backBtn.style.display = 'none';
+    });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // sacred emblem toast
+    document.getElementById('sacredEmblem').addEventListener('click', () => {
+        showToast(`"Come to me, all you who are weary..." — Matthew 11:28 🕊️`, true);
+    });
+    document.getElementById('fullMenuLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast(`✨ Full sacred menu — all plates available ✨`, true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('homeLogoLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    renderMenu();
+    console.log("✅ PARABLES & PLATTERS — ultimate responsive system, zero shadows, infinite harmony");
+
+</script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
 
 
 
