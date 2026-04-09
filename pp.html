@@ -1,12 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>Parables & Platters | Sacred Bites — Transcendent</title>
+
+    <title>Parables & Platters</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +46,6 @@
         ::-webkit-scrollbar-thumb { background: #c28a4e; border-radius: 0px; }
         ::-webkit-scrollbar-thumb:hover { background: #e0a76b; }
 
-        /* ---------- HEADER: BIGGER LOGO + TRANSPARENCY TOUCH ---------- */
         .sacred-header {
             position: fixed;
             top: 0;
@@ -227,7 +235,6 @@
             clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         }
 
-        /* ---------- STICKY FOOTER — ALWAYS VISIBLE (sticky + flex) ---------- */
         .sacred-footer {
             width: 100%;
             background: rgba(5, 3, 2, 0.92);
@@ -321,7 +328,6 @@
             .nav-btn::after { display: none; }
         }
 
-        /* MODAL with transparency + security */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -522,8 +528,11 @@
             .menu-grid { grid-template-columns: 1fr; }
             .item-price { font-size: 1.4rem; }
         }
+
     </style>
+
 </head>
+
 <body>
 
 <header class="sacred-header">
@@ -598,15 +607,15 @@
 
 <div id="globalToast" class="toast-msg"><i class="fas fa-dove"></i> <span id="toastText">Order blessed</span></div>
 <div class="floating-emblem" id="sacredEmblem">
-    <img src="https://placehold.co/100x100?text=✝️" alt="emblem" onerror="this.src='https://placehold.co/100x100?text=✝️'">
+    <img src="images/jesuslogo.png">
 </div>
 
 <footer class="sacred-footer">
-    <div class="footer-sigil">⬚  TRANSCENDENT  ⬚  STICKY  ⬚</div>
-    © 2025 Parables & Platters — Faithful, transparent, unshakable. "Taste and see that the Lord is good." — Psalm 34:8
+    © 2025 Parables & Platters — Feeding the soul.
 </footer>
 
 <script>
+
     (function() {
         const MENU_DB = [
             { id: 1, name: "Pap, Steak & Wors", price: "R25", desc: "Pap, steak, wors, chili sambal & creamy coleslaw", img: "https://placehold.co/600x600/2a211b/e2bc8a?text=Steak+Wors", extra: "pap, steak, wors, chilli, coleslaw" },
@@ -769,6 +778,15 @@
         setTimeout(() => { const b = document.getElementById('guidanceHint'); if(b) b.style.opacity = '0'; setTimeout(() => { if(b) b.style.display = 'none'; }, 800); }, 7000);
         renderMenu();
     })();
+
 </script>
+
 </body>
+
 </html>
+
+
+
+
+
+
