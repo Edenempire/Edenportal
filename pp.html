@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
+    
 <head>
-
+    
     <meta charset="UTF-8">
-
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-
+    
     <title>Parables & Platters</title>
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
+    
     <style>
-
+        
         * {
             margin: 0;
             padding: 0;
@@ -36,12 +36,11 @@
             line-height: 1.4;
         }
 
-        /* ultra-smooth scroll behavior + performance */
         html {
             scroll-behavior: smooth;
         }
 
-        /* custom scrollbar — delicate but visible */
+        /* custom scrollbar */
         ::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -58,39 +57,50 @@
             background: #e0a76b;
         }
 
-        /* ---------- HEADER (FIXED, CRISP) ---------- */
+        /* ---------- HEADER WITH BORDERED LOGO ---------- */
         .sacred-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(7, 5, 3, 0.92);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            padding: 10px 5%;
+            background: rgba(7, 5, 3, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 5%;
             z-index: 1100;
-            border-bottom: 1px solid rgba(194, 138, 78, 0.4);
+            border-bottom: 1px solid rgba(194, 138, 78, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.2s;
         }
         .header-logo-link {
             display: inline-block;
             transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            /* BORDER AROUND LOGO — gold-rimmed elegance */
+            border: 2px solid #c28a4e;
+            border-radius: 60px;
+            background: rgba(0,0,0,0.3);
+            padding: 6px 18px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 8px rgba(194,138,78,0.3);
         }
         .header-logo-link img {
             max-height: 58px;
             width: auto;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
             transition: filter 0.2s;
+            display: block;
+        }
+        .header-logo-link:hover {
+            transform: scale(1.02);
+            border-color: #e5bc85;
+            box-shadow: 0 0 15px rgba(194,138,78,0.5);
         }
         .header-logo-link:hover img {
             filter: drop-shadow(0 0 8px rgba(194, 138, 78, 0.6));
-            transform: scale(1.01);
         }
 
-        /* floating emblem (tactical) */
+        /* floating emblem */
         .floating-emblem {
             position: fixed;
             bottom: 24px;
@@ -121,23 +131,23 @@
             background: #1f1914;
         }
 
-        /* ---------- MAIN MENU GRID - RESPONSIVE OLYMPUS ---------- */
+        /* ---------- MAIN MENU GRID - EXPANDED, AIRY ---------- */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+            grid-template-columns: repeat(auto-fit, minmax(290px, 360px));
             justify-content: center;
-            gap: 36px 32px;
-            max-width: 1400px;
+            gap: 44px 38px;
+            max-width: 1480px;
             width: 100%;
-            margin: 150px auto 90px auto;
-            padding: 0 24px;
+            margin: 170px auto 110px auto;
+            padding: 0 28px;
         }
 
-        /* menu cards — robust, no shadows, just border glow */
+        /* menu cards — elegant, spacious */
         .menu-card {
             background: rgba(18, 15, 12, 0.92);
             backdrop-filter: blur(3px);
-            border-radius: 36px 24px 36px 24px;
+            border-radius: 40px 28px 40px 28px;
             border: 1px solid rgba(194, 138, 78, 0.45);
             transition: all 0.35s cubic-bezier(0.2, 0.85, 0.4, 1);
             overflow: hidden;
@@ -145,19 +155,10 @@
             flex-direction: column;
             position: relative;
         }
-        .menu-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            pointer-events: none;
-            border: 1px solid transparent;
-            transition: border 0.2s;
-        }
         .menu-card:hover {
-            transform: translateY(-5px);
-            background: rgba(28, 23, 18, 0.96);
-            border-color: rgba(210, 158, 92, 0.8);
+            transform: translateY(-6px);
+            background: rgba(32, 26, 20, 0.97);
+            border-color: rgba(210, 158, 92, 0.85);
         }
         .card-img {
             width: 100%;
@@ -172,56 +173,56 @@
             filter: brightness(0.94) contrast(1.08);
         }
         .card-body {
-            padding: 22px 20px 26px;
+            padding: 26px 24px 30px;
             text-align: center;
         }
         .item-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(130deg, #f2e2ca, #dcb17c);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             letter-spacing: -0.3px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .item-price {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: #e2b57a;
             background: rgba(0,0,0,0.45);
             display: inline-block;
-            padding: 4px 24px;
+            padding: 4px 28px;
             border-radius: 60px;
-            margin: 10px 0 8px;
+            margin: 12px 0 10px;
             border: 0.5px solid rgba(210, 158, 92, 0.6);
             letter-spacing: -0.5px;
         }
         .item-desc {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #cfc2b2;
-            line-height: 1.45;
-            margin: 10px 0 20px;
+            line-height: 1.5;
+            margin: 12px 0 22px;
             padding: 0 6px;
             font-weight: 400;
         }
         .order-cta {
             background: linear-gradient(105deg, #8b5e34, #6e4a28);
             border: none;
-            padding: 12px 8px;
-            width: 88%;
-            border-radius: 44px;
+            padding: 14px 10px;
+            width: 90%;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             color: #fff7ef;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             transition: all 0.2s;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .order-cta:hover {
             background: linear-gradient(105deg, #a57241, #8b5e34);
@@ -235,19 +236,89 @@
             background: #070504;
             border-top: 1px solid rgba(194, 138, 78, 0.3);
             text-align: center;
-            padding: 32px 20px;
-            margin-top: 40px;
-            font-size: 0.75rem;
+            padding: 40px 20px;
+            margin-top: 60px;
+            font-size: 0.8rem;
             color: #b9a68b;
         }
         .footer-sigil {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 6px;
-            margin-bottom: 12px;
-            opacity: 0.65;
+            margin-bottom: 14px;
+            opacity: 0.7;
         }
 
-        /* ---------- MODAL (popup) — supremely responsive ---------- */
+        /* ---------- SIDE CONTROL BUTTONS (TOP, MID, DOWN, QUICK SCROLL) ---------- */
+        .side-controls {
+            position: fixed;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1080;
+            background: rgba(10, 8, 6, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 18px 12px;
+            border-radius: 80px;
+            border: 1px solid rgba(194, 138, 78, 0.5);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+        .nav-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            background: #1e1814cc;
+            backdrop-filter: blur(4px);
+            border: 1px solid #c28a4e;
+            color: #e0bd8f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.4rem;
+        }
+        .nav-btn i {
+            font-size: 1.3rem;
+        }
+        .nav-btn:hover {
+            background: #c28a4e;
+            color: #0d0a07;
+            transform: scale(1.08);
+            border-color: #f3d6ac;
+        }
+        /* responsive: on small screens move to bottom-left or adjust */
+        @media (max-width: 680px) {
+            .side-controls {
+                right: 16px;
+                gap: 14px;
+                padding: 14px 8px;
+            }
+            .nav-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .side-controls {
+                right: 12px;
+                gap: 12px;
+                padding: 12px 6px;
+            }
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .menu-grid {
+                margin-top: 150px;
+                gap: 28px;
+            }
+        }
+
+        /* ---------- MODAL (popup) ---------- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -261,10 +332,10 @@
         }
         .modal-container {
             background: #18130f;
-            max-width: 580px;
+            max-width: 600px;
             width: 100%;
             border-radius: 56px;
-            padding: 28px 30px;
+            padding: 32px 34px;
             position: relative;
             animation: modalRise 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             border: 1px solid rgba(210, 158, 92, 0.7);
@@ -281,17 +352,14 @@
             top: 22px;
             right: 24px;
             background: #2d241e;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: none;
             font-size: 18px;
             cursor: pointer;
             color: #e2bc89;
             transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .modal-close:hover {
             background: #c28a4e;
@@ -300,18 +368,18 @@
         }
         .modal-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            margin-bottom: 26px;
+            font-size: 2.1rem;
+            margin-bottom: 28px;
             border-left: 4px solid #c28a4e;
-            padding-left: 20px;
+            padding-left: 22px;
             color: #f5e9db;
         }
         .form-row {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
         .form-row label {
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -379,13 +447,13 @@
         .cash-note {
             background: #2b231e;
             border-radius: 44px;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
-            font-size: 0.75rem;
-            margin: 12px 0 4px;
+            font-size: 0.8rem;
+            margin: 16px 0 6px;
         }
 
-        /* ---------- TOAST (DARK, TACTICAL) ---------- */
+        /* TOAST */
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -394,7 +462,7 @@
             background: #100d0a;
             backdrop-filter: blur(20px);
             color: #f3e8dc;
-            padding: 12px 26px;
+            padding: 14px 28px;
             border-radius: 80px;
             font-weight: 600;
             z-index: 2200;
@@ -406,8 +474,7 @@
             transition: 0.2s;
             border-left: 3px solid #dcae77;
             border-right: 3px solid #dcae77;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            font-size: 0.9rem;
             flex-wrap: wrap;
             justify-content: center;
             max-width: 90vw;
@@ -428,109 +495,7 @@
             color: #1e1712;
         }
 
-        /* floating utility buttons */
-        .float-nav {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            z-index: 1050;
-            display: flex;
-            gap: 12px;
-        }
-        .back2top, .menu-link {
-            background: #1e1814cc;
-            backdrop-filter: blur(6px);
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #c28a4e;
-            color: #e0bd8f;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-        }
-        .menu-link {
-            width: auto;
-            padding: 0 20px;
-            border-radius: 40px;
-            gap: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        .back2top:hover, .menu-link:hover {
-            background: #c28a4e;
-            color: #0d0a07;
-            border-color: #eecd9e;
-        }
-
-        /* ---------- WATCH & ULTRA SMALL (down to 160px) ---------- */
-        @media (max-width: 520px) {
-            .menu-grid {
-                gap: 24px;
-                margin-top: 130px;
-                padding: 0 16px;
-            }
-            .modal-container {
-                padding: 20px 18px;
-            }
-            .modal-title {
-                font-size: 1.6rem;
-            }
-            .card-body {
-                padding: 16px 12px 20px;
-            }
-            .item-title {
-                font-size: 1.6rem;
-            }
-            .order-cta {
-                width: 95%;
-            }
-            .float-nav {
-                bottom: 16px;
-                left: 16px;
-            }
-            .floating-emblem {
-                bottom: 16px;
-                right: 16px;
-                width: 58px;
-                height: 58px;
-            }
-            .floating-emblem img {
-                width: 48px;
-                height: 48px;
-            }
-            .toast-msg {
-                white-space: normal;
-                text-align: center;
-                width: 90%;
-                padding: 10px 18px;
-                bottom: 20px;
-            }
-        }
-
-        /* tiny screens (watches, foldables) */
-        @media (max-width: 360px) {
-            .menu-grid {
-                gap: 18px;
-            }
-            .item-title {
-                font-size: 1.4rem;
-            }
-            .item-price {
-                font-size: 1.3rem;
-            }
-            .modal-buttons {
-                flex-direction: column;
-            }
-            .modal-container {
-                padding: 18px;
-            }
-        }
-
-        /* loading state spinner (embedded animation) */
+        /* loading spinner */
         .loading-spinner {
             display: inline-block;
             width: 18px;
@@ -546,21 +511,31 @@
             cursor: not-allowed;
         }
 
+        /* extra bottom spacing for larger pages */
+        .sacred-footer {
+            margin-top: 50px;
+        }
     </style>
-
 </head>
-
 <body>
 
 <header class="sacred-header">
     <a href="#" class="header-logo-link" id="homeLogoLink">
-        <img src="images/jesuslogo_enef.png">
+        
+        <img src="images/jesuslogo_enef.png" alt="Parables & Platters Logo" onerror="this.src='https://placehold.co/400x120/2c241e/e2bc8a?text=✝️+P%26P+✝️'; this.onerror=null;">
     </a>
 </header>
 
+<div class="side-controls">
+    <div class="nav-btn" id="scrollTopBtn" title="Scroll to Top"><i class="fas fa-chevron-up"></i></div>
+    <div class="nav-btn" id="scrollMiddleBtn" title="Scroll to Menu Center"><i class="fas fa-utensils"></i></div>
+    <div class="nav-btn" id="scrollDownBtn" title="Scroll to Footer"><i class="fas fa-chevron-down"></i></div>
+    <div class="nav-btn" id="quickScrollAdvance" title="Quick Advance (Page Jump)"><i class="fas fa-forward-step"></i></div>
+</div>
+
 <div class="menu-grid" id="dynamicMenuGrid"></div>
 
-<!-- MODAL ORDER POPUP -->
+<!-- MODAL ORDER -->
 <div id="orderModal" class="modal-overlay">
     <div class="modal-container">
         <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
@@ -613,30 +588,27 @@
 </div>
 
 <div id="globalToast" class="toast-msg"><i class="fas fa-dove"></i> <span id="toastText">Order blessed</span></div>
-
-<div class="float-nav">
-    <div class="back2top" id="backToTopBtn"><i class="fas fa-chevron-up"></i></div>
-    <a href="#" class="menu-link" id="fullMenuLink"><i class="fas fa-utensil-spoon"></i> Full Menu</a>
-</div>
 <div class="floating-emblem" id="sacredEmblem">
     <img src="https://placehold.co/100x100?text=✝️" alt="sacred emblem" onerror="this.src='https://placehold.co/100x100?text=✝️'">
 </div>
 
 <footer class="sacred-footer">
     <div class="footer-sigil">✧  ✦  MANNA FROM HEAVEN  ✦  ✧</div>
-    © 2025 Parables & Platters — Centered in faith, rich in flavor. "Taste and see that the Lord is good." — Psalm 34:8
+    © 2025 Parables & Platters — Feeding the soul.
 </footer>
 
 <script>
-
-    // ---------- EXTENSIVE MENU DATA ----------
+    
+    // ---------- EXPANDED MENU (more items to advance entire page further) ----------
     const MENU_DB = [
-        { id: 1, name: "Pap, Steak & Wors", price: "R25", desc: "Pap, steak, wors, chili sambal & creamy coleslaw", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Steak+Wors", extra: "pap, steak, wors, chilli, coleslaw" },
-        { id: 2, name: "Blessed Bean Curry", price: "R22", desc: "Hearty bean curry with pap & fresh tomato salsa", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Bean+Curry", extra: "bean curry, pap, salsa, herbs" },
-        { id: 3, name: "Shepherd’s Stew", price: "R30", desc: "Slow-braised beef stew + pap & spicy chakalaka", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Beef+Stew", extra: "beef stew, pap, chakalaka" },
-        { id: 4, name: "Holy Mackerel Bredie", price: "R28", desc: "Fish bredie, samp & beans, tomato gravy", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Fish+Bredie", extra: "fish bredie, samp, beans, relish" },
-        { id: 5, name: "Glory Gizzard Feast", price: "R27", desc: "Spiced gizzard stew with pap & rainbow slaw", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Gizzard", extra: "gizzard stew, pap, slaw" },
-        { id: 6, name: "Midnight Chicken Rice", price: "R26", desc: "Fragrant yellow rice, tender chicken stew & carrots", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Chicken+Rice", extra: "rice, chicken stew, carrots" }
+        { id: 1, name: "Pap, Steak & Wors", price: "R25", desc: "Pap, steak, wors, chili sambal & creamy coleslaw — hearty blessing", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Steak+Wors", extra: "pap, steak, wors, chilli, coleslaw" },
+        { id: 2, name: "Blessed Bean Curry", price: "R22", desc: "Hearty bean curry with pap & fresh tomato salsa, vegan option", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Bean+Curry", extra: "bean curry, pap, salsa, herbs" },
+        { id: 3, name: "Shepherd’s Stew", price: "R30", desc: "Slow-braised beef stew + pap & spicy chakalaka, deep flavor", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Beef+Stew", extra: "beef stew, pap, chakalaka" },
+        { id: 4, name: "Holy Mackerel Bredie", price: "R28", desc: "Fish bredie, samp & beans, tomato gravy — coastal grace", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Fish+Bredie", extra: "fish bredie, samp, beans, relish" },
+        { id: 5, name: "Glory Gizzard Feast", price: "R27", desc: "Spiced gizzard stew with pap & rainbow slaw, soulful bite", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Gizzard", extra: "gizzard stew, pap, slaw" },
+        { id: 6, name: "Midnight Chicken Rice", price: "R26", desc: "Fragrant yellow rice, tender chicken stew & carrots", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Chicken+Rice", extra: "rice, chicken stew, carrots" },
+        { id: 7, name: "Prophet's Lamb Potjie", price: "R38", desc: "Slow-cooked lamb potjie, pap & butternut, ancestral recipe", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Lamb+Potjie", extra: "lamb, pap, butternut, gravy" },
+        { id: 8, name: "Divine Chakalaka Bowl", price: "R20", desc: "Vibrant chakalaka with samp, beans and fresh herbs", img: "https://placehold.co/600x400/2a211b/e2bc8a?text=Chakalaka", extra: "chakalaka, samp, beans" }
     ];
 
     let currentSelectedItem = null;
@@ -688,21 +660,16 @@
         let isValid = true;
         const name = document.getElementById('fullName').value.trim();
         if(!name) { showFieldError('fullName', 'nameError'); isValid = false; } else hideFieldError('fullName', 'nameError');
-
         const phone = document.getElementById('phoneNumber').value.trim();
         const phoneRegex = /^[0-9]{9,15}$/;
         if(!phone || !phoneRegex.test(phone)) { showFieldError('phoneNumber', 'phoneError'); isValid = false; } else hideFieldError('phoneNumber', 'phoneError');
-
         const email = document.getElementById('emailAddress').value.trim();
         const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
         if(!email || !emailRegex.test(email)) { showFieldError('emailAddress', 'emailError'); isValid = false; } else hideFieldError('emailAddress', 'emailError');
-
         const zone = document.getElementById('pickupZone').value;
         if(!zone) { showFieldError('pickupZone', 'zoneError'); isValid = false; } else hideFieldError('pickupZone', 'zoneError');
-
         const qty = parseInt(document.getElementById('quantityOrder').value);
         if(isNaN(qty) || qty < 1) { showFieldError('quantityOrder', 'qtyError'); isValid = false; } else hideFieldError('quantityOrder', 'qtyError');
-
         return isValid;
     }
 
@@ -755,23 +722,17 @@
         modalOverlay.style.display = 'flex';
     }
 
-    function closeModal() {
-        modalOverlay.style.display = 'none';
-        currentSelectedItem = null;
-    }
+    function closeModal() { modalOverlay.style.display = 'none'; currentSelectedItem = null; }
 
-    // Form submission with loading animation + robust fetch
     const orderForm = document.getElementById('orderFormCore');
     orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if(!currentSelectedItem) { showToast("Please select a meal first", false); return; }
         if(!validateOrderForm()) return;
-
         const submitBtn = document.getElementById('submitOrderBtn');
         const originalBtnHtml = submitBtn.innerHTML;
         submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
         submitBtn.disabled = true;
-
         const orderNumber = generateOrderRef();
         const formDataObj = new FormData();
         formDataObj.append('item', currentSelectedItem.name);
@@ -785,21 +746,14 @@
         formDataObj.append('special_request', document.getElementById('specialNotes').value);
         formDataObj.append('orderNumber', orderNumber);
         formDataObj.append('_subject', `🍽️ NEW ORDER: ${currentSelectedItem.name} | ${orderNumber}`);
-
         try {
-            const response = await fetch('https://formspree.io/f/manqrkpv', {
-                method: 'POST',
-                body: formDataObj,
-                headers: { 'Accept': 'application/json' }
-            });
+            const response = await fetch('https://formspree.io/f/manqrkpv', { method: 'POST', body: formDataObj, headers: { 'Accept': 'application/json' } });
             if(response.ok) {
                 closeModal();
                 showToast(`✅ Order #${orderNumber} confirmed! ${currentSelectedItem.name}. We'll contact you soon.`, true, orderNumber);
                 orderForm.reset();
                 clearFormErrors();
-            } else {
-                throw new Error('Submission error');
-            }
+            } else throw new Error('Submission error');
         } catch (err) {
             closeModal();
             showToast(`❌ Order failed. Please try again or contact us.`, false);
@@ -809,46 +763,47 @@
         }
     });
 
-    // sanitize phone input
-    document.getElementById('phoneNumber')?.addEventListener('input', function(e) {
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
-    });
-
-    // modal close handlers
+    document.getElementById('phoneNumber')?.addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15); });
     document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
     document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
 
-    // back to top smooth
-    const backBtn = document.getElementById('backToTopBtn');
-    window.addEventListener('scroll', () => {
-        if(window.scrollY > 300) backBtn.style.display = 'flex';
-        else backBtn.style.display = 'none';
+    // ---- SIDE CONTROL BUTTONS LOGIC ----
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const scrollMiddleBtn = document.getElementById('scrollMiddleBtn');
+    const scrollDownBtn = document.getElementById('scrollDownBtn');
+    const quickScrollAdvance = document.getElementById('quickScrollAdvance');
+    
+    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    scrollMiddleBtn.addEventListener('click', () => {
+        const menuGrid = document.getElementById('dynamicMenuGrid');
+        if(menuGrid) menuGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: window.innerHeight * 0.5, behavior: 'smooth' });
     });
-    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    scrollDownBtn.addEventListener('click', () => {
+        const footer = document.querySelector('.sacred-footer');
+        if(footer) footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+    // Quick Scroll Advance: moves the page further down by 500px (advance the entire page)
+    quickScrollAdvance.addEventListener('click', () => {
+        window.scrollBy({ top: 550, behavior: 'smooth' });
+        showToast(`✨ Scroll advanced — deeper into the sacred feast ✨`, true);
+    });
 
-    // sacred emblem toast
-    document.getElementById('sacredEmblem').addEventListener('click', () => {
-        showToast(`"Come to me, all you who are weary..." — Matthew 11:28 🕊️`, true);
-    });
-    document.getElementById('fullMenuLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast(`✨ Full sacred menu — all plates available ✨`, true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    document.getElementById('homeLogoLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
+    // emblem & logo extras
+    document.getElementById('sacredEmblem').addEventListener('click', () => showToast(`"Come to me, all you who are weary..." — Matthew 11:28 🕊️`, true));
+    document.getElementById('homeLogoLink').addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    
     renderMenu();
-    console.log("✅ PARABLES & PLATTERS — ultimate responsive system, zero shadows, infinite harmony");
-
+    
 </script>
-
+    
 </body>
-
+    
 </html>
+
+
 
 
 
