@@ -1,33 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    
+
 <head>
-    
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    
-    <title>AEROSPACE ENGINEERING</title>
+    <title>AEROSPACE ENGINEERING | FLIGHT DECK</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
     <link rel="icon" type="image/png" href="logo_tr.png">
     
     <style>
-        
         * {
-            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            
         }
 
         :root {
-            
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --accent-orange: #f97316;
@@ -37,11 +27,9 @@
             --text-primary: #e5e7eb;
             --text-secondary: #9ca3af;
             --text-accent: #f97316;
-            
         }
 
         html, body {
-            
             width: 100%;
             min-height: 100vh;
             background: var(--dark-bg);
@@ -49,17 +37,13 @@
             color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
-            
         }
 
         body {
-            
             background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
-            
         }
 
         .fixed-header {
-            
             position: fixed;
             top: 0;
             left: 0;
@@ -74,15 +58,12 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
-            
         }
 
         .logo-area {
-            
             display: flex;
             align-items: center;
             gap: 1rem;
-            
         }
 
         .logo-icon {
@@ -142,6 +123,17 @@
             max-width: 700px;
             margin: 0 auto;
             font-size: 1.1rem;
+        }
+
+        .branch-intro {
+            margin: 1rem 0 2rem 0;
+            padding: 0.5rem 1rem;
+            border-left: 4px solid var(--primary-red);
+            background: rgba(220,38,38,0.05);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
         .instrument-panel-main {
@@ -414,7 +406,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.3;
+            opacity: 0.35;
         }
 
         .audio-control {
@@ -431,6 +423,7 @@
             cursor: pointer;
             font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
+            transition: 0.2s;
         }
 
         .audio-control i {
@@ -439,48 +432,45 @@
         }
 
         @media (max-width: 768px) {
-            
             .main-container {
                 padding: 1rem;
                 margin-top: 120px;
             }
-            
             .procedure-grid {
                 grid-template-columns: 1fr;
             }
-            
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            
             .form-group.full-width {
                 grid-column: span 1;
             }
-            
             .hero-title {
                 font-size: 1.8rem;
             }
-            
             .instrument-value {
                 font-size: 1.4rem;
             }
-            
         }
-        
     </style>
-    
 </head>
-    
+
 <body>
 
 <header class="fixed-header">
     <div class="logo-area">
         <i class="fas fa-fighter-jet logo-icon"></i>
-        <a href="index.html" style="text-decoration: none; color: transparent;"><span class="page-title">AEROSPACE ENGINEERING</span></a>
+        <a href="#" style="text-decoration: none; color: transparent;"><span class="page-title">AEROSPACE ENGINEERING</span></a>
     </div>
 </header>
 
 <canvas id="bgCanvas" class="bg-canvas"></canvas>
+<div class="audio-control" id="audioToggle">
+    <i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE
+</div>
+<audio id="bgAudio" loop preload="auto">
+    <source src="ae.mp3" type="audio/mpeg">
+</audio>
 
 <main class="main-container">
 
@@ -489,21 +479,85 @@
         <p class="hero-subtitle">Aerospace engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering.</p>
     </div>
 
-<p>Let's dive first into aeronautical engineering</p>
+    <div class="branch-intro">
+        <i class="fas fa-plane" style="color: var(--primary-red); margin-right: 0.5rem;"></i> 
+        AERONAUTICAL ENGINEERING — focuses on atmospheric flight, aerodynamics, propulsion, avionics, and structural integrity.
+    </div>
 
-    <<
-            < 
+    <!-- Enhanced instrument panel with 12+ live telemetry readings -->
+    <div class="instrument-panel-main">
+        <div class="instrument"><div class="instrument-label">AIRSPEED (IAS)</div><div class="instrument-value"><span id="airspeed">412</span><span class="instrument-unit">KTS</span></div></div>
+        <div class="instrument"><div class="instrument-label">ANGLE OF ATTACK</div><div class="instrument-value"><span id="aoa">7.8</span><span class="instrument-unit">°</span></div></div>
+        <div class="instrument"><div class="instrument-label">G-LOAD</div><div class="instrument-value"><span id="gload">2.1</span><span class="instrument-unit">G</span></div></div>
+        <div class="instrument"><div class="instrument-label">RADAR STATUS</div><div class="instrument-value"><span id="radarStatus">TRACKING</span></div></div>
+        <div class="instrument"><div class="instrument-label">RPM (L)</div><div class="instrument-value"><span id="rpm">87%</span></div></div>
+        <div class="instrument"><div class="instrument-label">EGT</div><div class="instrument-value"><span id="egt">635°C</span></div></div>
+        <div class="instrument"><div class="instrument-label">OIL PRESS</div><div class="instrument-value"><span id="oilPress">82</span><span class="instrument-unit">PSI</span></div></div>
+        <div class="instrument"><div class="instrument-label">HYD PRESS</div><div class="instrument-value"><span id="hydPressure">3220</span><span class="instrument-unit">PSI</span></div></div>
+        <div class="instrument"><div class="instrument-label">BATTERY</div><div class="instrument-value"><span id="battery">94%</span></div></div>
+        <div class="instrument"><div class="instrument-label">FLT CONTROLS</div><div class="instrument-value"><span id="controls">NOMINAL</span></div></div>
+        <div class="instrument"><div class="instrument-label">Vr SPEED</div><div class="instrument-value"><span id="vrSpeed">165</span><span class="instrument-unit">KTS</span></div></div>
+        <div class="instrument"><div class="instrument-label">SLIP BALL</div><div class="instrument-value"><span id="slipBall">0.2</span><span class="instrument-unit">G</span></div></div>
+    </div>
+
+    <!-- AERONAUTICAL ENGINEERING PROCEDURES - Complete Grid -->
+    <div class="procedure-grid">
+        <!-- Aerodynamics Card -->
+        <div class="procedure-card">
+            <div class="card-header"><div class="step-number">01</div><div class="card-title">AERODYNAMICS & FLIGHT MECHANICS</div></div>
+            <div class="card-content">
+                <div class="procedure-text">Lift, drag, thrust, and weight equilibrium. Subsonic/transonic airflow behavior, wing design & vortex generation.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">Lift-to-Drag (L/D max):</span><span class="spec-value">12.4</span></li>
+                    <li><span class="spec-label">Mach Number:</span><span class="spec-value" id="machNum">0.72</span></li>
+                    <li><span class="spec-label">Wing Sweep:</span><span class="spec-value">25°</span></li>
+                </ul>
+                <div class="warning-note"><i class="fas fa-exclamation-triangle"></i> Transonic buffet region M 0.85–1.1</div>
+            </div>
+        </div>
+
+        <!-- Propulsion & Turbofan -->
+        <div class="procedure-card">
+            <div class="card-header"><div class="step-number">02</div><div class="card-title">PROPULSION & JET ENGINE PERFORMANCE</div></div>
+            <div class="card-content">
+                <div class="procedure-text">Turbofan thermodynamic cycle: compression, combustion, turbine, exhaust. Bypass ratio & specific thrust analysis.</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">N1 Fan Speed:</span><span class="spec-value">94%</span></li>
+                    <li><span class="spec-label">EGT Margin:</span><span class="spec-value">+42°C</span></li>
+                    <li><span class="spec-label">Thrust (dry):</span><span class="spec-value">29,500 lbf</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Avionics & Flight Systems -->
+        <div class="procedure-card">
+            <div class="card-header"><div class="step-number">03</div><div class="card-title">AVIONICS & NAVIGATION SUITE</div></div>
+            <div class="card-content">
+                <div class="procedure-text">Integrated INS/GPS, radar altimeter, tactical datalink, mission computer & digital flight control system (DFCS).</div>
+                <ul class="spec-list">
+                    <li><span class="spec-label">GPS FIX:</span><span class="spec-value" id="gpsFix">3D LOCK</span></li>
+                    <li><span class="spec-label">CM COUNTERMEASURES:</span><span class="spec-value" id="cmCount">24 REMAINING</span></li>
+                    <li><span class="spec-label">RWR MODE:</span><span class="spec-value">ACTIVE</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Post-Flight & Shutdown Checklist -->
+        <div class="procedure-card">
+            <div class="card-header"><div class="step-number">04</div><div class="card-title">POST-FLIGHT & ENGINE SHUTDOWN</div></div>
             <div class="card-content">
                 <div class="procedure-text">Engine cooldown, systems shutdown, post-flight inspection, and debrief data recording.</div>
                 <ul class="spec-list">
                     <li><span class="spec-label">Cooldown:</span><span class="spec-value">3 MIN IDLE</span></li>
                     <li><span class="spec-label">Flight Time:</span><span class="spec-value" id="flightTime">1.4 HRS</span></li>
                     <li><span class="spec-label">Fuel Remaining:</span><span class="spec-value" id="fuelRemaining">1850 LBS</span></li>
+                    <li><span class="spec-label">Landing AoA:</span><span class="spec-value" id="landingAoa">12.5°</span></li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <!-- Mission Report Section -->
     <div class="contact-section">
         <div class="section-title">
             <i class="fas fa-paper-plane"></i>
@@ -538,17 +592,22 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-
-                <h4>AEROSPACE ENGINEERING</h4>
-              
+                <h4>AEROSPACE ENGINEERING · FLIGHT RESEARCH DIVISION</h4>
+                <p>© 2026 Advanced Flight Dynamics | Aeronautics & Astronautics Integration</p>
             </div>
-           
+            <div class="footer-section">
+                <h4><i class="fas fa-satellite"></i> GROUND CONTROL</h4>
+                <p>Telemetry feed: live telemetry | AES-256 encrypted</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <i class="fas fa-cogs"></i> Next-gen flight test instrumentation — all data simulated for engineering analysis.
+        </div>
     </footer>
-
-</main>
+</main>
 
 <script>
-
+    // --- Canvas Background with fighter jet silhouettes (enhanced) ---
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -590,36 +649,35 @@
             ctx.lineTo(-4, 0);
             ctx.lineTo(-10, 6);
             ctx.closePath();
-            ctx.fillStyle = 'rgba(220, 38, 38, 0.25)';
+            ctx.fillStyle = 'rgba(220, 38, 38, 0.3)';
             ctx.fill();
             ctx.beginPath();
             ctx.moveTo(-4, 0);
             ctx.lineTo(-14, -3);
             ctx.lineTo(-14, 3);
-            ctx.fillStyle = 'rgba(220, 38, 38, 0.4)';
+            ctx.fillStyle = 'rgba(220, 38, 38, 0.5)';
             ctx.fill();
             ctx.restore();
         }
     }
     
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
         fighters.push(new Fighter(
             Math.random() * width,
             Math.random() * height,
-            (Math.random() - 0.5) * 0.6,
-            (Math.random() - 0.5) * 0.6
+            (Math.random() - 0.5) * 0.7,
+            (Math.random() - 0.5) * 0.7
         ));
     }
     
     function animateCanvas() {
         if (!ctx) return;
         ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.08)';
         ctx.fillRect(0, 0, width, height);
-        
         ctx.strokeStyle = 'rgba(220, 38, 38, 0.08)';
-        ctx.lineWidth = 0.5;
-        for (let i = 0; i < width; i += 80) {
+        ctx.lineWidth = 0.6;
+        for (let i = 0; i < width; i += 70) {
             ctx.beginPath();
             ctx.moveTo(i, 0);
             ctx.lineTo(i, height);
@@ -629,7 +687,6 @@
             ctx.lineTo(width, i % height);
             ctx.stroke();
         }
-        
         for (let f of fighters) {
             f.update();
             f.draw();
@@ -638,61 +695,70 @@
     }
     animateCanvas();
     
+    // --- INSTRUMENT UPDATES (real-time flight telemetry)---
     function updateInstruments() {
-
-        let airspeed = 385 + (Math.sin(Date.now() / 3000) * 15) + (Math.random() - 0.5) * 8;
-        airspeed = Math.min(620, Math.max(120, airspeed));
+        let airspeed = 385 + (Math.sin(Date.now() / 3000) * 18) + (Math.random() - 0.5) * 10;
+        airspeed = Math.min(620, Math.max(140, airspeed));
         document.getElementById('airspeed').innerText = Math.floor(airspeed);
         
-        let aoaVal = 8.2 + (Math.sin(Date.now() / 2500) * 1.2) + (Math.random() - 0.5) * 0.6;
-        aoaVal = Math.min(22, Math.max(2, aoaVal));
+        let aoaVal = 8.2 + (Math.sin(Date.now() / 2500) * 1.5) + (Math.random() - 0.5) * 0.7;
+        aoaVal = Math.min(24, Math.max(1.8, aoaVal));
         document.getElementById('aoa').innerText = aoaVal.toFixed(1);
         
-        let gloadVal = 1.3 + (Math.sin(Date.now() / 2000) * 0.8) + (Math.random() - 0.5) * 0.3;
-        gloadVal = Math.min(7.5, Math.max(0.8, gloadVal));
+        let gloadVal = 1.3 + (Math.sin(Date.now() / 2000) * 0.9) + (Math.random() - 0.5) * 0.4;
+        gloadVal = Math.min(8.2, Math.max(0.8, gloadVal));
         document.getElementById('gload').innerText = gloadVal.toFixed(1);
-
-        let radarStates = ['CLEAR', 'CONTACT', 'TRACKING', 'LOCK', 'SEARCH'];
-        let radarIndex = Math.floor(Math.abs(Math.sin(Date.now() / 8000)) * 4);
-        document.getElementById('radarStatus').innerText = radarStates[radarIndex];
-
-        document.getElementById('rpm').innerText = Math.floor(25 + Math.abs(Math.sin(Date.now() / 4000)) * 75) + '%';
-        document.getElementById('egt').innerText = Math.floor(550 + Math.sin(Date.now() / 3000) * 80) + '°C';
-        document.getElementById('oilPress').innerText = Math.floor(75 + Math.sin(Date.now() / 3500) * 15);
         
-        let hydPress = 3200 + (Math.sin(Date.now() / 5000) * 50);
+        let radarStates = ['CLEAR', 'CONTACT', 'TRACKING', 'LOCK', 'SEARCH', 'STANDBY'];
+        let radarIndex = Math.floor(Math.abs(Math.sin(Date.now() / 7000)) * 5);
+        document.getElementById('radarStatus').innerText = radarStates[radarIndex];
+        
+        let rpmVal = 28 + Math.abs(Math.sin(Date.now() / 4200)) * 71;
+        document.getElementById('rpm').innerText = Math.floor(rpmVal) + '%';
+        document.getElementById('egt').innerText = Math.floor(560 + Math.sin(Date.now() / 3200) * 85) + '°C';
+        document.getElementById('oilPress').innerText = Math.floor(72 + Math.sin(Date.now() / 3600) * 14);
+        
+        let hydPress = 3180 + (Math.sin(Date.now() / 5000) * 60);
         document.getElementById('hydPressure').innerText = Math.floor(hydPress) + ' PSI';
         
-        let batteryVal = 98 - (Date.now() / 3600000) % 15;
+        let batteryVal = 97 - (Date.now() / 3600000) % 16;
         document.getElementById('battery').innerText = Math.floor(batteryVal) + '%';
         
-        let controlStates = ['FREE', 'NOMINAL', 'OPERATIONAL'];
-        document.getElementById('controls').innerText = controlStates[Math.floor(Math.abs(Math.sin(Date.now() / 10000)) * 2.5)];
+        let controlStates = ['FREE', 'NOMINAL', 'OPERATIONAL', 'DAMPED'];
+        document.getElementById('controls').innerText = controlStates[Math.floor(Math.abs(Math.sin(Date.now() / 11000)) * 3)];
         
-        let vrBase = 160 + (Math.sin(Date.now() / 6000) * 5);
+        let vrBase = 158 + (Math.sin(Date.now() / 5500) * 7);
         document.getElementById('vrSpeed').innerText = Math.floor(vrBase);
-
-        document.getElementById('slipBall').innerText = ((Math.sin(Date.now() / 2500) * 0.3) + (Math.random() - 0.5) * 0.2).toFixed(1);
         
-        let cmCount = 32 - (Date.now() / 300000) % 32;
-        document.getElementById('cmCount').innerHTML = Math.floor(cmCount) + ' REMAINING';
+        document.getElementById('slipBall').innerText = ((Math.sin(Date.now() / 2400) * 0.35) + (Math.random() - 0.5) * 0.2).toFixed(1);
         
-        let landingAoA = 12.5 + (Math.sin(Date.now() / 4000) * 1);
+        let cmCount = 34 - (Date.now() / 320000) % 33;
+        document.getElementById('cmCount').innerHTML = Math.floor(Math.max(0, cmCount)) + ' REMAINING';
+        
+        let landingAoA = 12.2 + (Math.sin(Date.now() / 4200) * 1.2);
         document.getElementById('landingAoa').innerHTML = landingAoA.toFixed(1) + '°';
         
-        let flightHrs = 1.4 + (Date.now() / 3600000) % 2;
+        let flightHrs = 1.4 + (Date.now() / 3600000) % 2.3;
         document.getElementById('flightTime').innerHTML = flightHrs.toFixed(1) + ' HRS';
         
-        let fuel = 1850 - (Date.now() / 180000) % 1200;
-        document.getElementById('fuelRemaining').innerHTML = Math.floor(Math.max(150, fuel)) + ' LBS';
+        let fuel = 1890 - (Date.now() / 185000) % 1350;
+        document.getElementById('fuelRemaining').innerHTML = Math.floor(Math.max(210, fuel)) + ' LBS';
+        
+        let mach = (airspeed / 661).toFixed(2);
+        document.getElementById('machNum').innerHTML = mach;
+        
+        let gpsFixStates = ['3D LOCK', 'DGPS', 'INS ONLY', 'ACQUISITION'];
+        document.getElementById('gpsFix').innerHTML = gpsFixStates[Math.floor(Math.abs(Math.sin(Date.now() / 15000)) * 3)];
     }
     
-    setInterval(updateInstruments, 800);
+    setInterval(updateInstruments, 750);
+    updateInstruments();
     
+    // --- AUDIO CONTROL ---
     const audio = document.getElementById('bgAudio');
     const audioToggle = document.getElementById('audioToggle');
     audio.loop = true;
-    audio.volume = 0.3;
+    audio.volume = 0.28;
     audio.src = "ae.mp3";
     
     let audioEnabled = false;
@@ -725,10 +791,11 @@
     audio.addEventListener('ended', () => {
         if (audioEnabled) {
             audio.currentTime = 0;
-            audio.play();
+            audio.play().catch(e => console.log("autoplay blocked"));
         }
     });
     
+    // --- Formspree submission handler ---
     const form = document.getElementById('contactForm');
     const statusDiv = document.getElementById('formStatus');
     
@@ -761,49 +828,6 @@
             statusDiv.style.color = '#ef4444';
         }
     });
-    
 </script>
-    
 </body>
-    
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
