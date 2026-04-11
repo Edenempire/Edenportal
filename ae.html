@@ -489,143 +489,10 @@
         <p class="hero-subtitle">Aerospace engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering.</p>
     </div>
 
-    <div class="instrument-panel-main">
-        <div class="instrument">
-            <div class="instrument-label">AIRSPEED</div>
-            <div class="instrument-value"><span id="airspeed">385</span><span class="instrument-unit">KIAS</span></div>
-        </div>
-        <div class="instrument">
-            <div class="instrument-label">ANGLE OF ATTACK</div>
-            <div class="instrument-value"><span id="aoa">8.2</span><span class="instrument-unit">°</span></div>
-        </div>
-        <div class="instrument">
-            <div class="instrument-label">G-LOAD</div>
-            <div class="instrument-value"><span id="gload">1.3</span><span class="instrument-unit">G</span></div>
-        </div>
-        <div class="instrument">
-            <div class="instrument-label">RADAR STATUS</div>
-            <div class="instrument-value"><span id="radarStatus">CLEAR</span></div>
-        </div>
-    </div>
+<p>Let's dive first into aeronautical engineering</p>
 
-    <div class="procedure-grid">
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">01</div>
-                <div class="card-title">COCKPIT PREFLIGHT</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Mechanical flight control verification — manual reversion mode active. All hydraulic accumulators pressurized, backup systems armed.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Hydraulic Pressure:</span><span class="spec-value" id="hydPressure">3200 PSI</span></li>
-                    <li><span class="spec-label">Battery Bus:</span><span class="spec-value" id="battery">98%</span></li>
-                    <li><span class="spec-label">Control Surfaces:</span><span class="spec-value" id="controls">FREE</span></li>
-                </ul>
-                <div class="warning-note">
-                    <i class="fas fa-exclamation-triangle"></i> Ejection seat pin removed · Manual flight controls verified
-                </div>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">02</div>
-                <div class="card-title">ENGINE START SEQUENCE</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Jet Fuel Starter (JFS) engagement → throttle idle cutoff → introduce fuel at 20% RPM. Monitor EGT and oil pressure.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">RPM:</span><span class="spec-value" id="rpm">25%</span></li>
-                    <li><span class="spec-label">EGT:</span><span class="spec-value" id="egt">620°C</span></li>
-                    <li><span class="spec-label">Oil Pressure:</span><span class="spec-value" id="oilPress">85 PSI</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">03</div>
-                <div class="card-title">TAXI & CONTROL SWEEP</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Differential braking, rudder pedals. Full control surface deflection check — aileron, elevator, rudder sweep.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Aileron:</span><span class="spec-value">±20°</span></li>
-                    <li><span class="spec-label">Elevator:</span><span class="spec-value">+15°/-12°</span></li>
-                    <li><span class="spec-label">Rudder:</span><span class="spec-value">±28°</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">04</div>
-                <div class="card-title">TAKEOFF & ROTATION</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Military power, release brakes. Rotate at Vr, maintain 10-12° nose-up attitude. Gear up at positive rate.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Rotation Speed:</span><span class="spec-value" id="vrSpeed">160 KIAS</span></li>
-                    <li><span class="spec-label">Initial Pitch:</span><span class="spec-value">12° NU</span></li>
-                    <li><span class="spec-label">Flaps:</span><span class="spec-value">UP @ 400ft</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">05</div>
-                <div class="card-title">BASIC AIRWORK</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Coordinated flight maneuvers — level turns, climbs, descents. Maintain coordinated ball centered with rudder input.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Turn Coordination:</span><span class="spec-value" id="slipBall">0.0</span></li>
-                    <li><span class="spec-label">Slow Flight:</span><span class="spec-value">180 KIAS</span></li>
-                    <li><span class="spec-label">Speedbrakes:</span><span class="spec-value">MANUAL</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">06</div>
-                <div class="card-title">COMBAT MANEUVERS</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">High-G defensive maneuvers. Maximum performance turns, energy management, and missile evasion tactics.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Max G-Load:</span><span class="spec-value">9.0 G</span></li>
-                    <li><span class="spec-label">AOA Limit:</span><span class="spec-value">25 Units</span></li>
-                    <li><span class="spec-label">Chaff/Flare:</span><span class="spec-value" id="cmCount">32 REMAINING</span></li>
-                </ul>
-                <div class="warning-note">
-                    <i class="fas fa-bullseye"></i> Defensive break turn · Energy management critical
-                </div>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">07</div>
-                <div class="card-title">PRECISION LANDING</div>
-            </div>
-            <div class="card-content">
-                <div class="procedure-text">Overhead break or straight-in approach. Maintain on-speed AOA, flare at 30ft, drag chute deployment.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Approach Speed:</span><span class="spec-value">140 KIAS</span></li>
-                    <li><span class="spec-label">On-Speed AOA:</span><span class="spec-value" id="landingAoa">12.5°</span></li>
-                    <li><span class="spec-label">Flare Height:</span><span class="spec-value">30 FT</span></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="procedure-card">
-            <div class="card-header">
-                <div class="step-number">08</div>
-                <div class="card-title">POST-FLIGHT PROCEDURES</div>
-            </div>
+    <<
+            < 
             <div class="card-content">
                 <div class="procedure-text">Engine cooldown, systems shutdown, post-flight inspection, and debrief data recording.</div>
                 <ul class="spec-list">
@@ -671,28 +538,14 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>AEROSPACE ENGINEERING</h4>
-                <p>Manual Flight Division<br>Tactical Operations Manual</p>
-            </div>
-            <div class="footer-section">
-                <h4>REFERENCE</h4>
-                <p>Fighter Weapons School<br>Red Flag Procedures</p>
-            </div>
-            <div class="footer-section">
-                <h4>CERTIFICATION</h4>
-                <p>MLB-101 · Manual Flight Qualified<br>Stick & Rudder Endorsement</p>
-            </div>
-        </div>
-        <div class="copyright">
-            <i class="fas fa-crosshairs"></i> MANUAL FLIGHT PROTOCOL · PURE MECHANICAL CONTROL SYSTEMS
-        </div>
-    </footer>
-</main>
 
-<div class="audio-control" id="audioToggle">
-    <i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE
-</div>
-<audio id="bgAudio" loop preload="auto" style="display: none;"></audio>
+                <h4>AEROSPACE ENGINEERING</h4>
+              
+            </div>
+           
+    </footer>
+
+</main>
 
 <script>
 
