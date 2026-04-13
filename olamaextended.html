@@ -6,17 +6,13 @@
 
     <meta charset="UTF-8">
 
-    <!-- ULTRA MOBILE OPTIMIZED: viewport ensures proper scaling, user-scalable allows zoom if needed but UI fits smallest widths -->
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
 
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="logo_tr.png">
 
     <title>SMU-7 • CDR KEMELE • TIER-1 OMEGA</title>
 
     <style>
-
-        /* EXTREME MOBILE RESET — smallest screens down to 240px */
 
         * {
 
@@ -30,9 +26,10 @@
 
         }
 
-        /* Fluid typography based on viewport, minimal breakpoints */
         html {
+            
             font-size: 14px;
+            
         }
 
         @media (max-width: 480px) {
@@ -46,6 +43,7 @@
         }
 
         body {
+            
             background: #050202;
             font-family: 'Courier New', 'Fira Code', 'IBM Plex Mono', monospace;
             color: #cc5555;
@@ -59,9 +57,9 @@
             flex-direction: column;
             min-height: 100vh;
             position: relative;
+            
         }
 
-        /* scanline effect — lightweight */
         body::before {
             content: "";
             position: fixed;
@@ -74,7 +72,6 @@
             z-index: 1;
         }
 
-        /* laser overlay optimized (fewer elements on mobile) */
         .laser-overlay {
             position: fixed;
             top: 0;
@@ -137,7 +134,6 @@
             transform: translateX(-50%);
         }
 
-        /* main container — full width, tight padding */
         .main-container {
             width: 100%;
             max-width: 100%;
@@ -148,7 +144,6 @@
             flex: 1;
         }
 
-        /* compact header */
         .mil-header {
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(1px);
@@ -529,8 +524,11 @@
         button, .term-btn-adv, .btn-download {
             touch-action: manipulation;
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
 <div class="laser-overlay" id="laserOverlay"></div>
@@ -541,12 +539,11 @@
         <div class="header-flex">
             <div class="sandf-logo">
                 <img id="sandfLogo" src="images/SANDF_emblem.svg.png" alt="SANDF" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Emblem_of_the_South_African_National_Defence_Force.svg/80px-Emblem_of_the_South_African_National_Defence_Force.svg.png'">
-                <span>SANDF</span>
             </div>
-            <div class="live-time" id="liveTimeDisplay">--:--:-- SAST</div>
         </div>
+        
         <div class="centered-title">
-            <h1>CDR PHILANI KEMELE<br>COMMANDER • AIRFORCE</h1>
+            <h1>PHILANI KEMELE</h1>
             <div class="insignia-center">
                 <div class="stars-center">
                     <span class="star-1">★</span><span class="star-2">★</span><span class="star-3">★</span>
@@ -558,7 +555,7 @@
     </div>
 
     <div class="dossier-split">
-        <!-- QUICK FACTS COMPACT -->
+
         <div class="quick-facts-panel">
             <div class="profile-left-layout">
                 <div class="photo-quick">
