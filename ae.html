@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>AEROSPACE ENGINEERING | FLIGHT DECK</title>
+    <title>AEROSPACE ENGINEERING | ATMOSPHERE TO ORBIT</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,18 +21,19 @@
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --accent-orange: #f97316;
-            --dark-bg: #0a0a0a;
+            --deep-space: #0b0b1a;
             --card-bg: #111111;
             --border-glow: rgba(220, 38, 38, 0.3);
             --text-primary: #e5e7eb;
             --text-secondary: #9ca3af;
             --text-accent: #f97316;
+            --astronaut-blue: #3b82f6;
         }
 
         html, body {
             width: 100%;
             min-height: 100vh;
-            background: var(--dark-bg);
+            background: var(--deep-space);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: var(--text-primary);
             line-height: 1.5;
@@ -40,7 +41,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
+            background: radial-gradient(circle at 10% 20%, #0a0a1a 0%, #030308 100%);
         }
 
         .fixed-header {
@@ -49,9 +50,9 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+            background: rgba(8, 8, 18, 0.96);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.4);
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
@@ -75,7 +76,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary-red) 100%);
+            background: linear-gradient(135deg, #fff 0%, var(--primary-red) 70%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -102,99 +103,165 @@
 
         .hero-section {
             text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
-            border-radius: 24px;
+            margin-bottom: 2.5rem;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(0, 0, 0, 0) 90%);
+            border-radius: 32px;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.2);
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-orange) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-orange) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
             color: var(--text-secondary);
-            max-width: 700px;
+            max-width: 780px;
             margin: 0 auto;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            line-height: 1.5;
         }
 
         .branch-intro {
             margin: 1rem 0 2rem 0;
-            padding: 0.5rem 1rem;
-            border-left: 4px solid var(--primary-red);
-            background: rgba(220,38,38,0.05);
-            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            border-left: 5px solid var(--primary-red);
+            background: rgba(220,38,38,0.07);
+            border-radius: 16px;
             font-size: 1rem;
             color: var(--text-primary);
             font-weight: 500;
+            transition: 0.2s;
+        }
+
+        /* dual branch cards */
+        .branch-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        .branch-card {
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s;
+        }
+
+        .branch-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-4px);
+        }
+
+        .branch-header {
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(90deg, rgba(220,38,38,0.15), rgba(0,0,0,0.3));
+            border-bottom: 1px solid rgba(220,38,38,0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .branch-header i {
+            font-size: 2rem;
+        }
+
+        .branch-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .branch-body {
+            padding: 1.5rem;
+        }
+
+        .branch-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(220,38,38,0.2);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            border: 1px solid rgba(220,38,38,0.4);
         }
 
         .instrument-panel-main {
             background: var(--card-bg);
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            border-radius: 20px;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 24px;
             padding: 1.5rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
             font-family: 'JetBrains Mono', monospace;
         }
 
         .instrument {
             text-align: center;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
+            padding: 0.9rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
             border-left: 3px solid var(--primary-red);
         }
 
         .instrument-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
         .instrument-value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: var(--accent-orange);
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .instrument-unit {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-left: 0.25rem;
-        }
-
         .procedure-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0;
         }
 
         .procedure-card {
             background: var(--card-bg);
-            border: 1px solid rgba(220, 38, 38, 0.15);
-            border-radius: 20px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 24px;
             overflow: hidden;
             transition: all 0.2s ease;
         }
 
         .procedure-card:hover {
-            border-color: rgba(220, 38, 38, 0.4);
-            transform: translateY(-2px);
+            border-color: rgba(220, 38, 38, 0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
 
         .card-header {
@@ -211,18 +278,16 @@
             color: white;
             width: 32px;
             height: 32px;
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
         }
 
         .card-title {
             font-weight: 600;
             font-size: 1.1rem;
-            color: var(--text-primary);
         }
 
         .card-content {
@@ -232,7 +297,6 @@
         .procedure-text {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            line-height: 1.6;
             margin-bottom: 1rem;
         }
 
@@ -256,43 +320,33 @@
 
         .spec-value {
             color: var(--accent-orange);
-            font-weight: 500;
         }
 
         .warning-note {
-            background: rgba(220, 38, 38, 0.1);
+            background: rgba(220, 38, 38, 0.12);
             border-left: 3px solid var(--primary-red);
             padding: 0.75rem 1rem;
             margin-top: 1rem;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .warning-note i {
-            color: var(--primary-red);
-            margin-right: 0.5rem;
         }
 
         .contact-section {
-            background: var(--card-bg);
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            border-radius: 24px;
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 28px;
             padding: 2rem;
             margin: 2rem 0;
         }
 
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-        }
-
-        .section-title i {
-            color: var(--primary-red);
         }
 
         .form-grid {
@@ -313,58 +367,51 @@
             display: block;
             font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             font-weight: 500;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            padding: 0.8rem 1rem;
+            border-radius: 14px;
             color: var(--text-primary);
             font-family: 'Inter', monospace;
             font-size: 0.9rem;
-            transition: all 0.2s;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-red);
-            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.3);
         }
 
         .submit-btn {
             background: var(--primary-red);
             color: white;
             border: none;
-            padding: 0.875rem 2rem;
+            padding: 0.9rem 2rem;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 40px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
+            transition: 0.2s;
             width: 100%;
+            font-size: 0.9rem;
         }
 
         .submit-btn:hover {
             background: var(--primary-red-dark);
-            transform: translateY(-1px);
-        }
-
-        .form-status {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.85rem;
+            transform: translateY(-2px);
         }
 
         .footer {
             margin-top: 3rem;
-            padding: 2rem;
-            border-top: 1px solid rgba(220, 38, 38, 0.2);
+            padding: 2rem 0 1rem;
+            border-top: 1px solid rgba(220, 38, 38, 0.25);
             text-align: center;
         }
 
@@ -372,12 +419,8 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
-        }
-
-        .footer-section {
-            text-align: left;
         }
 
         .footer-section h4 {
@@ -388,14 +431,12 @@
 
         .footer-section p {
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: #7e8a98;
         }
 
         .copyright {
             font-size: 0.75rem;
-            color: var(--text-secondary);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 1.5rem;
+            color: #6b7280;
         }
 
         .bg-canvas {
@@ -406,50 +447,37 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.35;
+            opacity: 0.4;
         }
 
         .audio-control {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 22px;
+            right: 22px;
             z-index: 1000;
             background: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(8px);
             border-radius: 40px;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 0.5rem 1.2rem;
+            border: 1px solid rgba(220, 38, 38, 0.5);
             font-size: 0.75rem;
             cursor: pointer;
             font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
             transition: 0.2s;
         }
 
-        .audio-control i {
-            color: var(--primary-red);
-            margin-right: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .main-container {
-                padding: 1rem;
-                margin-top: 120px;
-            }
-            .procedure-grid {
+        @media (max-width: 800px) {
+            .branch-showcase {
                 grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 2rem;
             }
             .form-grid {
                 grid-template-columns: 1fr;
             }
             .form-group.full-width {
                 grid-column: span 1;
-            }
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            .instrument-value {
-                font-size: 1.4rem;
             }
         }
     </style>
@@ -459,9 +487,10 @@
 
 <header class="fixed-header">
     <div class="logo-area">
-        <i class="fas fa-fighter-jet logo-icon"></i>
-        <a href="#" style="text-decoration: none; color: transparent;"><span class="page-title">AEROSPACE ENGINEERING</span></a>
+        <i class="fas fa-rocket logo-icon"></i>
+        <span class="page-title">AEROSPACE ENGINEERING</span>
     </div>
+    <div class="badge"><i class="fas fa-microchip"></i> FLIGHT DYNAMICS & ORBITAL MECHANICS</div>
 </header>
 
 <canvas id="bgCanvas" class="bg-canvas"></canvas>
@@ -476,142 +505,133 @@
 
     <div class="hero-section">
         <h1 class="hero-title">What is Aerospace Engineering?</h1>
-        <p class="hero-subtitle">Aerospace engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering.</p>
+        <p class="hero-subtitle">Aerospace engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering — uniting the science of atmospheric flight with the extreme challenges of space exploration.</p>
     </div>
 
+    <!-- DUAL BRANCH EXTENSIVE CONTENT -->
+    <div class="branch-showcase">
+        <!-- AERONAUTICAL ENGINEERING (extended) -->
+        <div class="branch-card">
+            <div class="branch-header">
+                <i class="fas fa-fighter-jet" style="color: var(--primary-red); font-size: 2rem;"></i>
+                <h2>Aeronautical Engineering</h2>
+            </div>
+            <div class="branch-body">
+                <p><strong>Atmospheric flight mastery:</strong> Aeronautical engineering deals with the design, analysis, and optimization of vehicles that operate within Earth's atmosphere. From commercial airliners to supersonic jets and drones, this branch governs lift, drag, propulsion, and control surfaces.</p>
+                <p>Core domains: <strong>aerodynamics, propulsion (turbofan, ramjet), avionics, aeroelasticity, flight stability, and lightweight composite structures.</strong> Advanced computational fluid dynamics (CFD) and wind tunnel testing validate performance across subsonic, transonic, and hypersonic regimes.</p>
+                <div class="tech-grid">
+                    <span class="tech-tag"><i class="fas fa-chart-line"></i> Lift/Drag Optimization</span>
+                    <span class="tech-tag"><i class="fas fa-cogs"></i> Fly-by-Wire</span>
+                    <span class="tech-tag"><i class="fas fa-tachometer-alt"></i> Wing Morphing</span>
+                    <span class="tech-tag"><i class="fas fa-cloud"></i> Icing Protection</span>
+                </div>
+                <div class="warning-note" style="margin-top: 1rem;">
+                    <i class="fas fa-wind"></i> High-altitude dynamics & boundary layer control: critical for fuel efficiency and maneuverability.
+                </div>
+            </div>
+        </div>
+
+        <!-- ASTRONAUTICAL ENGINEERING (NEW EXTENDED BRANCH) -->
+        <div class="branch-card">
+            <div class="branch-header">
+                <i class="fas fa-saturn" style="color: var(--astronaut-blue); font-size: 2rem;"></i>
+                <h2>Astronautical Engineering</h2>
+            </div>
+            <div class="branch-body">
+                <p><strong>Beyond the Kármán line:</strong> Astronautical engineering focuses on spacecraft, launch vehicles, satellites, and interplanetary probes. It tackles the vacuum of space, extreme thermal cycles, radiation, microgravity, and orbital mechanics. Engineers design propulsion (chemical/ion thrusters), attitude control, life support, and re-entry systems.</p>
+                <p>Key disciplines: <strong>orbital mechanics, space environment, rocket propulsion, astrodynamics, thermal control, and deep-space communications.</strong> From CubeSats to Mars landers, astronautical innovation expands humanity's reach into the cosmos.</p>
+                <div class="tech-grid">
+                    <span class="tech-tag"><i class="fas fa-globe"></i> Hohmann Transfers</span>
+                    <span class="tech-tag"><i class="fas fa-broadcast-tower"></i> TDRSS</span>
+                    <span class="tech-tag"><i class="fas fa-burn"></i> Rocket Staging</span>
+                    <span class="tech-tag"><i class="fas fa-shield-alt"></i> Radiation Hardening</span>
+                </div>
+                <div class="warning-note" style="margin-top: 1rem;">
+                    <i class="fas fa-meteor"></i> Orbital insertion & station-keeping: precise delta-v maneuvers for mission success.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAP: AEROSPACE INTEGRATION -->
     <div class="branch-intro">
-        <i class="fas fa-plane" style="color: var(--primary-red); margin-right: 0.5rem;"></i> 
-        AERONAUTICAL ENGINEERING — focuses on atmospheric flight, aerodynamics, propulsion, avionics, and structural integrity.
+        <i class="fas fa-space-shuttle" style="color: var(--accent-orange); margin-right: 0.5rem;"></i> 
+        AEROSPACE INTEGRATION — Where aeronautical and astronautical engineering converge: Reusable launch vehicles, hypersonic spaceplanes, atmospheric re-entry, and next-gen space tourism.
     </div>
 
-    <!-- Enhanced instrument panel with 12+ live telemetry readings -->
+    <!-- DYNAMIC INSTRUMENT PANEL (EXTENDED) -->
     <div class="instrument-panel-main">
-        <div class="instrument"><div class="instrument-label">AIRSPEED (IAS)</div><div class="instrument-value"><span id="airspeed">412</span><span class="instrument-unit">KTS</span></div></div>
-        <div class="instrument"><div class="instrument-label">ANGLE OF ATTACK</div><div class="instrument-value"><span id="aoa">7.8</span><span class="instrument-unit">°</span></div></div>
-        <div class="instrument"><div class="instrument-label">G-LOAD</div><div class="instrument-value"><span id="gload">2.1</span><span class="instrument-unit">G</span></div></div>
-        <div class="instrument"><div class="instrument-label">RADAR STATUS</div><div class="instrument-value"><span id="radarStatus">TRACKING</span></div></div>
-        <div class="instrument"><div class="instrument-label">RPM (L)</div><div class="instrument-value"><span id="rpm">87%</span></div></div>
-        <div class="instrument"><div class="instrument-label">EGT</div><div class="instrument-value"><span id="egt">635°C</span></div></div>
-        <div class="instrument"><div class="instrument-label">OIL PRESS</div><div class="instrument-value"><span id="oilPress">82</span><span class="instrument-unit">PSI</span></div></div>
-        <div class="instrument"><div class="instrument-label">HYD PRESS</div><div class="instrument-value"><span id="hydPressure">3220</span><span class="instrument-unit">PSI</span></div></div>
-        <div class="instrument"><div class="instrument-label">BATTERY</div><div class="instrument-value"><span id="battery">94%</span></div></div>
-        <div class="instrument"><div class="instrument-label">FLT CONTROLS</div><div class="instrument-value"><span id="controls">NOMINAL</span></div></div>
-        <div class="instrument"><div class="instrument-label">Vr SPEED</div><div class="instrument-value"><span id="vrSpeed">165</span><span class="instrument-unit">KTS</span></div></div>
-        <div class="instrument"><div class="instrument-label">SLIP BALL</div><div class="instrument-value"><span id="slipBall">0.2</span><span class="instrument-unit">G</span></div></div>
+        <div class="instrument"><div class="instrument-label">AIRSPEED (IAS)</div><div class="instrument-value" id="airspeed">385</div><div class="instrument-unit">knots</div></div>
+        <div class="instrument"><div class="instrument-label">AOA</div><div class="instrument-value" id="aoa">7.2</div><div class="instrument-unit">deg</div></div>
+        <div class="instrument"><div class="instrument-label">G-LOAD</div><div class="instrument-value" id="gload">1.2</div><div class="instrument-unit">G</div></div>
+        <div class="instrument"><div class="instrument-label">RADAR</div><div class="instrument-value" id="radarStatus">SEARCH</div></div>
+        <div class="instrument"><div class="instrument-label">PROPULSION</div><div class="instrument-value" id="rpm">94%</div></div>
+        <div class="instrument"><div class="instrument-label">EGT</div><div class="instrument-value" id="egt">620°C</div></div>
+        <div class="instrument"><div class="instrument-label">ORBIT ALT</div><div class="instrument-value" id="orbitAlt">408</div><div class="instrument-unit">km LEO</div></div>
+        <div class="instrument"><div class="instrument-label">ΔV REMAIN</div><div class="instrument-value" id="deltaV">2,840</div><div class="instrument-unit">m/s</div></div>
     </div>
 
-    <!-- AERONAUTICAL ENGINEERING PROCEDURES - Complete Grid -->
+    <!-- PROCEDURES: AERONAUTICAL + ASTRONAUTICAL engineering extensions -->
     <div class="procedure-grid">
-        <!-- Aerodynamics Card -->
         <div class="procedure-card">
-            <div class="card-header"><div class="step-number">01</div><div class="card-title">AERODYNAMICS & FLIGHT MECHANICS</div></div>
-            <div class="card-content">
-                <div class="procedure-text">Lift, drag, thrust, and weight equilibrium. Subsonic/transonic airflow behavior, wing design & vortex generation.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Lift-to-Drag (L/D max):</span><span class="spec-value">12.4</span></li>
-                    <li><span class="spec-label">Mach Number:</span><span class="spec-value" id="machNum">0.72</span></li>
-                    <li><span class="spec-label">Wing Sweep:</span><span class="spec-value">25°</span></li>
-                </ul>
-                <div class="warning-note"><i class="fas fa-exclamation-triangle"></i> Transonic buffet region M 0.85–1.1</div>
-            </div>
+            <div class="card-header"><div class="step-number">01</div><div class="card-title">AERODYNAMIC CHARACTERIZATION</div></div>
+            <div class="card-content"><div class="procedure-text">High-fidelity CFD & wind tunnel validation. Pressure distribution, laminar-to-turbulent transition, transonic drag rise mitigation. Essential for aircraft and launch vehicle ascent.</div><ul class="spec-list"><li><span class="spec-label">CL max</span><span class="spec-value">1.85</span></li><li><span class="spec-label">Critical Mach</span><span class="spec-value">0.89</span></li><li><span class="spec-label">Reynolds number</span><span class="spec-value">18.4e6</span></li></ul></div>
         </div>
-
-        <!-- Propulsion & Turbofan -->
         <div class="procedure-card">
-            <div class="card-header"><div class="step-number">02</div><div class="card-title">PROPULSION & JET ENGINE PERFORMANCE</div></div>
-            <div class="card-content">
-                <div class="procedure-text">Turbofan thermodynamic cycle: compression, combustion, turbine, exhaust. Bypass ratio & specific thrust analysis.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">N1 Fan Speed:</span><span class="spec-value">94%</span></li>
-                    <li><span class="spec-label">EGT Margin:</span><span class="spec-value">+42°C</span></li>
-                    <li><span class="spec-label">Thrust (dry):</span><span class="spec-value">29,500 lbf</span></li>
-                </ul>
-            </div>
+            <div class="card-header"><div class="step-number">02</div><div class="card-title">PROPULSION & THRUST VECTORING</div></div>
+            <div class="card-content"><div class="procedure-text">Turbofan, scramjet, and rocket engine integration. For astronautical: bipropellant engines, electric propulsion (ion thrusters), specific impulse optimization.</div><ul class="spec-list"><li><span class="spec-label">Isp (vac)</span><span class="spec-value">348 s</span></li><li><span class="spec-label">Thrust/Weight</span><span class="spec-value">6.2</span></li><li><span class="spec-label">Chamber Pressure</span><span class="spec-value">112 bar</span></li></ul></div>
         </div>
-
-        <!-- Avionics & Flight Systems -->
         <div class="procedure-card">
-            <div class="card-header"><div class="step-number">03</div><div class="card-title">AVIONICS & NAVIGATION SUITE</div></div>
-            <div class="card-content">
-                <div class="procedure-text">Integrated INS/GPS, radar altimeter, tactical datalink, mission computer & digital flight control system (DFCS).</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">GPS FIX:</span><span class="spec-value" id="gpsFix">3D LOCK</span></li>
-                    <li><span class="spec-label">CM COUNTERMEASURES:</span><span class="spec-value" id="cmCount">24 REMAINING</span></li>
-                    <li><span class="spec-label">RWR MODE:</span><span class="spec-value">ACTIVE</span></li>
-                </ul>
-            </div>
+            <div class="card-header"><div class="step-number">03</div><div class="card-title">ORBITAL MECHANICS & GUIDANCE</div></div>
+            <div class="card-content"><div class="procedure-text">Astronautical core: Hohmann transfers, rendezvous, delta-v budgets. Attitude determination using star trackers and IMUs. Re-entry corridor prediction for crew modules.</div><ul class="spec-list"><li><span class="spec-label">Inclination</span><span class="spec-value">51.6°</span></li><li><span class="spec-label">Eccentricity</span><span class="spec-value">0.0012</span></li><li><span class="spec-label">Re-entry G-load</span><span class="spec-value">3.5 G</span></li></ul></div>
         </div>
-
-        <!-- Post-Flight & Shutdown Checklist -->
         <div class="procedure-card">
-            <div class="card-header"><div class="step-number">04</div><div class="card-title">POST-FLIGHT & ENGINE SHUTDOWN</div></div>
-            <div class="card-content">
-                <div class="procedure-text">Engine cooldown, systems shutdown, post-flight inspection, and debrief data recording.</div>
-                <ul class="spec-list">
-                    <li><span class="spec-label">Cooldown:</span><span class="spec-value">3 MIN IDLE</span></li>
-                    <li><span class="spec-label">Flight Time:</span><span class="spec-value" id="flightTime">1.4 HRS</span></li>
-                    <li><span class="spec-label">Fuel Remaining:</span><span class="spec-value" id="fuelRemaining">1850 LBS</span></li>
-                    <li><span class="spec-label">Landing AoA:</span><span class="spec-value" id="landingAoa">12.5°</span></li>
-                </ul>
-            </div>
+            <div class="card-header"><div class="step-number">04</div><div class="card-title">STRUCTURAL INTEGRITY & THERMAL PROTECTION</div></div>
+            <div class="card-content"><div class="procedure-text">Lightweight composites for airframes; ablative tiles and ceramic matrix composites for re-entry. Vibration damping, acoustic fatigue, and cryogenic tank design.</div><ul class="spec-list"><li><span class="spec-label">Max Q</span><span class="spec-value">32.6 kPa</span></li><li><span class="spec-label">TPS temp</span><span class="spec-value">1,650 °C</span></li><li><span class="spec-label">Margin of safety</span><span class="spec-value">28%</span></li></ul></div>
         </div>
     </div>
 
-    <!-- Mission Report Section -->
-    <div class="contact-section">
-        <div class="section-title">
-            <i class="fas fa-paper-plane"></i>
-            <span>MISSION REPORT · PILOT DEBRIEF</span>
-        </div>
+    <!-- ASTRONAUTICAL ENGINEERING DEEP DIVE SECTION (additional content) -->
+    <div class="branch-intro" style="border-left-color: var(--astronaut-blue); margin-top: 0.5rem;">
+        <i class="fas fa-satellite-dish" style="color: var(--astronaut-blue); margin-right: 0.6rem;"></i>
+        ASTRONAUTICAL ENGINEERING IN-DEPTH: Launch vehicle design, spacecraft subsystems (ADCS, C&DH, EPS), orbital debris mitigation, interplanetary trajectory design, and human rating standards.
+    </div>
+    
+    <div class="procedure-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px,1fr));">
+        <div class="procedure-card"><div class="card-header"><i class="fas fa-chart-orbital" style="color:var(--primary-red)"></i><div class="card-title">Launch & Ascent</div></div><div class="card-content"><div class="procedure-text">Multi-stage staging optimization, gravity turn, pitch programs, fairing separation. Monte Carlo dispersion analysis for orbital injection accuracy.</div><div class="warning-note"><i class="fas fa-chart-simple"></i> Typical ΔV to LEO: 9.4 km/s</div></div></div>
+        <div class="procedure-card"><div class="card-header"><i class="fas fa-microchip" style="color:var(--primary-red)"></i><div class="card-title">Spacecraft Avionics</div></div><div class="card-content"><div class="procedure-text">Radiation-hardened electronics, fault-tolerant flight computers, redundant telemetry links, and high-gain antenna arrays for deep space communication.</div><div class="warning-note"><i class="fas fa-satellite"></i> Latency: 4-20 min (Mars link)</div></div></div>
+        <div class="procedure-card"><div class="card-header"><i class="fas fa-temperature-low"></i><div class="card-title">Thermal Control</div></div><div class="card-content"><div class="procedure-text">Passive (MLI, coatings) and active (heat pipes, pumped fluid loops) systems to maintain component temperatures from -150°C to +120°C in vacuum.</div><div class="warning-note"><i class="fas fa-sun"></i> Radiator sizing based on orbital beta angle.</div></div></div>
+    </div>
+
+    <!-- CONTACT / MISSION LOG SECTION -->
+    <div class="contact-section" id="contact">
+        <div class="section-title"><i class="fas fa-paper-plane"></i> TRANSMIT MISSION REPORT</div>
         <form id="contactForm" action="https://formspree.io/f/xlgodvda" method="POST">
             <div class="form-grid">
-                <div class="form-group">
-                    <label>CALLSIGN / FULL NAME</label>
-                    <input type="text" name="name" placeholder="Enter callsign or full name" required>
-                </div>
-                <div class="form-group">
-                    <label>EMAIL ADDRESS</label>
-                    <input type="email" name="email" placeholder="tactical@email.com" required>
-                </div>
-                <div class="form-group full-width">
-                    <label>AIRCRAFT TYPE</label>
-                    <input type="text" name="aircraft" placeholder="F-16C / F/A-18E / etc">
-                </div>
-                <div class="form-group full-width">
-                    <label>MISSION REPORT / DEBRIEF NOTES</label>
-                    <textarea name="message" rows="4" placeholder="Flight details, maneuvers performed, system performance notes..." required></textarea>
-                </div>
+                <div class="form-group"><label>FULL NAME / CALLSIGN</label><input type="text" name="name" required placeholder="MAJ. E. RILEY"></div>
+                <div class="form-group"><label>AEROSPACE UNIT</label><input type="text" name="unit" placeholder="Flight Test / Mission Ops"></div>
+                <div class="form-group full-width"><label>MESSAGE / QUERY</label><textarea rows="3" name="message" required placeholder="Telemetry inquiry / collaboration request..."></textarea></div>
             </div>
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-upload"></i> SUBMIT MISSION REPORT
-            </button>
-            <div id="formStatus" class="form-status"></div>
+            <button type="submit" class="submit-btn"><i class="fas fa-arrow-up"></i> TRANSMIT TO GROUND STATION</button>
+            <div id="formStatus" class="form-status" style="margin-top: 1rem; text-align:center;"></div>
         </form>
     </div>
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section">
-                <h4>AEROSPACE ENGINEERING · FLIGHT RESEARCH DIVISION</h4>
-                <p>© 2026 Advanced Flight Dynamics | Aeronautics & Astronautics Integration</p>
-            </div>
-            <div class="footer-section">
-                <h4><i class="fas fa-satellite"></i> GROUND CONTROL</h4>
-                <p>Telemetry feed: live telemetry | AES-256 encrypted</p>
-            </div>
+            <div class="footer-section"><h4>AEROSPACE ENGINEERING · ATMOSPHERE TO DEEP SPACE</h4><p>© 2026 Advanced Flight Dynamics | Aeronautics & Astronautics Integration</p></div>
+            <div class="footer-section"><h4><i class="fas fa-satellite"></i> MISSION CONTROL</h4><p>Telemetry: encrypted downlink | Orbit tracking: real-time ephemeris</p></div>
         </div>
-        <div class="copyright">
-            <i class="fas fa-cogs"></i> Next-gen flight test instrumentation — all data simulated for engineering analysis.
-        </div>
+        <div class="copyright"><i class="fas fa-cogs"></i> Next-gen flight & space systems — simulation for engineering analysis. Both branches unified.</div>
     </footer>
 </main>
 
 <script>
-    // --- Canvas Background with fighter jet silhouettes (enhanced) ---
+    // Canvas background with aircraft + spacecraft silhouettes
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
-    let fighters = [];
+    let objects = [];
     
     function resizeCanvas() {
         width = window.innerWidth;
@@ -622,211 +642,87 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     
-    class Fighter {
-        constructor(x, y, vx, vy) {
-            this.x = x;
-            this.y = y;
-            this.vx = vx;
-            this.vy = vy;
-            this.size = 28;
+    class SpaceObject {
+        constructor(x, y, vx, vy, type) {
+            this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.type = type;
         }
         update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x + this.size < 0) this.x = width + this.size;
-            if (this.x - this.size > width) this.x = -this.size;
-            if (this.y + this.size < 0) this.y = height + this.size;
-            if (this.y - this.size > height) this.y = -this.size;
+            this.x += this.vx; this.y += this.vy;
+            if (this.x + 40 < 0) this.x = width + 40;
+            if (this.x - 40 > width) this.x = -40;
+            if (this.y + 40 < 0) this.y = height + 40;
+            if (this.y - 40 > height) this.y = -40;
         }
         draw() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            let angle = Math.atan2(this.vy, this.vx);
-            ctx.rotate(angle);
-            ctx.beginPath();
-            ctx.moveTo(18, 0);
-            ctx.lineTo(-10, -6);
-            ctx.lineTo(-4, 0);
-            ctx.lineTo(-10, 6);
-            ctx.closePath();
-            ctx.fillStyle = 'rgba(220, 38, 38, 0.3)';
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(-4, 0);
-            ctx.lineTo(-14, -3);
-            ctx.lineTo(-14, 3);
-            ctx.fillStyle = 'rgba(220, 38, 38, 0.5)';
-            ctx.fill();
+            ctx.save(); ctx.translate(this.x, this.y);
+            if (this.type === 'plane') {
+                ctx.beginPath(); ctx.moveTo(18,0); ctx.lineTo(-8,-5); ctx.lineTo(-2,0); ctx.lineTo(-8,5); ctx.closePath();
+                ctx.fillStyle = 'rgba(220,38,38,0.35)'; ctx.fill();
+            } else {
+                ctx.beginPath(); ctx.ellipse(0,0,9,5,0,0,Math.PI*2); ctx.fillStyle = 'rgba(59,130,246,0.3)'; ctx.fill();
+                ctx.beginPath(); ctx.rect(-4,-2,8,4); ctx.fillStyle = 'rgba(220,38,38,0.5)'; ctx.fill();
+            }
             ctx.restore();
         }
     }
-    
-    for (let i = 0; i < 8; i++) {
-        fighters.push(new Fighter(
-            Math.random() * width,
-            Math.random() * height,
-            (Math.random() - 0.5) * 0.7,
-            (Math.random() - 0.5) * 0.7
-        ));
-    }
+    for(let i=0;i<6;i++) objects.push(new SpaceObject(Math.random()*width, Math.random()*height, (Math.random()-0.5)*0.6, (Math.random()-0.5)*0.6, 'plane'));
+    for(let i=0;i<4;i++) objects.push(new SpaceObject(Math.random()*width, Math.random()*height, (Math.random()-0.5)*0.4, (Math.random()-0.5)*0.4, 'satellite'));
     
     function animateCanvas() {
         if (!ctx) return;
-        ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = 'rgba(5, 5, 5, 0.08)';
-        ctx.fillRect(0, 0, width, height);
-        ctx.strokeStyle = 'rgba(220, 38, 38, 0.08)';
-        ctx.lineWidth = 0.6;
-        for (let i = 0; i < width; i += 70) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, height);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(0, i % height);
-            ctx.lineTo(width, i % height);
-            ctx.stroke();
-        }
-        for (let f of fighters) {
-            f.update();
-            f.draw();
-        }
+        ctx.clearRect(0,0,width,height);
+        ctx.fillStyle = 'rgba(5,5,15,0.1)'; ctx.fillRect(0,0,width,height);
+        ctx.strokeStyle = 'rgba(220,38,38,0.07)'; ctx.lineWidth=0.7;
+        for(let i=0;i<width;i+=65){ ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,height); ctx.stroke(); }
+        for(let o of objects){ o.update(); o.draw(); }
         requestAnimationFrame(animateCanvas);
     }
     animateCanvas();
     
-    // --- INSTRUMENT UPDATES (real-time flight telemetry)---
+    // instrument update
     function updateInstruments() {
-        let airspeed = 385 + (Math.sin(Date.now() / 3000) * 18) + (Math.random() - 0.5) * 10;
-        airspeed = Math.min(620, Math.max(140, airspeed));
-        document.getElementById('airspeed').innerText = Math.floor(airspeed);
-        
-        let aoaVal = 8.2 + (Math.sin(Date.now() / 2500) * 1.5) + (Math.random() - 0.5) * 0.7;
-        aoaVal = Math.min(24, Math.max(1.8, aoaVal));
-        document.getElementById('aoa').innerText = aoaVal.toFixed(1);
-        
-        let gloadVal = 1.3 + (Math.sin(Date.now() / 2000) * 0.9) + (Math.random() - 0.5) * 0.4;
-        gloadVal = Math.min(8.2, Math.max(0.8, gloadVal));
-        document.getElementById('gload').innerText = gloadVal.toFixed(1);
-        
-        let radarStates = ['CLEAR', 'CONTACT', 'TRACKING', 'LOCK', 'SEARCH', 'STANDBY'];
-        let radarIndex = Math.floor(Math.abs(Math.sin(Date.now() / 7000)) * 5);
-        document.getElementById('radarStatus').innerText = radarStates[radarIndex];
-        
-        let rpmVal = 28 + Math.abs(Math.sin(Date.now() / 4200)) * 71;
-        document.getElementById('rpm').innerText = Math.floor(rpmVal) + '%';
-        document.getElementById('egt').innerText = Math.floor(560 + Math.sin(Date.now() / 3200) * 85) + '°C';
-        document.getElementById('oilPress').innerText = Math.floor(72 + Math.sin(Date.now() / 3600) * 14);
-        
-        let hydPress = 3180 + (Math.sin(Date.now() / 5000) * 60);
-        document.getElementById('hydPressure').innerText = Math.floor(hydPress) + ' PSI';
-        
-        let batteryVal = 97 - (Date.now() / 3600000) % 16;
-        document.getElementById('battery').innerText = Math.floor(batteryVal) + '%';
-        
-        let controlStates = ['FREE', 'NOMINAL', 'OPERATIONAL', 'DAMPED'];
-        document.getElementById('controls').innerText = controlStates[Math.floor(Math.abs(Math.sin(Date.now() / 11000)) * 3)];
-        
-        let vrBase = 158 + (Math.sin(Date.now() / 5500) * 7);
-        document.getElementById('vrSpeed').innerText = Math.floor(vrBase);
-        
-        document.getElementById('slipBall').innerText = ((Math.sin(Date.now() / 2400) * 0.35) + (Math.random() - 0.5) * 0.2).toFixed(1);
-        
-        let cmCount = 34 - (Date.now() / 320000) % 33;
-        document.getElementById('cmCount').innerHTML = Math.floor(Math.max(0, cmCount)) + ' REMAINING';
-        
-        let landingAoA = 12.2 + (Math.sin(Date.now() / 4200) * 1.2);
-        document.getElementById('landingAoa').innerHTML = landingAoA.toFixed(1) + '°';
-        
-        let flightHrs = 1.4 + (Date.now() / 3600000) % 2.3;
-        document.getElementById('flightTime').innerHTML = flightHrs.toFixed(1) + ' HRS';
-        
-        let fuel = 1890 - (Date.now() / 185000) % 1350;
-        document.getElementById('fuelRemaining').innerHTML = Math.floor(Math.max(210, fuel)) + ' LBS';
-        
-        let mach = (airspeed / 661).toFixed(2);
-        document.getElementById('machNum').innerHTML = mach;
-        
-        let gpsFixStates = ['3D LOCK', 'DGPS', 'INS ONLY', 'ACQUISITION'];
-        document.getElementById('gpsFix').innerHTML = gpsFixStates[Math.floor(Math.abs(Math.sin(Date.now() / 15000)) * 3)];
+        let airspeed = 380 + Math.sin(Date.now()/2800)*25 + (Math.random()-0.5)*8;
+        document.getElementById('airspeed').innerText = Math.floor(Math.min(650, Math.max(120, airspeed)));
+        let aoa = 7.8 + Math.sin(Date.now()/2200)*1.9;
+        document.getElementById('aoa').innerText = aoa.toFixed(1);
+        let gload = 1.3 + Math.sin(Date.now()/1900)*0.7;
+        document.getElementById('gload').innerText = gload.toFixed(1);
+        let radars = ['CLEAR', 'CONTACT', 'TRACK', 'STANDBY'];
+        document.getElementById('radarStatus').innerText = radars[Math.floor(Math.abs(Math.sin(Date.now()/8000))*3)];
+        let rpm = 62 + Math.abs(Math.sin(Date.now()/3500))*36;
+        document.getElementById('rpm').innerText = Math.floor(rpm)+'%';
+        let egt = 590 + Math.sin(Date.now()/3100)*45;
+        document.getElementById('egt').innerText = Math.floor(egt)+'°C';
+        let orbitAlt = 402 + Math.sin(Date.now()/17000)*11;
+        document.getElementById('orbitAlt').innerText = Math.floor(orbitAlt);
+        let deltaV = 2840 - (Date.now()/150000)%520;
+        document.getElementById('deltaV').innerText = Math.floor(Math.max(210, deltaV));
     }
-    
-    setInterval(updateInstruments, 750);
+    setInterval(updateInstruments, 780);
     updateInstruments();
     
-    // --- AUDIO CONTROL ---
+    // Audio control
     const audio = document.getElementById('bgAudio');
-    const audioToggle = document.getElementById('audioToggle');
-    audio.loop = true;
-    audio.volume = 0.28;
-    audio.src = "ae.mp3";
+    const toggleBtn = document.getElementById('audioToggle');
+    audio.loop = true; audio.volume = 0.3;
+    let audioActive = false;
+    function startAudio(){ audio.play().then(()=>{ audioActive=true; toggleBtn.innerHTML='<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE'; }).catch(()=>{ toggleBtn.innerHTML='<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO'; }); }
+    toggleBtn.addEventListener('click',()=>{ if(!audioActive){ startAudio(); } else if(audio.paused){ audio.play(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE'; } else { audio.pause(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AUDIO PAUSED'; } });
+    audio.play().catch(()=>{ toggleBtn.innerHTML='<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO'; });
+    audio.addEventListener('ended',()=>{ if(audioActive){ audio.currentTime=0; audio.play(); } });
     
-    let audioEnabled = false;
-    
-    function enableAudio() {
-        audio.play().then(() => {
-            audioEnabled = true;
-            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE';
-        }).catch(() => {
-            audioToggle.innerHTML = '<i class="fas fa-volume-mute"></i> CLICK TO ENABLE AUDIO';
-        });
-    }
-    
-    audioToggle.addEventListener('click', () => {
-        if (!audioEnabled) {
-            enableAudio();
-        } else if (audio.paused) {
-            audio.play();
-            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE';
-        } else {
-            audio.pause();
-            audioToggle.innerHTML = '<i class="fas fa-headset"></i> AUDIO PAUSED';
-        }
-    });
-    
-    audio.play().catch(() => {
-        audioToggle.innerHTML = '<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO';
-    });
-    
-    audio.addEventListener('ended', () => {
-        if (audioEnabled) {
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log("autoplay blocked"));
-        }
-    });
-    
-    // --- Formspree submission handler ---
+    // Form submission (formspree)
     const form = document.getElementById('contactForm');
     const statusDiv = document.getElementById('formStatus');
-    
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async(e)=>{
         e.preventDefault();
-        const formData = new FormData(form);
-        statusDiv.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Transmitting mission report...';
-        statusDiv.style.color = '#9ca3af';
-        
-        try {
-            const response = await fetch('https://formspree.io/f/xlgodvda', {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (response.ok) {
-                statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Mission report transmitted successfully. Command acknowledged.';
-                statusDiv.style.color = '#10b981';
-                form.reset();
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 5000);
-            } else {
-                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Transmission failed. Please verify connection and retry.';
-                statusDiv.style.color = '#ef4444';
-            }
-        } catch (error) {
-            statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Communication error. Verify network status.';
-            statusDiv.style.color = '#ef4444';
-        }
+        const fd = new FormData(form);
+        statusDiv.innerHTML='<i class="fas fa-spinner fa-pulse"></i> Uplinking mission report...';
+        try{
+            const resp = await fetch('https://formspree.io/f/xlgodvda', { method:'POST', body:fd, headers:{'Accept':'application/json'} });
+            if(resp.ok){ statusDiv.innerHTML='<i class="fas fa-check-circle"></i> Transmission success. Ground control received.'; form.reset(); setTimeout(()=>statusDiv.innerHTML='',5000); }
+            else { statusDiv.innerHTML='<i class="fas fa-exclamation-triangle"></i> Transmission error. Retry.'; }
+        } catch(err){ statusDiv.innerHTML='<i class="fas fa-exclamation-triangle"></i> Comms failure.'; }
     });
 </script>
 </body>
