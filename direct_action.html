@@ -9,20 +9,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>CV-5 · DIRECT ACTION</title>
-  <!-- fonts & icons -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&family=VT323&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- circle favicon (simple inline) -->
+
   <link rel="icon" type="image/png" href="logo_tr.png" sizes="16x16">
   
   <style>
     
-    /* ----- root compact (fixed missing comma, added dept) ----- */
     * {
+      
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      
     }
 
     :root {
@@ -62,7 +65,6 @@
       max-width: 100%;
     }
 
-    /* ----- matrix canvas (reduced opacity) ----- */
     #matrixCanvas {
       position: fixed;
       inset: 0;
@@ -71,7 +73,6 @@
       pointer-events: none;
     }
 
-    /* ----- scanline (minimal) ----- */
     body::after {
       content: "";
       position: fixed;
@@ -474,9 +475,8 @@
         initMatrix();
       });
 
-      // --- departments data (fixed missing comma & duplicate id) ---
       const DEPARTMENTS = [
-        { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIC01', file: 'innovations.html' },
+        { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIO01', file: 'innovations.html' },
         { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-suit', code: 'CEO02', file: 'ceo.html' },
         { id: 'sc', name: '03. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SCT03', file: 'scl.html' },
         { id: 'cs', name: '04. COMPUTER SCIENCE', icon: 'fa-code', code: 'ZA32', file: 'compsci.html' },
