@@ -372,14 +372,14 @@
       await seedInitialData();
       setupMessagesListener();
       await loadPermanentMemory();
-      addAIMessage('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Mission: Secure flat in Durban Central. How may I assist, Commander?`);
+      addAIMessage('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. How may I assist, Operator?`);
       notify('Permanent memory loaded • Sarah remembers you', 'success');
       document.getElementById('llmStatusBadge').innerHTML = '🧠 PERMANENT MEMORY';
     } catch(e) { notify(`Init error: ${e.message}`, 'error'); } finally { showLoader(false); }
   }
   
   document.getElementById('unlockBtn').addEventListener('click', () => {
-    if(document.getElementById('pinInput').value === '1100101') {
+    if(document.getElementById('pinInput').value === '1') {
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
       notify('CIC ACCESS GRANTED • PERMANENT MEMORY SYSTEM ONLINE', 'success');
