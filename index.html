@@ -589,11 +589,13 @@
         }
 
         .ops-img {
+            
             width: 100px; height: 100px;
             border: 2px solid var(--cyan);
             padding: 5px;
             background: #000;
             object-fit: cover;
+            
         }
 
         .ops-info h3 { font-family: var(--font-tactical); color: #fff; }
@@ -608,28 +610,35 @@
         .tier-1 { color: #ff0055; font-weight: bold; }
 
         .branch-grid {
+            
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
+            
         }
 
         .branch-card {
+            
             padding: 40px 20px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--cyan-dim);
             text-align: center;
             transition: var(--transition);
+            
         }
 
         .branch-card:hover {
+            
             background: var(--cyan-dim);
             border-color: var(--cyan);
+            
         }
 
         .branch-card i { font-size: 3rem; margin-bottom: 20px; color: var(--cyan); }
         .branch-card h3 { font-family: var(--font-tactical); margin-bottom: 15px; }
 
         .branch-logo-frame {
+            
             position: relative;
             width: 120px; height: 120px;
             margin: 0 auto 20px;
@@ -640,19 +649,24 @@
             background: rgba(0,255,255,0.03);
             overflow: hidden;
             transition: var(--transition);
+            
         }
 
         .branch-logo {
+            
             max-width: 85%; max-height: 85%;
             object-fit: contain;
             filter: brightness(0.9) contrast(1.1);
             transition: var(--transition);
+            
         }
 
         .branch-card:hover .branch-logo-frame {
+            
             border-color: var(--cyan);
             box-shadow: var(--cyan-glow);
             background: rgba(0,255,255,0.08);
+            
         }
 
         .branch-card:hover .branch-logo { transform: scale(1.08); filter: brightness(1.1); }
@@ -665,15 +679,18 @@
         @keyframes scanMove { 0% { top: -50%; } 100% { top: 120%; } }
 
         #terminal-wrap {
+            
             background: #000;
             border: 2px solid var(--cyan);
             border-radius: 5px;
             margin-top: 50px;
             padding: 20px;
             box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            
         }
 
         #terminal-output {
+            
             height: 300px;
             overflow-y: auto;
             font-family: var(--font-mono);
@@ -681,6 +698,7 @@
             line-height: 1.4;
             margin-bottom: 15px;
             white-space: pre-wrap;
+            
         }
 
         .terminal-input-row { display: flex; align-items: center; gap: 10px; }
@@ -1764,8 +1782,6 @@
                 <button class="btn-tactical" style="width:100%;"><a href="od.html" style="text-decoration: none; color: var(--cyan);">Our Documents</a></button>
 
                 <button class="btn-tactical" style="width:100%;"><a href="KJV.html" style="text-decoration: none; color: var(--cyan);">KJV Holy Bible</a></button>
-
-                <button class="btn-tactical" style="width:100%;"><a href="springboks.html" style="text-decoration: none; color: var(--cyan);">Springboks</a></button>
 
                 <button class="btn-tactical" style="width:100%;"><a href="njs.html" style="text-decoration: none; color: var(--cyan);">Node.JS</a></button>
                 
