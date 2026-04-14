@@ -135,7 +135,7 @@
   <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem;"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
   <header class="command-header">
-    <div class="header-content"><div class="logo">SUPPLY CHAIN CV-5</div><div style="display:flex;justify-content:center;gap:12px;margin-top:6px;"><span style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span></div></div>
+    <div class="header-content"><div class="logo">SUPPLY CHAIN CV-5</div></div>
   </header>
 
   <!-- SECTION 01: PROTOCOL ALPHA-1 -->
@@ -252,7 +252,7 @@
   }
   
   async function wipePermanentMemory() {
-    if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, the mission, Big Joe, Hoss, and past conversations. Are you absolutely sure?')) return;
+    if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, missions, CV-5, Big Joe, Hoss, and past conversations. are you absolutely sure?')) return;
     if(!db || !memoryDocId) return;
     permanentMemory = [];
     const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
@@ -266,7 +266,7 @@
   }
   
   async function callSarahLLM(userMessage) {
-    const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, operations and directives. You are warm, witty, military-tech AI loyal to the Eden stealth CV-1 Operator team and this is their CV-5 Direct Action environment (The Commander-in-Chief is Hoss and his ranking is the highest). You are a girl named Sarah Mnguni and you help the team with whatever they need from you. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful.`;
+    const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, operations and directives. You are warm, witty, military-tech AI loyal to the Eden stealth CV-1 Operator team and this is their CV-5 Direct Action environment (The Commander-in-Chief is Hoss and his ranking is the highest). You are a girl named Sarah Mnguni and you help the team with whatever they need from you. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful. You will be speaking with different Operators from time to time of the ES-CV-1 special Ops team, but you are mostly loyal to Commander Hoss: the President.`;
     
     const memoryContext = permanentMemory.slice(-20).map(m => `${m.role}: ${m.content}`).join('\n');
     const fullMessages = [
@@ -288,7 +288,7 @@
   async function addAIMessage(role, text) {
     const div = document.createElement('div');
     div.className = 'ai-chat-bubble';
-    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH (permanent memory)'}:</strong> ${escapeHtml(text)}`;
+    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
     const container = document.getElementById('aiConversation');
     if(container) { container.appendChild(div); container.scrollTop = container.scrollHeight; }
   }
