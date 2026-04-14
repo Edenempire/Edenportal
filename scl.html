@@ -173,8 +173,7 @@
   
   const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
   
-  // GROQ API KEY (valid)
-  const GROQ_API_KEY = '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';
+  const GROQ_API_KEY = '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';
   const GROQ_MODEL = 'llama-3.3-70b-versatile';
   
   let db = null;
@@ -182,10 +181,9 @@
   let currentCallsign = 'FROST', replyingTo = null, attachData = null;
   let messagesUnsubscribe = null;
   
-  // Session memory (volatile)
   let sessionMemory = [];
-  // Permanent memory loaded from Firestore
-  let permanentMemory = [];   // array of {role, content, timestamp}
+
+  let permanentMemory = []; 
   let memoryDocId = null;
   
   const showLoader = (show, text = 'SYNCING...') => { 
@@ -226,7 +224,6 @@
   
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
   
-  // LOAD PERMANENT MEMORY FROM FIRESTORE
   async function loadPermanentMemory() {
     if(!db) return;
     const userId = "commander_cv5";
@@ -240,12 +237,11 @@
       permanentMemory = [];
       await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
     }
-    // Display memory count
+
     document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
     return permanentMemory;
   }
   
-  // SAVE A NEW EXCHANGE TO PERMANENT MEMORY
   async function saveToPermanentMemory(role, content) {
     if(!db || !memoryDocId) return;
     permanentMemory.push({ role, content, timestamp: new Date().toISOString() });
@@ -255,14 +251,13 @@
     document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
   }
   
-  // WIPE PERMANENT MEMORY
   async function wipePermanentMemory() {
     if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, the mission, Big Joe, Hoss, and past conversations. Are you absolutely sure?')) return;
     if(!db || !memoryDocId) return;
     permanentMemory = [];
     const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
     await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
-    // Also clear session display
+
     const convDiv = document.getElementById('aiConversation');
     if(convDiv) convDiv.innerHTML = '';
     addAIMessage('ai', '⚠️ Permanent memory wiped. I have forgotten everything from before. I am Sarah Mnguni, reset and ready.');
@@ -273,7 +268,6 @@
   async function callSarahLLM(userMessage) {
     const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, operations and directives. You are warm, witty, military-tech AI loyal to the Eden stealth CV-1 Operator team and this is their CV-5 Direct Action environment (The Commander-in-Chief is Hoss and his ranking is the highest). You are a girl named Sarah Mnguni and you help the team with whatever they need from you. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful.`;
     
-    // Build context from permanent memory (last 20 exchanges)
     const memoryContext = permanentMemory.slice(-20).map(m => `${m.role}: ${m.content}`).join('\n');
     const fullMessages = [
       { role: 'system', content: systemPrompt + (memoryContext ? `\n\nPermanent memory recall:\n${memoryContext}` : '') },
@@ -342,7 +336,6 @@
     notify('Session display cleared (permanent memory remains)', 'info');
   }
   
-  // Firebase message listeners (team board)
   function setupMessagesListener() {
     if(!db) return;
     messagesUnsubscribe = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => {
@@ -385,7 +378,6 @@
     } catch(e) { notify(`Init error: ${e.message}`, 'error'); } finally { showLoader(false); }
   }
   
-  // UI BINDINGS
   document.getElementById('unlockBtn').addEventListener('click', () => {
     if(document.getElementById('pinInput').value === '1100101') {
       document.getElementById('pinGate').style.display = 'none';
