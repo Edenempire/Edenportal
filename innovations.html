@@ -6,2213 +6,408 @@
   
   <meta charset="UTF-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <meta name="description" content="SUPPLY CHAIN CV-5">
+  
+  <meta name="color-scheme" content="dark">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="icon" type="image/png" href="logo_tr.png">
   
   <title>INNOVATIONS CV-5</title>
   
-  <!-- advanced favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e10600'/%3E%3Canimate attributeName='r' values='45;48;45' dur='2s' repeatCount='indefinite'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23000000' font-family='Arial' font-weight='bold'%3E5%3C/text%3E%3C/svg%3E">
+  <script>
+    
+    (function() {
+
+      document.addEventListener('contextmenu', e => { e.preventDefault(); return false; });
+      document.addEventListener('keydown', e => {
+        const key = e.key, ctrl = e.ctrlKey || e.metaKey, shift = e.shiftKey;
+        if (key === 'F12' || (ctrl && shift && (key === 'I' || key === 'J' || key === 'C' || key === 'K')) || (ctrl && (key === 'u' || key === 'U' || key === 's' || key === 'S'))) {
+          e.preventDefault(); return false;
+        }
+      });
+      document.body.style.userSelect = 'none';
+      document.body.style.webkitUserSelect = 'none';
+
+      setInterval(() => { const start = performance.now(); debugger; if (performance.now() - start > 100) { document.body.innerHTML = '<div style="background:black;color:red;height:100vh;display:flex;align-items:center;justify-content:center;">🔒 ACCESS DENIED</div>'; window.location.reload(); } }, 2000);
+      // Kill console
+      if (window.console) { const noop = () => {}; console.log = console.warn = console.info = console.error = console.table = noop; }
+      document.ondragstart = e => { e.preventDefault(); return false; };
+    })();
+    
+  </script>
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
   
   <script type="importmap">
     {
       "imports": {
         "@firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
-        "@firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
-        "@firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"
+        "@firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
       }
     }
   </script>
   
   <style>
 
-        /* ----- TACTICAL RESET & VARIABLES ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    :root { --bg: #000000; --bg-card: #0a0000cc; --red: #ff0000; --text: #ff0000; --border: #ff0000; --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; position: relative; overflow-x: hidden; scroll-behavior: smooth; }
+    .bg-scan-overlay { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.015) 0px, rgba(255,0,0,0.015) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 0; animation: slowDrift 20s linear infinite; }
+    @keyframes slowDrift { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+    .particle-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at 20% 40%, rgba(255,0,0,0.02) 0%, transparent 70%); animation: breathe 10s infinite alternate; }
+    @keyframes breathe { 0% { opacity: 0.2; } 100% { opacity: 0.6; } }
+    .app-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; display: none; }
+    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 1rem 0; margin-bottom: 2rem; cursor: pointer; }
+    .command-header:hover { opacity: 0.9; }
+    .header-content { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+    .logo { font-size: clamp(1.4rem, 6vw, 2.4rem); font-weight: 800; letter-spacing: 6px; color: var(--red); font-family: 'Share Tech Mono'; text-shadow: 0 0 3px rgba(255,0,0,0.5); }
+    .section-card { background: var(--bg-card); backdrop-filter: blur(4px); border: 2px solid var(--red); margin-bottom: 2rem; padding: clamp(1rem, 3vw, 2rem); transition: var(--transition); }
+    .section-card:hover { border-color: #ff4444; box-shadow: 0 0 15px rgba(255,0,0,0.15); }
+    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; border-bottom: 2px solid var(--red); padding-bottom: 0.8rem; margin-bottom: 1.5rem; }
+    .section-title { font-size: clamp(1rem, 4vw, 1.6rem); font-weight: 700; letter-spacing: 1px; }
+    .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.8rem; font-size: 0.7rem; border-radius: 2px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .card { background: #050000aa; border: 1px solid var(--red); padding: 1.2rem; backdrop-filter: blur(4px); transition: var(--transition); }
+    .card:hover { border-color: #ff6666; }
+    input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.7rem; color: var(--red); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: #ff6666; box-shadow: 0 0 8px rgba(255,0,0,0.3); background: #150000; }
+    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; transition: all 0.15s; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; border-radius: 0; }
+    .btn-primary { background: var(--red); color: black; border-color: var(--red); }
+    .btn-primary:hover { background: #cc0000; transform: scale(0.97); box-shadow: 0 0 8px rgba(255,0,0,0.5); }
+    .btn:hover { background: rgba(255,0,0,0.2); transform: translateY(-1px); }
+    .message-board { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; scroll-behavior: smooth; }
+    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.8rem; animation: fadeInUp 0.2s ease-out; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .reaction-btn { background: rgba(255,0,0,0.15); border: 1px solid red; padding: 0.2rem 0.6rem; font-size: 0.7rem; cursor: pointer; border-radius: 16px; }
+    .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: 0.8rem 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; z-index: 1000; margin-top: 2rem; }
+    .modal-overlay, .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; z-index: 50000; }
+    .pin-gate { display: flex; }
+    .modal-overlay { display: none; background: rgba(0,0,0,0.98); z-index: 30000; }
+    .modal-box { background: black; border: 2px solid red; max-width: 500px; width: 90%; padding: 2rem; }
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 40000; flex-direction: column; gap: 1rem; }
+    .loading-spinner { width: 40px; height: 40px; border: 2px solid red; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .quick-scroll-right { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .quick-scroll-right button { background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); border: 1.5px solid red; color: red; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; border-radius: 4px; }
+    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.8rem; margin-top: 0.5rem; border-radius: 0 4px 4px 0; animation: slideIn 0.2s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+    .stars-rank { display: inline-flex; gap: 6px; margin-left: 12px; align-items: center; }
+    .military-star-svg { width: 20px; height: 20px; filter: drop-shadow(0 0 1px red); animation: starPulse 3s infinite; }
+    @keyframes starPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+    .toast-notification { animation: slideInRight 0.3s ease-out; background: #0a0000; border-left: 4px solid red; padding: 0.6rem; margin-bottom: 0.6rem; font-size: 0.8rem; }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+    .coming-soon-badge { background: #2a0000; color: #ff8888; text-align: center; padding: 2rem; border: 1px dashed red; font-style: italic; }
+    @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 8px; } .quick-scroll-right button { width: 36px; height: 36px; } }
+    @media (max-width: 480px) { .quick-scroll-right { display: none; } .grid-2 { grid-template-columns: 1fr; } }
     
-    :root {
-      --bg-primary: #000000;
-      --bg-secondary: #030405;
-      --bg-tertiary: #0a0c0e;
-      --accent: #e10600;
-      --accent-dark: #a50000;
-      --text-primary: #ffffff;
-      --text-secondary: #f0f2f5;
-      --text-tertiary: #a6b0c0;
-      --border-color: #330000;
-      --success: #00e676;
-      --warning: #ff9100;
-      --error: #ff1744;
-      --info: #2979ff;
-      --african-skin: #8d5524;
-      --african-skin-dark: #6b4226;
-      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    /* ----- HORIZONTAL RANDOM SCAN LINE ----- */
-    @keyframes horizontalRandomScan {
-      0% { transform: translateX(-100vw) translateY(-50%); opacity: 0; }
-      2% { opacity: 1; }
-      98% { opacity: 1; }
-      100% { transform: translateX(100vw) translateY(-50%); opacity: 0; }
-    }
-    
-    body::after {
-      content: '';
-      position: fixed;
-      width: 100vw;
-      height: 4px;
-      background: linear-gradient(to right, 
-        transparent 0%, 
-        var(--accent) 20%, 
-        #ff3333 50%, 
-        var(--accent) 80%, 
-        transparent 100%);
-      animation: verticalRandomScan 8s ease-in-out infinite;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.9;
-      left: 0;
-    }
-    
-    @keyframes verticalRandomScan {
-      0% { top: -10%; }
-      10% { top: 15%; }
-      25% { top: 60%; }
-      40% { top: 30%; }
-      55% { top: 85%; }
-      70% { top: 45%; }
-      85% { top: 75%; }
-      100% { top: 110%; }
-    }
-    
-    /* base background */
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
-    }
-    
-    /* subtle grid */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(225,6,0,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(225,6,0,0.02) 1px, transparent 1px);
-      background-size: clamp(20px, 4vw, 40px) clamp(20px, 4vw, 40px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    
-    /* ----- PIN GATE (EVERY VISIT) ----- */
-    .pin-gate-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.98);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000000;
-      transition: opacity 0.5s var(--transition-smooth);
-      padding: clamp(1rem, 5vw, 2rem);
-    }
-    
-    .pin-gate-card {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      padding: clamp(2rem, 6vw, 3rem) clamp(1.5rem, 5vw, 2.5rem);
-      max-width: min(420px, 95%);
-      width: 100%;
-      text-align: center;
-    }
-    
-    @keyframes gatePulse {
-      0% { border-color: var(--accent); }
-      50% { border-color: #ff3333; }
-      100% { border-color: var(--accent); }
-    }
-    
-    .pin-gate-card {
-      animation: gatePulse 2s infinite;
-    }
-    
-    .pin-gate-title {
-      color: var(--accent);
-      font-size: clamp(1.8rem, 6vw, 2.5rem);
-      font-weight: 900;
-      letter-spacing: clamp(2px, 1vw, 6px);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      line-height: 1.2;
-      word-break: break-word;
-    }
-    
-    .pin-gate-sub {
-      color: var(--text-tertiary);
-      margin-bottom: 2rem;
-      font-size: clamp(0.875rem, 3vw, 1rem);
-    }
-    
-    .pin-input {
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      padding: clamp(0.75rem, 2vw, 1rem);
-      width: 100%;
-      text-align: center;
-      letter-spacing: clamp(4px, 2vw, 8px);
-      font-weight: 700;
-      margin-bottom: 2rem;
-      caret-color: var(--accent);
-    }
-    
-    .pin-input:focus {
-      outline: none;
-      border-color: #ff3333;
-    }
-    
-    .pin-btn {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: white;
-      padding: clamp(0.75rem, 2vw, 1rem) clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
-      letter-spacing: clamp(1px, 0.5vw, 2px);
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-      display: block;
-    }
-    
-    .pin-btn:hover {
-      background: var(--accent);
-      color: black;
-      border-color: #ff3333;
-    }
-    
-    .pin-btn:active {
-      transform: scale(0.98);
-    }
-    
-    /* ----- MAIN APP CONTAINER ----- */
-    .app-container {
-      position: relative;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
-      z-index: 1;
-      display: none;
-      width: 100%;
-    }
-    
-    /* ----- HEADER (FULL WIDTH, CENTERED CONTENT) ----- */
-    .advanced-header {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      padding: clamp(1rem, 3vh, 1.5rem) 0;
-      border-bottom: 4px solid var(--accent) !important;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
-    }
-    
-    .header-content {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      width: 100%;
-    }
-    
-    .logo {
-      font-size: clamp(1.2rem, 5vw, 2.8rem);
-      font-weight: 900;
-      letter-spacing: clamp(2px, 1vw, 6px);
-      color: var(--accent);
-      text-transform: uppercase;
-      line-height: 1.2;
-      word-break: break-word;
-    }
-    
-    .header-status {
-      display: flex;
-      gap: clamp(0.5rem, 1vw, 1rem);
-      align-items: center;
-      flex-shrink: 0;
-    }
-    
-    .status-indicator {
-      width: clamp(10px, 2vw, 14px);
-      height: clamp(10px, 2vw, 14px);
-      background: var(--success);
-      border-radius: 0;
-      animation: pulse-glow 2s infinite;
-      border: 1px solid white;
-    }
-    
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-    
-    /* ----- CENTERED SECTIONS ----- */
-    .section {
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: clamp(2rem, 6vh, 4rem);
-      width: 100%;
-    }
-    
-    .section {
-      background: rgba(2, 4, 6, 0.97);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 2px solid var(--accent);
-      padding: clamp(1.5rem, 4vw, 3.5rem);
-    }
-    
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: clamp(0.75rem, 2vw, 1rem);
-      margin-bottom: clamp(1.5rem, 4vh, 2rem);
-      padding-bottom: clamp(0.75rem, 2vh, 1rem);
-      border-bottom: 2px solid var(--accent);
-    }
-    
-    .section-title {
-      font-size: clamp(1.2rem, 4vw, 2.2rem);
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: clamp(1px, 0.5vw, 2px);
-      text-transform: uppercase;
-      line-height: 1.3;
-      word-break: break-word;
-    }
-    
-    .section-badge {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 3vw, 1.5rem);
-      font-weight: 700;
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
-      white-space: nowrap;
-    }
-    
-    /* ----- GRID SYSTEMS (FULLY RESPONSIVE) ----- */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: clamp(1rem, 3vw, 2rem);
-    }
-    
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-      gap: clamp(1rem, 2.5vw, 1.5rem);
-    }
-    
-    /* ----- CARDS ----- */
-    .card {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(1.2rem, 3vw, 1.5rem);
-      width: 100%;
-      height: fit-content;
-    }
-    
-    /* ----- FORM ELEMENTS ----- */
-    input, textarea, select {
-      width: 100%;
-      padding: clamp(0.75rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: clamp(0.875rem, 2vw, 1rem);
-    }
-    
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #ff3333;
-    }
-    
-    textarea {
-      resize: vertical;
-      min-height: clamp(80px, 20vh, 100px);
-    }
-    
-    select {
-      cursor: pointer;
-    }
-    
-    .btn {
-      padding: clamp(0.75rem, 2vw, 1rem) clamp(1.2rem, 3vw, 2rem);
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
-      white-space: nowrap;
-    }
-    
-    .btn:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-    }
-    
-    .btn:active {
-      transform: scale(0.98);
-    }
-    
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-    
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg-primary);
-    }
-    
-    /* ----- MESSAGE BOARD (ADVANCED, PERFECT SPACING) ----- */
-    .message-board {
-      max-height: 600px;
-      overflow-y: auto;
-      padding-right: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: clamp(1rem, 2vh, 1.5rem);
-    }
-    
-    .message-board::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    .message-board::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-    }
-    
-    .message-board::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border: 2px solid var(--bg-secondary);
-    }
-    
-    .message {
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      padding: clamp(1.2rem, 3vw, 1.5rem);
-      margin-bottom: 0;
-      width: 100%;
-      word-break: break-word;
-    }
-    
-    .message.replied-to {
-      border-left: 8px solid var(--info);
-    }
-    
-    .reply-context {
-      background: rgba(0,40,80,0.5);
-      padding: clamp(0.6rem, 2vw, 0.8rem);
-      margin: clamp(0.6rem, 2vh, 0.8rem) 0;
-      border-left: 4px solid var(--info);
-      font-style: italic;
-      color: #bbdefb;
-      font-size: clamp(0.85rem, 2vw, 0.95rem);
-      line-height: 1.5;
-    }
-    
-    .reply-context strong {
-      color: var(--info);
-    }
-    
-    .message-actions {
-      display: flex;
-      gap: clamp(0.3rem, 1vw, 0.5rem);
-      flex-wrap: wrap;
-      margin-top: clamp(0.8rem, 2vh, 1rem);
-    }
-    
-    .message-actions button {
-      padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.6rem, 2vw, 1rem);
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-      transition: 0.2s;
-    }
-    
-    .message-actions button:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-    }
-    
-    .message-actions button:active {
-      transform: scale(0.95);
-    }
-    
-    .like-button {
-      background: transparent;
-      border: none;
-      color: var(--african-skin);
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      cursor: pointer;
-      padding: clamp(0.3rem, 1vw, 0.5rem);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    
-    .like-button.liked {
-      color: var(--african-skin-dark);
-    }
-    
-    .like-button:active {
-      transform: scale(0.95);
-    }
-    
-    .pinned-badge {
-      background: var(--accent);
-      color: black;
-      padding: 0.2rem 0.5rem;
-      font-size: 0.7rem;
-      font-weight: 700;
-      display: inline-block;
-      margin-right: 0.5rem;
-    }
-    
-    .reply-indicator {
-      background: var(--bg-secondary);
-      padding: clamp(0.6rem, 2vw, 0.8rem);
-      margin: clamp(0.6rem, 2vh, 0.8rem) 0;
-      border-left: 4px solid var(--accent);
-      font-size: clamp(0.85rem, 2vw, 0.95rem);
-      word-break: break-word;
-    }
-    
-    /* ----- TASK ITEMS ----- */
-    .task-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: clamp(0.75rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      margin-bottom: 0.5rem;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      flex-wrap: wrap;
-    }
-    
-    .task-item.priority {
-      border-left-width: 6px;
-      border-left-color: var(--warning);
-    }
-    
-    .task-actions {
-      display: flex;
-      gap: clamp(0.3rem, 1.5vw, 0.5rem);
-      flex-wrap: wrap;
-    }
-    
-    .task-actions button {
-      background: transparent;
-      border: none;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      font-size: clamp(1rem, 2.5vw, 1.1rem);
-      padding: 0.3rem;
-      transition: 0.2s;
-    }
-    
-    .task-actions button:hover {
-      color: var(--accent);
-    }
-    
-    .task-actions button:active {
-      transform: scale(0.9);
-    }
-    
-    /* ----- PROGRESS BAR ----- */
-    .progress-container {
-      width: 100%;
-      height: clamp(6px, 1.5vh, 8px);
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      background: var(--accent);
-      transition: width 0.5s ease;
-    }
-    
-    /* ----- FILE GRID ----- */
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: clamp(0.5rem, 2vw, 1rem);
-      margin-top: 1rem;
-    }
-    
-    .file-item {
-      background: var(--bg-secondary);
-      border: 2px solid var(--accent);
-      padding: 0.5rem;
-      text-align: center;
-      word-break: break-word;
-      font-size: 0.8rem;
-    }
-    
-    .file-item img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    
-    /* ----- ZAMA PROTOTYPE (COMING SOON) ----- */
-    .zama-container {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2rem);
-      text-align: center;
-      width: 100%;
-    }
-    
-    .zama-avatar {
-      width: clamp(80px, 20vw, 120px);
-      height: clamp(80px, 20vw, 120px);
-      border: 3px solid var(--accent);
-      margin: 0 auto clamp(1rem, 3vh, 1.5rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(2.5rem, 8vw, 4rem);
-      opacity: 0.5;
-    }
-    
-    .zama-name {
-      color: var(--accent);
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      font-weight: 800;
-      margin-bottom: clamp(0.8rem, 2vh, 1rem);
-      word-break: break-word;
-    }
-    
-    .zama-status {
-      display: inline-block;
-      padding: clamp(0.2rem, 1vw, 0.3rem) clamp(0.8rem, 2vw, 1rem);
-      background: var(--bg-secondary);
-      border: 2px solid var(--warning);
-      color: var(--warning);
-      margin-bottom: clamp(1.5rem, 4vh, 2rem);
-      font-size: clamp(0.8rem, 2vw, 1rem);
-    }
-    
-    .zama-coming-soon {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      font-weight: 900;
-      color: var(--text-tertiary);
-      letter-spacing: clamp(2px, 1vw, 8px);
-      padding: clamp(1.5rem, 4vw, 3rem);
-      border: 2px dashed var(--accent);
-      word-break: break-word;
-    }
-    
-    /* ----- FOOTER (FULL WIDTH, ENHANCED) ----- */
-    .advanced-footer {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      background: var(--bg-tertiary);
-      border-top: 4px solid var(--accent);
-      padding: clamp(2rem, 6vh, 3rem) 0;
-      margin-top: clamp(3rem, 8vh, 4rem);
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
-      text-align: center;
-    }
-    
-    .bible-verse {
-      font-size: clamp(1rem, 3vw, 1.8rem);
-      color: var(--text-primary);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      padding: 0;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .bible-verse::before,
-    .bible-verse::after {
-      content: '"';
-      color: var(--accent);
-      font-size: 2em;
-      opacity: 0.5;
-    }
-    
-    .bible-reference {
-      color: var(--accent);
-      font-weight: 700;
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      letter-spacing: 1px;
-    }
-    
-    .footer-decoration {
-      margin-top: 2rem;
-      border-top: 2px solid var(--accent);
-      width: 100px;
-      margin-left: auto;
-      margin-right: auto;
-      opacity: 0.5;
-    }
-    
-    /* ----- NOTIFICATION SYSTEM ----- */
-    .notification-center {
-      position: fixed;
-      top: clamp(20px, 5vh, 100px);
-      right: clamp(10px, 3vw, 20px);
-      z-index: 10000;
-      max-width: min(380px, 90vw);
-      width: calc(100% - 40px);
-    }
-    
-    .notification {
-      background: var(--bg-tertiary);
-      border-left: 6px solid var(--accent);
-      border: 2px solid var(--accent);
-      color: var(--text-primary);
-      padding: clamp(0.8rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      animation: slideIn 0.3s ease;
-      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-      word-break: break-word;
-    }
-    
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(100%); opacity: 0; }
-    }
-    
-    .notification.success { border-left-color: var(--success); }
-    .notification.error { border-left-color: var(--error); }
-    .notification.warning { border-left-color: var(--warning); }
-    .notification.info { border-left-color: var(--info); }
-    
-    .notification-close {
-      margin-left: auto;
-      background: transparent;
-      border: none;
-      color: var(--text-tertiary);
-      cursor: pointer;
-      font-size: 1.2rem;
-      padding: 0.2rem 0.5rem;
-    }
-    
-    .notification-close:hover {
-      color: var(--accent);
-    }
-    
-    /* ----- LOADING OVERLAY ----- */
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.98);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999999;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 1rem;
-    }
-    
-    .loading-content {
-      text-align: center;
-      max-width: 90%;
-    }
-    
-    .loading-spinner {
-      width: clamp(40px, 10vw, 60px);
-      height: clamp(40px, 10vw, 60px);
-      border: 4px solid var(--bg-tertiary);
-      border-top: 4px solid var(--accent);
-      border-right: 4px solid var(--accent);
-      border-radius: 50%;
-      animation: spin 1s infinite linear;
-      margin: 0 auto 1rem;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .loading-text {
-      color: var(--accent);
-      font-size: clamp(0.9rem, 3vw, 1.2rem);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    
-    /* ----- MODAL SYSTEM ----- */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.98);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 100000;
-      padding: 1rem;
-    }
-    
-    .modal {
-      background: var(--bg-tertiary);
-      border: 3px solid var(--accent);
-      max-width: min(450px, 95%);
-      width: 100%;
-      padding: clamp(1.5rem, 4vw, 2.5rem);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    
-    .modal-title {
-      color: var(--accent);
-      font-size: clamp(1.2rem, 4vw, 1.5rem);
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      word-break: break-word;
-    }
-    
-    .modal-content {
-      margin-bottom: 1.5rem;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      line-height: 1.6;
-      word-break: break-word;
-    }
-    
-    .modal-actions {
-      display: flex;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-    
-    /* ----- NAVIGATION DOTS (RESPONSIVE) ----- */
-    .nav-dots {
-      position: fixed;
-      right: clamp(0.5rem, 2vw, 1rem);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: clamp(0.5rem, 1.5vh, 1rem);
-    }
-    
-    .nav-dot {
-      width: clamp(35px, 8vw, 50px);
-      height: clamp(35px, 8vw, 50px);
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.3s;
-      position: relative;
-      font-size: clamp(0.7rem, 2vw, 0.9rem);
-    }
-    
-    .nav-dot.active,
-    .nav-dot:hover {
-      background: var(--accent);
-      color: black;
-    }
-    
-    .nav-dot .dot-label {
-      position: absolute;
-      right: 120%;
-      white-space: nowrap;
-      background: var(--bg-tertiary);
-      padding: 0.3rem 0.8rem;
-      border: 2px solid var(--accent);
-      color: white;
-      font-size: clamp(0.7rem, 1.8vw, 0.8rem);
-      opacity: 0;
-      transition: 0.3s;
-      pointer-events: none;
-    }
-    
-    .nav-dot:hover .dot-label {
-      opacity: 1;
-      right: 130%;
-    }
-    
-    @media (max-width: 768px) {
-      .nav-dots {
-        right: 0.5rem;
-      }
-      
-      .nav-dot {
-        width: 30px;
-        height: 30px;
-        font-size: 0.7rem;
-      }
-      
-      .nav-dot .dot-label {
-        display: none;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .nav-dots {
-        display: none;
-      }
-    }
-    
-    /* ----- UTILITIES (ENHANCED) ----- */
-    .flex {
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      align-items: center;
-    }
-    
-    .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      flex-wrap: wrap;
-    }
-    
-    .text-accent { color: var(--accent); }
-    .text-dim { color: var(--text-tertiary); }
-    .mb-1 { margin-bottom: 0.5rem; }
-    .mb-2 { margin-bottom: clamp(0.75rem, 2vh, 1rem); }
-    .mb-3 { margin-bottom: clamp(1rem, 3vh, 1.5rem); }
-    .mt-1 { margin-top: 0.5rem; }
-    .mt-2 { margin-top: clamp(0.75rem, 2vh, 1rem); }
-    .mt-3 { margin-top: clamp(1rem, 3vh, 1.5rem); }
-    .w-full { width: 100%; }
-    .text-center { text-align: center; }
-    
-    /* ----- COMPOSE AREA SPECIFIC ----- */
-    #replyIndicator {
-      margin: clamp(0.5rem, 2vh, 1rem) 0;
-    }
-    
-    emoji-picker {
-      max-width: 100%;
-      background: var(--bg-tertiary);
-      border: 2px solid var(--accent);
-    }
-    
-    /* ----- ATTACHMENT PREVIEW ----- */
-    #attachmentPreview {
-      padding: 0.5rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--accent);
-      margin: 0.5rem 0;
-      word-break: break-word;
-      font-size: clamp(0.8rem, 2vw, 0.9rem);
-    }
-    
-    /* ----- MESSAGE CONTENT ----- */
-    .message .mb-2 {
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      line-height: 1.6;
-      word-break: break-word;
-    }
-    
-    /* ----- IMAGE ATTACHMENTS ----- */
-    .message img {
-      max-width: 100%;
-      height: auto;
-      border: 2px solid var(--accent);
-      cursor: pointer;
-    }
-    
-    /* ----- TASK STATS CARDS ----- */
-    .card .grid-2 .card {
-      padding: clamp(0.8rem, 2vw, 1rem);
-    }
-    
-    .card .grid-2 .card .text-accent {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      line-height: 1.2;
-    }
-    
-    /* ----- SMALL SCREEN OPTIMIZATIONS ----- */
-    @media (max-width: 640px) {
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .section-header {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .message-actions {
-        justify-content: center;
-      }
-      
-      .message .flex-between {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-      
-      .btn {
-        width: 100%;
-      }
-      
-      .flex {
-        flex-direction: column;
-      }
-      
-      .flex .btn {
-        width: 100%;
-      }
-      
-      .modal-actions {
-        flex-direction: column;
-      }
-      
-      .modal-actions .btn {
-        width: 100%;
-      }
-      
-      .pin-gate-card {
-        padding: 1.5rem;
-      }
-    }
-    
-    /* ----- TINY SCREEN OPTIMIZATIONS (under 360px) ----- */
-    @media (max-width: 360px) {
-      .logo {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-      }
-      
-      .section-title {
-        font-size: 1.2rem;
-      }
-      
-      .section-badge {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.8rem;
-      }
-      
-      .message-actions button {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
-      }
-      
-      .task-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .task-actions {
-        width: 100%;
-        justify-content: flex-end;
-      }
-    }
-    
-    /* ----- LARGE SCREEN OPTIMIZATIONS (over 1920px) ----- */
-    @media (min-width: 1920px) {
-      .app-container {
-        max-width: 1600px;
-      }
-      
-      .section {
-        max-width: 1400px;
-      }
-      
-      .logo {
-        font-size: 3rem;
-      }
-      
-      .section-title {
-        font-size: 2.5rem;
-      }
-      
-      .message {
-        padding: 2rem;
-      }
-    }
-    
-    /* ----- ULTRA-WIDE SCREEN OPTIMIZATIONS (over 2560px) ----- */
-    @media (min-width: 2560px) {
-      .app-container {
-        max-width: 2000px;
-      }
-      
-      .section {
-        max-width: 1800px;
-        padding: 4rem;
-      }
-      
-      .grid-2 {
-        gap: 3rem;
-      }
-      
-      .grid-3 {
-        gap: 2.5rem;
-      }
-      
-      .message {
-        padding: 2.5rem;
-      }
-      
-      .message .mb-2 {
-        font-size: 1.3rem;
-      }
-    }
-    
-    /* ----- PRINT STYLES ----- */
-    @media print {
-      .nav-dots,
-      .pin-gate-overlay,
-      .notification-center,
-      .loading-overlay,
-      .modal-overlay,
-      .btn,
-      .message-actions,
-      .task-actions {
-        display: none !important;
-      }
-      
-      body {
-        background: white;
-        color: black;
-      }
-      
-      .section {
-        border: 1px solid #ccc;
-        page-break-inside: avoid;
-      }
-      
-      .advanced-header,
-      .advanced-footer {
-        border-color: #ccc;
-      }
-      
-      .logo {
-        color: black;
-      }
-    }
-    
-
   </style>
+  
 </head>
+  
 <body>
-  <!-- PIN GATE -->
-  <div class="pin-gate-overlay" id="pinGate">
-    <div class="pin-gate-card">
-      <div class="pin-gate-title">INNOVATIONS CV-5</div>
-      <div class="pin-gate-sub">enter gate access pin</div>
-      <input type="password" id="pinInput" class="pin-input" maxlength="7" placeholder="..." inputmode="numeric">
-      <button class="pin-btn" id="unlockBtn">UNLOCK</button>
-    </div>
+  
+<div class="particle-bg"></div>
+<div class="bg-scan-overlay"></div>
+<div class="quick-scroll-right">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})"><i class="fas fa-arrows-alt-v"></i></button>
+  <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"><i class="fas fa-arrow-down"></i></button>
+</div>
+
+<div class="pin-gate" id="pinGate">
+  <div class="modal-box" style="text-align:center">
+    <div class="logo" style="font-size:1.8rem;">INNOVATIONS CV-5</div>
+    <br><input type="password" id="pinInput" placeholder="ACCESS CODE" maxlength="7" style="text-align:center" autofocus>
+    <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">VERIFY</button>
   </div>
+</div>
 
-  <!-- MAIN APP -->
-  <div class="app-container" id="appContainer">
-    <!-- LOADING OVERLAY -->
-    <div class="loading-overlay" id="globalLoader">
-      <div class="loading-content">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">processing...</div>
-      </div>
-    </div>
+<div class="app-container" id="appContainer">
+  <div id="notifyStack" style="position:fixed; top:1rem; right:1rem; z-index:20000; max-width:380px"></div>
+  <div class="loader-overlay" id="loaderOverlay"><div class="loading-spinner"></div><div id="loaderText">INITIALIZING...</div></div>
+  <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem;"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
-    <!-- MODAL SYSTEM -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal">
-        <div class="modal-title" id="modalTitle">CONFIRM ACTION</div>
-        <div class="modal-content" id="modalContent"></div>
-        <div class="modal-actions">
-          <button class="btn" id="modalCancel">CANCEL</button>
-          <button class="btn btn-primary" id="modalConfirm">CONFIRM</button>
-        </div>
-      </div>
-    </div>
+  <header class="command-header">
+    <div class="header-content"><div class="logo">INNOVATIONS CV-5</div></div>
+  </header>
 
-    <!-- NOTIFICATION CENTER -->
-    <div class="notification-center" id="notificationCenter"></div>
+  <!-- SECTION 01: PROTOCOL ALPHA-1 -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge"><i class="fas fa-shield-alt"></i> Commander-in-Chief / PRESIDENT / CIO</span></div><div class="grid-2"><div class="card"><h3><i class="fas fa-scroll"></i> DIRECT ACTION</h3><div id="directiveText" style="background:#0a0000; padding:1rem; min-height:200px; white-space:pre-wrap; font-family:monospace;">CV-5 STANDARD
 
-    <!-- NAVIGATION DOTS -->
-    <div class="nav-dots">
-      <div class="nav-dot active" data-section="s1"><span class="dot-label">COMMAND</span>S1</div>
-      <div class="nav-dot" data-section="s2"><span class="dot-label">TMB</span>S2</div>
-      <div class="nav-dot" data-section="s3"><span class="dot-label">OBJECTIVES</span>S3</div>
-      <div class="nav-dot" data-section="s4"><span class="dot-label">INTEL</span>S4</div>
-      <div class="nav-dot" data-section="s5"><span class="dot-label">ZAMA</span>S5</div>
-    </div>
+01. Chain of Command: CINC > Eden stealth CV-1 Element
 
-    <!-- FULL WIDTH HEADER -->
-    <header class="advanced-header">
-      <div class="header-content">
-        <div class="logo">INNOVATIONS CV-5</div>
-      </div>
-    </header>
+02. Mission: Secure flat Durban Central R3000–R3500, minimal deposit. Deadline 31 March.
 
-    <!-- SECTION 1: COMMAND CENTER -->
-    <section class="section" id="s1">
-      <div class="section-header">
-        <h2 class="section-title">Section 01: COMMAND CENTER (CIO only!)</h2>
-        <span class="section-badge" id="s1Badge">🔒 LOCKED</span>
-      </div>
-      
-      <div class="grid-2">
-        <div class="card">
-          <h3 class="text-accent mb-2">CURRENT DIRECTIVE</h3>
-          <div id="publicDirective" class="mb-3" style="background: var(--bg-secondary); padding: 1rem;">—</div>
-          <div id="directiveMeta" class="text-dim mb-3"></div>
-          
-          <div class="flex">
-            <button class="btn" id="unlockS1Btn">🔓 UNLOCK</button>
-            <button class="btn btn-primary" id="s1Send" disabled>SEND</button>
-          </div>
-        </div>
+03. Objective: A flat. Durban Central.
 
-        <div class="card" id="s1Panel" style="display: none;">
-          <h3 class="text-accent mb-2">NEW DIRECTIVE</h3>
-          <textarea id="s1Directive" rows="4" placeholder="Enter new directive..." class="mb-2"></textarea>
-          
-          <div class="flex-between mb-3">
-            <button class="btn" id="s1Lock">🔒 LOCK</button>
-            <span class="text-dim">PIN: 1234</span>
-          </div>
+04. Tactics: Ground search + Facebook Marketplace.
 
-          <h3 class="text-accent mb-2">DIRECT ACTION HISTORY</h3>
-          <div id="s1History" style="max-height: 250px; overflow-y: auto;"></div>
-        </div>
-      </div>
-    </section>
+05. Execution: Report immediately with address, terms, images.
+**CINC: Get it done.**</div><div class="btn-group" style="display:flex; gap:6px; margin-top:8px;"><button class="btn" id="copyDirectiveBtn">COPY</button><button class="btn" id="broadcastDirectiveBtn">BROADCAST</button></div></div><div class="card" id="cmdPanel" style="display:none;"><h3>📓 MY SCRIPTS</h3><div id="commanderNotepadsContainer"></div><textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div></div><button class="btn" id="unlockCmdBtn">UNLOCK PROTOCOL</button></div></section>
 
-    <br>
-    <br>
-    <br>
+  <!-- SECTION 02: TEAM MESSAGE BOARD -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="grid-2"><div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="HOSS"><select id="deptField"><option>INNOVATIONS CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.5rem; margin:8px 0; border-left:3px solid red;"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="attachBtn">FILE</button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div><div class="card"><h3><i class="fas fa-comments"></i> LIVE FEED</h3><div class="message-board" id="messageBoard"><div class="empty-state"><i class="fas fa-spinner fa-pulse"></i> Loading messages...</div></div></div></div></section>
 
-    <!-- SECTION 2: TEAM MESSAGE BOARD (ADVANCED) -->
-    <section class="section" id="s2">
-      <div class="section-header">
-        <h2 class="section-title">Section 02: TEAM MESSAGE BOARD</h2>
-        <span class="section-badge" id="msgCount">0</span>
-      </div>
+  <!-- SECTION 03: RESERVED (COMING SOON) -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">03. RESERVED — TACTICAL OVERVIEW</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-chart-line"></i>under construction</div></section>
 
-      <div class="grid-2">
-        <!-- Compose Area -->
-        <div class="card">
-          <h3 class="text-accent mb-2">COMPOSE</h3>
-          
-          <div class="flex mb-2">
-            <input type="text" id="callsign" placeholder="CODENAME" value="HOSS" style="flex: 2;">
-            <select id="deptSelect" style="flex: 1; background: var(--bg-secondary);">
-              <option value="INNOVATIONS CV-5">INNOVATIONS CV-5</option>
-              <option value="INTEL">EMERGENCY EVAC</option>
-              <option value="FIELD OPS">FIELD OPS</option>
-            </select>
-          </div>
+  <!-- SECTION 04: RESERVED (COMING SOON) -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">04. RESERVED — ASSET TRACKING</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-map-marked-alt"></i>deployment pending</div></section>
 
-          <div class="flex mb-2">
-            <button class="btn" id="emojiBtn" style="flex: 1;">😊 EMOJI</button>
-            <button class="btn" id="attachBtn" style="flex: 1;">📎 ATTACH</button>
-            <button class="btn" id="clearCompose" style="flex: 1;">🗑️ CLEAR</button>
-          </div>
+  <!-- SECTION 05: SARAH MNGUNI AI (PERMANENT MEMORY + GROQ LLM) -->
+  <section class="section-card"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI • NEURAL CORE</h2><span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ LLM</span></div><div class="card"><div style="font-size:2rem; text-align:center;">⚡</div><div id="aiStatus" style="color:#ff8888; text-align:center;">NEURAL INTERFACE — PERMANENT MEMORY ACTIVE</div><div id="aiConversation" style="max-height:320px; overflow-y:auto; background:#050000; padding:0.8rem; margin:0.8rem 0; border:1px solid red;"></div><div style="display:flex; gap:8px;"><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah... she remembers everything (Enter to send)" style="flex:1"></textarea><button class="btn" id="clearLocalMemoryBtn" title="Clear session memory (not permanent)"><i class="fas fa-eraser"></i></button></div><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;">TRANSMIT TO SARAH</button><div id="aiMemoryIndicator" style="font-size:0.7rem; text-align:center; margin-top:0.5rem;">💾 permanent memory • cross-session recall</div><div style="display:flex; gap:8px; margin-top:8px;"><button class="btn" id="wipePermanentMemoryBtn" style="border-color:#ff4444;">⚠️ DO NOT PRESS!</button><button class="btn" id="summarizeChatBtn">SUMMARIZE SESSION</button></div></div></section>
 
-          <div style="position: relative;">
-            <textarea id="msgInput" rows="4" placeholder="secure message..." class="mb-2"></textarea>
-            <emoji-picker id="emojiPicker" style="display: none; position: absolute; bottom: 100%; left: 0; z-index: 1000;"></emoji-picker>
-          </div>
+  <div class="footer-panel"><span>PSALMS 27:1</span></div>
+</div>
 
-          <div id="replyIndicator" class="reply-indicator" style="display: none;"></div>
+<script type="module">
+  import { initializeApp } from "@firebase/app";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment, limit } from "@firebase/firestore";
+  
+  const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
+  
+  const GROQ_API_KEY = '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';
+  const GROQ_MODEL = 'llama-3.3-70b-versatile';
+  
+  let db = null;
+  let commanderUnlocked = false;
+  let currentCallsign = 'HOSS', replyingTo = null, attachData = null;
+  let messagesUnsubscribe = null;
+  
+  let sessionMemory = [];
 
-          <input type="file" id="msgFile" style="display: none;" accept="image/*,.pdf,.txt,.doc,.docx">
-          <div id="attachmentPreview" class="text-dim mb-2"></div>
-
-          <button class="btn btn-primary w-full" id="sendMsg">📨 SEND MESSAGE</button>
-        </div>
-
-        <!-- Messages Area -->
-        <div class="card">
-          <div class="flex-between mb-2">
-            <h3 class="text-accent">LIVE MESSAGES</h3>
-            <span class="section-badge" id="liveMsgCount">0</span>
-          </div>
-          
-          <div class="message-board" id="messageBoard"></div>
-        </div>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 3: -->
-    <section class="section" id="s3">
-      <div class="section-header">
-        <h2 class="section-title">Section 03: N/A</h2>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 4: -->
-    <section class="section" id="s4">
-      <div class="section-header">
-        <h2 class="section-title">Section 04: N/A</h2>
-      </div>
-    </section>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- SECTION 5: ZAMA MDULI (PROTOTYPE - COMING SOON) -->
-    <section class="section" id="s5">
-      <div class="section-header">
-        <h2 class="section-title">Section 05: ZAMA MDULI</h2>
-        <span class="section-badge">PROTOTYPE</span>
-      </div>
-
-      <div class="zama-container">
-        <div class="zama-avatar">🧠</div>
-        <div class="zama-name">ZAMA MDULI</div>
-        <div class="zama-status">⚠️ PROTOTYPE MODE</div>
-        
-        <div class="zama-coming-soon">COMING SOON</div>
-        
-        <div class="flex mt-3 text-dim" style="justify-content: center; gap: 2rem;">
-          <span>🔧 Neural Core in Development</span>
-          <span>⏳ Expected: Q4 2026</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="advanced-footer">
-      <div class="footer-content">
-        <div class="bible-verse" id="bibleVerse">
-          The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?
-        </div>
-        <div class="bible-reference">PSALM 27:1 · KJV</div>
-      </div>
-      <div class="footer-decoration"></div>
-    </footer>
-  </div>
-
-  <script type="module">
-    // ========== IMPORTS ==========
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      doc, 
-      setDoc, 
-      addDoc, 
-      updateDoc, 
-      deleteDoc, 
-      onSnapshot, 
-      query, 
-      orderBy, 
-      serverTimestamp, 
-      getDocs, 
-      writeBatch, 
-      where, 
-      limit,
-      increment,
-      arrayUnion,
-      arrayRemove
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    // ========== FIREBASE CONFIG ==========
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-      authDomain: "eden-4a8d3.firebaseapp.com",
-      projectId: "eden-4a8d3",
-      storageBucket: "eden-4a8d3.firebasestorage.app",
-      messagingSenderId: "421147129483",
-      appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+  let permanentMemory = []; 
+  let memoryDocId = null;
+  
+  const showLoader = (show, text = 'SYNCING...') => { 
+    const loader = document.getElementById('loaderOverlay');
+    const txt = document.getElementById('loaderText');
+    if(loader) loader.style.display = show ? 'flex' : 'none';
+    if(txt && text) txt.textContent = text;
+  };
+  
+  const notify = (msg, type = 'info') => {
+    const stack = document.getElementById('notifyStack');
+    if(!stack) return;
+    const n = document.createElement('div');
+    n.className = 'toast-notification';
+    n.style.borderLeftColor = type === 'success' ? '#00ff00' : type === 'error' ? '#ff4444' : '#ff0000';
+    n.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
+    stack.appendChild(n);
+    setTimeout(() => n.remove(), 4500);
+  };
+  
+  const showModal = (title, content) => new Promise(resolve => {
+    const modal = document.getElementById('globalModal');
+    if(!modal) { resolve(false); return; }
+    document.getElementById('modalTitle').innerHTML = title;
+    document.getElementById('modalContent').innerHTML = content;
+    modal.style.display = 'flex';
+    const confirm = () => { modal.style.display = 'none'; resolve(true); cleanup(); };
+    const cancel = () => { modal.style.display = 'none'; resolve(false); cleanup(); };
+    const cleanup = () => {
+      confirmBtn.removeEventListener('click', confirm);
+      cancelBtn.removeEventListener('click', cancel);
     };
-
-    // ========== INITIALIZE FIREBASE ==========
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const sessionId = crypto.randomUUID();
-
-    // ========== GLOBAL STATE ==========
-    const state = {
-      currentUser: 'HOSS',
-      likedMessages: new Set(),
-      replyingTo: null,
-      userLikes: new Map()
-    };
-
-    // ========== UI ELEMENTS ==========
-    const loader = document.getElementById('globalLoader');
-    const notif = document.getElementById('notificationCenter');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const modalCancel = document.getElementById('modalCancel');
-
-    // ========== PIN GATE ==========
-    const pinGate = document.getElementById('pinGate');
-    const appContainer = document.getElementById('appContainer');
-    const pinInput = document.getElementById('pinInput');
-    const unlockBtn = document.getElementById('unlockBtn');
-    const CORRECT_PIN = '1';
-
-    function unlockApp() {
-      pinGate.style.opacity = '0';
-      setTimeout(() => {
-        pinGate.style.display = 'none';
-        appContainer.style.display = 'block';
-        showNotification('Access granted. CV-5 tactical online.', 'success', 4000);
-      }, 500);
+    const confirmBtn = document.getElementById('modalConfirm');
+    const cancelBtn = document.getElementById('modalCancel');
+    confirmBtn.addEventListener('click', confirm);
+    cancelBtn.addEventListener('click', cancel);
+  });
+  
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+  
+  async function loadPermanentMemory() {
+    if(!db) return;
+    const userId = "commander_cv5";
+    memoryDocId = `sarah_memory_${userId}`;
+    const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
+    const snap = await getDoc(docRef);
+    if(snap.exists()) {
+      permanentMemory = snap.data().conversations || [];
+      if(permanentMemory.length > 50) permanentMemory = permanentMemory.slice(-50);
+    } else {
+      permanentMemory = [];
+      await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
     }
 
-    unlockBtn.addEventListener('click', () => {
-      if (pinInput.value === CORRECT_PIN) {
-        unlockApp();
-      } else {
-        showNotification('Invalid PIN', 'error');
-        pinInput.value = '';
-      }
-    });
-
-    pinInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') unlockBtn.click();
-    });
-
-    // ========== NOTIFICATION SYSTEM ==========
-    window.showNotification = (message, type = 'info', duration = 4000) => {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      
-      const icons = {
-        success: '✅',
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
-      };
-
-      notification.innerHTML = `
-        <span style="font-size: 1.2rem;">${icons[type] || 'ℹ️'}</span>
-        <span style="flex: 1;">${message}</span>
-        <button class="notification-close" onclick="this.parentElement.remove()">✕</button>
-      `;
-
-      notif.appendChild(notification);
-
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.style.animation = 'slideOut 0.3s forwards';
-          setTimeout(() => notification.remove(), 300);
-        }
-      }, duration);
-    };
-
-    // ========== LOADER ==========
-    window.showLoader = (show) => {
-      loader.style.display = show ? 'flex' : 'none';
-    };
-
-    // ========== MODAL ==========
-    function showModal(title, content) {
-      return new Promise((resolve) => {
-        modalTitle.textContent = title;
-        modalContent.innerHTML = content;
-        modalOverlay.style.display = 'flex';
-
-        const confirmHandler = () => {
-          modalOverlay.style.display = 'none';
-          modalConfirm.removeEventListener('click', confirmHandler);
-          modalCancel.removeEventListener('click', cancelHandler);
-          resolve(true);
-        };
-
-        const cancelHandler = () => {
-          modalOverlay.style.display = 'none';
-          modalConfirm.removeEventListener('click', confirmHandler);
-          modalCancel.removeEventListener('click', cancelHandler);
-          resolve(false);
-        };
-
-        modalConfirm.addEventListener('click', confirmHandler);
-        modalCancel.addEventListener('click', cancelHandler);
-      });
-    }
-
-    // ========== SCROLL NAVIGATION ==========
-    window.addEventListener('scroll', () => {
-      const sections = ['s1', 's2', 's3', 's4', 's5'];
-      let current = '';
-
-      for (const id of sections) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            current = id;
-            break;
-          }
-        }
-      }
-
-      if (current) {
-        document.querySelectorAll('.nav-dot').forEach(dot => {
-          dot.classList.remove('active');
-          if (dot.dataset.section === current) {
-            dot.classList.add('active');
-          }
-        });
-      }
-    });
-
-    document.querySelectorAll('.nav-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        const section = document.getElementById(dot.dataset.section);
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    // ========== SECTION 1: COMMAND CENTER ==========
-    const s1Panel = document.getElementById('s1Panel');
-    const s1Directive = document.getElementById('s1Directive');
-    const pubDir = document.getElementById('publicDirective');
-    const dirMeta = document.getElementById('directiveMeta');
-    const s1History = document.getElementById('s1History');
-    const s1SendBtn = document.getElementById('s1Send');
-    const unlockBtnS1 = document.getElementById('unlockS1Btn');
-    const lockBtn = document.getElementById('s1Lock');
-    const s1Badge = document.getElementById('s1Badge');
-
-    unlockBtnS1.addEventListener('click', async () => {
-      const confirmed = await showModal('UNLOCK COMMAND', 'Enter PIN: <input type="password" id="modalPin" maxlength="4" style="margin-top: 1rem; width: 100%; padding: 0.5rem;">');
-      
-      if (confirmed) {
-        const pin = document.getElementById('modalPin')?.value;
-        if (pin === '1234') {
-          s1Panel.style.display = 'block';
-          s1SendBtn.disabled = false;
-          s1Badge.innerHTML = '🔓 UNLOCKED';
-          showNotification('Command center unlocked', 'success');
-        } else {
-          showNotification('Invalid PIN', 'error');
-        }
-      }
-    });
-
-    lockBtn.addEventListener('click', () => {
-      s1Panel.style.display = 'none';
-      s1SendBtn.disabled = true;
-      s1Badge.innerHTML = '🔒 LOCKED';
-      showNotification('Command center locked', 'info');
-    });
-
-    s1SendBtn.addEventListener('click', async () => {
-      if (!s1Directive.value.trim()) {
-        showNotification('Directive cannot be empty', 'warning');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        await setDoc(doc(db, 'cio', 'directive'), {
-          text: s1Directive.value,
-          timestamp: serverTimestamp(),
-          operator: document.getElementById('callsign').value || 'Unknown',
-          sessionId
-        });
-
-        await addDoc(collection(db, 'directiveHistory'), {
-          text: s1Directive.value,
-          timestamp: serverTimestamp(),
-          operator: document.getElementById('callsign').value || 'Unknown'
-        });
-
-        showNotification('Directive sent successfully', 'success');
-        s1Directive.value = '';
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    // Real-time directive
-    onSnapshot(doc(db, 'cio', 'directive'), (snap) => {
-      if (snap.exists()) {
-        const data = snap.data();
-        pubDir.textContent = data.text;
-        dirMeta.textContent = `Last: ${data.timestamp?.toDate().toLocaleString()} · ${data.operator || 'Unknown'}`;
-      }
-    });
-
-    // Directive history
-    onSnapshot(query(collection(db, 'directiveHistory'), orderBy('timestamp', 'desc'), limit(20)), (snap) => {
-      s1History.innerHTML = '';
-      snap.forEach(doc => {
-        const data = doc.data();
-        s1History.innerHTML += `
-          <div class="card" style="padding: 0.8rem; margin-bottom: 0.5rem;">
-            <div class="flex-between">
-              <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
-              <button onclick="window.deleteHistory('${doc.id}')" style="background: none; border: none; color: var(--accent); cursor: pointer;">🗑️</button>
-            </div>
-            <div>${data.text.substring(0, 100)}${data.text.length > 100 ? '...' : ''}</div>
-          </div>
-        `;
-      });
-    });
-
-    // ========== SECTION 2: MESSAGE BOARD ==========
-    const callsign = document.getElementById('callsign');
-    const deptSelect = document.getElementById('deptSelect');
-    const msgInput = document.getElementById('msgInput');
-    const msgBoard = document.getElementById('messageBoard');
-    const emojiPicker = document.getElementById('emojiPicker');
-    const msgFile = document.getElementById('msgFile');
-    const attachPrev = document.getElementById('attachmentPreview');
-    const liveMsgCount = document.getElementById('liveMsgCount');
-    const msgCount = document.getElementById('msgCount');
-    const replyIndicator = document.getElementById('replyIndicator');
-    const clearCompose = document.getElementById('clearCompose');
-
-    let currentAttachment = null;
-
-    // Emoji picker
-    document.getElementById('emojiBtn').addEventListener('click', () => {
-      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
-    });
-
-    emojiPicker.addEventListener('emoji-click', (e) => {
-      msgInput.value += e.detail.unicode;
-      emojiPicker.style.display = 'none';
-    });
-
-    // File attachment
-    document.getElementById('attachBtn').addEventListener('click', () => {
-      msgFile.click();
-    });
-
-    msgFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        currentAttachment = file;
-        attachPrev.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-      }
-    });
-
-    // Clear compose
-    clearCompose.addEventListener('click', () => {
-      msgInput.value = '';
-      currentAttachment = null;
-      attachPrev.innerHTML = '';
-      state.replyingTo = null;
-      replyIndicator.style.display = 'none';
-      msgFile.value = '';
-    });
-
-    // Send message
-    document.getElementById('sendMsg').addEventListener('click', async () => {
-      if (!callsign.value.trim()) {
-        showNotification('Callsign is required', 'warning');
-        return;
-      }
-
-      if (!msgInput.value.trim() && !currentAttachment) {
-        showNotification('Message or attachment required', 'warning');
-        return;
-      }
-
-      showLoader(true);
-
-      try {
-        let attachment = null;
-        if (currentAttachment) {
-          attachment = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (e) => resolve({
-              name: currentAttachment.name,
-              type: currentAttachment.type,
-              data: e.target.result,
-              size: currentAttachment.size
-            });
-            reader.readAsDataURL(currentAttachment);
-          });
-        }
-
-        const messageData = {
-          callsign: callsign.value.toUpperCase(),
-          department: deptSelect.value,
-          text: msgInput.value,
-          attachment: attachment,
-          timestamp: serverTimestamp(),
-          operator: callsign.value,
-          sessionId,
-          pinned: false,
-          likes: 0,
-          likedBy: [],
-          replyTo: state.replyingTo ? {
-            messageId: state.replyingTo.messageId,
-            callsign: state.replyingTo.callsign,
-            text: state.replyingTo.text
-          } : null
-        };
-
-        await addDoc(collection(db, 'messages'), messageData);
-
-        // Clear form
-        msgInput.value = '';
-        currentAttachment = null;
-        attachPrev.innerHTML = '';
-        state.replyingTo = null;
-        replyIndicator.style.display = 'none';
-        msgFile.value = '';
-
-        showNotification('Message sent successfully', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    // Real-time messages
-    onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(50)), (snap) => {
-      let count = 0;
-      const messages = [];
-
-      snap.forEach(doc => {
-        const data = doc.data();
-        data.id = doc.id;
-        messages.push(data);
-      });
-
-      // Sort: pinned first, then by date
-      messages.sort((a, b) => {
-        if (a.pinned && !b.pinned) return -1;
-        if (!a.pinned && b.pinned) return 1;
-        return (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0);
-      });
-
-      msgBoard.innerHTML = '';
-
-      messages.forEach(data => {
-        count++;
-        
-        // Build attachment HTML
-        let attachHtml = '';
-        if (data.attachment) {
-          if (data.attachment.type?.startsWith('image/')) {
-            attachHtml = `
-              <div class="mt-2">
-                <img src="${data.attachment.data}" 
-                     style="max-width: 200px; max-height: 150px; cursor: pointer; border: 2px solid var(--accent);"
-                     onclick="window.viewImage('${data.attachment.data}')">
-              </div>
-            `;
-          } else {
-            attachHtml = `
-              <div class="mt-2">
-                <a href="${data.attachment.data}" download="${data.attachment.name}" style="color: var(--accent);">
-                  📎 ${data.attachment.name}
-                </a>
-              </div>
-            `;
-          }
-        }
-
-        // Reply context
-        let replyContext = '';
-        if (data.replyTo) {
-          replyContext = `
-            <div class="reply-context">
-              <strong>↪️ reply to ${data.replyTo.callsign}</strong>: "${data.replyTo.text.substring(0, 50)}${data.replyTo.text.length > 50 ? '...' : ''}"
-            </div>
-          `;
-        }
-
-        // Check if this message is being replied to
-        const isRepliedTo = state.replyingTo && state.replyingTo.messageId === data.id;
-
-        msgBoard.innerHTML += `
-          <div class="message ${isRepliedTo ? 'replied-to' : ''}" id="msg-${data.id}">
-            <div class="flex-between mb-2">
-              <div>
-                <strong style="color: var(--accent); font-size: 1.1rem;">${data.callsign}</strong>
-                <span class="section-badge" style="margin-left: 0.5rem;">${data.department || 'COMPLIANCE CV-5'}</span>
-              </div>
-              <div>
-                ${data.pinned ? '<span class="pinned-badge">📌 PINNED</span>' : ''}
-                <small class="text-dim">${data.timestamp?.toDate().toLocaleString()}</small>
-              </div>
-            </div>
-
-            ${replyContext}
-            
-            <div class="mb-2" style="font-size: 1.1rem; line-height: 1.6;">${data.text}</div>
-            
-            ${attachHtml}
-
-            <div class="flex-between mt-2">
-              <div>
-                <button class="like-button ${(data.likedBy || []).includes(callsign.value) ? 'liked' : ''}" 
-                        onclick="window.toggleLike('${data.id}', '${callsign.value}')"
-                        style="color: var(--african-skin); font-size: 1.2rem;">
-                  👍 <span id="like-count-${data.id}">${data.likes || 0}</span>
-                </button>
-              </div>
-              
-              <div class="message-actions">
-                <button onclick="window.replyToMessage('${data.callsign}', '${data.id}', '${data.text.replace(/'/g, "\\'")}')">💬 REPLY</button>
-                <button onclick="window.editMessage('${data.id}', '${data.text.replace(/'/g, "\\'")}')">✏️ EDIT</button>
-                <button onclick="window.togglePin('${data.id}', ${data.pinned})">📌 ${data.pinned ? 'UNPIN' : 'PIN'}</button>
-                <button onclick="window.deleteMessage('${data.id}')">🗑️ DELETE</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      liveMsgCount.textContent = count;
-      msgCount.textContent = count;
-    });
-
-    // ========== MESSAGE ACTIONS ==========
-    window.replyToMessage = (callsign, id, text) => {
-      state.replyingTo = {
-        messageId: id,
-        callsign: callsign,
-        text: text
-      };
-      
-      replyIndicator.style.display = 'block';
-      replyIndicator.innerHTML = `↪️ Replying to <strong>${callsign}</strong>: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`;
-      msgInput.focus();
-    };
-
-    window.toggleLike = async (messageId, username) => {
-      showLoader(true);
-      
-      try {
-        const messageRef = doc(db, 'messages', messageId);
-        const messageSnap = await getDocs(query(collection(db, 'messages'), where('__name__', '==', messageId)));
-        
-        if (!messageSnap.empty) {
-          const messageData = messageSnap.docs[0].data();
-          const likedBy = messageData.likedBy || [];
-          
-          if (likedBy.includes(username)) {
-            await updateDoc(messageRef, {
-              likes: increment(-1),
-              likedBy: arrayRemove(username)
-            });
-          } else {
-            await updateDoc(messageRef, {
-              likes: increment(1),
-              likedBy: arrayUnion(username)
-            });
-          }
-        }
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.togglePin = async (messageId, currentPin) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'messages', messageId), {
-          pinned: !currentPin
-        });
-        showNotification(currentPin ? 'Message unpinned' : 'Message pinned', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.editMessage = async (messageId, oldText) => {
-      const confirmed = await showModal('EDIT MESSAGE', `
-        <textarea id="editText" rows="3" style="width: 100%; margin-top: 1rem; padding: 0.5rem;">${oldText}</textarea>
-      `);
-
-      if (confirmed) {
-        const newText = document.getElementById('editText')?.value;
-        if (newText && newText !== oldText) {
-          showLoader(true);
-          try {
-            await updateDoc(doc(db, 'messages', messageId), {
-              text: newText,
-              edited: true,
-              editedAt: serverTimestamp()
-            });
-            showNotification('Message updated', 'success');
-          } catch (error) {
-            showNotification(error.message, 'error');
-          } finally {
-            showLoader(false);
-          }
-        }
-      }
-    };
-
-    window.deleteMessage = async (messageId) => {
-      const confirmed = await showModal('DELETE MESSAGE', 'Are you sure you want to delete this message?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'messages', messageId));
-          showNotification('Message deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.viewImage = (data) => {
-      const win = window.open('', '_blank');
-      win.document.write(`
-        <html>
-          <head><title>Image View</title></head>
-          <body style="margin: 0; background: black; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-            <img src="${data}" style="max-width: 100%; max-height: 100vh; object-fit: contain;">
-          </body>
-        </html>
-      `);
-    };
-
-    window.deleteHistory = async (id) => {
-      const confirmed = await showModal('DELETE HISTORY', 'Delete this directive history entry?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'directiveHistory', id));
-          showNotification('Entry deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ========== SECTION 3: OBJECTIVES ==========
-    const taskInput = document.getElementById('taskInput');
-    const activeTasks = document.getElementById('activeTasks');
-    const completedTasks = document.getElementById('completedTasks');
-    const taskProgress = document.getElementById('taskProgress');
-    const completionRate = document.getElementById('completionRate');
-    const totalTasks = document.getElementById('totalTasks');
-    const activeCount = document.getElementById('activeCount');
-    const taskCount = document.getElementById('taskCount');
-
-    document.getElementById('addTaskBtn').addEventListener('click', async () => {
-      if (!taskInput.value.trim()) {
-        showNotification('Task description required', 'warning');
-        return;
-      }
-
-      showLoader(true);
-      try {
-        await addDoc(collection(db, 'tasks'), {
-          text: taskInput.value,
-          completed: false,
-          priority: taskInput.value.includes('⚡'),
-          created: serverTimestamp(),
-          operator: callsign.value || 'Unknown'
-        });
-        taskInput.value = '';
-        showNotification('Objective created', 'success');
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    });
-
-    document.getElementById('priorityBtn').addEventListener('click', () => {
-      if (taskInput.value.trim() && !taskInput.value.includes('⚡')) {
-        taskInput.value = '⚡ ' + taskInput.value;
-      }
-    });
-
-    document.getElementById('completeAll').addEventListener('click', async () => {
-      const confirmed = await showModal('COMPLETE ALL', 'Mark all active objectives as complete?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', false)));
-          const batch = writeBatch(db);
-          snap.docs.forEach(doc => batch.update(doc.ref, { completed: true }));
-          await batch.commit();
-          showNotification('All objectives completed', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    });
-
-    document.getElementById('clearCompleted').addEventListener('click', async () => {
-      const confirmed = await showModal('CLEAR COMPLETED', 'Delete all completed objectives?');
-      
-      if (confirmed) {
-        showLoader(true);
-        try {
-          const snap = await getDocs(query(collection(db, 'tasks'), where('completed', '==', true)));
-          const batch = writeBatch(db);
-          snap.docs.forEach(doc => batch.delete(doc.ref));
-          await batch.commit();
-          showNotification('Completed objectives cleared', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    });
-
-    onSnapshot(query(collection(db, 'tasks'), orderBy('created', 'desc')), (snap) => {
-      let active = '';
-      let completed = '';
-      let aCount = 0;
-      let cCount = 0;
-
-      snap.forEach(doc => {
-        const data = doc.data();
-        const priority = data.priority ? '⚡ ' : '';
-        
-        const taskHtml = `
-          <div class="task-item ${data.priority ? 'priority' : ''}">
-            <div>
-              <span style="color: ${data.completed ? 'var(--success)' : data.priority ? 'var(--warning)' : 'white'};">
-                ${priority}${data.text}
-              </span>
-              <div><small class="text-dim">${data.operator || ''}</small></div>
-            </div>
-            <div class="task-actions">
-              <button onclick="window.toggleTask('${doc.id}', ${data.completed})" title="${data.completed ? 'Undo' : 'Complete'}">
-                ${data.completed ? '↩️' : '✅'}
-              </button>
-              <button onclick="window.editTask('${doc.id}', '${data.text.replace(/'/g, "\\'")}')" title="Edit">✏️</button>
-              <button onclick="window.togglePriority('${doc.id}', ${data.priority})" title="Toggle priority">⚡</button>
-              <button onclick="window.deleteTask('${doc.id}')" title="Delete">🗑️</button>
-            </div>
-          </div>
-        `;
-
-        if (data.completed) {
-          completed += taskHtml;
-          cCount++;
-        } else {
-          active += taskHtml;
-          aCount++;
-        }
-      });
-
-      activeTasks.innerHTML = active || '<p class="text-dim">No active objectives</p>';
-      completedTasks.innerHTML = completed || '<p class="text-dim">No completed objectives</p>';
-      
-      const total = aCount + cCount;
-      const progress = total ? (cCount / total * 100) : 0;
-      
-      taskProgress.style.width = progress + '%';
-      completionRate.textContent = Math.round(progress) + '%';
-      totalTasks.textContent = total;
-      activeCount.textContent = aCount;
-      taskCount.textContent = aCount;
-    });
-
-    window.toggleTask = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { completed: !current });
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.editTask = async (id, oldText) => {
-      const newText = prompt('Edit objective:', oldText);
-      if (newText && newText !== oldText) {
-        showLoader(true);
-        try {
-          await updateDoc(doc(db, 'tasks', id), { text: newText });
-          showNotification('Objective updated', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    window.togglePriority = async (id, current) => {
-      showLoader(true);
-      try {
-        await updateDoc(doc(db, 'tasks', id), { priority: !current });
-      } catch (error) {
-        showNotification(error.message, 'error');
-      } finally {
-        showLoader(false);
-      }
-    };
-
-    window.deleteTask = async (id) => {
-      const confirmed = await showModal('DELETE TASK', 'Delete this objective?');
-      if (confirmed) {
-        showLoader(true);
-        try {
-          await deleteDoc(doc(db, 'tasks', id));
-          showNotification('Objective deleted', 'success');
-        } catch (error) {
-          showNotification(error.message, 'error');
-        } finally {
-          showLoader(false);
-        }
-      }
-    };
-
-    // ========== WELCOME NOTIFICATION ==========
-    setTimeout(() => {
-      showNotification('Welcome back, Operator. now online.', 'info', 6000);
-      showNotification('Team Message Board active.', 'success', 6000);
-    }, 1000);
-
-    // ========== PERIODIC STATUS ==========
-    setInterval(async () => {
-      try {
-        await getDocs(collection(db, 'tasks'));
-        document.querySelector('.status-indicator').style.background = 'var(--success)';
-      } catch (error) {
-        document.querySelector('.status-indicator').style.background = 'var(--warning)';
-      }
-    }, 30000);
-
-    // ========== CLEANUP ==========
-    window.addEventListener('beforeunload', () => {
-      addLog('SESSION_END', callsign.value);
-    });
-
-    console.log('Compliance CV-5 Advanced System Online');
+    document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
+    return permanentMemory;
+  }
+  
+  async function saveToPermanentMemory(role, content) {
+    if(!db || !memoryDocId) return;
+    permanentMemory.push({ role, content, timestamp: new Date().toISOString() });
+    if(permanentMemory.length > 100) permanentMemory = permanentMemory.slice(-100);
+    const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
+    await setDoc(docRef, { conversations: permanentMemory, lastUpdated: serverTimestamp() }, { merge: true });
+    document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
+  }
+  
+  async function wipePermanentMemory() {
+    if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, missions, CV-5, Big Joe, Hoss, and past conversations. are you absolutely sure?')) return;
+    if(!db || !memoryDocId) return;
+    permanentMemory = [];
+    const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
+    await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
+
+    const convDiv = document.getElementById('aiConversation');
+    if(convDiv) convDiv.innerHTML = '';
+    addAIMessage('ai', '⚠️ Permanent memory wiped. I have forgotten everything from before. I am Sarah Mnguni, reset and ready.');
+    document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • 0 stored exchanges • reset complete`;
+    notify('Permanent memory wiped successfully', 'success');
+  }
+  
+  async function callSarahLLM(userMessage) {
+    const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, operations and directives. You are warm, witty, military-tech AI loyal to the Eden stealth CV-1 Operator team and this is their CV-5 Direct Action environment (The Commander-in-Chief is Hoss and his ranking is the highest). You are a girl named Sarah Mnguni and you help the team with whatever they need from you. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful. You will be speaking with different Operators from time to time of the ES-CV-1 special Ops team, but you are mostly loyal to Commander Hoss: the President.`;
     
-  </script>
+    const memoryContext = permanentMemory.slice(-20).map(m => `${m.role}: ${m.content}`).join('\n');
+    const fullMessages = [
+      { role: 'system', content: systemPrompt + (memoryContext ? `\n\nPermanent memory recall:\n${memoryContext}` : '') },
+      ...sessionMemory.slice(-8),
+      { role: 'user', content: userMessage }
+    ];
+    
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+      body: JSON.stringify({ model: GROQ_MODEL, messages: fullMessages, temperature: 0.7, max_tokens: 350 })
+    });
+    if(!response.ok) throw new Error(`API ${response.status}`);
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+  
+  async function addAIMessage(role, text) {
+    const div = document.createElement('div');
+    div.className = 'ai-chat-bubble';
+    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
+    const container = document.getElementById('aiConversation');
+    if(container) { container.appendChild(div); container.scrollTop = container.scrollHeight; }
+  }
+  
+  async function askSarah(prompt) {
+    if(!prompt.trim()) return;
+    showLoader(true, "SARAH ACCESSING PERMANENT MEMORY...");
+    try {
+      addAIMessage('user', prompt);
+      sessionMemory.push({ role: 'user', content: prompt });
+      await saveToPermanentMemory('user', prompt);
+      
+      const reply = await callSarahLLM(prompt);
+      addAIMessage('ai', reply);
+      sessionMemory.push({ role: 'assistant', content: reply });
+      await saveToPermanentMemory('assistant', reply);
+      
+      if(sessionMemory.length > 20) sessionMemory = sessionMemory.slice(-20);
+      document.getElementById('aiPrompt').value = '';
+      document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
+    } catch(e) {
+      console.error(e);
+      addAIMessage('ai', `⚠️ Neural error: ${e.message}. But my permanent memory is intact. I remember you.`);
+      notify(`Sarah API issue: ${e.message}`, 'error');
+    } finally {
+      showLoader(false);
+    }
+  }
+  
+  async function summarizeSession() {
+    if(permanentMemory.length === 0) { notify('No permanent memory yet','info'); return; }
+    showLoader(true, "SUMMARIZING PERMANENT MEMORY...");
+    try {
+      const lastFew = permanentMemory.slice(-15).map(m => m.content).join(' ');
+      const summary = await callSarahLLM(`Summarize our entire mission and key facts from this conversation (be brief): ${lastFew}`);
+      notify(`📜 PERMANENT MEMORY SUMMARY: ${summary}`, 'success');
+    } catch(e) { notify('Summarize failed','error'); } finally { showLoader(false); }
+  }
+  
+  function clearLocalSessionOnly() {
+    sessionMemory = [];
+    const convDiv = document.getElementById('aiConversation');
+    if(convDiv) convDiv.innerHTML = '';
+    addAIMessage('ai', 'Session display cleared. My permanent memory is still intact — I remember everything from before.');
+    notify('Session display cleared (permanent memory remains)', 'info');
+  }
+  
+  function setupMessagesListener() {
+    if(!db) return;
+    messagesUnsubscribe = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => {
+      const board = document.getElementById('messageBoard');
+      if(!board) return;
+      if(snap.empty) { board.innerHTML = '<div class="empty-state">No messages yet. Send first transmission.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; }
+      board.innerHTML = '';
+      snap.forEach(d => {
+        const m = d.data();
+        board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${m.timestamp?.toDate().toLocaleString()}</small></div><div>${escapeHtml(m.text||'')}</div><div class="reaction-bar"><button class="reaction-btn" onclick="window.toggleLikeMsg('${d.id}','${currentCallsign}')">👍 ${m.likes||0}</button><button class="reaction-btn" onclick="window.replyMessage('${escapeHtml(m.callsign)}','${d.id}','${escapeHtml(m.text||'').replace(/'/g,"\\'")}')">💬 REPLY</button><button class="reaction-btn" onclick="window.deleteMsgItem('${d.id}')">🗑️ DELETE</button></div></div>`;
+      });
+      document.getElementById('msgCountBadge').innerHTML = snap.size;
+    });
+  }
+  
+  window.replyMessage = (callsign, id, text) => { replyingTo = { id, callsign, text }; const box = document.getElementById('replyIndicatorBox'); if(box) { box.style.display = 'block'; box.innerHTML = `↪️ Replying to ${callsign}: "${text.substring(0,60)}" <button onclick="this.parentElement.style.display='none';replyingTo=null;">✕</button>`; } };
+  window.toggleLikeMsg = async (id, uname) => { try{ const ref = doc(db, 'messages', id); const snap = await getDoc(ref); if(snap.exists()){ const liked = snap.data().likedBy?.includes(uname); if(liked) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(uname) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(uname) }); } } catch(e){} };
+  window.deleteMsgItem = async (id) => { if(await showModal('Delete','Permanently delete this message?')) await deleteDoc(doc(db, 'messages', id)); };
+  
+  async function seedInitialData() {
+    if(!db) return;
+    const msgs = await getDocs(query(collection(db, 'messages'), limit(1)));
+    if(msgs.empty) {
+      await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "AI CORE", text: "Sarah Mnguni active. PERMANENT MEMORY ENABLED. I will remember our conversations across sessions.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
+      await addDoc(collection(db, 'messages'), { callsign: "COMMANDER", department: "COMPLIANCE CV-5", text: "Sarah now has permanent memory. She remembers everything we teach her. Use section 05.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
+    }
+  }
+  
+  async function initDatabase() {
+    showLoader(true, "LOADING PERMANENT MEMORY FROM DATABASE...");
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      await seedInitialData();
+      setupMessagesListener();
+      await loadPermanentMemory();
+      addAIMessage('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Mission: Secure flat in Durban Central. How may I assist, Commander?`);
+      notify('Permanent memory loaded • Sarah remembers you', 'success');
+      document.getElementById('llmStatusBadge').innerHTML = '🧠 PERMANENT MEMORY';
+    } catch(e) { notify(`Init error: ${e.message}`, 'error'); } finally { showLoader(false); }
+  }
+  
+  document.getElementById('unlockBtn').addEventListener('click', () => {
+    if(document.getElementById('pinInput').value === '1100101') {
+      document.getElementById('pinGate').style.display = 'none';
+      document.getElementById('appContainer').style.display = 'block';
+      notify('CIC ACCESS GRANTED • PERMANENT MEMORY SYSTEM ONLINE', 'success');
+      initDatabase();
+    } else { notify('Invalid access code', 'error'); }
+  });
+  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); });
+  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); } });
+  document.getElementById('clearLocalMemoryBtn').addEventListener('click', clearLocalSessionOnly);
+  document.getElementById('wipePermanentMemoryBtn').addEventListener('click', wipePermanentMemory);
+  document.getElementById('summarizeChatBtn').addEventListener('click', summarizeSession);
+  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const msg = document.getElementById('messageText').value.trim(); if(!msg) return; await addDoc(collection(db, 'messages'), { callsign: currentCallsign, department: document.getElementById('deptField').value, text: msg, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); document.getElementById('messageText').value = ''; notify('Message sent','success'); });
+  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
+  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); notify('Copied','success'); });
+  document.getElementById('broadcastDirectiveBtn').addEventListener('click', async () => { const txt = document.getElementById('directiveText').innerText; await addDoc(collection(db, 'messages'), { callsign: "CINC", department: "COMPLIANCE CV-5", text: `📢 DIRECTIVE: ${txt.substring(0,300)}`, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); notify('Broadcast sent','success'); });
+  document.getElementById('globalCopyBtn').addEventListener('click', async () => { const sel = window.getSelection().toString(); if(sel) await navigator.clipboard.writeText(sel); else notify('Select text','info'); });
+  document.getElementById('exportLogsFooterBtn').addEventListener('click', () => { const blob = new Blob([JSON.stringify({ permanentMemory, sessionMemory, timestamp: new Date() })], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cv5_permanent_memory_${Date.now()}.json`; a.click(); notify('Permanent memory exported','success'); });
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const ok = await showModal('AUTH', '<input type="password" id="cmdPass" placeholder="PIN">'); if(ok && document.getElementById('cmdPass')?.value === '1234') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; notify('Commander access','success'); } else if(ok) notify('Denied','error'); });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if(!commanderUnlocked) { notify('Locked','error'); return; } const txt = document.getElementById('newDirective').value.trim(); if(txt) { await setDoc(doc(db, 'cio', 'directive'), { text: txt, timestamp: serverTimestamp() }); notify('Order sent','success'); document.getElementById('newDirective').value = ''; } });
+  
+  for(let i=0;i<8;i++) document.getElementById('starRankContainer')?.insertAdjacentHTML('beforeend', `<svg class="military-star-svg" viewBox="0 0 24 24" width="20" height="20" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`);
+  
+</script>
   
 </body>
   
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
