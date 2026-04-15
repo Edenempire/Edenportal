@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   
   <title>The Book of Eden</title>
-  <!-- advanced type palette -->
+
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
   
   <link rel="icon" type="image/png" href="logo.png" sizes="192x192">
@@ -17,12 +17,15 @@
   <style>
     
     * {
+      
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      
     }
 
     :root {
+      
       --cyan: #00ffff;
       --deep-cyan: #00ccff;
       --panel: rgba(0, 12, 18, 0.9);
@@ -32,24 +35,25 @@
       --font-tactical: 'Orbitron', sans-serif;
       --font-body: 'Electrolize', sans-serif;
       --font-mono: 'VT323', monospace;
-      --font-verse: 'Cormorant Garamond', serif;   /* adds ancient‑scroll gravity */
+      --font-verse: 'Cormorant Garamond', serif;   
       --scrollbar: #00ffff;
+      
     }
 
     html, body {
+      
       background: #050a0e;
       color: #d0f0ff;
       font-family: var(--font-body);
       scroll-behavior: smooth;
       overflow-x: hidden;
+      
     }
 
-    /* ===== fine scroll ===== */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #021016; }
     ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 4px; box-shadow: inset 0 0 6px #0ff; }
 
-    /* ===== textured dark backdrop ===== */
     body::before {
       content: "";
       position: fixed;
@@ -78,7 +82,6 @@
       padding: clamp(20px, 5vw, 70px) 20px;
     }
 
-    /* ========== HEADER (relic style) ========== */
     .header {
       text-align: center;
       margin-bottom: 5rem;
@@ -121,7 +124,6 @@
       letter-spacing: 3px;
     }
 
-    /* ===== story grid ===== */
     .story {
       display: flex;
       flex-direction: column;
@@ -130,7 +132,6 @@
       counter-reset: chapter;
     }
 
-    /* ===== CHAPTER CARD (elevated) ===== */
     .chapter {
       counter-increment: chapter;
       padding: 3.5rem 3rem;
@@ -148,7 +149,6 @@
       border-color: #fff;
     }
 
-    /* chapter corner ornaments (animated) */
     .chapter .corner {
       position: absolute;
       width: 35px;
@@ -164,7 +164,6 @@
     .corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
     .corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
-    /* chapter badge (like wax seal) */
     .chapter::before {
       content: "⚔️ chapter " counter(chapter) " ⚔️";
       position: absolute;
@@ -195,7 +194,6 @@
       letter-spacing: 1px;
     }
 
-    /* ===== verses ===== */
     .verses {
       font-family: var(--font-verse);
       font-size: 1.25rem;
@@ -263,7 +261,6 @@
       font-weight: 600;
     }
 
-    /* prophecy block (example – extra touch) */
     .prophecy-note {
       margin-top: 2.5rem;
       padding: 1.5rem 2rem;
@@ -287,7 +284,6 @@
       letter-spacing: 3px;
     }
 
-    /* ===== footer seal ===== */
     .footer {
       margin-top: 8rem;
       padding: 3rem 1rem 2rem;
@@ -314,7 +310,6 @@
       opacity: 0.9;
     }
 
-    /* responsive tweaks */
     @media (max-width: 700px) {
       .chapter { padding: 2.5rem 1.5rem; }
       .chapter::before { left: 1rem; padding: 0.3rem 1rem; font-size: 0.75rem; }
@@ -323,7 +318,6 @@
       .header h1 a { letter-spacing: 5px; }
     }
 
-    /* dynamic verse number marker correction (for tiny) */
     @media (max-width: 450px) {
       .verse { padding-left: 0; }
       .verse::before {
@@ -336,7 +330,6 @@
       }
     }
 
-    /* small animation for entrance */
     @keyframes fadeRaise {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -357,16 +350,13 @@
   
 <div class="main">
 
-  <!-- ===== HEADER ===== -->
   <div class="header">
     <h1><a href="index.html" style="text-decoration: none; color: inherit;">OUR STORY</a></h1>
-    <span>THE BOOK OF EDEN ·第一卷</span>
+    <span>THE BOOK OF EDEN· 第一卷</span>
   </div>
 
-  <!-- ===== THE STORY - advanced manuscript ===== -->
   <div class="story">
 
-    <!-- CHAPTER I  -->
     <div class="chapter">
       <div class="corner corner-tl"></div>
       <div class="corner corner-tr"></div>
@@ -387,12 +377,10 @@
         <div class="verse" data-verse="1:6">Thus the seed of Eden was planted in secret, in the soil of a young man's soul, waiting for the appointed time to sprout forth.</div>
         
       </div>
-      <!-- small prophetic ornament -->
       <div class="prophecy-note">🔥 "From one spark, a nation shall be kindled."</div>
       
     </div>
 
-    <!-- CHAPTER II  -->
     <div class="chapter">
       <div class="corner corner-tl"></div>
       <div class="corner corner-tr"></div>
@@ -417,7 +405,6 @@
       
     </div>
 
-    <!-- CHAPTER III  -->
     <div class="chapter">
       <div class="corner corner-tl"></div>
       <div class="corner corner-tr"></div>
@@ -450,7 +437,6 @@
       </div>
     </div>
 
-    <!-- CHAPTER IV  -->
     <div class="chapter">
       <div class="corner corner-tl"></div>
       <div class="corner corner-tr"></div>
@@ -483,13 +469,11 @@
     </div>
   </div>
 
-  <!-- ========== FOOTER ========== -->
   <div class="footer">
     <p>✧ THE BOOK OF EDEN ✧</p>
   </div>
 </div>
 
-<!-- micro script for dynamic console salute -->
 <script>
   
   (function() {
