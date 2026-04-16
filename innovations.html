@@ -106,6 +106,169 @@
     .coming-soon-badge { background: #2a0000; color: #ff8888; text-align: center; padding: 2rem; border: 1px dashed red; font-style: italic; }
     @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 8px; } .quick-scroll-right button { width: 36px; height: 36px; } }
     @media (max-width: 480px) { .quick-scroll-right { display: none; } .grid-2 { grid-template-columns: 1fr; } }
+
+    /* ===== MOBILE-FIRST MESSAGE BOARD FIXES ===== */
+/* These styles specifically target the Team Message Board section
+   to prevent overlapping and ensure perfect fit on all mobile devices */
+
+/* Force all message board containers to respect viewport width */
+.section-card,
+.grid-2,
+.card,
+.message-board,
+.message-item {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .card {
+    width: 100%;
+    padding: 0.8rem !important;
+    overflow-x: hidden;
+  }
+  
+  .message-board {
+    max-height: 500px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  .message-item {
+    width: 100%;
+    padding: 0.6rem !important;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  
+  .message-item div {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .reaction-bar {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+  
+  .reaction-btn {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+  
+  .message-item > div:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .message-item strong {
+    font-size: 0.85rem;
+  }
+  
+  .message-item small {
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+  
+  .message-item div:nth-child(2) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-card {
+    padding: 0.8rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  .card {
+    padding: 0.6rem !important;
+  }
+  
+  .message-item {
+    padding: 0.5rem !important;
+  }
+  
+  .reaction-btn {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+  
+  .message-item small {
+    white-space: normal;
+    font-size: 0.6rem;
+  }
+}
+
+.message-item img,
+.message-item iframe {
+  
+  max-width: 100%;
+  height: auto;
+  
+}
+
+#messageText,
+#callsignField,
+#deptField {
+  
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+}
+
+.btn-group {
+  
+  flex-wrap: wrap;
+  
+}
+
+#replyIndicatorBox {
+  
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.7rem;
+  white-space: normal;
+  word-break: break-word;
+  
+}
+
+.message-board::-webkit-scrollbar {
+  
+  width: 4px;
+  
+}
+
+.message-board::-webkit-scrollbar-track {
+  
+  background: #0a0000;
+  
+}
+
+.message-board::-webkit-scrollbar-thumb {
+  
+  background: #ff0000;
+  border-radius: 2px;
+  
+}
     
   </style>
   
