@@ -794,6 +794,7 @@
         }
 
         #eliteSplash {
+            
             position: fixed;
             inset: 0;
             background: #000;
@@ -803,6 +804,7 @@
             z-index: 999999;
             animation: tacticalFade 1s ease 5s forwards;
             overflow: hidden;
+            
         }
 
         @keyframes tacticalFade {
@@ -810,6 +812,7 @@
         }
 
         .splash-core {
+            
             text-align: center;
             color: var(--cyan);
             position: relative;
@@ -817,9 +820,11 @@
             max-width: 600px;
             padding: 40px 20px;
             z-index: 10;
+            
         }
 
         .splash-hex-bg {
+            
             position: absolute;
             top: 50%;
             left: 50%;
@@ -831,17 +836,21 @@
                 radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.02) 0px, transparent 2px);
             pointer-events: none;
             z-index: 1;
+            
         }
 
         .splash-logo-container {
+            
             position: relative;
             width: 160px;
             height: 160px;
             margin: 0 auto 20px;
             z-index: 20;
+            
         }
 
         .splash-logo {
+            
             width: 100%;
             height: 100%;
             border-radius: 50%;
@@ -850,9 +859,11 @@
             position: relative;
             z-index: 3;
             object-fit: cover;
+            
         }
 
         .splash-title {
+            
             font-family: 'Orbitron', sans-serif;
             font-size: 3rem;
             font-weight: 900;
@@ -862,18 +873,22 @@
             z-index: 20;
             color: #fff;
             text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+            
         }
 
         .splash-version-badge {
+            
             margin: 15px 0 25px;
             display: flex;
             flex-direction: column;
             gap: 5px;
             z-index: 20;
             position: relative;
+            
         }
 
         .version-number {
+            
             font-family: 'VT323', monospace;
             font-size: 1.5rem;
             color: var(--cyan);
@@ -883,9 +898,11 @@
             display: inline-block;
             margin: 0 auto;
             letter-spacing: 2px;
+            
         }
 
         .splash-loading-container {
+            
             width: 100%;
             max-width: 400px;
             margin: 30px auto;
@@ -895,9 +912,11 @@
             position: relative;
             z-index: 20;
             backdrop-filter: blur(5px);
+            
         }
 
         .splash-loading-header {
+            
             display: flex;
             justify-content: space-between;
             font-family: 'VT323', monospace;
@@ -906,6 +925,7 @@
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            
         }
 
         .loading-percentage {
@@ -1327,7 +1347,7 @@
             
             .hud-nav {
                 right: 15px;
-                bottom: 15px;
+                bottom: 20px;
             }
             
             .hud-btn {
