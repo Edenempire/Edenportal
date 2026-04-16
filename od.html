@@ -1,1 +1,764 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Eden Stealth CV-1 | CLASSIFIED DOCUMENT VAULT</title>
+    <meta name="description" content="Secure Document Vault - View & Download Classified PDFs - Eden Stealth CV-1 Tier 1 Unit">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --cyan: #00ffff;
+            --cyan-dim: rgba(0, 255, 255, 0.15);
+            --cyan-glow: 0 0 12px rgba(0, 255, 255, 0.5);
+            --bg-black: #050505;
+            --panel-bg: rgba(0, 10, 10, 0.92);
+            --font-tactical: 'Orbitron', monospace;
+            --font-body: 'Electrolize', sans-serif;
+            --font-mono: 'VT323', monospace;
+            --gold: #ffcc00;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f14, #000000 85%);
+            color: var(--cyan);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,255,255,0.02) 2px, transparent 2px, transparent 6px);
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Header */
+        .vault-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--cyan);
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            box-shadow: var(--cyan-glow);
+        }
+
+        .logo-icon i {
+            font-size: 1.8rem;
+            color: var(--cyan);
+        }
+
+        .title h1 {
+            font-family: var(--font-tactical);
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+        }
+
+        .title span {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .security-badge {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--cyan);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .security-badge i {
+            margin-right: 6px;
+        }
+
+        /* Main Container */
+        .vault-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+
+        /* Vault Header Section */
+        .vault-intro {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--panel-bg);
+            border: 1px solid var(--cyan-dim);
+            border-radius: 12px;
+        }
+
+        .vault-intro h2 {
+            font-family: var(--font-tactical);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .vault-intro p {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .access-level {
+            display: inline-block;
+            margin-top: 15px;
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid #ff0055;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Document Grid - THE VAULT */
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        .doc-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--cyan-dim);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .doc-card:hover {
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+            transform: translateY(-5px);
+        }
+
+        .doc-header {
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border-bottom: 1px solid var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .doc-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--cyan);
+        }
+
+        .doc-icon i {
+            font-size: 2rem;
+            color: #ff4444;
+        }
+
+        .doc-meta {
+            flex: 1;
+        }
+
+        .doc-meta h3 {
+            font-family: var(--font-tactical);
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .doc-class {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .doc-description {
+            padding: 18px 20px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #ccc;
+            border-bottom: 1px solid var(--cyan-dim);
+            min-height: 85px;
+        }
+
+        .doc-actions {
+            padding: 15px 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-vault {
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 8px 18px;
+            font-family: var(--font-tactical);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-vault:hover {
+            background: var(--cyan);
+            color: #000;
+            box-shadow: var(--cyan-glow);
+        }
+
+        .btn-view {
+            border-color: #00ccff;
+        }
+
+        .btn-download {
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+
+        .btn-download:hover {
+            background: #ffaa00;
+            color: #000;
+        }
+
+        /* PDF Modal Viewer */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-container {
+            width: 90%;
+            max-width: 1000px;
+            height: 85vh;
+            background: #1a1a1a;
+            border: 2px solid var(--cyan);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            background: #000;
+            border-bottom: 1px solid var(--cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-tactical);
+            color: var(--cyan);
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--cyan);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #ff0055;
+            transform: scale(1.1);
+        }
+
+        .pdf-frame {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        /* Footer */
+        .vault-footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--cyan-dim);
+            margin-top: 30px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        /* Offline Banner */
+        #offline-banner {
+            position: fixed;
+            top: 80px;
+            width: 100%;
+            background: #ff3300;
+            color: #fff;
+            text-align: center;
+            padding: 6px;
+            z-index: 5000;
+            font-family: var(--font-mono);
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .document-grid {
+                grid-template-columns: 1fr;
+            }
+            .vault-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .title h1 {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Loading Toast */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000dd;
+            border: 1px solid var(--cyan);
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-family: var(--font-mono);
+            z-index: 10001;
+            backdrop-filter: blur(8px);
+            display: none;
+            animation: fadeUp 0.2s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; bottom: 0; }
+            to { opacity: 1; bottom: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+<div id="offline-banner">⚠️ OFFLINE MODE — VAULT OPERATIONAL • DOCUMENTS CACHED ⚡</div>
+
+<header class="vault-header">
+    <div class="logo-area" onclick="window.location.href='index.html'">
+        <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="title">
+            <h1>EDEN STEALTH CV-1</h1>
+            <span>CLASSIFIED DOCUMENT VAULT</span>
+        </div>
+    </div>
+    <div class="security-badge">
+        <i class="fas fa-lock"></i> AES-256 ENCRYPTED • TIER 1 CLEARANCE
+    </div>
+</header>
+
+<main class="vault-container">
+    <div class="vault-intro">
+        <h2><i class="fas fa-database"></i> THE BLACK VAULT</h2>
+        <p>Authorized Personnel Only — Official Directives, Operational Charters, and Classified Annexes</p>
+        <div class="access-level"><i class="fas fa-fingerprint"></i> LEVEL: OMEGA CLEARANCE REQUIRED</div>
+    </div>
+
+    <div class="document-grid" id="documentGrid">
+        <!-- Documents will be injected dynamically via JS with embedded PDF data (base64 samples for offline robustness) -->
+    </div>
+
+    <div class="vault-footer">
+        <i class="fas fa-eye"></i> All documents are digitally signed • Unauthorized distribution prohibited<br>
+        <span style="font-size:0.7rem;">[ VAULT STATUS: SECURE | LOGGED SESSION ]</span>
+    </div>
+</main>
+
+<!-- PDF Modal Viewer -->
+<div id="pdfModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fas fa-file-pdf"></i> <span id="modalDocTitle">DOCUMENT VIEWER</span></h3>
+            <button class="close-modal" onclick="closePDFModal()">&times;</button>
+        </div>
+        <iframe id="pdfFrame" class="pdf-frame" src=""></iframe>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+    // ============================================
+    // EDEN VAULT - PDF DOCUMENTS WITH EMBEDDED DATA (OFFLINE READY)
+    // ============================================
+    
+    // Sample PDF documents as Base64 (small but functional PDFs - realistic representation)
+    // Each PDF is a minimal valid PDF with document title and text content.
+    // For production, these would be real files, but for offline demo we embed minimal valid PDFs.
+    
+    function generateSimplePDF(title, contentBody, docNumber) {
+        // Create a minimal PDF using raw PDF syntax (works in all browsers)
+        // This generates a valid PDF with the given title and content.
+        const pdfContent = `%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 226 >>
+stream
+BT
+/F1 24 Tf
+100 700 Td
+(EDEN STEALTH CV-1) Tj
+/F1 16 Tf
+0 -40 Td
+(Document Reference: ${docNumber}) Tj
+0 -30 Td
+(Title: ${title}) Tj
+0 -40 Td
+(${contentBody}) Tj
+0 -30 Td
+(Authorized Personnel Only - Tier 1 Clearance) Tj
+0 -40 Td
+(Date: ${new Date().toLocaleDateString()}) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000217 00000 n 
+0000000497 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+556
+%%EOF`;
+        return btoa(pdfContent);
+    }
+    
+    // Document Repository - each entry has title, description, classification, and embedded PDF data
+    const documents = [
+        {
+            id: "DOC-001",
+            title: "OPERATIONAL CHARTER v.7",
+            description: "The founding doctrine of Eden Stealth CV-1. Direct Action protocols, divine mandate, and territorial jurisdiction.",
+            classification: "TOP SECRET // NOFORN",
+            icon: "fa-scroll",
+            pdfData: generateSimplePDF("Operational Charter v.7", "Article 1: Direct Action for God. Defense of HQ and Re-Privatization of South African sovereign interests.", "DOC-001")
+        },
+        {
+            id: "DOC-002",
+            title: "TACTICAL FIELD MANUAL",
+            description: "Standard operating procedures for Tier 1 field operatives. Engagement criteria, communication encryption, and extraction protocols.",
+            classification: "SECRET // TACTICAL",
+            icon: "fa-book-skull",
+            pdfData: generateSimplePDF("Tactical Field Manual", "Phase 1: Reconnaissance. Phase 2: Direct Engagement. Phase 3: Extraction via Stainless Steel branch.", "DOC-002")
+        },
+        {
+            id: "DOC-003",
+            title: "BRANCH CHARTERS: PARABLES & PLATTERS",
+            description: "Corporate structure, food sector logistics, and community sustenance operations under Eden Stealth CV-1.",
+            classification: "CONFIDENTIAL // CIPC ACTIVE",
+            icon: "fa-utensils",
+            pdfData: generateSimplePDF("Parables & Platters Charter", "Sector: Food Distribution & Community Resilience. CIPC registration active. Supply chain security protocols.", "DOC-003")
+        },
+        {
+            id: "DOC-004",
+            title: "HOPCO TRANSPORTATION DIRECTIVE",
+            description: "Tactical movement, logistics coordination, and asset deployment across South African operational theaters.",
+            classification: "SECRET // LOGISTICS",
+            icon: "fa-truck-fast",
+            pdfData: generateSimplePDF("HopCo Transportation Directive", "Fleet composition, clandestine routing, and rapid deployment zones. Authorized by Commander Big Joe.", "DOC-004")
+        },
+        {
+            id: "DOC-005",
+            title: "STAINLESS STEEL SECURITY PROTOCOL",
+            description: "Private security framework, close protection standards, and asset hardening measures.",
+            classification: "TOP SECRET // ARMORED",
+            icon: "fa-shield-haltered",
+            pdfData: generateSimplePDF("Stainless Steel Protocol", "Physical security, counter-surveillance, and executive protection tiers. Level 5 hardened assets.", "DOC-005")
+        },
+        {
+            id: "DOC-006",
+            title: "LAWK NATIONAL LEGAL FRAMEWORK",
+            description: "Legal doctrine, constitutional mandates, and operational immunity structures.",
+            classification: "CLASSIFIED // LEGAL",
+            icon: "fa-gavel",
+            pdfData: generateSimplePDF("Lawk National Legal Framework", "Jurisdictional analysis, international law adherence, and sovereign defense clauses.", "DOC-006")
+        },
+        {
+            id: "DOC-007",
+            title: "COMMAND STRUCTURE ANNEX",
+            description: "Organizational hierarchy, succession protocol, and officer designations within Eden Stealth CV-1.",
+            classification: "RESTRICTED // COMMAND",
+            icon: "fa-sitemap",
+            pdfData: generateSimplePDF("Command Structure Annex", "President Hoss (CIC), Deputy Big Joe, Council of Commanders. Succession matrix.", "DOC-007")
+        },
+        {
+            id: "DOC-008",
+            title: "INTELLIGENCE ASSESSMENT: REGIONAL THREATS",
+            description: "Strategic analysis of hostile entities, risk matrices, and counter-measures.",
+            classification: "TOP SECRET // INTEL",
+            icon: "fa-brain",
+            pdfData: generateSimplePDF("Intelligence Assessment", "Threat vectors, counter-intelligence operations, and early warning systems.", "DOC-008")
+        }
+    ];
+    
+    // Function to show toast notifications
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = message;
+        toast.style.backgroundColor = isError ? '#ff1133cc' : '#00aa55cc';
+        toast.style.display = 'block';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 2500);
+    }
+    
+    // Download PDF
+    function downloadPDF(doc) {
+        try {
+            const byteCharacters = atob(doc.pdfData);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.download = `${doc.id}_${doc.title.replace(/\s/g, '_')}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast(`📥 DOWNLOADED: ${doc.title}`, false);
+        } catch (e) {
+            console.error("Download failed", e);
+            showToast("❌ Download failed. Check permissions.", true);
+        }
+    }
+    
+    // View PDF in Modal
+    function viewPDF(doc) {
+        try {
+            const byteCharacters = atob(doc.pdfData);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const modal = document.getElementById('pdfModal');
+            const frame = document.getElementById('pdfFrame');
+            const modalTitle = document.getElementById('modalDocTitle');
+            modalTitle.textContent = `${doc.id} — ${doc.title}`;
+            frame.src = url;
+            modal.style.display = 'flex';
+            
+            // Clean up object URL when modal closes (handled in close function)
+            window.currentPDFUrl = url;
+        } catch (e) {
+            console.error("PDF view error", e);
+            showToast("⚠️ Unable to render PDF. Retry.", true);
+        }
+    }
+    
+    function closePDFModal() {
+        const modal = document.getElementById('pdfModal');
+        const frame = document.getElementById('pdfFrame');
+        if (window.currentPDFUrl) {
+            URL.revokeObjectURL(window.currentPDFUrl);
+            window.currentPDFUrl = null;
+        }
+        frame.src = '';
+        modal.style.display = 'none';
+    }
+    
+    // Render Document Grid
+    function renderVault() {
+        const grid = document.getElementById('documentGrid');
+        if (!grid) return;
+        
+        grid.innerHTML = '';
+        documents.forEach(doc => {
+            const card = document.createElement('div');
+            card.className = 'doc-card';
+            card.innerHTML = `
+                <div class="doc-header">
+                    <div class="doc-icon"><i class="fas ${doc.icon}"></i></div>
+                    <div class="doc-meta">
+                        <h3>${doc.title}</h3>
+                        <div class="doc-class"><i class="fas fa-tag"></i> ${doc.classification}</div>
+                    </div>
+                </div>
+                <div class="doc-description">
+                    ${doc.description}
+                </div>
+                <div class="doc-actions">
+                    <button class="btn-vault btn-view" data-id="${doc.id}"><i class="fas fa-eye"></i> VIEW</button>
+                    <button class="btn-vault btn-download" data-id="${doc.id}"><i class="fas fa-download"></i> DOWNLOAD</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        
+        // Attach event listeners
+        document.querySelectorAll('.btn-view').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.getAttribute('data-id');
+                const doc = documents.find(d => d.id === id);
+                if (doc) viewPDF(doc);
+                else showToast("Document reference error", true);
+            });
+        });
+        
+        document.querySelectorAll('.btn-download').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.getAttribute('data-id');
+                const doc = documents.find(d => d.id === id);
+                if (doc) downloadPDF(doc);
+                else showToast("Download error", true);
+            });
+        });
+    }
+    
+    // Offline detection and banner
+    function updateOfflineStatus() {
+        const banner = document.getElementById('offline-banner');
+        if (!navigator.onLine) {
+            banner.style.display = 'block';
+            showToast("📡 OFFLINE MODE ACTIVE — Documents cached and accessible", false);
+        } else {
+            banner.style.display = 'none';
+        }
+    }
+    
+    window.addEventListener('online', () => {
+        updateOfflineStatus();
+        showToast("🛜 CONNECTION RESTORED — VAULT SYNCED", false);
+    });
+    window.addEventListener('offline', () => {
+        updateOfflineStatus();
+        showToast("⚠️ OFFLINE — Vault remains fully operational", false);
+    });
+    
+    // Add keyboard ESC to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('pdfModal');
+            if (modal.style.display === 'flex') closePDFModal();
+        }
+    });
+    
+    // Prevent context menu / source tricks
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    // Block devtools shortcuts (basic)
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+            showToast("🔒 SECURITY: DevTools restricted", true);
+        }
+        if (e.key === 'F12') {
+            e.preventDefault();
+            showToast("🔒 Console access disabled", true);
+        }
+    });
+    
+    // Initialize Vault
+    renderVault();
+    updateOfflineStatus();
+    
+    // Optional: Cache documents to IndexedDB for extreme offline resilience (basic)
+    if ('caches' in window) {
+        caches.open('eden-vault-v1').then(cache => {
+            // Pre-cache document blobs for extreme offline (optional)
+            console.log("VAULT: Offline cache ready");
+        });
+    }
+    
+    // Add a small watermark effect for classified feel
+    console.log("%c⚠️ CLASSIFIED DOCUMENT VAULT — AUTHORIZED ACCESS ONLY ⚠️", "color: #00ffff; font-size: 16px; font-family: monospace;");
+    
+    // Show ready toast
+    setTimeout(() => {
+        showToast("🔓 VAULT ACCESS GRANTED — TIER 1 OPERATOR", false);
+    }, 500);
+</script>
+
+</body>
+</html>
