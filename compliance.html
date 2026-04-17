@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
-  <meta name="description" content="COMPLIANCE CV-5 • SARAH MNUNGI • PERMANENT MEMORY • SECURE TERMINAL">
+  <meta name="description" content="SUPPLY CHAIN CV-5">
   
   <meta name="color-scheme" content="dark">
   
@@ -106,6 +106,164 @@
     .coming-soon-badge { background: #2a0000; color: #ff8888; text-align: center; padding: 2rem; border: 1px dashed red; font-style: italic; }
     @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-scroll-right { right: 8px; } .quick-scroll-right button { width: 36px; height: 36px; } }
     @media (max-width: 480px) { .quick-scroll-right { display: none; } .grid-2 { grid-template-columns: 1fr; } }
+
+.section-card,
+.grid-2,
+.card,
+.message-board,
+.message-item {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .card {
+    width: 100%;
+    padding: 0.8rem !important;
+    overflow-x: hidden;
+  }
+  
+  .message-board {
+    max-height: 500px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  .message-item {
+    width: 100%;
+    padding: 0.6rem !important;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  
+  .message-item div {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .reaction-bar {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+  
+  .reaction-btn {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+  
+  .message-item > div:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .message-item strong {
+    font-size: 0.85rem;
+  }
+  
+  .message-item small {
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+  
+  .message-item div:nth-child(2) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-card {
+    padding: 0.8rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  .card {
+    padding: 0.6rem !important;
+  }
+  
+  .message-item {
+    padding: 0.5rem !important;
+  }
+  
+  .reaction-btn {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+  
+  .message-item small {
+    white-space: normal;
+    font-size: 0.6rem;
+  }
+}
+
+.message-item img,
+.message-item iframe {
+  
+  max-width: 100%;
+  height: auto;
+  
+}
+
+#messageText,
+#callsignField,
+#deptField {
+  
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+}
+
+.btn-group {
+  
+  flex-wrap: wrap;
+  
+}
+
+#replyIndicatorBox {
+  
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.7rem;
+  white-space: normal;
+  word-break: break-word;
+  
+}
+
+.message-board::-webkit-scrollbar {
+  
+  width: 4px;
+  
+}
+
+.message-board::-webkit-scrollbar-track {
+  
+  background: #0a0000;
+  
+}
+
+.message-board::-webkit-scrollbar-thumb {
+  
+  background: #ff0000;
+  border-radius: 2px;
+  
+}
     
   </style>
   
@@ -135,32 +293,38 @@
   <div class="modal-overlay" id="globalModal"><div class="modal-box"><div id="modalTitle"></div><div id="modalContent"></div><div style="display:flex; gap:1rem; margin-top:1.5rem;"><button class="btn" id="modalCancel">CANCEL</button><button class="btn btn-primary" id="modalConfirm">CONFIRM</button></div></div></div>
 
   <header class="command-header">
-    <div class="header-content"><div class="logo">COMPLIANCE CV-5</div><div style="display:flex;justify-content:center;gap:12px;margin-top:6px;"><span style="width:8px;height:8px;background:red;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span></div></div>
+    <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
 
-  <!-- SECTION 01: PROTOCOL ALPHA-1 -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge"><i class="fas fa-shield-alt"></i> Commander-in-Chief</span></div><div class="grid-2"><div class="card"><h3><i class="fas fa-scroll"></i> DIRECT ACTION</h3><div id="directiveText" style="background:#0a0000; padding:1rem; min-height:200px; white-space:pre-wrap; font-family:monospace;">CV-5 STANDARD
+  <section class="section-card"><div class="section-header"><h2 class="section-title">01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRankContainer"></span></h2><span class="badge"><i class="fas fa-shield-alt"></i> Commander-in-Chief / PRESIDENT / CIO</span></div><div class="grid-2"><div class="card"><h3><i class="fas fa-scroll"></i> DIRECT ACTION</h3>
+    
+    <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:200px; white-space:pre-wrap; font-family:monospace;"> 
+    CV-5 STANDARD
 
 01. Chain of Command: CINC > Eden stealth CV-1 Element
+
 02. Mission: Secure flat Durban Central R3000–R3500, minimal deposit. Deadline 31 March.
+
 03. Objective: A flat. Durban Central.
+
 04. Tactics: Ground search + Facebook Marketplace.
+
 05. Execution: Report immediately with address, terms, images.
-**CINC: Get it done.**</div><div class="btn-group" style="display:flex; gap:6px; margin-top:8px;"><button class="btn" id="copyDirectiveBtn">COPY</button><button class="btn" id="broadcastDirectiveBtn">BROADCAST</button></div></div><div class="card" id="cmdPanel" style="display:none;"><h3>📓 COMMANDER NOTEPADS</h3><div id="commanderNotepadsContainer"></div><textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div></div><button class="btn" id="unlockCmdBtn">UNLOCK PROTOCOL</button></div></section>
+**CINC: Get it done.**
+  </div>
+    
+    <div class="btn-group" style="display:flex; gap:6px; margin-top:8px;"><button class="btn" id="copyDirectiveBtn">COPY</button><button class="btn" id="broadcastDirectiveBtn">BROADCAST</button></div></div><div class="card" id="cmdPanel" style="display:none;"><h3>📓 MY SCRIPTS</h3><div id="commanderNotepadsContainer"></div><textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea><div style="display:flex; gap:0.6rem; margin-top:0.8rem;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div></div><button class="btn" id="unlockCmdBtn">UNLOCK PROTOCOL</button></div></section>
 
   <!-- SECTION 02: TEAM MESSAGE BOARD -->
   <section class="section-card"><div class="section-header"><h2 class="section-title">02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span><button class="btn" id="refreshMessagesBtn"><i class="fas fa-sync-alt"></i></button></div><div class="grid-2"><div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select><div id="replyIndicatorBox" style="display:none; background:#2a0000; padding:0.5rem; margin:8px 0; border-left:3px solid red;"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><div style="display:flex; gap:5px; margin:8px 0;"><button class="btn" id="attachBtn">FILE</button><button class="btn" id="clearComposeBtn">CLEAR</button></div><input type="file" id="attachFileInput" style="display:none"><button class="btn btn-primary" id="sendMsgBtn">ENCRYPT & SEND</button></div><div class="card"><h3><i class="fas fa-comments"></i> LIVE FEED</h3><div class="message-board" id="messageBoard"><div class="empty-state"><i class="fas fa-spinner fa-pulse"></i> Loading messages...</div></div></div></div></section>
 
-  <!-- SECTION 03: RESERVED (COMING SOON) -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">03. RESERVED — TACTICAL OVERVIEW</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-chart-line"></i> Strategic intelligence & mission analytics — Under construction</div></section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">03. RESERVED — TACTICAL OVERVIEW</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-chart-line"></i>under construction</div></section>
 
-  <!-- SECTION 04: RESERVED (COMING SOON) -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">04. RESERVED — ASSET TRACKING</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-map-marked-alt"></i> Real-time geolocation & asset management — Deployment pending</div></section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">04. RESERVED — ASSET TRACKING</h2><span class="badge"><i class="fas fa-clock"></i> COMING SOON</span></div><div class="coming-soon-badge"><i class="fas fa-map-marked-alt"></i>deployment pending</div></section>
 
-  <!-- SECTION 05: SARAH MNGUNI AI (PERMANENT MEMORY + GROQ LLM) -->
-  <section class="section-card"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI • NEURAL CORE</h2><span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ LLM</span></div><div class="card"><div style="font-size:2rem; text-align:center;">🧠⚡</div><div id="aiStatus" style="color:#ff8888; text-align:center;">NEURAL INTERFACE — PERMANENT MEMORY ACTIVE</div><div id="aiConversation" style="max-height:320px; overflow-y:auto; background:#050000; padding:0.8rem; margin:0.8rem 0; border:1px solid red;"></div><div style="display:flex; gap:8px;"><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah... she remembers everything (Enter to send)" style="flex:1"></textarea><button class="btn" id="clearLocalMemoryBtn" title="Clear session memory (not permanent)"><i class="fas fa-eraser"></i></button></div><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;">TRANSMIT TO SARAH</button><div id="aiMemoryIndicator" style="font-size:0.7rem; text-align:center; margin-top:0.5rem;">💾 permanent memory • cross-session recall</div><div style="display:flex; gap:8px; margin-top:8px;"><button class="btn" id="wipePermanentMemoryBtn" style="border-color:#ff4444;">⚠️ DO NOT PRESS!</button><button class="btn" id="summarizeChatBtn">SUMMARIZE SESSION</button></div></div></section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">05. SARAH MNGUNI • NEURAL CORE</h2><span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ LLM</span></div><div class="card"><div style="font-size:2rem; text-align:center;">⚡</div><div id="aiStatus" style="color:#ff8888; text-align:center;">NEURAL INTERFACE — PERMANENT MEMORY ACTIVE</div><div id="aiConversation" style="max-height:320px; overflow-y:auto; background:#050000; padding:0.8rem; margin:0.8rem 0; border:1px solid red;"></div><div style="display:flex; gap:8px;"><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah... she remembers everything (Enter to send)" style="flex:1"></textarea><button class="btn" id="clearLocalMemoryBtn" title="Clear session memory (not permanent)"><i class="fas fa-eraser"></i></button></div><button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;">TRANSMIT TO SARAH</button><div id="aiMemoryIndicator" style="font-size:0.7rem; text-align:center; margin-top:0.5rem;">💾 permanent memory • cross-session recall</div><div style="display:flex; gap:8px; margin-top:8px;"><button class="btn" id="wipePermanentMemoryBtn" style="border-color:#ff4444;">⚠️ DO NOT PRESS!</button><button class="btn" id="summarizeChatBtn">SUMMARIZE SESSION</button></div></div></section>
 
-  <div class="footer-panel"><button class="btn" id="globalCopyBtn">COPY</button><button class="btn" id="exportLogsFooterBtn">EXPORT LOGS</button><span>PSALMS 27:1</span><span id="llmStatusBadge">🧠 SARAH</span></div>
+  <div class="footer-panel"><span>PSALMS 27:1</span></div>
 </div>
 
 <script type="module">
@@ -169,8 +333,7 @@
   
   const firebaseConfig = { apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ", authDomain: "eden-4a8d3.firebaseapp.com", projectId: "eden-4a8d3", storageBucket: "eden-4a8d3.firebasestorage.app", messagingSenderId: "421147129483", appId: "1:421147129483:web:9495dfb813fe6195f2c68e" };
   
-  // GROQ API KEY (valid)
-  const GROQ_API_KEY = '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';
+  const GROQ_API_KEY = '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';
   const GROQ_MODEL = 'llama-3.3-70b-versatile';
   
   let db = null;
@@ -178,10 +341,9 @@
   let currentCallsign = 'BIG-JOE', replyingTo = null, attachData = null;
   let messagesUnsubscribe = null;
   
-  // Session memory (volatile)
   let sessionMemory = [];
-  // Permanent memory loaded from Firestore
-  let permanentMemory = [];   // array of {role, content, timestamp}
+
+  let permanentMemory = []; 
   let memoryDocId = null;
   
   const showLoader = (show, text = 'SYNCING...') => { 
@@ -222,7 +384,6 @@
   
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
   
-  // LOAD PERMANENT MEMORY FROM FIRESTORE
   async function loadPermanentMemory() {
     if(!db) return;
     const userId = "commander_cv5";
@@ -236,12 +397,11 @@
       permanentMemory = [];
       await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
     }
-    // Display memory count
+
     document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
     return permanentMemory;
   }
   
-  // SAVE A NEW EXCHANGE TO PERMANENT MEMORY
   async function saveToPermanentMemory(role, content) {
     if(!db || !memoryDocId) return;
     permanentMemory.push({ role, content, timestamp: new Date().toISOString() });
@@ -251,14 +411,13 @@
     document.getElementById('aiMemoryIndicator').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
   }
   
-  // WIPE PERMANENT MEMORY
   async function wipePermanentMemory() {
-    if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, the mission, Big Joe, Hoss, and past conversations. Are you absolutely sure?')) return;
+    if(!await showModal('⚠️ WIPE PERMANENT MEMORY', 'This will delete ALL of Sarah\'s long-term memories. She will forget everything she learned about you, missions, CV-5, Big Joe, Hoss, and past conversations. are you absolutely sure?')) return;
     if(!db || !memoryDocId) return;
     permanentMemory = [];
     const docRef = doc(db, 'sarahPermanentMemory', memoryDocId);
     await setDoc(docRef, { conversations: [], lastUpdated: serverTimestamp() });
-    // Also clear session display
+
     const convDiv = document.getElementById('aiConversation');
     if(convDiv) convDiv.innerHTML = '';
     addAIMessage('ai', '⚠️ Permanent memory wiped. I have forgotten everything from before. I am Sarah Mnguni, reset and ready.');
@@ -267,9 +426,8 @@
   }
   
   async function callSarahLLM(userMessage) {
-    const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, and directives. You are warm, witty, military-tech AI loyal to CV-5 team (Big Joe, Hoss, Commander). You help secure a flat in Durban Central. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful.`;
+    const systemPrompt = `You are Sarah Mnguni. You have PERMANENT MEMORY across sessions. You remember past conversations, names, missions, operations and directives. You are warm, witty, military-tech AI loyal to the Eden stealth CV-1 Operator team and this is their CV-5 Direct Action environment (The Commander-in-Chief is Hoss and his ranking is the highest). You are a girl named Sarah Mnguni and you help the team with whatever they need from you. Use the permanent memory context below to recall past details. Keep responses concise (2-4 sentences) but be helpful. You will be speaking with different Operators from time to time of the ES-CV-1 special Ops team, but you are mostly loyal to Commander Hoss: the President. Right now, this is the Compliance CV-5 page with Big-Joe as its' main Operator. Eden stealth CV-1 is a team of the Eden Operator unit of the South African Air Force of the SANDF - The South African National Defence Force. ES-CV-1 is an Operator team... the best Operator team in the entire universe. They hold an entire system of networks, and protocols, and ecosystem... they are foundational - they are based - military airforce based - they are One for the Pack - they are Operators - special Operators - Tier 1.`;
     
-    // Build context from permanent memory (last 20 exchanges)
     const memoryContext = permanentMemory.slice(-20).map(m => `${m.role}: ${m.content}`).join('\n');
     const fullMessages = [
       { role: 'system', content: systemPrompt + (memoryContext ? `\n\nPermanent memory recall:\n${memoryContext}` : '') },
@@ -290,7 +448,7 @@
   async function addAIMessage(role, text) {
     const div = document.createElement('div');
     div.className = 'ai-chat-bubble';
-    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH (permanent memory)'}:</strong> ${escapeHtml(text)}`;
+    div.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
     const container = document.getElementById('aiConversation');
     if(container) { container.appendChild(div); container.scrollTop = container.scrollHeight; }
   }
@@ -338,7 +496,6 @@
     notify('Session display cleared (permanent memory remains)', 'info');
   }
   
-  // Firebase message listeners (team board)
   function setupMessagesListener() {
     if(!db) return;
     messagesUnsubscribe = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(100)), snap => {
@@ -375,13 +532,12 @@
       await seedInitialData();
       setupMessagesListener();
       await loadPermanentMemory();
-      addAIMessage('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Mission: Secure flat in Durban Central. How may I assist, Commander?`);
+      addAIMessage('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. How may I assist, Operator?`);
       notify('Permanent memory loaded • Sarah remembers you', 'success');
       document.getElementById('llmStatusBadge').innerHTML = '🧠 PERMANENT MEMORY';
     } catch(e) { notify(`Init error: ${e.message}`, 'error'); } finally { showLoader(false); }
   }
   
-  // UI BINDINGS
   document.getElementById('unlockBtn').addEventListener('click', () => {
     if(document.getElementById('pinInput').value === '7') {
       document.getElementById('pinGate').style.display = 'none';
@@ -412,9 +568,6 @@
 </body>
   
 </html>
-
-
-
 
 
 
