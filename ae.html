@@ -1,23 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>AEROSPACE ENGINEERING | ATMOSPHERE TO ORBIT</title>
+    
+    <title>AEROSPACE ENGINEERING</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <link rel="icon" type="image/png" href="logo_tr.png">
     
     <style>
+        
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         :root {
+            
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --accent-orange: #f97316;
@@ -28,9 +38,11 @@
             --text-secondary: #9ca3af;
             --text-accent: #f97316;
             --astronaut-blue: #3b82f6;
+            
         }
 
         html, body {
+            
             width: 100%;
             min-height: 100vh;
             background: var(--deep-space);
@@ -38,13 +50,17 @@
             color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
+            
         }
 
         body {
+            
             background: radial-gradient(circle at 10% 20%, #0a0a1a 0%, #030308 100%);
+            
         }
 
         .fixed-header {
+            
             position: fixed;
             top: 0;
             left: 0;
@@ -59,20 +75,26 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
+            
         }
 
         .logo-area {
+            
             display: flex;
             align-items: center;
             gap: 1rem;
+            
         }
 
         .logo-icon {
+            
             font-size: 1.8rem;
             color: var(--primary-red);
+            
         }
 
         .page-title {
+            
             font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
@@ -80,9 +102,11 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            
         }
 
         .badge {
+            
             background: rgba(220, 38, 38, 0.15);
             border: 1px solid rgba(220, 38, 38, 0.3);
             padding: 0.4rem 1rem;
@@ -91,26 +115,32 @@
             font-weight: 500;
             font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
+            
         }
 
         .main-container {
+            
             max-width: 1280px;
             margin: 100px auto 0;
             padding: 2rem;
             position: relative;
             z-index: 10;
+            
         }
 
         .hero-section {
+            
             text-align: center;
             margin-bottom: 2.5rem;
             padding: 2rem 1.5rem;
             background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(0, 0, 0, 0) 90%);
             border-radius: 32px;
             border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+            
         }
 
         .hero-title {
+            
             font-size: 2.8rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -119,17 +149,21 @@
             background-clip: text;
             color: transparent;
             letter-spacing: -0.02em;
+            
         }
 
         .hero-subtitle {
+            
             color: var(--text-secondary);
             max-width: 780px;
             margin: 0 auto;
             font-size: 1.15rem;
             line-height: 1.5;
+            
         }
 
         .branch-intro {
+            
             margin: 1rem 0 2rem 0;
             padding: 0.75rem 1.25rem;
             border-left: 5px solid var(--primary-red);
@@ -139,28 +173,34 @@
             color: var(--text-primary);
             font-weight: 500;
             transition: 0.2s;
+            
         }
 
-        /* dual branch cards */
         .branch-showcase {
+            
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.8rem;
             margin: 2rem 0 2.5rem;
+            
         }
 
         .branch-card {
+            
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(2px);
             border-radius: 28px;
             border: 1px solid rgba(220, 38, 38, 0.25);
             overflow: hidden;
             transition: transform 0.2s ease, border-color 0.2s;
+            
         }
 
         .branch-card:hover {
+            
             border-color: var(--primary-red);
             transform: translateY(-4px);
+            
         }
 
         .branch-header {
@@ -495,7 +535,7 @@
 
 <canvas id="bgCanvas" class="bg-canvas"></canvas>
 <div class="audio-control" id="audioToggle">
-    <i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE
+    <i class="fas fa-headset"></i> ATMOSPHERE TO ORBIT · AUDIO · ACTIVE
 </div>
 <audio id="bgAudio" loop preload="auto">
     <source src="ae.mp3" type="audio/mpeg">
@@ -504,13 +544,17 @@
 <main class="main-container">
 
     <div class="hero-section">
+        
         <h1 class="hero-title">What is Aerospace Engineering?</h1>
-        <p class="hero-subtitle">Aerospace engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering — uniting the science of atmospheric flight with the extreme challenges of space exploration.</p>
+        
+        <p class="hero-subtitle">Aerospace Engineering is the primary field of engineering concerned with the development of aircraft and spacecraft. It has two major and overlapping branches: aeronautical engineering and astronautical engineering.</p>
+
+        <p class="hero-subtitle">Aerodynamics, Air Propulsion, Avionics, Materials Science, Structural Analysis, and Manufacturing - The interaction between these technolgies is known as Aerospace Engineering.</p>
+        
     </div>
 
-    <!-- DUAL BRANCH EXTENSIVE CONTENT -->
     <div class="branch-showcase">
-        <!-- AERONAUTICAL ENGINEERING (extended) -->
+        
         <div class="branch-card">
             <div class="branch-header">
                 <i class="fas fa-fighter-jet" style="color: var(--primary-red); font-size: 2rem;"></i>
@@ -531,7 +575,6 @@
             </div>
         </div>
 
-        <!-- ASTRONAUTICAL ENGINEERING (NEW EXTENDED BRANCH) -->
         <div class="branch-card">
             <div class="branch-header">
                 <i class="fas fa-saturn" style="color: var(--astronaut-blue); font-size: 2rem;"></i>
@@ -553,13 +596,11 @@
         </div>
     </div>
 
-    <!-- OVERLAP: AEROSPACE INTEGRATION -->
     <div class="branch-intro">
         <i class="fas fa-space-shuttle" style="color: var(--accent-orange); margin-right: 0.5rem;"></i> 
         AEROSPACE INTEGRATION — Where aeronautical and astronautical engineering converge: Reusable launch vehicles, hypersonic spaceplanes, atmospheric re-entry, and next-gen space tourism.
     </div>
 
-    <!-- DYNAMIC INSTRUMENT PANEL (EXTENDED) -->
     <div class="instrument-panel-main">
         <div class="instrument"><div class="instrument-label">AIRSPEED (IAS)</div><div class="instrument-value" id="airspeed">385</div><div class="instrument-unit">knots</div></div>
         <div class="instrument"><div class="instrument-label">AOA</div><div class="instrument-value" id="aoa">7.2</div><div class="instrument-unit">deg</div></div>
@@ -571,7 +612,6 @@
         <div class="instrument"><div class="instrument-label">ΔV REMAIN</div><div class="instrument-value" id="deltaV">2,840</div><div class="instrument-unit">m/s</div></div>
     </div>
 
-    <!-- PROCEDURES: AERONAUTICAL + ASTRONAUTICAL engineering extensions -->
     <div class="procedure-grid">
         <div class="procedure-card">
             <div class="card-header"><div class="step-number">01</div><div class="card-title">AERODYNAMIC CHARACTERIZATION</div></div>
@@ -591,7 +631,6 @@
         </div>
     </div>
 
-    <!-- ASTRONAUTICAL ENGINEERING DEEP DIVE SECTION (additional content) -->
     <div class="branch-intro" style="border-left-color: var(--astronaut-blue); margin-top: 0.5rem;">
         <i class="fas fa-satellite-dish" style="color: var(--astronaut-blue); margin-right: 0.6rem;"></i>
         ASTRONAUTICAL ENGINEERING IN-DEPTH: Launch vehicle design, spacecraft subsystems (ADCS, C&DH, EPS), orbital debris mitigation, interplanetary trajectory design, and human rating standards.
@@ -603,7 +642,6 @@
         <div class="procedure-card"><div class="card-header"><i class="fas fa-temperature-low"></i><div class="card-title">Thermal Control</div></div><div class="card-content"><div class="procedure-text">Passive (MLI, coatings) and active (heat pipes, pumped fluid loops) systems to maintain component temperatures from -150°C to +120°C in vacuum.</div><div class="warning-note"><i class="fas fa-sun"></i> Radiator sizing based on orbital beta angle.</div></div></div>
     </div>
 
-    <!-- CONTACT / MISSION LOG SECTION -->
     <div class="contact-section" id="contact">
         <div class="section-title"><i class="fas fa-paper-plane"></i> TRANSMIT MISSION REPORT</div>
         <form id="contactForm" action="https://formspree.io/f/xlgodvda" method="POST">
@@ -627,7 +665,7 @@
 </main>
 
 <script>
-    // Canvas background with aircraft + spacecraft silhouettes
+
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -679,7 +717,6 @@
     }
     animateCanvas();
     
-    // instrument update
     function updateInstruments() {
         let airspeed = 380 + Math.sin(Date.now()/2800)*25 + (Math.random()-0.5)*8;
         document.getElementById('airspeed').innerText = Math.floor(Math.min(650, Math.max(120, airspeed)));
@@ -701,7 +738,6 @@
     setInterval(updateInstruments, 780);
     updateInstruments();
     
-    // Audio control
     const audio = document.getElementById('bgAudio');
     const toggleBtn = document.getElementById('audioToggle');
     audio.loop = true; audio.volume = 0.3;
@@ -711,7 +747,6 @@
     audio.play().catch(()=>{ toggleBtn.innerHTML='<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO'; });
     audio.addEventListener('ended',()=>{ if(audioActive){ audio.currentTime=0; audio.play(); } });
     
-    // Form submission (formspree)
     const form = document.getElementById('contactForm');
     const statusDiv = document.getElementById('formStatus');
     form.addEventListener('submit', async(e)=>{
@@ -724,6 +759,57 @@
             else { statusDiv.innerHTML='<i class="fas fa-exclamation-triangle"></i> Transmission error. Retry.'; }
         } catch(err){ statusDiv.innerHTML='<i class="fas fa-exclamation-triangle"></i> Comms failure.'; }
     });
+    
 </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
