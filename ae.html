@@ -1,13 +1,22 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>AEROSPACE ENGINEERING | FULLY ADAPTIVE</title>
+    
+    <title>AEROSPACE ENGINEERING</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <link rel="icon" type="image/png" href="logo_tr.png">
+    
     <style>
+        
         * {
             margin: 0;
             padding: 0;
@@ -462,8 +471,6 @@
             transition: 0.2s;
         }
 
-        /* ========== ADVANCED MEDIA QUERIES – ALL DEVICES, ZERO SPACING ISSUES ========== */
-        /* Large Desktops & Ultra-wide */
         @media (min-width: 1600px) {
             .main-container {
                 max-width: 1400px;
@@ -480,7 +487,6 @@
             }
         }
 
-        /* Standard Laptops / Desktops */
         @media (max-width: 1280px) {
             .main-container {
                 max-width: 1100px;
@@ -488,7 +494,6 @@
             }
         }
 
-        /* Tablets & small laptops */
         @media (max-width: 1024px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -501,7 +506,6 @@
             }
         }
 
-        /* Tablets (portrait) and large phones */
         @media (max-width: 800px) {
             .branch-showcase {
                 grid-template-columns: 1fr;
@@ -561,7 +565,6 @@
             }
         }
 
-        /* Mobile devices (landscape & large smartphones) */
         @media (max-width: 600px) {
             .fixed-header {
                 flex-direction: column;
@@ -625,7 +628,6 @@
             }
         }
 
-        /* Small mobile devices (<= 480px) */
         @media (max-width: 480px) {
             .main-container {
                 padding: 0.85rem;
@@ -683,7 +685,6 @@
             }
         }
 
-        /* Extremely small devices (smartwatches, 220px - 320px) */
         @media (max-width: 360px) {
             .fixed-header {
                 padding: 0.4rem 0.7rem;
@@ -822,7 +823,6 @@
             }
         }
 
-        /* Ultra-compact watches / very tiny displays (<= 220px) */
         @media (max-width: 240px) {
             .fixed-header {
                 flex-direction: column;
@@ -886,8 +886,11 @@
                 font-size: 0.45rem;
             }
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
 <header class="fixed-header">
@@ -956,15 +959,16 @@
     </div>
     
     <footer class="footer">
+        
         <div class="footer-content">
             <div class="footer-section"><h4>Eden stealth CV-1</h4><p>© 2026 Advanced </p></div>
-            <div class="footer-section"><h4><i class="fas fa-satellite"></i> MISSION CONTROL</h4><p>Telemetry: encrypted downlink | Orbit tracking: real-time ephemeris</p></div>
-        </div>
-        <div class="copyright"><i class="fas fa-cogs"></i> Next-gen flight & space systems — simulation for engineering analysis. Both branches unified.</div>
+            
     </footer>
+    
 </main>
 
 <script>
+    
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -1024,6 +1028,9 @@
     toggleBtn.addEventListener('click',()=>{ if(!audioActive){ startAudio(); } else if(audio.paused){ audio.play(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE'; } else { audio.pause(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AUDIO PAUSED'; } });
     audio.play().catch(()=>{ toggleBtn.innerHTML='<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO'; });
     audio.addEventListener('ended',()=>{ if(audioActive){ audio.currentTime=0; audio.play(); } });
+    
 </script>
+    
 </body>
+    
 </html>
