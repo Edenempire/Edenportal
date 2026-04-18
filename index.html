@@ -1012,6 +1012,7 @@ body.green-yellow .status-dot {
         }
 
         .system-check {
+            
             font-family: 'VT323', monospace;
             font-size: 0.9rem;
             display: flex;
@@ -1022,9 +1023,11 @@ body.green-yellow .status-dot {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--cyan-dim);
             min-width: 100px;
+            
         }
 
         .check-label {
+            
             color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             font-size: 0.8rem;
@@ -1035,6 +1038,7 @@ body.green-yellow .status-dot {
         .status-pending { color: #ffff00; }
 
         #installBtn {
+            
             display: inline-block !important;
             background: transparent;
             border: 3px solid var(--cyan);
@@ -1060,15 +1064,19 @@ body.green-yellow .status-dot {
             0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
             50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.7); }
             100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+            
         }
         
         #installBtn::before {
+            
             content: "📱 ";
             margin-right: 8px;
             font-size: 1.2rem;
+            
         }
         
         #installBtn:hover {
+            
             color: #000;
             background: var(--cyan);
             box-shadow: 0 0 30px var(--cyan);
@@ -1080,10 +1088,12 @@ body.green-yellow .status-dot {
         }
         
         #installBtn.installing {
+            
             border-color: orange;
             color: orange;
             box-shadow: 0 0 30px orange;
             animation: none;
+            
         }
         
         #installBtn.installing::before {
@@ -1091,10 +1101,12 @@ body.green-yellow .status-dot {
         }
         
         #installBtn.installed {
+            
             border-color: lime;
             color: lime;
             box-shadow: 0 0 40px lime;
             animation: none;
+    
         }
         
         #installBtn.installed::before {
@@ -1102,23 +1114,29 @@ body.green-yellow .status-dot {
         }
         
         @media (max-width: 600px) {
+            
             #installBtn {
                 padding: 15px 25px;
                 font-size: 0.9rem;
                 min-width: 240px;
                 width: 90%;
             }
+    
         }
         
         #main-footer {
+            
             display: flex;
             flex-direction: column;
             align-items: center;
+            
         }
         
         #installBtn {
+            
             order: 999;
             margin-top: 50px;
+            
         }
 
         * {
@@ -1131,6 +1149,7 @@ body.green-yellow .status-dot {
         }
 
         #refresh-notification {
+            
             position: fixed;
             top: 100px;
             right: 30px;
@@ -1156,11 +1175,13 @@ body.green-yellow .status-dot {
         }
 
         .refresh-icon {
+            
             font-size: 2rem;
             color: var(--cyan);
             animation: spin 2s linear infinite;
             margin-bottom: 10px;
             text-align: center;
+    
         }
 
         @keyframes spin {
@@ -1169,12 +1190,14 @@ body.green-yellow .status-dot {
         }
 
         .refresh-text {
+            
             font-family: var(--font-tactical);
             font-size: 1rem;
             color: #fff;
             text-align: center;
             letter-spacing: 2px;
             margin-bottom: 15px;
+            
         }
 
         .refresh-progress {
@@ -1345,7 +1368,7 @@ body.green-yellow .status-dot {
             
             .section-title {
                 
-                font-size: 1.8rem;
+                font-size: 1.6rem;
                 
             }
             
