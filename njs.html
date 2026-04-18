@@ -1,1 +1,758 @@
-...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Node.js Interactive Learning Hub | Code & Concepts</title>
+    <!-- Google Fonts & Simple Icons (Font Awesome CDN for clean icons) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0b1219 0%, #0f1724 100%);
+            color: #eef2ff;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* main container */
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* header styling */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8bcb6e, #3b9e5c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero h1 i {
+            background: none;
+            color: #68c87c;
+            font-size: 2.5rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #9aaebf;
+            max-width: 720px;
+            margin: 0.75rem auto 0;
+        }
+        .badge {
+            display: inline-block;
+            background: #1e2a3a;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #b9e6b3;
+            margin-top: 0.75rem;
+        }
+
+        /* grid layout: 2 columns (left: interactive editor, right: docs & examples) */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* card style */
+        .card {
+            background: rgba(18, 25, 40, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            border: 1px solid rgba(72, 187, 120, 0.25);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+        }
+        .card-header {
+            padding: 1.2rem 1.5rem;
+            background: rgba(10, 20, 30, 0.6);
+            border-bottom: 1px solid #2a3a48;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .card-header i {
+            color: #5fcb7a;
+            font-size: 1.4rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* code editor simulation */
+        .code-editor {
+            background: #0a0f1a;
+            border-radius: 1.2rem;
+            border: 1px solid #2c3f33;
+            overflow: hidden;
+            font-family: 'Menlo', 'Fira Code', monospace;
+        }
+        .editor-header {
+            background: #111822;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2c3f33;
+            font-size: 0.8rem;
+            color: #86a9c2;
+        }
+        .editor-header span i {
+            margin-right: 6px;
+        }
+        textarea {
+            width: 100%;
+            background: #0a0f1a;
+            border: none;
+            color: #e2eafc;
+            font-family: 'Menlo', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            padding: 1.2rem;
+            resize: vertical;
+            outline: none;
+            white-space: pre-wrap;
+            tab-size: 2;
+        }
+        textarea:focus {
+            background: #0e1422;
+        }
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            background: #202a36;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #eef2ff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: #2c7840;
+            box-shadow: 0 2px 6px rgba(44, 120, 64, 0.3);
+        }
+        .btn-primary:hover {
+            background: #3e9a57;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #2a3649;
+        }
+        .btn-secondary:hover {
+            background: #3f4d64;
+        }
+        .output-area {
+            margin-top: 1.5rem;
+            background: #07121c;
+            border-radius: 1rem;
+            border-left: 3px solid #4caf6e;
+            padding: 1rem;
+        }
+        .output-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #84b78c;
+            margin-bottom: 0.5rem;
+        }
+        .output-content {
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: #03080f;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #cbdde9;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .error-output {
+            color: #ffad9a;
+            border-left-color: #e55;
+        }
+
+        /* right side: documentation and snippets */
+        .snippet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.8rem;
+        }
+        .snippet-btn {
+            background: #0f1724;
+            border: 1px solid #2a3a48;
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            transition: 0.1s;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .snippet-btn i {
+            font-size: 1.2rem;
+            color: #5fcb7a;
+            width: 24px;
+        }
+        .snippet-btn:hover {
+            background: #1a2538;
+            border-color: #4caf6e;
+            transform: translateX(4px);
+        }
+        .doc-card {
+            background: #0b111e;
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            margin-top: 1rem;
+            border: 1px solid #2c3f33;
+        }
+        .doc-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #c3e0c7;
+        }
+        .doc-card p, .doc-card li {
+            font-size: 0.85rem;
+            color: #b8cee4;
+        }
+        .doc-card ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        hr {
+            border-color: #2a3a48;
+            margin: 1rem 0;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 2.5rem;
+            color: #5f7f9a;
+        }
+
+        @media (max-width: 880px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            body {
+                padding: 1rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        .highlight {
+            color: #8fef9b;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="hero">
+        <h1>
+            <i class="fab fa-node-js"></i> 
+            NODE.JS
+        </h1>
+        <p>Asynchronous · Event-Driven · Server-Side JavaScript</p>
+        <div class="badge"><i class="fas fa-code"></i> Live REPL Simulator &nbsp;|&nbsp; Core Concepts</div>
+    </div>
+
+    <div class="dashboard">
+        <!-- LEFT PANEL: Interactive Node.js Playground -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-terminal"></i>
+                <span>⚡ Node.js Sandbox (simulated runtime)</span>
+            </div>
+            <div class="card-body">
+                <div class="code-editor">
+                    <div class="editor-header">
+                        <span><i class="fas fa-file-code"></i> script.js</span>
+                        <span><i class="fas fa-node"></i> Node v20.x (simulated)</span>
+                    </div>
+                    <textarea id="codeInput" rows="8" placeholder='Write Node.js code here. Example: console.log("Hello Node!");&#10;const os = require("os");&#10;console.log("Platform:", os.platform());&#10;&#10;// Async demo&#10;setTimeout(() => console.log("Async works!"), 100);'>// Welcome to Node.js REPL!
+console.log("🚀 Node.js environment active");
+const fs = require("fs");
+const path = require("path");
+
+// Simulate file system read
+console.log("Current directory (sim):", __dirname);
+console.log("Process version:", process.version);
+
+// Async demonstration
+setTimeout(() => {
+  console.log("⚡ Asynchronous callback executed after 1 second");
+}, 1000);
+
+// Simple event emitter style
+const EventEmitter = require("events");
+const emitter = new EventEmitter();
+emitter.on("greet", (name) => {
+  console.log(`👋 Hello ${name} from custom event!`);
+});
+emitter.emit("greet", "Node.js Developer");
+
+console.log("✅ Script ready — Node.js core modules demo");</textarea>
+                </div>
+                <div class="action-bar">
+                    <div>
+                        <button id="runBtn" class="btn btn-primary"><i class="fas fa-play"></i> Run Code (node sandbox)</button>
+                        <button id="resetBtn" class="btn btn-secondary"><i class="fas fa-undo-alt"></i> Reset Example</button>
+                    </div>
+                    <span style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> Simulated: fs, path, os, events, process, timers</span>
+                </div>
+
+                <!-- OUTPUT CONSOLE -->
+                <div id="outputContainer" class="output-area">
+                    <div class="output-label"><i class="fas fa-desktop"></i> OUTPUT (stdout / stderr)</div>
+                    <div id="outputContent" class="output-content">// Click "Run Code" to execute Node.js simulation<br>// Includes core modules, async behavior, and events</div>
+                </div>
+                <div style="margin-top: 12px; font-size: 0.7rem; color:#84a2b5;">
+                    <i class="fas fa-lightbulb"></i> Tip: use require('fs'), require('events'), require('os') — all native Node modules are mocked to illustrate behavior.
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: Documentation & Snippets -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-book-open"></i>
+                <span>📘 Core Modules & Patterns</span>
+            </div>
+            <div class="card-body">
+                <div class="snippet-list">
+                    <div class="snippet-btn" data-snippet="os">
+                        <i class="fab fa-node"></i> <span>🖥️ OS Module — system info</span>
+                    </div>
+                    <div class="snippet-btn" data-snippet="fs">
+                        <i class="fas fa-file-alt"></i> <span>📁 File System (fs.readFileSync)</span>
+                    </div>
+                    <div class="snippet-btn" data-snippet="events">
+                        <i class="fas fa-bolt"></i> <span>⚡ EventEmitter — custom events</span>
+                    </div>
+                    <div class="snippet-btn" data-snippet="async">
+                        <i class="fas fa-hourglass-half"></i> <span>⏱️ Async patterns (setTimeout, Promise)</span>
+                    </div>
+                    <div class="snippet-btn" data-snippet="http">
+                        <i class="fas fa-globe"></i> <span>🌐 HTTP server snippet (simulated)</span>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h4><i class="fas fa-cogs"></i> What is Node.js?</h4>
+                    <p>Node.js is an open-source, cross-platform JavaScript runtime built on Chrome's V8 engine. It uses an event-driven, non-blocking I/O model, perfect for scalable network applications.</p>
+                    <ul>
+                        <li><strong>Asynchronous & Non-blocking</strong> — handles many connections concurrently.</li>
+                        <li><strong>npm ecosystem</strong> — largest library of open-source packages.</li>
+                        <li><strong>CommonJS modules</strong> — <code>require()</code> and <code>module.exports</code>.</li>
+                    </ul>
+                </div>
+                <div class="doc-card" style="margin-top: 0.8rem;">
+                    <h4><i class="fas fa-microchip"></i> Simulated Core APIs</h4>
+                    <p>This sandbox supports: <code>console</code>, <code>setTimeout</code>/<code>setInterval</code>, <code>process</code>, <code>os</code>, <code>path</code>, <code>fs</code> (sync reads), <code>events</code>, <code>Buffer</code>, <code>__dirname</code>, <code>__filename</code>. It's a realistic playground to learn Node.js fundamentals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i class="fab fa-node-js"></i> Node.js Interactive Hub — educational simulation. Real Node.js behavior for core modules & async flow.
+    </div>
+</div>
+
+<script>
+    // ---------- NODE.JS SIMULATED RUNTIME ----------
+    // Provides mocks for core modules: fs, path, os, events, util, process, etc.
+    // Goal: mimic basic behavior to make the educational experience feel authentic.
+    
+    function createNodeSandbox(userCode) {
+        // captured output lines
+        let outputLog = [];
+        let errorLog = [];
+        
+        // helper to capture console methods
+        const fakeConsole = {
+            log: (...args) => {
+                outputLog.push(args.map(arg => {
+                    if (arg === undefined) return 'undefined';
+                    if (arg === null) return 'null';
+                    if (typeof arg === 'object') {
+                        try {
+                            return JSON.stringify(arg, null, 2);
+                        } catch(e) {
+                            return String(arg);
+                        }
+                    }
+                    return String(arg);
+                }).join(' '));
+            },
+            error: (...args) => {
+                errorLog.push(...args.map(a => String(a)));
+                outputLog.push('[stderr] ' + args.map(a => String(a)).join(' '));
+            },
+            warn: (...args) => {
+                outputLog.push('[warn] ' + args.map(a => String(a)).join(' '));
+            },
+            info: (...args) => {
+                outputLog.push('[info] ' + args.map(a => String(a)).join(' '));
+            }
+        };
+        
+        // MOCK MODULES
+        // 1. os module mock
+        const mockOs = {
+            platform: () => 'linux (simulated)',
+            arch: () => 'x64',
+            cpus: () => [{ model: 'Node.js Virtual CPU', speed: 2400 }],
+            totalmem: () => 16_000_000_000,
+            freemem: () => 4_000_000_000,
+            homedir: () => '/home/node_user',
+            hostname: () => 'node-sandbox',
+            type: () => 'Linux'
+        };
+        
+        // 2. path module mock (basic)
+        const mockPath = {
+            join: (...segments) => segments.join('/').replace(/\/{2,}/g, '/'),
+            basename: (p) => p.split('/').pop(),
+            dirname: (p) => p.split('/').slice(0, -1).join('/') || '.',
+            extname: (p) => { const match = p.match(/\.[^/.]+$/); return match ? match[0] : ''; },
+            resolve: (...args) => '/simulated/' + args.join('/')
+        };
+        
+        // 3. fs module mock (sync read/write simulation)
+        const mockFs = {
+            readFileSync: (filePath, encoding = 'utf8') => {
+                if (filePath.includes('example.txt')) {
+                    return "This is a simulated file content from Node.js sandbox!";
+                } else if (filePath.includes('package.json')) {
+                    return JSON.stringify({ name: "node-sandbox", version: "1.0.0" }, null, 2);
+                } else {
+                    throw new Error(`ENOENT: file not found, open '${filePath}'`);
+                }
+            },
+            writeFileSync: (filePath, data) => {
+                outputLog.push(`[fs] writeFileSync simulation: wrote ${data.length} bytes to ${filePath}`);
+                return true;
+            },
+            existsSync: (path) => path.includes('example') || path.includes('package.json'),
+            readdirSync: (path) => ['index.js', 'README.md', 'node_modules']
+        };
+        
+        // 4. events module mock
+        class MockEventEmitter {
+            constructor() {
+                this.events = {};
+            }
+            on(event, listener) {
+                if (!this.events[event]) this.events[event] = [];
+                this.events[event].push(listener);
+                return this;
+            }
+            emit(event, ...args) {
+                if (this.events[event]) {
+                    this.events[event].forEach(fn => fn(...args));
+                    return true;
+                }
+                return false;
+            }
+            once(event, listener) {
+                const wrapper = (...args) => {
+                    listener(...args);
+                    this.off(event, wrapper);
+                };
+                this.on(event, wrapper);
+                return this;
+            }
+            off(event, listener) {
+                if (!this.events[event]) return;
+                this.events[event] = this.events[event].filter(l => l !== listener);
+            }
+        }
+        
+        // 5. process mock (partial)
+        const mockProcess = {
+            version: 'v20.10.0 (simulated)',
+            platform: 'linux',
+            env: { NODE_ENV: 'development', USER: 'sandbox' },
+            cwd: () => '/simulated/workspace',
+            argv: ['node', 'sandbox.js'],
+            nextTick: (cb, ...args) => setTimeout(() => cb(...args), 0),
+            exit: () => { outputLog.push('⚠️ process.exit() called — simulation halts.'); throw new Error('process.exit simulation'); }
+        };
+        
+        // 6. buffer
+        const mockBuffer = {
+            from: (str) => ({ toString: () => str, length: str.length }),
+            alloc: (size) => ({ length: size, fill: () => {} })
+        };
+        
+        // require cache and mapping
+        const modulesCache = {
+            'os': mockOs,
+            'path': mockPath,
+            'fs': mockFs,
+            'events': { EventEmitter: MockEventEmitter },
+            'util': { promisify: (fn) => (...args) => new Promise((resolve, reject) => { fn(...args, (err, res) => err ? reject(err) : resolve(res)); }) },
+            'buffer': mockBuffer,
+            'process': mockProcess
+        };
+        
+        function requireMock(moduleName) {
+            if (modulesCache[moduleName]) return modulesCache[moduleName];
+            if (moduleName === 'events') return { EventEmitter: MockEventEmitter };
+            throw new Error(`Cannot find module '${moduleName}'. Supported: os, path, fs, events, util, buffer, process`);
+        }
+        
+        // provide __dirname, __filename, exports, module
+        const mockModule = { exports: {} };
+        const sandboxGlobals = {
+            console: fakeConsole,
+            require: requireMock,
+            __dirname: '/simulated/project',
+            __filename: '/simulated/project/index.js',
+            module: mockModule,
+            exports: mockModule.exports,
+            setTimeout: (fn, delay) => {
+                const id = setTimeout(() => {
+                    try { fn(); } catch(e) { fakeConsole.error('Async error:', e.message); }
+                }, delay);
+                return id;
+            },
+            clearTimeout: (id) => clearTimeout(id),
+            setInterval: (fn, delay) => setInterval(fn, delay),
+            clearInterval: (id) => clearInterval(id),
+            Buffer: mockBuffer,
+            process: mockProcess,
+            global: { ...global, process: mockProcess }
+        };
+        
+        // combine and evaluate
+        const fullCode = `"use strict";\n${userCode}`;
+        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+        
+        return new Promise((resolve) => {
+            let asyncError = null;
+            let syncError = null;
+            let executionOutput = [];
+            let executionErrors = [];
+            
+            const finalize = () => {
+                const allOutput = [...outputLog, ...executionOutput];
+                resolve({
+                    output: allOutput.join('\n'),
+                    error: asyncError || syncError ? (syncError?.message || asyncError) : null,
+                    rawLogs: allOutput
+                });
+            };
+            
+            // wrap in try-catch for synchronous code
+            try {
+                const func = new AsyncFunction(...Object.keys(sandboxGlobals), fullCode);
+                const promise = func(...Object.values(sandboxGlobals));
+                if (promise && typeof promise.catch === 'function') {
+                    promise.catch(err => {
+                        asyncError = err.message || String(err);
+                        finalize();
+                    });
+                    // resolve after promise settles plus timeout for pending timers? we wait a bit for async logs
+                    Promise.allSettled([promise]).then(() => {
+                        // allow pending setTimeouts to flush (short delay)
+                        setTimeout(() => finalize(), 80);
+                    });
+                } else {
+                    setTimeout(() => finalize(), 50);
+                }
+            } catch (err) {
+                syncError = err;
+                finalize();
+            }
+        });
+    }
+    
+    // DOM elements
+    const codeTextarea = document.getElementById('codeInput');
+    const runBtn = document.getElementById('runBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const outputDiv = document.getElementById('outputContent');
+    const outputContainer = document.getElementById('outputContainer');
+    
+    // helper to display output/error
+    function displayOutput(outputText, isError = false) {
+        outputDiv.innerText = outputText || '(no output)';
+        if (isError) {
+            outputContainer.classList.add('error-output');
+        } else {
+            outputContainer.classList.remove('error-output');
+        }
+    }
+    
+    async function runNodeCode() {
+        const userCode = codeTextarea.value;
+        outputDiv.innerText = "⏳ Running Node.js simulation...";
+        try {
+            const result = await createNodeSandbox(userCode);
+            if (result.error) {
+                displayOutput(`❌ [NODE ERROR]: ${result.error}\n\n--- stdout / console output ---\n${result.output || ''}`, true);
+            } else {
+                const finalMsg = result.output.trim() === "" ? "✅ Program executed successfully (no console output)." : result.output;
+                displayOutput(finalMsg, false);
+            }
+        } catch (e) {
+            displayOutput(`🚨 Unexpected runtime error: ${e.message}`, true);
+        }
+    }
+    
+    function resetToDefault() {
+        const defaultCode = `// Welcome to Node.js REPL!
+console.log("🚀 Node.js environment active");
+const fs = require("fs");
+const path = require("path");
+
+// Simulate file system read
+console.log("Current directory (sim):", __dirname);
+console.log("Process version:", process.version);
+
+// Async demonstration
+setTimeout(() => {
+  console.log("⚡ Asynchronous callback executed after 1 second");
+}, 1000);
+
+// Simple event emitter style
+const EventEmitter = require("events");
+const emitter = new EventEmitter();
+emitter.on("greet", (name) => {
+  console.log(\`👋 Hello \${name} from custom event!\`);
+});
+emitter.emit("greet", "Node.js Developer");
+
+console.log("✅ Script ready — Node.js core modules demo");`;
+        codeTextarea.value = defaultCode;
+        displayOutput("// Reset to default Node.js example. Click Run to see simulated output.", false);
+    }
+    
+    // snippet loader
+    const snippets = {
+        os: `// OS Module - get system information
+const os = require("os");
+console.log("Platform:", os.platform());
+console.log("Architecture:", os.arch());
+console.log("Total Memory:", (os.totalmem() / 1024**3).toFixed(2), "GB");
+console.log("Hostname:", os.hostname());
+console.log("CPUs count:", os.cpus().length);`,
+        fs: `// File System (sync read simulation)
+const fs = require("fs");
+try {
+  const data = fs.readFileSync("example.txt", "utf8");
+  console.log("File content:", data);
+  const packageData = fs.readFileSync("package.json", "utf8");
+  console.log("Package.json name:", JSON.parse(packageData).name);
+} catch (err) {
+  console.error("Error reading file:", err.message);
+}`,
+        events: `// EventEmitter: custom events
+const EventEmitter = require("events");
+const myEmitter = new EventEmitter();
+
+myEmitter.on("data", (msg) => {
+  console.log("📨 Event received:", msg);
+});
+
+myEmitter.emit("data", "Hello Node.js!");
+myEmitter.emit("data", "Events are powerful!");
+
+console.log("Event emitter demo complete.");`,
+        async: `// Asynchronous Patterns in Node.js
+console.log("Start of script");
+
+setTimeout(() => {
+  console.log("⏰ Timeout after 0ms (macro task)");
+}, 0);
+
+Promise.resolve().then(() => console.log("📌 Promise microtask"));
+
+setTimeout(() => {
+  console.log("⏰ Async delayed 500ms");
+}, 500);
+
+console.log("End of script (synchronous)");`,
+        http: `// HTTP Server Simulation (conceptual)
+const http = require("http");
+// In real Node: createServer
+console.log("🌐 Creating HTTP server on port 3000...");
+console.log("Server would respond with 'Hello Node.js World'");
+console.log("Simulation: server.listen(3000)");
+const serverMessage = "HTTP server is ready for requests!";
+console.log(serverMessage);
+// Demonstrating that http module is recognized
+console.log("http module is available in Node.js core.");`
+    };
+    
+    function loadSnippet(snippetKey) {
+        if (snippets[snippetKey]) {
+            codeTextarea.value = snippets[snippetKey];
+            displayOutput(`📋 Snippet loaded: "${snippetKey.toUpperCase()}" example. Press Run to execute.`, false);
+        } else {
+            displayOutput("Snippet not found", false);
+        }
+    }
+    
+    // attach event listeners
+    runBtn.addEventListener('click', runNodeCode);
+    resetBtn.addEventListener('click', resetToDefault);
+    
+    document.querySelectorAll('.snippet-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const key = btn.getAttribute('data-snippet');
+            if (key) loadSnippet(key);
+        });
+    });
+    
+    // initial default display
+    resetToDefault();
+</script>
+</body>
+</html>
