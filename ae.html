@@ -595,69 +595,10 @@
             </div>
         </div>
     </div>
-
-    <div class="branch-intro">
-        <i class="fas fa-space-shuttle" style="color: var(--accent-orange); margin-right: 0.5rem;"></i> 
-        AEROSPACE INTEGRATION — Where aeronautical and astronautical engineering converge: Reusable launch vehicles, hypersonic spaceplanes, atmospheric re-entry, and next-gen space tourism.
-    </div>
-
-    <div class="instrument-panel-main">
-        <div class="instrument"><div class="instrument-label">AIRSPEED (IAS)</div><div class="instrument-value" id="airspeed">385</div><div class="instrument-unit">knots</div></div>
-        <div class="instrument"><div class="instrument-label">AOA</div><div class="instrument-value" id="aoa">7.2</div><div class="instrument-unit">deg</div></div>
-        <div class="instrument"><div class="instrument-label">G-LOAD</div><div class="instrument-value" id="gload">1.2</div><div class="instrument-unit">G</div></div>
-        <div class="instrument"><div class="instrument-label">RADAR</div><div class="instrument-value" id="radarStatus">SEARCH</div></div>
-        <div class="instrument"><div class="instrument-label">PROPULSION</div><div class="instrument-value" id="rpm">94%</div></div>
-        <div class="instrument"><div class="instrument-label">EGT</div><div class="instrument-value" id="egt">620°C</div></div>
-        <div class="instrument"><div class="instrument-label">ORBIT ALT</div><div class="instrument-value" id="orbitAlt">408</div><div class="instrument-unit">km LEO</div></div>
-        <div class="instrument"><div class="instrument-label">ΔV REMAIN</div><div class="instrument-value" id="deltaV">2,840</div><div class="instrument-unit">m/s</div></div>
-    </div>
-
-    <div class="procedure-grid">
-        <div class="procedure-card">
-            <div class="card-header"><div class="step-number">01</div><div class="card-title">AERODYNAMIC CHARACTERIZATION</div></div>
-            <div class="card-content"><div class="procedure-text">High-fidelity CFD & wind tunnel validation. Pressure distribution, laminar-to-turbulent transition, transonic drag rise mitigation. Essential for aircraft and launch vehicle ascent.</div><ul class="spec-list"><li><span class="spec-label">CL max</span><span class="spec-value">1.85</span></li><li><span class="spec-label">Critical Mach</span><span class="spec-value">0.89</span></li><li><span class="spec-label">Reynolds number</span><span class="spec-value">18.4e6</span></li></ul></div>
-        </div>
-        <div class="procedure-card">
-            <div class="card-header"><div class="step-number">02</div><div class="card-title">PROPULSION & THRUST VECTORING</div></div>
-            <div class="card-content"><div class="procedure-text">Turbofan, scramjet, and rocket engine integration. For astronautical: bipropellant engines, electric propulsion (ion thrusters), specific impulse optimization.</div><ul class="spec-list"><li><span class="spec-label">Isp (vac)</span><span class="spec-value">348 s</span></li><li><span class="spec-label">Thrust/Weight</span><span class="spec-value">6.2</span></li><li><span class="spec-label">Chamber Pressure</span><span class="spec-value">112 bar</span></li></ul></div>
-        </div>
-        <div class="procedure-card">
-            <div class="card-header"><div class="step-number">03</div><div class="card-title">ORBITAL MECHANICS & GUIDANCE</div></div>
-            <div class="card-content"><div class="procedure-text">Astronautical core: Hohmann transfers, rendezvous, delta-v budgets. Attitude determination using star trackers and IMUs. Re-entry corridor prediction for crew modules.</div><ul class="spec-list"><li><span class="spec-label">Inclination</span><span class="spec-value">51.6°</span></li><li><span class="spec-label">Eccentricity</span><span class="spec-value">0.0012</span></li><li><span class="spec-label">Re-entry G-load</span><span class="spec-value">3.5 G</span></li></ul></div>
-        </div>
-        <div class="procedure-card">
-            <div class="card-header"><div class="step-number">04</div><div class="card-title">STRUCTURAL INTEGRITY & THERMAL PROTECTION</div></div>
-            <div class="card-content"><div class="procedure-text">Lightweight composites for airframes; ablative tiles and ceramic matrix composites for re-entry. Vibration damping, acoustic fatigue, and cryogenic tank design.</div><ul class="spec-list"><li><span class="spec-label">Max Q</span><span class="spec-value">32.6 kPa</span></li><li><span class="spec-label">TPS temp</span><span class="spec-value">1,650 °C</span></li><li><span class="spec-label">Margin of safety</span><span class="spec-value">28%</span></li></ul></div>
-        </div>
-    </div>
-
-    <div class="branch-intro" style="border-left-color: var(--astronaut-blue); margin-top: 0.5rem;">
-        <i class="fas fa-satellite-dish" style="color: var(--astronaut-blue); margin-right: 0.6rem;"></i>
-        ASTRONAUTICAL ENGINEERING IN-DEPTH: Launch vehicle design, spacecraft subsystems (ADCS, C&DH, EPS), orbital debris mitigation, interplanetary trajectory design, and human rating standards.
-    </div>
     
-    <div class="procedure-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px,1fr));">
-        <div class="procedure-card"><div class="card-header"><i class="fas fa-chart-orbital" style="color:var(--primary-red)"></i><div class="card-title">Launch & Ascent</div></div><div class="card-content"><div class="procedure-text">Multi-stage staging optimization, gravity turn, pitch programs, fairing separation. Monte Carlo dispersion analysis for orbital injection accuracy.</div><div class="warning-note"><i class="fas fa-chart-simple"></i> Typical ΔV to LEO: 9.4 km/s</div></div></div>
-        <div class="procedure-card"><div class="card-header"><i class="fas fa-microchip" style="color:var(--primary-red)"></i><div class="card-title">Spacecraft Avionics</div></div><div class="card-content"><div class="procedure-text">Radiation-hardened electronics, fault-tolerant flight computers, redundant telemetry links, and high-gain antenna arrays for deep space communication.</div><div class="warning-note"><i class="fas fa-satellite"></i> Latency: 4-20 min (Mars link)</div></div></div>
-        <div class="procedure-card"><div class="card-header"><i class="fas fa-temperature-low"></i><div class="card-title">Thermal Control</div></div><div class="card-content"><div class="procedure-text">Passive (MLI, coatings) and active (heat pipes, pumped fluid loops) systems to maintain component temperatures from -150°C to +120°C in vacuum.</div><div class="warning-note"><i class="fas fa-sun"></i> Radiator sizing based on orbital beta angle.</div></div></div>
-    </div>
-
-    <div class="contact-section" id="contact">
-        <div class="section-title"><i class="fas fa-paper-plane"></i> TRANSMIT MISSION REPORT</div>
-        <form id="contactForm" action="https://formspree.io/f/xlgodvda" method="POST">
-            <div class="form-grid">
-                <div class="form-group"><label>FULL NAME / CALLSIGN</label><input type="text" name="name" required placeholder="MAJ. E. RILEY"></div>
-                <div class="form-group"><label>AEROSPACE UNIT</label><input type="text" name="unit" placeholder="Flight Test / Mission Ops"></div>
-                <div class="form-group full-width"><label>MESSAGE / QUERY</label><textarea rows="3" name="message" required placeholder="Telemetry inquiry / collaboration request..."></textarea></div>
-            </div>
-            <button type="submit" class="submit-btn"><i class="fas fa-arrow-up"></i> TRANSMIT TO GROUND STATION</button>
-            <div id="formStatus" class="form-status" style="margin-top: 1rem; text-align:center;"></div>
-        </form>
-    </div>
-
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section"><h4>AEROSPACE ENGINEERING · ATMOSPHERE TO DEEP SPACE</h4><p>© 2026 Advanced Flight Dynamics | Aeronautics & Astronautics Integration</p></div>
+            <div class="footer-section"><h4>Eden stealth CV-1</h4><p>© 2026 Advanced </p></div>
             <div class="footer-section"><h4><i class="fas fa-satellite"></i> MISSION CONTROL</h4><p>Telemetry: encrypted downlink | Orbit tracking: real-time ephemeris</p></div>
         </div>
         <div class="copyright"><i class="fas fa-cogs"></i> Next-gen flight & space systems — simulation for engineering analysis. Both branches unified.</div>
