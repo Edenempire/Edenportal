@@ -25,12 +25,15 @@
   <style>
     
     * {
+      
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      
     }
     :root {
+      
       --bg: #000000;
       --surface: #0a0c10;
       --border: #2a3a44;
@@ -43,15 +46,21 @@
       --font-mono: 'Roboto Mono', monospace;
       --header-h: 70px;
       --footer-h: 60px;
+      
     }
+    
     html, body {
+      
       height: 100%;
       background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-main);
       line-height: 1.4;
+      
     }
+    
     body {
+      
       display: grid;
       grid-template-rows: auto 1fr auto;
       grid-template-columns: 1fr min(96%, 750px) 1fr;
@@ -62,8 +71,11 @@
       align-items: start;
       justify-items: stretch;
       overflow-y: auto;
+      
     }
+    
     header {
+      
       grid-area: header;
       background: var(--surface);
       border-bottom: 2px solid var(--border);
@@ -72,8 +84,11 @@
       justify-content: center;
       padding: 12px 16px;
       min-height: var(--header-h);
+      
     }
+    
     .header-title {
+      
       font-size: clamp(1rem, 5vw, 1.6rem);
       font-weight: 800;
       letter-spacing: 1px;
@@ -85,8 +100,11 @@
       align-items: center;
       gap: 10px;
       text-align: center;
+      
     }
+    
     .main {
+      
       grid-area: main;
       width: 100%;
       padding: 16px 0 24px 0;
@@ -94,29 +112,44 @@
       flex-direction: column;
       align-items: center;
       gap: 18px;
+      
     }
+    
     .main > * {
+      
       width: 100%;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      
     }
+    
     .card {
+      
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 28px;
       padding: 20px 18px;
+      
     }
+    
     .current-time-card {
+      
       text-align: center;
+      
     }
+    
     .current-label {
+      
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 3px;
       color: #9ab0c0;
+      
     }
+    
     .current-time {
+      
       font-family: var(--font-mono);
       font-size: clamp(2.8rem, 12vw, 5rem);
       font-weight: 700;
@@ -124,17 +157,26 @@
       margin: 6px 0 2px;
       color: var(--accent);
       word-break: keep-all;
+      
     }
+    
     .current-date {
+      
       font-size: clamp(0.9rem, 4vw, 1.2rem);
       color: #b0c8da;
+      
     }
+    
     .quick-add {
+      
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      
     }
+    
     .quick-add input {
+      
       flex: 1;
       min-width: 140px;
       background: #0a0c10;
@@ -146,12 +188,18 @@
       color: var(--accent);
       text-align: center;
       letter-spacing: 2px;
+      
     }
+    
     .quick-add input:focus {
+      
       outline: none;
       border-color: var(--accent);
+      
     }
+    
     .quick-add button {
+      
       width: 70px;
       background: var(--surface);
       border: 2px solid var(--border);
@@ -163,13 +211,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      
     }
+    
     .quick-add button:hover {
+      
       background: var(--accent);
       color: black;
       border-color: var(--accent);
+      
     }
+    
     .sound-selector-panel {
+      
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 40px;
@@ -179,7 +233,9 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      
     }
+    
     .sound-selector-panel span {
       font-size: clamp(0.9rem, 4vw, 1.2rem);
       font-weight: 600;
@@ -458,6 +514,7 @@
       animation: blink 1s step-start infinite;
     }
     @keyframes blink { 50% { opacity: 0.3; } }
+    
     @media (max-width: 550px) {
       .alarm-item { flex-direction: column; align-items: flex-start; }
       .alarm-controls { align-self: flex-end; }
@@ -467,6 +524,7 @@
       .modal-content { padding: 20px 16px; }
       .time-picker input { width: 70px; font-size: 1.8rem; }
     }
+    
     @media (max-width: 380px) {
       .day-badge { width: 26px; height: 26px; }
       .btn-icon { width: 38px; height: 38px; }
@@ -482,18 +540,16 @@
 <body>
 
 <header>
-  <div class="header-title" title="Alarm System Automation - Manage your daily alarms">
-    <i class="fas fa-microchip"></i> ALARM SYSTEM AUTOMATION
-  </div>
+  <div class="header-title" title="Alarm System Auto">ALARM SYSTEM AUTOMATION</div>
 </header>
 
 <div class="main">
-  <div id="permissionBanner" title="Enable notifications and audio permissions for full alarm experience">
+  <div id="permissionBanner" title="Enable notifications and audio permissions for full alarm auto experience">
     <span>🔔 ALLOW NOTIFICATIONS + CUSTOM MP3</span>
     <button onclick="requestFullPermissions()">ENABLE</button>
   </div>
 
-  <div class="card current-time-card" title="Current live time and date synchronized with your device">
+  <div class="card current-time-card" title="current live time and date synchronized with your device">
     <div class="current-label"><i class="fas fa-globe"></i> REAL-TIME SYNC</div>
     <div class="current-time" id="currentTime">00:00:00</div>
     <div class="current-date" id="currentDate"></div>
