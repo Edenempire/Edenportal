@@ -5,6 +5,8 @@
 <head>
 
     <!-- I WANT MORE ROBUST POWER, AND OFFLINE CAPABILITY. MUST CACHE A LOT. -->
+
+    <!-- THE CSS NEVER CHANGES -->
     
     <meta charset="UTF-8">
     
@@ -98,30 +100,42 @@
         }
         
         body.red-mode .hero-title {
+            
             text-shadow: 0 0 4px rgba(255, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.25);
+            
         }
         
         body.red-mode .tier-1 {
+            
             color: #ff9900;
+            
         }
         
         body.red-mode .status-dot {
+            
             background: #ff0000;
+            
         }
         
         body.red-mode .nav-link:hover,
         body.red-mode .nav-link.active {
+            
             background: rgba(255, 0, 0, 0.15);
             border-left-color: #ff0000;
+            
         }
         
         body.red-mode .splash-title {
+            
             text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+            
         }
         
         body.red-mode .version-number {
+            
             background: rgba(255, 0, 0, 0.05);
             border: 1px solid rgba(255, 0, 0, 0.3);
+            
         }
 
         .theme-toggle {
@@ -334,6 +348,7 @@
         }
         
         .nav-link {
+            
             display: block;
             padding: 15px 25px;
             color: #fff;
@@ -345,6 +360,7 @@
             cursor: pointer;
             width: 100%;
             text-align: left;
+            
         }
         
         .nav-link:hover {
@@ -386,23 +402,28 @@
             
         }
     
-.status-dot {
-    background: #00ff00 !important;
-    box-shadow: 0 0 8px #00ff00 !important;
-    animation: statusPulse 1.5s infinite;
-}
-
-@keyframes statusPulse {
-    0% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.6; transform: scale(1); }
-}
-
-body.red-mode .status-dot,
-body.green-yellow .status-dot {
-    background: #00ff00 !important;
-    box-shadow: 0 0 8px #00ff00 !important;
-}
+        .status-dot {
+            
+            background: #00ff00 !important;
+            box-shadow: 0 0 8px #00ff00 !important;
+            animation: statusPulse 1.5s infinite;
+            color: green;
+            
+        }
+        
+        @keyframes statusPulse {
+            
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.6; transform: scale(1); }
+            
+        }
+        
+        body.red-mode .status-dot,
+        body.green-yellow .status-dot {
+            background: #00ff00 !important;
+            box-shadow: 0 0 8px #00ff00 !important;
+        }
         
         #navTime {
             
@@ -455,6 +476,7 @@ body.green-yellow .status-dot {
         }
         
         @media (max-width: 768px) {
+            
             .nav-system {
                 width: 280px;
             }
@@ -469,6 +491,7 @@ body.green-yellow .status-dot {
                 padding: 14px 20px;
                 font-size: 1rem;
             }
+            
         }
 
         #hero {
@@ -570,31 +593,39 @@ body.green-yellow .status-dot {
         .separator { height: 2px; flex-grow: 1; background: var(--cyan-dim); min-width: 50px; }
 
         .Operator-grid {
+            
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
+            
         }
 
         .ops-card {
+            
             background: var(--panel-bg);
             border: 1px solid var(--cyan-dim);
             transition: var(--transition);
             clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+            
         }
 
         .ops-card:hover {
+            
             border-color: var(--cyan);
             box-shadow: var(--cyan-glow);
             transform: translateY(-5px);
+            
         }
 
         .ops-header {
+            
             padding: 30px;
             display: flex;
             gap: 20px;
             align-items: center;
             border-bottom: 1px solid var(--cyan-dim);
             flex-wrap: wrap;
+            
         }
 
         .ops-img {
@@ -711,7 +742,9 @@ body.green-yellow .status-dot {
         }
 
         .terminal-input-row { display: flex; align-items: center; gap: 10px; }
+        
         #term-input {
+            
             flex-grow: 1;
             background: transparent;
             border: none;
@@ -719,35 +752,42 @@ body.green-yellow .status-dot {
             font-family: var(--font-mono);
             font-size: 1.2rem;
             outline: none;
+            
         }
 
         #main-footer {
+            
             border-top: 2px solid var(--cyan);
             padding: 60px 5%;
             background: #000;
             text-align: center;
             margin-top: 100px;
+            
         }
 
         .footer-grid {
+            
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
             margin-bottom: 50px;
+            
         }
 
         .weather-panel {
+            
             background: rgba(0, 255, 255, 0.05);
             padding: 20px;
             border-radius: 4px;
             display: inline-block;
+            
         }
 
         .hud-nav {
             
             position: fixed;
             right: 30px;
-            bottom: 50px;
+            bottom: 60px;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -983,25 +1023,32 @@ body.green-yellow .status-dot {
         }
 
         .splash-loading-footer {
+            
             display: flex;
             justify-content: space-between;
             font-family: 'VT323', monospace;
             font-size: 0.9rem;
             color: rgba(0, 255, 255, 0.6);
             margin-top: 5px;
+            
         }
 
         .loading-status {
+            
             color: var(--cyan);
             animation: blinkStatus 2s infinite;
+            
         }
 
         @keyframes blinkStatus {
+            
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+            
         }
 
         .splash-system-checks {
+            
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -1009,6 +1056,7 @@ body.green-yellow .status-dot {
             z-index: 20;
             position: relative;
             flex-wrap: wrap;
+            
         }
 
         .system-check {
@@ -1031,6 +1079,7 @@ body.green-yellow .status-dot {
             color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             font-size: 0.8rem;
+            
         }
 
         .check-status { font-size: 0.9rem; }
@@ -1058,6 +1107,7 @@ body.green-yellow .status-dot {
             font-weight: bold;
             animation: pulse-install 2s infinite;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            
         }
         
         @keyframes pulse-install {
@@ -1084,7 +1134,9 @@ body.green-yellow .status-dot {
         }
         
         #installBtn:active {
+            
             transform: scale(0.95);
+            
         }
         
         #installBtn.installing {
@@ -1097,7 +1149,9 @@ body.green-yellow .status-dot {
         }
         
         #installBtn.installing::before {
+            
             content: "⏳ ";
+            
         }
         
         #installBtn.installed {
@@ -1116,10 +1170,12 @@ body.green-yellow .status-dot {
         @media (max-width: 600px) {
             
             #installBtn {
+                
                 padding: 15px 25px;
                 font-size: 0.9rem;
                 min-width: 240px;
                 width: 90%;
+                
             }
     
         }
@@ -1145,7 +1201,9 @@ body.green-yellow .status-dot {
         }
 
         .logo-frame, .brand-text {
+            
             pointer-events: none;
+            
         }
 
         #refresh-notification {
@@ -1163,6 +1221,7 @@ body.green-yellow .status-dot {
             animation: slideIn 0.3s ease;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             font-family: var(--font-mono);
+            
         }
 
         @keyframes slideIn {
@@ -1201,29 +1260,36 @@ body.green-yellow .status-dot {
         }
 
         .refresh-progress {
+            
             width: 100%;
             height: 4px;
             background: #222;
             margin: 15px 0;
             overflow: hidden;
+            
         }
 
         .refresh-bar {
+            
             height: 100%;
             background: var(--cyan);
             width: 0%;
             transition: width 0.1s linear;
+            
         }
 
         .refresh-status {
+            
             font-family: var(--font-mono);
             font-size: 0.9rem;
             color: var(--cyan);
             text-align: center;
             opacity: 0.8;
+            
         }
 
         .audio-status {
+            
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -1242,26 +1308,33 @@ body.green-yellow .status-dot {
             opacity: 0;
             transition: opacity 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            
         }
 
         .audio-status.visible { opacity: 1; }
 
         .audio-indicator {
+            
             width: 8px;
             height: 8px;
             border-radius: 50%;
             background: #ff0055;
             transition: background 0.3s ease;
+            
         }
 
         .audio-indicator.active {
+            
             background: #00ff00;
             animation: audioPulse 1s infinite;
+            
         }
 
         .audio-indicator.anthem {
+            
             background: var(--cyan);
             animation: anthemPulse 0.5s infinite;
+            
         }
 
         @keyframes audioPulse {
@@ -1279,6 +1352,7 @@ body.green-yellow .status-dot {
         .audio-text { color: #fff; letter-spacing: 1px; }
 
         #rsaFlag {
+            
             position: fixed;
             bottom: 18px;
             left: 28px;
@@ -1290,6 +1364,7 @@ body.green-yellow .status-dot {
             transition: all 0.3s ease;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            
         }
 
         #rsaFlag.playing {
@@ -1304,12 +1379,14 @@ body.green-yellow .status-dot {
         }
 
         @media (max-width: 600px) {
+            
             .splash-logo-container { width: 120px; height: 120px; }
             .splash-title { font-size: 2rem; letter-spacing: 4px; }
             .splash-system-checks { gap: 10px; }
             .system-check { min-width: 80px; padding: 5px 8px; }
             #rsaFlag { width: 65px; bottom: 12px; left: 12px; }
             .audio-status { bottom: 12px; right: 12px; padding: 5px 12px; font-size: 0.7rem; }
+            
             #refresh-notification {
                 top: auto;
                 bottom: 30px;
@@ -1317,39 +1394,52 @@ body.green-yellow .status-dot {
                 left: 20px;
                 min-width: auto;
             }
+            
         }
 
         @media screen and (max-width: 480px) {
             
             .hero-title {
+                
                 font-size: clamp(1.5rem, 6vw, 2rem);
                 letter-spacing: clamp(2px, 0.8vw, 4px);
+                
             }
             
             .hero-subtitle {
+                
                 font-size: 1rem;
                 letter-spacing: 3px;
+                
             }
             
             .btn-tactical {
+                
                 padding: 10px 25px;
                 font-size: 0.8rem;
+                
             }
             
             .Operator-grid {
+                
                 grid-template-columns: 1fr;
                 gap: 20px;
+                
             }
             
             .ops-header {
+                
                 padding: 20px;
                 flex-direction: column;
                 text-align: center;
+                
             }
             
             .ops-img {
+                
                 width: 80px;
                 height: 80px;
+                
             }
             
             .ops-stats {
