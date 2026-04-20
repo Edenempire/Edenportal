@@ -13,13 +13,11 @@
   <meta name="color-scheme" content="dark">
   
   <title>COMPLIANCE CV-5</title>
-
+  
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <link rel="icon" type="image/png" href="logo_tr.png">
-
+  
   <script type="importmap">
     {
       "imports": {
@@ -31,432 +29,53 @@
   
   <style>
     
-    * {
-      
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      
-    }
-    
-    :root {
-      
-      --bg: #000000;
-      --card-bg: #0a0000cc;
-      --red: #ff1a1a;
-      --red-glow: #ff3333;
-      --text: #ff1a1a;
-      --border: #ff1a1a;
-      
-    }
-    
-    body {
-      
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Share Tech Mono', 'Inter', monospace;
-      min-height: 100vh;
-      overflow-x: hidden;
-      
-    }
-
-    .scan-lines {
-      
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px);
-      pointer-events: none;
-      z-index: 1;
-      animation: drift 22s linear infinite;
-      
-    }
-    
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+    :root { --bg: #000000; --card-bg: #0a0000cc; --red: #ff1a1a; --red-glow: #ff3333; --text: #ff1a1a; --border: #ff1a1a; }
+    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; overflow-x: hidden; }
+    .scan-lines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 1; animation: drift 22s linear infinite; }
     @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
-    .ambient-glow {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 30% 40%, rgba(255,30,30,0.03) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 1;
-      animation: pulseGlow 8s infinite alternate;
-    }
-    
+    .ambient-glow { position: fixed; inset: 0; background: radial-gradient(circle at 30% 40%, rgba(255,30,30,0.03) 0%, transparent 70%); pointer-events: none; z-index: 1; animation: pulseGlow 8s infinite alternate; }
     @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.7; } }
-
-    .app-container {
-      
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.2rem;
-      position: relative;
-      z-index: 10;
-      display: none;
-      
-    }
-
-    .command-header {
-      
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      background: #000000dd;
-      backdrop-filter: blur(12px);
-      border-bottom: 3px solid var(--red);
-      padding: 0.9rem 0;
-      margin-bottom: 2rem;
-      cursor: pointer;
-      
-    }
-    
-    .header-content {
-      
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      text-align: center;
-      
-    }
-    
-    .logo {
-      
-      font-size: clamp(1.3rem, 5vw, 2.2rem);
-      font-weight: 800;
-      letter-spacing: 5px;
-      color: var(--red);
-      text-shadow: 0 0 4px rgba(255,0,0,0.5);
-      font-family: 'Share Tech Mono';
-      
-    }
-
-    .section-card {
-      
-      background: var(--card-bg);
-      backdrop-filter: blur(4px);
-      border: 1.5px solid var(--red);
-      margin-bottom: 2rem;
-      padding: clamp(1rem, 3vw, 1.8rem);
-      transition: all 0.2s ease;
-      
-    }
-    
-    .section-card:hover {
-      
-      border-color: #ff5555;
-      box-shadow: 0 0 12px rgba(255,0,0,0.2);
-      
-    }
-    
-    .section-header {
-      
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      border-bottom: 2px solid var(--red);
-      padding-bottom: 0.7rem;
-      margin-bottom: 1.5rem;
-      
-    }
-    
-    .section-title {
-      
-      font-size: clamp(0.9rem, 4vw, 1.4rem);
-      font-weight: 700;
-      letter-spacing: 1px;
-      
-    }
-    
-    .badge {
-      
-      background: rgba(255,0,0,0.2);
-      border: 1px solid var(--red);
-      padding: 0.2rem 0.7rem;
-      font-size: 0.7rem;
-      border-radius: 2px;
-      
-    }
-    
-    .grid-2 {
-      
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      
-    }
-    
-    .card {
-      
-      background: #050000aa;
-      border: 1px solid var(--red);
-      padding: 1rem;
-      transition: 0.1s linear;
-      
-    }
-    
-    input, textarea, select {
-      
-      width: 100%;
-      background: #0a0000;
-      border: 1px solid var(--red);
-      padding: 0.65rem;
-      color: #ff4d4d;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.85rem;
-      outline: none;
-      
-    }
-    
-    input:focus, textarea:focus, select:focus {
-      
-      border-color: #ff6666;
-      box-shadow: 0 0 6px rgba(255,0,0,0.3);
-      background: #1a0000;
-      
-    }
-    
-    .btn {
-      
-      background: transparent;
-      border: 1.5px solid var(--red);
-      color: var(--red);
-      padding: 0.45rem 0.9rem;
-      cursor: pointer;
-      font-weight: 600;
-      font-family: 'Share Tech Mono';
-      font-size: 0.75rem;
-      transition: 0.12s linear;
-      
-    }
-    
-    .btn-primary {
-      
-      background: var(--red);
-      color: black;
-      border-color: var(--red);
-      
-    }
-    
-    .btn-primary:hover {
-      
-      background: #cc0000;
-      transform: scale(0.97);
-      
-    }
-    
-    .btn:hover {
-      
-      background: rgba(255,0,0,0.2);
-      
-    }
-    
-    .message-board {
-      
-      max-height: 460px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      
-    }
-    
-    .message-item {
-      
-      background: #0f0000aa;
-      border-left: 4px solid var(--red);
-      padding: 0.7rem;
-      animation: fadeSlide 0.2s ease;
-      
-    }
-    
-    @keyframes fadeSlide {
-      
-      from { opacity: 0; transform: translateY(8px);}
-      to { opacity: 1; transform: translateY(0);}
-      
-    }
-    
-    .reaction-bar {
-      
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-      
-    }
-    
-    .reaction-btn {
-      
-      background: rgba(255,0,0,0.1);
-      border: 1px solid red;
-      padding: 0.2rem 0.6rem;
-      font-size: 0.7rem;
-      cursor: pointer;
-      border-radius: 16px;
-      
-    }
-    
-    .footer-panel {
-      
-      position: sticky;
-      bottom: 0;
-      background: #000000ee;
-      backdrop-filter: blur(16px);
-      border-top: 2px solid var(--red);
-      padding: 0.7rem;
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 0.7rem;
-      
-    }
-    
-    .pin-gate {
-      
-      position: fixed;
-      inset: 0;
-      background: black;
-      backdrop-filter: blur(20px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 20000;
-      
-    }
-    
-    .modal-box {
-      
-      background: black;
-      border: 2px solid red;
-      max-width: 450px;
-      width: 90%;
-      padding: 2rem;
-      text-align: center;
-      
-    }
-    
-    .loader-overlay {
-      
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.96);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 30000;
-      flex-direction: column;
-      gap: 1rem;
-      
-    }
-    
-    .spinner {
-      
-      width: 40px;
-      height: 40px;
-      border: 2px solid red;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      
-    }
-    
+    .app-container { max-width: 1400px; margin: 0 auto; padding: 0 1.2rem; position: relative; z-index: 10; display: none; }
+    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 0.9rem 0; margin-bottom: 2rem; cursor: pointer; }
+    .header-content { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+    .logo { font-size: clamp(1.3rem, 5vw, 2.2rem); font-weight: 800; letter-spacing: 5px; color: var(--red); text-shadow: 0 0 4px rgba(255,0,0,0.5); font-family: 'Share Tech Mono'; }
+    .section-card { background: var(--card-bg); backdrop-filter: blur(4px); border: 1.5px solid var(--red); margin-bottom: 2rem; padding: clamp(1rem, 3vw, 1.8rem); transition: all 0.2s ease; }
+    .section-card:hover { border-color: #ff5555; box-shadow: 0 0 12px rgba(255,0,0,0.2); }
+    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; border-bottom: 2px solid var(--red); padding-bottom: 0.7rem; margin-bottom: 1.5rem; }
+    .section-title { font-size: clamp(0.9rem, 4vw, 1.4rem); font-weight: 700; letter-spacing: 1px; }
+    .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.7rem; font-size: 0.7rem; border-radius: 2px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: #050000aa; border: 1px solid var(--red); padding: 1rem; transition: 0.1s linear; }
+    input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.65rem; color: #ff4d4d; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: #ff6666; box-shadow: 0 0 6px rgba(255,0,0,0.3); background: #1a0000; }
+    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.45rem 0.9rem; cursor: pointer; font-weight: 600; font-family: 'Share Tech Mono'; font-size: 0.75rem; transition: 0.12s linear; border-radius: 2px; }
+    .btn-primary { background: var(--red); color: black; border-color: var(--red); }
+    .btn-primary:hover { background: #cc0000; transform: scale(0.97); }
+    .btn:hover { background: rgba(255,0,0,0.2); }
+    .message-board { max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.7rem; }
+    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.7rem; animation: fadeSlide 0.2s ease; }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+    .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .reaction-btn { background: rgba(255,0,0,0.1); border: 1px solid red; padding: 0.2rem 0.6rem; font-size: 0.7rem; cursor: pointer; border-radius: 16px; }
+    .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: 0.7rem; text-align: center; margin-top: 2rem; font-size: 0.7rem; }
+    .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; z-index: 20000; }
+    .modal-box { background: black; border: 2px solid red; max-width: 450px; width: 90%; padding: 2rem; text-align: center; }
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 30000; flex-direction: column; gap: 1rem; }
+    .spinner { width: 40px; height: 40px; border: 2px solid red; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .ai-chat-bubble {
-      background: #1a0000;
-      border-left: 3px solid red;
-      padding: 0.7rem;
-      margin-top: 0.6rem;
-      border-radius: 0 4px 4px 0;
-    }
-    
-    .stars-rank {
-      
-      display: inline-flex;
-      gap: 5px;
-      margin-left: 10px;
-      align-items: center;
-      
-    }
-    
-    .mil-star {
-      
-      width: 18px;
-      height: 18px;
-      filter: drop-shadow(0 0 1px red);
-      
-    }
-    
-    .toast-msg {
-      
-      background: #0a0000;
-      border-left: 4px solid red;
-      padding: 0.6rem;
-      margin-bottom: 0.5rem;
-      font-size: 0.8rem;
-      animation: slideRight 0.25s ease;
-      
-    }
-    @keyframes slideRight {
-      from { opacity: 0; transform: translateX(60px);}
-      to { opacity: 1; transform: translateX(0);}
-    }
-    .quick-nav {
-      
-      position: fixed;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 99;
-      
-    }
-    
-    .quick-nav button {
-      
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(6px);
-      border: 1.5px solid red;
-      color: red;
-      width: 42px;
-      height: 42px;
-      cursor: pointer;
-      border-radius: 4px;
-      
-    }
-    
-    @media (max-width: 720px) {
-      .app-container { padding: 0 0.8rem; }
-      .quick-nav { right: 5px; }
-      .quick-nav button { width: 34px; height: 34px; font-size: 0.8rem; }
-      .grid-2 { grid-template-columns: 1fr; }
-      .message-item div { word-break: break-word; }
-    }
-    
+    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.7rem; margin-top: 0.6rem; border-radius: 0 4px 4px 0; }
+    .stars-rank { display: inline-flex; gap: 5px; margin-left: 10px; align-items: center; }
+    .mil-star { width: 18px; height: 18px; filter: drop-shadow(0 0 1px red); }
+    .toast-msg { background: #0a0000; border-left: 4px solid red; padding: 0.6rem; margin-bottom: 0.5rem; font-size: 0.8rem; animation: slideRight 0.25s ease; }
+    @keyframes slideRight { from { opacity: 0; transform: translateX(60px);} to { opacity: 1; transform: translateX(0);} }
+    .quick-nav { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 99; }
+    .quick-nav button { background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); border: 1.5px solid red; color: red; width: 42px; height: 42px; cursor: pointer; border-radius: 4px; }
+    @media (max-width: 720px) { .app-container { padding: 0 0.8rem; } .quick-nav { right: 5px; } .quick-nav button { width: 34px; height: 34px; } .grid-2 { grid-template-columns: 1fr; } }
     .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-    .coming-soon {
-      text-align: center;
-      padding: 2rem;
-      border: 1px dashed red;
-      color: #ff8888;
-      background: #1a000033;
-    }
-    
-    #replyIndicatorBox {
-      
-      background: #2a0000;
-      padding: 0.5rem;
-      margin: 6px 0;
-      border-left: 3px solid red;
-      font-size: 0.7rem;
-      
-    }
+    .commander-badge { background: #330000; border: 1px solid #ff4444; font-size: 0.65rem; padding: 0.2rem 0.5rem; }
+    #replyIndicatorBox { background: #2a0000; padding: 0.5rem; margin: 6px 0; border-left: 3px solid red; font-size: 0.7rem; display: none; }
+    .protocol-status { font-family: monospace; letter-spacing: 1px; }
     
   </style>
   
@@ -475,8 +94,8 @@
 <div class="pin-gate" id="pinGate">
   <div class="modal-box">
     <div class="logo" style="font-size:1.8rem;">COMPLIANCE CV-5</div>
-    <br><input type="password" id="pinInput" placeholder="CODE" maxlength="7" style="text-align:center" autofocus>
-    <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">AUTHENTICATE</button>
+    <br><input type="password" id="pinInput" placeholder="ENTER ACCESS CODE" maxlength="8" style="text-align:center" autofocus>
+    <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">CONFIRM</button>
   </div>
 </div>
 
@@ -488,30 +107,41 @@
     <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
 
-  <section class="section-card">
+  <section class="section-card" id="sectionAlpha5">
     <div class="section-header">
-      <h2 class="section-title">Section 01. PROTOCOL ALPHA-1 <span class="stars-rank" id="starRank"></span></h2>
-      <span class="badge"><i class="fas fa-crown"></i> CINC / PRESIDENT</span>
+      <h2 class="section-title">SECTION 01. PROTOCOL ALPHA-5 <span class="stars-rank" id="starRank"></span></h2>
+      <span class="badge"><i class="fas fa-skull-crossbones"></i> CINC / PRESIDENCY</span>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3><i class="fas fa-scroll"></i> ACTIVE DAILY NEW MISSION</h3>
-        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0;">
+        <h3><i class="fas fa-bullhorn"></i> DAILY MISSION DIRECTIVE</h3>
+        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">
+           AWAITING COMMANDER TRANSMISSION...
         </div>
-        <div class="btn-group"><button class="btn" id="copyDirectiveBtn">COPY</button><button class="btn" id="broadcastDirectiveBtn">BROADCAST</button></div>
+        <div class="btn-group">
+          <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
+          <button class="btn" id="broadcastDirectiveBtn"><i class="fas fa-broadcast-tower"></i> SHARE</button>
+        </div>
+        <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒</div>
       </div>
       <div class="card" id="cmdPanel" style="display:none;">
-        <h3><i class="fas fa-lock-open"></i> COMMANDER OVERRIDE</h3>
-        <textarea id="newDirective" rows="3" placeholder="Operational order..."></textarea>
-        <div class="btn-group" style="margin-top:8px;"><button class="btn" id="lockCmdBtn">LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn">TRANSMIT</button></div>
+        <h3><i class="fas fa-crown"></i> COMMANDER-IN-CHIEF</h3>
+        <textarea id="newDirective" rows="4" placeholder="✍️ COMPOSE NEW MISSION DIRECTIVE... "></textarea>
+        <div class="btn-group" style="margin-top:8px;">
+          <button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button>
+          <button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-upload"></i> UPDATE MISSION</button>
+          <button class="btn" id="deleteMissionBtn" style="border-color:#ff4444;"><i class="fas fa-trash-alt"></i> DELETE MISSION</button>
+        </div>
       </div>
-      <button class="btn" id="unlockCmdBtn" style="width:auto; margin-top:0;">UNLOCK PROTOCOL</button>
+      <div class="btn-group" style="margin-top:0;">
+        <button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK</button>
+      </div>
     </div>
   </section>
 
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">Section 02. TEAM MESSAGE BOARD</h2>
+      <h2 class="section-title">SECTION 02. TEAM MESSAGE BOARD</h2>
       <span class="badge" id="msgCountBadge">0</span>
       <button class="btn" id="refreshMsgBtn"><i class="fas fa-sync-alt"></i></button>
     </div>
@@ -520,10 +150,10 @@
         <h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3>
         <input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE">
         <select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select>
-        <div id="replyIndicatorBox" style="display:none;"></div>
+        <div id="replyIndicatorBox"></div>
         <textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea>
-        <div class="btn-group"><button class="btn" id="clearComposeBtn">CLEAR</button></div>
         <button class="btn btn-primary" id="sendMsgBtn" style="margin-top:6px;">ENCRYPT & SEND</button>
+        <button class="btn" id="clearComposeBtn" style="margin-top:6px;">CLEAR</button>
       </div>
       <div class="card">
         <h3><i class="fas fa-comments"></i> LIVE FEED</h3>
@@ -532,21 +162,13 @@
     </div>
   </section>
 
-   <section class="section-card">
-    <div class="section-header">
-      <h2 class="section-title">Section 03. COMING SOON!</h2>
-    </div>
-   </section>
-
-      <section class="section-card">
-    <div class="section-header">
-      <h2 class="section-title">Section 04. COMING SOON!</h2>
-    </div>
-   </section>
+  <section class="section-card"><div class="section-header"><h2 class="section-title">Section 03. COMING SOON!</h2></div></section>
+  
+  <section class="section-card"><div class="section-header"><h2 class="section-title">Section 04. COMING SOON!</h2></div></section>
 
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">Section 05. SARAH MNGUNI • NEURAL CORE</h2>
+      <h2 class="section-title">Section 05. SARAH MNGUNNI • NEURAL CORE</h2>
       <span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ</span>
     </div>
     <div class="card">
@@ -558,14 +180,12 @@
       <div class="btn-group" style="margin-top:12px;"><button class="btn" id="wipeMemoryBtn" style="border-color:#ff4444;">⚠️ WIPE PERMANENT MEMORY</button><button class="btn" id="summarizeMemoryBtn">SUMMARIZE</button></div>
     </div>
   </section>
-
   <div class="footer-panel"><span>PSALMS 27:1 - THE LORD IS MY LIGHT AND SALVATION, OF WHOM SHALL I FEAR?</span></div>
-  
 </div>
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment, limit } from "@firebase/firestore";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment } from "@firebase/firestore";
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
@@ -582,8 +202,8 @@
   let commanderUnlocked = false;
   let replyingTo = null;
   let messagesUnsub = null;
-  let sessionMessages = [];    
-  let permanentMemory = [];    
+  let sessionMessages = [];
+  let permanentMemory = [];
   let memoryDocId = null;
 
   const showLoader = (show, text = "PROCESSING...") => {
@@ -616,108 +236,34 @@
   });
   const escapeHtml = (s) => s ? s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  async function loadPermanentMemory() {
-    if (!db) return [];
-    const userId = "cv5_commander";
-    memoryDocId = `sarah_mem_${userId}`;
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
+  // ---- Mission CRUD (Firestore doc 'cio/directive') ----
+  async function loadMissionDirective() {
+    if (!db) return;
+    const ref = doc(db, 'cio', 'directive');
     const snap = await getDoc(ref);
-    if (snap.exists()) {
-      permanentMemory = snap.data().conversations || [];
-      if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80);
+    if (snap.exists() && snap.data().text) {
+      document.getElementById('directiveText').innerText = snap.data().text;
     } else {
-      permanentMemory = [];
-      await setDoc(ref, { conversations: [], updated: serverTimestamp() });
-    }
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
-    return permanentMemory;
-  }
-  async function saveToPermanentMemory(role, content) {
-    if (!db || !memoryDocId) return;
-    permanentMemory.push({ role, content, ts: Date.now() });
-    if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100);
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
-    await setDoc(ref, { conversations: permanentMemory, updated: serverTimestamp() }, { merge: true });
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`;
-  }
-
-  async function callGroq(userMsg, contextMemory) {
-    const systemBase = `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). You are warm, direct, loyal. Use recall from permanent memory below to remember past missions, names, directives. Keep responses concise (2-4 sentences) but helpful. Current operator: Big-Joe on CV-5 Compliance page. You are a core member.`;
-    const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n');
-    const messages = [
-      { role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') },
-      ...sessionMessages.slice(-6),
-      { role: 'user', content: userMsg }
-    ];
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-      body: JSON.stringify({ model: GROQ_MODEL, messages, temperature: 0.65, max_tokens: 320 })
-    });
-    if (!res.ok) throw new Error(`API ${res.status}`);
-    const data = await res.json();
-    return data.choices[0].message.content;
-  }
-
-  async function askSarah(promptText) {
-    if (!promptText.trim()) return;
-    showLoader(true, "SARAH ACCESSING PERMANENT MEMORY...");
-    try {
-      addAIBubble('user', promptText);
-      sessionMessages.push({ role: 'user', content: promptText });
-      await saveToPermanentMemory('user', promptText);
-      const reply = await callGroq(promptText, permanentMemory);
-      addAIBubble('ai', reply);
-      sessionMessages.push({ role: 'assistant', content: reply });
-      await saveToPermanentMemory('assistant', reply);
-      if (sessionMessages.length > 24) sessionMessages = sessionMessages.slice(-20);
-      document.getElementById('aiPrompt').value = '';
-    } catch (err) {
-      console.error(err);
-      addAIBubble('ai', `⚠️ Neural glitch: ${err.message}. But my permanent memory is intact.`);
-      toast(`Sarah error: ${err.message}`, 'error');
-    } finally {
-      showLoader(false);
+      const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE.";
+      document.getElementById('directiveText').innerText = defaultMsg;
+      await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() });
     }
   }
-  function addAIBubble(role, text) {
-    const container = document.getElementById('aiConversation');
-    if (!container) return;
-    const bubble = document.createElement('div');
-    bubble.className = 'ai-chat-bubble';
-    bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
+  async function updateMissionDirective(newText) {
+    if (!db) return;
+    const ref = doc(db, 'cio', 'directive');
+    await setDoc(ref, { text: newText, timestamp: serverTimestamp() });
+    document.getElementById('directiveText').innerText = newText;
+    toast("MISSION DIRECTIVE UPDATED (CRUD)", "success");
   }
-  async function wipePermanent() {
-    const confirm = await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'This will erase ALL of Sarah’s long-term memory. She will forget everything about missions, you, CV-5. Are you ABSOLUTELY sure?');
-    if (!confirm) return;
-    if (!db || !memoryDocId) return;
-    permanentMemory = [];
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
-    await setDoc(ref, { conversations: [], updated: serverTimestamp() });
-    const convDiv = document.getElementById('aiConversation');
-    if (convDiv) convDiv.innerHTML = '';
-    addAIBubble('ai', '⚠️ Permanent memory has been wiped. I have forgotten everything prior. I am Sarah Mnguni, reset and ready.');
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset complete`;
-    toast('Permanent memory erased', 'success');
-  }
-  async function summarizeSession() {
-    if (permanentMemory.length === 0) { toast('No memory to summarize', 'info'); return; }
-    showLoader(true, "SUMMARIZING PERMANENT MEMORY...");
-    try {
-      const recent = permanentMemory.slice(-12).map(m => m.content).join(' ');
-      const summaryPrompt = `Summarize the key mission facts, names, and objectives from this conversation (very brief, max 2 sentences): ${recent}`;
-      const res = await callGroq(summaryPrompt, permanentMemory.slice(-8));
-      toast(`📜 MEMORY SUMMARY: ${res}`, 'success');
-    } catch(e) { toast('Summarize failed', 'error'); } finally { showLoader(false); }
-  }
-  function clearSessionOnly() {
-    sessionMessages = [];
-    const container = document.getElementById('aiConversation');
-    if (container) container.innerHTML = '';
-    addAIBubble('ai', 'Session display cleared. My permanent memory remains intact — I still remember our history.');
-    toast('Local chat cleared (permanent memory safe)', 'info');
+  async function deleteMissionDirective() {
+    if (!db) return;
+    const confirmDel = await showConfirmModal("⚠️ DELETE MISSION", "Commander: This will erase current directive. Confirm?");
+    if (!confirmDel) return;
+    const ref = doc(db, 'cio', 'directive');
+    await setDoc(ref, { text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: serverTimestamp() });
+    document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER.";
+    toast("Mission directive wiped", "success");
   }
 
   function setupMessagesListener() {
@@ -734,23 +280,16 @@
           <div><strong>${escapeHtml(m.callsign)}</strong> <small>${m.timestamp?.toDate().toLocaleString() || 'now'}</small></div>
           <div>${escapeHtml(m.text || '')}</div>
           <div class="reaction-bar">
-            <button class="reaction-btn" data-like="${mid}" data-call="${escapeHtml(m.callsign)}">👍 ${m.likes || 0}</button>
+            <button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button>
             <button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}" data-text="${escapeHtml(m.text || '').replace(/'/g, "\\'")}">💬 REPLY</button>
             <button class="reaction-btn" data-delete="${mid}">🗑️ DELETE</button>
           </div>
         </div>`;
       });
       document.getElementById('msgCountBadge').innerHTML = snap.size;
-
-      document.querySelectorAll('[data-like]').forEach(btn => {
-        btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); };
-      });
-      document.querySelectorAll('[data-reply]').forEach(btn => {
-        btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); };
-      });
-      document.querySelectorAll('[data-delete]').forEach(btn => {
-        btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete this transmission?')) await deleteDoc(doc(db, 'messages', id)); };
-      });
+      document.querySelectorAll('[data-like]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); }; });
+      document.querySelectorAll('[data-reply]').forEach(btn => { btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); }; });
+      document.querySelectorAll('[data-delete]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); }; });
     });
   }
   async function toggleLike(msgId) {
@@ -759,11 +298,8 @@
     if (snap.exists()) {
       const likedBy = snap.data().likedBy || [];
       const caller = document.getElementById('callsignField')?.value || 'OPERATOR';
-      if (likedBy.includes(caller)) {
-        await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) });
-      } else {
-        await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) });
-      }
+      if (likedBy.includes(caller)) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) });
+      else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) });
     }
   }
   function startReply(call, id, txt) {
@@ -786,113 +322,157 @@
     }
     const callsign = document.getElementById('callsignField').value.trim() || 'UNKNOWN';
     const dept = document.getElementById('deptField').value;
-    await addDoc(collection(db, 'messages'), {
-      callsign, department: dept, text: finalText, timestamp: serverTimestamp(), likes: 0, likedBy: []
-    });
+    await addDoc(collection(db, 'messages'), { callsign, department: dept, text: finalText, timestamp: serverTimestamp(), likes: 0, likedBy: [] });
     document.getElementById('messageText').value = '';
     toast('Message transmitted', 'success');
   }
   async function broadcastDirective() {
     const txt = document.getElementById('directiveText').innerText;
     await addDoc(collection(db, 'messages'), { callsign: "CINC", department: "COMPLIANCE CV-5", text: `📢 DIRECTIVE BROADCAST: ${txt.substring(0,300)}`, timestamp: serverTimestamp(), likes: 0, likedBy: [] });
-    toast('Directive broadcasted', 'success');
+    toast('Directive broadcasted to team board', 'success');
   }
 
+  async function loadPermanentMemory() {
+    if (!db) return [];
+    const userId = "cv5_commander";
+    memoryDocId = `sarah_mem_${userId}`;
+    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
+    const snap = await getDoc(ref);
+    if (snap.exists()) { permanentMemory = snap.data().conversations || []; if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80); }
+    else { permanentMemory = []; await setDoc(ref, { conversations: [], updated: serverTimestamp() }); }
+    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
+    return permanentMemory;
+  }
+  async function saveToPermanentMemory(role, content) {
+    if (!db || !memoryDocId) return;
+    permanentMemory.push({ role, content, ts: Date.now() });
+    if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100);
+    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
+    await setDoc(ref, { conversations: permanentMemory, updated: serverTimestamp() }, { merge: true });
+    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`;
+  }
+  async function callGroq(userMsg, contextMemory) {
+    const systemBase = `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`;
+    const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n');
+    const messages = [{ role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') }, ...sessionMessages.slice(-6), { role: 'user', content: userMsg }];
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` }, body: JSON.stringify({ model: GROQ_MODEL, messages, temperature: 0.65, max_tokens: 320 }) });
+    if (!res.ok) throw new Error(`API ${res.status}`);
+    const data = await res.json();
+    return data.choices[0].message.content;
+  }
+  async function askSarah(promptText) {
+    if (!promptText.trim()) return;
+    showLoader(true, "SARAH ACCESSING PERMANENT MEMORY...");
+    try {
+      addAIBubble('user', promptText);
+      sessionMessages.push({ role: 'user', content: promptText });
+      await saveToPermanentMemory('user', promptText);
+      const reply = await callGroq(promptText, permanentMemory);
+      addAIBubble('ai', reply);
+      sessionMessages.push({ role: 'assistant', content: reply });
+      await saveToPermanentMemory('assistant', reply);
+      if (sessionMessages.length > 24) sessionMessages = sessionMessages.slice(-20);
+      document.getElementById('aiPrompt').value = '';
+    } catch (err) { addAIBubble('ai', `⚠️ Neural glitch: ${err.message}.`); toast(`Sarah error`, 'error'); } finally { showLoader(false); }
+  }
+  function addAIBubble(role, text) {
+    const container = document.getElementById('aiConversation');
+    if (!container) return;
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-chat-bubble';
+    bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+  }
+  async function wipePermanent() {
+    if (!await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'Erase ALL Sarah long-term memory? She will forget everything.')) return;
+    permanentMemory = [];
+    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
+    await setDoc(ref, { conversations: [], updated: serverTimestamp() });
+    document.getElementById('aiConversation').innerHTML = '';
+    addAIBubble('ai', '⚠️ Permanent memory wiped. Reset complete.');
+    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset`;
+    toast('Permanent memory erased', 'success');
+  }
+  async function summarizeSession() { if(permanentMemory.length===0) return toast('No memory', 'info'); showLoader(true,"SUMMARIZING..."); try { const recent = permanentMemory.slice(-12).map(m=>m.content).join(' '); const summaryPrompt = `Summarize key mission facts (max 2 sentences): ${recent}`; const res = await callGroq(summaryPrompt, permanentMemory.slice(-8)); toast(`📜 MEMORY SUMMARY: ${res}`, 'success'); } catch(e){ toast('Summarize failed','error'); } finally { showLoader(false); } }
+  function clearSessionOnly() { sessionMessages = []; document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai','Session display cleared. Permanent memory intact.'); toast('Local chat cleared','info'); }
+
   document.getElementById('unlockBtn').addEventListener('click', async () => {
-    if (document.getElementById('pinInput').value === '7') {
+    if (document.getElementById('pinInput').value === '11111111') {
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
-      toast('ACCESS GRANTED • CV-5 ONLINE', 'success');
+      toast('ACCESS GRANTED • CV-5 ONLINE • COMMANDER PIN ACCEPTED', 'success');
       const app = initializeApp(FIREBASE_CONFIG);
       db = getFirestore(app);
+      await loadMissionDirective();
       await loadPermanentMemory();
       setupMessagesListener();
       addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Awaiting orders.`);
-
       const msgsSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
-      if (msgsSnap.empty) {
-        await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
-      }
+      if (msgsSnap.empty) await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
     } else { toast('INVALID ACCESS CODE', 'error'); }
   });
 
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => {
+    const pin = prompt('COMMANDER OVERRIDE PIN (8 digits for PROTOCOL ALPHA-5)');
+    if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked • full CRUD ability', 'success'); }
+    else toast('Access denied', 'error');
+  });
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Commander panel locked', 'info'); });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
+    if (!commanderUnlocked) { toast('Locked: Commander authentication required', 'error'); return; }
+    const newDir = document.getElementById('newDirective').value.trim();
+    if (newDir) { await updateMissionDirective(newDir); document.getElementById('newDirective').value = ''; }
+    else toast('Directive empty', 'error');
+  });
+  document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked) await deleteMissionDirective(); else toast('Unauthorized','error'); });
+  
+  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Directive copied', 'success'); });
+  document.getElementById('broadcastDirectiveBtn').addEventListener('click', broadcastDirective);
+  document.getElementById('sendMsgBtn').addEventListener('click', sendMessage);
+  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
+  document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Live feed active', 'info'));
   document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); });
   document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); } });
   document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
-  document.getElementById('sendMsgBtn').addEventListener('click', sendMessage);
-  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
-  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Directive copied', 'success'); });
-  document.getElementById('broadcastDirectiveBtn').addEventListener('click', broadcastDirective);
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => {
-    const ok = await showConfirmModal('COMMANDER AUTH', 'Enter override PIN');
-    if (ok) {
-      const pin = prompt('PIN CODE');
-      if (pin === '1234') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked', 'success'); }
-      else toast('Access denied', 'error');
-    }
-  });
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
-    if (!commanderUnlocked) { toast('Locked', 'error'); return; }
-    const newDir = document.getElementById('newDirective').value.trim();
-    if (newDir) {
-      await setDoc(doc(db, 'cio', 'directive'), { text: newDir, timestamp: serverTimestamp() });
-      document.getElementById('directiveText').innerText = newDir;
-      document.getElementById('newDirective').value = '';
-      toast('Directive updated', 'success');
-    }
-  });
-  document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Live feed active', 'info'));
 
   const starSpan = document.getElementById('starRank');
-  if(starSpan) for(let i=0;i<6;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
   
 </script>
   
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
