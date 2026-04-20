@@ -1,15 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Eden Stealth CV-1 | CLASSIFIED DOCUMENT VAULT</title>
-    <meta name="description" content="Secure Document Vault - View & Download Classified PDFs - Eden Stealth CV-1 Tier 1 Unit">
+    
+    <title>DOCUMENT VAULT</title>
+    
+    <meta name="description" content="Document Vault">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        
         * {
             margin: 0;
             padding: 0;
@@ -374,7 +386,6 @@
             }
         }
 
-        /* Loading Toast */
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -395,44 +406,38 @@
             from { opacity: 0; bottom: 0; }
             to { opacity: 1; bottom: 30px; }
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
 <div class="scanlines"></div>
-<div id="offline-banner">⚠️ OFFLINE MODE — VAULT OPERATIONAL • DOCUMENTS CACHED ⚡</div>
+<div id="offline-banner">⚠️ OFFLINE — VAULT OPERATIONAL • DOCUMENTS CACHED ⚡</div>
 
 <header class="vault-header">
     <div class="logo-area" onclick="window.location.href='index.html'">
         <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
         <div class="title">
             <h1>EDEN STEALTH CV-1</h1>
-            <span>CLASSIFIED DOCUMENT VAULT</span>
+            <span>DOCUMENT VAULT</span>
         </div>
-    </div>
-    <div class="security-badge">
-        <i class="fas fa-lock"></i> AES-256 ENCRYPTED • TIER 1 CLEARANCE
     </div>
 </header>
 
 <main class="vault-container">
     <div class="vault-intro">
         <h2><i class="fas fa-database"></i> THE BLACK VAULT</h2>
-        <p>Authorized Personnel Only — Official Directives, Operational Charters, and Classified Annexes</p>
-        <div class="access-level"><i class="fas fa-fingerprint"></i> LEVEL: OMEGA CLEARANCE REQUIRED</div>
+        <p>Official company certificates</p>
     </div>
 
     <div class="document-grid" id="documentGrid">
-        <!-- Documents will be injected dynamically via JS with embedded PDF data (base64 samples for offline robustness) -->
+
     </div>
 
-    <div class="vault-footer">
-        <i class="fas fa-eye"></i> All documents are digitally signed • Unauthorized distribution prohibited<br>
-        <span style="font-size:0.7rem;">[ VAULT STATUS: SECURE | LOGGED SESSION ]</span>
-    </div>
 </main>
 
-<!-- PDF Modal Viewer -->
 <div id="pdfModal" class="modal-overlay">
     <div class="modal-container">
         <div class="modal-header">
@@ -446,17 +451,9 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
-    // ============================================
-    // EDEN VAULT - PDF DOCUMENTS WITH EMBEDDED DATA (OFFLINE READY)
-    // ============================================
-    
-    // Sample PDF documents as Base64 (small but functional PDFs - realistic representation)
-    // Each PDF is a minimal valid PDF with document title and text content.
-    // For production, these would be real files, but for offline demo we embed minimal valid PDFs.
     
     function generateSimplePDF(title, contentBody, docNumber) {
-        // Create a minimal PDF using raw PDF syntax (works in all browsers)
-        // This generates a valid PDF with the given title and content.
+
         const pdfContent = `%PDF-1.4
 1 0 obj
 << /Type /Catalog /Pages 2 0 R >>
@@ -507,7 +504,6 @@ startxref
         return btoa(pdfContent);
     }
     
-    // Document Repository - each entry has title, description, classification, and embedded PDF data
     const documents = [
         {
             id: "DOC-001",
@@ -575,7 +571,6 @@ startxref
         }
     ];
     
-    // Function to show toast notifications
     function showToast(message, isError = false) {
         const toast = document.getElementById('toastMsg');
         toast.textContent = message;
@@ -586,7 +581,6 @@ startxref
         }, 2500);
     }
     
-    // Download PDF
     function downloadPDF(doc) {
         try {
             const byteCharacters = atob(doc.pdfData);
@@ -611,7 +605,6 @@ startxref
         }
     }
     
-    // View PDF in Modal
     function viewPDF(doc) {
         try {
             const byteCharacters = atob(doc.pdfData);
@@ -629,7 +622,6 @@ startxref
             frame.src = url;
             modal.style.display = 'flex';
             
-            // Clean up object URL when modal closes (handled in close function)
             window.currentPDFUrl = url;
         } catch (e) {
             console.error("PDF view error", e);
@@ -647,8 +639,7 @@ startxref
         frame.src = '';
         modal.style.display = 'none';
     }
-    
-    // Render Document Grid
+
     function renderVault() {
         const grid = document.getElementById('documentGrid');
         if (!grid) return;
@@ -676,7 +667,6 @@ startxref
             grid.appendChild(card);
         });
         
-        // Attach event listeners
         document.querySelectorAll('.btn-view').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = btn.getAttribute('data-id');
@@ -716,7 +706,6 @@ startxref
         showToast("⚠️ OFFLINE — Vault remains fully operational", false);
     });
     
-    // Add keyboard ESC to close modal
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const modal = document.getElementById('pdfModal');
@@ -724,10 +713,8 @@ startxref
         }
     });
     
-    // Prevent context menu / source tricks
     document.addEventListener('contextmenu', (e) => e.preventDefault());
-    
-    // Block devtools shortcuts (basic)
+
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'I' || e.key === 'J' || e.key === 'C')) {
             e.preventDefault();
@@ -739,26 +726,77 @@ startxref
         }
     });
     
-    // Initialize Vault
     renderVault();
     updateOfflineStatus();
-    
-    // Optional: Cache documents to IndexedDB for extreme offline resilience (basic)
+
     if ('caches' in window) {
         caches.open('eden-vault-v1').then(cache => {
-            // Pre-cache document blobs for extreme offline (optional)
+
             console.log("VAULT: Offline cache ready");
         });
     }
     
-    // Add a small watermark effect for classified feel
     console.log("%c⚠️ CLASSIFIED DOCUMENT VAULT — AUTHORIZED ACCESS ONLY ⚠️", "color: #00ffff; font-size: 16px; font-family: monospace;");
     
-    // Show ready toast
     setTimeout(() => {
         showToast("🔓 VAULT ACCESS GRANTED — TIER 1 OPERATOR", false);
     }, 500);
 </script>
 
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
