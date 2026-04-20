@@ -392,31 +392,30 @@
             color: var(--cyan);
             
         }
-        
+
         .nav-status {
             
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 5px;
-            
-        }
-    
-        .status-dot {
-            
-            background: #00ff00 !important;
-            box-shadow: 0 0 8px #00ff00 !important;
-            animation: statusPulse 1.5s infinite;
-            color: green;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
             
         }
         
-        @keyframes statusPulse {
+        .status-dot {
             
-            0% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0.6; transform: scale(1); }
+            display: inline-block !important;
+            width: 12px !important;
+            height: 12px !important;
+            background: #00ff00 !important;
+            border-radius: 50% !important;
+            box-shadow: 0 0 10px #00ff00 !important;
+            animation: dotPulse 1s infinite !important;
             
+        }
+        
+        @keyframes dotPulse {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
         
         body.red-mode .status-dot,
@@ -1005,11 +1004,13 @@
         }
 
         .splash-bar {
+            
             height: 100%;
             background: var(--cyan);
             width: 0%;
             animation: tacticalLoading 4.5s linear forwards;
             position: relative;
+            
         }
 
         @keyframes tacticalLoading {
