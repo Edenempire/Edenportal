@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-  
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  
   <meta name="description" content="Compliance CV-5">
-  
   <meta name="color-scheme" content="dark">
-  
-  <title>COMPLIANCE CV-5</title>
-  
+  <title>COMPLIANCE CV-5 • DYNAMIC OBJECTIVES</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
   <script type="importmap">
     {
       "imports": {
@@ -26,9 +16,7 @@
       }
     }
   </script>
-  
   <style>
-    
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
     :root { --bg: #000000; --card-bg: #0a0000cc; --red: #ff1a1a; --red-glow: #ff3333; --text: #ff1a1a; --border: #ff1a1a; }
     body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; overflow-x: hidden; }
@@ -76,13 +64,19 @@
     .commander-badge { background: #330000; border: 1px solid #ff4444; font-size: 0.65rem; padding: 0.2rem 0.5rem; }
     #replyIndicatorBox { background: #2a0000; padding: 0.5rem; margin: 6px 0; border-left: 3px solid red; font-size: 0.7rem; display: none; }
     .protocol-status { font-family: monospace; letter-spacing: 1px; }
-    
+    /* tasklist styles */
+    .task-item { background: #0a0000aa; border-left: 3px solid var(--red); padding: 0.6rem; margin-bottom: 0.6rem; transition: 0.1s; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
+    .task-check { width: 22px; height: 22px; accent-color: red; cursor: pointer; }
+    .task-title { flex: 2; font-weight: 600; word-break: break-word; }
+    .task-deadline { font-size: 0.7rem; background: #1f0000; padding: 0.2rem 0.5rem; border-radius: 2px; font-family: monospace; }
+    .task-actions { display: flex; gap: 6px; }
+    .task-actions button { background: transparent; border: 1px solid red; padding: 4px 8px; font-size: 0.65rem; cursor: pointer; }
+    .add-task-panel { margin-top: 1rem; background: #0a000055; padding: 1rem; border: 1px dashed red; }
+    .progress-bar { background: #2a0000; border-radius: 8px; height: 10px; width: 100%; overflow: hidden; margin-bottom: 12px; }
+    .progress-fill { background: #ff1a1a; width: 0%; height: 100%; transition: width 0.2s; }
   </style>
-  
 </head>
-  
 <body>
-  
 <div class="ambient-glow"></div>
 <div class="scan-lines"></div>
 <div class="quick-nav">
@@ -115,9 +109,7 @@
     <div class="grid-2">
       <div class="card">
         <h3><i class="fas fa-bullhorn"></i> DAILY MISSION DIRECTIVE</h3>
-        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">
-           AWAITING COMMANDER TRANSMISSION...
-        </div>
+        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER TRANSMISSION...</div>
         <div class="btn-group">
           <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
           <button class="btn" id="broadcastDirectiveBtn"><i class="fas fa-broadcast-tower"></i> SHARE</button>
@@ -162,8 +154,27 @@
     </div>
   </section>
 
-  <section class="section-card"><div class="section-header"><h2 class="section-title">Section 03. COMING SOON!</h2></div></section>
-  
+  <!-- SECTION 03: FULLY DYNAMIC OBJECTIVES TASKLIST with FIRESTORE -->
+  <section class="section-card" id="dynamicObjectivesSection">
+    <div class="section-header">
+      <h2 class="section-title">SECTION 03. OPERATIONAL OBJECTIVES <i class="fas fa-tasks"></i></h2>
+      <span class="badge" id="taskCounter">0 / 0 COMPLETED</span>
+      <button class="btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> SYNC</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="taskProgressFill"></div></div>
+    <div id="tasksContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;">
+      <div style="text-align:center; padding:1rem;">LOADING OBJECTIVES...</div>
+    </div>
+    <div class="add-task-panel" id="addTaskPanel" style="display: none;">
+      <h4><i class="fas fa-plus-circle"></i> COMMANDER: NEW OBJECTIVE</h4>
+      <input type="text" id="newTaskTitle" placeholder="Objective title (e.g., 'Secure comms relay')">
+      <input type="text" id="newTaskDeadline" placeholder="Deadline / ETA (optional)">
+      <div class="btn-group"><button class="btn btn-primary" id="createTaskBtn">DEPLOY TASK</button><button class="btn" id="cancelAddTaskBtn">CANCEL</button></div>
+    </div>
+    <div class="btn-group"><button class="btn" id="unlockTasksBtn"><i class="fas fa-lock-open"></i> UNLOCK TASK EDIT</button><button class="btn" id="lockTasksPanelBtn"><i class="fas fa-lock"></i> LOCK EDIT</button></div>
+    <div class="protocol-status" style="margin-top:8px;">⚡ LIVE SYNC: objectives stored in Firestore</div>
+  </section>
+
   <section class="section-card"><div class="section-header"><h2 class="section-title">Section 04. COMING SOON!</h2></div></section>
 
   <section class="section-card">
@@ -185,7 +196,7 @@
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment } from "@firebase/firestore";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment, where } from "@firebase/firestore";
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
@@ -205,6 +216,8 @@
   let sessionMessages = [];
   let permanentMemory = [];
   let memoryDocId = null;
+  let tasksUnsubscribe = null;
+  let tasksEditUnlocked = false;
 
   const showLoader = (show, text = "PROCESSING...") => {
     const loader = document.getElementById('loaderOverlay');
@@ -236,197 +249,102 @@
   });
   const escapeHtml = (s) => s ? s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  // ---- Mission CRUD (Firestore doc 'cio/directive') ----
-  async function loadMissionDirective() {
+  // ---- existing Mission CRUD ----
+  async function loadMissionDirective() { if (!db) return; const ref = doc(db, 'cio', 'directive'); const snap = await getDoc(ref); if (snap.exists() && snap.data().text) document.getElementById('directiveText').innerText = snap.data().text; else { const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE."; document.getElementById('directiveText').innerText = defaultMsg; await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() }); } }
+  async function updateMissionDirective(newText) { if (!db) return; const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: newText, timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = newText; toast("MISSION DIRECTIVE UPDATED", "success"); }
+  async function deleteMissionDirective() { if (!db) return; if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current directive?")) { const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER."; toast("Mission directive wiped", "success"); } }
+  
+  // ---------- SECTION 03: FIRESTORE OBJECTIVES (TASKLIST) ----------
+  async function initTasksListener() {
     if (!db) return;
-    const ref = doc(db, 'cio', 'directive');
-    const snap = await getDoc(ref);
-    if (snap.exists() && snap.data().text) {
-      document.getElementById('directiveText').innerText = snap.data().text;
-    } else {
-      const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE.";
-      document.getElementById('directiveText').innerText = defaultMsg;
-      await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() });
-    }
-  }
-  async function updateMissionDirective(newText) {
-    if (!db) return;
-    const ref = doc(db, 'cio', 'directive');
-    await setDoc(ref, { text: newText, timestamp: serverTimestamp() });
-    document.getElementById('directiveText').innerText = newText;
-    toast("MISSION DIRECTIVE UPDATED (CRUD)", "success");
-  }
-  async function deleteMissionDirective() {
-    if (!db) return;
-    const confirmDel = await showConfirmModal("⚠️ DELETE MISSION", "Commander: This will erase current directive. Confirm?");
-    if (!confirmDel) return;
-    const ref = doc(db, 'cio', 'directive');
-    await setDoc(ref, { text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: serverTimestamp() });
-    document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER.";
-    toast("Mission directive wiped", "success");
-  }
-
-  function setupMessagesListener() {
-    if (!db) return;
-    messagesUnsub = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(120)), (snap) => {
-      const board = document.getElementById('messageBoard');
-      if (!board) return;
-      if (snap.empty) { board.innerHTML = '<div class="coming-soon">No messages yet.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; }
-      board.innerHTML = '';
-      snap.forEach(docSnap => {
-        const m = docSnap.data();
-        const mid = docSnap.id;
-        board.innerHTML += `<div class="message-item">
-          <div><strong>${escapeHtml(m.callsign)}</strong> <small>${m.timestamp?.toDate().toLocaleString() || 'now'}</small></div>
-          <div>${escapeHtml(m.text || '')}</div>
-          <div class="reaction-bar">
-            <button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button>
-            <button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}" data-text="${escapeHtml(m.text || '').replace(/'/g, "\\'")}">💬 REPLY</button>
-            <button class="reaction-btn" data-delete="${mid}">🗑️ DELETE</button>
-          </div>
-        </div>`;
-      });
-      document.getElementById('msgCountBadge').innerHTML = snap.size;
-      document.querySelectorAll('[data-like]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); }; });
-      document.querySelectorAll('[data-reply]').forEach(btn => { btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); }; });
-      document.querySelectorAll('[data-delete]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); }; });
+    if (tasksUnsubscribe) tasksUnsubscribe();
+    const tasksQuery = query(collection(db, 'objectives'), orderBy('createdAt', 'asc'));
+    tasksUnsubscribe = onSnapshot(tasksQuery, (snapshot) => {
+      const container = document.getElementById('tasksContainer');
+      if (!container) return;
+      if (snapshot.empty) { container.innerHTML = '<div style="text-align:center;padding:1rem;">⛔ No active objectives. Commander may deploy tasks.</div>'; updateTaskProgress([]); return; }
+      let tasksList = [];
+      snapshot.forEach(docSnap => { tasksList.push({ id: docSnap.id, ...docSnap.data() }); });
+      renderTasks(tasksList);
+      updateTaskProgress(tasksList);
     });
   }
-  async function toggleLike(msgId) {
-    const ref = doc(db, 'messages', msgId);
-    const snap = await getDoc(ref);
-    if (snap.exists()) {
-      const likedBy = snap.data().likedBy || [];
-      const caller = document.getElementById('callsignField')?.value || 'OPERATOR';
-      if (likedBy.includes(caller)) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) });
-      else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) });
+  function renderTasks(tasks) {
+    const container = document.getElementById('tasksContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    tasks.forEach(task => {
+      const div = document.createElement('div');
+      div.className = 'task-item';
+      const isCompleted = task.completed || false;
+      div.innerHTML = `
+        <input type="checkbox" class="task-check" data-id="${task.id}" ${isCompleted ? 'checked' : ''} ${!tasksEditUnlocked ? 'disabled' : ''}>
+        <span class="task-title" style="${isCompleted ? 'text-decoration:line-through; opacity:0.7;' : ''}">${escapeHtml(task.title)}</span>
+        ${task.deadline ? `<span class="task-deadline"><i class="far fa-calendar-alt"></i> ${escapeHtml(task.deadline)}</span>` : ''}
+        <div class="task-actions">
+          ${tasksEditUnlocked ? `<button class="btn delete-task" data-id="${task.id}"><i class="fas fa-trash"></i></button>` : ''}
+          ${tasksEditUnlocked && !isCompleted ? `<button class="btn edit-task" data-id="${task.id}" data-title="${escapeHtml(task.title)}" data-deadline="${escapeHtml(task.deadline || '')}"><i class="fas fa-edit"></i></button>` : ''}
+        </div>
+      `;
+      container.appendChild(div);
+    });
+    if (tasksEditUnlocked) {
+      document.querySelectorAll('.task-check').forEach(cb => cb.addEventListener('change', async (e) => { const id = cb.getAttribute('data-id'); const completed = cb.checked; await updateDoc(doc(db, 'objectives', id), { completed, updatedAt: serverTimestamp() }); toast(`Task ${completed ? 'completed' : 'reopened'}`, 'success'); }));
+      document.querySelectorAll('.delete-task').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(await showConfirmModal("DELETE OBJECTIVE", "Remove this task permanently?")) { await deleteDoc(doc(db, 'objectives', id)); toast("Task deleted", "success"); } }));
+      document.querySelectorAll('.edit-task').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); const oldTitle = btn.getAttribute('data-title'); const newTitle = prompt("Edit objective title:", oldTitle); if(newTitle && newTitle.trim()) { await updateDoc(doc(db, 'objectives', id), { title: newTitle.trim(), updatedAt: serverTimestamp() }); toast("Objective updated", "success"); } else if(newTitle === "") toast("Title cannot be empty", "error"); }));
     }
   }
-  function startReply(call, id, txt) {
-    replyingTo = { id, callsign: call, text: txt };
-    const box = document.getElementById('replyIndicatorBox');
-    if (box) {
-      box.style.display = 'block';
-      box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`;
-    }
+  function updateTaskProgress(tasks) {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.completed === true).length;
+    const percent = total === 0 ? 0 : (completed / total) * 100;
+    document.getElementById('taskProgressFill').style.width = `${percent}%`;
+    document.getElementById('taskCounter').innerHTML = `${completed} / ${total} COMPLETED`;
   }
-  async function sendMessage() {
-    let text = document.getElementById('messageText').value.trim();
-    if (!text) return;
-    let finalText = text;
-    if (replyingTo) {
-      finalText = `@${replyingTo.callsign} ${text}`;
-      replyingTo = null;
-      const box = document.getElementById('replyIndicatorBox');
-      if(box) box.style.display = 'none';
-    }
-    const callsign = document.getElementById('callsignField').value.trim() || 'UNKNOWN';
-    const dept = document.getElementById('deptField').value;
-    await addDoc(collection(db, 'messages'), { callsign, department: dept, text: finalText, timestamp: serverTimestamp(), likes: 0, likedBy: [] });
-    document.getElementById('messageText').value = '';
-    toast('Message transmitted', 'success');
-  }
-  async function broadcastDirective() {
-    const txt = document.getElementById('directiveText').innerText;
-    await addDoc(collection(db, 'messages'), { callsign: "CINC", department: "COMPLIANCE CV-5", text: `📢 DIRECTIVE BROADCAST: ${txt.substring(0,300)}`, timestamp: serverTimestamp(), likes: 0, likedBy: [] });
-    toast('Directive broadcasted to team board', 'success');
+  async function createNewTask(title, deadline) {
+    if (!db || !title.trim()) return toast("Task title required", "error");
+    await addDoc(collection(db, 'objectives'), { title: title.trim(), deadline: deadline.trim() || null, completed: false, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+    toast(`Objective "${title}" deployed`, "success");
   }
 
-  async function loadPermanentMemory() {
-    if (!db) return [];
-    const userId = "cv5_commander";
-    memoryDocId = `sarah_mem_${userId}`;
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
-    const snap = await getDoc(ref);
-    if (snap.exists()) { permanentMemory = snap.data().conversations || []; if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80); }
-    else { permanentMemory = []; await setDoc(ref, { conversations: [], updated: serverTimestamp() }); }
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`;
-    return permanentMemory;
-  }
-  async function saveToPermanentMemory(role, content) {
-    if (!db || !memoryDocId) return;
-    permanentMemory.push({ role, content, ts: Date.now() });
-    if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100);
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
-    await setDoc(ref, { conversations: permanentMemory, updated: serverTimestamp() }, { merge: true });
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`;
-  }
-  async function callGroq(userMsg, contextMemory) {
-    const systemBase = `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`;
-    const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n');
-    const messages = [{ role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') }, ...sessionMessages.slice(-6), { role: 'user', content: userMsg }];
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` }, body: JSON.stringify({ model: GROQ_MODEL, messages, temperature: 0.65, max_tokens: 320 }) });
-    if (!res.ok) throw new Error(`API ${res.status}`);
-    const data = await res.json();
-    return data.choices[0].message.content;
-  }
-  async function askSarah(promptText) {
-    if (!promptText.trim()) return;
-    showLoader(true, "SARAH ACCESSING PERMANENT MEMORY...");
-    try {
-      addAIBubble('user', promptText);
-      sessionMessages.push({ role: 'user', content: promptText });
-      await saveToPermanentMemory('user', promptText);
-      const reply = await callGroq(promptText, permanentMemory);
-      addAIBubble('ai', reply);
-      sessionMessages.push({ role: 'assistant', content: reply });
-      await saveToPermanentMemory('assistant', reply);
-      if (sessionMessages.length > 24) sessionMessages = sessionMessages.slice(-20);
-      document.getElementById('aiPrompt').value = '';
-    } catch (err) { addAIBubble('ai', `⚠️ Neural glitch: ${err.message}.`); toast(`Sarah error`, 'error'); } finally { showLoader(false); }
-  }
-  function addAIBubble(role, text) {
-    const container = document.getElementById('aiConversation');
-    if (!container) return;
-    const bubble = document.createElement('div');
-    bubble.className = 'ai-chat-bubble';
-    bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-  }
-  async function wipePermanent() {
-    if (!await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'Erase ALL Sarah long-term memory? She will forget everything.')) return;
-    permanentMemory = [];
-    const ref = doc(db, 'sarahPermanentMemory', memoryDocId);
-    await setDoc(ref, { conversations: [], updated: serverTimestamp() });
-    document.getElementById('aiConversation').innerHTML = '';
-    addAIBubble('ai', '⚠️ Permanent memory wiped. Reset complete.');
-    document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset`;
-    toast('Permanent memory erased', 'success');
-  }
+  // Messages + Sarah etc
+  function setupMessagesListener() { if (!db) return; messagesUnsub = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(120)), (snap) => { const board = document.getElementById('messageBoard'); if (!board) return; if (snap.empty) { board.innerHTML = '<div class="coming-soon">No messages yet.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; } board.innerHTML = ''; snap.forEach(docSnap => { const m = docSnap.data(); const mid = docSnap.id; board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${m.timestamp?.toDate().toLocaleString() || 'now'}</small></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}" data-text="${escapeHtml(m.text || '').replace(/'/g, "\\'")}">💬 REPLY</button><button class="reaction-btn" data-delete="${mid}">🗑️ DELETE</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = snap.size; document.querySelectorAll('[data-like]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); }; }); document.querySelectorAll('[data-reply]').forEach(btn => { btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); }; }); document.querySelectorAll('[data-delete]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); }; }); }); }
+  async function toggleLike(msgId) { const ref = doc(db, 'messages', msgId); const snap = await getDoc(ref); if (snap.exists()) { const likedBy = snap.data().likedBy || []; const caller = document.getElementById('callsignField')?.value || 'OPERATOR'; if (likedBy.includes(caller)) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) }); } }
+  function startReply(call, id, txt) { replyingTo = { id, callsign: call, text: txt }; const box = document.getElementById('replyIndicatorBox'); if (box) { box.style.display = 'block'; box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`; } }
+  async function sendMessage() { let text = document.getElementById('messageText').value.trim(); if (!text) return; let finalText = text; if (replyingTo) { finalText = `@${replyingTo.callsign} ${text}`; replyingTo = null; const box = document.getElementById('replyIndicatorBox'); if(box) box.style.display = 'none'; } const callsign = document.getElementById('callsignField').value.trim() || 'UNKNOWN'; const dept = document.getElementById('deptField').value; await addDoc(collection(db, 'messages'), { callsign, department: dept, text: finalText, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); document.getElementById('messageText').value = ''; toast('Message transmitted', 'success'); }
+  async function broadcastDirective() { const txt = document.getElementById('directiveText').innerText; await addDoc(collection(db, 'messages'), { callsign: "CINC", department: "COMPLIANCE CV-5", text: `📢 DIRECTIVE BROADCAST: ${txt.substring(0,300)}`, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); toast('Directive broadcasted', 'success'); }
+  
+  async function loadPermanentMemory() { if (!db) return []; const userId = "cv5_commander"; memoryDocId = `sarah_mem_${userId}`; const ref = doc(db, 'sarahPermanentMemory', memoryDocId); const snap = await getDoc(ref); if (snap.exists()) { permanentMemory = snap.data().conversations || []; if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80); } else { permanentMemory = []; await setDoc(ref, { conversations: [], updated: serverTimestamp() }); } document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`; return permanentMemory; }
+  async function saveToPermanentMemory(role, content) { if (!db || !memoryDocId) return; permanentMemory.push({ role, content, ts: Date.now() }); if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100); const ref = doc(db, 'sarahPermanentMemory', memoryDocId); await setDoc(ref, { conversations: permanentMemory, updated: serverTimestamp() }, { merge: true }); document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`; }
+  async function callGroq(userMsg, contextMemory) { const systemBase = `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`; const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n'); const messages = [{ role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') }, ...sessionMessages.slice(-6), { role: 'user', content: userMsg }]; const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` }, body: JSON.stringify({ model: GROQ_MODEL, messages, temperature: 0.65, max_tokens: 320 }) }); if (!res.ok) throw new Error(`API ${res.status}`); const data = await res.json(); return data.choices[0].message.content; }
+  async function askSarah(promptText) { if (!promptText.trim()) return; showLoader(true, "SARAH ACCESSING PERMANENT MEMORY..."); try { addAIBubble('user', promptText); sessionMessages.push({ role: 'user', content: promptText }); await saveToPermanentMemory('user', promptText); const reply = await callGroq(promptText, permanentMemory); addAIBubble('ai', reply); sessionMessages.push({ role: 'assistant', content: reply }); await saveToPermanentMemory('assistant', reply); if (sessionMessages.length > 24) sessionMessages = sessionMessages.slice(-20); document.getElementById('aiPrompt').value = ''; } catch (err) { addAIBubble('ai', `⚠️ Neural glitch: ${err.message}.`); toast(`Sarah error`, 'error'); } finally { showLoader(false); } }
+  function addAIBubble(role, text) { const container = document.getElementById('aiConversation'); if (!container) return; const bubble = document.createElement('div'); bubble.className = 'ai-chat-bubble'; bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`; container.appendChild(bubble); container.scrollTop = container.scrollHeight; }
+  async function wipePermanent() { if (!await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'Erase ALL Sarah long-term memory?')) return; permanentMemory = []; const ref = doc(db, 'sarahPermanentMemory', memoryDocId); await setDoc(ref, { conversations: [], updated: serverTimestamp() }); document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai', '⚠️ Permanent memory wiped.'); document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset`; toast('Permanent memory erased', 'success'); }
   async function summarizeSession() { if(permanentMemory.length===0) return toast('No memory', 'info'); showLoader(true,"SUMMARIZING..."); try { const recent = permanentMemory.slice(-12).map(m=>m.content).join(' '); const summaryPrompt = `Summarize key mission facts (max 2 sentences): ${recent}`; const res = await callGroq(summaryPrompt, permanentMemory.slice(-8)); toast(`📜 MEMORY SUMMARY: ${res}`, 'success'); } catch(e){ toast('Summarize failed','error'); } finally { showLoader(false); } }
   function clearSessionOnly() { sessionMessages = []; document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai','Session display cleared. Permanent memory intact.'); toast('Local chat cleared','info'); }
 
+  // EVENT LISTENERS
   document.getElementById('unlockBtn').addEventListener('click', async () => {
     if (document.getElementById('pinInput').value === '11111111') {
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
-      toast('ACCESS GRANTED • CV-5 ONLINE • COMMANDER PIN ACCEPTED', 'success');
+      toast('ACCESS GRANTED • CV-5 ONLINE', 'success');
       const app = initializeApp(FIREBASE_CONFIG);
       db = getFirestore(app);
       await loadMissionDirective();
       await loadPermanentMemory();
       setupMessagesListener();
-      addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Awaiting orders.`);
+      initTasksListener();  // DYNAMIC OBJECTIVES
+      addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online.`);
       const msgsSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
       if (msgsSnap.empty) await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
     } else { toast('INVALID ACCESS CODE', 'error'); }
   });
 
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => {
-    const pin = prompt('COMMANDER OVERRIDE PIN (8 digits for PROTOCOL ALPHA-5)');
-    if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked • full CRUD ability', 'success'); }
-    else toast('Access denied', 'error');
-  });
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const pin = prompt('COMMANDER OVERRIDE PIN'); if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked', 'success'); } else toast('Access denied', 'error'); });
   document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Commander panel locked', 'info'); });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
-    if (!commanderUnlocked) { toast('Locked: Commander authentication required', 'error'); return; }
-    const newDir = document.getElementById('newDirective').value.trim();
-    if (newDir) { await updateMissionDirective(newDir); document.getElementById('newDirective').value = ''; }
-    else toast('Directive empty', 'error');
-  });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if (!commanderUnlocked) { toast('Locked: Commander authentication required', 'error'); return; } const newDir = document.getElementById('newDirective').value.trim(); if (newDir) { await updateMissionDirective(newDir); document.getElementById('newDirective').value = ''; } else toast('Directive empty', 'error'); });
   document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked) await deleteMissionDirective(); else toast('Unauthorized','error'); });
-  
   document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Directive copied', 'success'); });
   document.getElementById('broadcastDirectiveBtn').addEventListener('click', broadcastDirective);
   document.getElementById('sendMsgBtn').addEventListener('click', sendMessage);
@@ -438,41 +356,15 @@
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
 
+  // SECTION 03 task UI controls
+  document.getElementById('unlockTasksBtn').addEventListener('click', () => { tasksEditUnlocked = true; document.getElementById('addTaskPanel').style.display = 'block'; renderTasks([]); initTasksListener(); toast("TASK EDIT UNLOCKED: Commander can add/delete/edit", "success"); });
+  document.getElementById('lockTasksPanelBtn').addEventListener('click', () => { tasksEditUnlocked = false; document.getElementById('addTaskPanel').style.display = 'none'; initTasksListener(); toast("Task panel locked (view only)", "info"); });
+  document.getElementById('createTaskBtn').addEventListener('click', () => { const title = document.getElementById('newTaskTitle').value; const deadline = document.getElementById('newTaskDeadline').value; createNewTask(title, deadline); document.getElementById('newTaskTitle').value = ''; document.getElementById('newTaskDeadline').value = ''; });
+  document.getElementById('cancelAddTaskBtn').addEventListener('click', () => { document.getElementById('newTaskTitle').value = ''; document.getElementById('newTaskDeadline').value = ''; });
+  document.getElementById('refreshTasksBtn').addEventListener('click', () => { toast("Refreshing objectives...", "info"); initTasksListener(); });
+
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
-  
 </script>
-  
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 </html>
