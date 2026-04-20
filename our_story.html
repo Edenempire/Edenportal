@@ -39,14 +39,17 @@
     }
 
     html, body {
+      
       background: #03090c;
       color: #cceeff;
       font-family: var(--font-body);
       scroll-behavior: smooth;
       overflow-x: hidden;
+      
     }
 
     body::before {
+      
       content: "";
       position: fixed;
       inset: 0;
@@ -56,26 +59,32 @@
       background-size: 40px 40px;
       z-index: 0;
       pointer-events: none;
+      
     }
 
     .main {
+      
       position: relative;
       z-index: 3;
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
+      
     }
 
     .header {
+      
       text-align: center;
       margin-bottom: 4rem;
       padding: 2rem 1rem;
       background: rgba(0, 15, 20, 0.8);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
+      
     }
 
     .header h1 a {
+      
       font-family: var(--font-tactical);
       font-size: 3.8rem;
       font-weight: 900;
@@ -83,9 +92,11 @@
       text-transform: uppercase;
       text-decoration: none;
       color: var(--cyan);
+      
     }
 
     .header span {
+      
       display: block;
       font-family: var(--font-mono);
       font-size: 1.1rem;
@@ -96,37 +107,46 @@
       margin: 1rem auto 0;
       width: fit-content;
       letter-spacing: 2px;
+      
     }
 
     .story {
+      
       display: flex;
       flex-direction: column;
       gap: 4rem;
       counter-reset: chapter;
+      
     }
 
     .chapter {
+      
       counter-increment: chapter;
       padding: 3rem 2.5rem;
       background: var(--panel);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
       position: relative;
+      
     }
 
     .chapter .corner {
+      
       position: absolute;
       width: 30px;
       height: 30px;
       border: 1px solid var(--cyan);
       opacity: 0.5;
+      
     }
+    
     .corner-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
     .corner-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
     .corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
     .corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
     .chapter::before {
+      
       content: "⚔️ chapter " counter(chapter) " ⚔️";
       position: absolute;
       top: -14px;
@@ -142,6 +162,7 @@
       text-transform: uppercase;
       z-index: 10;
       white-space: nowrap;
+      
     }
 
     .chapter h2 {
