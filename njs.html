@@ -10,8 +10,6 @@
     
     <title>Node.js Interactive Learning Hub | Code & Concepts</title>
     
-    <!-- Google Fonts & Simple Icons (Font Awesome CDN for clean icons) -->
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,35 +17,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="logo_tr.png">
     
     <style>
+        
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         body {
+            
             font-family: 'Inter', sans-serif;
             background: linear-gradient(145deg, #0b1219 0%, #0f1724 100%);
             color: #eef2ff;
             line-height: 1.5;
             padding: 2rem 1.5rem;
             min-height: 100vh;
+            
         }
 
-        /* main container */
         .app-container {
+            
             max-width: 1440px;
             margin: 0 auto;
+            
         }
 
-        /* header styling */
         .hero {
+            
             text-align: center;
             margin-bottom: 2.5rem;
+            
         }
+        
         .hero h1 {
+            
             font-size: 3rem;
             font-weight: 700;
             background: linear-gradient(135deg, #8bcb6e, #3b9e5c);
@@ -58,19 +67,28 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
+            
         }
+        
         .hero h1 i {
+            
             background: none;
             color: #68c87c;
             font-size: 2.5rem;
+            
         }
+        
         .hero p {
+            
             font-size: 1.2rem;
             color: #9aaebf;
             max-width: 720px;
             margin: 0.75rem auto 0;
+            
         }
+        
         .badge {
+            
             display: inline-block;
             background: #1e2a3a;
             padding: 0.2rem 0.8rem;
@@ -79,18 +97,20 @@
             font-weight: 500;
             color: #b9e6b3;
             margin-top: 0.75rem;
+            
         }
 
-        /* grid layout: 2 columns (left: interactive editor, right: docs & examples) */
         .dashboard {
+            
             display: grid;
             grid-template-columns: 1fr 1.1fr;
             gap: 1.8rem;
             margin-top: 0.5rem;
+            
         }
 
-        /* card style */
         .card {
+            
             background: rgba(18, 25, 40, 0.7);
             backdrop-filter: blur(2px);
             border-radius: 2rem;
@@ -98,8 +118,11 @@
             overflow: hidden;
             transition: all 0.2s ease;
             box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+            
         }
+        
         .card-header {
+            
             padding: 1.2rem 1.5rem;
             background: rgba(10, 20, 30, 0.6);
             border-bottom: 1px solid #2a3a48;
@@ -108,24 +131,34 @@
             gap: 10px;
             font-weight: 600;
             font-size: 1.25rem;
+            
         }
+        
         .card-header i {
+            
             color: #5fcb7a;
             font-size: 1.4rem;
+            
         }
+        
         .card-body {
+            
             padding: 1.5rem;
+            
         }
 
-        /* code editor simulation */
         .code-editor {
+            
             background: #0a0f1a;
             border-radius: 1.2rem;
             border: 1px solid #2c3f33;
             overflow: hidden;
             font-family: 'Menlo', 'Fira Code', monospace;
+            
         }
+        
         .editor-header {
+            
             background: #111822;
             padding: 0.6rem 1rem;
             display: flex;
@@ -133,10 +166,15 @@
             border-bottom: 1px solid #2c3f33;
             font-size: 0.8rem;
             color: #86a9c2;
+            
         }
+        
         .editor-header span i {
+            
             margin-right: 6px;
+            
         }
+        
         textarea {
             width: 100%;
             background: #0a0f1a;
@@ -309,11 +347,11 @@
             NODE.JS
         </h1>
         <p>Asynchronous · Event-Driven · Server-Side JavaScript</p>
-        <div class="badge"><i class="fas fa-code"></i> Live REPL Simulator &nbsp;|&nbsp; Core Concepts</div>
+        <div class="badge"><i class="fas fa-code"></i> Live &nbsp;|&nbsp; Core Concepts</div>
     </div>
 
     <div class="dashboard">
-        <!-- LEFT PANEL: Interactive Node.js Playground -->
+
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-terminal"></i>
@@ -357,7 +395,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
                     <span style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> Simulated: fs, path, os, events, process, timers</span>
                 </div>
 
-                <!-- OUTPUT CONSOLE -->
                 <div id="outputContainer" class="output-area">
                     <div class="output-label"><i class="fas fa-desktop"></i> OUTPUT (stdout / stderr)</div>
                     <div id="outputContent" class="output-content">// Click "Run Code" to execute Node.js simulation<br>// Includes core modules, async behavior, and events</div>
@@ -368,7 +405,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             </div>
         </div>
 
-        <!-- RIGHT PANEL: Documentation & Snippets -->
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-book-open"></i>
@@ -417,11 +453,10 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
 <script>
     
     function createNodeSandbox(userCode) {
-        // captured output lines
+
         let outputLog = [];
         let errorLog = [];
         
-        // helper to capture console methods
         const fakeConsole = {
             log: (...args) => {
                 outputLog.push(args.map(arg => {
@@ -449,8 +484,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             }
         };
         
-        // MOCK MODULES
-        // 1. os module mock
         const mockOs = {
             platform: () => 'linux (simulated)',
             arch: () => 'x64',
@@ -462,7 +495,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             type: () => 'Linux'
         };
         
-        // 2. path module mock (basic)
         const mockPath = {
             join: (...segments) => segments.join('/').replace(/\/{2,}/g, '/'),
             basename: (p) => p.split('/').pop(),
@@ -471,7 +503,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             resolve: (...args) => '/simulated/' + args.join('/')
         };
         
-        // 3. fs module mock (sync read/write simulation)
         const mockFs = {
             readFileSync: (filePath, encoding = 'utf8') => {
                 if (filePath.includes('example.txt')) {
@@ -490,7 +521,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             readdirSync: (path) => ['index.js', 'README.md', 'node_modules']
         };
         
-        // 4. events module mock
         class MockEventEmitter {
             constructor() {
                 this.events = {};
@@ -521,7 +551,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             }
         }
         
-        // 5. process mock (partial)
         const mockProcess = {
             version: 'v20.10.0 (simulated)',
             platform: 'linux',
@@ -532,13 +561,11 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             exit: () => { outputLog.push('⚠️ process.exit() called — simulation halts.'); throw new Error('process.exit simulation'); }
         };
         
-        // 6. buffer
         const mockBuffer = {
             from: (str) => ({ toString: () => str, length: str.length }),
             alloc: (size) => ({ length: size, fill: () => {} })
         };
         
-        // require cache and mapping
         const modulesCache = {
             'os': mockOs,
             'path': mockPath,
@@ -555,7 +582,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             throw new Error(`Cannot find module '${moduleName}'. Supported: os, path, fs, events, util, buffer, process`);
         }
         
-        // provide __dirname, __filename, exports, module
         const mockModule = { exports: {} };
         const sandboxGlobals = {
             console: fakeConsole,
@@ -578,7 +604,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
             global: { ...global, process: mockProcess }
         };
         
-        // combine and evaluate
         const fullCode = `"use strict";\n${userCode}`;
         const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
         
@@ -597,7 +622,6 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
                 });
             };
             
-            // wrap in try-catch for synchronous code
             try {
                 const func = new AsyncFunction(...Object.keys(sandboxGlobals), fullCode);
                 const promise = func(...Object.values(sandboxGlobals));
@@ -606,9 +630,9 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
                         asyncError = err.message || String(err);
                         finalize();
                     });
-                    // resolve after promise settles plus timeout for pending timers? we wait a bit for async logs
+
                     Promise.allSettled([promise]).then(() => {
-                        // allow pending setTimeouts to flush (short delay)
+
                         setTimeout(() => finalize(), 80);
                     });
                 } else {
@@ -621,14 +645,12 @@ console.log("✅ Script ready — Node.js core modules demo");</textarea>
         });
     }
     
-    // DOM elements
     const codeTextarea = document.getElementById('codeInput');
     const runBtn = document.getElementById('runBtn');
     const resetBtn = document.getElementById('resetBtn');
     const outputDiv = document.getElementById('outputContent');
     const outputContainer = document.getElementById('outputContainer');
     
-    // helper to display output/error
     function displayOutput(outputText, isError = false) {
         outputDiv.innerText = outputText || '(no output)';
         if (isError) {
@@ -682,7 +704,6 @@ console.log("✅ script ready — Node.js core modules");`;
         displayOutput("// Reset to default Node.js example. Click Run to see simulated output.", false);
     }
     
-    // snippet loader
     const snippets = {
         os: `// OS Module - get system information
 const os = require("os");
@@ -748,7 +769,6 @@ console.log("http module is available in Node.js core.");`
         }
     }
     
-    // attach event listeners
     runBtn.addEventListener('click', runNodeCode);
     resetBtn.addEventListener('click', resetToDefault);
     
@@ -759,7 +779,6 @@ console.log("http module is available in Node.js core.");`
         });
     });
     
-    // initial default display
     resetToDefault();
     
 </script>
@@ -767,6 +786,24 @@ console.log("http module is available in Node.js core.");`
 </body>
     
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
