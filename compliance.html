@@ -1,13 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  
   <meta name="description" content="Compliance CV-5">
+  
   <meta name="color-scheme" content="dark">
-  <title>COMPLIANCE CV-5 • DYNAMIC OBJECTIVES</title>
+  
+  <title>COMPLIANCE CV-5</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <script type="importmap">
     {
       "imports": {
@@ -16,7 +26,9 @@
       }
     }
   </script>
+  
   <style>
+    
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
     :root { --bg: #000000; --card-bg: #0a0000cc; --red: #ff1a1a; --red-glow: #ff3333; --text: #ff1a1a; --border: #ff1a1a; }
     body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; overflow-x: hidden; }
@@ -74,9 +86,13 @@
     .add-task-panel { margin-top: 1rem; background: #0a000055; padding: 1rem; border: 1px dashed red; }
     .progress-bar { background: #2a0000; border-radius: 8px; height: 10px; width: 100%; overflow: hidden; margin-bottom: 12px; }
     .progress-fill { background: #ff1a1a; width: 0%; height: 100%; transition: width 0.2s; }
+    
   </style>
+  
 </head>
+  
 <body>
+  
 <div class="ambient-glow"></div>
 <div class="scan-lines"></div>
 <div class="quick-nav">
@@ -154,7 +170,6 @@
     </div>
   </section>
 
-  <!-- SECTION 03: FULLY DYNAMIC OBJECTIVES TASKLIST with FIRESTORE -->
   <section class="section-card" id="dynamicObjectivesSection">
     <div class="section-header">
       <h2 class="section-title">SECTION 03. OPERATIONAL OBJECTIVES <i class="fas fa-tasks"></i></h2>
@@ -249,12 +264,10 @@
   });
   const escapeHtml = (s) => s ? s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  // ---- existing Mission CRUD ----
   async function loadMissionDirective() { if (!db) return; const ref = doc(db, 'cio', 'directive'); const snap = await getDoc(ref); if (snap.exists() && snap.data().text) document.getElementById('directiveText').innerText = snap.data().text; else { const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE."; document.getElementById('directiveText').innerText = defaultMsg; await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() }); } }
   async function updateMissionDirective(newText) { if (!db) return; const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: newText, timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = newText; toast("MISSION DIRECTIVE UPDATED", "success"); }
   async function deleteMissionDirective() { if (!db) return; if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current directive?")) { const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER."; toast("Mission directive wiped", "success"); } }
   
-  // ---------- SECTION 03: FIRESTORE OBJECTIVES (TASKLIST) ----------
   async function initTasksListener() {
     if (!db) return;
     if (tasksUnsubscribe) tasksUnsubscribe();
@@ -262,7 +275,7 @@
     tasksUnsubscribe = onSnapshot(tasksQuery, (snapshot) => {
       const container = document.getElementById('tasksContainer');
       if (!container) return;
-      if (snapshot.empty) { container.innerHTML = '<div style="text-align:center;padding:1rem;">⛔ No active objectives. Commander may deploy tasks.</div>'; updateTaskProgress([]); return; }
+      if (snapshot.empty) { container.innerHTML = '<div style="text-align:center;padding:1rem;">⛔ No active objectives.</div>'; updateTaskProgress([]); return; }
       let tasksList = [];
       snapshot.forEach(docSnap => { tasksList.push({ id: docSnap.id, ...docSnap.data() }); });
       renderTasks(tasksList);
@@ -307,7 +320,6 @@
     toast(`Objective "${title}" deployed`, "success");
   }
 
-  // Messages + Sarah etc
   function setupMessagesListener() { if (!db) return; messagesUnsub = onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(120)), (snap) => { const board = document.getElementById('messageBoard'); if (!board) return; if (snap.empty) { board.innerHTML = '<div class="coming-soon">No messages yet.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; } board.innerHTML = ''; snap.forEach(docSnap => { const m = docSnap.data(); const mid = docSnap.id; board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${m.timestamp?.toDate().toLocaleString() || 'now'}</small></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}" data-text="${escapeHtml(m.text || '').replace(/'/g, "\\'")}">💬 REPLY</button><button class="reaction-btn" data-delete="${mid}">🗑️ DELETE</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = snap.size; document.querySelectorAll('[data-like]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); }; }); document.querySelectorAll('[data-reply]').forEach(btn => { btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); }; }); document.querySelectorAll('[data-delete]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete?')) await deleteDoc(doc(db, 'messages', id)); }; }); }); }
   async function toggleLike(msgId) { const ref = doc(db, 'messages', msgId); const snap = await getDoc(ref); if (snap.exists()) { const likedBy = snap.data().likedBy || []; const caller = document.getElementById('callsignField')?.value || 'OPERATOR'; if (likedBy.includes(caller)) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) }); } }
   function startReply(call, id, txt) { replyingTo = { id, callsign: call, text: txt }; const box = document.getElementById('replyIndicatorBox'); if (box) { box.style.display = 'block'; box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`; } }
@@ -323,7 +335,6 @@
   async function summarizeSession() { if(permanentMemory.length===0) return toast('No memory', 'info'); showLoader(true,"SUMMARIZING..."); try { const recent = permanentMemory.slice(-12).map(m=>m.content).join(' '); const summaryPrompt = `Summarize key mission facts (max 2 sentences): ${recent}`; const res = await callGroq(summaryPrompt, permanentMemory.slice(-8)); toast(`📜 MEMORY SUMMARY: ${res}`, 'success'); } catch(e){ toast('Summarize failed','error'); } finally { showLoader(false); } }
   function clearSessionOnly() { sessionMessages = []; document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai','Session display cleared. Permanent memory intact.'); toast('Local chat cleared','info'); }
 
-  // EVENT LISTENERS
   document.getElementById('unlockBtn').addEventListener('click', async () => {
     if (document.getElementById('pinInput').value === '11111111') {
       document.getElementById('pinGate').style.display = 'none';
@@ -334,7 +345,7 @@
       await loadMissionDirective();
       await loadPermanentMemory();
       setupMessagesListener();
-      initTasksListener();  // DYNAMIC OBJECTIVES
+      initTasksListener(); 
       addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online.`);
       const msgsSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
       if (msgsSnap.empty) await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
@@ -356,7 +367,6 @@
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
 
-  // SECTION 03 task UI controls
   document.getElementById('unlockTasksBtn').addEventListener('click', () => { tasksEditUnlocked = true; document.getElementById('addTaskPanel').style.display = 'block'; renderTasks([]); initTasksListener(); toast("TASK EDIT UNLOCKED: Commander can add/delete/edit", "success"); });
   document.getElementById('lockTasksPanelBtn').addEventListener('click', () => { tasksEditUnlocked = false; document.getElementById('addTaskPanel').style.display = 'none'; initTasksListener(); toast("Task panel locked (view only)", "info"); });
   document.getElementById('createTaskBtn').addEventListener('click', () => { const title = document.getElementById('newTaskTitle').value; const deadline = document.getElementById('newTaskDeadline').value; createNewTask(title, deadline); document.getElementById('newTaskTitle').value = ''; document.getElementById('newTaskDeadline').value = ''; });
@@ -365,6 +375,51 @@
 
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  
 </script>
+  
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
