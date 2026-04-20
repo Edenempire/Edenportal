@@ -9,67 +9,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   
   <title>The Book of Eden</title>
-
+  
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
   
-  <link rel="icon" type="image/png" href="logo.png" sizes="192x192">
-  
   <style>
-    
+
     * {
-      
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      
     }
 
     :root {
-      
-      --cyan: #00ffff;
-      --deep-cyan: #00ccff;
-      --panel: rgba(0, 12, 18, 0.9);
-      --border-glow: rgba(0, 255, 255, 0.5);
-      --glow: 0 0 30px rgba(0, 255, 255, 0.6);
+      --cyan: #00aacc;
+      --deep-cyan: #0088aa;
+      --panel: rgba(0, 10, 14, 0.95);
+      --border-light: #00aacc;
       --radius: 18px;
       --font-tactical: 'Orbitron', sans-serif;
       --font-body: 'Electrolize', sans-serif;
       --font-mono: 'VT323', monospace;
-      --font-verse: 'Cormorant Garamond', serif;   
-      --scrollbar: #00ffff;
-      
+      --font-verse: 'Cormorant Garamond', serif;
     }
 
+    /* No glows, no shadows — flat, crisp, readable */
     html, body {
-      
-      background: #050a0e;
-      color: #d0f0ff;
+      background: #03090c;
+      color: #cceeff;
       font-family: var(--font-body);
       scroll-behavior: smooth;
       overflow-x: hidden;
-      
     }
 
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #021016; }
-    ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 4px; box-shadow: inset 0 0 6px #0ff; }
-
+    /* simple grid pattern without glow */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       background-image: 
-        linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: 0;
-      pointer-events: none;
-    }
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 60% 30%, rgba(0, 200, 255, 0.08) 0%, transparent 60%);
+        linear-gradient(rgba(0, 170, 204, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 170, 204, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
       z-index: 0;
       pointer-events: none;
     }
@@ -77,107 +57,87 @@
     .main {
       position: relative;
       z-index: 3;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: clamp(20px, 5vw, 70px) 20px;
+      padding: 20px;
     }
 
+    /* ---------- HEADER (flat) ---------- */
     .header {
       text-align: center;
-      margin-bottom: 5rem;
-      padding: 2.5rem 1rem;
-      background: rgba(0, 10, 15, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-glow);
+      margin-bottom: 4rem;
+      padding: 2rem 1rem;
+      background: rgba(0, 15, 20, 0.8);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius);
-      box-shadow: 0 0 50px rgba(0, 255, 255, 0.25), inset 0 0 20px rgba(0, 255, 255, 0.1);
-      position: relative;
-      transition: 0.4s;
     }
-    .header:hover { box-shadow: 0 0 70px #0ff; border-color: #fff; }
+
     .header h1 a {
       font-family: var(--font-tactical);
-      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-size: 3.8rem;
       font-weight: 900;
-      letter-spacing: 12px;
+      letter-spacing: 10px;
       text-transform: uppercase;
       text-decoration: none;
       color: var(--cyan);
-      text-shadow: 0 0 20px cyan, 0 0 40px #0af;
-      animation: headerPulse 3s infinite alternate;
-    }
-    @keyframes headerPulse {
-      0% { text-shadow: 0 0 15px cyan, 0 0 30px #0af; }
-      100% { text-shadow: 0 0 30px #0ff, 0 0 70px #00aaff; }
     }
 
     .header span {
       display: block;
       font-family: var(--font-mono);
-      font-size: 1.2rem;
-      color: #b0ffff;
-      border-top: 1px dashed var(--cyan);
-      border-bottom: 1px dashed var(--cyan);
-      padding: 0.6rem 2rem;
+      font-size: 1.1rem;
+      color: #88ddff;
+      border-top: 1px solid var(--cyan);
+      border-bottom: 1px solid var(--cyan);
+      padding: 0.5rem 2rem;
       margin: 1rem auto 0;
       width: fit-content;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
     }
 
+    /* ---------- STORY & CHAPTERS (no shadows/glows) ---------- */
     .story {
       display: flex;
       flex-direction: column;
-      gap: 5rem;
-      position: relative;
+      gap: 4rem;
       counter-reset: chapter;
     }
 
     .chapter {
       counter-increment: chapter;
-      padding: 3.5rem 3rem;
+      padding: 3rem 2.5rem;
       background: var(--panel);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 255, 255, 0.25);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius);
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 255, 0.2) inset, 0 0 30px rgba(0, 255, 255, 0.2);
-      transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
       position: relative;
     }
-    .chapter:hover {
-      transform: translateY(-10px) scale(1.01);
-      box-shadow: 0 30px 60px -15px #000, 0 0 0 2px #0ff inset, 0 0 60px #0ff;
-      border-color: #fff;
-    }
 
+    /* corners without glow */
     .chapter .corner {
       position: absolute;
-      width: 35px;
-      height: 35px;
-      border: 2px solid var(--cyan);
-      filter: drop-shadow(0 0 8px cyan);
-      opacity: 0.35;
-      transition: 0.3s;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--cyan);
+      opacity: 0.5;
     }
-    .chapter:hover .corner { opacity: 0.9; width: 40px; height: 40px; }
-    .corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-    .corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
-    .corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
-    .corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+    .corner-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .corner-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+    .corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
     .chapter::before {
       content: "⚔️ chapter " counter(chapter) " ⚔️";
       position: absolute;
-      top: -16px;
-      left: 2rem;
-      background: #021016;
-      padding: 0.5rem 2rem;
+      top: -14px;
+      left: 1.5rem;
+      background: #03090c;
+      padding: 0.3rem 1.5rem;
       font-family: var(--font-tactical);
-      font-size: 0.9rem;
-      letter-spacing: 3px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
       color: #fff;
       border: 1px solid var(--cyan);
-      border-radius: 40px;
-      box-shadow: 0 0 20px cyan;
+      border-radius: 30px;
       text-transform: uppercase;
       z-index: 10;
       white-space: nowrap;
@@ -185,33 +145,25 @@
 
     .chapter h2 {
       font-family: var(--font-tactical);
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      padding-left: 1.5rem;
-      border-left: 6px solid var(--cyan);
-      color: white;
-      text-shadow: 0 0 10px cyan;
+      font-size: 1.9rem;
+      margin-bottom: 1.8rem;
+      padding-left: 1rem;
+      border-left: 4px solid var(--cyan);
+      color: #ffffff;
       letter-spacing: 1px;
     }
 
     .verses {
       font-family: var(--font-verse);
-      font-size: 1.25rem;
-      line-height: 1.8;
-      color: #e6f3ff;
+      font-size: 1.2rem;
+      line-height: 1.75;
+      color: #e0f0ff;
     }
 
     .verse {
       margin-bottom: 1.2rem;
-      padding-left: 3.2rem;
+      padding-left: 3rem;
       position: relative;
-      transition: 0.2s;
-      font-weight: 400;
-    }
-    .verse:hover {
-      color: white;
-      text-shadow: 0 0 6px #0ff;
-      transform: translateX(8px);
     }
 
     .verse::before {
@@ -220,298 +172,403 @@
       left: 0;
       top: 0;
       font-family: var(--font-mono);
-      font-size: 1rem;
-      background: rgba(0, 30, 30, 0.7);
+      font-size: 0.9rem;
+      background: #071218;
       color: var(--cyan);
-      padding: 0.2rem 1rem;
-      border-radius: 20px;
-      border-left: 3px solid var(--cyan);
-      box-shadow: 0 0 10px rgba(0,255,255,0.3);
+      padding: 0.1rem 0.8rem;
+      border-radius: 16px;
+      border-left: 2px solid var(--cyan);
       font-weight: bold;
-      letter-spacing: 1px;
     }
 
     .dialogue {
       display: inline-block;
-      background: rgba(0, 255, 255, 0.08);
-      border-left: 4px solid var(--cyan);
-      padding: 0.2rem 1.2rem 0.2rem 1.2rem;
-      border-radius: 0 20px 20px 0;
+      background: rgba(0, 170, 204, 0.1);
+      border-left: 2px solid var(--cyan);
+      padding: 0.1rem 1rem;
+      border-radius: 0 12px 12px 0;
       font-style: italic;
-      color: #fff;
-      margin: 0.3rem 0;
+      color: #ffffff;
       font-family: var(--font-body);
-      font-weight: 400;
-      backdrop-filter: blur(3px);
     }
 
     .emphasis {
-      color: #00ffff;
+      color: #00ccdd;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 5px cyan;
+      letter-spacing: 1px;
     }
 
     .highlight {
-      background: linear-gradient(145deg, rgba(0,255,255,0.2), rgba(0,150,255,0.1));
-      padding: 0.1rem 0.5rem;
-      border-radius: 8px;
-      border: 0.5px solid cyan;
+      background: rgba(0, 170, 204, 0.15);
+      padding: 0.05rem 0.4rem;
+      border: 0.5px solid var(--cyan);
+      border-radius: 6px;
       font-weight: 600;
     }
 
     .prophecy-note {
-      margin-top: 2.5rem;
-      padding: 1.5rem 2rem;
-      background: rgba(0, 20, 25, 0.7);
-      border: 1px dashed #0ff;
-      border-radius: 30px;
+      margin-top: 2rem;
+      padding: 1.2rem 1.8rem;
+      background: #07161c;
+      border: 1px solid var(--cyan);
+      border-radius: 24px;
       font-family: var(--font-mono);
-      font-size: 1.2rem;
-      color: #aff;
-      box-shadow: 0 0 30px rgba(0,255,255,0.1);
+      font-size: 1.1rem;
+      color: #bbffff;
       position: relative;
     }
     .prophecy-note::before {
       content: "✧ prophecy ✧";
       position: absolute;
-      top: -15px;
-      left: 20px;
-      background: #000c10;
-      padding: 0 20px;
-      color: cyan;
-      letter-spacing: 3px;
+      top: -12px;
+      left: 18px;
+      background: #03090c;
+      padding: 0 15px;
+      color: var(--cyan);
+      letter-spacing: 2px;
     }
 
     .footer {
-      margin-top: 8rem;
-      padding: 3rem 1rem 2rem;
+      margin-top: 6rem;
+      padding: 2.5rem 1rem 1.8rem;
       text-align: center;
       font-family: var(--font-mono);
-      border-top: 1px solid rgba(0, 255, 255, 0.35);
+      border-top: 1px solid var(--cyan);
       position: relative;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
     .footer::before {
       content: "✧ ⚔️ ✧ ⚔️ ✧";
       position: absolute;
-      top: -16px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      background: #050a0e;
-      padding: 0 2rem;
-      color: cyan;
-      font-size: 1.7rem;
-      letter-spacing: 10px;
-    }
-    .footer p {
-      margin: 0.5rem 0;
-      opacity: 0.9;
+      background: #03090c;
+      padding: 0 1.5rem;
+      color: var(--cyan);
+      font-size: 1.4rem;
+      letter-spacing: 6px;
     }
 
-    @media (max-width: 700px) {
-      .chapter { padding: 2.5rem 1.5rem; }
-      .chapter::before { left: 1rem; padding: 0.3rem 1rem; font-size: 0.75rem; }
-      .verse { padding-left: 2.2rem; font-size: 1.1rem; }
-      .verse::before { padding: 0.15rem 0.7rem; font-size: 0.8rem; }
-      .header h1 a { letter-spacing: 5px; }
+    button.flat-link {
+      background: none;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-family: var(--font-tactical);
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+    }
+    button.flat-link:hover {
+      background: var(--cyan);
+      color: #03090c;
     }
 
-    @media (max-width: 450px) {
-      .verse { padding-left: 0; }
-      .verse::before {
-        position: relative;
-        display: inline-block;
-        margin-right: 0.6rem;
+    /* ============================================ */
+    /* MEDIA QUERIES FOR LITERALLY EVERY DEVICE     */
+    /* FROM LARGEST SCREENS TO SMALLEST WEARABLES   */
+    /* ============================================ */
+
+    /* 4K+ and ultra-wide (2560px and above) */
+    @media (min-width: 2560px) {
+      .main { max-width: 1800px; padding: 40px 60px; }
+      .header h1 a { font-size: 6rem; letter-spacing: 18px; }
+      .header span { font-size: 1.6rem; }
+      .chapter { padding: 5rem 4.5rem; }
+      .chapter h2 { font-size: 2.8rem; }
+      .verses { font-size: 1.6rem; line-height: 1.9; }
+      .verse { padding-left: 4.5rem; }
+      .verse::before { font-size: 1.2rem; padding: 0.2rem 1.2rem; }
+      .chapter::before { font-size: 1.2rem; padding: 0.5rem 2.5rem; top: -20px; }
+      .prophecy-note { font-size: 1.4rem; padding: 1.8rem 2.5rem; }
+      .footer { font-size: 1.5rem; }
+    }
+
+    /* Desktop large (1920px - 2559px) */
+    @media (min-width: 1920px) and (max-width: 2559px) {
+      .main { max-width: 1500px; padding: 30px 40px; }
+      .header h1 a { font-size: 5rem; letter-spacing: 14px; }
+      .chapter { padding: 4rem 3.5rem; }
+      .chapter h2 { font-size: 2.4rem; }
+      .verses { font-size: 1.4rem; }
+    }
+
+    /* Desktop standard (1440px - 1919px) */
+    @media (min-width: 1440px) and (max-width: 1919px) {
+      .main { max-width: 1200px; padding: 30px; }
+      .header h1 a { font-size: 4.2rem; letter-spacing: 12px; }
+    }
+
+    /* Small desktop / laptop (1280px - 1439px) */
+    @media (min-width: 1280px) and (max-width: 1439px) {
+      .main { max-width: 1100px; padding: 25px; }
+      .header h1 a { font-size: 3.8rem; letter-spacing: 10px; }
+      .chapter { padding: 3rem 2.5rem; }
+      .chapter h2 { font-size: 2rem; }
+    }
+
+    /* Laptop / small desktop (1024px - 1279px) */
+    @media (min-width: 1024px) and (max-width: 1279px) {
+      .main { max-width: 960px; padding: 20px; }
+      .header h1 a { font-size: 3.4rem; letter-spacing: 8px; }
+      .chapter { padding: 2.8rem 2rem; }
+      .verses { font-size: 1.15rem; }
+    }
+
+    /* Tablet landscape (900px - 1023px) */
+    @media (min-width: 900px) and (max-width: 1023px) {
+      .main { max-width: 880px; padding: 20px; }
+      .header h1 a { font-size: 3rem; letter-spacing: 6px; }
+      .chapter { padding: 2.5rem 1.8rem; }
+      .chapter h2 { font-size: 1.8rem; }
+      .verse { padding-left: 2.8rem; }
+    }
+
+    /* Tablet portrait (768px - 899px) */
+    @media (min-width: 768px) and (max-width: 899px) {
+      .main { max-width: 720px; padding: 18px; }
+      .header h1 a { font-size: 2.6rem; letter-spacing: 5px; }
+      .header span { font-size: 1rem; }
+      .chapter { padding: 2.2rem 1.6rem; }
+      .chapter::before { left: 1rem; font-size: 0.7rem; padding: 0.2rem 1rem; white-space: nowrap; }
+      .chapter h2 { font-size: 1.6rem; }
+      .verses { font-size: 1.08rem; }
+      .verse { padding-left: 2.6rem; }
+      .verse::before { font-size: 0.8rem; padding: 0.1rem 0.7rem; }
+    }
+
+    /* Large phone (640px - 767px) */
+    @media (min-width: 640px) and (max-width: 767px) {
+      .main { padding: 16px; }
+      .header h1 a { font-size: 2.2rem; letter-spacing: 4px; }
+      .header span { font-size: 0.9rem; }
+      .chapter { padding: 2rem 1.4rem; }
+      .chapter::before { left: 0.8rem; font-size: 0.65rem; padding: 0.2rem 0.8rem; }
+      .chapter h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
+      .verses { font-size: 1rem; line-height: 1.65; }
+      .verse { padding-left: 2.2rem; margin-bottom: 1rem; }
+      .verse::before { font-size: 0.7rem; padding: 0.05rem 0.6rem; }
+      .dialogue { font-size: 0.95rem; }
+      .prophecy-note { font-size: 0.95rem; padding: 1rem 1.2rem; }
+    }
+
+    /* Medium phone (480px - 639px) */
+    @media (min-width: 480px) and (max-width: 639px) {
+      .main { padding: 14px; }
+      .header { margin-bottom: 2rem; padding: 1.2rem 0.8rem; }
+      .header h1 a { font-size: 1.9rem; letter-spacing: 3px; }
+      .header span { font-size: 0.8rem; padding: 0.3rem 1rem; }
+      .chapter { padding: 1.8rem 1.2rem; margin-bottom: 0.5rem; }
+      .chapter::before { left: 0.6rem; top: -12px; font-size: 0.6rem; padding: 0.15rem 0.7rem; white-space: nowrap; }
+      .chapter h2 { font-size: 1.3rem; padding-left: 0.7rem; border-left-width: 3px; }
+      .verses { font-size: 0.95rem; }
+      .verse { padding-left: 1.8rem; }
+      .verse::before { font-size: 0.65rem; padding: 0.05rem 0.5rem; left: 0; top: 2px; }
+      .dialogue { padding: 0.1rem 0.6rem; font-size: 0.9rem; }
+      .prophecy-note { margin-top: 1.5rem; padding: 0.9rem 1rem; font-size: 0.85rem; }
+      .prophecy-note::before { font-size: 0.7rem; top: -10px; left: 12px; padding: 0 8px; }
+      .footer { margin-top: 3rem; font-size: 0.9rem; }
+      .footer::before { font-size: 1rem; letter-spacing: 4px; top: -12px; }
+    }
+
+    /* Small phone (380px - 479px) */
+    @media (min-width: 380px) and (max-width: 479px) {
+      .main { padding: 10px; }
+      .header { margin-bottom: 1.8rem; padding: 1rem 0.5rem; }
+      .header h1 a { font-size: 1.6rem; letter-spacing: 2px; }
+      .header span { font-size: 0.7rem; padding: 0.2rem 0.8rem; }
+      .chapter { padding: 1.5rem 1rem; }
+      .chapter::before { left: 0.5rem; top: -10px; font-size: 0.55rem; padding: 0.1rem 0.6rem; }
+      .chapter h2 { font-size: 1.2rem; padding-left: 0.5rem; margin-bottom: 1rem; }
+      .verses { font-size: 0.88rem; line-height: 1.55; }
+      .verse { padding-left: 0; margin-bottom: 0.9rem; }
+      .verse::before { 
+        position: relative; 
+        display: inline-block; 
+        margin-right: 0.5rem; 
         margin-bottom: 0.2rem;
         left: auto;
         top: auto;
+        font-size: 0.6rem;
+        padding: 0.05rem 0.5rem;
       }
+      .dialogue { font-size: 0.85rem; padding: 0.05rem 0.5rem; }
+      .prophecy-note { font-size: 0.8rem; padding: 0.8rem; }
+      .prophecy-note::before { font-size: 0.65rem; top: -9px; left: 10px; padding: 0 5px; }
+      .footer { font-size: 0.8rem; padding: 1.5rem 0.5rem 1rem; }
     }
 
-    @keyframes fadeRaise {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    /* Compact phone / small foldable (300px - 379px) */
+    @media (min-width: 300px) and (max-width: 379px) {
+      .main { padding: 8px; }
+      .header { margin-bottom: 1.5rem; padding: 0.8rem 0.3rem; }
+      .header h1 a { font-size: 1.3rem; letter-spacing: 1px; }
+      .header span { font-size: 0.6rem; padding: 0.2rem 0.6rem; letter-spacing: 1px; }
+      .chapter { padding: 1.2rem 0.8rem; }
+      .chapter::before { left: 0.3rem; top: -8px; font-size: 0.45rem; padding: 0.1rem 0.5rem; letter-spacing: 1px; }
+      .chapter h2 { font-size: 1rem; padding-left: 0.4rem; border-left-width: 2px; margin-bottom: 0.8rem; }
+      .verses { font-size: 0.8rem; line-height: 1.5; }
+      .verse { margin-bottom: 0.7rem; padding-left: 0; }
+      .verse::before { 
+        position: relative; 
+        display: inline-block; 
+        margin-right: 0.4rem;
+        font-size: 0.55rem;
+        padding: 0.05rem 0.4rem;
+      }
+      .dialogue { font-size: 0.75rem; padding: 0.05rem 0.4rem; border-left-width: 1px; }
+      .emphasis, .highlight { font-size: 0.78rem; }
+      .prophecy-note { margin-top: 1rem; padding: 0.6rem; font-size: 0.7rem; }
+      .prophecy-note::before { font-size: 0.55rem; top: -8px; left: 8px; padding: 0 4px; }
+      .footer { margin-top: 2rem; font-size: 0.7rem; padding: 1rem 0.3rem 0.8rem; }
+      .footer::before { font-size: 0.8rem; letter-spacing: 3px; top: -10px; }
+      button.flat-link { font-size: 0.6rem; padding: 0.2rem 0.6rem; }
     }
-    .chapter {
-      animation: fadeRaise 0.6s ease backwards;
+
+    /* Ultra-small / smartwatch or very narrow (below 300px) */
+    @media (max-width: 299px) {
+      .main { padding: 5px; }
+      .header { margin-bottom: 1rem; padding: 0.5rem 0.2rem; }
+      .header h1 a { font-size: 1rem; letter-spacing: 0px; display: block; }
+      .header span { font-size: 0.5rem; padding: 0.1rem 0.4rem; letter-spacing: 0px; }
+      .chapter { padding: 1rem 0.6rem; }
+      .chapter::before { left: 0.2rem; top: -6px; font-size: 0.4rem; padding: 0.05rem 0.4rem; white-space: nowrap; }
+      .chapter h2 { font-size: 0.85rem; padding-left: 0.3rem; margin-bottom: 0.6rem; }
+      .verses { font-size: 0.7rem; line-height: 1.4; }
+      .verse { margin-bottom: 0.6rem; padding-left: 0; }
+      .verse::before { 
+        position: relative; 
+        display: inline-block; 
+        margin-right: 0.3rem;
+        font-size: 0.5rem;
+        padding: 0.02rem 0.3rem;
+      }
+      .dialogue { font-size: 0.68rem; padding: 0.02rem 0.3rem; }
+      .emphasis, .highlight { font-size: 0.68rem; }
+      .prophecy-note { margin-top: 0.8rem; padding: 0.5rem; font-size: 0.62rem; }
+      .prophecy-note::before { font-size: 0.5rem; top: -7px; left: 5px; padding: 0 3px; letter-spacing: 1px; }
+      .footer { margin-top: 1.5rem; font-size: 0.6rem; padding: 0.8rem 0.2rem 0.5rem; }
+      .footer::before { font-size: 0.65rem; letter-spacing: 2px; top: -9px; }
+      button.flat-link { font-size: 0.5rem; padding: 0.1rem 0.4rem; margin-top: 0.5rem; }
+      .corner { width: 18px; height: 18px; }
     }
-    .chapter:nth-child(1) { animation-delay: 0.1s; }
-    .chapter:nth-child(2) { animation-delay: 0.3s; }
-    .chapter:nth-child(3) { animation-delay: 0.5s; }
-    .chapter:nth-child(4) { animation-delay: 0.7s; }
-    
+
+    /* Special: very tall mobile screens (aspect ratio handling) */
+    @media (min-height: 800px) and (max-width: 480px) {
+      .story { gap: 2.5rem; }
+      .footer { margin-top: 3rem; }
+    }
+
+    /* Print styles — no glows, clean */
+    @media print {
+      body { background: white; color: black; }
+      .main { max-width: 100%; padding: 0.5in; }
+      .header, .chapter, .prophecy-note { border: 1px solid #ccc; background: white; color: black; }
+      .header h1 a { color: black; }
+      .verse::before { background: #eee; color: black; border-left-color: #aaa; }
+      .dialogue { border-left-color: #aaa; background: #f5f5f5; }
+      .footer::before { background: white; }
+      body::before { display: none; }
+    }
   </style>
-  
 </head>
-  
 <body>
-  
 <div class="main">
-
   <div class="header">
-    <h1><a href="index.html" style="text-decoration: none; color: inherit;">OUR STORY</a></h1>
-    <span>THE BOOK OF EDEN· 第一卷</span>
+    <h1><a href="#">OUR STORY</a></h1>
+    <span>THE BOOK OF EDEN ·第一卷 · THE PURE CODEX</span>
   </div>
 
   <div class="story">
-
+    <!-- CHAPTER 1 -->
     <div class="chapter">
-      <div class="corner corner-tl"></div>
-      <div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div>
-      <div class="corner corner-br"></div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
       <h2>THE VISIONARY</h2>
       <div class="verses">
         <div class="verse" data-verse="1:1">In the beginning, before the foundations of the Conglomerate were laid, there arose a young male adult named <span class="emphasis">Thato Morake</span>, a son of the soil, born under the African sun with fire in his bones and vision in his spirit.</div>
-        
         <div class="verse" data-verse="1:2">And the young Thato looked upon the world and saw that it was bound by smallness, by the chains of limited thinking, by minds that could not stretch beyond the horizon of their own sight.</div>
-        
         <div class="verse" data-verse="1:3">But Thato was not like the others. For within him burned a flame that could not be quenched — the flame of empire, the fire of dominion, the unrelenting desire to build something <span class="highlight">greater than himself</span>.</div>
-        
         <div class="verse" data-verse="1:4">He spoke to himself in the quiet hours, saying, <span class="dialogue">"Why should I inherit leftovers when I can sit at the head of the table? Why should I follow when I was born to lead?"</span></div>
-        
         <div class="verse" data-verse="1:5">And the Lord, who sees the hearts of men, looked upon Thato and was pleased, for his ambition was not for vanity but for purpose — to create, to build, to establish a legacy that would outlive his bones.</div>
-        
         <div class="verse" data-verse="1:6">Thus the seed of Eden was planted in secret, in the soil of a young man's soul, waiting for the appointed time to sprout forth.</div>
-        
       </div>
       <div class="prophecy-note">🔥 "From one spark, a nation shall be kindled."</div>
-      
     </div>
 
+    <!-- CHAPTER 2 -->
     <div class="chapter">
-      <div class="corner corner-tl"></div>
-      <div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div>
-      <div class="corner corner-br"></div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
       <h2>THE YEAR OF DIVINE APPOINTMENT — 2023</h2>
       <div class="verses">
-        
         <div class="verse" data-verse="2:1">Now it came to pass in the year of our Lord 2023, in the city of Durban, at the <span class="emphasis">sinister universal church</span>, that the hand of Providence moved to weave together the threads of destiny.</div>
-        
         <div class="verse" data-verse="2:2">For Thato had long been a faithful among the congregation, a familiar face in the assembly, known to many but truly known by few.</div>
-        
         <div class="verse" data-verse="2:3">But there came also one <span class="emphasis">Philani Kemele</span>, a young male adult of soldier, code and logic, whose mind ran in obliteration, circuits and algorithms.</div>
-        
         <div class="verse" data-verse="2:4">And 2023 was Philani's first year at that place. He came as a stranger, as one unknown, carrying within him gifts he himself did not yet fully comprehend.</div>
-        
         <div class="verse" data-verse="2:5">At first, Philani looked upon Thato with skeptical eyes, saying in his mind, <span class="dialogue">"yeah... another charmer boy that thinks the world revolves around him."</span></div>
-        
         <div class="verse" data-verse="2:6">Little did he know that the very skepticism that guarded him would soon become the foundation of an unshakeable alliance.</div>
-        
       </div>
-      
     </div>
 
+    <!-- CHAPTER 3: THE CANCELLED TOURNAMENT & THE FIRST COVENANT -->
     <div class="chapter">
-      <div class="corner corner-tl"></div>
-      <div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div>
-      <div class="corner corner-br"></div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
       <h2>THE CANCELLED SOCCER TOURNAMENT</h2>
       <div class="verses">
         <div class="verse" data-verse="3:1">And it came to pass that the sinister church proclaimed a soccer tournament, a gathering of the young boys to compete in the beautiful game.</div>
-        
         <div class="verse" data-verse="3:2">The boys assembled, and they began to practice together, their feet upon the grass, their hearts stirred by the prospect of victory.</div>
-        
-        <div class="verse" data-verse="3:3">Now Philani had no love for soccer in those days. His world was the world of <span class="highlight">ones and zeros</span>, of compilers and interpreters, of logic gates and data streams. He feared embarrassment, for the soccer field was foreign territory to his feet.</div>
-        
-        <div class="verse" data-verse="3:4">But Thato and one <span class="emphasis">mpumelelo</span> spoke, saying, <span class="dialogue">"Join us. What matters is not your skill but your presence among us, and besides, you'll adapt very quickly."</span></div>
-        
+        <div class="verse" data-verse="3:3">Now Philani had no love for soccer in those days. His world was the world of <span class="highlight">ones and zeros</span>, of compilers and interpreters, of logic gates and data streams.</div>
+        <div class="verse" data-verse="3:4">But Thato and one <span class="emphasis">Mpumelelo</span> spoke, saying, <span class="dialogue">"Join us. What matters is not your skill but your presence."</span></div>
         <div class="verse" data-verse="3:5">And Philani heeded their voice, though reluctance weighed upon his steps. He went to the practice, not knowing that this simple act would alter the course of his life forever.</div>
-        
-        <div class="verse" data-verse="3:6">As they ran and passed and strategized upon the field, conversations flowed like water between them — not merely of the game, but of <span class="emphasis">weightier matters</span>.</div>
-        
-        <div class="verse" data-verse="3:7">Between passes, they spoke of God. Between tactical formations, they spoke of manhood. Between goals, they spoke of purpose.</div>
-        
-        <div class="verse" data-verse="3:8">And with every word that Thato spoke, Philani felt the walls of his skepticism crumble, brick by brick, until he could see clearly: <span class="dialogue">"This one is different. This one thinks as I think. This one fathoms as I fathom."</span></div>
-        
-        <div class="verse" data-verse="3:9">For Thato spoke not of small things — of petty gains or momentary pleasures — but of <span class="highlight">legacy, of impact, of changing the very fabric of the nation</span>.</div>
-        
-        <div class="verse" data-verse="3:10">And Philani's spirit recognized a kindred spirit, as iron sharpens iron, and as one flame kindles another.</div>
-
-        <!-- CONTINUATION FROM VERSE 10. AND SO PHILANI DECIDED TO INVITE THATO TO THE ETHEKWINI LIBRARY TO DEVISE A GAME PLAN FOR THE TOURNAMENT, AND TO ALSO SEE IF HE COULD COLLABORATE WITH THATO ON A CONGLOMERATE BUSINESS, AND WITH SHOCK - THATO WAS ALREADY ON THAT THINKING, AND PHILANI WAS JUST AMAZED, AND EDEN WAS BORN RIGHT THERE AND THEN. AFTER SORTING OUT BUSINESS MATTERS ON A NOTEBOOK, THEY THEN DEVISED THE MOST DEFENSIVE GAMEPLAN EVER FOR SOCCER, AND THEY DID PUT IT INTO PRACTISE BEFORE ALL OF THEIR COMPETITION IN FRIENDLY GAMES THAT WERE PRIOR TO THE ACTUAL TOURNAMENT, BUT THE BISHOP OF THE UNIVERSAL CHURCH HERMANO SOUZA WAS AGAINST SPORTS AS HE BELIEVED THAT WHY MUST CHURCH MEMBERS OF THEIR EVIL ORGANIZATION FOCUS ON FEEDING THE FLESH RATHER THAN THE SPIRIT, AND SO HE ENDED UP CANCELLING IT - AFTER SO MUCH TRAINING THAT WENT IN. EVERYBODY WAS MAD, AND FROM THERE - THE MINDSET FOR SOCCER FOR THIS EVIL CHURCH HAS NEVER BEEN THE SAME AGAIN. THATO WANTED TO LAUNCH THE FIRST BRANCH OF EDEN, WHICH IS PARABLES AND PLATTERS WAY LATER IN THE FUTURE, BUT PHILANI WANTED TO START OPERATING ON THAT DECEMBER, 2023, ON A SMALL SCALE - JUST TO GET SOME MONEY IN... THATO WAS RELUCTANT, BUT AGREED. THEY BOTH BELIEVED IN PARABLES AND PLATTERS' POTENTIAL GREATLY, AND SO THATO CALLED IN MASIYA ON BOARD, AND IT JUST SO HAPPENED THAT MASIYA COULD COOK - PHILANI AND THATO ONLY KNEW HOW TO FRY EGGS, AND THAT'S IT. MASIYA AGREED TO BE THE TEMPORARY CHEF, AND THEY STARTED PARALES AND PLATTERS, BUT WITHOUT THE PAPERWORK, AND THEY SOLD FOOD AT UMHLANGA BY THE RIDGE CORNER IN THE MORNING AND NOON TIMES WITH SUCCESS, UNTIL THEY HAD TO PAUSE ON THAT DECEMBER WHEN MASIYA LOST ALL OF THE RE-STOCKING MONEY WITH NO MORE MONEY TO MAKE A PROPER COMEACK, AND SO THEY DECIDED TO WAIT OUT THE YEAR, AND PHILANI WENT HOME AND HAD THE MOST BORING REST OF HIS DECEMBER... MASIYA WENT TO THE RURAL AREAS AND SO DID THATO TO VISIT HIS GRANNY. FOR THE REST OF 2023 ON THAT DECEMBBER, PHILANI STARTED TO RE-FOCUS PROPERLY ON MILITARY THINGS AS HIS NEWFOUND BROTHERHOOD WITH THATO KIND OF BEGAN TO GET HIM OFF TRACK WITH HIS MILITARY WORK, AND SO MAYBE IT WAS AN ACT OF GOD FOR MASIYA TO LOSE ALL OF THAT MONEY - FOR PHILANI WAS WAY TOO IMPORTANT FOR THE DEFENCE OF THE COUNTRY. JANUARY CAME AND PHILANI RETURNED TO HIS MILITARY RESERVATION, BUT AS HE WAS NOW FOCUSING ON THAT AND THE RE-LAUNCHING OF PARABLES AND PLATTERS, GOD CAME TO PHILANI IN A VISION WHERE HE SAW THE SON OF MAN JESUS CHRIST, BLACK AS AFRICA, RIDING ON A BLACK HORSE ON THE SEA SHORE OF THE OCEAN , AND JESUS HAD A SPECIAL MILITARY OPERATION FOR HIM, AND PHILANI ACCEPTED WITHOUT HESITANCE AND BY THE BEGINNING OF SEPTEMBER 2024, PHILANI PASSED THE OPERATIONAL 100%. THIS SECRET OPERATION WAS FROM FEBRUARY 2024 TO SEPTEMBER 2024. JESUS TOLD PHILANI THAT HE WILL REWARD HIM AS IT IS WRITTEN IN THE BOOK OF REVELATIONS ON HE THAT OVERCOMETH SHALL SIT WITH ME IN MY THRONE - PHILANI KNEW EXACTLY WHAT THIS MEANT. THE DETAILS OF THE OPERATION ARE TOO EXTENSIVE FOR THEM TO BE WRITTEN ON THIS BOOK. WHEN PHILANI RETURNED TO THE WORLD, HE RE-ACQUAINTED WITH THATO AND THEY ONLY RE-LAUNCHED PARABLES AND PLATTERS IN 2025 MARCH AFTER RECEIVING THE PAPERWORK THIS TIME. FOR ALL THE TIME PHILANI WAS MIA, THERE WAS NO BUSINESS BEING DONE, AND PHILANI DID THINK ABOUT THIS, ESPECIALLY WITH PLACING THATO ON HOLD, BUT THE OPERATION WAS TOO DEEP. LET'S JUST SAY THAT THINGS WERE SUCCESSFUL WHEN PARABLES AND PLATTERS RE-LAUNCHED, IT WAS SUCCESS... THEY MADE +1K ON THEIR FIRST NIGHT OF SALES @ UMHLANGA, BUT TRANSPORTATION COSTS WAS STILL KILLING THEM HEAVILY WITH R400 GOING TO THE DRIVER LEIROY EVERYDAY, AND SO THEY HAD TO NOW WORK AROUND THIS. THATO PAID FOR A BASE IN TOWN FOR PHILANI TO STAY @ SO THAT HE COULD BE THE NEW COOK AND SELL AROUND DURBAN CENTRAL - PHILANI HAD LEARNT SOME BASICS OF COOKING DURING HIS MIA STATUS IN 2024  -->
-        
+        <div class="verse" data-verse="3:6">Between passes, they spoke of God. Between tactical formations, they spoke of manhood. Between goals, they spoke of purpose.</div>
+        <div class="verse" data-verse="3:7">And with every word that Thato spoke, Philani felt the walls of his skepticism crumble: <span class="dialogue">"This one is different. This one thinks as I think."</span></div>
+        <div class="verse" data-verse="3:8">But the bishop Hermano Souza cancelled the tournament, saying: <span class="dialogue">"Why feed the flesh rather than the spirit?"</span> And everyone was mad. Yet from that cancellation, a greater fire arose.</div>
+        <div class="verse" data-verse="3:9">Thato envisioned Parables and Platters. Philani pushed for a December launch. They called Masiya — who could cook — for they only knew how to fry eggs. They sold at Umhlanga with success, until Masiya lost the re-stocking money.</div>
+        <div class="verse" data-verse="3:10">Thus they paused. And Philani re-focused on military duty — an act of God to preserve the defender of the nation. The tournament died, but Eden breathed its first breath.</div>
       </div>
+      <div class="prophecy-note">⚡ "From every cancellation, a greater genesis is born."</div>
     </div>
 
+    <!-- CHAPTER 4: THE BLACK HORSE VISION -->
     <div class="chapter">
-      <div class="corner corner-tl"></div>
-      <div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div>
-      <div class="corner corner-br"></div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <h2>THE VISION OF THE BLACK HORSE</h2>
+      <div class="verses">
+        <div class="verse" data-verse="4:1">In the first month of 2024, God came to Philani in a vision: He saw the Son of Man, Jesus Christ, black as Africa, riding on a black horse on the seashore.</div>
+        <div class="verse" data-verse="4:2">And Jesus said: <span class="dialogue emphasis">"I have a special military operation for you. From February to September. Will you accept?"</span> Philani answered without hesitation: <span class="dialogue">"Lord, send me."</span></div>
+        <div class="verse" data-verse="4:3">Then the Lord declared: <span class="dialogue">"He who overcomes shall sit with Me in My throne."</span> By September 2024, Philani passed the operation at 100%.</div>
+        <div class="verse" data-verse="4:4">When he returned, they relaunched Parables and Platters in March 2025 with paperwork. On the first night they made over +1K, though transport costs (R400 daily to Leroy) cut deep.</div>
+        <div class="verse" data-verse="4:5">Thato paid for a base in town. Philani became the cook — he had learned during his hidden season. They sold around Durban Central. Eden stretched its limbs.</div>
+      </div>
+      <div class="prophecy-note">🐉 "He who is faithful in the hidden shall govern in the open."</div>
+    </div>
+
+    <!-- CHAPTER 5: THE LIBRARY COVENANT -->
+    <div class="chapter">
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
       <h2>THE LIBRARY MEETING</h2>
       <div class="verses">
-        <div class="verse" data-verse="4:1">Now in the tenth month, which is called October, in the year 2023, Philani sent word to Thato, saying, <span class="dialogue">"Let us meet at the Durban Central Municipal Library, for I must speak with you concerning matters of weight."</span></div>
-        
-        <div class="verse" data-verse="4:2">The first day they appointed, Philani had to postpone, for other matters demanded his attention. But they agreed to meet on the morrow.</div>
-        
-        <div class="verse" data-verse="4:3">And it came to pass that they sat together in that place of books and silence.</div>
-        
-        <div class="verse" data-verse="4:4">Then, Philani looked upon Thato and posed the question that would define their future: <span class="dialogue emphasis">"Where do you want to be in life?"</span></div>
-        
-        <div class="verse" data-verse="4:4">And Thato answered without hesitation, his voice steady as a pillar, <span class="dialogue emphasis">"The top."</span></div>
-        
-        <div class="verse" data-verse="4:5">Then Philani smiled. And he spoke in return, <span class="dialogue emphasis">"Me too."</span></div>
-        <div class="verse" data-verse="4:6">Then Philani spoke again, saying, <span class="dialogue">"How are we going to get there?"</span></div>
-        
-        <div class="verse" data-verse="4:7">And Thato replied, <span class="dialogue">"Through money."</span></div>
-        
-        <div class="verse" data-verse="4:8">Again Philani asked, <span class="dialogue">"And how do we get that money?"</span></div>
-        
-        <div class="verse" data-verse="4:9">Thato said: <span class="dialogue emphasis">"well, I was thinking business."</span></div>
-        
-        <div class="verse" data-verse="4:10">And in that library, two young men bound themselves to a vision that would become <span class="emphasis">Eden Conglomerate</span>.</div>
+        <div class="verse" data-verse="5:1">Philani sent word to Thato: <span class="dialogue">"Let us meet at the Durban Central Municipal Library."</span> And they sat together in that place of books and silence.</div>
+        <div class="verse" data-verse="5:2">Philani asked: <span class="dialogue emphasis">"Where do you want to be in life?"</span> Thato answered: <span class="dialogue emphasis">"The top."</span> Philani replied: <span class="dialogue emphasis">"Me too."</span></div>
+        <div class="verse" data-verse="5:3">"How do we get there?" — "Through money." — "And how do we get that money?" — <span class="dialogue emphasis">"Business."</span></div>
+        <div class="verse" data-verse="5:4">In that library, two young men bound themselves to a vision that would become <span class="emphasis">Eden Conglomerate</span>. One builds, one defends. One speaks, one calculates. And Eden rose.</div>
       </div>
-      
     </div>
   </div>
 
   <div class="footer">
-    <p>✧ THE BOOK OF EDEN ✧</p>
+    <p>✧ THE BOOK OF EDEN · CHRONICLES OF THE CONGLOMERATE ✧</p>
+    <p style="font-size: 0.8rem; margin-top: 0.8rem;">“And they shall build and not another inhabit — for the vision is for an appointed time.”</p>
+    <button class="flat-link" id="scrollTopBtn">⚔️ RISE TO THE BEGINNING ⚔️</button>
   </div>
 </div>
 
 <script>
-  
-  (function() {
-    console.log("'The Book of Eden' — advanced codex opened.");
-  })();
-  
+  document.getElementById('scrollTopBtn')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
-
 </body>
-  
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
