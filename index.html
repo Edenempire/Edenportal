@@ -2135,6 +2135,28 @@
                     return;
                 }
 
+                if (raw === '7') {
+                    printToTerm('PASSING BIOMETRIC...', 'var(--cyan)');
+                    let dots = 0;
+                    const loadingLine = document.createElement('div');
+                    loadingLine.style.color = 'var(--cyan)';
+                    loadingLine.innerHTML = '> AUTHENTICATING';
+                    termOutput.appendChild(loadingLine);
+                    termOutput.scrollTop = termOutput.scrollHeight;
+
+                    const loadingInterval = setInterval(() => {
+                        dots = (dots + 1) % 4;
+                        loadingLine.innerHTML = '> AUTHENTICATING' + '.'.repeat(dots);
+                        termOutput.scrollTop = termOutput.scrollHeight;
+                    }, 400);
+
+                    setTimeout(() => {
+                        clearInterval(loadingInterval);
+                        window.location.href = "as.html";
+                    }, 2200);
+                    return;
+                }
+
                 if (val === 'help') {
                     printToTerm('Available: clear | status | scan ops | open manifesto');
                 } else if (val === 'clear') {
@@ -2391,34 +2413,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const installBtn = document.getElementById("installBtn");
             if (!installBtn) return;
             
-            // ALWAYS SHOW THE BUTTON initially
             installBtn.style.display = "inline-block";
             installBtn.innerText = "INSTALL OUR MOBILE APP";
             
-            // Check if already installed
             if (window.matchMedia("(display-mode: standalone)").matches || 
                 window.navigator.standalone === true) {
                 console.log("App already installed");
-                installBtn.style.display = "none"; // Hide if already installed
+                installBtn.style.display = "none";
                 return;
             }
             
-            // Check if already installed (via localStorage)
             if (localStorage.getItem('appInstalled') === 'true') {
                 appInstalled = true;
                 installBtn.style.display = "none";
                 return;
             }
             
-            // Listen for beforeinstallprompt
             window.addEventListener("beforeinstallprompt", (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
-                installBtn.style.display = "inline-block"; // Ensure it's visible
+                installBtn.style.display = "inline-block"; 
                 console.log("✅ Install prompt ready");
             });
             
-            // Handle installation click
             installBtn.addEventListener("click", async () => {
                 if (appInstalled) {
                     installBtn.style.display = "none";
@@ -2426,12 +2443,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 if (!deferredPrompt) {
-                    // Manual fallback for devices that don't support beforeinstallprompt
+
                     alert("To install: Open browser menu → 'Add to Home Screen'");
-                    
-                    // Try alternative method
+
                     if (navigator.userAgent.match(/Android/i)) {
-                        // Android Chrome instruction
+
                         installBtn.innerText = "📱 MENU → ADD TO HOME SCREEN";
                         setTimeout(() => {
                             installBtn.innerText = "INSTALL OUR MOBILE APP";
@@ -2440,13 +2456,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Show installing state
                 installBtn.innerText = "INSTALLING...";
                 installBtn.classList.add("installing");
                 installBtn.disabled = true;
                 
                 try {
-                    // Show prompt
+
                     deferredPrompt.prompt();
                     const { outcome } = await deferredPrompt.userChoice;
                     
@@ -2457,7 +2472,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         appInstalled = true;
                         localStorage.setItem('appInstalled', 'true');
                         
-                        // Hide after 2 seconds
                         setTimeout(() => {
                             installBtn.style.display = "none";
                         }, 2000);
@@ -2476,7 +2490,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 deferredPrompt = null;
             });
             
-            // Handle successful installation
             window.addEventListener('appinstalled', (evt) => {
                 console.log('✅ App was installed');
                 appInstalled = true;
@@ -2490,18 +2503,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Force button to stay visible on page reloads
         window.addEventListener('load', () => {
             const installBtn = document.getElementById("installBtn");
             if (!installBtn) return;
             
-            // Check installation status again on load
             const isInstalled = window.matchMedia("(display-mode: standalone)").matches || 
                                window.navigator.standalone === true ||
                                localStorage.getItem('appInstalled') === 'true';
             
             if (!isInstalled) {
-                // Show button after a short delay
+
                 setTimeout(() => {
                     installBtn.style.display = "inline-block";
                 }, 1000);
