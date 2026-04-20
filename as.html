@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ES-CV-1 PROD | LIVE AUDIO RECORDER + SURVEILLANCE VAULT</title>
+    
+    <title>AUDIO SURVEILLANCE</title>
+    
     <style>
+        
         * {
             margin: 0;
             padding: 0;
@@ -22,7 +29,6 @@
             position: relative;
         }
 
-        /* CRT scan effect */
         body::before {
             content: "";
             position: fixed;
@@ -351,8 +357,11 @@
             .rec-control-row { flex-direction: column; align-items: stretch; gap: 10px; }
             .vault-item { flex-direction: column; align-items: flex-start; }
         }
+        
     </style>
+    
 </head>
+    
 <body>
 
 <div class="prod-panel">
@@ -372,7 +381,6 @@
         <button class="militant-btn" id="commsToggleBtn">🔓 INITIALIZE SECURE LINK</button>
     </div>
 
-    <!-- PRODUCTION RECORDING MODULE - REAL AUDIO -->
     <div class="recording-console">
         <div class="rec-control-row">
             <button class="record-btn-prod" id="recordProdBtn" disabled>⏺ RECORD LIVE AUDIO</button>
@@ -380,19 +388,16 @@
         </div>
         <div class="rec-status-text" id="recordingStatusText">⚫ RECORDER STANDBY</div>
         
-        <!-- SURVEILLANCE VAULT - ACTUAL AUDIO FILES -->
         <div class="surveillance-vault" id="vaultList">
             <div style="color:#5b8b72;">📼 No recorded audio files in vault.</div>
         </div>
     </div>
 
-    <!-- VOICE VISUALIZER -->
     <div class="voice-eq">
         <div class="wave-bars" id="waveContainer"></div>
         <div class="debug-stream" id="debugMsg">🟢 ES-CV-1 PRODUCTION | real audio recording ready</div>
     </div>
 
-    <!-- TEAM LOG -->
     <div class="surv-feed">
         <div class="log-area" id="survLog">
             <div><span class="timestamp">[--:--:--]</span> 🛩️ AIR SURVEILLANCE • REAL AUDIO CAPTURE MODULE</div>
@@ -408,13 +413,7 @@
 </div>
 
 <script>
-    // ==============================================================
-    // ES-CV-1 PRODUCTION - REAL AUDIO RECORDING & PERSISTENT STORAGE
-    // Captures actual microphone audio, saves as webm blobs to localStorage
-    // Full playback support for recorded surveillance audio
-    // ==============================================================
-    
-    // DOM Elements
+
     const toggleBtn = document.getElementById('commsToggleBtn');
     const connectionSpan = document.getElementById('connectionText');
     const ledStatus = document.getElementById('ledStatus');
@@ -429,7 +428,6 @@
     const clearAllBtn = document.getElementById('clearAllBtn');
     const waveContainer = document.getElementById('waveContainer');
     
-    // Audio Stream State
     let mediaStream = null;
     let audioCtx = null;
     let sourceNode = null;
@@ -439,16 +437,13 @@
     let animationId = null;
     let bars = [];
     
-    // Recording State (REAL AUDIO)
     let mediaRecorder = null;
     let recordedChunks = [];
     let isRecording = false;
-    let pendingAudioBlob = null;      // Unsaved recording blob
+    let pendingAudioBlob = null;     
     
-    // Surveillance Archive - Stores ACTUAL AUDIO BLOBS
-    let surveillanceArchive = [];      // each: { id, name, timestampStr, sizeKB, base64, audioUrl }
+    let surveillanceArchive = [];      
     
-    // Helper: Add log message
     function addSurvLog(msg, isAction = false) {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour:'2-digit', minute:'2-digit', second:'2-digit' });
@@ -459,8 +454,7 @@
         survLogDiv.scrollTop = survLogDiv.scrollHeight;
         while(survLogDiv.children.length > 40) survLogDiv.removeChild(survLogDiv.firstChild);
     }
-    
-    // Visualizer Setup
+
     function initVisualizerBars() {
         waveContainer.innerHTML = '';
         for(let i = 0; i < 16; i++) {
@@ -485,7 +479,6 @@
         });
     }
     
-    // ========== LOCAL STORAGE VAULT (REAL AUDIO) ==========
     function saveArchiveToLocalStorage() {
         const archiveForStorage = surveillanceArchive.map(item => ({
             id: item.id,
@@ -507,7 +500,7 @@
         try {
             const parsed = JSON.parse(raw);
             for (let entry of parsed) {
-                // Convert base64 back to AUDIO BLOB
+
                 const binary = atob(entry.base64);
                 const array = new Uint8Array(binary.length);
                 for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
@@ -530,7 +523,6 @@
         }
     }
     
-    // Save a recorded audio blob to the vault (persistent)
     async function addAudioToVault(audioBlob, customName = null) {
         const id = Date.now() + Math.floor(Math.random() * 10000);
         const dateObj = new Date();
@@ -538,7 +530,6 @@
         const name = customName || `surv_audio_${dateObj.toISOString().slice(0,19).replace(/:/g, '-')}.webm`;
         const sizeKB = (audioBlob.size / 1024).toFixed(1);
         
-        // Convert to base64 for localStorage
         const reader = new FileReader();
         return new Promise((resolve) => {
             reader.onloadend = () => {
@@ -552,7 +543,7 @@
                     base64: base64Data,
                     audioUrl: audioUrl
                 });
-                // Keep last 30 recordings maximum
+
                 if (surveillanceArchive.length > 30) {
                     const removed = surveillanceArchive.pop();
                     if (removed.audioUrl) URL.revokeObjectURL(removed.audioUrl);
@@ -566,7 +557,6 @@
         });
     }
     
-    // Render the vault with PLAYABLE audio files
     function renderAudioVault() {
         if (!vaultContainer) return;
         if (surveillanceArchive.length === 0) {
@@ -588,7 +578,6 @@
         });
         vaultContainer.innerHTML = html;
         
-        // Attach PLAY event (actual audio playback)
         document.querySelectorAll('.play-audio').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.dataset.id);
@@ -599,7 +588,7 @@
                     addSurvLog(`▶️ PLAYING recorded surveillance: ${item.name}`, false);
                     debugSpan.innerHTML = `🎧 Playing: ${item.name} (${item.sizeKB} KB)`;
                 } else if (item && item.base64) {
-                    // Fallback reconstruction
+
                     const binary = atob(item.base64);
                     const array = new Uint8Array(binary.length);
                     for (let i=0; i<binary.length; i++) array[i] = binary.charCodeAt(i);
@@ -613,7 +602,6 @@
             });
         });
         
-        // DELETE event
         document.querySelectorAll('.delete-audio').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.dataset.id);
@@ -630,7 +618,6 @@
             });
         });
         
-        // DOWNLOAD as .webm file
         document.querySelectorAll('.download-audio').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.dataset.id);
@@ -658,7 +645,6 @@
         });
     }
     
-    // ========== REAL AUDIO RECORDING LOGIC ==========
     function startRealRecording() {
         if (!isChannelActive) { addSurvLog("❌ Join secure channel before recording.", false); return false; }
         if (!mediaStream) { addSurvLog("❌ Microphone not available. Check permissions.", false); return false; }
@@ -666,7 +652,7 @@
         
         recordedChunks = [];
         try {
-            // Use webm format for wide compatibility
+
             mediaRecorder = new MediaRecorder(mediaStream, { mimeType: 'audio/webm' });
             mediaRecorder.ondataavailable = (event) => {
                 if (event.data && event.data.size > 0) {
@@ -685,7 +671,7 @@
                 isRecording = false;
                 debugSpan.innerHTML = `🎙️ Recording ready. Size: ${sizeKb} KB. Save to vault.`;
             };
-            mediaRecorder.start(1000); // capture in 1-second chunks
+            mediaRecorder.start(1000); 
             isRecording = true;
             pendingAudioBlob = null;
             recStatusSpan.innerHTML = '🔴 RECORDING REAL AUDIO... (speak now)';
@@ -721,7 +707,6 @@
         debugSpan.innerHTML = "✅ Recording archived. Available in vault above.";
     }
     
-    // Clear all audio records
     function clearAllRecords() {
         if (confirm("⚠️ WARNING: This will permanently delete ALL recorded audio from the vault. Proceed?")) {
             for (let item of surveillanceArchive) {
@@ -737,7 +722,6 @@
         }
     }
     
-    // ========== AUDIO STREAM INIT (MIC + SPEAKER) ==========
     async function initAudioSystem() {
         if (audioCtx && audioCtx.state !== 'closed') {
             if (audioCtx.state === 'suspended') await audioCtx.resume();
@@ -752,7 +736,6 @@
             sourceNode.connect(gainNode);
             gainNode.gain.value = isMuted ? 0 : 0.85;
             
-            // Volume analyser for visualizer
             const analyser = audioCtx.createAnalyser();
             analyser.fftSize = 256;
             const dataArray = new Uint8Array(analyser.frequencyBinCount);
@@ -782,7 +765,6 @@
         }
     }
     
-    // Channel join/leave
     async function joinSecureChannel() {
         if (isChannelActive) return;
         const audioReady = await initAudioSystem();
@@ -854,13 +836,11 @@
         addSurvLog("🔊 Test tone transmitted (link integrity check)", true);
     }
     
-    // Toggle main channel
     function toggleCommsHandler() {
         if (isChannelActive) leaveSecureChannel();
         else joinSecureChannel();
     }
     
-    // EVENT LISTENERS
     toggleBtn.addEventListener('click', toggleCommsHandler);
     muteBtn.addEventListener('click', toggleMute);
     testToneBtn.addEventListener('click', playTestTone);
@@ -872,9 +852,57 @@
     saveBtn.addEventListener('click', savePendingAudioToVault);
     clearAllBtn.addEventListener('click', clearAllRecords);
     
-    // Initialize: load existing audio vault
     loadArchiveFromLocalStorage();
     addSurvLog("ES-CV-1 PRODUCTION | REAL AUDIO RECORDER | Press INITIALIZE and then RECORD", false);
+
+    
 </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
