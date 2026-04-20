@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
   
-  <meta name="description" content="C CV-5">
+  <meta name="description" content="Compliance CV-5">
   
   <meta name="color-scheme" content="dark">
   
@@ -86,15 +86,18 @@
     @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.7; } }
 
     .app-container {
+      
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.2rem;
       position: relative;
       z-index: 10;
       display: none;
+      
     }
-    /* HEADER BARR */
+
     .command-header {
+      
       width: 100vw;
       position: relative;
       left: 50%;
@@ -107,34 +110,47 @@
       padding: 0.9rem 0;
       margin-bottom: 2rem;
       cursor: pointer;
+      
     }
+    
     .header-content {
+      
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.5rem;
       text-align: center;
+      
     }
+    
     .logo {
+      
       font-size: clamp(1.3rem, 5vw, 2.2rem);
       font-weight: 800;
       letter-spacing: 5px;
       color: var(--red);
       text-shadow: 0 0 4px rgba(255,0,0,0.5);
       font-family: 'Share Tech Mono';
+      
     }
-    /* CARDS */
+
     .section-card {
+      
       background: var(--card-bg);
       backdrop-filter: blur(4px);
       border: 1.5px solid var(--red);
       margin-bottom: 2rem;
       padding: clamp(1rem, 3vw, 1.8rem);
       transition: all 0.2s ease;
+      
     }
+    
     .section-card:hover {
+      
       border-color: #ff5555;
       box-shadow: 0 0 12px rgba(255,0,0,0.2);
+      
     }
+    
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -421,7 +437,7 @@ CV-5 DIRECTIVE (ACTIVE)
 
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">02. TEAM MESSAGE BOARD</h2>
+      <h2 class="section-title">Section 02. TEAM MESSAGE BOARD</h2>
       <span class="badge" id="msgCountBadge">0</span>
       <button class="btn" id="refreshMsgBtn"><i class="fas fa-sync-alt"></i></button>
     </div>
@@ -444,19 +460,19 @@ CV-5 DIRECTIVE (ACTIVE)
 
    <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">03. COMING SOON!</h2>
+      <h2 class="section-title">Section 03. COMING SOON!</h2>
     </div>
    </section>
 
       <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">04. COMING SOON!</h2>
+      <h2 class="section-title">Section 04. COMING SOON!</h2>
     </div>
    </section>
 
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">05. SARAH MNGUNI • NEURAL CORE</h2>
+      <h2 class="section-title">Section 05. SARAH MNGUNI • NEURAL CORE</h2>
       <span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ</span>
     </div>
     <div class="card">
@@ -469,8 +485,8 @@ CV-5 DIRECTIVE (ACTIVE)
     </div>
   </section>
 
-  <section class="section-card"><div class="section-header"><h2 class="section-title">04. RESERVED • TACTICAL OVERVIEW</h2><span class="badge">COMING SOON</span></div><div class="coming-soon"><i class="fas fa-chart-simple"></i> SECURE CHANNEL PENDING</div></section>
   <div class="footer-panel"><span>PSALMS 27:1 - THE LORD IS MY LIGHT AND SALVATION, OF WHOM SHALL I FEAR?</span></div>
+  
 </div>
 
 <script type="module">
@@ -492,8 +508,8 @@ CV-5 DIRECTIVE (ACTIVE)
   let commanderUnlocked = false;
   let replyingTo = null;
   let messagesUnsub = null;
-  let sessionMessages = [];    // local UI conversation memory
-  let permanentMemory = [];    // firestore persistent
+  let sessionMessages = [];    
+  let permanentMemory = [];    
   let memoryDocId = null;
 
   const showLoader = (show, text = "PROCESSING...") => {
@@ -718,7 +734,7 @@ CV-5 DIRECTIVE (ACTIVE)
       await loadPermanentMemory();
       setupMessagesListener();
       addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online. Awaiting orders.`);
-      // seed demo if empty
+
       const msgsSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
       if (msgsSnap.empty) {
         await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
