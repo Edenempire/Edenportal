@@ -139,22 +139,22 @@
       z-index: 10000;
     }
 
-    .header-emblem {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(1rem, 5vw, 4rem);
-      width: 100%;
-      flex-wrap: wrap;
-    }
+.header-emblem {
+  display: flex;
+  flex-direction: column;  /* Change from 'row' to 'column' */
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vh, 1rem);
+  width: 100%;
+      }
 
     .logo-container {
-      height: clamp(70px, 16vh, 110px);
-      width: clamp(70px, 16vh, 110px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  height: clamp(70px, 16vh, 110px);
+  width: clamp(70px, 16vh, 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
     .logo-img {
       width: 80%;
@@ -171,18 +171,18 @@
       border-color: #ffffff;
     }
 
-    .countdown-timer {
-      font-size: clamp(1rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--strike-blue);
-      font-family: 'Courier New', monospace;
-      background: transparent;
-      padding: 0.2rem 0;
-      letter-spacing: 4px;
-      border: none;
-      white-space: nowrap;
-      text-align: center;
-    }
+.countdown-timer {
+  font-size: clamp(1rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--strike-blue);
+  font-family: 'Courier New', monospace;
+  background: transparent;
+  padding: 0.2rem 0;
+  letter-spacing: 4px;
+  border: none;
+  white-space: nowrap;
+  text-align: center;
+}
 
     .tactical-menu-permanent {
       position: fixed;
