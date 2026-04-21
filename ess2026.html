@@ -445,11 +445,145 @@
     .audio-btn:hover { background: var(--strike-blue); color: #000; }
 
     @media (max-width: 480px) {
-      .player-row { flex-direction: column; align-items: flex-start; }
-      .player-captain { align-self: flex-start; }
-      .menu-panel-perm { width: 220px; }
-      #champion-story { width: 95%; }
-    }
+  :root {
+    --header-height: clamp(120px, 18vh, 150px);
+    --rail-width: 50px;
+  }
+
+  .command-center {
+    padding: 0.3rem clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .header-emblem {
+    gap: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .logo-container {
+    height: clamp(50px, 12vh, 70px);
+    width: clamp(50px, 12vh, 70px);
+  }
+
+  .countdown-timer {
+    letter-spacing: 2px;
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  }
+
+  .tactical-menu-permanent,
+  .quick-scroll-permanent {
+    top: 50vh;
+  }
+
+  .menu-panel-perm {
+    width: 260px;
+    max-height: 70vh;
+  }
+
+  .tactical-menu-permanent:hover .menu-panel-perm,
+  .menu-panel-perm:hover {
+    transform: translateY(-50%) translateX(58px);
+  }
+
+  .menu-item {
+    padding: 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .scroll-btn-perm,
+  .menu-trigger-perm {
+    font-size: 1.2rem;
+  }
+
+  main {
+    margin: calc(var(--header-height) + 1rem) 0 1rem 0;
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
+    gap: 1.5rem;
+  }
+
+  .ops-card {
+    padding: clamp(0.8rem, 2vw, 1rem);
+  }
+
+  .section-command {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .section-command h2 {
+    font-size: 1.2rem;
+  }
+
+  #champion-story {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .teams-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .team-card {
+    padding: 0.8rem;
+  }
+
+  .team-role {
+    font-size: 1.3rem;
+  }
+
+  .player-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+
+  .player-captain {
+    align-self: flex-start;
+  }
+
+  .table-container {
+    font-size: 0.75rem;
+  }
+
+  th, td {
+    padding: 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .color-key {
+    gap: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .footer-grid {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .live-data {
+    width: 90%;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .live-data div {
+    font-size: 0.7rem;
+  }
+
+  .copyright {
+    font-size: 0.6rem;
+    padding-top: 1rem;
+  }
+
+  .advanced-settings-grid {
+    gap: 0.8rem;
+  }
+
+  .audio-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}
     
     @media (min-width: 2000px) {
       :root { --rail-width: 110px; }
