@@ -74,7 +74,9 @@
         .branch-card,
         #main-header,
         #main-footer {
+            
             transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            
         }
 
         body.red-mode {
@@ -96,7 +98,9 @@
         body.red-mode #terminal-wrap,
         body.red-mode #main-header,
         body.red-mode #main-footer {
+            
             transition: all 0.4s ease;
+            
         }
         
         body.red-mode .hero-title {
@@ -262,10 +266,12 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .brand-text h1 {
+            
             font-family: var(--font-tactical);
             font-size: 1.8rem;
             letter-spacing: 4px;
             text-transform: uppercase;
+            
         }
 
         .brand-text span {
@@ -476,18 +482,24 @@
         @media (max-width: 768px) {
             
             .nav-system {
+                
                 width: 280px;
+                
             }
             
             #hamburger {
+                
                 width: 48px;
                 height: 48px;
                 right: 5px;
+                
             }
             
             .nav-link {
+                
                 padding: 14px 20px;
                 font-size: 1rem;
+                
             }
             
         }
@@ -639,11 +651,14 @@
         .ops-info h3 { font-family: var(--font-tactical); color: #fff; }
         .ops-info span { color: var(--cyan); font-family: var(--font-mono); font-size: 0.9rem; }
         .ops-stats {
+            
             padding: 20px 30px;
             background: rgba(0, 255, 255, 0.02);
             font-family: var(--font-mono);
             font-size: 0.9rem;
+            
         }
+        
         .stat-line { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px dotted rgba(0, 255, 255, 0.2); }
         .tier-1 { color: #ff0055; font-weight: bold; }
 
@@ -709,11 +724,14 @@
 
         .branch-card:hover .branch-logo { transform: scale(1.08); filter: brightness(1.1); }
         .logo-scan {
+            
             position: absolute; width: 100%; height: 40%; top: -50%;
             background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.3), transparent);
             animation: scanMove 4s linear infinite;
             pointer-events: none;
+            
         }
+        
         @keyframes scanMove { 0% { top: -50%; } 100% { top: 120%; } }
 
         #terminal-wrap {
@@ -867,7 +885,9 @@
         }
 
         @keyframes tacticalFade {
+            
             to { opacity: 0; visibility: hidden; }
+            
         }
 
         .splash-core {
@@ -988,11 +1008,14 @@
         }
 
         .loading-percentage {
+            
             color: #fff;
             font-weight: bold;
+            
         }
 
         .splash-loader {
+            
             width: 100%;
             height: 20px;
             background: #111;
@@ -1000,6 +1023,7 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 10px;
+            
         }
 
         .splash-bar {
