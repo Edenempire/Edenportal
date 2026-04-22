@@ -61,6 +61,7 @@
         }
 
         body::before {
+            
             content: "";
             position: fixed;
             top: 0;
@@ -70,9 +71,11 @@
             background: repeating-linear-gradient(0deg, rgba(200,50,50,0.02) 0px, rgba(200,50,50,0.02) 1px, transparent 1px, transparent 6px);
             pointer-events: none;
             z-index: 1;
+            
         }
 
         .laser-overlay {
+            
             position: fixed;
             top: 0;
             left: 0;
@@ -81,9 +84,11 @@
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
+            
         }
 
         .laser {
+            
             position: absolute;
             width: 1px;
             height: 100%;
@@ -91,6 +96,7 @@
             top: 0;
             animation: laserSweep linear infinite;
             opacity: 0;
+            
         }
 
         @keyframes laserSweep {
@@ -100,8 +106,8 @@
             100% { transform: translateX(100vw); opacity: 0; }
         }
 
-        /* minimal sniper hint (less intrusive on mobile) */
         .sniper-hint {
+            
             position: fixed;
             top: 50%;
             left: 50%;
@@ -112,29 +118,37 @@
             z-index: 2;
             border: 1px solid rgba(200,50,50,0.15);
             background: radial-gradient(circle, transparent 70%, rgba(200,50,50,0.02) 90%);
+            
         }
+        
         .sniper-hint::before,
         .sniper-hint::after {
             content: "";
             position: absolute;
             background: rgba(200,50,50,0.15);
         }
+        
         .sniper-hint::before {
+            
             top: 50%;
             left: 0;
             width: 100%;
             height: 1px;
             transform: translateY(-50%);
         }
+        
         .sniper-hint::after {
+            
             top: 0;
             left: 50%;
             width: 1px;
             height: 100%;
             transform: translateX(-50%);
+            
         }
 
         .main-container {
+            
             width: 100%;
             max-width: 100%;
             margin: 0;
@@ -142,52 +156,68 @@
             position: relative;
             z-index: 10;
             flex: 1;
+            
         }
 
         .mil-header {
+            
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(1px);
             border: 1px solid #cc3333;
             padding: 12px 14px;
             margin-bottom: 18px;
+            
         }
 
         .header-flex {
+            
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 10px;
+            
         }
 
         .sandf-logo {
+            
             display: inline-flex;
             align-items: center;
             gap: 6px;
             background: transparent;
+            
         }
+        
         .sandf-logo img {
+            
             height: 38px;
             width: auto;
             filter: drop-shadow(0 0 1px rgba(200,0,0,0.3));
+            
         }
+        
         .sandf-logo span {
+            
             font-size: 0.55rem;
             letter-spacing: 0.5px;
             opacity: 0.75;
+            
         }
 
         .live-time {
+            
             background: rgba(20,0,0,0.6);
             border: 1px solid #cc3333;
             padding: 4px 10px;
             font-size: 0.65rem;
             font-weight: bold;
             color: #cc7777;
+            
         }
 
         .centered-title h1 {
+            
             font-size: 1.2rem;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -195,24 +225,32 @@
             font-weight: 800;
             text-align: center;
             word-break: break-word;
+            
         }
+        
         @media (max-width: 480px) {
             .centered-title h1 { font-size: 1rem; }
         }
 
         .insignia-center {
+            
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
             margin-top: 6px;
             flex-wrap: wrap;
+            
         }
+        
         .stars-center {
+            
             display: flex;
             gap: 5px;
             font-size: 1.3rem;
+            
         }
+        
         .star-1, .star-2, .star-3, .star-4, .star-5, .star-6 {
             color: #cc4444;
             display: inline-block;
@@ -564,28 +602,27 @@
                 <div class="quick-stats-mini">
                     <div class="mini-stat">TIER-1 OPERATOR</div>
                     <div class="mini-stat">AEROSPACE ENGINEER</div>
-                    <div class="mini-stat">DP EDEN • CV-1</div>
                 </div>
             </div>
             <div class="quick-fact-item"><div class="quick-fact-label">CALLSIGNS</div><div class="quick-fact-value">BIG-JOE // OLAMA // FORTEZ</div></div>
             <div class="quick-fact-item"><div class="quick-fact-label">ORIGIN</div><div class="quick-fact-value">Marianhill, Durban // Hammarsdale</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">PHYSIQUE</div><div class="quick-fact-value">186cm // 98kg // 6% BF</div></div>
+            <div class="quick-fact-item"><div class="quick-fact-label">PHYSIQUE</div><div class="quick-fact-value">5'4 // 62kg // 6% BF</div></div>
             <div class="quick-fact-item"><div class="quick-fact-label">RANK/UNIT</div><div class="quick-fact-value">COMMANDER (SAAF) // SMU-7</div></div>
             <div class="quick-fact-item"><div class="quick-fact-label">AFFILIATION</div><div class="quick-fact-value">Mob Piru // Blood gang</div></div>
             <div class="quick-fact-item"><div class="quick-fact-label">STATUS</div><div class="quick-fact-value">REDCON-1 // CV-5</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">AERO PROJ</div><div class="quick-fact-value">Project Naledi // UAV // Avionics</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">CODE</div><div class="quick-fact-value">JS // Rust // Python // C++</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">WEAPONS</div><div class="quick-fact-value">Vektor CR-21 // FN FAL // Glock 19</div></div>
+            <div class="quick-fact-item"><div class="quick-fact-label">AEROSPACE ENGINEERING PROJECTS</div><div class="quick-fact-value">Project Naledi // Lift @ Angle of Attack</div></div>
+            <div class="quick-fact-item"><div class="quick-fact-label">PROGRAMMING LANGUAGE</div><div class="quick-fact-value">JavaScript</div></div>
+            
             <div class="quick-fact-item"><div class="quick-fact-label">SNIPER</div><div class="quick-fact-value">Expert // 1,200m // Tactical Optics</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">MOTTO</div><div class="quick-fact-value">"Soldier is the only power I show."</div></div>
-            <div class="quick-fact-item"><div class="quick-fact-label">CLEARANCE</div><div class="quick-fact-value">TIER-1 OMEGA // COSMIC TOP SECRET</div></div>
-            <div class="security-badge">⚡ SMU-7 OMEGA // AES-256-GCM // POST-QUANTUM // BIOMETRIC ⚡</div>
+            
+            <div class="quick-fact-item"><div class="quick-fact-label">MOTTO</div><div class="quick-fact-value">"War is all I know, War is all I'm told."</div></div>
+            <div class="quick-fact-item"><div class="quick-fact-label">CLEARANCE</div><div class="quick-fact-value">COMMANDER-IN-CHIEF</div></div>
+            
         </div>
-
-        <!-- MAIN PROFILE -->
+        
         <div class="main-profile-panel">
             <div class="deep-card">
-                <div class="deep-title">// AEROSPACE CERTIFICATES //</div>
+                <div class="deep-title">// QUALIFICATIONS //</div>
                 <div class="cert-item"><div class="cert-name">BEng Aeronautical Engineering (Cum Laude)</div><button class="btn-download" onclick="downloadCert('Aero_Engineering.pdf')">DOWNLOAD</button><iframe class="pdf-viewer" src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" title="PDF preview"></iframe></div>
                 <div class="cert-item"><div class="cert-name">SMU-7 Advanced Aerospace Systems</div><button class="btn-download" onclick="downloadCert('SMU7_Aerospace.pdf')">DOWNLOAD</button><iframe class="pdf-viewer" src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" title="PDF preview"></iframe></div>
                 <div class="cert-item"><div class="cert-name">Flight Test Engineer (FTE) Certification</div><button class="btn-download" onclick="downloadCert('FTE_Cert.pdf')">DOWNLOAD</button><iframe class="pdf-viewer" src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" title="PDF preview"></iframe></div>
