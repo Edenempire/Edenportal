@@ -13,12 +13,15 @@
     <style>
         
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         body {
+            
             min-height: 100vh;
             background: radial-gradient(ellipse at 30% 20%, #0a0f1a, #020408);
             font-family: 'Share Tech Mono', 'Courier New', 'Fira Code', monospace;
@@ -27,9 +30,11 @@
             justify-content: center;
             padding: 1rem;
             position: relative;
+            
         }
 
         body::before {
+            
             content: "";
             position: fixed;
             top: 0;
@@ -39,9 +44,11 @@
             background: repeating-linear-gradient(0deg, rgba(0,255,65,0.015) 0px, rgba(0,255,65,0.015) 2px, transparent 2px, transparent 6px);
             pointer-events: none;
             z-index: 10;
+            
         }
 
         .prod-panel {
+            
             max-width: 750px;
             width: 100%;
             background: rgba(4, 10, 16, 0.95);
@@ -51,9 +58,11 @@
             box-shadow: 0 30px 50px rgba(0,0,0,0.8), 0 0 25px rgba(0, 255, 150, 0.3);
             overflow: hidden;
             z-index: 20;
+            
         }
 
         .crypto-header {
+            
             background: #07100bd9;
             padding: 1rem 1.5rem;
             border-bottom: 2px solid #1eff6e;
@@ -61,9 +70,11 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 0.5rem;
+            
         }
 
         .callsign {
+            
             font-weight: 700;
             font-size: 1rem;
             letter-spacing: 2px;
@@ -72,15 +83,18 @@
         }
 
         .enc-level {
+            
             font-size: 0.65rem;
             background: #000000aa;
             padding: 0.25rem 0.9rem;
             border-radius: 30px;
             border: 1px solid #1eff6e;
             color: #bbffdd;
+            
         }
 
         .status-bar {
+            
             background: #03090ecc;
             padding: 0.8rem 1.5rem;
             display: flex;
@@ -89,32 +103,39 @@
             border-bottom: 1px solid #1f3a2b;
             flex-wrap: wrap;
             gap: 0.5rem;
+            
         }
 
         .live-badge {
+            
             display: flex;
             align-items: center;
             gap: 0.7rem;
             font-size: 0.8rem;
             font-weight: bold;
+            
         }
 
         .led-red {
+            
             width: 12px;
             height: 12px;
             background-color: #ff2a2a;
             border-radius: 50%;
             box-shadow: 0 0 6px #ff0000;
             animation: pulseRed 1.2s infinite;
+            
         }
 
         .led-green {
+            
             width: 12px;
             height: 12px;
             background-color: #1eff6e;
             border-radius: 50%;
             box-shadow: 0 0 10px #00ff66;
             animation: pulseGreen 1s infinite;
+            
         }
 
         @keyframes pulseRed {
@@ -127,19 +148,24 @@
         }
 
         .channel-id {
+            
             background: #00000077;
             padding: 0.25rem 0.9rem;
             border-radius: 24px;
             font-size: 0.7rem;
             font-weight: bold;
             color: #c2ffdb;
+            
         }
 
         .toggle-comms {
+            
             margin: 1.5rem 1.5rem 0.8rem 1.5rem;
+            
         }
 
         .militant-btn {
+            
             width: 100%;
             background: #0a121c;
             border: 2px solid #2e7d5e;
@@ -165,22 +191,27 @@
         }
 
         .recording-console {
+            
             background: #02070cd9;
             margin: 0.5rem 1.5rem;
             border-radius: 1.5rem;
             padding: 0.9rem 1.2rem;
             border: 1px solid #2c8f62;
+            
         }
 
         .rec-control-row {
+            
             display: flex;
             gap: 15px;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            
         }
 
         .record-btn-prod {
+            
             background: #1a1f2a;
             border: 1.5px solid #e04e3a;
             padding: 0.7rem 1.5rem;
@@ -191,6 +222,7 @@
             cursor: pointer;
             transition: 0.1s;
             font-size: 0.9rem;
+            
         }
 
         .record-btn-prod.recording-active {
@@ -207,6 +239,7 @@
         }
 
         .save-btn-prod {
+            
             background: #0f2a1c;
             border: 1px solid #2eff8a;
             padding: 0.7rem 1.5rem;
@@ -214,17 +247,21 @@
             color: #c6ffdf;
             font-weight: bold;
             cursor: pointer;
+            
         }
 
         .rec-status-text {
+            
             font-size: 0.7rem;
             margin-top: 12px;
             color: #b1ffcf;
             letter-spacing: 0.5px;
             font-family: monospace;
+            
         }
 
         .surveillance-vault {
+            
             max-height: 180px;
             overflow-y: auto;
             background: #010a0ecc;
@@ -232,9 +269,11 @@
             margin-top: 12px;
             padding: 8px 6px;
             font-size: 0.7rem;
+            
         }
 
         .vault-item {
+            
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -245,17 +284,21 @@
             border-left: 3px solid #2aff8c;
             flex-wrap: wrap;
             gap: 6px;
+            
         }
 
         .vault-filename {
+            
             color: #ccffdd;
             font-weight: 500;
             flex: 2;
             word-break: break-all;
             font-size: 0.7rem;
+            
         }
 
         .vault-actions button {
+            
             background: #14261e;
             border: none;
             margin: 0 4px;
@@ -266,35 +309,45 @@
             font-family: monospace;
             font-size: 0.65rem;
             transition: 0.05s linear;
+            
         }
 
         .vault-actions button:active {
+            
             background: #2a6e4e;
+            
         }
 
         .voice-eq {
+            
             margin: 0.5rem 1.5rem;
             background: #02070ccc;
             border-radius: 1.5rem;
             padding: 0.7rem 1rem;
+            
         }
 
         .wave-bars {
+            
             display: flex;
             align-items: center;
             gap: 5px;
             height: 48px;
+            
         }
 
         .bar {
+            
             flex: 1;
             background: #2eff88;
             height: 6px;
             border-radius: 4px;
             transition: height 0.07s ease-out;
+            
         }
 
         .debug-stream {
+            
             font-size: 0.65rem;
             background: #030b0f;
             padding: 8px 12px;
@@ -302,36 +355,46 @@
             text-align: center;
             color: #b0ffcf;
             margin-top: 8px;
+            
         }
 
         .surv-feed {
+            
             margin: 0.5rem 1.5rem 1rem 1.5rem;
             background: #030a0ecc;
             border-radius: 1.2rem;
             padding: 0.7rem;
             border-left: 3px solid #1eff6e;
+            
         }
 
         .log-area {
+            
             max-height: 100px;
             overflow-y: auto;
             font-size: 0.68rem;
             color: #caf5de;
+            
         }
 
         .timestamp {
+            
             color: #6effa3;
+            
         }
 
         .action-buttons {
+            
             display: flex;
             justify-content: center;
             gap: 12px;
             margin: 0.2rem 1.5rem 1rem 1.5rem;
             flex-wrap: wrap;
+            
         }
 
         .sec-btn {
+            
             background: #0e1c16;
             border: 1px solid #3a946c;
             padding: 0.5rem 1.2rem;
@@ -341,15 +404,18 @@
             font-family: monospace;
             cursor: pointer;
             font-size: 0.75rem;
+            
         }
 
         footer {
+            
             font-size: 0.55rem;
             text-align: center;
             padding: 0.9rem;
             color: #368f62;
             border-top: 1px solid #1c412f;
             background: #03090f80;
+            
         }
 
         @media (max-width: 550px) {
@@ -366,8 +432,7 @@
 
 <div class="prod-panel">
     <div class="crypto-header">
-        <span class="callsign">🔒 ES-CV-1 • REAL AUDIO RECORDER</span>
-        <span class="enc-level">⚡ AES-256 | LOCAL STORAGE VAULT</span>
+        <span class="callsign">Protocol-7</span>
     </div>
     <div class="status-bar">
         <div class="live-badge">
@@ -383,8 +448,8 @@
 
     <div class="recording-console">
         <div class="rec-control-row">
-            <button class="record-btn-prod" id="recordProdBtn" disabled>⏺ RECORD LIVE AUDIO</button>
-            <button class="save-btn-prod" id="saveProdBtn" disabled>💾 SAVE TO VAULT</button>
+            <button class="record-btn-prod" id="recordProdBtn" disabled>⏺ RECORD</button>
+            <button class="save-btn-prod" id="saveProdBtn" disabled>💾 SAVE</button>
         </div>
         <div class="rec-status-text" id="recordingStatusText">⚫ RECORDER STANDBY</div>
         
@@ -395,12 +460,12 @@
 
     <div class="voice-eq">
         <div class="wave-bars" id="waveContainer"></div>
-        <div class="debug-stream" id="debugMsg">🟢 ES-CV-1 PRODUCTION | real audio recording ready</div>
+        <div class="debug-stream" id="debugMsg">🟢 ready</div>
     </div>
 
     <div class="surv-feed">
         <div class="log-area" id="survLog">
-            <div><span class="timestamp">[--:--:--]</span> 🛩️ AIR SURVEILLANCE • REAL AUDIO CAPTURE MODULE</div>
+            <div><span class="timestamp">[--:--:--]</span> 🛩️ AIRSPACE SURVEILLANCE</div>
         </div>
     </div>
 
@@ -409,7 +474,7 @@
         <button class="sec-btn" id="testToneProdBtn" disabled>🔊 COMS TEST</button>
         <button class="sec-btn" id="clearAllBtn" disabled>🗑️ CLEAR ALL RECORDS</button>
     </div>
-    <footer>🔐 REAL AUDIO RECORDING | All captured audio saved as .webm files in browser vault | Click PLAY to listen</footer>
+    <footer>🔐 7</footer>
 </div>
 
 <script>
