@@ -7,7 +7,6 @@
   <meta charset="UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  
   <meta name="description" content="Compliance CV-5">
   
   <meta name="color-scheme" content="dark">
@@ -15,9 +14,7 @@
   <title>COMPLIANCE CV-5</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
   <link rel="icon" type="image/png" href="logo_tr.png">
   
   <script type="importmap">
@@ -68,19 +65,16 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.7rem; margin-top: 0.6rem; border-radius: 0 4px 4px 0; }
     .stars-rank { display: inline-flex; gap: 5px; margin-left: 10px; align-items: center; }
-    .mil-star { width: 18px; height: 18px; filter: drop-shadow(0 0 1px red); }
+    .mil-star { width: 18px; height: 18px; filter: drop-shadow(0 0 1px red); fill: #E5E4E2 !important; stroke: #b0b0b0 !important; }
     .toast-msg { background: #0a0000; border-left: 4px solid red; padding: 0.6rem; margin-bottom: 0.5rem; font-size: 0.8rem; animation: slideRight 0.25s ease; }
     @keyframes slideRight { from { opacity: 0; transform: translateX(60px);} to { opacity: 1; transform: translateX(0);} }
     .quick-nav { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 99; }
     .quick-nav button { background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); border: 1.5px solid red; color: red; width: 42px; height: 42px; cursor: pointer; border-radius: 4px; }
-    
     @media (max-width: 720px) { .app-container { padding: 0 0.8rem; } .quick-nav { right: 5px; } .quick-nav button { width: 34px; height: 34px; } .grid-2 { grid-template-columns: 1fr; } }
     .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
     .commander-badge { background: #330000; border: 1px solid #ff4444; font-size: 0.65rem; padding: 0.2rem 0.5rem; }
     #replyIndicatorBox { background: #2a0000; padding: 0.5rem; margin: 6px 0; border-left: 3px solid red; font-size: 0.7rem; display: none; }
     .protocol-status { font-family: monospace; letter-spacing: 1px; }
-    
-    /* tasklist styles */
     .task-item { background: #0a0000aa; border-left: 3px solid var(--red); padding: 0.6rem; margin-bottom: 0.6rem; transition: 0.1s; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
     .task-check { width: 22px; height: 22px; accent-color: red; cursor: pointer; }
     .task-title { flex: 2; font-weight: 600; word-break: break-word; }
@@ -90,20 +84,10 @@
     .add-task-panel { margin-top: 1rem; background: #0a000055; padding: 1rem; border: 1px dashed red; }
     .progress-bar { background: #2a0000; border-radius: 8px; height: 10px; width: 100%; overflow: hidden; margin-bottom: 12px; }
     .progress-fill { background: #ff1a1a; width: 0%; height: 100%; transition: width 0.2s; }
-
-      /* Override star colors to Platinum for CINC */
-.mil-star {
-    fill: #E5E4E2 !important;
-    stroke: #b0b0b0 !important;
-    filter: drop-shadow(0 0 2px rgba(229, 228, 226, 0.6));
-                }
-    
   </style>
-  
 </head>
   
 <body>
-  
 <div class="ambient-glow"></div>
 <div class="scan-lines"></div>
 <div class="quick-nav">
@@ -115,7 +99,7 @@
 <div class="pin-gate" id="pinGate">
   <div class="modal-box">
     <div class="logo" style="font-size:1.8rem;">COMPLIANCE CV-5</div>
-    <br><input type="password" id="pinInput" placeholder="ENTER ACCESS CODE" maxlength="8" style="text-align:center" autofocus>
+    <br><input type="password" id="pinInput" placeholder="ENTER ACCESS CODE" maxlength="1" style="text-align:center" autofocus>
     <button class="btn btn-primary" id="unlockBtn" style="margin-top:1.5rem; width:100%">CONFIRM</button>
   </div>
 </div>
@@ -128,6 +112,7 @@
     <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
 
+  <!-- SECTION 1: MISSION DIRECTIVE with inline edit for commander (pre-fill existing directive) -->
   <section class="section-card" id="sectionAlpha5">
     <div class="section-header">
       <h2 class="section-title">SECTION 01. PROTOCOL ALPHA-5 <span class="stars-rank" id="starRank"></span></h2>
@@ -188,9 +173,7 @@
       <button class="btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> SYNC</button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="taskProgressFill"></div></div>
-    <div id="tasksContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;">
-      <div style="text-align:center; padding:1rem;">LOADING OBJECTIVES...</div>
-    </div>
+    <div id="tasksContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;"></div>
     <div class="add-task-panel" id="addTaskPanel" style="display: none;">
       <h4><i class="fas fa-plus-circle"></i> COMMANDER: NEW OBJECTIVE</h4>
       <input type="text" id="newTaskTitle" placeholder="Objective title (e.g., 'Secure comms relay')">
@@ -221,7 +204,7 @@
 
 <script type="module">
   import { initializeApp } from "@firebase/app";
-  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment, where } from "@firebase/firestore";
+  import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, arrayUnion, arrayRemove, increment } from "@firebase/firestore";
 
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
@@ -268,13 +251,12 @@
     document.body.appendChild(modalDiv);
     const yesBtn = modalDiv.querySelector('#modalYes');
     const noBtn = modalDiv.querySelector('#modalNo');
-    const cleanup = () => { modalDiv.remove(); resolve(false); };
     yesBtn.onclick = () => { modalDiv.remove(); resolve(true); };
-    noBtn.onclick = cleanup;
+    noBtn.onclick = () => { modalDiv.remove(); resolve(false); };
   });
   const escapeHtml = (s) => s ? s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  async function loadMissionDirective() { if (!db) return; const ref = doc(db, 'cio', 'directive'); const snap = await getDoc(ref); if (snap.exists() && snap.data().text) document.getElementById('directiveText').innerText = snap.data().text; else { const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE."; document.getElementById('directiveText').innerText = defaultMsg; await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() }); } }
+  async function loadMissionDirective() { if (!db) return; const ref = doc(db, 'cio', 'directive'); const snap = await getDoc(ref); if (snap.exists() && snap.data().text) { const txt = snap.data().text; document.getElementById('directiveText').innerText = txt; } else { const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE."; document.getElementById('directiveText').innerText = defaultMsg; await setDoc(ref, { text: defaultMsg, timestamp: serverTimestamp() }); } }
   async function updateMissionDirective(newText) { if (!db) return; const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: newText, timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = newText; toast("MISSION DIRECTIVE UPDATED", "success"); }
   async function deleteMissionDirective() { if (!db) return; if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current directive?")) { const ref = doc(db, 'cio', 'directive'); await setDoc(ref, { text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: serverTimestamp() }); document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER."; toast("Mission directive wiped", "success"); } }
   
@@ -334,7 +316,9 @@
   async function toggleLike(msgId) { const ref = doc(db, 'messages', msgId); const snap = await getDoc(ref); if (snap.exists()) { const likedBy = snap.data().likedBy || []; const caller = document.getElementById('callsignField')?.value || 'OPERATOR'; if (likedBy.includes(caller)) await updateDoc(ref, { likes: increment(-1), likedBy: arrayRemove(caller) }); else await updateDoc(ref, { likes: increment(1), likedBy: arrayUnion(caller) }); } }
   function startReply(call, id, txt) { replyingTo = { id, callsign: call, text: txt }; const box = document.getElementById('replyIndicatorBox'); if (box) { box.style.display = 'block'; box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`; } }
   async function sendMessage() { let text = document.getElementById('messageText').value.trim(); if (!text) return; let finalText = text; if (replyingTo) { finalText = `@${replyingTo.callsign} ${text}`; replyingTo = null; const box = document.getElementById('replyIndicatorBox'); if(box) box.style.display = 'none'; } const callsign = document.getElementById('callsignField').value.trim() || 'UNKNOWN'; const dept = document.getElementById('deptField').value; await addDoc(collection(db, 'messages'), { callsign, department: dept, text: finalText, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); document.getElementById('messageText').value = ''; toast('Message transmitted', 'success'); }
-  async function broadcastDirective() { const txt = document.getElementById('directiveText').innerText; await addDoc(collection(db, 'messages'), { callsign: "CINC", department: "COMPLIANCE CV-5", text: `📢 DIRECTIVE BROADCAST: ${txt.substring(0,300)}`, timestamp: serverTimestamp(), likes: 0, likedBy: [] }); toast('Directive broadcasted', 'success'); }
+  
+  // SHARE: native Web Share API with fallback copy
+  async function broadcastDirective() { const txt = document.getElementById('directiveText').innerText; const shareData = { title: 'MISSION DIRECTIVE', text: txt }; if (navigator.share) { try { await navigator.share(shareData); toast('Shared via system dialog', 'success'); } catch(e) { if(e.name !== 'AbortError') toast('Share failed', 'error'); } } else { navigator.clipboard.writeText(txt); toast('📋 Directive copied to clipboard (share fallback)', 'success'); } }
   
   async function loadPermanentMemory() { if (!db) return []; const userId = "cv5_commander"; memoryDocId = `sarah_mem_${userId}`; const ref = doc(db, 'sarahPermanentMemory', memoryDocId); const snap = await getDoc(ref); if (snap.exists()) { permanentMemory = snap.data().conversations || []; if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80); } else { permanentMemory = []; await setDoc(ref, { conversations: [], updated: serverTimestamp() }); } document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`; return permanentMemory; }
   async function saveToPermanentMemory(role, content) { if (!db || !memoryDocId) return; permanentMemory.push({ role, content, ts: Date.now() }); if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100); const ref = doc(db, 'sarahPermanentMemory', memoryDocId); await setDoc(ref, { conversations: permanentMemory, updated: serverTimestamp() }, { merge: true }); document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`; }
@@ -345,8 +329,11 @@
   async function summarizeSession() { if(permanentMemory.length===0) return toast('No memory', 'info'); showLoader(true,"SUMMARIZING..."); try { const recent = permanentMemory.slice(-12).map(m=>m.content).join(' '); const summaryPrompt = `Summarize key mission facts (max 2 sentences): ${recent}`; const res = await callGroq(summaryPrompt, permanentMemory.slice(-8)); toast(`📜 MEMORY SUMMARY: ${res}`, 'success'); } catch(e){ toast('Summarize failed','error'); } finally { showLoader(false); } }
   function clearSessionOnly() { sessionMessages = []; document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai','Session display cleared. Permanent memory intact.'); toast('Local chat cleared','info'); }
 
+  // ENTER key for access code and Enter button support
+  document.getElementById('pinInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('unlockBtn').click(); });
+  
   document.getElementById('unlockBtn').addEventListener('click', async () => {
-    if (document.getElementById('pinInput').value === '11111111') {
+    if (document.getElementById('pinInput').value === '7') {
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('appContainer').style.display = 'block';
       toast('ACCESS GRANTED • CV-5 ONLINE', 'success');
@@ -357,12 +344,21 @@
       setupMessagesListener();
       initTasksListener(); 
       addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Sarah Mnguni online.`);
-      const msgsSnap = await getDocs(query(collection(db, 'messages'), limit(1)));
-      if (msgsSnap.empty) await addDoc(collection(db, 'messages'), { callsign: "SARAH-AI", department: "CORE", text: "Permanent memory active. I recall all previous mission data.", timestamp: serverTimestamp(), likes: 0, likedBy: [] });
     } else { toast('INVALID ACCESS CODE', 'error'); }
   });
 
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const pin = prompt('COMMANDER OVERRIDE PIN'); if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked', 'success'); } else toast('Access denied', 'error'); });
+  // Commander unlock: fill textarea with existing directive (NOT empty)
+  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { 
+    const pin = prompt('COMMANDER OVERRIDE PIN'); 
+    if (pin === '11111111') { 
+      commanderUnlocked = true; 
+      document.getElementById('cmdPanel').style.display = 'block';
+      // Prepopulate with current directive so commander can edit, not retype from scratch
+      const currentDir = document.getElementById('directiveText').innerText;
+      document.getElementById('newDirective').value = currentDir;
+      toast('Commander unlocked. Edit existing directive above.', 'success');
+    } else toast('Access denied', 'error'); 
+  });
   document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Commander panel locked', 'info'); });
   document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if (!commanderUnlocked) { toast('Locked: Commander authentication required', 'error'); return; } const newDir = document.getElementById('newDirective').value.trim(); if (newDir) { await updateMissionDirective(newDir); document.getElementById('newDirective').value = ''; } else toast('Directive empty', 'error'); });
   document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked) await deleteMissionDirective(); else toast('Unauthorized','error'); });
@@ -376,7 +372,6 @@
   document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
-
   document.getElementById('unlockTasksBtn').addEventListener('click', () => { tasksEditUnlocked = true; document.getElementById('addTaskPanel').style.display = 'block'; renderTasks([]); initTasksListener(); toast("TASK EDIT UNLOCKED: Commander can add/delete/edit", "success"); });
   document.getElementById('lockTasksPanelBtn').addEventListener('click', () => { tasksEditUnlocked = false; document.getElementById('addTaskPanel').style.display = 'none'; initTasksListener(); toast("Task panel locked (view only)", "info"); });
   document.getElementById('createTaskBtn').addEventListener('click', () => { const title = document.getElementById('newTaskTitle').value; const deadline = document.getElementById('newTaskDeadline').value; createNewTask(title, deadline); document.getElementById('newTaskTitle').value = ''; document.getElementById('newTaskDeadline').value = ''; });
@@ -385,51 +380,6 @@
 
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
-  
 </script>
-  
 </body>
-  
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
