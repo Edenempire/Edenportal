@@ -936,7 +936,6 @@
         <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER UPLOAD...</div>
         <div class="btn-group">
           <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
-          <button class="btn" id="broadcastDirectiveBtn"><i class="fas fa-broadcast-tower"></i> SHARE</button>
         </div>
         <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒</div>
       </div>
@@ -950,6 +949,7 @@
         </div>
       </div>
       <div class="btn-group" style="margin-top:0;">
+        <br>
         <button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK</button>
       </div>
     </div>
@@ -1055,12 +1055,14 @@
 <script>
   
   const firebaseConfig = {
+    
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
     authDomain: "eden-4a8d3.firebaseapp.com",
     projectId: "eden-4a8d3",
     storageBucket: "eden-4a8d3.firebasestorage.app",
     messagingSenderId: "421147129483",
     appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+    
   };
   
   const GROQ_KEY = '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';
@@ -1077,13 +1079,16 @@
   let tasksEditUnlocked = false;
 
   const showLoader = (show, text = "PROCESSING...") => {
+    
     const loader = document.getElementById('loaderOverlay');
     const txt = document.getElementById('loaderText');
     if (loader) loader.style.display = show ? 'flex' : 'none';
     if (txt && text) txt.textContent = text;
+    
   };
   
   const toast = (msg, type = 'info') => {
+    
     const stack = document.getElementById('toastStack');
     if (!stack) return;
     const div = document.createElement('div');
@@ -1092,9 +1097,11 @@
     div.innerHTML = `<span>${type === 'error' ? '⚠' : '✓'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
     stack.appendChild(div);
     setTimeout(() => div.remove(), 4000);
+    
   };
   
   const showConfirmModal = (title, msg) => new Promise(resolve => {
+    
     const modalDiv = document.createElement('div');
     modalDiv.className = 'pin-gate';
     modalDiv.style.zIndex = '40000';
@@ -1104,11 +1111,13 @@
     const noBtn = modalDiv.querySelector('#modalNo');
     yesBtn.onclick = () => { modalDiv.remove(); resolve(true); };
     noBtn.onclick = () => { modalDiv.remove(); resolve(false); };
+    
   });
   
   const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
   async function loadMissionDirective() { 
+    
     if (!db) return; 
     const ref = db.collection('cio').doc('directive'); 
     const snap = await ref.get(); 
@@ -1119,17 +1128,21 @@
       document.getElementById('directiveText').innerText = defaultMsg; 
       await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
     } 
+    
   }
   
   async function updateMissionDirective(newText) { 
+    
     if (!db) return; 
     const ref = db.collection('cio').doc('directive'); 
     await ref.set({ text: newText, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
     document.getElementById('directiveText').innerText = newText; 
     toast("MISSION DIRECTIVE UPDATED", "success"); 
+    
   }
   
   async function deleteMissionDirective() { 
+    
     if (!db) return; 
     if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current mission directive?")) { 
       const ref = db.collection('cio').doc('directive'); 
@@ -1137,9 +1150,11 @@
       document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW COMMAND."; 
       toast("Mission directive wiped", "success"); 
     } 
+    
   }
   
   function initTasksListener() {
+    
     if (!db) return;
     if (tasksUnsubscribe) tasksUnsubscribe();
     tasksUnsubscribe = db.collection('objectives').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
@@ -1155,9 +1170,11 @@
       renderTasks(tasksList);
       updateTaskProgress(tasksList);
     });
+    
   }
   
   function renderTasks(tasks) {
+    
     const container = document.getElementById('tasksContainer');
     if (!container) return;
     container.innerHTML = '';
@@ -1203,14 +1220,17 @@
   }
   
   function updateTaskProgress(tasks) {
+    
     const total = tasks.length;
     const completed = tasks.filter(t => t.completed === true).length;
     const percent = total === 0 ? 0 : (completed / total) * 100;
     document.getElementById('taskProgressFill').style.width = `${percent}%`;
     document.getElementById('taskCounter').innerHTML = `${completed} / ${total} COMPLETED`;
+    
   }
   
   async function createNewTask(title, deadline) {
+    
     if (!db || !title.trim()) return toast("Task title required", "error");
     await db.collection('objectives').add({ 
       title: title.trim(), 
@@ -1220,9 +1240,11 @@
       updatedAt: firebase.firestore.FieldValue.serverTimestamp() 
     });
     toast(`Objective "${title}" deployed`, "success");
+    
   }
 
   function setupMessagesListener() { 
+    
     if (!db) return; 
     messagesUnsub = db.collection('messages').orderBy('timestamp', 'desc').limit(120).onSnapshot((snap) => { 
       const board = document.getElementById('messageBoard'); 
@@ -1268,6 +1290,7 @@
   }
   
   async function toggleLike(msgId) { 
+    
     const ref = db.collection('messages').doc(msgId); 
     const snap = await ref.get(); 
     if (snap.exists) { 
@@ -1282,15 +1305,18 @@
   }
   
   function startReply(call, id, txt) { 
+    
     replyingTo = { id, callsign: call, text: txt }; 
     const box = document.getElementById('replyIndicatorBox'); 
     if (box) { 
       box.style.display = 'block'; 
       box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`; 
     } 
+    
   }
   
   async function sendMessage() { 
+    
     let text = document.getElementById('messageText').value.trim(); 
     if (!text) return; 
     let finalText = text; 
@@ -1328,9 +1354,11 @@
       navigator.clipboard.writeText(txt); 
       toast('📋 Directive copied to clipboard (share fallback)', 'success'); 
     } 
+    
   }
   
   async function loadPermanentMemory() { 
+    
     if (!db) return []; 
     const userId = "cv5_commander"; 
     memoryDocId = `sarah_mem_${userId}`; 
@@ -1345,19 +1373,23 @@
     } 
     document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`; 
     return permanentMemory; 
+    
   }
   
   async function saveToPermanentMemory(role, content) { 
+    
     if (!db || !memoryDocId) return; 
     permanentMemory.push({ role, content, ts: Date.now() }); 
     if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100); 
     const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
     await ref.set({ conversations: permanentMemory, updated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); 
     document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`; 
+    
   }
   
   async function callGroq(userMsg, contextMemory) { 
-    const systemBase = `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`; 
+    
+    const systemBase = `You are Sarah Mnguni, A South African girl AI soldier with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team, but mainly the Commander-in-Chief: Thato Morake, callsign: Hoss. Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`; 
     const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n'); 
     const messages = [{ role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') }, ...sessionMessages.slice(-6), { role: 'user', content: userMsg }]; 
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { 
@@ -1368,9 +1400,11 @@
     if (!res.ok) throw new Error(`API ${res.status}`); 
     const data = await res.json(); 
     return data.choices[0].message.content; 
+    
   }
   
   async function askSarah(promptText) { 
+    
     if (!promptText.trim()) return; 
     showLoader(true, "SARAH ACCESSING PERMANENT MEMORY..."); 
     try { 
@@ -1389,9 +1423,11 @@
     } finally { 
       showLoader(false); 
     } 
+    
   }
   
   function addAIBubble(role, text) { 
+    
     const container = document.getElementById('aiConversation'); 
     if (!container) return; 
     const bubble = document.createElement('div'); 
@@ -1399,9 +1435,11 @@
     bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`; 
     container.appendChild(bubble); 
     container.scrollTop = container.scrollHeight; 
+    
   }
   
   async function wipePermanent() { 
+    
     if (!await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'Erase ALL Sarah long-term memory?')) return; 
     permanentMemory = []; 
     const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
@@ -1410,9 +1448,11 @@
     addAIBubble('ai', '⚠️ Permanent memory wiped.'); 
     document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset`; 
     toast('Permanent memory erased', 'success'); 
+    
   }
   
   async function summarizeSession() { 
+    
     if(permanentMemory.length===0) return toast('No memory', 'info'); 
     showLoader(true,"SUMMARIZING..."); 
     try { 
@@ -1425,27 +1465,35 @@
     } finally { 
       showLoader(false); 
     } 
+    
   }
   
   function clearSessionOnly() { 
+    
     sessionMessages = []; 
     document.getElementById('aiConversation').innerHTML = ''; 
     addAIBubble('ai','Session display cleared. Permanent memory intact.'); 
     toast('Local chat cleared','info'); 
+    
   }
 
   function loadLocalNotepad() { 
+    
     const saved = localStorage.getItem('cv5_constitution_notepad'); 
     if(saved) document.getElementById('richNotepad').innerHTML = saved; 
+    
   }
   
   function saveNotepad() { 
+    
     const content = document.getElementById('richNotepad').innerHTML; 
     localStorage.setItem('cv5_constitution_notepad', content); 
     toast('Notepad saved', 'success'); 
+    
   }
   
   function exportNotepad() { 
+    
     const content = document.getElementById('richNotepad').innerText || document.getElementById('richNotepad').innerHTML; 
     const blob = new Blob([content], {type:'text/plain'}); 
     const a = document.createElement('a'); 
@@ -1454,13 +1502,17 @@
     a.click(); 
     URL.revokeObjectURL(a.href); 
     toast('Exported', 'success'); 
+    
   }
   
   function applyFormat(command) { 
+    
     document.execCommand(command, false, null); 
+    
   }
   
   function loadMediaGallery() { 
+    
     const gallery = JSON.parse(localStorage.getItem('cv5_media_gallery') || '[]'); 
     const container = document.getElementById('mediaGallery'); 
     container.innerHTML = ''; 
@@ -1477,9 +1529,11 @@
       }; 
       container.appendChild(div); 
     }); 
+    
   }
   
   function uploadMedia(file) { 
+    
     if(!file) return; 
     const reader = new FileReader(); 
     reader.onload = (e) => { 
@@ -1491,15 +1545,19 @@
       toast('Media uploaded', 'success'); 
     }; 
     reader.readAsDataURL(file); 
+    
   }
   
   function clearMedia() { 
+    
     localStorage.removeItem('cv5_media_gallery'); 
     loadMediaGallery(); 
     toast('Media vault cleared', 'info'); 
+    
   }
   
   function uploadPdf(file) { 
+    
     if(file && file.type === 'application/pdf') { 
       const reader = new FileReader(); 
       reader.onload = (e) => { 
@@ -1510,6 +1568,7 @@
       }; 
       reader.readAsArrayBuffer(file); 
     } else toast('Select a PDF file', 'error'); 
+    
   }
 
   document.getElementById('pinInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('unlockBtn').click(); });
@@ -1536,6 +1595,7 @@
   });
 
   document.getElementById('unlockCmdBtn').addEventListener('click', async () => { 
+    
     const pin = prompt('COMMANDER OVERRIDE PIN'); 
     if (pin === '11111111') { 
       commanderUnlocked = true; 
@@ -1543,15 +1603,19 @@
       document.getElementById('newDirective').value = document.getElementById('directiveText').innerText; 
       toast('Commander unlocked. Edit existing directive above.', 'success'); 
     } else toast('Access denied', 'error'); 
+    
   });
   
   document.getElementById('lockCmdBtn').addEventListener('click', () => { 
+    
     commanderUnlocked = false; 
     document.getElementById('cmdPanel').style.display = 'none'; 
     toast('Commander panel locked', 'info'); 
+    
   });
   
   document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { 
+    
     if (!commanderUnlocked) { 
       toast('Locked: Commander authentication required', 'error'); 
       return; 
@@ -1561,16 +1625,21 @@
       await updateMissionDirective(newDir); 
       document.getElementById('newDirective').value = ''; 
     } else toast('Directive empty', 'error'); 
+    
   });
   
   document.getElementById('deleteMissionBtn').addEventListener('click', async () => { 
+    
     if(commanderUnlocked) await deleteMissionDirective(); 
     else toast('Unauthorized','error'); 
+    
   });
   
   document.getElementById('copyDirectiveBtn').addEventListener('click', () => { 
+    
     navigator.clipboard.writeText(document.getElementById('directiveText').innerText); 
     toast('Directive copied', 'success'); 
+    
   });
   
   document.getElementById('broadcastDirectiveBtn').addEventListener('click', broadcastDirective);
@@ -1588,11 +1657,13 @@
   });
   
   document.getElementById('aiPrompt').addEventListener('keypress', (e) => { 
+    
     if(e.key === 'Enter') { 
       e.preventDefault(); 
       const q = document.getElementById('aiPrompt').value.trim(); 
       if(q) askSarah(q); 
     } 
+    
   });
   
   document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
@@ -1600,38 +1671,48 @@
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
   
   document.getElementById('unlockTasksBtn').addEventListener('click', () => { 
+    
     tasksEditUnlocked = true; 
     document.getElementById('addTaskPanel').style.display = 'block'; 
     renderTasks([]); 
     initTasksListener(); 
     toast("TASK EDIT UNLOCKED", "success"); 
+    
   });
   
   document.getElementById('lockTasksPanelBtn').addEventListener('click', () => { 
+    
     tasksEditUnlocked = false; 
     document.getElementById('addTaskPanel').style.display = 'none'; 
     initTasksListener(); 
     toast("Task panel locked (view only)", "info"); 
+    
   });
   
   document.getElementById('createTaskBtn').addEventListener('click', () => { 
+    
     const title = document.getElementById('newTaskTitle').value; 
     const deadline = document.getElementById('newTaskDeadline').value; 
     createNewTask(title, deadline); 
     document.getElementById('newTaskTitle').value = ''; 
     document.getElementById('newTaskDeadline').value = ''; 
+    
   });
   
   document.getElementById('refreshTasksBtn').addEventListener('click', () => { 
+    
     toast("refreshing objectives...", "info"); 
     initTasksListener(); 
+    
   });
   
   document.getElementById('saveNotepadBtn').addEventListener('click', saveNotepad);
   document.getElementById('exportTxtBtn').addEventListener('click', exportNotepad);
   document.getElementById('clearNotepadBtn').addEventListener('click', () => { 
+    
     document.getElementById('richNotepad').innerHTML = ''; 
     saveNotepad(); 
+    
   });
   
   document.getElementById('boldBtn').addEventListener('click', () => applyFormat('bold'));
@@ -1646,9 +1727,11 @@
   
   document.getElementById('clearMediaBtn').addEventListener('click', clearMedia);
   document.getElementById('uploadPdfBtn').addEventListener('click', () => { 
+    
     const file = document.getElementById('pdfUploadInput').files[0]; 
     if(file) uploadPdf(file); 
     else toast('select PDF', 'error'); 
+    
   });
   
   document.getElementById('refreshPdfBtn').addEventListener('click', () => { 
