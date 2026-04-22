@@ -593,7 +593,6 @@
       .task-actions { width: 100%; justify-content: flex-end; }
     }
     
-    /* Medium Phones (480px - 639px) */
     @media (min-width: 480px) and (max-width: 639px) {
       .app-container { padding: 0 var(--spacing-sm); }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-sm); }
@@ -636,7 +635,6 @@
       .media-item img, .media-item video { max-width: 55px; max-height: 55px; }
     }
     
-    /* iPhone SE / Very Small Phones (320px - 374px) */
     @media (min-width: 320px) and (max-width: 374px) {
       .app-container { padding: 0 0.5rem; }
       .grid-2 { grid-template-columns: 1fr; gap: 0.5rem; }
@@ -663,7 +661,6 @@
       .footer-panel { font-size: 0.55rem; }
     }
     
-    /* Smart Watches (280px - 319px) */
     @media (max-width: 319px) {
       .app-container { padding: 0 0.3rem; }
       .grid-2 { grid-template-columns: 1fr; gap: 0.4rem; }
@@ -696,7 +693,6 @@
       .protocol-status { font-size: 0.5rem; }
     }
     
-    /* Foldable Devices / Very Narrow (up to 280px) */
     @media (max-width: 280px) {
       .app-container { padding: 0 0.2rem; }
       .section-title { font-size: 0.65rem; }
@@ -706,7 +702,6 @@
       .task-title { font-size: 0.6rem; }
     }
     
-    /* Print styles - tactical printouts */
     @media print {
       .quick-nav, .pin-gate, .loader-overlay, .btn, .reaction-bar, .ambient-glow, .scan-lines {
         display: none !important;
@@ -733,7 +728,6 @@
       }
     }
     
-    /* Touch-friendly adjustments for mobile */
     @media (hover: none) and (pointer: coarse) {
       .btn, .reaction-btn, .task-check, .quick-nav button {
         min-height: 44px;
@@ -747,28 +741,33 @@
       }
     }
     
-    /* High contrast / reduced motion preference */
     @media (prefers-reduced-motion: reduce) {
       .scan-lines, .ambient-glow, .spinner, .toast-msg, .message-item {
         animation: none !important;
       }
     }
     
-    /* Dark mode already enforced, but ensure consistency */
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #000000;
         --card-bg: #0a0000cc;
       }
     }
+    
   </style>
+  
 </head>
+  
 <body>
+  
 <div class="ambient-glow"></div>
 <div class="scan-lines"></div>
 <div class="quick-nav">
+  
   <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+  
   <button onclick="window.scrollTo({top:document.body.scrollHeight/2,behavior:'smooth'})"><i class="fas fa-arrows-alt-v"></i></button>
+  
   <button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"><i class="fas fa-chevron-down"></i></button>
 </div>
 
@@ -828,7 +827,7 @@
       <div class="card">
         <h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3>
         <input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE">
-        <select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>TACTICAL</option></select>
+        <select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>BREACH</option></select>
         <div id="replyIndicatorBox"></div>
         <textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea>
         <button class="btn btn-primary" id="sendMsgBtn" style="margin-top:6px;">ENCRYPT & SEND</button>
@@ -836,21 +835,21 @@
       </div>
       <div class="card">
         <h3><i class="fas fa-comments"></i> LIVE FEED</h3>
-        <div class="message-board" id="messageBoard"><div class="coming-soon" style="padding:1rem;">INITIALIZING COMMS...</div></div>
+        <div class="message-board" id="messageBoard"><div class="coming-soon" style="padding:1rem;">SYNCING...</div></div>
       </div>
     </div>
   </section>
 
   <section class="section-card" id="dynamicObjectivesSection">
     <div class="section-header">
-      <h2 class="section-title">SECTION 03. OPERATIONAL OBJECTIVES <i class="fas fa-tasks"></i></h2>
+      <h2 class="section-title">SECTION 03. MISSION OBJECTIVES <i class="fas fa-tasks"></i></h2>
       <span class="badge" id="taskCounter">0 / 0 COMPLETED</span>
       <button class="btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> SYNC</button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="taskProgressFill"></div></div>
     <div id="tasksContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;"></div>
     <div class="add-task-panel" id="addTaskPanel" style="display: none;">
-      <h4><i class="fas fa-plus-circle"></i> COMMANDER: NEW OBJECTIVE</h4>
+      <h4><i class="fas fa-plus-circle"></i> NEW OBJECTIVE</h4>
       <input type="text" id="newTaskTitle" placeholder="Objective title (e.g., 'Secure comms relay')">
       <input type="text" id="newTaskDeadline" placeholder="Deadline / ETA (optional)">
       <div class="btn-group"><button class="btn btn-primary" id="createTaskBtn">DEPLOY TASK</button><button class="btn" id="cancelAddTaskBtn">CANCEL</button></div>
@@ -861,14 +860,17 @@
   <section class="section-card" id="constitutionSection">
     <div class="section-header">
       <h2 class="section-title">SECTION 04. THE SOUTH AFRICAN CONSTITUTION DEPLOYMENT</h2>
-      <span class="badge">SAC.PDF • NOTEPAD+ • MEDIA VAULT</span>
     </div>
+    
     <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      
       <div class="card">
-        <h3><i class="fas fa-gavel"></i> CONSTITUTION REFERENCE (SAC.PDF)</h3>
-        <iframe id="pdfViewer" class="pdf-embed" src="SAC.pdf" title="South African Constitution"></iframe>
+        
+        <iframe id="pdfViewer" class="pdf-embed" src="sac.pdf" title="South African Constitution"></iframe>
+        
         <div class="btn-group"><button class="btn" id="refreshPdfBtn"><i class="fas fa-sync-alt"></i> RELOAD PDF</button></div>
-        <p style="font-size:0.7rem; margin-top:6px;">📁 Ensure SAC.pdf is in repo root. If missing, upload below.</p>
+        
+        <p style="font-size:0.7rem; margin-top:6px;">📁 ensure sac.pdf is in repo root. if missing, upload below.</p>
         <input type="file" id="pdfUploadInput" accept=".pdf">
         <button class="btn" id="uploadPdfBtn">UPLOAD PDF TO LOCAL</button>
       </div>
@@ -906,12 +908,14 @@
       <div id="memoryCounter" style="font-size:0.7rem; text-align:center; margin-top:0.6rem;">💾 PERMANENT MEMORY ACTIVE</div>
       <div class="btn-group" style="margin-top:12px;"><button class="btn" id="wipeMemoryBtn" style="border-color:#ff4444;">⚠️ WIPE PERMANENT MEMORY</button><button class="btn" id="summarizeMemoryBtn">SUMMARIZE</button></div>
     </div>
+    
   </section>
-  <div class="footer-panel"><span>PSALMS 27:1 - THE LORD IS MY LIGHT AND SALVATION, OF WHOM SHALL I FEAR?</span></div>
+  
+  <div class="footer-panel"><span>BE PROSPEROUS</span></div>
 </div>
 
 <script>
-  // Firebase config (same as before - keeping functionality intact)
+  
   const firebaseConfig = {
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
     authDomain: "eden-4a8d3.firebaseapp.com",
@@ -1516,6 +1520,25 @@
 
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  
 </script>
+  
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
