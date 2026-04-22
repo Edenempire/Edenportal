@@ -26,13 +26,16 @@
   <style>
     
     * { 
+      
       margin: 0; 
       padding: 0; 
       box-sizing: border-box; 
       -webkit-tap-highlight-color: transparent; 
+      
     }
     
     :root { 
+      
       --bg: #000000; 
       --card-bg: #0a0000cc; 
       --red: #ff1a1a; 
@@ -45,54 +48,68 @@
       --spacing-lg: 1.5rem;
       --spacing-xl: 2rem;
       --spacing-2xl: 3rem;
+      
     }
     
     body { 
+      
       background: var(--bg); 
       color: var(--text); 
       font-family: 'Share Tech Mono', 'Inter', monospace; 
       min-height: 100vh; 
       overflow-x: hidden; 
+      
     }
     
     .scan-lines { 
+      
       position: fixed; 
       inset: 0; 
       background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px); 
       pointer-events: none; 
       z-index: 1; 
       animation: drift 22s linear infinite; 
+      
     }
     
     @keyframes drift { 
+      
       0% { background-position: 0 0; } 
       100% { background-position: 0 100%; } 
+      
     }
     
     .ambient-glow { 
+      
       position: fixed; 
       inset: 0; 
       background: radial-gradient(circle at 30% 40%, rgba(255,30,30,0.03) 0%, transparent 70%); 
       pointer-events: none; 
       z-index: 1; 
       animation: pulseGlow 8s infinite alternate; 
+      
     }
     
     @keyframes pulseGlow { 
+      
       0% { opacity: 0.3; } 
       100% { opacity: 0.7; } 
+      
     }
     
     .app-container { 
+      
       max-width: 1400px; 
       margin: 0 auto; 
       padding: 0 var(--spacing-lg); 
       position: relative; 
       z-index: 10; 
       display: none; 
+      
     }
     
     .command-header { 
+      
       width: 100vw; 
       position: relative; 
       left: 50%; 
@@ -105,39 +122,49 @@
       padding: var(--spacing-md) 0; 
       margin-bottom: var(--spacing-xl); 
       cursor: pointer; 
+      
     }
     
     .header-content { 
+      
       max-width: 1400px; 
       margin: 0 auto; 
       padding: 0 var(--spacing-lg); 
       text-align: center; 
+      
     }
     
     .logo { 
+      
       font-size: clamp(1rem, 5vw, 2.2rem); 
       font-weight: 800; 
       letter-spacing: 5px; 
       color: var(--red); 
       text-shadow: 0 0 4px rgba(255,0,0,0.5); 
       font-family: 'Share Tech Mono'; 
+      
     }
     
     .section-card { 
+      
       background: var(--card-bg); 
       backdrop-filter: blur(4px); 
       border: 1.5px solid var(--red); 
       margin-bottom: var(--spacing-xl); 
       padding: clamp(0.75rem, 3vw, 1.8rem); 
       transition: all 0.2s ease; 
+      
     }
     
     .section-card:hover { 
+      
       border-color: #ff5555; 
       box-shadow: 0 0 12px rgba(255,0,0,0.2); 
+      
     }
     
     .section-header { 
+      
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
@@ -146,36 +173,46 @@
       border-bottom: 2px solid var(--red); 
       padding-bottom: var(--spacing-sm); 
       margin-bottom: var(--spacing-lg); 
+      
     }
     
     .section-title { 
+      
       font-size: clamp(0.85rem, 4vw, 1.4rem); 
       font-weight: 700; 
       letter-spacing: 1px; 
+      
     }
     
     .badge { 
+      
       background: rgba(255,0,0,0.2); 
       border: 1px solid var(--red); 
       padding: 0.2rem 0.7rem; 
       font-size: 0.7rem; 
       border-radius: 2px; 
+      
     }
     
     .grid-2 { 
+      
       display: grid; 
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
       gap: var(--spacing-lg); 
+      
     }
     
     .card { 
+      
       background: #050000aa; 
       border: 1px solid var(--red); 
       padding: var(--spacing-md); 
       transition: 0.1s linear; 
+      
     }
     
     input, textarea, select { 
+      
       width: 100%; 
       background: #0a0000; 
       border: 1px solid var(--red); 
@@ -184,15 +221,19 @@
       font-family: 'Share Tech Mono', monospace; 
       font-size: 0.85rem; 
       outline: none; 
+      
     }
     
     input:focus, textarea:focus, select:focus { 
+      
       border-color: #ff6666; 
       box-shadow: 0 0 6px rgba(255,0,0,0.3); 
       background: #1a0000; 
+      
     }
     
     .btn { 
+      
       background: transparent; 
       border: 1.5px solid var(--red); 
       color: var(--red); 
@@ -204,60 +245,78 @@
       transition: 0.12s linear; 
       border-radius: 2px; 
       white-space: nowrap;
+      
     }
     
     .btn-primary { 
+      
       background: var(--red); 
       color: black; 
       border-color: var(--red); 
+      
     }
     
     .btn-primary:hover { 
+      
       background: #cc0000; 
       transform: scale(0.97); 
+      
     }
     
     .btn:hover { 
+      
       background: rgba(255,0,0,0.2); 
+      
     }
     
     .message-board { 
+      
       max-height: 460px; 
       overflow-y: auto; 
       display: flex; 
       flex-direction: column; 
       gap: var(--spacing-sm); 
+      
     }
     
     .message-item { 
+      
       background: #0f0000aa; 
       border-left: 4px solid var(--red); 
       padding: var(--spacing-sm); 
       animation: fadeSlide 0.2s ease; 
+      
     }
     
     @keyframes fadeSlide { 
+      
       from { opacity: 0; transform: translateY(8px);} 
       to { opacity: 1; transform: translateY(0);} 
+      
     }
     
     .reaction-bar { 
+      
       display: flex; 
       gap: var(--spacing-sm); 
       margin-top: var(--spacing-sm); 
       flex-wrap: wrap; 
+      
     }
     
     .reaction-btn { 
+      
       background: rgba(255,0,0,0.1); 
       border: 1px solid red; 
       padding: 0.2rem 0.6rem; 
       font-size: 0.7rem; 
       cursor: pointer; 
       border-radius: 16px; 
+      
     }
     
     .footer-panel { 
+      
       position: sticky; 
       bottom: 0; 
       background: #000000ee; 
@@ -267,9 +326,11 @@
       text-align: center; 
       margin-top: var(--spacing-xl); 
       font-size: 0.7rem; 
+      
     }
     
     .pin-gate { 
+      
       position: fixed; 
       inset: 0; 
       background: black; 
@@ -278,18 +339,22 @@
       align-items: center; 
       justify-content: center; 
       z-index: 20000; 
+      
     }
     
     .modal-box { 
+      
       background: black; 
       border: 2px solid red; 
       max-width: 450px; 
       width: 90%; 
       padding: var(--spacing-xl); 
       text-align: center; 
+      
     }
     
     .loader-overlay { 
+      
       position: fixed; 
       inset: 0; 
       background: rgba(0,0,0,0.96); 
@@ -300,45 +365,57 @@
       z-index: 30000; 
       flex-direction: column; 
       gap: var(--spacing-md); 
+      
     }
     
     .spinner { 
+      
       width: 40px; 
       height: 40px; 
       border: 2px solid red; 
       border-top-color: transparent; 
       border-radius: 50%; 
       animation: spin 0.7s linear infinite; 
+      
     }
     
     @keyframes spin { 
+      
       to { transform: rotate(360deg); } 
+      
     }
     
     .ai-chat-bubble { 
+      
       background: #1a0000; 
       border-left: 3px solid red; 
       padding: var(--spacing-sm); 
       margin-top: var(--spacing-sm); 
       border-radius: 0 4px 4px 0; 
+      
     }
     
     .stars-rank { 
+      
       display: inline-flex; 
       gap: 5px; 
       margin-left: 10px; 
       align-items: center; 
+      
     }
     
     .mil-star { 
+      
       width: 18px; 
       height: 18px; 
       filter: drop-shadow(0 0 1px red); 
       fill: #E5E4E2 !important; 
       stroke: #b0b0b0 !important; 
+      
     }
     
     .toast-msg { 
+      
       background: #0a0000; 
       border-left: 4px solid red; 
       padding: var(--spacing-sm); 
@@ -347,14 +424,18 @@
       animation: slideRight 0.25s ease; 
       position: relative; 
       z-index: 21001; 
+      
     }
     
     @keyframes slideRight { 
+      
       from { opacity: 0; transform: translateX(60px);} 
       to { opacity: 1; transform: translateX(0);} 
+      
     }
     
     .quick-nav { 
+      
       position: fixed; 
       right: 16px; 
       top: 50%; 
@@ -363,9 +444,11 @@
       flex-direction: column; 
       gap: 12px; 
       z-index: 99; 
+      
     }
     
     .quick-nav button { 
+      
       background: rgba(0,0,0,0.8); 
       backdrop-filter: blur(6px); 
       border: 1.5px solid red; 
@@ -374,30 +457,38 @@
       height: 42px; 
       cursor: pointer; 
       border-radius: 4px; 
+      
     }
     
     .btn-group { 
+      
       display: flex; 
       gap: 8px; 
       flex-wrap: wrap; 
       margin-top: 8px; 
+      
     }
     
     #replyIndicatorBox { 
+      
       background: #2a0000; 
       padding: var(--spacing-sm); 
       margin: 6px 0; 
       border-left: 3px solid red; 
       font-size: 0.7rem; 
       display: none; 
+      
     }
     
     .protocol-status { 
+      
       font-family: monospace; 
       letter-spacing: 1px; 
+      
     }
     
     .task-item { 
+      
       background: #0a0000aa; 
       border-left: 3px solid var(--red); 
       padding: var(--spacing-sm); 
@@ -408,66 +499,84 @@
       gap: 12px; 
       flex-wrap: wrap; 
       justify-content: space-between; 
+      
     }
     
     .task-check { 
+      
       width: 22px; 
       height: 22px; 
       accent-color: red; 
       cursor: pointer; 
+      
     }
     
     .task-title { 
+      
       flex: 2; 
       font-weight: 600; 
       word-break: break-word; 
+      
     }
     
     .task-deadline { 
+      
       font-size: 0.7rem; 
       background: #1f0000; 
       padding: 0.2rem 0.5rem; 
       border-radius: 2px; 
       font-family: monospace; 
+      
     }
     
     .task-actions { 
+      
       display: flex; 
       gap: 6px; 
+      
     }
     
     .task-actions button { 
+      
       background: transparent; 
       border: 1px solid red; 
       padding: 4px 8px; 
       font-size: 0.65rem; 
       cursor: pointer; 
+      
     }
     
     .add-task-panel { 
+      
       margin-top: var(--spacing-md); 
       background: #0a000055; 
       padding: var(--spacing-md); 
       border: 1px dashed red; 
+      
     }
     
     .progress-bar { 
+      
       background: #2a0000; 
       border-radius: 8px; 
       height: 10px; 
       width: 100%; 
       overflow: hidden; 
       margin-bottom: 12px; 
+      
     }
     
     .progress-fill { 
+      
       background: #ff1a1a; 
       width: 0%; 
       height: 100%; 
       transition: width 0.2s; 
+      
     }
     
     .notepad-toolbar { 
+      
       display: flex; 
       flex-wrap: wrap; 
       gap: 6px; 
@@ -475,45 +584,50 @@
       background: #0f0000; 
       padding: 8px; 
       border: 1px solid red; 
+      
     }
     
     .media-gallery { 
+      
       display: flex; 
       flex-wrap: wrap; 
       gap: 12px; 
       margin-top: 16px; 
       max-height: 180px; 
       overflow-y: auto; 
+      
     }
     
     .media-item { 
+      
       background: #0a0000; 
       border: 1px solid red; 
       padding: 6px; 
       width: 80px; 
       text-align: center; 
       cursor: pointer; 
+      
     }
     
     .media-item img, .media-item video { 
+      
       max-width: 70px; 
       max-height: 70px; 
+      
     }
     
     .pdf-embed { 
+      
       width: 100%; 
       height: 500px; 
       border: 1px solid red; 
       background: #0a0000; 
       margin-bottom: var(--spacing-md); 
+      
     }
 
-    /* ============================================ */
-    /* COMPREHENSIVE MEDIA QUERIES - ALL DEVICES */
-    /* ============================================ */
-    
-    /* Ultra-Wide Desktops (2560px and above) */
     @media (min-width: 2560px) {
+      
       .app-container { 
         max-width: 1800px; 
         padding: 0 var(--spacing-2xl); 
@@ -530,41 +644,46 @@
       .section-title { font-size: 1.8rem; }
       .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
       input, textarea, select { padding: 0.85rem; font-size: 1rem; }
+      
     }
     
-    /* Large Desktops (1920px - 2559px) */
     @media (min-width: 1920px) and (max-width: 2559px) {
+      
       .app-container { max-width: 1600px; padding: 0 var(--spacing-xl); }
       .section-card { padding: var(--spacing-xl); }
       .grid-2 { gap: var(--spacing-xl); }
       .logo { font-size: 2.4rem; }
+      
     }
     
-    /* Standard Desktops (1440px - 1919px) */
     @media (min-width: 1440px) and (max-width: 1919px) {
+      
       .app-container { max-width: 1300px; }
       .grid-2 { gap: var(--spacing-lg); }
+      
     }
     
-    /* Small Desktops / Laptops (1024px - 1439px) */
     @media (min-width: 1024px) and (max-width: 1439px) {
+      
       .app-container { max-width: 1100px; padding: 0 var(--spacing-md); }
       .quick-nav { right: 12px; }
       .quick-nav button { width: 38px; height: 38px; }
+      
     }
     
-    /* Tablets Landscape (900px - 1023px) */
     @media (min-width: 900px) and (max-width: 1023px) {
+      
       .app-container { padding: 0 var(--spacing-md); }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-md); }
       .quick-nav { right: 10px; }
       .quick-nav button { width: 36px; height: 36px; font-size: 0.8rem; }
       .section-card { padding: var(--spacing-md); }
       .pdf-embed { height: 400px; }
+      
     }
     
-    /* Tablets Portrait (768px - 899px) */
     @media (min-width: 768px) and (max-width: 899px) {
+      
       .app-container { padding: 0 var(--spacing-md); }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-md); }
       .quick-nav { right: 8px; }
@@ -574,10 +693,11 @@
       .btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; white-space: normal; }
       .pdf-embed { height: 350px; }
       .message-board { max-height: 350px; }
+      
     }
     
-    /* Large Phones (640px - 767px) */
     @media (min-width: 640px) and (max-width: 767px) {
+      
       .app-container { padding: 0 var(--spacing-sm); }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-md); }
       .quick-nav { right: 6px; }
@@ -591,9 +711,11 @@
       .pdf-embed { height: 300px; }
       .task-item { flex-direction: column; align-items: flex-start; }
       .task-actions { width: 100%; justify-content: flex-end; }
+      
     }
     
     @media (min-width: 480px) and (max-width: 639px) {
+      
       .app-container { padding: 0 var(--spacing-sm); }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-sm); }
       .quick-nav { right: 5px; }
@@ -610,10 +732,11 @@
       .stars-rank .mil-star { width: 14px; height: 14px; }
       .message-item { font-size: 0.8rem; }
       .reaction-btn { font-size: 0.6rem; padding: 0.15rem 0.5rem; }
+      
     }
     
-    /* Small Phones (375px - 479px) */
     @media (min-width: 375px) and (max-width: 479px) {
+      
       .app-container { padding: 0 0.6rem; }
       .grid-2 { grid-template-columns: 1fr; gap: var(--spacing-sm); }
       .quick-nav { right: 4px; }
@@ -633,9 +756,11 @@
       .task-deadline { font-size: 0.6rem; }
       .media-item { width: 65px; }
       .media-item img, .media-item video { max-width: 55px; max-height: 55px; }
+      
     }
     
     @media (min-width: 320px) and (max-width: 374px) {
+      
       .app-container { padding: 0 0.5rem; }
       .grid-2 { grid-template-columns: 1fr; gap: 0.5rem; }
       .quick-nav { right: 3px; }
@@ -659,9 +784,11 @@
       .message-item { font-size: 0.7rem; }
       .reaction-btn { font-size: 0.55rem; padding: 0.1rem 0.4rem; }
       .footer-panel { font-size: 0.55rem; }
+      
     }
     
     @media (max-width: 319px) {
+      
       .app-container { padding: 0 0.3rem; }
       .grid-2 { grid-template-columns: 1fr; gap: 0.4rem; }
       .quick-nav { display: none; } /* Hide quick nav on watches for space */
@@ -691,18 +818,22 @@
       .media-item img, .media-item video { max-width: 45px; max-height: 45px; }
       .ai-chat-bubble { font-size: 0.6rem; }
       .protocol-status { font-size: 0.5rem; }
+      
     }
     
     @media (max-width: 280px) {
+      
       .app-container { padding: 0 0.2rem; }
       .section-title { font-size: 0.65rem; }
       .btn { font-size: 0.4rem; padding: 0.1rem 0.25rem; }
       .logo { font-size: 0.7rem; }
       .pdf-embed { height: 160px; }
       .task-title { font-size: 0.6rem; }
+      
     }
     
     @media print {
+      
       .quick-nav, .pin-gate, .loader-overlay, .btn, .reaction-bar, .ambient-glow, .scan-lines {
         display: none !important;
       }
@@ -726,9 +857,11 @@
         background: white;
         color: black;
       }
+      
     }
     
     @media (hover: none) and (pointer: coarse) {
+      
       .btn, .reaction-btn, .task-check, .quick-nav button {
         min-height: 44px;
         min-width: 44px;
@@ -739,19 +872,24 @@
       .reaction-btn {
         padding: 0.3rem 0.8rem;
       }
+      
     }
     
     @media (prefers-reduced-motion: reduce) {
+      
       .scan-lines, .ambient-glow, .spinner, .toast-msg, .message-item {
         animation: none !important;
       }
+      
     }
     
     @media (prefers-color-scheme: dark) {
+      
       :root {
         --bg: #000000;
         --card-bg: #0a0000cc;
       }
+      
     }
     
   </style>
@@ -795,7 +933,7 @@
     <div class="grid-2">
       <div class="card">
         <h3>DAILY MISSION DIRECTIVE</h3>
-        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER TRANSMISSION...</div>
+        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER UPLOAD...</div>
         <div class="btn-group">
           <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
           <button class="btn" id="broadcastDirectiveBtn"><i class="fas fa-broadcast-tower"></i> SHARE</button>
@@ -859,7 +997,7 @@
 
   <section class="section-card" id="constitutionSection">
     <div class="section-header">
-      <h2 class="section-title">SECTION 04. THE SOUTH AFRICAN CONSTITUTION DEPLOYMENT</h2>
+      <h2 class="section-title">SECTION 04. THE SOUTH AFRICAN CONSTITUTION: DEPLOYMENT</h2>
     </div>
     
     <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
@@ -870,7 +1008,7 @@
         
         <div class="btn-group"><button class="btn" id="refreshPdfBtn"><i class="fas fa-sync-alt"></i> RELOAD PDF</button></div>
         
-        <p style="font-size:0.7rem; margin-top:6px;">📁 ensure sac.pdf is in repo root. if missing, upload below.</p>
+        <p style="font-size:0.7rem; margin-top:6px;">📁 ensure sac.pdf is in root. if missing, upload below.</p>
         <input type="file" id="pdfUploadInput" accept=".pdf">
         <button class="btn" id="uploadPdfBtn">UPLOAD PDF TO LOCAL</button>
       </div>
@@ -897,7 +1035,7 @@
 
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">Section 05. SARAH MNGUNNI • NEURAL CORE</h2>
+      <h2 class="section-title">Section 05. SARAH MNGUNI • NEURAL CORE</h2>
       <span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ</span>
     </div>
     <div class="card">
@@ -977,7 +1115,7 @@
     if (snap.exists && snap.data().text) { 
       document.getElementById('directiveText').innerText = snap.data().text; 
     } else { 
-      const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE. STAND BY FOR COMMANDER DIRECTIVE."; 
+      const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE."; 
       document.getElementById('directiveText').innerText = defaultMsg; 
       await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
     } 
@@ -993,10 +1131,10 @@
   
   async function deleteMissionDirective() { 
     if (!db) return; 
-    if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current directive?")) { 
+    if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current mission directive?")) { 
       const ref = db.collection('cio').doc('directive'); 
-      await ref.set({ text: "⚠️ MISSION DELETED. AWAITING NEW ORDER.", timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
-      document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW ORDER."; 
+      await ref.set({ text: "⚠️ MISSION DELETED. AWAITING NEW COMMAND.", timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
+      document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW COMMAND."; 
       toast("Mission directive wiped", "success"); 
     } 
   }
@@ -1485,7 +1623,7 @@
   });
   
   document.getElementById('refreshTasksBtn').addEventListener('click', () => { 
-    toast("Refreshing objectives...", "info"); 
+    toast("refreshing objectives...", "info"); 
     initTasksListener(); 
   });
   
@@ -1503,14 +1641,14 @@
   document.getElementById('uploadMediaBtn').addEventListener('click', () => { 
     const file = document.getElementById('mediaUploadInput').files[0]; 
     if(file) uploadMedia(file); 
-    else toast('Select file', 'error'); 
+    else toast('select file', 'error'); 
   });
   
   document.getElementById('clearMediaBtn').addEventListener('click', clearMedia);
   document.getElementById('uploadPdfBtn').addEventListener('click', () => { 
     const file = document.getElementById('pdfUploadInput').files[0]; 
     if(file) uploadPdf(file); 
-    else toast('Select PDF', 'error'); 
+    else toast('select PDF', 'error'); 
   });
   
   document.getElementById('refreshPdfBtn').addEventListener('click', () => { 
@@ -1526,6 +1664,45 @@
 </body>
   
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
