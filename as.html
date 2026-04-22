@@ -180,14 +180,17 @@
             cursor: pointer;
             transition: 0.12s linear;
             box-shadow: 0 6px 0 #001e14;
+            
         }
 
         .militant-btn.active-comms {
+            
             background: radial-gradient(ellipse at center, #1b5538, #0b2a1c);
             border-color: #8effb0;
             color: #ffffff;
             text-shadow: 0 0 8px #00ffaa;
             box-shadow: 0 0 20px #1eff6e77;
+            
         }
 
         .recording-console {
@@ -231,6 +234,7 @@
             color: white;
             box-shadow: 0 0 12px #ff4422;
             animation: pulseRec 0.8s infinite;
+            
         }
 
         @keyframes pulseRec {
@@ -419,9 +423,11 @@
         }
 
         @media (max-width: 550px) {
+            
             .militant-btn { font-size: 1.1rem; padding: 0.8rem 0; }
             .rec-control-row { flex-direction: column; align-items: stretch; gap: 10px; }
             .vault-item { flex-direction: column; align-items: flex-start; }
+            
         }
         
     </style>
@@ -439,7 +445,7 @@
             <div class="led-red" id="ledStatus"></div>
             <span id="connectionText">OFFLINE / STANDBY</span>
         </div>
-        <div class="channel-id">📼 REAL AUDIO • .WEBM RECORDINGS</div>
+        <div class="channel-id">📼</div>
     </div>
 
     <div class="toggle-comms">
@@ -474,7 +480,7 @@
         <button class="sec-btn" id="testToneProdBtn" disabled>🔊 COMS TEST</button>
         <button class="sec-btn" id="clearAllBtn" disabled>🗑️ CLEAR ALL RECORDS</button>
     </div>
-    <footer>🔐 7</footer>
+    <footer>🔐</footer>
 </div>
 
 <script>
