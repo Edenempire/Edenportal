@@ -45,6 +45,7 @@
 
     html { scroll-behavior: smooth; width: 100%; height: 100%; }
     body {
+      
       font-family: 'Inter', 'Segoe UI', 'Courier New', monospace;
       background: var(--black-bg);
       color: var(--text-primary);
@@ -53,6 +54,7 @@
       width: 100%;
       overflow-x: hidden;
       position: relative;
+      
     }
 
     .radar-grid {
@@ -101,6 +103,7 @@
       box-shadow: none !important;
       
     }
+    
     @keyframes f22spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
     .contact-dot {
@@ -133,8 +136,10 @@
     }
 
     main, footer, .tactical-menu-permanent, .quick-scroll-permanent, .command-center {
+      
       position: relative;
       z-index: 10;
+      
     }
 
     .command-center {
@@ -379,8 +384,9 @@
     }
 
     #champion-story {
-      
-      width: 60%;
+
+      margin-top: 40px;
+      width: 70%;
       margin-left: auto;
       margin-right: auto;
       font-size: 20px;
