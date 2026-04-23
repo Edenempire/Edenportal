@@ -176,6 +176,7 @@
         }
         
         textarea {
+            
             width: 100%;
             background: #0a0f1a;
             border: none;
@@ -188,19 +189,28 @@
             outline: none;
             white-space: pre-wrap;
             tab-size: 2;
+            
         }
+        
         textarea:focus {
+            
             background: #0e1422;
+            
         }
+        
         .action-bar {
+            
             display: flex;
             gap: 12px;
             margin-top: 1rem;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            
         }
+        
         .btn {
+            
             background: #202a36;
             border: none;
             padding: 0.6rem 1.2rem;
@@ -214,37 +224,58 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            
         }
+        
         .btn-primary {
+            
             background: #2c7840;
             box-shadow: 0 2px 6px rgba(44, 120, 64, 0.3);
+            
         }
+        
         .btn-primary:hover {
+            
             background: #3e9a57;
             transform: translateY(-2px);
+            
         }
+        
         .btn-secondary {
+            
             background: #2a3649;
+            
         }
+        
         .btn-secondary:hover {
+            
             background: #3f4d64;
+            
         }
+        
         .output-area {
+            
             margin-top: 1.5rem;
             background: #07121c;
             border-radius: 1rem;
             border-left: 3px solid #4caf6e;
             padding: 1rem;
+            
         }
+        
         .output-label {
+            
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
             color: #84b78c;
             margin-bottom: 0.5rem;
+            
         }
+        
         .output-content {
+            
             font-family: monospace;
             font-size: 0.85rem;
             background: #03080f;
@@ -255,20 +286,27 @@
             color: #cbdde9;
             max-height: 200px;
             overflow-y: auto;
+            
         }
+        
         .error-output {
+            
             color: #ffad9a;
             border-left-color: #e55;
+            
         }
 
-        /* right side: documentation and snippets */
         .snippet-list {
+            
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             margin-bottom: 1.8rem;
+            
         }
+        
         .snippet-btn {
+            
             background: #0f1724;
             border: 1px solid #2a3a48;
             border-radius: 1rem;
@@ -280,75 +318,189 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            
         }
+        
         .snippet-btn i {
+            
             font-size: 1.2rem;
             color: #5fcb7a;
             width: 24px;
+            
         }
+        
         .snippet-btn:hover {
+            
             background: #1a2538;
             border-color: #4caf6e;
             transform: translateX(4px);
+            
         }
+        
         .doc-card {
+            
             background: #0b111e;
             border-radius: 1.2rem;
             padding: 1rem 1.2rem;
             margin-top: 1rem;
             border: 1px solid #2c3f33;
+            
         }
+        
         .doc-card h4 {
+            
             font-size: 1rem;
             margin-bottom: 0.5rem;
             color: #c3e0c7;
+            
         }
+        
         .doc-card p, .doc-card li {
+            
             font-size: 0.85rem;
             color: #b8cee4;
+            
         }
+        
         .doc-card ul {
+            
             padding-left: 1.2rem;
             margin-top: 0.5rem;
+            
         }
+        
         hr {
+            
             border-color: #2a3a48;
             margin: 1rem 0;
+            
         }
+        
         .footer-note {
+            
             text-align: center;
             font-size: 0.75rem;
             margin-top: 2.5rem;
             color: #5f7f9a;
+            
         }
 
         @media (max-width: 880px) {
+            
             .dashboard {
+                
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                
             }
+            
             body {
+                
                 padding: 1rem;
             }
+            
             .hero h1 {
+                
                 font-size: 2rem;
+                
             }
+            
         }
+        
         .highlight {
+            
             color: #8fef9b;
+            
         }
+
+        .async-popup-btn {
+            
+            background: #2c7840;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            
+        }
+        
+        .async-modal {
+            
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        
+        .async-modal-content {
+            
+            background: #0f1724;
+            border-radius: 1.5rem;
+            border: 1px solid #4caf6e;
+            padding: 2rem;
+            text-align: center;
+            
+        }
+        
+        .close-popup {
+            
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #9aaebf;
+            float: right;
+            margin-top: -1rem;
+            margin-right: -0.5rem;
+            
+        }
+        
+        .async-modal-body {
+            
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #8fef9b;
+            padding: 1.5rem 2rem;
+            
+        }
+        
     </style>
+    
 </head>
+    
 <body>
+    
 <div class="app-container">
     <div class="hero">
         <h1>
             <i class="fab fa-node-js"></i> 
             NODE.JS
         </h1>
-        <p>Asynchronous · Event-Driven · Server-Side JavaScript</p>
+        <p><button class="async-popup-btn" id="asyncPopupBtn"><i class="fas fa-hourglass-half"></i>Asynchronous</button> · Event-Driven · Server-Side JavaScript</p>
         <div class="badge"><i class="fas fa-code"></i> Live &nbsp;|&nbsp; Core Concepts</div>
     </div>
+
+    <div id="asyncModal" class="async-modal">
+    <div class="async-modal-content">
+        <button class="close-popup" id="closeModalBtn">&times;</button>
+        <div class="async-modal-body">
+            ONE NODE.JS PROCESS CAN JUGGLE THOUSANDS OF USERS. NO TRAFFIC JAM. ASYNC LETS NODE DO MANY THINGS AT ONCE USING A SINGLE THREAD.
+        </div>
+    </div>
+</div>
 
     <div class="dashboard">
 
@@ -782,6 +934,21 @@ console.log("http module is available in Node.js core.");`
     resetToDefault();
     
 </script>
+
+    <script>
+        
+        document.getElementById('asyncPopupBtn').onclick = () => {
+            document.getElementById('asyncModal').style.display = 'flex';
+        };
+        document.getElementById('closeModalBtn').onclick = () => {
+            document.getElementById('asyncModal').style.display = 'none';
+        };
+        window.onclick = (e) => {
+            if (e.target === document.getElementById('asyncModal')) {
+                document.getElementById('asyncModal').style.display = 'none';
+            }
+        };
+        </script>
     
 </body>
     
