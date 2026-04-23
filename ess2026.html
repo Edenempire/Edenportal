@@ -204,6 +204,7 @@
 }
 
     .tactical-menu-permanent {
+      
       position: fixed;
       left: 0;
       top: 55vh;                    
@@ -215,9 +216,11 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
+      
     }
 
     .menu-trigger-perm {
+      
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
@@ -230,10 +233,17 @@
       font-size: clamp(1.5rem, 2.5vw, 2.2rem);
       cursor: pointer;
       transition: 0.15s linear;
+      
     }
-    .menu-trigger-perm:hover { background: var(--strike-blue); color: #000; }
+    
+    .menu-trigger-perm:hover { 
+      
+      background: var(--strike-blue); color: #000; 
+    
+    }
 
     .menu-panel-perm {
+      
       position: absolute;
       left: 0;
       top: 50%;
@@ -249,16 +259,21 @@
       transition: 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
       max-height: 80vh;
       overflow-y: auto;
+      
     }
+    
     .tactical-menu-permanent:hover .menu-panel-perm,
     .menu-panel-perm:hover {
+      
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
       transform: translateY(-50%) translateX(calc(var(--rail-width) + 8px));
+      
     }
 
     .menu-item {
+      
       padding: 0.8rem;
       margin: 0.4rem 0;
       border: 2px solid var(--strike-blue);          
@@ -269,10 +284,13 @@
       transition: 0.1s;
       background: transparent;
       font-size: clamp(0.7rem, 2vw, 0.9rem);
+      
     }
+    
     .menu-item:hover { background: var(--strike-blue); color: black; }
 
     .quick-scroll-permanent {
+      
       position: fixed;
       right: 0;
       top: 55vh;                        
@@ -284,9 +302,11 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
+      
     }
 
     .scroll-btn-perm {
+      
       width: 100%;
       aspect-ratio: 1/1;
       background: var(--panel-bg);
@@ -299,10 +319,13 @@
       font-size: clamp(1.4rem, 2.2vw, 2rem);
       cursor: pointer;
       transition: 0.15s;
+      
     }
+    
     .scroll-btn-perm:hover { background: var(--strike-blue); color: #000; }
 
     main {
+      
       width: 100%;
       margin: calc(var(--header-height) + 2rem) 0 2rem 0;
       padding: 0 clamp(0.8rem, 3vw, 2rem);
@@ -311,18 +334,22 @@
       gap: clamp(2rem, 5vw, 4rem);
       z-index: 10;
       position: relative;
+      
     }
 
     .ops-card {
+      
       width: 100%;
       background: rgba(0, 20, 30, 0.65);
       border: 2px solid var(--border-light);       
       border-left: 5px solid var(--strike-blue);   
       border-right: 2px solid var(--strike-blue);
       padding: clamp(1rem, 3vw, 2rem);
+      
     }
 
     .section-command {
+      
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -331,44 +358,58 @@
       padding-bottom: 0.5rem;
       flex-wrap: wrap;
       gap: 0.5rem;
+      
     }
+    
     .section-command h2 {
+      
       font-size: clamp(1rem, 2.5vw, 1.8rem);
       color: var(--strike-blue);
       letter-spacing: 2px;
+      
     }
 
     #champion-story {
+      
       width: 80%;
       margin-left: auto;
       margin-right: auto;
       font-size: 20px;
+      
     }
 
     .teams-grid {
+      
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
+      
     }
 
     .team-card {
+      
       background: rgba(0, 30, 40, 0.7);
       border: 2px solid var(--strike-blue);         
       border-left: 10px solid var(--alpha-red);
       padding: 1.2rem;
+      
     }
+    
     .team-card.delta-force { border-left-color: var(--delta-green); }
 
     .team-role {
+      
       font-size: clamp(1.4rem, 3vw, 2rem);
       font-weight: 800;
       color: var(--strike-blue);
       border-bottom: 2px dashed var(--strike-blue);  
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
+      
     }
 
     .player-row {
+      
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -377,7 +418,9 @@
       padding: 0.5rem 0.8rem;
       margin: 0.5rem 0;
       flex-wrap: wrap;
+      
     }
+    
     .player-number { color: var(--strike-blue); font-weight: 800; min-width: 3ch; }
     .team-card .player-name { color: var(--alpha-red); font-weight: 700; min-width: 10ch; }
     .team-card.delta-force .player-name { color: var(--delta-green); }
@@ -393,6 +436,7 @@
     .delta-force .player-captain { background: var(--delta-green); }
 
     .table-container {
+      
       width: 100%;
       overflow-x: auto;
       border: 2px solid var(--strike-blue);         
@@ -407,51 +451,70 @@
     .upcoming-row { background: rgba(199, 110, 0, 0.5); }    
 
     footer {
+      
       background: rgba(0, 15, 25, 0.85);
       border-top: 6px solid var(--strike-blue);      
       padding: 2rem 1rem 1rem;
       margin-top: 3rem;
       width: 100%;
+      
     }
+    
     .footer-grid {
+      
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: clamp(1rem, 4vw, 3rem);
       margin-bottom: 2rem;
+      
     }
+    
     .live-data {
+      
       background: rgba(0, 20, 28, 0.7);
       border: 2px solid var(--strike-blue);          
       padding: 0.8rem 1.2rem;
       min-width: 200px;
+      
     }
+    
     .live-data div {
+      
       display: flex;
       justify-content: space-between;
       gap: 1rem;
       font-size: clamp(0.7rem, 2vw, 0.9rem);
+      
     }
+    
     .copyright {
+      
       text-align: center;
       color: var(--text-dim);
       border-top: 2px solid var(--strike-blue);   
       padding-top: 1.5rem;
       font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+      
     }
+    
     .copyright span { color: var(--strike-blue); }
 
     * { box-shadow: none !important; filter: none !important; text-shadow: none !important; }
 
     .advanced-settings-grid {
+      
       display: flex;
       flex-wrap: wrap;
       gap: 1.5rem;
       align-items: center;
       justify-content: center;
+      
     }
+    
     .audio-btn {
+      
       border: 2px solid var(--strike-blue);
       background: transparent;
       color: var(--strike-blue);
@@ -460,10 +523,13 @@
       font-weight: 600;
       transition: 0.1s;
       font-size: 0.85rem;
+      
     }
+    
     .audio-btn:hover { background: var(--strike-blue); color: #000; }
 
     @media (max-width: 480px) {
+      
   :root {
     --header-height: clamp(120px, 18vh, 150px);
     --rail-width: 50px;
@@ -503,47 +569,65 @@
   }
 
   .menu-item {
+    
     padding: 0.6rem;
     font-size: 0.75rem;
+    
   }
 
   .scroll-btn-perm,
   .menu-trigger-perm {
+    
     font-size: 1.2rem;
+    
   }
 
   main {
+    
     margin: calc(var(--header-height) + 1rem) 0 1rem 0;
     padding: 0 clamp(0.5rem, 2vw, 1rem);
     gap: 1.5rem;
+    
   }
 
   .ops-card {
+    
     padding: clamp(0.8rem, 2vw, 1rem);
+    
   }
 
   .section-command {
+    
     flex-direction: column;
     align-items: flex-start;
     gap: 0.3rem;
+    
   }
 
   .section-command h2 {
+    
     font-size: 1.2rem;
+    
   }
 
   #champion-story {
+    
     width: 100%;
     font-size: 16px;
+    
   }
 
   .teams-grid {
+    
     grid-template-columns: 1fr;
     gap: 1rem;
+    
   }
 
   .team-card {
+    
     padding: 0.8rem;
+    
   }
 
   .team-role {
@@ -695,8 +779,8 @@
       <div class="table-container"><table><thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead>
         <tbody id="league-tbody">
           
-          <tr><td style="color: darkred;">EDEN ALPHA</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td></tr>
-          <tr><td style="color: darkgreen;">EDEN DELTA</td><td>4</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
+          <tr><td style="color: red;">EDEN ALPHA</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td></tr>
+          <tr><td style="color: green;">EDEN DELTA</td><td>4</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
           
         </tbody>
       </table></div>
