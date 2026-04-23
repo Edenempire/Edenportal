@@ -3,76 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="description" content="Compliance CV-5 - Neural Core v4.2">
+  <meta name="description" content="Compliance CV-5 - Neural Core Online">
   <meta name="color-scheme" content="dark">
-  <title>COMPLIANCE CV-5 • SARAH NEURAL CORE</title>
+  <title>COMPLIANCE CV-5 • SARAH ACTIVE</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="icon" type="image/png" href="logo_tr.png">
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    :root { --bg: #000000; --card-bg: #0a0000cc; --red: #ff1a1a; --red-glow: #ff3333; --text: #ff1a1a; --border: #ff1a1a; --spacing-xs: 0.25rem; --spacing-sm: 0.5rem; --spacing-md: 1rem; --spacing-lg: 1.5rem; --spacing-xl: 2rem; --spacing-2xl: 3rem; }
-    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', 'Inter', monospace; min-height: 100vh; overflow-x: hidden; }
+    :root { --bg: #000000; --card-bg: #0a0000cc; --red: #ff1a1a; --text: #ff1a1a; --border: #ff1a1a; }
+    body { background: var(--bg); color: var(--text); font-family: 'Share Tech Mono', monospace; min-height: 100vh; overflow-x: hidden; }
     .scan-lines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,0,0,0.02) 0px, rgba(255,0,0,0.02) 2px, transparent 2px, transparent 8px); pointer-events: none; z-index: 1; animation: drift 22s linear infinite; }
     @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
     .ambient-glow { position: fixed; inset: 0; background: radial-gradient(circle at 30% 40%, rgba(255,30,30,0.03) 0%, transparent 70%); pointer-events: none; z-index: 1; animation: pulseGlow 8s infinite alternate; }
     @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.7; } }
-    .app-container { max-width: 1400px; margin: 0 auto; padding: 0 var(--spacing-lg); position: relative; z-index: 10; display: none; }
-    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: var(--spacing-md) 0; margin-bottom: var(--spacing-xl); cursor: pointer; }
-    .header-content { max-width: 1400px; margin: 0 auto; padding: 0 var(--spacing-lg); text-align: center; }
-    .logo { font-size: clamp(1rem, 5vw, 2.2rem); font-weight: 800; letter-spacing: 5px; color: var(--red); text-shadow: 0 0 4px rgba(255,0,0,0.5); font-family: 'Share Tech Mono'; }
-    .section-card { background: var(--card-bg); backdrop-filter: blur(4px); border: 1.5px solid var(--red); margin-bottom: var(--spacing-xl); padding: clamp(0.75rem, 3vw, 1.8rem); transition: all 0.2s ease; }
-    .section-card:hover { border-color: #ff5555; box-shadow: 0 0 12px rgba(255,0,0,0.2); }
-    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--spacing-sm); border-bottom: 2px solid var(--red); padding-bottom: var(--spacing-sm); margin-bottom: var(--spacing-lg); }
-    .section-title { font-size: clamp(0.85rem, 4vw, 1.4rem); font-weight: 700; letter-spacing: 1px; }
+    .app-container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 10; display: none; }
+    .command-header { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #000000dd; backdrop-filter: blur(12px); border-bottom: 3px solid var(--red); padding: 1rem 0; margin-bottom: 2rem; }
+    .header-content { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+    .logo { font-size: clamp(1rem, 5vw, 2.2rem); font-weight: 800; letter-spacing: 5px; color: var(--red); text-shadow: 0 0 4px rgba(255,0,0,0.5); }
+    .section-card { background: #0a0000cc; backdrop-filter: blur(4px); border: 1.5px solid var(--red); margin-bottom: 2rem; padding: 1.5rem; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--red); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    .section-title { font-size: clamp(0.85rem, 4vw, 1.4rem); font-weight: 700; }
     .badge { background: rgba(255,0,0,0.2); border: 1px solid var(--red); padding: 0.2rem 0.7rem; font-size: 0.7rem; border-radius: 2px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); }
-    .card { background: #050000aa; border: 1px solid var(--red); padding: var(--spacing-md); transition: 0.1s linear; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: #050000aa; border: 1px solid var(--red); padding: 1rem; }
     input, textarea, select { width: 100%; background: #0a0000; border: 1px solid var(--red); padding: 0.65rem; color: #ff4d4d; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; }
-    input:focus, textarea:focus, select:focus { border-color: #ff6666; box-shadow: 0 0 6px rgba(255,0,0,0.3); background: #1a0000; }
-    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.45rem 0.9rem; cursor: pointer; font-weight: 600; font-family: 'Share Tech Mono'; font-size: 0.75rem; transition: 0.12s linear; border-radius: 2px; white-space: nowrap; }
+    .btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); padding: 0.45rem 0.9rem; cursor: pointer; font-family: 'Share Tech Mono'; font-size: 0.75rem; transition: 0.12s linear; border-radius: 2px; }
     .btn-primary { background: var(--red); color: black; border-color: var(--red); }
     .btn-primary:hover { background: #cc0000; transform: scale(0.97); }
     .btn:hover { background: rgba(255,0,0,0.2); }
-    .message-board { max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: var(--spacing-sm); }
-    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: var(--spacing-sm); animation: fadeSlide 0.2s ease; }
+    .message-board { max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+    .message-item { background: #0f0000aa; border-left: 4px solid var(--red); padding: 0.5rem; animation: fadeSlide 0.2s ease; }
     @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
-    .reaction-bar { display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-sm); flex-wrap: wrap; }
+    .reaction-bar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .reaction-btn { background: rgba(255,0,0,0.1); border: 1px solid red; padding: 0.2rem 0.6rem; font-size: 0.7rem; cursor: pointer; border-radius: 16px; }
-    .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: var(--spacing-sm); text-align: center; margin-top: var(--spacing-xl); font-size: 0.7rem; }
+    .footer-panel { position: sticky; bottom: 0; background: #000000ee; backdrop-filter: blur(16px); border-top: 2px solid var(--red); padding: 0.5rem; text-align: center; margin-top: 2rem; font-size: 0.7rem; }
     .pin-gate { position: fixed; inset: 0; background: black; backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; z-index: 20000; }
-    .modal-box { background: black; border: 2px solid red; max-width: 450px; width: 90%; padding: var(--spacing-xl); text-align: center; }
-    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 30000; flex-direction: column; gap: var(--spacing-md); }
+    .modal-box { background: black; border: 2px solid red; max-width: 450px; width: 90%; padding: 2rem; text-align: center; }
+    .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 30000; flex-direction: column; gap: 1rem; }
     .spinner { width: 40px; height: 40px; border: 2px solid red; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: var(--spacing-sm); margin-top: var(--spacing-sm); border-radius: 0 4px 4px 0; word-break: break-word; white-space: pre-wrap; }
+    .ai-chat-bubble { background: #1a0000; border-left: 3px solid red; padding: 0.5rem; margin-top: 0.5rem; border-radius: 0 4px 4px 0; }
     .stars-rank { display: inline-flex; gap: 5px; margin-left: 10px; align-items: center; }
-    .mil-star { width: 18px; height: 18px; filter: drop-shadow(0 0 1px red); fill: #E5E4E2 !important; stroke: #b0b0b0 !important; }
-    .toast-msg { background: #0a0000; border-left: 4px solid red; padding: var(--spacing-sm); margin-bottom: var(--spacing-sm); font-size: 0.8rem; animation: slideRight 0.25s ease; position: relative; z-index: 21001; }
+    .mil-star { width: 18px; height: 18px; fill: #E5E4E2; stroke: #b0b0b0; }
+    .toast-msg { background: #0a0000; border-left: 4px solid red; padding: 0.5rem; margin-bottom: 0.5rem; font-size: 0.8rem; animation: slideRight 0.25s ease; position: relative; z-index: 21001; }
     @keyframes slideRight { from { opacity: 0; transform: translateX(60px);} to { opacity: 1; transform: translateX(0);} }
     .quick-nav { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 99; }
     .quick-nav button { background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); border: 1.5px solid red; color: red; width: 42px; height: 42px; cursor: pointer; border-radius: 4px; }
     .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-    #replyIndicatorBox { background: #2a0000; padding: var(--spacing-sm); margin: 6px 0; border-left: 3px solid red; font-size: 0.7rem; display: none; }
-    .protocol-status { font-family: monospace; letter-spacing: 1px; }
-    .task-item { background: #0a0000aa; border-left: 3px solid var(--red); padding: var(--spacing-sm); margin-bottom: var(--spacing-sm); transition: 0.1s; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
+    #replyIndicatorBox { background: #2a0000; padding: 0.5rem; margin: 6px 0; border-left: 3px solid red; font-size: 0.7rem; display: none; }
+    .task-item { background: #0a0000aa; border-left: 3px solid var(--red); padding: 0.5rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: space-between; }
     .task-check { width: 22px; height: 22px; accent-color: red; cursor: pointer; }
-    .task-title { flex: 2; font-weight: 600; word-break: break-word; }
-    .task-deadline { font-size: 0.7rem; background: #1f0000; padding: 0.2rem 0.5rem; border-radius: 2px; font-family: monospace; }
-    .task-actions { display: flex; gap: 6px; }
-    .task-actions button { background: transparent; border: 1px solid red; padding: 4px 8px; font-size: 0.65rem; cursor: pointer; }
-    .add-task-panel { margin-top: var(--spacing-md); background: #0a000055; padding: var(--spacing-md); border: 1px dashed red; }
+    .task-title { flex: 2; font-weight: 600; }
+    .task-deadline { font-size: 0.7rem; background: #1f0000; padding: 0.2rem 0.5rem; border-radius: 2px; }
+    .add-task-panel { margin-top: 1rem; background: #0a000055; padding: 1rem; border: 1px dashed red; display: none; }
     .progress-bar { background: #2a0000; border-radius: 8px; height: 10px; width: 100%; overflow: hidden; margin-bottom: 12px; }
     .progress-fill { background: #ff1a1a; width: 0%; height: 100%; transition: width 0.2s; }
-    .notepad-toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; background: #0f0000; padding: 8px; border: 1px solid red; }
-    .media-gallery { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; max-height: 180px; overflow-y: auto; }
-    .media-item { background: #0a0000; border: 1px solid red; padding: 6px; width: 80px; text-align: center; cursor: pointer; }
-    .media-item img, .media-item video { max-width: 70px; max-height: 70px; }
-    .pdf-embed { width: 100%; height: 500px; border: 1px solid red; background: #0a0000; margin-bottom: var(--spacing-md); }
-    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .quick-nav button { width: 34px; height: 34px; } }
-    @media (max-width: 480px) { .btn { white-space: normal; } }
+    @media (max-width: 768px) { .app-container { padding: 0 0.8rem; } .quick-nav { right: 5px; } .quick-nav button { width: 34px; height: 34px; } .grid-2 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -97,27 +85,27 @@
   <div class="loader-overlay" id="loaderOverlay"><div class="spinner"></div><div id="loaderText">SECURE CONNECTION</div></div>
 
   <header class="command-header">
-    <div class="header-content"><div class="logo"><a href="index.html" style="text-decoration: none; color: var(--red);">COMPLIANCE CV-5</a></div></div>
+    <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
 
-  <section class="section-card" id="sectionAlpha5">
+  <section class="section-card">
     <div class="section-header">
       <h2 class="section-title">PROTOCOL ALPHA-1 <span class="stars-rank" id="starRank"></span></h2>
-      <span class="badge"> CINC / PRESIDENCY [Thato 'Hoss' Morake.]</span>
+      <span class="badge">CINC / PRESIDENCY [Thato 'Hoss' Morake]</span>
     </div>
     <div class="grid-2">
       <div class="card">
         <h3>DAILY MISSION DIRECTIVE</h3>
         <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER UPLOAD...</div>
         <div class="btn-group"><button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button></div>
-        <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒</div>
+        <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒 CLASSIFIED</div>
       </div>
       <div class="card" id="cmdPanel" style="display:none;">
         <h3><i class="fas fa-crown"></i> COMMANDER-IN-CHIEF</h3>
-        <textarea id="newDirective" rows="4" placeholder="✍️ COMPOSE NEW MISSION DIRECTIVE... "></textarea>
-        <div class="btn-group" style="margin-top:8px;"><button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-upload"></i> UPDATE MISSION</button><button class="btn" id="deleteMissionBtn" style="border-color:#ff4444;"><i class="fas fa-trash-alt"></i> DELETE MISSION</button></div>
+        <textarea id="newDirective" rows="4" placeholder="COMPOSE NEW MISSION DIRECTIVE..."></textarea>
+        <div class="btn-group"><button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-upload"></i> UPDATE</button><button class="btn" id="deleteMissionBtn" style="border-color:#ff4444;"><i class="fas fa-trash-alt"></i> DELETE</button></div>
       </div>
-      <div class="btn-group" style="margin-top:0;"><br><button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK</button></div>
+      <div><button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK COMMANDER</button></div>
     </div>
   </section>
 
@@ -125,39 +113,23 @@
     <div class="section-header"><h2 class="section-title">SECTION 02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span><button class="btn" id="refreshMsgBtn"><i class="fas fa-sync-alt"></i></button></div>
     <div class="grid-2">
       <div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>BREACH</option></select><div id="replyIndicatorBox"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><button class="btn btn-primary" id="sendMsgBtn" style="margin-top:6px;">ENCRYPT & SEND</button><button class="btn" id="clearComposeBtn" style="margin-top:6px;">CLEAR</button></div>
-      <div class="card"><h3><i class="fas fa-comments"></i> LIVE FEED</h3><div class="message-board" id="messageBoard"><div class="coming-soon" style="padding:1rem;">SYNCING...</div></div></div>
+      <div class="card"><h3><i class="fas fa-comments"></i> LIVE FEED</h3><div class="message-board" id="messageBoard"><div style="padding:1rem;">SYNCING...</div></div></div>
     </div>
   </section>
 
-  <section class="section-card" id="dynamicObjectivesSection">
-    <div class="section-header"><h2 class="section-title">SECTION 03. MISSION OBJECTIVES <i class="fas fa-tasks"></i></h2><span class="badge" id="taskCounter">0 / 0 COMPLETED</span><button class="btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> SYNC</button></div>
-    <div class="progress-bar"><div class="progress-fill" id="taskProgressFill"></div></div>
-    <div id="tasksContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;"></div>
-    <div class="add-task-panel" id="addTaskPanel" style="display: none;"><h4><i class="fas fa-plus-circle"></i> NEW OBJECTIVE</h4><input type="text" id="newTaskTitle" placeholder="Objective title"><input type="text" id="newTaskDeadline" placeholder="Deadline / ETA (optional)"><div class="btn-group"><button class="btn btn-primary" id="createTaskBtn">DEPLOY TASK</button><button class="btn" id="cancelAddTaskBtn">CANCEL</button></div></div>
-    <div class="btn-group"><button class="btn" id="unlockTasksBtn"><i class="fas fa-lock-open"></i> UNLOCK TASK EDIT</button><button class="btn" id="lockTasksPanelBtn"><i class="fas fa-lock"></i> LOCK EDIT</button></div>
-  </section>
-
-  <section class="section-card" id="constitutionSection">
-    <div class="section-header"><h2 class="section-title">SECTION 04. THE SOUTH AFRICAN CONSTITUTION: DEPLOYMENT</h2></div>
-    <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-      <div class="card"><iframe id="pdfViewer" class="pdf-embed" src="sac.pdf" title="South African Constitution"></iframe><div class="btn-group"><button class="btn" id="refreshPdfBtn"><i class="fas fa-sync-alt"></i> RELOAD PDF</button></div><p style="font-size:0.7rem; margin-top:6px;">📁 ensure sac.pdf is in root. if missing, upload below.</p><input type="file" id="pdfUploadInput" accept=".pdf"><button class="btn" id="uploadPdfBtn">UPLOAD PDF TO LOCAL</button></div>
-      <div class="card"><h3><i class="fas fa-edit"></i> TACTICAL NOTEPAD</h3><div class="notepad-toolbar"><button class="btn" id="boldBtn"><i class="fas fa-bold"></i></button><button class="btn" id="italicBtn"><i class="fas fa-italic"></i></button><button class="btn" id="underlineBtn"><i class="fas fa-underline"></i></button><button class="btn" id="clearFormatBtn"><i class="fas fa-eraser"></i></button><button class="btn" id="exportTxtBtn"><i class="fas fa-download"></i> EXPORT</button><button class="btn" id="clearNotepadBtn"><i class="fas fa-trash"></i> CLEAR</button></div><div id="richNotepad" contenteditable="true" style="background:#0a0000; border:1px solid red; min-height:240px; padding:10px; color:#ff4d4d; font-family:'Share Tech Mono'; overflow-y:auto;"></div><div class="btn-group" style="margin-top:8px;"><button class="btn" id="saveNotepadBtn"><i class="fas fa-save"></i> SAVE TO LOCAL</button><span style="font-size:0.7rem;"> auto-saved</span></div><h4 style="margin-top:16px;"><i class="fas fa-file-image"></i> MEDIA & FILES (localStorage)</h4><input type="file" id="mediaUploadInput" accept="image/*,video/*,application/pdf,.txt"><button class="btn" id="uploadMediaBtn">UPLOAD MEDIA</button><div id="mediaGallery" class="media-gallery"></div><div class="btn-group"><button class="btn" id="clearMediaBtn">CLEAR ALL MEDIA</button></div></div>
-    </div>
-  </section>
-
-  <!-- ENHANCED SARAH SECTION - FULLY UPGRADED NEURAL CORE -->
+  <!-- SARAH MNGUNNI SECTION - FULLY WORKING -->
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">SECTION 05. SARAH MNGUNNI • NEURAL CORE v4.2</h2>
-      <span class="badge"><i class="fas fa-brain"></i> PERMANENT MEMORY • GROQ • RESILIENCE ENGINE</span>
+      <h2 class="section-title">SECTION 05. SARAH MNGUNNI • NEURAL CORE</h2>
+      <span class="badge"><i class="fas fa-brain"></i> GROQ • PERMANENT MEMORY</span>
     </div>
     <div class="card">
-      <div id="aiStatus" style="text-align:center; color:#ff8888;">🧠 NEURAL INTERFACE ACTIVE • CROSS-SESSION RECALL • LOW-LATENCY PROXY</div>
+      <div id="aiStatus" style="text-align:center; color:#ff8888;">🧠 NEURAL INTERFACE ACTIVE • PROXY: ONLINE</div>
       <div id="aiConversation" style="max-height:320px; overflow-y:auto; background:#050000; padding:0.7rem; margin:0.8rem 0; border:1px solid red;"></div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;"><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah — she remembers everything, even across time (Enter to send)" style="flex:1; min-width:150px;"></textarea><button class="btn" id="clearSessionBtn" title="Clear local session display"><i class="fas fa-eraser"></i></button></div>
+      <div style="display:flex; gap:8px;"><textarea id="aiPrompt" rows="2" placeholder="Talk to Sarah — she remembers everything (Enter to send)" style="flex:1"></textarea><button class="btn" id="clearSessionBtn"><i class="fas fa-eraser"></i></button></div>
       <button class="btn btn-primary" id="askAiBtn" style="margin-top:0.5rem; width:100%;">TRANSMIT TO SARAH</button>
       <div id="memoryCounter" style="font-size:0.7rem; text-align:center; margin-top:0.6rem;">💾 PERMANENT MEMORY ACTIVE</div>
-      <div class="btn-group" style="margin-top:12px;"><button class="btn" id="wipeMemoryBtn" style="border-color:#ff4444;">⚠️ WIPE PERMANENT MEMORY</button><button class="btn" id="summarizeMemoryBtn">SUMMARIZE</button><button class="btn" id="testProxyBtn">🔌 TEST PROXY</button></div>
+      <div class="btn-group" style="margin-top:12px;"><button class="btn" id="wipeMemoryBtn" style="border-color:#ff4444;">⚠️ WIPE MEMORY</button><button class="btn" id="summarizeMemoryBtn">SUMMARIZE</button></div>
     </div>
   </section>
   
@@ -183,9 +155,7 @@
   let memoryDocId = null;
   let tasksUnsubscribe = null;
   let tasksEditUnlocked = false;
-  
   const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
-  let proxyHealthy = false;
 
   const showLoader = (show, text = "PROCESSING...") => {
     const loader = document.getElementById('loaderOverlay');
@@ -204,128 +174,133 @@
     stack.appendChild(div);
     setTimeout(() => div.remove(), 4000);
   };
-  
-  const showConfirmModal = (title, msg) => new Promise(resolve => {
-    const modalDiv = document.createElement('div');
-    modalDiv.className = 'pin-gate';
-    modalDiv.style.zIndex = '40000';
-    modalDiv.innerHTML = `<div class="modal-box"><h3>${title}</h3><p style="margin:1rem 0;">${msg}</p><div style="display:flex; gap:1rem;"><button class="btn" id="modalNo">CANCEL</button><button class="btn btn-primary" id="modalYes">CONFIRM</button></div></div>`;
-    document.body.appendChild(modalDiv);
-    const yesBtn = modalDiv.querySelector('#modalYes');
-    const noBtn = modalDiv.querySelector('#modalNo');
-    yesBtn.onclick = () => { modalDiv.remove(); resolve(true); };
-    noBtn.onclick = () => { modalDiv.remove(); resolve(false); };
-  });
-  
+
   const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  // --- existing mission, tasks, messages functions (unchanged) ---
-  async function loadMissionDirective() { if (!db) return; const ref = db.collection('cio').doc('directive'); const snap = await ref.get(); if (snap.exists && snap.data().text) document.getElementById('directiveText').innerText = snap.data().text; else { const defaultMsg = "ORDER: PROTOCOL ALPHA-1 ACTIVE."; document.getElementById('directiveText').innerText = defaultMsg; await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); } }
-  async function updateMissionDirective(newText) { if (!db) return; const ref = db.collection('cio').doc('directive'); await ref.set({ text: newText, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('directiveText').innerText = newText; toast("MISSION DIRECTIVE UPDATED", "success"); }
-  async function deleteMissionDirective() { if (!db) return; if(await showConfirmModal("⚠️ DELETE MISSION", "Erase current mission directive?")) { const ref = db.collection('cio').doc('directive'); await ref.set({ text: "⚠️ MISSION DELETED. AWAITING NEW COMMAND.", timestamp: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('directiveText').innerText = "⚠️ MISSION DELETED. AWAITING NEW COMMAND."; toast("Mission directive wiped", "success"); } }
-  function initTasksListener() { if (!db) return; if (tasksUnsubscribe) tasksUnsubscribe(); tasksUnsubscribe = db.collection('objectives').orderBy('createdAt', 'asc').onSnapshot((snapshot) => { const container = document.getElementById('tasksContainer'); if (!container) return; if (snapshot.empty) { container.innerHTML = '<div style="text-align:center;padding:1rem;">⛔ No active objectives.</div>'; updateTaskProgress([]); return; } let tasksList = []; snapshot.forEach(docSnap => { tasksList.push({ id: docSnap.id, ...docSnap.data() }); }); renderTasks(tasksList); updateTaskProgress(tasksList); }); }
-  function renderTasks(tasks) { const container = document.getElementById('tasksContainer'); if (!container) return; container.innerHTML = ''; tasks.forEach(task => { const div = document.createElement('div'); div.className = 'task-item'; const isCompleted = task.completed || false; div.innerHTML = `<input type="checkbox" class="task-check" data-id="${task.id}" ${isCompleted ? 'checked' : ''} ${!tasksEditUnlocked ? 'disabled' : ''}><span class="task-title" style="${isCompleted ? 'text-decoration:line-through; opacity:0.7;' : ''}">${escapeHtml(task.title)}</span>${task.deadline ? `<span class="task-deadline"><i class="far fa-calendar-alt"></i> ${escapeHtml(task.deadline)}</span>` : ''}<div class="task-actions">${tasksEditUnlocked ? `<button class="btn delete-task" data-id="${task.id}"><i class="fas fa-trash"></i></button>` : ''}${tasksEditUnlocked && !isCompleted ? `<button class="btn edit-task" data-id="${task.id}" data-title="${escapeHtml(task.title)}" data-deadline="${escapeHtml(task.deadline || '')}"><i class="fas fa-edit"></i></button>` : ''}</div>`; container.appendChild(div); }); if (tasksEditUnlocked) { document.querySelectorAll('.task-check').forEach(cb => cb.addEventListener('change', async (e) => { const id = cb.getAttribute('data-id'); const completed = cb.checked; await db.collection('objectives').doc(id).update({ completed, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }); toast(`Task ${completed ? 'completed' : 'reopened'}`, 'success'); })); document.querySelectorAll('.delete-task').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(await showConfirmModal("DELETE OBJECTIVE", "Remove this task permanently?")) { await db.collection('objectives').doc(id).delete(); toast("Task deleted", "success"); } })); document.querySelectorAll('.edit-task').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); const oldTitle = btn.getAttribute('data-title'); const newTitle = prompt("Edit objective title:", oldTitle); if(newTitle && newTitle.trim()) { await db.collection('objectives').doc(id).update({ title: newTitle.trim(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }); toast("Objective updated", "success"); } else if(newTitle === "") toast("Title cannot be empty", "error"); })); } }
-  function updateTaskProgress(tasks) { const total = tasks.length; const completed = tasks.filter(t => t.completed === true).length; const percent = total === 0 ? 0 : (completed / total) * 100; document.getElementById('taskProgressFill').style.width = `${percent}%`; document.getElementById('taskCounter').innerHTML = `${completed} / ${total} COMPLETED`; }
-  async function createNewTask(title, deadline) { if (!db || !title.trim()) return toast("Task title required", "error"); await db.collection('objectives').add({ title: title.trim(), deadline: deadline.trim() || null, completed: false, createdAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }); toast(`Objective "${title}" deployed`, "success"); }
-  function setupMessagesListener() { if (!db) return; messagesUnsub = db.collection('messages').orderBy('timestamp', 'desc').limit(120).onSnapshot((snap) => { const board = document.getElementById('messageBoard'); if (!board) return; if (snap.empty) { board.innerHTML = '<div class="coming-soon">No messages yet. Be the first to transmit.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; } board.innerHTML = ''; snap.forEach(docSnap => { const m = docSnap.data(); const mid = docSnap.id; const timeStr = m.timestamp?.toDate ? m.timestamp.toDate().toLocaleString() : 'just now'; board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${timeStr}</small> <span class="badge">${escapeHtml(m.department || 'CV-5')}</span></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}" data-text="${escapeHtml((m.text || '').substring(0,50))}">💬 REPLY</button><button class="reaction-btn" data-delete="${mid}">🗑️ DELETE</button></div></div>`; }); document.getElementById('msgCountBadge').innerHTML = snap.size; document.querySelectorAll('[data-like]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-like'); await toggleLike(id); }; }); document.querySelectorAll('[data-reply]').forEach(btn => { btn.onclick = () => { const id = btn.getAttribute('data-reply'); const call = btn.getAttribute('data-call'); const txt = btn.getAttribute('data-text'); startReply(call, id, txt); }; }); document.querySelectorAll('[data-delete]').forEach(btn => { btn.onclick = async () => { const id = btn.getAttribute('data-delete'); if(await showConfirmModal('DELETE MESSAGE','Permanently delete?')) await db.collection('messages').doc(id).delete(); }; }); }, (error) => { console.error("Firestore error:", error); document.getElementById('messageBoard').innerHTML = '<div style="padding:1rem;color:#ff8888;">⚠️ CONNECTION ERROR. Check Firebase permissions.</div>'; toast("Firebase connection error", "error"); }); }
-  async function toggleLike(msgId) { const ref = db.collection('messages').doc(msgId); const snap = await ref.get(); if (snap.exists) { const likedBy = snap.data().likedBy || []; const caller = document.getElementById('callsignField')?.value || 'OPERATOR'; if (likedBy.includes(caller)) await ref.update({ likes: firebase.firestore.FieldValue.increment(-1), likedBy: firebase.firestore.FieldValue.arrayRemove(caller) }); else await ref.update({ likes: firebase.firestore.FieldValue.increment(1), likedBy: firebase.firestore.FieldValue.arrayUnion(caller) }); } }
-  function startReply(call, id, txt) { replyingTo = { id, callsign: call, text: txt }; const box = document.getElementById('replyIndicatorBox'); if (box) { box.style.display = 'block'; box.innerHTML = `↪️ REPLY TO ${call}: "${txt.substring(0,55)}" <button style="background:none;border:none;color:red;float:right;" onclick="this.parentElement.style.display='none'; window.replyingTo=null;">✕</button>`; } }
-  async function sendMessage() { let text = document.getElementById('messageText').value.trim(); if (!text) return; let finalText = text; if (replyingTo) { finalText = `@${replyingTo.callsign} ${text}`; replyingTo = null; const box = document.getElementById('replyIndicatorBox'); if(box) box.style.display = 'none'; } const callsign = document.getElementById('callsignField').value.trim() || 'UNKNOWN'; const dept = document.getElementById('deptField').value; await db.collection('messages').add({ callsign, department: dept, text: finalText, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, likedBy: [] }); document.getElementById('messageText').value = ''; toast('Message transmitted', 'success'); }
-  async function broadcastDirective() { const txt = document.getElementById('directiveText').innerText; if (navigator.share) { try { await navigator.share({ title: 'MISSION DIRECTIVE', text: txt }); toast('Shared via system dialog', 'success'); } catch(e) { if(e.name !== 'AbortError') toast('Share failed', 'error'); } } else { navigator.clipboard.writeText(txt); toast('📋 Directive copied to clipboard', 'success'); } }
-  
-  // --- SARAH MEMORY CORE (unchanged logic, only enhancements) ---
-  async function loadPermanentMemory() { if (!db) return []; const userId = "cv5_commander"; memoryDocId = `sarah_mem_${userId}`; const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); const snap = await ref.get(); if (snap.exists) { permanentMemory = snap.data().conversations || []; if (permanentMemory.length > 80) permanentMemory = permanentMemory.slice(-80); } else { permanentMemory = []; await ref.set({ conversations: [], updated: firebase.firestore.FieldValue.serverTimestamp() }); } document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • cross-session recall`; return permanentMemory; }
-  async function saveToPermanentMemory(role, content) { if (!db || !memoryDocId) return; permanentMemory.push({ role, content, ts: Date.now() }); if (permanentMemory.length > 120) permanentMemory = permanentMemory.slice(-100); const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); await ref.set({ conversations: permanentMemory, updated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`; }
-
-  // ENHANCED PROXY CALL WITH RETRY AND HEALTH CHECK
-  async function testProxyConnection() {
-    try {
-      const testResp = await fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', content: 'ping' }] }) });
-      proxyHealthy = testResp.status === 200 || testResp.status === 400; // 400 means endpoint exists but body format maybe off, that's fine
-      return proxyHealthy;
-    } catch(e) { proxyHealthy = false; return false; }
+  async function loadMissionDirective() { 
+    if (!db) return; 
+    const ref = db.collection('cio').doc('directive'); 
+    const snap = await ref.get(); 
+    if (snap.exists && snap.data().text) { 
+      document.getElementById('directiveText').innerText = snap.data().text; 
+    } else { 
+      const defaultMsg = "ORDER: PROTOCOL ALPHA-1 ACTIVE."; 
+      document.getElementById('directiveText').innerText = defaultMsg; 
+      await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
+    } 
   }
-  
+
+  function setupMessagesListener() { 
+    if (!db) return; 
+    messagesUnsub = db.collection('messages').orderBy('timestamp', 'desc').limit(50).onSnapshot((snap) => { 
+      const board = document.getElementById('messageBoard'); 
+      if (!board) return; 
+      if (snap.empty) { board.innerHTML = '<div>No messages yet.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; }
+      board.innerHTML = ''; 
+      snap.forEach(docSnap => { 
+        const m = docSnap.data(); 
+        const mid = docSnap.id; 
+        const timeStr = m.timestamp?.toDate ? m.timestamp.toDate().toLocaleString() : 'just now';
+        board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${timeStr}</small></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}">💬 REPLY</button></div></div>`; 
+      }); 
+      document.getElementById('msgCountBadge').innerHTML = snap.size; 
+    });
+  }
+
+  async function loadPermanentMemory() { 
+    if (!db) return []; 
+    memoryDocId = "sarah_mem_cv5"; 
+    const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
+    const snap = await ref.get(); 
+    if (snap.exists) { permanentMemory = snap.data().conversations || []; } 
+    else { permanentMemory = []; await ref.set({ conversations: [] }); }
+    document.getElementById('memoryCounter').innerHTML = `💾 ${permanentMemory.length} memories stored`;
+    return permanentMemory; 
+  }
+
+  async function saveToPermanentMemory(role, content) { 
+    if (!db || !memoryDocId) return; 
+    permanentMemory.push({ role, content, ts: Date.now() }); 
+    if (permanentMemory.length > 100) permanentMemory = permanentMemory.slice(-80); 
+    const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
+    await ref.set({ conversations: permanentMemory }, { merge: true }); 
+  }
+
   async function callGroq(userMsg, contextMemory) {
     const messages = [ 
-      { role: 'system', content: `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance. Be tactical, direct, and loyal to the constitution.` },
-      ...contextMemory.slice(-18).map(m => ({ role: m.role, content: m.content })),
+      { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator. Respond concisely in 1-3 sentences. Be direct and helpful.' },
+      ...contextMemory.slice(-12).map(m => ({ role: m.role, content: m.content })),
       { role: 'user', content: userMsg }
     ];
     
-    let lastError = null;
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000);
-        const response = await fetch(PROXY_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages }),
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-        const data = await response.json();
-        if (data.choices && data.choices[0] && data.choices[0].message) return data.choices[0].message.content;
-        else if (data.content) return data.content;
-        else throw new Error('Invalid response structure from proxy');
-      } catch (err) {
-        lastError = err;
-        console.warn(`Proxy attempt ${attempt} failed:`, err);
-        if (attempt === 1) await new Promise(r => setTimeout(r, 1000));
-      }
-    }
-    throw new Error(`Proxy unreachable: ${lastError?.message || 'connection failed'}`);
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, temperature: 0.7, max_tokens: 300 })
+    });
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data.choices && data.choices[0]) return data.choices[0].message.content;
+    throw new Error('Invalid response');
   }
-  
+
   async function askSarah(promptText) { 
     if (!promptText.trim()) return; 
-    showLoader(true, "SARAH ACCESSING PERMANENT MEMORY..."); 
+    showLoader(true, "SARAH PROCESSING..."); 
     try { 
       addAIBubble('user', promptText); 
       sessionMessages.push({ role: 'user', content: promptText }); 
       await saveToPermanentMemory('user', promptText); 
       const reply = await callGroq(promptText, permanentMemory); 
       addAIBubble('ai', reply); 
-      sessionMessages.push({ role: 'assistant', content: reply }); 
       await saveToPermanentMemory('assistant', reply); 
-      if (sessionMessages.length > 24) sessionMessages = sessionMessages.slice(-20); 
       document.getElementById('aiPrompt').value = ''; 
     } catch (err) { 
-      console.error("Sarah neural error:", err);
-      addAIBubble('ai', `⚠️ Neural link degraded: ${err.message}. Proxy health: ${proxyHealthy ? 'online' : 'offline'}. Ensure Render backend is running.`); 
-      toast(`Sarah error: ${err.message.substring(0,100)}`, 'error'); 
+      console.error(err);
+      addAIBubble('ai', `⚠️ Error: ${err.message}. Check proxy connection.`); 
+      toast(`Sarah error: ${err.message}`, 'error'); 
     } finally { 
       showLoader(false); 
     } 
   }
-  
+
   function addAIBubble(role, text) { 
     const container = document.getElementById('aiConversation'); 
     if (!container) return; 
     const bubble = document.createElement('div'); 
     bubble.className = 'ai-chat-bubble'; 
-    bubble.innerHTML = `<strong>${role === 'user' ? '👤 OPERATOR' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`; 
+    bubble.innerHTML = `<strong>${role === 'user' ? '👤 YOU' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`; 
     container.appendChild(bubble); 
     container.scrollTop = container.scrollHeight; 
   }
-  
-  async function wipePermanent() { if (!await showConfirmModal('⚠️ DANGER: WIPE PERMANENT MEMORY', 'Erase ALL Sarah long-term memory?')) return; permanentMemory = []; const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); await ref.set({ conversations: [], updated: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai', '⚠️ Permanent memory wiped.'); document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • 0 exchanges • reset`; toast('Permanent memory erased', 'success'); }
-  async function summarizeSession() { if(permanentMemory.length===0) return toast('No memory', 'info'); showLoader(true,"SUMMARIZING..."); try { const recent = permanentMemory.slice(-12).map(m=>m.content).join(' '); const summaryPrompt = `Summarize key mission facts (max 2 sentences): ${recent}`; const res = await callGroq(summaryPrompt, permanentMemory.slice(-8)); toast(`📜 MEMORY SUMMARY: ${res}`, 'success'); } catch(e){ toast('Summarize failed','error'); } finally { showLoader(false); } }
-  function clearSessionOnly() { sessionMessages = []; document.getElementById('aiConversation').innerHTML = ''; addAIBubble('ai','Session display cleared. Permanent memory intact.'); toast('Local chat cleared','info'); }
-  async function manualProxyTest() { showLoader(true, "TESTING PROXY..."); const ok = await testProxyConnection(); showLoader(false); if(ok) toast('✅ Proxy online & responding', 'success'); else toast('❌ Proxy unreachable. Check Render status.', 'error'); }
-  
-  function loadLocalNotepad() { const saved = localStorage.getItem('cv5_constitution_notepad'); if(saved) document.getElementById('richNotepad').innerHTML = saved; }
-  function saveNotepad() { const content = document.getElementById('richNotepad').innerHTML; localStorage.setItem('cv5_constitution_notepad', content); toast('Notepad saved', 'success'); }
-  function exportNotepad() { const content = document.getElementById('richNotepad').innerText || document.getElementById('richNotepad').innerHTML; const blob = new Blob([content], {type:'text/plain'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'constitution_notes.txt'; a.click(); URL.revokeObjectURL(a.href); toast('Exported', 'success'); }
-  function applyFormat(command) { document.execCommand(command, false, null); }
-  function loadMediaGallery() { const gallery = JSON.parse(localStorage.getItem('cv5_media_gallery') || '[]'); const container = document.getElementById('mediaGallery'); container.innerHTML = ''; gallery.forEach((item, idx) => { const div = document.createElement('div'); div.className = 'media-item'; if(item.type.startsWith('image/')) div.innerHTML = `<img src="${item.data}" alt="media"><br><small>${item.name.slice(0,10)}</small>`; else if(item.type.startsWith('video/')) div.innerHTML = `<video src="${item.data}" controls style="max-width:70px;"></video>`; else div.innerHTML = `<i class="fas fa-file"></i><br>${item.name.slice(0,10)}`; div.onclick = () => { if(item.type.startsWith('image/')) window.open(item.data); else if(item.type.startsWith('video/')) window.open(item.data); else toast('File preview not supported', 'info'); }; container.appendChild(div); }); }
-  function uploadMedia(file) { if(!file) return; const reader = new FileReader(); reader.onload = (e) => { const gallery = JSON.parse(localStorage.getItem('cv5_media_gallery') || '[]'); gallery.push({ name: file.name, type: file.type, data: e.target.result }); if(gallery.length > 30) gallery.shift(); localStorage.setItem('cv5_media_gallery', JSON.stringify(gallery)); loadMediaGallery(); toast('Media uploaded', 'success'); }; reader.readAsDataURL(file); }
-  function clearMedia() { localStorage.removeItem('cv5_media_gallery'); loadMediaGallery(); toast('Media vault cleared', 'info'); }
-  function uploadPdf(file) { if(file && file.type === 'application/pdf') { const reader = new FileReader(); reader.onload = (e) => { const blob = new Blob([e.target.result], {type:'application/pdf'}); const url = URL.createObjectURL(blob); document.getElementById('pdfViewer').src = url; toast('PDF loaded locally', 'success'); }; reader.readAsArrayBuffer(file); } else toast('Select a PDF file', 'error'); }
 
-  document.getElementById('pinInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('unlockBtn').click(); });
+  async function wipePermanent() { 
+    if (!confirm('WIPE ALL PERMANENT MEMORY?')) return; 
+    permanentMemory = []; 
+    if (db && memoryDocId) await db.collection('sarahPermanentMemory').doc(memoryDocId).set({ conversations: [] });
+    document.getElementById('aiConversation').innerHTML = ''; 
+    addAIBubble('ai', '⚠️ Memory wiped.'); 
+    toast('Memory erased', 'success'); 
+  }
+
+  async function summarizeSession() { 
+    if(permanentMemory.length===0) return toast('No memory', 'info'); 
+    showLoader(true,"SUMMARIZING..."); 
+    try { 
+      const summary = await callGroq("Summarize our key conversation topics briefly.", permanentMemory.slice(-15)); 
+      toast(`📜 ${summary}`, 'success'); 
+    } catch(e){ toast('Failed','error'); } 
+    finally { showLoader(false); } 
+  }
+
+  function clearSessionOnly() { 
+    sessionMessages = []; 
+    document.getElementById('aiConversation').innerHTML = ''; 
+    addAIBubble('ai','Session cleared.'); 
+  }
+
+  // EVENT LISTENERS
   document.getElementById('unlockBtn').addEventListener('click', async () => {
     if (document.getElementById('pinInput').value === '7') {
       document.getElementById('pinGate').style.display = 'none';
@@ -336,46 +311,30 @@
       await loadMissionDirective();
       await loadPermanentMemory();
       setupMessagesListener();
-      initTasksListener(); 
-      await testProxyConnection();
-      addAIBubble('ai', `🧠 Permanent memory restored. I remember ${permanentMemory.length} past exchanges. Proxy status: ${proxyHealthy ? 'SECURE LINK' : 'STANDBY MODE'}. Sarah Mnguni neural core v4.2 online.`);
-      loadLocalNotepad(); 
-      loadMediaGallery();
-    } else { toast('INVALID ACCESS CODE', 'error'); }
+      addAIBubble('ai', `✅ Neural core online. ${permanentMemory.length} memories restored. Sarah ready.`);
+    } else { toast('INVALID CODE', 'error'); }
+  });
+
+  document.getElementById('unlockCmdBtn').addEventListener('click', () => { 
+    const pin = prompt('COMMANDER PIN'); 
+    if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked'); } 
+    else toast('Access denied', 'error'); 
   });
   
-  document.getElementById('unlockCmdBtn').addEventListener('click', async () => { const pin = prompt('COMMANDER OVERRIDE PIN'); if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; document.getElementById('newDirective').value = document.getElementById('directiveText').innerText; toast('Commander unlocked. Edit existing directive above.', 'success'); } else toast('Access denied', 'error'); });
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Commander panel locked', 'info'); });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if (!commanderUnlocked) { toast('Locked: Commander authentication required', 'error'); return; } const newDir = document.getElementById('newDirective').value.trim(); if (newDir) { await updateMissionDirective(newDir); document.getElementById('newDirective').value = ''; } else toast('Directive empty', 'error'); });
-  document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked) await deleteMissionDirective(); else toast('Unauthorized','error'); });
-  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Directive copied', 'success'); });
-  document.getElementById('broadcastDirectiveBtn').addEventListener('click', broadcastDirective);
-  document.getElementById('sendMsgBtn').addEventListener('click', sendMessage);
+  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Locked'); });
+  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if(commanderUnlocked){ const newDir = document.getElementById('newDirective').value; if(newDir) await db.collection('cio').doc('directive').set({ text: newDir, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); toast('Updated'); } else toast('Unauthorized'); });
+  document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked && confirm('DELETE?')) await db.collection('cio').doc('directive').set({ text: 'MISSION DELETED', timestamp: firebase.firestore.FieldValue.serverTimestamp() }); });
+  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Copied'); });
+  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const text = document.getElementById('messageText').value; if(text && db){ await db.collection('messages').add({ callsign: document.getElementById('callsignField').value, text: text, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('messageText').value = ''; toast('Sent'); } });
   document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
-  document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Live feed active', 'info'));
-  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); });
-  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value.trim(); if(q) askSarah(q); } });
+  document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Refreshing...'));
+  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value; if(q) askSarah(q); });
+  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value; if(q) askSarah(q); } });
   document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
-  document.getElementById('testProxyBtn').addEventListener('click', manualProxyTest);
-  
-  document.getElementById('unlockTasksBtn').addEventListener('click', () => { tasksEditUnlocked = true; document.getElementById('addTaskPanel').style.display = 'block'; renderTasks([]); initTasksListener(); toast("TASK EDIT UNLOCKED", "success"); });
-  document.getElementById('lockTasksPanelBtn').addEventListener('click', () => { tasksEditUnlocked = false; document.getElementById('addTaskPanel').style.display = 'none'; initTasksListener(); toast("Task panel locked (view only)", "info"); });
-  document.getElementById('createTaskBtn').addEventListener('click', () => { const title = document.getElementById('newTaskTitle').value; const deadline = document.getElementById('newTaskDeadline').value; createNewTask(title, deadline); document.getElementById('newTaskTitle').value = ''; document.getElementById('newTaskDeadline').value = ''; });
-  document.getElementById('refreshTasksBtn').addEventListener('click', () => { toast("refreshing objectives...", "info"); initTasksListener(); });
-  
-  document.getElementById('saveNotepadBtn').addEventListener('click', saveNotepad);
-  document.getElementById('exportTxtBtn').addEventListener('click', exportNotepad);
-  document.getElementById('clearNotepadBtn').addEventListener('click', () => { document.getElementById('richNotepad').innerHTML = ''; saveNotepad(); });
-  document.getElementById('boldBtn').addEventListener('click', () => applyFormat('bold'));
-  document.getElementById('italicBtn').addEventListener('click', () => applyFormat('italic'));
-  document.getElementById('underlineBtn').addEventListener('click', () => applyFormat('underline'));
-  document.getElementById('clearFormatBtn').addEventListener('click', () => document.execCommand('removeFormat'));
-  document.getElementById('uploadMediaBtn').addEventListener('click', () => { const file = document.getElementById('mediaUploadInput').files[0]; if(file) uploadMedia(file); else toast('select file', 'error'); });
-  document.getElementById('clearMediaBtn').addEventListener('click', clearMedia);
-  document.getElementById('uploadPdfBtn').addEventListener('click', () => { const file = document.getElementById('pdfUploadInput').files[0]; if(file) uploadPdf(file); else toast('select PDF', 'error'); });
-  document.getElementById('refreshPdfBtn').addEventListener('click', () => { document.getElementById('pdfViewer').src = document.getElementById('pdfViewer').src; toast('PDF reloaded', 'info'); });
+
+  // Stars
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
 </script>
