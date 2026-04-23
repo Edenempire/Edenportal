@@ -1405,32 +1405,45 @@
     document.getElementById('memoryCounter').innerHTML = `💾 permanent memory • ${permanentMemory.length} stored exchanges • active recall`; 
     
   }
+
+  // ASYNC FUNCTION
   
   async function callGroq(userMsg, contextMemory) {
   const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
   
+  const messages = [
+    { 
+      role: 'system', 
+      content: `You are Sarah Mnguni...` 
+    },
+    ...contextMemory.slice(-18).map(m => ({ role: m.role, content: m.content })),
+    { role: 'user', content: userMsg }
+  ];
+  
   const response = await fetch(PROXY_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        { 
-          role: 'system', 
-          content: `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.` 
-        },
-        ...contextMemory.slice(-18).map(m => ({ role: m.role, content: m.content })),
-        { role: 'user', content: userMsg }
-      ],
-      temperature: 0.65,
-      max_tokens: 320
-    })
+    body: JSON.stringify({ messages }) // ← Wrap in { messages }
   });
   
-  if (!response.ok) throw new Error(`Proxy error: ${response.status}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Proxy error ${response.status}: ${errorText}`);
+  }
+  
   const data = await response.json();
-  return data.choices[0].message.content;
+  
+  // Handle different response formats
+  if (data.choices && data.choices[0]) {
+    return data.choices[0].message.content;
+  } else if (data.content) {
+    return data.content;
+  } else {
+    throw new Error('Unexpected response format');
+  }
 }
+
+  // DIFFERENT FUNCTION
   
   async function askSarah(promptText) { 
     
