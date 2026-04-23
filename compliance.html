@@ -1086,9 +1086,6 @@
     appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     
   };
-  
-  const GROQ_KEY = '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';
-  const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
   let db = null;
   let commanderUnlocked = false;
@@ -1409,21 +1406,31 @@
     
   }
   
-  async function callGroq(userMsg, contextMemory) { 
-    
-    const systemBase = `You are Sarah Mnguni, A South African girl AI soldier with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team, but mainly the Commander-in-Chief: Thato Morake, callsign: Hoss. Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.`; 
-    const memoryBlock = contextMemory.slice(-18).map(m => `${m.role}: ${m.content}`).join('\n'); 
-    const messages = [{ role: 'system', content: systemBase + (memoryBlock ? `\n\nPERMANENT RECALL:\n${memoryBlock}` : '') }, ...sessionMessages.slice(-6), { role: 'user', content: userMsg }]; 
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { 
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` }, 
-      body: JSON.stringify({ model: GROQ_MODEL, messages, temperature: 0.65, max_tokens: 320 }) 
-    }); 
-    if (!res.ok) throw new Error(`API ${res.status}`); 
-    const data = await res.json(); 
-    return data.choices[0].message.content; 
-    
-  }
+  async function callGroq(userMsg, contextMemory) {
+  const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
+  
+  const response = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        { 
+          role: 'system', 
+          content: `You are Sarah Mnguni, AI operator with PERMANENT MEMORY across sessions. You serve the Eden stealth CV-1 team. Commander-in-Chief is Hoss (highest rank). Use recall from permanent memory. Keep responses concise (2-4 sentences). Current operator: Big-Joe on CV-5 Compliance.` 
+        },
+        ...contextMemory.slice(-18).map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: userMsg }
+      ],
+      temperature: 0.65,
+      max_tokens: 320
+    })
+  });
+  
+  if (!response.ok) throw new Error(`Proxy error: ${response.status}`);
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
   
   async function askSarah(promptText) { 
     
