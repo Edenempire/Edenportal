@@ -979,7 +979,7 @@
         <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
             <i class="fas fa-angle-double-up"></i>
         </button>
-        <button class="hud-btn" onclick="scrollToSection('subsidiaries')">
+        <button class="hud-btn" onclick="scrollToSection('branch-card')">
             <i class="fas fa-crosshairs"></i>
         </button>
         <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
@@ -1110,6 +1110,13 @@
     toggleBtn.addEventListener('click',()=>{ if(!audioActive){ startAudio(); } else if(audio.paused){ audio.play(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AEROSPACE AUDIO · ACTIVE'; } else { audio.pause(); toggleBtn.innerHTML='<i class="fas fa-headset"></i> AUDIO PAUSED'; } });
     audio.play().catch(()=>{ toggleBtn.innerHTML='<i class="fas fa-headset"></i> CLICK TO ENABLE AUDIO'; });
     audio.addEventListener('ended',()=>{ if(audioActive){ audio.currentTime=0; audio.play(); } });
+
+    function scrollToSection(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+                    }
     
 </script>
     
