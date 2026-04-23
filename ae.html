@@ -19,12 +19,15 @@
     <style>
         
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         :root {
+            
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --accent-orange: #f97316;
@@ -35,9 +38,11 @@
             --text-secondary: #9ca3af;
             --text-accent: #f97316;
             --astronaut-blue: #3b82f6;
+            
         }
 
         html, body {
+            
             width: 100%;
             min-height: 100vh;
             background: var(--deep-space);
@@ -45,13 +50,17 @@
             color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
+            
         }
 
         body {
+            
             background: radial-gradient(circle at 10% 20%, #0a0a1a 0%, #030308 100%);
+            
         }
 
         .fixed-header {
+            
             position: fixed;
             top: 0;
             left: 0;
@@ -66,20 +75,26 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
+            
         }
 
         .logo-area {
+            
             display: flex;
             align-items: center;
             gap: 1rem;
+            
         }
 
         .logo-icon {
+            
             font-size: 1.8rem;
             color: var(--primary-red);
+            
         }
 
         .page-title {
+            
             font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
@@ -87,9 +102,11 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            
         }
 
         .badge {
+            
             background: rgba(220, 38, 38, 0.15);
             border: 1px solid rgba(220, 38, 38, 0.3);
             padding: 0.4rem 1rem;
@@ -98,6 +115,7 @@
             font-weight: 500;
             font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
+            
         }
 
         .main-container {
@@ -473,6 +491,7 @@
         }
 
         @media (min-width: 1600px) {
+            
             .main-container {
                 max-width: 1400px;
                 padding: 2rem 2.5rem;
@@ -486,16 +505,20 @@
             .instrument-value {
                 font-size: 1.9rem;
             }
+            
         }
 
         @media (max-width: 1280px) {
+            
             .main-container {
                 max-width: 1100px;
                 padding: 1.8rem;
             }
+            
         }
 
         @media (max-width: 1024px) {
+            
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -505,9 +528,11 @@
             .instrument-panel-main {
                 grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             }
+            
         }
 
         @media (max-width: 800px) {
+            
             .branch-showcase {
                 grid-template-columns: 1fr;
             }
@@ -564,9 +589,11 @@
                 text-align: center;
                 gap: 0.8rem;
             }
+            
         }
 
         @media (max-width: 600px) {
+            
             .fixed-header {
                 flex-direction: column;
                 padding: 0.6rem 1rem;
@@ -627,9 +654,11 @@
                 padding: 0.35rem 0.9rem;
                 font-size: 0.65rem;
             }
+            
         }
 
         @media (max-width: 480px) {
+            
             .main-container {
                 padding: 0.85rem;
                 margin-top: 120px;
@@ -684,9 +713,11 @@
                 right: 8px;
                 padding: 0.25rem 0.7rem;
             }
+            
         }
 
         @media (max-width: 360px) {
+            
             .fixed-header {
                 padding: 0.4rem 0.7rem;
             }
@@ -822,9 +853,11 @@
                 padding: 0.2rem 0.5rem;
                 font-size: 0.5rem;
             }
+            
         }
 
         @media (max-width: 240px) {
+            
             .fixed-header {
                 flex-direction: column;
                 gap: 0.2rem;
@@ -886,6 +919,7 @@
             .copyright {
                 font-size: 0.45rem;
             }
+            
         }
         
     </style>
@@ -899,7 +933,7 @@
         <i class="fas fa-rocket logo-icon"></i>
         <span class="page-title">AEROSPACE ENGINEERING</span>
     </div>
-    <div class="badge"><i class="fas fa-microchip"></i> FLIGHT DYNAMICS & ORBITAL MECHANICS</div>
+    <div class="badge"><i class="fas fa-microchip"></i> <a href="#astrodynamics" style="text-decoration: none; color: var(--text-secondary);">FLIGHT DYNAMICS & ORBITAL MECHANICS</a></div>
 </header>
 
 <canvas id="bgCanvas" class="bg-canvas"></canvas>
@@ -964,7 +998,7 @@
         <div class="footer-content">
             <div class="footer-section"><p>© 2026 Advanced </p>
             
-            <p>Flight dynamics and orbital mechanics (often called astrodynamics) are the core disciplines that explain how spacecraft move through space and how we control that motion. While orbital mechanics focuses on the path a craft takes through space under the influence of gravity, flight dynamics covers the broader engineering involved in navigating and orienting the vehicle.</p>
+            <p id="astrodynamics">Flight dynamics and orbital mechanics (often called astrodynamics) are the core disciplines that explain how spacecraft move through space and how we control that motion. While orbital mechanics focuses on the path a craft takes through space under the influence of gravity, flight dynamics covers the broader engineering involved in navigating and orienting the vehicle.</p>
             
             </div>
             
