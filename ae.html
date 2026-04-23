@@ -921,6 +921,34 @@
             }
             
         }
+
+                    .hud-nav {
+            
+            position: fixed;
+            right: 30px;
+            bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 3000;
+            
+        }
+
+        .hud-btn {
+            
+            width: 50px; height: 50px;
+            background: #000;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            
+        }
+
+        .hud-btn:hover { background: var(--cyan); color: #000; }
         
     </style>
     
@@ -943,6 +971,21 @@
 <audio id="bgAudio" loop preload="auto">
     <source src="ae.mp3" type="audio/mpeg">
 </audio>
+
+    <div class="hud-nav">
+        <button class="hud-btn" onclick="window.internalRefresh()" title="Internal Refresh">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+        <button class="hud-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <i class="fas fa-angle-double-up"></i>
+        </button>
+        <button class="hud-btn" onclick="scrollToSection('subsidiaries')">
+            <i class="fas fa-crosshairs"></i>
+        </button>
+        <button class="hud-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+            <i class="fas fa-angle-double-down"></i>
+        </button>
+    </div>
 
 <main class="main-container">
     <div class="hero-section">
