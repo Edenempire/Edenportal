@@ -949,7 +949,7 @@
 
   <section class="section-card" id="sectionAlpha5">
     <div class="section-header">
-      <h2 class="section-title">SECTION 01. PROTOCOL ALPHA-5 <span class="stars-rank" id="starRank"></span></h2>
+      <h2 class="section-title">PROTOCOL ALPHA-1 <span class="stars-rank" id="starRank"></span></h2>
       <span class="badge"> CINC / PRESIDENCY [Thato 'Hoss' Morake]</span>
     </div>
     <div class="grid-2">
@@ -1146,7 +1146,7 @@
     if (snap.exists && snap.data().text) { 
       document.getElementById('directiveText').innerText = snap.data().text; 
     } else { 
-      const defaultMsg = "ORDER: PROTOCOL ALPHA-5 ACTIVE."; 
+      const defaultMsg = "ORDER: PROTOCOL ALPHA-1 ACTIVE."; 
       document.getElementById('directiveText').innerText = defaultMsg; 
       await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
     } 
