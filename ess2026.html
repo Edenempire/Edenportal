@@ -19,12 +19,15 @@
   <style>
     
     * {
+      
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      
     }
 
     :root {
+      
       --black-bg: #000a0f;
       --mil-green: #1f9f2a;           
       --strike-blue: #1e90ff;         
@@ -37,6 +40,7 @@
       --header-solid: #000f18;
       --header-height: clamp(150px, 22vh, 200px);     
       --rail-width: clamp(60px, 6vw, 90px);
+      
     }
 
     html { scroll-behavior: smooth; width: 100%; height: 100%; }
@@ -52,6 +56,7 @@
     }
 
     .radar-grid {
+      
       position: fixed;
       top: 0;
       left: 0;
@@ -61,9 +66,11 @@
       z-index: 0;
       overflow: hidden;
       pointer-events: none;
+      
     }
 
     .f22-radar {
+      
       position: absolute;
       top: 50%;
       left: 50%;
@@ -75,9 +82,11 @@
       background: repeating-radial-gradient(circle at 50% 50%, transparent 0px, transparent 39px, rgba(31, 159, 42, 0.25) 40px, transparent 41px);
       opacity: 0.9;
       box-shadow: none !important;
+      
     }
 
     .scan-arm {
+      
       position: absolute;
       top: 50%;
       left: 50%;
@@ -90,10 +99,12 @@
       mix-blend-mode: screen;
       filter: none;
       box-shadow: none !important;
+      
     }
     @keyframes f22spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
     .contact-dot {
+      
       position: absolute;
       width: 8px;                       
       height: 8px;
@@ -108,14 +119,17 @@
       z-index: 3;
       box-shadow: none !important;
       filter: none !important;
+      
     }
 
     .radar-noise {
+      
       position: fixed;
       inset: 0;
       background: repeating-linear-gradient(0deg, rgba(20, 60, 20, 0.1) 0px, transparent 3px, transparent 9px);
       pointer-events: none;
       z-index: 1;
+      
     }
 
     main, footer, .tactical-menu-permanent, .quick-scroll-permanent, .command-center {
@@ -124,6 +138,7 @@
     }
 
     .command-center {
+      
       position: fixed;
       top: 0;
       left: 0;
@@ -137,18 +152,22 @@
       align-items: center;
       padding: 0.5rem clamp(1rem, 4vw, 4rem);
       z-index: 10000;
+      
     }
 
 .header-emblem {
+  
   display: flex;
   flex-direction: column;  /* Change from 'row' to 'column' */
   align-items: center;
   justify-content: center;
   gap: clamp(0.5rem, 2vh, 1rem);
   width: 100%;
+  
       }
 
     .logo-container {
+      
   height: clamp(80px, 16vh, 130px);
   width: clamp(80px, 16vh, 130px);
   display: flex;
@@ -157,8 +176,8 @@
 }
 
     .logo-img {
-      width: 80%;
-      height: 80%;
+      width: 110%;
+      height: 110%;
       object-fit: cover;
       border-radius: 50%;
       border: 3px solid var(--strike-blue);          
