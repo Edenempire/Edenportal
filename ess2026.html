@@ -142,22 +142,30 @@
       
     }
 
-    .command-center {
-      
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--header-height);
-      background: var(--header-solid);
-      border-bottom: 6px solid var(--strike-blue);    /* thinner border */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem clamp(3rem, 7vw, 10rem);
-      z-index: 10000;
-      
+.command-center {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  
+  /* 1. We swap 'height' for 'min-height' to allow flexibility */
+  /* If you want a specific "floor", increase this value (e.g., 120px or 15vh) */
+  min-height: var(--header-height); 
+  
+  /* 2. Increased vertical padding from 1rem to 3rem for 'breathing room' */
+  padding: 3rem clamp(3rem, 7vw, 10rem);
+  
+  background: var(--header-solid);
+  border-bottom: 6px solid var(--strike-blue);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  
+  /* Ensure the padding is included in the total height calculation */
+  box-sizing: border-box; 
     }
 
 .header-emblem {
