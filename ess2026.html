@@ -179,28 +179,27 @@
   
       }
 
-    .logo-container {
-      
+.logo-container {
   height: clamp(80px, 16vh, 130px);
   width: clamp(80px, 16vh, 130px);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Clips the image zoom */
+  border-radius: 50%; 
+  border: 3px solid var(--strike-blue); /* Border stays here, static */
 }
 
 .logo-img {
-  width: 130%;
-  height: 130%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--strike-blue);          
-  background: #001c28;
-  display: block;
-  cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease; /* Added transform transition */
-  
-  /* THIS ZOOMS THE IMAGE */
-  transform: scale(1.15); 
+  transition: transform 0.2s ease;
+  transform: scale(1.3); /* Pre-zoomed inside the border */
+}
+
+.logo-img:hover {
+  transform: scale(1.4); /* Zooms more on hover without touching the border */
 }
 
 .logo-img:hover {
