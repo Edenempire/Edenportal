@@ -38,7 +38,7 @@
       --text-dim: #b0d0e5;
       --panel-bg: rgba(0, 25, 35, 0.7);
       --header-solid: #000f18;
-      --header-height: clamp(250px, 50vh, 500px);
+      --header-height: clamp(200px, 40vh, 400px);
       --rail-width: clamp(60px, 6vw, 90px);
       
     }
@@ -142,88 +142,92 @@
       
     }
 
-.command-center {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  
-  /* 1. We swap 'height' for 'min-height' to allow flexibility */
-  /* If you want a specific "floor", increase this value (e.g., 120px or 15vh) */
-  min-height: var(--header-height); 
-  
-  /* 2. Increased vertical padding from 1rem to 3rem for 'breathing room' */
-  padding: 3rem clamp(3rem, 7vw, 10rem);
-  
-  background: var(--header-solid);
-  border-bottom: 6px solid var(--strike-blue);
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-  
-  /* Ensure the padding is included in the total height calculation */
-  box-sizing: border-box; 
+    .command-center {
+      
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      
+      min-height: var(--header-height); 
+      
+      padding: 3rem clamp(3rem, 7vw, 10rem);
+      
+      background: var(--header-solid);
+      border-bottom: 6px solid var(--strike-blue);
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      
+      box-sizing: border-box;
+      
     }
 
-.header-emblem {
-  
-  display: flex;
-  flex-direction: column;  /* Change from 'row' to 'column' */
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.5rem, 2vh, 1rem);
-  width: 100%;
-  
-      }
+    .header-emblem {
+      
+      display: flex;
+      flex-direction: column;  /* Change from 'row' to 'column' */
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.5rem, 2vh, 1rem);
+      width: 100%;
+      
+    }
 
-.logo-container {
-  height: clamp(80px, 16vh, 130px);
-  width: clamp(80px, 16vh, 130px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Clips the image zoom */
-  border-radius: 50%; 
-  border: 3px solid var(--strike-blue); /* Border stays here, static */
-}
+    .logo-container {
+      
+      height: clamp(80px, 16vh, 130px);
+      width: clamp(80px, 16vh, 130px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; 
+      border-radius: 50%; 
+      border: 3px solid var(--strike-blue);
+    }
 
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.2s ease;
-  transform: scale(1.3); /* Pre-zoomed inside the border */
-}
+    .logo-img {
+      
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+      transform: scale(1.3);
+      
+    }
+    
+    .logo-img:hover {
+      
+      transform: scale(1.4);
+      
+    }
+    
+    .logo-img:hover {
+      
+      border-color: #ffffff;
+      transform: scale(1.25);
+      
+    }
 
-.logo-img:hover {
-  transform: scale(1.4); /* Zooms more on hover without touching the border */
-}
-
-.logo-img:hover {
-  border-color: #ffffff;
-  /* OPTIONAL: Zoom it a bit more on hover */
-  transform: scale(1.25); 
-}
-
-.countdown-timer {
-  
-  font-size: clamp(1.4rem, 3.2vw, 2.3rem);
-  font-weight: 700;
-  color: var(--strike-blue);
-  font-family: 'Courier New', monospace;
-  background: transparent;
-  padding: 0.2rem 0;
-  letter-spacing: 4px;
-  border: none;
-  white-space: nowrap;
-  text-align: center;
-  left: 70%;
-  right: 70%;
-  
-}
+    .countdown-timer {
+      
+      font-size: clamp(1.4rem, 3.2vw, 2.3rem);
+      font-weight: 700;
+      color: var(--strike-blue);
+      font-family: 'Courier New', monospace;
+      background: transparent;
+      padding: 0.2rem 0;
+      letter-spacing: 4px;
+      border: none;
+      white-space: nowrap;
+      text-align: center;
+      left: 70%;
+      right: 70%;
+      
+    }
 
     .tactical-menu-permanent {
       
