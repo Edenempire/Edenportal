@@ -38,7 +38,7 @@
       --text-dim: #b0d0e5;
       --panel-bg: rgba(0, 25, 35, 0.7);
       --header-solid: #000f18;
-      --header-height: clamp(200px, 40vh, 400px);
+      --header-height: clamp(180px, 35vh, 350px);
       --rail-width: clamp(60px, 6vw, 90px);
       
     }
@@ -149,7 +149,7 @@
       left: 0;
       width: 100%;
       min-height: var(--header-height); 
-      padding: 3rem clamp(2rem, 6vw, 9rem);
+      padding: 2rem clamp(2rem, 6vw, 9rem);
       background: var(--header-solid);
       border-bottom: 6px solid var(--strike-blue);
       display: flex;
@@ -174,14 +174,15 @@
 
     .logo-container {
       
-      height: clamp(100px, 18vh, 130px);
-      width: clamp(100px, 18vh, 130px);
+      height: clamp(100px, 20vh, 130px);
+      width: clamp(100px, 20vh, 130px);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden; 
       border-radius: 50%; 
       border: 3px solid var(--strike-blue);
+      
     }
 
     .logo-img {
@@ -190,7 +191,7 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.2s ease;
-      transform: scale(1.1);
+      transform: scale(1.6);
       
     }
     
