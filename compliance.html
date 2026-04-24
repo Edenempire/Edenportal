@@ -106,7 +106,8 @@
   <header class="command-header">
     <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
-
+  
+<!-- SECTION 1 -->
   <section class="section-card">
     <div class="section-header">
       <h2 class="section-title">PROTOCOL ALPHA-1 <span class="stars-rank" id="starRank"></span></h2>
@@ -128,18 +129,19 @@
     </div>
   </section>
 
+  <!-- SECTION 2 -->
   <section class="section-card">
     <div class="section-header"><h2 class="section-title">SECTION 02. TEAM MESSAGE BOARD</h2><span class="badge" id="msgCountBadge">0</span><button class="btn" id="refreshMsgBtn"><i class="fas fa-sync-alt"></i></button></div>
     <div class="grid-2">
-      <div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>BREACH</option></select><div id="replyIndicatorBox"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><button class="btn btn-primary" id="sendMsgBtn" style="margin-top:6px;">ENCRYPT & SEND</button><button class="btn" id="clearComposeBtn" style="margin-top:6px;">CLEAR</button></div>
+      <div class="card"><h3><i class="fas fa-pen-nib"></i> NEW TRANSMISSION</h3><br><input type="text" id="callsignField" placeholder="CALLSIGN" value="BIG-JOE"><select id="deptField"><option>COMPLIANCE CV-5</option><option>INTEL</option><option>BREACH</option></select><div id="replyIndicatorBox"></div><textarea id="messageText" rows="3" placeholder="Message... (Enter to send)"></textarea><button class="btn btn-primary" id="sendMsgBtn" style="margin-top:6px;">ENCRYPT & SEND</button><button class="btn" id="clearComposeBtn" style="margin-top:6px;">CLEAR</button></div>
       <div class="card"><h3><i class="fas fa-comments"></i> LIVE FEED</h3><div class="message-board" id="messageBoard"><div style="padding:1rem;">SYNCING...</div></div></div>
     </div>
   </section>
 
-  <!-- SARAH MNGUNNI SECTION - FULLY WORKING -->
+<!-- SECTION 5 -->
   <section class="section-card">
     <div class="section-header">
-      <h2 class="section-title">SECTION 05. SARAH MNGUNNI • NEURAL CORE</h2>
+      <h2 class="section-title">SECTION 05. SARAH MNGUNI • NEURAL CORE</h2>
       <span class="badge"><i class="fas fa-brain"></i> GROQ • PERMANENT MEMORY</span>
     </div>
     <div class="card">
@@ -156,6 +158,7 @@
 </div>
 
 <script>
+  
   const firebaseConfig = {
     apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
     authDomain: "eden-4a8d3.firebaseapp.com",
@@ -319,7 +322,6 @@
     addAIBubble('ai','Session cleared.'); 
   }
 
-  // EVENT LISTENERS
   document.getElementById('unlockBtn').addEventListener('click', async () => {
     if (document.getElementById('pinInput').value === '7') {
       document.getElementById('pinGate').style.display = 'none';
@@ -353,9 +355,76 @@
   document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
   document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
 
-  // Stars
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+  
 </script>
+  
 </body>
+  
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
