@@ -188,25 +188,26 @@
   justify-content: center;
 }
 
-    .logo-img {
-      
-      width: 130%;
-      height: 130%;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid var(--strike-blue);          
-      background: #001c28;
-      display: block;
-      cursor: pointer;
-      transition: border-color 0.2s ease;
-      
-    }
-    
-    .logo-img:hover {
-      
-      border-color: #ffffff;
-      
-    }
+.logo-img {
+  width: 130%;
+  height: 130%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--strike-blue);          
+  background: #001c28;
+  display: block;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease; /* Added transform transition */
+  
+  /* THIS ZOOMS THE IMAGE */
+  transform: scale(1.15); 
+}
+
+.logo-img:hover {
+  border-color: #ffffff;
+  /* OPTIONAL: Zoom it a bit more on hover */
+  transform: scale(1.25); 
+}
 
 .countdown-timer {
   
