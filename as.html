@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PROTOCOL-7 · TACTICAL SHARED RADIO · CROSS-DEVICE</title>
+    <title>PROTOCOL-7 · TACTICAL SHARED RADIO · FIRESTORE</title>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -106,7 +106,7 @@
 </head>
 <body>
 <div class="protocol-7">
-    <div class="radio-header"><span class="callsign"><i class="fas fa-broadcast-tower"></i> PROTOCOL-7</span><div class="enc-level"><i class="fas fa-lock"></i> CROSS-DEVICE · SHARED FREQ</div></div>
+    <div class="radio-header"><span class="callsign"><i class="fas fa-broadcast-tower"></i> PROTOCOL-7</span><div class="enc-level"><i class="fas fa-lock"></i> CROSS-DEVICE · SHARED FREQ · FIRESTORE</div></div>
     <div class="status-bar"><div class="live-badge"><div class="led off" id="radioLed"></div><span id="radioStatus">OFFLINE / STANDBY</span></div><div class="channel-id"><i class="fas fa-hashtag"></i> <span id="channelName">FREQ: 462.5625 MHz</span><input type="text" id="channelInput" class="channel-input" placeholder="channel #" value="4625625" maxlength="20"><button id="changeChanBtn" class="channel-btn">SET</button></div></div>
     <div class="ptt-section"><button class="ptt-btn" id="pttButton" disabled><i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY</button><div style="text-align: center; margin-top: 8px; font-size: 0.6rem; color: #6effa3;"><i class="fas fa-info-circle"></i> SHARED CHANNEL · ONLY ONE OPERATOR TRANSMITS AT A TIME</div></div>
     <div class="recording-console"><div class="rec-control-row"><button class="record-btn" id="recordBtn" disabled><i class="fas fa-circle"></i> RECORD AMBIENT</button><button class="save-btn" id="saveBtn" disabled><i class="fas fa-save"></i> SAVE TO VAULT</button></div><div class="rec-status-text" id="recordingStatus"><i class="fas fa-dot-circle"></i> RECORDER STANDBY</div><div class="surveillance-vault" id="vaultList"><div style="color:#5b8b72;"><i class="fas fa-database"></i> No recorded audio in vault</div></div></div>
@@ -117,18 +117,18 @@
     <footer><i class="fas fa-shield-haltered"></i> PROTOCOL-7 · SHARED FREQUENCY · CROSS-DEVICE · CONTINUOUS SURVEILLANCE</footer>
 </div>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script>
-    // FIXED: Complete PROTOCOL-7 with robust WebRTC signaling, lock release, recording, channel change, and UI consistency.
+    // FIRESTORE VERSION - Complete rewrite for Firestore compatibility
     const FIREBASE_CONFIG = {
         apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
         authDomain: "eden-4a8d3.firebaseapp.com",
         projectId: "eden-4a8d3",
         storageBucket: "eden-4a8d3.firebasestorage.app",
         messagingSenderId: "421147129483",
-        appId: "1:421147129483:web:9495dfb813fe6195f2c68e",
-        databaseURL: "https://eden-4a8d3-default-rtdb.firebaseio.com/"
+        appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
+    
     // DOM elements
     const pttBtn = document.getElementById('pttButton'), initBtn = document.getElementById('initBtn'), muteBtn = document.getElementById('muteBtn'), testToneBtn = document.getElementById('testToneBtn');
     const recordBtn = document.getElementById('recordBtn'), saveBtn = document.getElementById('saveBtn'), clearVaultBtn = document.getElementById('clearVaultBtn');
@@ -139,49 +139,438 @@
     
     // State
     let isChannelActive = false, isTransmitting = false, isMuted = false, mediaStream = null, audioContext = null, gainNode = null, analyser = null, animationId = null;
-    let database = null, peerConnection = null, remoteAudio = null, deviceId = null, currentChannel = '4625625', displayChannel = '462.5625';
-    let activePeers = new Map(), currentTransmitter = null, presenceRef = null, lockRef = null, signalsRef = null;
+    let db = null, peerConnection = null, remoteAudio = null, deviceId = null, currentChannel = '4625625', displayChannel = '462.5625';
+    let activePeers = new Map(), currentTransmitter = null;
+    let presenceUnsubscribe = null, lockUnsubscribe = null, signalUnsubscribe = null;
     let mediaRecorder = null, recordedChunks = [], isRecording = false, pendingAudioBlob = null;
     let surveillanceArchive = [];
     const ICE_SERVERS = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] };
     
-    function sanitizeChannel(ch) { return ch.replace(/[\.#\$\[\]]/g, '_'); }
+    function sanitizeChannel(ch) { return ch.replace(/[\.#\$\[\]/]/g, '_'); }
+    
     function initBars() { waveContainer.innerHTML = ''; for(let i=0;i<24;i++){ let b=document.createElement('div'); b.className='bar'; b.style.height='3px'; waveContainer.appendChild(b); } }
     initBars();
+    
     function updateVisualizer(vol=0){ if(!isChannelActive){ document.querySelectorAll('.bar').forEach(b=>b.style.height='3px'); return; } let intensity=Math.min(0.92,Math.max(0.05,vol*1.5)); let bars=document.querySelectorAll('.bar'); bars.forEach((bar,idx)=>{ let h=3+(intensity*44)*(0.3+(idx/bars.length)*0.8); bar.style.height=`${Math.min(48,h)}px`; }); }
+    
     function addLog(msg, isAction=false){ let now=new Date(); let timeStr=now.toLocaleTimeString('en-US',{hour12:false}); let div=document.createElement('div'); div.innerHTML=`<span class="timestamp">[${timeStr}]</span> ${isAction?'⚡ CMD':'🎙️ SURV'}: ${msg}`; survLog.appendChild(div); survLog.scrollTop=survLog.scrollHeight; while(survLog.children.length>50) survLog.removeChild(survLog.firstChild); }
     
     function saveArchiveToLocalStorage(){ let store=surveillanceArchive.map(i=>({id:i.id,name:i.name,timestampStr:i.timestampStr,sizeKB:i.sizeKB,base64:i.base64})); localStorage.setItem('PROTOCOL7_VAULT',JSON.stringify(store)); }
+    
     async function loadArchiveFromLocalStorage(){ let raw=localStorage.getItem('PROTOCOL7_VAULT'); if(!raw) return; try{ let parsed=JSON.parse(raw); for(let entry of parsed){ let binary=atob(entry.base64), array=new Uint8Array(binary.length); for(let i=0;i<binary.length;i++)array[i]=binary.charCodeAt(i); let blob=new Blob([array],{type:'audio/webm'}), url=URL.createObjectURL(blob); surveillanceArchive.push({...entry,audioUrl:url}); } renderVault(); addLog(`📀 Loaded ${surveillanceArchive.length} recordings`,false); }catch(e){ console.warn(e); } }
+    
     async function addToVault(blob,customName=null){ let id=Date.now()+Math.floor(Math.random()*10000), date=new Date(), ts=date.toLocaleString(), name=customName||`protocol7_${displayChannel}_${date.toISOString().slice(0,19).replace(/:/g,'-')}.webm`, sizeKB=(blob.size/1024).toFixed(1); let reader=new FileReader(); return new Promise(resolve=>{ reader.onloadend=()=>{ let base64=reader.result.split(',')[1], url=URL.createObjectURL(blob); surveillanceArchive.unshift({id,name,timestampStr:ts,sizeKB,base64:base64,audioUrl:url}); if(surveillanceArchive.length>50){ let old=surveillanceArchive.pop(); if(old.audioUrl) URL.revokeObjectURL(old.audioUrl); } saveArchiveToLocalStorage(); renderVault(); addLog(`✅ SAVED: "${name}" (${sizeKB} KB)`,true); resolve(); }; reader.readAsDataURL(blob); }); }
+    
     function renderVault(){ if(!vaultContainer) return; if(surveillanceArchive.length===0){ vaultContainer.innerHTML='<div style="color:#5b8b72;"><i class="fas fa-database"></i> No recorded audio in vault</div>'; return; } let html=''; surveillanceArchive.forEach(rec=>{ html+=`<div class="vault-item"><span class="vault-filename"><i class="fas fa-file-audio"></i> ${rec.name} (${rec.sizeKB} KB) · ${rec.timestampStr}</span><div class="vault-actions"><button class="play-audio" data-id="${rec.id}"><i class="fas fa-play"></i> PLAY</button><button class="delete-audio" data-id="${rec.id}"><i class="fas fa-trash"></i> DEL</button><button class="download-audio" data-id="${rec.id}"><i class="fas fa-download"></i> DL</button></div></div>`; }); vaultContainer.innerHTML=html; document.querySelectorAll('.play-audio').forEach(btn=>btn.addEventListener('click',(e)=>{ let item=surveillanceArchive.find(i=>i.id==parseInt(btn.dataset.id)); if(item?.audioUrl) new Audio(item.audioUrl).play().catch(e=>addLog(`Playback error`,false)); })); document.querySelectorAll('.delete-audio').forEach(btn=>btn.addEventListener('click',(e)=>{ let idx=surveillanceArchive.findIndex(i=>i.id==parseInt(btn.dataset.id)); if(idx!==-1){ let rem=surveillanceArchive[idx]; if(rem.audioUrl) URL.revokeObjectURL(rem.audioUrl); surveillanceArchive.splice(idx,1); saveArchiveToLocalStorage(); renderVault(); addLog(`🗑️ Deleted: ${rem.name}`,true); } })); document.querySelectorAll('.download-audio').forEach(btn=>btn.addEventListener('click',(e)=>{ let item=surveillanceArchive.find(i=>i.id==parseInt(btn.dataset.id)); if(item?.audioUrl){ let a=document.createElement('a'); a.href=item.audioUrl; a.download=item.name; a.click(); addLog(`⬇️ Download: ${item.name}`,false); } })); }
     
-    async function initAudioSystem(){ if(audioContext && audioContext.state!=='closed'){ if(audioContext.state==='suspended') await audioContext.resume(); return true; } try{ audioContext=new (window.AudioContext||window.webkitAudioContext)(); mediaStream=await navigator.mediaDevices.getUserMedia({audio:true}); let source=audioContext.createMediaStreamSource(mediaStream); gainNode=audioContext.createGain(); source.connect(gainNode); gainNode.connect(audioContext.destination); gainNode.gain.value=0; analyser=audioContext.createAnalyser(); analyser.fftSize=256; source.connect(analyser); let dataArray=new Uint8Array(analyser.frequencyBinCount); function loop(){ if(!isChannelActive||!analyser){ requestAnimationFrame(loop); updateVisualizer(0.05); return; } analyser.getByteTimeDomainData(dataArray); let max=0; for(let i=0;i<dataArray.length;i++){ let v=(dataArray[i]-128)/128; max=Math.max(max,Math.abs(v)); } updateVisualizer(max); requestAnimationFrame(loop); } loop(); return true; } catch(e){ debugMsg.innerHTML="⚠️ MIC ERROR"; addLog("❌ Microphone access denied",false); return false; } }
+    async function initAudioSystem(){ if(audioContext && audioContext.state!=='closed'){ if(audioContext.state==='suspended') await audioContext.resume(); return true; } try{ audioContext=new (window.AudioContext||window.webkitAudioContext)(); mediaStream=await navigator.mediaDevices.getUserMedia({audio:true}); let source=audioContext.createMediaStreamSource(mediaStream); gainNode=audioContext.createGain(); source.connect(gainNode); gainNode.connect(audioContext.destination); gainNode.gain.value=0; analyser=audioContext.createAnalyser(); analyser.fftSize=256; source.connect(analyser); let dataArray=new Uint8Array(analyser.frequencyBinCount); function loop(){ if(!isChannelActive||!analyser){ requestAnimationFrame(loop); updateVisualizer(0.05); return; } analyser.getByteTimeDomainData(dataArray); let max=0; for(let i=0;i<dataArray.length;i++){ let v=(dataArray[i]-128)/128; max=Math.max(max,Math.abs(v)); } updateVisualizer(max); requestAnimationFrame(loop); } loop(); addLog("🎤 Audio system initialized", false); return true; } catch(e){ debugMsg.innerHTML="⚠️ MIC ERROR"; addLog("❌ Microphone access denied",false); return false; } }
+    
     function getDeviceId(){ let id=localStorage.getItem('protocol7_device_id'); if(!id){ id='op_'+Math.random().toString(36).substring(2,10)+'_'+Date.now(); localStorage.setItem('protocol7_device_id',id); } return id; }
+    
     function updatePeerListUI(){ if(activePeers.size===0){ peerListDiv.innerHTML='<span style="color: #666;">No active operators</span>'; return; } let html=''; for(let [id] of activePeers){ let isTx=(currentTransmitter===id); html+=`<span class="peer-badge ${isTx?'transmitting-badge':''}"><i class="fas fa-user-secret"></i> ${id.substring(0,10)}... ${isTx?'🔴 TX':'🎧 RX'}</span>`; } peerListDiv.innerHTML=html; }
-    async function requestTransmitLock(){ if(!database) return false; if(currentTransmitter===deviceId) return true; if(currentTransmitter!==null) return false; let lockPath=`protocol7_lock/${currentChannel}/transmitter`; let ref=database.ref(lockPath); try{ await ref.transaction(cur=>{ if(cur===null||cur===deviceId) return deviceId; return cur; }); let snap=await ref.get(); if(snap.val()===deviceId){ currentTransmitter=deviceId; return true; } return false; } catch(e){ return false; } }
-    async function releaseTransmitLock(){ if(!database||currentTransmitter!==deviceId) return; let lockPath=`protocol7_lock/${currentChannel}/transmitter`; let snap=await database.ref(lockPath).get(); if(snap.val()===deviceId) await database.ref(lockPath).set(null); if(currentTransmitter===deviceId) currentTransmitter=null; }
-    async function createPeerConnection(){ if(peerConnection) peerConnection.close(); peerConnection=new RTCPeerConnection(ICE_SERVERS); if(mediaStream) mediaStream.getTracks().forEach(t=>peerConnection.addTrack(t,mediaStream)); if(!remoteAudio){ remoteAudio=new Audio(); remoteAudio.autoplay=true; } peerConnection.ontrack=e=>{ if(remoteAudio) remoteAudio.srcObject=e.streams[0]; }; peerConnection.onicecandidate=e=>{ if(e.candidate) sendSignal({type:'candidate',candidate:e.candidate}); }; return peerConnection; }
-    function sendSignal(sig){ if(!database) return; let ref=database.ref(`protocol7_signals/${currentChannel}/${deviceId}`); ref.set({...sig,from:deviceId,ts:firebase.database.ServerValue.TIMESTAMP}).then(()=>setTimeout(()=>ref.remove(),5000)); }
-    async function setupSignaling(){ if(!database) return; let signalsPath=`protocol7_signals/${currentChannel}`; database.ref(signalsPath).on('child_added',async snap=>{ let sig=snap.val(); if(sig.from===deviceId) return; try{ if(sig.type==='offer' && peerConnection && peerConnection.signalingState==='stable'){ await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.offer)); let ans=await peerConnection.createAnswer(); await peerConnection.setLocalDescription(ans); sendSignal({type:'answer',answer:ans}); } else if(sig.type==='answer' && peerConnection && peerConnection.signalingState==='have-local-offer'){ await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.answer)); } else if(sig.type==='candidate' && peerConnection && sig.candidate){ await peerConnection.addIceCandidate(new RTCIceCandidate(sig.candidate)); } } catch(e){ console.warn(e); } }); presenceRef=database.ref(`protocol7_presence/${currentChannel}`); await presenceRef.child(deviceId).set({online:true, ts:firebase.database.ServerValue.TIMESTAMP}); presenceRef.on('child_added',async snap=>{ if(snap.key!==deviceId){ activePeers.set(snap.key,{}); updatePeerListUI(); if((!peerConnection || peerConnection.connectionState==='closed' || peerConnection.connectionState==='new') && isChannelActive){ await createPeerConnection(); let offer=await peerConnection.createOffer(); await peerConnection.setLocalDescription(offer); sendSignal({type:'offer',offer:offer}); } } }); presenceRef.on('child_removed',snap=>{ activePeers.delete(snap.key); updatePeerListUI(); }); presenceRef.child(deviceId).onDisconnect().remove(); lockRef=database.ref(`protocol7_lock/${currentChannel}/transmitter`); lockRef.on('value',snap=>{ currentTransmitter=snap.val(); updatePeerListUI(); if(currentTransmitter && currentTransmitter!==deviceId){ radioStatus.innerHTML='🔴 CHANNEL BUSY · OPERATOR TRANSMITTING'; debugMsg.innerHTML='🔴 Channel busy - wait'; } else if(currentTransmitter===null && isChannelActive){ radioStatus.innerHTML='🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)'; debugMsg.innerHTML='🎧 Channel clear - ready to transmit'; } }); }
-    async function initSecureChannel(){ if(isChannelActive) return; if(!await initAudioSystem()) return; if(audioContext?.state==='suspended') await audioContext.resume(); if(!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG); database=firebase.database(); deviceId=getDeviceId(); await createPeerConnection(); await setupSignaling(); isChannelActive=true; initBtn.innerHTML='<i class="fas fa-power-off"></i> TERMINATE SECURE LINK'; radioLed.className='led standby'; radioStatus.innerHTML='🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)'; pttBtn.disabled=false; muteBtn.disabled=false; testToneBtn.disabled=false; recordBtn.disabled=false; clearVaultBtn.disabled=false; debugMsg.innerHTML='🎙️ PROTOCOL-7 ACTIVE | PTT TO TRANSMIT'; addLog("** SECURE CHANNEL ESTABLISHED - SHARED FREQ **",true); addLog(`📡 FREQ: ${displayChannel} MHz`,true); if(gainNode) gainNode.gain.value=0; }
-    async function terminateSecureChannel(){ if(!isChannelActive) return; if(isRecording) stopContinuousRecording(); if(isTransmitting) await stopTransmitting(); if(peerConnection){ peerConnection.close(); peerConnection=null; } if(remoteAudio) remoteAudio.srcObject=null; if(presenceRef && deviceId) try{ await presenceRef.child(deviceId).remove(); }catch(e){} if(lockRef) lockRef.off(); if(signalsRef) signalsRef.off(); if(gainNode) gainNode.gain.value=0; isChannelActive=false; activePeers.clear(); currentTransmitter=null; updatePeerListUI(); initBtn.innerHTML='<i class="fas fa-power-off"></i> INITIALIZE SECURE LINK'; radioLed.className='led off'; radioStatus.innerHTML='⛔ OFFLINE / STANDBY'; pttBtn.disabled=true; muteBtn.disabled=true; testToneBtn.disabled=true; recordBtn.disabled=true; saveBtn.disabled=true; clearVaultBtn.disabled=true; pttBtn.classList.remove('active'); pttBtn.innerHTML='<i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY'; updateVisualizer(0); debugMsg.innerHTML='🔻 Channel terminated. Re-initialize.'; addLog("*** SECURE CHANNEL TERMINATED ***",true); }
-    async function startTransmitting(){ if(!isChannelActive || isTransmitting || isMuted){ if(isMuted) addLog("🔇 Microphone muted. Unmute to transmit.",false); return; } let lockOk=await requestTransmitLock(); if(!lockOk){ addLog("❌ CHANNEL BUSY - Another operator transmitting",false); return; } isTransmitting=true; if(gainNode) gainNode.gain.value=0.85; radioLed.className='led transmitting'; radioStatus.innerHTML='🔴 TRANSMITTING · SHARED CHANNEL ACTIVE'; pttBtn.classList.add('active'); pttBtn.innerHTML='<i class="fas fa-microphone-alt"></i> TRANSMITTING... RELEASE'; addLog("🎤 TRANSMITTING on shared frequency",true); debugMsg.innerHTML="🔴 TRANSMITTING - Other operators hear you"; updatePeerListUI(); }
-    async function stopTransmitting(){ if(!isChannelActive || !isTransmitting) return; isTransmitting=false; if(gainNode) gainNode.gain.value=0; await releaseTransmitLock(); radioLed.className='led standby'; radioStatus.innerHTML='🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)'; pttBtn.classList.remove('active'); pttBtn.innerHTML='<i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY'; addLog("⏹️ Transmission ended - listening",true); debugMsg.innerHTML="🎧 LISTENING - Shared frequency clear"; updatePeerListUI(); }
-    function toggleMute(){ if(!isChannelActive) return; isMuted=!isMuted; if(isMuted){ if(isTransmitting) stopTransmitting(); muteBtn.innerHTML='<i class="fas fa-microphone"></i> UNMUTE MIC'; muteBtn.style.borderColor='#ff6666'; addLog("🔇 Microphone MUTED",true); } else { muteBtn.innerHTML='<i class="fas fa-microphone-slash"></i> MUTE MIC'; muteBtn.style.borderColor=''; addLog("🎤 Microphone UNMUTED",true); } }
-    function playTestTone(){ if(!isChannelActive||!audioContext) return; let osc=audioContext.createOscillator(), gain=audioContext.createGain(); osc.connect(gain); gain.connect(audioContext.destination); osc.frequency.value=1040; gain.gain.value=0.15; osc.start(); gain.gain.exponentialRampToValueAtTime(0.0001,audioContext.currentTime+0.6); osc.stop(audioContext.currentTime+0.5); addLog("🔊 COMS TEST TONE (local)",true); }
-    function startContinuousRecording(){ if(!isChannelActive){ addLog("❌ Initialize secure link first",false); return; } if(!mediaStream){ addLog("❌ No mic access",false); return; } if(isRecording) stopContinuousRecording(); recordedChunks=[]; try{ mediaRecorder=new MediaRecorder(mediaStream,{mimeType:'audio/webm'}); mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recordedChunks.push(e.data); }; mediaRecorder.onstop=()=>{ let finalBlob=new Blob(recordedChunks,{type:'audio/webm'}); pendingAudioBlob=finalBlob; let sz=(finalBlob.size/1024).toFixed(1); recordingStatusSpan.innerHTML=`<i class="fas fa-pause"></i> Stopped. ${sz} KB captured. Press SAVE.`; addLog(`⏹️ Recording stopped: ${sz} KB`,true); saveBtn.disabled=false; recordBtn.innerHTML='<i class="fas fa-circle"></i> RECORD AMBIENT'; recordBtn.classList.remove('recording'); isRecording=false; debugMsg.innerHTML=`📼 Ready. Size: ${sz} KB`; }; mediaRecorder.start(1000); isRecording=true; pendingAudioBlob=null; recordingStatusSpan.innerHTML='<i class="fas fa-circle" style="color:#ff0044;"></i> RECORDING EVERYTHING (ambient+comms)'; recordBtn.innerHTML='<i class="fas fa-stop"></i> STOP RECORDING'; recordBtn.classList.add('recording'); saveBtn.disabled=true; addLog("🔴 CONTINUOUS RECORDING STARTED",true); debugMsg.innerHTML="🔴 RECORDING ACTIVE"; } catch(e){ addLog(`Recording error: ${e.message}`,false); } }
+    
+    // FIRESTORE TRANSMIT LOCK FUNCTIONS
+    async function requestTransmitLock(){ 
+        if(!db) return false; 
+        if(currentTransmitter===deviceId) return true; 
+        if(currentTransmitter!==null) return false; 
+        
+        try {
+            const lockRef = db.collection('protocol7_locks').doc(currentChannel);
+            const result = await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(lockRef);
+                const current = doc.exists ? doc.data().transmitter : null;
+                
+                if (current === null || current === deviceId) {
+                    transaction.set(lockRef, { transmitter: deviceId, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+                    return true;
+                }
+                return false;
+            });
+            
+            if (result) {
+                currentTransmitter = deviceId;
+                return true;
+            }
+            return false;
+        } catch(e) {
+            console.warn("Lock request failed:", e);
+            return false;
+        }
+    }
+    
+    async function releaseTransmitLock(){ 
+        if(!db || currentTransmitter!==deviceId) return; 
+        try {
+            const lockRef = db.collection('protocol7_locks').doc(currentChannel);
+            const doc = await lockRef.get();
+            if (doc.exists && doc.data().transmitter === deviceId) {
+                await lockRef.delete();
+            }
+            if(currentTransmitter===deviceId) currentTransmitter=null;
+        } catch(e) {
+            console.warn("Release lock failed:", e);
+        }
+    }
+    
+    async function createPeerConnection(){ 
+        if(peerConnection) peerConnection.close(); 
+        peerConnection=new RTCPeerConnection(ICE_SERVERS); 
+        if(mediaStream) mediaStream.getTracks().forEach(t=>peerConnection.addTrack(t,mediaStream)); 
+        if(!remoteAudio){ remoteAudio=new Audio(); remoteAudio.autoplay=true; } 
+        peerConnection.ontrack=e=>{ if(remoteAudio) remoteAudio.srcObject=e.streams[0]; }; 
+        peerConnection.onicecandidate=e=>{ if(e.candidate) sendSignal({type:'candidate',candidate:e.candidate}); }; 
+        return peerConnection; 
+    }
+    
+    // FIRESTORE SIGNALING
+    function sendSignal(sig){ 
+        if(!db) return; 
+        const signalData = {
+            ...sig,
+            from: deviceId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            channel: currentChannel
+        };
+        db.collection('protocol7_signals').add(signalData).then(docRef => {
+            // Auto-delete after 10 seconds
+            setTimeout(() => docRef.delete().catch(()=>{}), 10000);
+        }).catch(e => console.warn("Send signal failed:", e));
+    }
+    
+    async function setupSignaling(){ 
+        if(!db) return; 
+        
+        // Listen for signals
+        signalUnsubscribe = db.collection('protocol7_signals')
+            .where('channel', '==', currentChannel)
+            .orderBy('timestamp', 'desc')
+            .onSnapshot(async (snapshot) => {
+                for (const change of snapshot.docChanges()) {
+                    if (change.type === 'added') {
+                        const sig = change.doc.data();
+                        if (sig.from === deviceId) continue;
+                        
+                        try {
+                            if (sig.type === 'offer' && peerConnection && peerConnection.signalingState === 'stable') {
+                                await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.offer));
+                                let ans = await peerConnection.createAnswer();
+                                await peerConnection.setLocalDescription(ans);
+                                sendSignal({type: 'answer', answer: ans});
+                            } 
+                            else if (sig.type === 'answer' && peerConnection && peerConnection.signalingState === 'have-local-offer') {
+                                await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.answer));
+                            } 
+                            else if (sig.type === 'candidate' && peerConnection && sig.candidate) {
+                                await peerConnection.addIceCandidate(new RTCIceCandidate(sig.candidate));
+                            }
+                        } catch(e) { console.warn('Signal error:', e); }
+                        
+                        // Delete processed signal
+                        change.doc.ref.delete().catch(()=>{});
+                    }
+                }
+            }, error => console.error("Signal listener error:", error));
+        
+        // Setup presence in Firestore
+        const presenceDoc = db.collection('protocol7_presence').doc(`${currentChannel}_${deviceId}`);
+        await presenceDoc.set({
+            deviceId: deviceId,
+            channel: currentChannel,
+            online: true,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Listen for presence changes
+        presenceUnsubscribe = db.collection('protocol7_presence')
+            .where('channel', '==', currentChannel)
+            .where('online', '==', true)
+            .onSnapshot((snapshot) => {
+                const newPeers = new Map();
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.deviceId !== deviceId) {
+                        newPeers.set(data.deviceId, {});
+                    }
+                });
+                
+                // Check for new peers
+                for (const [id] of newPeers) {
+                    if (!activePeers.has(id)) {
+                        // New peer joined, create offer if needed
+                        if (peerConnection && (peerConnection.connectionState === 'new' || peerConnection.connectionState === 'closed')) {
+                            createPeerConnection().then(async () => {
+                                let offer = await peerConnection.createOffer();
+                                await peerConnection.setLocalDescription(offer);
+                                sendSignal({type: 'offer', offer: offer});
+                            });
+                        }
+                    }
+                }
+                
+                activePeers = newPeers;
+                updatePeerListUI();
+            }, error => console.error("Presence listener error:", error));
+        
+        // Setup presence cleanup on disconnect
+        if (navigator.onLine) {
+            window.addEventListener('beforeunload', () => {
+                presenceDoc.delete().catch(()=>{});
+            });
+        }
+        
+        // Listen for lock changes
+        lockUnsubscribe = db.collection('protocol7_locks').doc(currentChannel)
+            .onSnapshot((doc) => {
+                currentTransmitter = doc.exists ? doc.data().transmitter : null;
+                updatePeerListUI();
+                if (currentTransmitter && currentTransmitter !== deviceId) {
+                    radioStatus.innerHTML = '🔴 CHANNEL BUSY · OPERATOR TRANSMITTING';
+                    debugMsg.innerHTML = '🔴 Channel busy - wait';
+                    if (isTransmitting) stopTransmitting();
+                } else if (currentTransmitter === null && isChannelActive) {
+                    radioStatus.innerHTML = '🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)';
+                    debugMsg.innerHTML = '🎧 Channel clear - ready to transmit';
+                }
+            }, error => console.error("Lock listener error:", error));
+    }
+    
+    async function initSecureChannel(){ 
+        if(isChannelActive) return; 
+        if(!await initAudioSystem()) return; 
+        if(audioContext?.state==='suspended') await audioContext.resume(); 
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        db = firebase.firestore();
+        
+        // Enable Firestore offline persistence
+        try {
+            await db.enablePersistence({ synchronizeTabs: true });
+        } catch(e) {
+            console.warn("Persistence error:", e);
+        }
+        
+        deviceId = getDeviceId(); 
+        await createPeerConnection(); 
+        await setupSignaling(); 
+        
+        isChannelActive = true; 
+        initBtn.innerHTML = '<i class="fas fa-power-off"></i> TERMINATE SECURE LINK'; 
+        radioLed.className = 'led standby'; 
+        radioStatus.innerHTML = '🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)'; 
+        pttBtn.disabled = false; 
+        muteBtn.disabled = false; 
+        testToneBtn.disabled = false; 
+        recordBtn.disabled = false; 
+        clearVaultBtn.disabled = false; 
+        debugMsg.innerHTML = '🎙️ PROTOCOL-7 ACTIVE | PTT TO TRANSMIT'; 
+        addLog("** SECURE CHANNEL ESTABLISHED - FIRESTORE **", true); 
+        addLog(`📡 FREQ: ${displayChannel} MHz`, true); 
+        if(gainNode) gainNode.gain.value = 0; 
+    }
+    
+    async function terminateSecureChannel(){ 
+        if(!isChannelActive) return; 
+        if(isRecording) stopContinuousRecording(); 
+        if(isTransmitting) await stopTransmitting(); 
+        
+        if(peerConnection){ peerConnection.close(); peerConnection=null; } 
+        if(remoteAudio) remoteAudio.srcObject=null; 
+        
+        // Clean up Firestore listeners
+        if(presenceUnsubscribe) presenceUnsubscribe();
+        if(lockUnsubscribe) lockUnsubscribe();
+        if(signalUnsubscribe) signalUnsubscribe();
+        
+        // Remove presence
+        if (db && deviceId) {
+            try {
+                await db.collection('protocol7_presence').doc(`${currentChannel}_${deviceId}`).delete();
+            } catch(e) {}
+            try {
+                const lockRef = db.collection('protocol7_locks').doc(currentChannel);
+                const doc = await lockRef.get();
+                if (doc.exists && doc.data().transmitter === deviceId) {
+                    await lockRef.delete();
+                }
+            } catch(e) {}
+        }
+        
+        if(gainNode) gainNode.gain.value = 0; 
+        isChannelActive = false; 
+        activePeers.clear(); 
+        currentTransmitter = null; 
+        updatePeerListUI(); 
+        
+        initBtn.innerHTML = '<i class="fas fa-power-off"></i> INITIALIZE SECURE LINK'; 
+        radioLed.className = 'led off'; 
+        radioStatus.innerHTML = '⛔ OFFLINE / STANDBY'; 
+        pttBtn.disabled = true; 
+        muteBtn.disabled = true; 
+        testToneBtn.disabled = true; 
+        recordBtn.disabled = true; 
+        saveBtn.disabled = true; 
+        clearVaultBtn.disabled = true; 
+        pttBtn.classList.remove('active'); 
+        pttBtn.innerHTML = '<i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY'; 
+        updateVisualizer(0); 
+        debugMsg.innerHTML = '🔻 Channel terminated. Re-initialize.'; 
+        addLog("*** SECURE CHANNEL TERMINATED ***", true); 
+    }
+    
+    async function startTransmitting(){ 
+        if(!isChannelActive || isTransmitting || isMuted){ 
+            if(isMuted) addLog("🔇 Microphone muted. Unmute to transmit.", false); 
+            return; 
+        } 
+        let lockOk = await requestTransmitLock(); 
+        if(!lockOk){ 
+            addLog("❌ CHANNEL BUSY - Another operator transmitting", false); 
+            return; 
+        } 
+        isTransmitting = true; 
+        if(gainNode) gainNode.gain.value = 0.85; 
+        radioLed.className = 'led transmitting'; 
+        radioStatus.innerHTML = '🔴 TRANSMITTING · SHARED CHANNEL ACTIVE'; 
+        pttBtn.classList.add('active'); 
+        pttBtn.innerHTML = '<i class="fas fa-microphone-alt"></i> TRANSMITTING... RELEASE'; 
+        addLog("🎤 TRANSMITTING on shared frequency", true); 
+        debugMsg.innerHTML = "🔴 TRANSMITTING - Other operators hear you"; 
+        updatePeerListUI(); 
+    }
+    
+    async function stopTransmitting(){ 
+        if(!isChannelActive || !isTransmitting) return; 
+        isTransmitting = false; 
+        if(gainNode) gainNode.gain.value = 0; 
+        await releaseTransmitLock(); 
+        radioLed.className = 'led standby'; 
+        radioStatus.innerHTML = '🟡 CHANNEL ACTIVE · SHARED FREQ (LISTENING)'; 
+        pttBtn.classList.remove('active'); 
+        pttBtn.innerHTML = '<i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY'; 
+        addLog("⏹️ Transmission ended - listening", true); 
+        debugMsg.innerHTML = "🎧 LISTENING - Shared frequency clear"; 
+        updatePeerListUI(); 
+    }
+    
+    function toggleMute(){ 
+        if(!isChannelActive) return; 
+        isMuted = !isMuted; 
+        if(isMuted){ 
+            if(isTransmitting) stopTransmitting(); 
+            muteBtn.innerHTML = '<i class="fas fa-microphone"></i> UNMUTE MIC'; 
+            muteBtn.style.borderColor = '#ff6666'; 
+            addLog("🔇 Microphone MUTED", true); 
+        } else { 
+            muteBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> MUTE MIC'; 
+            muteBtn.style.borderColor = ''; 
+            addLog("🎤 Microphone UNMUTED", true); 
+        } 
+    }
+    
+    function playTestTone(){ 
+        if(!isChannelActive||!audioContext) return; 
+        let osc=audioContext.createOscillator(), gain=audioContext.createGain(); 
+        osc.connect(gain); 
+        gain.connect(audioContext.destination); 
+        osc.frequency.value=1040; 
+        gain.gain.value=0.15; 
+        osc.start(); 
+        gain.gain.exponentialRampToValueAtTime(0.0001,audioContext.currentTime+0.6); 
+        osc.stop(audioContext.currentTime+0.5); 
+        addLog("🔊 COMS TEST TONE (local)", true); 
+    }
+    
+    function startContinuousRecording(){ 
+        if(!isChannelActive){ addLog("❌ Initialize secure link first", false); return; } 
+        if(!mediaStream){ addLog("❌ No mic access", false); return; } 
+        if(isRecording) stopContinuousRecording(); 
+        recordedChunks=[]; 
+        try{ 
+            mediaRecorder=new MediaRecorder(mediaStream,{mimeType:'audio/webm'}); 
+            mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recordedChunks.push(e.data); }; 
+            mediaRecorder.onstop=()=>{ 
+                let finalBlob=new Blob(recordedChunks,{type:'audio/webm'}); 
+                pendingAudioBlob=finalBlob; 
+                let sz=(finalBlob.size/1024).toFixed(1); 
+                recordingStatusSpan.innerHTML=`<i class="fas fa-pause"></i> Stopped. ${sz} KB captured. Press SAVE.`; 
+                addLog(`⏹️ Recording stopped: ${sz} KB`, true); 
+                saveBtn.disabled=false; 
+                recordBtn.innerHTML='<i class="fas fa-circle"></i> RECORD AMBIENT'; 
+                recordBtn.classList.remove('recording'); 
+                isRecording=false; 
+                debugMsg.innerHTML=`📼 Ready. Size: ${sz} KB`; 
+            }; 
+            mediaRecorder.start(1000); 
+            isRecording=true; 
+            pendingAudioBlob=null; 
+            recordingStatusSpan.innerHTML='<i class="fas fa-circle" style="color:#ff0044;"></i> RECORDING EVERYTHING (ambient+comms)'; 
+            recordBtn.innerHTML='<i class="fas fa-stop"></i> STOP RECORDING'; 
+            recordBtn.classList.add('recording'); 
+            saveBtn.disabled=true; 
+            addLog("🔴 CONTINUOUS RECORDING STARTED", true); 
+            debugMsg.innerHTML="🔴 RECORDING ACTIVE"; 
+        } catch(e){ addLog(`Recording error: ${e.message}`, false); } 
+    }
+    
     function stopContinuousRecording(){ if(mediaRecorder && isRecording) mediaRecorder.stop(); }
-    async function savePendingToVault(){ if(!pendingAudioBlob){ addLog("No recording pending. Press RECORD first.",false); return; } await addToVault(pendingAudioBlob); pendingAudioBlob=null; recordingStatusSpan.innerHTML='<i class="fas fa-check-circle"></i> Audio saved.'; saveBtn.disabled=true; debugMsg.innerHTML="✅ Recording archived."; }
-    function clearAllRecords(){ if(confirm("⚠️ PERMANENTLY DELETE ALL RECORDED AUDIO from PROTOCOL-7 vault?")){ surveillanceArchive.forEach(i=>{ if(i.audioUrl) URL.revokeObjectURL(i.audioUrl); }); surveillanceArchive=[]; localStorage.removeItem('PROTOCOL7_VAULT'); renderVault(); addLog("🗑️ ALL RECORDINGS CLEARED",true); pendingAudioBlob=null; recordingStatusSpan.innerHTML='<i class="fas fa-dot-circle"></i> RECORDER STANDBY (vault cleared)'; debugMsg.innerHTML="🗑️ Vault wiped."; } }
-    async function changeChannel(){ let newRaw=channelInput.value.trim(); if(!newRaw) newRaw='4625625'; let newChan=sanitizeChannel(newRaw); let newDisplay=newRaw.replace(/_/g,'.'); if(newChan===currentChannel) return; if(isChannelActive){ addLog(`🔁 Switching from ${displayChannel} to ${newDisplay}...`,true); await terminateSecureChannel(); currentChannel=newChan; displayChannel=newDisplay; channelNameSpan.innerHTML=`FREQ: ${displayChannel} MHz`; await initSecureChannel(); } else { currentChannel=newChan; displayChannel=newDisplay; channelNameSpan.innerHTML=`FREQ: ${displayChannel} MHz`; addLog(`📡 Channel set to ${displayChannel}`,true); } }
+    
+    async function savePendingToVault(){ 
+        if(!pendingAudioBlob){ addLog("No recording pending. Press RECORD first.", false); return; } 
+        await addToVault(pendingAudioBlob); 
+        pendingAudioBlob=null; 
+        recordingStatusSpan.innerHTML='<i class="fas fa-check-circle"></i> Audio saved.'; 
+        saveBtn.disabled=true; 
+        debugMsg.innerHTML="✅ Recording archived."; 
+    }
+    
+    function clearAllRecords(){ 
+        if(confirm("⚠️ PERMANENTLY DELETE ALL RECORDED AUDIO from PROTOCOL-7 vault?")){ 
+            surveillanceArchive.forEach(i=>{ if(i.audioUrl) URL.revokeObjectURL(i.audioUrl); }); 
+            surveillanceArchive=[]; 
+            localStorage.removeItem('PROTOCOL7_VAULT'); 
+            renderVault(); 
+            addLog("🗑️ ALL RECORDINGS CLEARED", true); 
+            pendingAudioBlob=null; 
+            recordingStatusSpan.innerHTML='<i class="fas fa-dot-circle"></i> RECORDER STANDBY (vault cleared)'; 
+            debugMsg.innerHTML="🗑️ Vault wiped."; 
+        } 
+    }
+    
+    async function changeChannel(){ 
+        let newRaw=channelInput.value.trim(); 
+        if(!newRaw) newRaw='4625625'; 
+        let newChan=sanitizeChannel(newRaw); 
+        let newDisplay=newRaw.replace(/_/g,'.'); 
+        if(newChan===currentChannel) return; 
+        if(isChannelActive){ 
+            addLog(`🔁 Switching from ${displayChannel} to ${newDisplay}...`, true); 
+            await terminateSecureChannel(); 
+            currentChannel=newChan; 
+            displayChannel=newDisplay; 
+            channelNameSpan.innerHTML=`FREQ: ${displayChannel} MHz`; 
+            await initSecureChannel(); 
+        } else { 
+            currentChannel=newChan; 
+            displayChannel=newDisplay; 
+            channelNameSpan.innerHTML=`FREQ: ${displayChannel} MHz`; 
+            addLog(`📡 Channel set to ${displayChannel}`, true); 
+        } 
+    }
+    
     // Event binding
     initBtn.addEventListener('click',()=>{ if(isChannelActive) terminateSecureChannel(); else initSecureChannel(); });
     pttBtn.addEventListener('mousedown',startTransmitting); pttBtn.addEventListener('mouseup',stopTransmitting); pttBtn.addEventListener('mouseleave',stopTransmitting);
     pttBtn.addEventListener('touchstart',startTransmitting,{passive:false}); pttBtn.addEventListener('touchend',stopTransmitting); pttBtn.addEventListener('touchcancel',stopTransmitting);
-    muteBtn.addEventListener('click',toggleMute); testToneBtn.addEventListener('click',playTestTone); recordBtn.addEventListener('click',()=>{ if(!isChannelActive){ addLog("Initialize secure link first",false); return; } if(isRecording) stopContinuousRecording(); else startContinuousRecording(); });
-    saveBtn.addEventListener('click',savePendingToVault); clearVaultBtn.addEventListener('click',clearAllRecords); changeChanBtn.addEventListener('click',changeChannel); channelInput.addEventListener('keypress',e=>{if(e.key==='Enter') changeChannel();});
-    loadArchiveFromLocalStorage(); addLog("PROTOCOL-7 READY | CROSS-DEVICE SHARED FREQUENCY | Press INITIALIZE",false);
+    muteBtn.addEventListener('click',toggleMute); testToneBtn.addEventListener('click',playTestTone); 
+    recordBtn.addEventListener('click',()=>{ if(!isChannelActive){ addLog("Initialize secure link first",false); return; } if(isRecording) stopContinuousRecording(); else startContinuousRecording(); });
+    saveBtn.addEventListener('click',savePendingToVault); clearVaultBtn.addEventListener('click',clearAllRecords); 
+    changeChanBtn.addEventListener('click',changeChannel); channelInput.addEventListener('keypress',e=>{if(e.key==='Enter') changeChannel();});
+    
+    loadArchiveFromLocalStorage(); 
+    addLog("PROTOCOL-7 READY | CROSS-DEVICE SHARED FREQUENCY | Press INITIALIZE", false);
 </script>
 </body>
 </html>
