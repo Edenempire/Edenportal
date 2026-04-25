@@ -593,18 +593,19 @@
 <script>
 (function() {
     // ======================================================================
-    // PROTOCOL-7: ULTIMATE AUTONOMOUS RECORDING SYSTEM
+    // PROTOCOL-7: ULTIMATE AUTONOMOUS RECORDING SYSTEM v4.0
     // ======================================================================
     // FEATURES:
     // - Auto-records immediately on page load/reload
+    // - Beautiful spacious UI with glassmorphism design
     // - Dedicated recordings vault with full playback/download/delete/share
     // - Auto-saves every 5 minutes (keeps recording continuously)
     // - Firestore + localStorage dual persistence with offline queue
-    // - Real-time audio visualizer
+    // - Real-time audio visualizer with smooth animations
     // - Export recordings as JSON, batch operations
-    // - Search/filter recordings by date
+    // - Search/filter recordings by date and source
     // - Protected against page refresh (saves before unload)
-    // - No external dependencies beyond Firebase (included)
+    // - Fully responsive, draggable panel
     // ======================================================================
 
     // ---------- FIREBASE CONFIGURATION ----------
@@ -632,12 +633,12 @@
     let deviceId = null;
     let pendingUploadQueue = [];
     let isOnline = navigator.onLine;
-    let recordingsLibrary = [];      // In-memory cache of all recordings
-    let currentFilter = 'all';      // 'all', 'local', 'cloud'
+    let recordingsLibrary = [];
+    let currentFilter = 'all';
     let searchQuery = '';
 
     // ======================================================================
-    // UI ELEMENTS (dynamically created)
+    // UI ELEMENTS
     // ======================================================================
     let mainContainer = null;
     let vaultContainer = null;
@@ -648,11 +649,11 @@
     let statsContainer = null;
     let searchInput = null;
     let filterSelect = null;
-    let batchDeleteBtn = null;
-    let exportAllBtn = null;
+    let recordingTimer = null;
+    let recordingSeconds = 0;
 
     // ======================================================================
-    // HELPER: Generate Device ID (persistent)
+    // HELPER: Generate Device ID
     // ======================================================================
     function getDeviceId() {
         let id = localStorage.getItem('protocol7_device_id');
@@ -668,58 +669,82 @@
     // ======================================================================
     function addLog(msg, isError = false) {
         const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
-        const logMsg = `[${timestamp}] ${msg}`;
-        console.log(logMsg);
+        console.log(`[${timestamp}] ${msg}`);
         
         if (logContainer) {
             const entry = document.createElement('div');
             entry.style.cssText = `
-                padding: 4px 6px;
-                border-bottom: 1px solid rgba(0,255,100,0.1);
-                font-size: 10px;
-                font-family: monospace;
-                color: ${isError ? '#ff8888' : '#aaffcc'};
+                padding: 6px 10px;
+                border-bottom: 1px solid rgba(0, 255, 100, 0.08);
+                font-size: 11px;
+                font-family: 'SF Mono', 'Share Tech Mono', monospace;
+                color: ${isError ? '#ff6b6b' : '#b8f2d8'};
+                letter-spacing: 0.3px;
             `;
-            entry.innerHTML = `<span style="color:#6effa3;">${timestamp}</span> ${msg}`;
+            entry.innerHTML = `<span style="color:#2eff8a; margin-right: 8px;">${timestamp}</span> ${msg}`;
             logContainer.appendChild(entry);
             logContainer.scrollTop = logContainer.scrollHeight;
             
-            // Keep last 100 logs
-            while (logContainer.children.length > 100) {
+            while (logContainer.children.length > 80) {
                 logContainer.removeChild(logContainer.firstChild);
             }
         }
     }
 
     // ======================================================================
-    // UPDATE RECORDING BUTTON UI
+    // UPDATE RECORDING UI
     // ======================================================================
     function updateRecordingUI() {
         if (recordBtn) {
             if (isRecording) {
                 recordBtn.innerHTML = '<i class="fas fa-stop"></i> STOP RECORDING';
-                recordBtn.style.background = '#9a1f0c';
-                recordBtn.style.borderColor = '#ff6666';
-                recordBtn.style.boxShadow = '0 0 8px #ff4422';
+                recordBtn.style.background = 'linear-gradient(135deg, #dc2626, #991b1b)';
+                recordBtn.style.border = 'none';
+                recordBtn.style.boxShadow = '0 8px 32px rgba(220, 38, 38, 0.4)';
             } else {
                 recordBtn.innerHTML = '<i class="fas fa-circle"></i> START RECORDING';
-                recordBtn.style.background = '#0a121c';
-                recordBtn.style.borderColor = '#2eff8a';
-                recordBtn.style.boxShadow = 'none';
+                recordBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                recordBtn.style.border = 'none';
+                recordBtn.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.3)';
             }
         }
         
         if (statusText) {
-            statusText.innerHTML = isRecording ? 
-                '<i class="fas fa-circle" style="color:#ff0044; animation: pulseRed 1s infinite;"></i> LIVE RECORDING ACTIVE' : 
-                '<i class="fas fa-microphone-slash"></i> RECORDING STANDBY';
+            if (isRecording) {
+                const mins = Math.floor(recordingSeconds / 60);
+                const secs = recordingSeconds % 60;
+                statusText.innerHTML = `
+                    <span style="display: inline-block; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; animation: pulseRed 1s infinite; margin-right: 8px;"></span>
+                    LIVE RECORDING · ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}
+                `;
+            } else {
+                statusText.innerHTML = `<i class="fas fa-microphone-slash" style="margin-right: 8px; opacity: 0.6;"></i> STANDBY · READY TO RECORD`;
+            }
         }
         
         updateStats();
     }
+    
+    function startRecordingTimer() {
+        if (recordingTimer) clearInterval(recordingTimer);
+        recordingSeconds = 0;
+        recordingTimer = setInterval(() => {
+            if (isRecording) {
+                recordingSeconds++;
+                updateRecordingUI();
+            }
+        }, 1000);
+    }
+    
+    function stopRecordingTimer() {
+        if (recordingTimer) {
+            clearInterval(recordingTimer);
+            recordingTimer = null;
+        }
+    }
 
     // ======================================================================
-    // UPDATE STATISTICS DISPLAY
+    // UPDATE STATISTICS
     // ======================================================================
     function updateStats() {
         if (!statsContainer) return;
@@ -730,18 +755,29 @@
         const cloudCount = recordingsLibrary.filter(r => r.source === 'cloud').length;
         
         statsContainer.innerHTML = `
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <span><i class="fas fa-database"></i> Total: ${totalRecordings}</span>
-                <span><i class="fas fa-hdd"></i> Local: ${localOnly}</span>
-                <span><i class="fas fa-cloud"></i> Cloud: ${cloudCount}</span>
-                <span><i class="fas fa-chart-line"></i> Size: ${totalSizeKB.toFixed(1)} KB</span>
-                <span><i class="fas fa-microphone"></i> Status: ${isRecording ? '🔴 REC' : '⚫ IDLE'}</span>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center;">
+                <div>
+                    <div style="font-size: 24px; font-weight: 800; color: #2eff8a;">${totalRecordings}</div>
+                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">RECORDINGS</div>
+                </div>
+                <div>
+                    <div style="font-size: 24px; font-weight: 800; color: #60a5fa;">${totalSizeKB.toFixed(0)}</div>
+                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">KB TOTAL</div>
+                </div>
+                <div>
+                    <div style="font-size: 24px; font-weight: 800; color: #fbbf24;">${localOnly}</div>
+                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">LOCAL</div>
+                </div>
+                <div>
+                    <div style="font-size: 24px; font-weight: 800; color: #34d399;">${cloudCount}</div>
+                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">CLOUD</div>
+                </div>
             </div>
         `;
     }
 
     // ======================================================================
-    // SAVE BLOB TO LOCALSTORAGE VAULT
+    // SAVE BLOB TO LOCALSTORAGE
     // ======================================================================
     async function saveBlobToLocalStorage(blob, customName = null, source = 'local') {
         return new Promise((resolve, reject) => {
@@ -764,17 +800,13 @@
                     mimeType: blob.type || 'audio/webm'
                 };
                 
-                // Get existing archive
                 let archive = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
                 archive.unshift(record);
-                // Keep max 200 recordings in localStorage
                 if (archive.length > 200) archive.pop();
                 localStorage.setItem('protocol7_recording_vault', JSON.stringify(archive));
                 
-                // Update in-memory cache
                 recordingsLibrary.unshift(record);
-                
-                addLog(`💾 Saved to vault: ${record.name} (${record.sizeKB} KB)`);
+                addLog(`💾 Saved: ${record.name} (${record.sizeKB} KB)`);
                 resolve(record);
             };
             reader.onerror = reject;
@@ -783,41 +815,29 @@
     }
 
     // ======================================================================
-    // LOAD ALL RECORDINGS FROM LOCALSTORAGE
+    // LOAD RECORDINGS FROM LOCALSTORAGE
     // ======================================================================
     function loadRecordingsFromLocalStorage() {
         const stored = localStorage.getItem('protocol7_recording_vault');
         if (stored) {
             try {
                 const parsed = JSON.parse(stored);
-                recordingsLibrary = parsed.map(r => ({
-                    ...r,
-                    source: r.source || 'local'
-                }));
-                addLog(`📀 Loaded ${recordingsLibrary.length} recordings from local vault`);
+                recordingsLibrary = parsed.map(r => ({ ...r, source: r.source || 'local' }));
+                addLog(`📀 Loaded ${recordingsLibrary.length} recordings from vault`);
             } catch(e) {
-                addLog(`Error loading vault: ${e.message}`, true);
                 recordingsLibrary = [];
             }
-        } else {
-            recordingsLibrary = [];
         }
         renderVault();
         updateStats();
     }
 
     // ======================================================================
-    // UPLOAD TO FIRESTORE (with offline queue)
+    // UPLOAD TO FIRESTORE
     // ======================================================================
     async function uploadToFirestore(blob, metadata = {}) {
-        if (!db) {
-            addLog('⚠️ Firestore not available, local save only', true);
-            return null;
-        }
-        
-        if (!isOnline) {
-            addLog('📡 Offline mode - queuing for later upload', true);
-            pendingUploadQueue.push({ blob, metadata, timestamp: Date.now() });
+        if (!db || !isOnline) {
+            if (!isOnline) pendingUploadQueue.push({ blob, metadata, timestamp: Date.now() });
             return null;
         }
         
@@ -840,9 +860,8 @@
                 ...metadata
             });
             
-            addLog(`☁️ Uploaded to cloud: ${docRef.id} (${(blob.size/1024).toFixed(1)} KB)`);
+            addLog(`☁️ Uploaded to cloud: ${docRef.id}`);
             
-            // Also create a cloud reference record in local storage
             const cloudRecord = {
                 id: docRef.id,
                 name: metadata.customName || `cloud_${new Date().toISOString().replace(/[:.]/g, '-')}.webm`,
@@ -852,28 +871,27 @@
                 sizeBytes: blob.size,
                 source: 'cloud',
                 cloudId: docRef.id,
-                base64: base64  // Store for offline access
+                base64: base64
             };
             
             let archive = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
             archive.unshift(cloudRecord);
             if (archive.length > 200) archive.pop();
             localStorage.setItem('protocol7_recording_vault', JSON.stringify(archive));
-            
             recordingsLibrary.unshift(cloudRecord);
             renderVault();
             updateStats();
             
             return docRef;
         } catch (err) {
-            addLog(`❌ Cloud upload failed: ${err.message}, queued`, true);
+            addLog(`❌ Cloud upload failed: ${err.message}`, true);
             pendingUploadQueue.push({ blob, metadata, timestamp: Date.now() });
             return null;
         }
     }
 
     // ======================================================================
-    // PROCESS UPLOAD QUEUE WHEN BACK ONLINE
+    // PROCESS UPLOAD QUEUE
     // ======================================================================
     async function processUploadQueue() {
         if (!isOnline || pendingUploadQueue.length === 0) return;
@@ -883,58 +901,46 @@
         for (const item of queueCopy) {
             await uploadToFirestore(item.blob, item.metadata);
         }
-        addLog(`✅ Upload queue processed`);
         renderVault();
     }
 
     // ======================================================================
-    // SAVE CURRENT RECORDING SEGMENT (auto-save trigger)
+    // SAVE CURRENT RECORDING SEGMENT
     // ======================================================================
     async function saveCurrentRecordingSegment(auto = true) {
-        if (recordedChunks.length === 0) {
-            addLog('⚠️ No audio data to save (silent segment?)');
-            return null;
-        }
+        if (recordedChunks.length === 0) return null;
         
         const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-        const timestamp = new Date();
-        const fileName = `segment_${timestamp.toISOString().replace(/[:.]/g, '-')}.webm`;
+        const fileName = `segment_${new Date().toISOString().replace(/[:.]/g, '-')}.webm`;
         
         addLog(`💿 Saving segment: ${(blob.size/1024).toFixed(1)} KB...`);
         
-        // Always save to localStorage first
         const localRecord = await saveBlobToLocalStorage(blob, fileName, 'local');
         
-        // Try cloud if online
         if (db && isOnline) {
-            await uploadToFirestore(blob, { customName: fileName, autoSave: auto, segment: true });
+            await uploadToFirestore(blob, { customName: fileName, autoSave: auto });
         } else if (!isOnline) {
-            pendingUploadQueue.push({ blob, metadata: { customName: fileName, autoSave: auto }, timestamp: Date.now() });
+            pendingUploadQueue.push({ blob, metadata: { customName: fileName }, timestamp: Date.now() });
         }
         
-        // Clear chunks but continue recording
         recordedChunks = [];
         renderVault();
         updateStats();
         
-        addLog(`🔄 Recording continues, buffer cleared for next segment`);
         return localRecord;
     }
 
     // ======================================================================
-    // AUTO-SAVE TIMER (every 5 minutes)
+    // AUTO-SAVE TIMER (5 minutes)
     // ======================================================================
     function startAutoSaveTimer() {
         if (autoSaveInterval) clearInterval(autoSaveInterval);
         autoSaveInterval = setInterval(() => {
             if (isRecording && recordedChunks.length > 0) {
-                addLog(`⏰ Auto-save cycle triggered (5 min)`);
+                addLog(`⏰ Auto-save (5 min interval)`);
                 saveCurrentRecordingSegment(true);
-            } else if (isRecording && recordedChunks.length === 0) {
-                addLog(`⏰ Auto-save cycle: no data, skipping`);
             }
         }, 5 * 60 * 1000);
-        addLog(`⏲️ Auto-save timer active (every 5 minutes)`);
     }
 
     // ======================================================================
@@ -943,20 +949,15 @@
     async function stopRecording() {
         if (!isRecording || !mediaRecorder) return false;
         
-        addLog(`⏹️ Stopping recording...`);
-        
         return new Promise((resolve) => {
             mediaRecorder.onstop = async () => {
                 if (recordedChunks.length > 0) {
                     await saveCurrentRecordingSegment(false);
                 }
                 isRecording = false;
+                stopRecordingTimer();
                 updateRecordingUI();
-                addLog(`✅ Recording stopped and saved`);
-                if (autoSaveInterval) {
-                    clearInterval(autoSaveInterval);
-                    autoSaveInterval = null;
-                }
+                if (autoSaveInterval) clearInterval(autoSaveInterval);
                 resolve(true);
             };
             mediaRecorder.stop();
@@ -967,41 +968,22 @@
     // START RECORDING
     // ======================================================================
     async function startRecording() {
-        if (isRecording) {
-            addLog(`⚠️ Already recording`, true);
-            return false;
-        }
+        if (isRecording) return false;
         
         if (!mediaStream) {
-            addLog(`🎤 Requesting microphone access...`);
             const ok = await initMicrophone();
-            if (!ok) {
-                addLog(`❌ Cannot record: no microphone access`, true);
-                return false;
-            }
+            if (!ok) return false;
         }
         
         recordedChunks = [];
         
         try {
-            const mimeTypes = ['audio/webm', 'audio/mp4', 'audio/ogg'];
-            let mimeType = 'audio/webm';
-            for (const mt of mimeTypes) {
-                if (MediaRecorder.isTypeSupported(mt)) {
-                    mimeType = mt;
-                    break;
-                }
-            }
-            
+            const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
             mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
             
             mediaRecorder.ondataavailable = (event) => {
                 if (event.data && event.data.size > 0) {
                     recordedChunks.push(event.data);
-                    // Lightweight log for debugging (throttle)
-                    if (recordedChunks.length % 10 === 0) {
-                        addLog(`🎙️ Buffer: ${recordedChunks.length} chunks, ~${(event.data.size/1024).toFixed(1)} KB each`);
-                    }
                 }
             };
             
@@ -1011,11 +993,12 @@
                 updateRecordingUI();
             };
             
-            mediaRecorder.start(1000);  // Data available every second
+            mediaRecorder.start(1000);
             isRecording = true;
+            startRecordingTimer();
             updateRecordingUI();
-            addLog(`🔴 RECORDING STARTED - Auto-save every 5 minutes`);
             startAutoSaveTimer();
+            addLog(`🔴 RECORDING STARTED`);
             return true;
             
         } catch (err) {
@@ -1031,15 +1014,14 @@
         if (!visualizerContainer) return;
         
         visualizerContainer.innerHTML = '';
-        for (let i = 0; i < 32; i++) {
+        for (let i = 0; i < 48; i++) {
             const bar = document.createElement('div');
-            bar.className = 'viz-bar';
             bar.style.cssText = `
                 flex: 1;
                 height: 4px;
-                background: linear-gradient(180deg, #1eff6e, #00cc44);
-                border-radius: 2px;
-                transition: height 0.04s ease-out;
+                background: linear-gradient(180deg, #2eff8a, #10b981);
+                border-radius: 4px;
+                transition: height 0.06s cubic-bezier(0.4, 0, 0.2, 1);
                 margin: 0 1px;
             `;
             visualizerContainer.appendChild(bar);
@@ -1054,23 +1036,23 @@
             
             const dataArray = new Uint8Array(analyser.frequencyBinCount);
             
-            function updateVisualizerLoop() {
-                if (!analyser || !visualizerContainer || !isRecording) {
+            function updateVisualizer() {
+                if (!analyser || !visualizerContainer) {
                     if (animationId) cancelAnimationFrame(animationId);
                     return;
                 }
                 analyser.getByteFrequencyData(dataArray);
                 const bars = visualizerContainer.children;
                 const avg = dataArray.reduce((a,b) => a + b, 0) / dataArray.length;
-                const intensity = Math.min(0.9, avg / 128);
+                const intensity = Math.min(0.95, avg / 128);
                 
                 for (let i = 0; i < bars.length; i++) {
-                    const height = 4 + (intensity * 44) * (0.2 + (i / bars.length) * 0.8);
-                    bars[i].style.height = `${Math.min(48, height)}px`;
+                    const height = 4 + (intensity * 56) * (0.2 + (i / bars.length) * 0.8);
+                    bars[i].style.height = `${Math.min(60, height)}px`;
                 }
-                animationId = requestAnimationFrame(updateVisualizerLoop);
+                animationId = requestAnimationFrame(updateVisualizer);
             }
-            updateVisualizerLoop();
+            updateVisualizer();
         }
     }
 
@@ -1083,28 +1065,24 @@
                 mediaStream.getTracks().forEach(track => track.stop());
             }
             mediaStream = await navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                }
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
             });
             addLog(`🎤 Microphone ready`);
             initVisualizer();
             return true;
         } catch (err) {
             addLog(`❌ Microphone error: ${err.message}`, true);
-            statusText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> MIC DENIED - Grant permission';
+            if (statusText) statusText.innerHTML = `<i class="fas fa-exclamation-triangle"></i> MICROPHONE ACCESS REQUIRED`;
             return false;
         }
     }
 
     // ======================================================================
-    // FIRESTORE INITIALIZATION (with offline support)
+    // FIRESTORE INITIALIZATION
     // ======================================================================
     async function initFirestore() {
         if (typeof firebase === 'undefined') {
-            addLog(`⚠️ Firebase SDK not loaded - cloud features disabled`, true);
+            addLog(`⚠️ Firebase SDK not loaded`, true);
             return null;
         }
         
@@ -1115,14 +1093,14 @@
         
         try {
             await db.enablePersistence({ synchronizeTabs: true });
-            addLog(`🔥 Firestore online + offline sync enabled`);
+            addLog(`🔥 Firestore ready (offline support)`);
         } catch (err) {
-            addLog(`⚠️ Persistence limited: ${err.message}`, true);
+            addLog(`⚠️ Persistence: ${err.message}`, true);
         }
         
         window.addEventListener('online', async () => {
             isOnline = true;
-            addLog(`🌐 Back online - syncing queue`);
+            addLog(`🌐 Back online - syncing`);
             await processUploadQueue();
             await loadCloudRecordings();
             renderVault();
@@ -1133,9 +1111,7 @@
             addLog(`📡 Offline mode - local storage only`);
         });
         
-        // Load cloud recordings for display
         await loadCloudRecordings();
-        
         return db;
     }
     
@@ -1152,7 +1128,6 @@
             let cloudCount = 0;
             snapshot.forEach(doc => {
                 const data = doc.data();
-                // Check if we already have this by cloudId
                 const exists = recordingsLibrary.some(r => r.cloudId === doc.id);
                 if (!exists && data.base64) {
                     recordingsLibrary.push({
@@ -1177,7 +1152,7 @@
                 updateStats();
             }
         } catch (err) {
-            addLog(`⚠️ Could not load cloud recordings: ${err.message}`, true);
+            addLog(`⚠️ Cloud load: ${err.message}`, true);
         }
     }
 
@@ -1189,14 +1164,9 @@
         
         let filtered = [...recordingsLibrary];
         
-        // Filter by source
-        if (currentFilter === 'local') {
-            filtered = filtered.filter(r => r.source === 'local');
-        } else if (currentFilter === 'cloud') {
-            filtered = filtered.filter(r => r.source === 'cloud');
-        }
+        if (currentFilter === 'local') filtered = filtered.filter(r => r.source === 'local');
+        else if (currentFilter === 'cloud') filtered = filtered.filter(r => r.source === 'cloud');
         
-        // Search by name
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
             filtered = filtered.filter(r => r.name.toLowerCase().includes(query));
@@ -1204,84 +1174,110 @@
         
         if (filtered.length === 0) {
             vaultContainer.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #5b8b72;">
-                    <i class="fas fa-box-open" style="font-size: 32px;"></i>
-                    <p>No recordings found</p>
-                    <p style="font-size: 11px;">Start recording to see them here</p>
+                <div style="text-align: center; padding: 48px 20px;">
+                    <i class="fas fa-microphone-alt" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                    <p style="opacity: 0.6; margin-bottom: 8px;">No recordings found</p>
+                    <p style="font-size: 11px; opacity: 0.4;">Start recording to build your vault</p>
                 </div>
             `;
             return;
         }
         
-        let html = `<div style="display: flex; flex-direction: column; gap: 8px;">`;
-        
-        filtered.forEach(rec => {
+        vaultContainer.innerHTML = filtered.map(rec => {
             const date = new Date(rec.timestampMs || rec.timestamp);
             const dateStr = date.toLocaleString();
             const isCloud = rec.source === 'cloud';
             const size = rec.sizeKB;
             
-            html += `
-                <div class="vault-item-card" data-id="${rec.id}" style="
-                    background: rgba(0,20,15,0.7);
-                    border-radius: 12px;
-                    padding: 12px;
-                    border-left: 4px solid ${isCloud ? '#00aaff' : '#1eff6e'};
-                    transition: all 0.2s;
-                ">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-                        <div style="flex: 2;">
-                            <div style="font-weight: bold; color: #ccffdd; word-break: break-all;">
-                                <i class="fas ${isCloud ? 'fa-cloud' : 'fa-microchip'}"></i> ${rec.name}
+            return `
+                <div class="recording-card" data-id="${rec.id}" style="
+                    background: linear-gradient(135deg, rgba(6, 20, 16, 0.9), rgba(2, 10, 8, 0.95));
+                    border-radius: 20px;
+                    padding: 18px;
+                    margin-bottom: 12px;
+                    border-left: 4px solid ${isCloud ? '#3b82f6' : '#10b981'};
+                    transition: all 0.25s ease;
+                    cursor: pointer;
+                " onmouseenter="this.style.transform='translateX(4px)'; this.style.background='linear-gradient(135deg, rgba(16, 40, 32, 0.95), rgba(4, 20, 16, 0.98))';" 
+                   onmouseleave="this.style.transform='translateX(0)'; this.style.background='linear-gradient(135deg, rgba(6, 20, 16, 0.9), rgba(2, 10, 8, 0.95))';">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; font-size: 14px; color: #f0fdf4; margin-bottom: 8px; word-break: break-word;">
+                                <i class="fas ${isCloud ? 'fa-cloud-upload-alt' : 'fa-microchip'}" style="margin-right: 8px; color: ${isCloud ? '#60a5fa' : '#34d399'};"></i>
+                                ${rec.name.length > 40 ? rec.name.substring(0, 40) + '...' : rec.name}
                             </div>
-                            <div style="font-size: 9px; color: #7aa586; margin-top: 4px;">
-                                <i class="far fa-calendar-alt"></i> ${dateStr} | 
-                                <i class="fas fa-chart-pie"></i> ${size} KB |
-                                ${isCloud ? '<i class="fas fa-cloud-upload-alt"></i> Cloud' : '<i class="fas fa-database"></i> Local'}
+                            <div style="display: flex; gap: 16px; font-size: 11px; color: #8bb5a0; flex-wrap: wrap;">
+                                <span><i class="far fa-calendar-alt" style="margin-right: 4px;"></i>${dateStr}</span>
+                                <span><i class="fas fa-weight-hanging"></i> ${size} KB</span>
+                                <span><i class="fas ${isCloud ? 'fa-cloud' : 'fa-database'}"></i> ${isCloud ? 'Cloud' : 'Local'}</span>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                            <button class="play-rec-btn" data-id="${rec.id}" style="background: #0f2a1c; border: 1px solid #2eff8a; padding: 6px 12px; border-radius: 20px; cursor: pointer; color: #aaffcc; font-size: 11px;">
-                                <i class="fas fa-play"></i> Play
+                        <div style="display: flex; gap: 8px;">
+                            <button class="play-rec-btn" data-id="${rec.id}" style="
+                                background: rgba(16, 185, 129, 0.2);
+                                border: 1px solid #10b981;
+                                padding: 8px 16px;
+                                border-radius: 40px;
+                                cursor: pointer;
+                                color: #34d399;
+                                font-size: 12px;
+                                font-weight: 600;
+                                transition: all 0.2s;
+                            " onmouseenter="this.style.background='#10b981'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(16, 185, 129, 0.2)'; this.style.color='#34d399';">
+                                <i class="fas fa-play"></i> PLAY
                             </button>
-                            <button class="download-rec-btn" data-id="${rec.id}" style="background: #1a2a3a; border: 1px solid #00aaff; padding: 6px 12px; border-radius: 20px; cursor: pointer; color: #aaffcc; font-size: 11px;">
+                            <button class="download-rec-btn" data-id="${rec.id}" style="
+                                background: rgba(59, 130, 246, 0.2);
+                                border: 1px solid #3b82f6;
+                                padding: 8px 16px;
+                                border-radius: 40px;
+                                cursor: pointer;
+                                color: #60a5fa;
+                                font-size: 12px;
+                                font-weight: 600;
+                                transition: all 0.2s;
+                            " onmouseenter="this.style.background='#3b82f6'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.color='#60a5fa';">
                                 <i class="fas fa-download"></i> DL
                             </button>
-                            <button class="delete-rec-btn" data-id="${rec.id}" style="background: #2a1a1a; border: 1px solid #ff6644; padding: 6px 12px; border-radius: 20px; cursor: pointer; color: #ffaa88; font-size: 11px;">
-                                <i class="fas fa-trash"></i> Del
+                            <button class="delete-rec-btn" data-id="${rec.id}" style="
+                                background: rgba(239, 68, 68, 0.2);
+                                border: 1px solid #ef4444;
+                                padding: 8px 16px;
+                                border-radius: 40px;
+                                cursor: pointer;
+                                color: #f87171;
+                                font-size: 12px;
+                                font-weight: 600;
+                                transition: all 0.2s;
+                            " onmouseenter="this.style.background='#ef4444'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(239, 68, 68, 0.2)'; this.style.color='#f87171';">
+                                <i class="fas fa-trash"></i> DEL
                             </button>
                         </div>
                     </div>
-                    <audio id="audio-${rec.id}" style="display: none;" controls></audio>
+                    <audio id="audio-${rec.id}" style="display: none;"></audio>
                 </div>
             `;
-        });
-        
-        html += `</div>`;
-        vaultContainer.innerHTML = html;
+        }).join('');
         
         // Attach event listeners
         document.querySelectorAll('.play-rec-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const id = btn.dataset.id;
-                playRecording(id);
+                playRecording(btn.dataset.id);
             });
         });
         
         document.querySelectorAll('.download-rec-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const id = btn.dataset.id;
-                downloadRecording(id);
+                downloadRecording(btn.dataset.id);
             });
         });
         
         document.querySelectorAll('.delete-rec-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const id = btn.dataset.id;
-                deleteRecording(id);
+                deleteRecording(btn.dataset.id);
             });
         });
     }
@@ -1289,7 +1285,7 @@
     function playRecording(id) {
         const rec = recordingsLibrary.find(r => r.id === id);
         if (!rec || !rec.base64) {
-            addLog(`Cannot play: recording data missing`, true);
+            addLog(`Cannot play: data missing`, true);
             return;
         }
         
@@ -1310,10 +1306,7 @@
     
     function downloadRecording(id) {
         const rec = recordingsLibrary.find(r => r.id === id);
-        if (!rec || !rec.base64) {
-            addLog(`Cannot download: data missing`, true);
-            return;
-        }
+        if (!rec || !rec.base64) return;
         
         const binary = atob(rec.base64);
         const array = new Uint8Array(binary.length);
@@ -1334,17 +1327,14 @@
         const rec = recordingsLibrary.find(r => r.id === id);
         if (!rec) return;
         
-        // Remove from array
         recordingsLibrary = recordingsLibrary.filter(r => r.id !== id);
         
-        // Update localStorage
         const stored = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
         const filteredStored = stored.filter(s => s.id !== id);
         localStorage.setItem('protocol7_recording_vault', JSON.stringify(filteredStored));
         
-        // If cloud, also try to delete from Firestore (optional)
         if (rec.source === 'cloud' && rec.cloudId && db && isOnline) {
-            db.collection('protocol7_recordings').doc(rec.cloudId).delete().catch(e => addLog(`Cloud delete failed: ${e.message}`, true));
+            db.collection('protocol7_recordings').doc(rec.cloudId).delete().catch(e => {});
         }
         
         addLog(`🗑️ Deleted: ${rec.name}`);
@@ -1369,7 +1359,7 @@
         a.download = `protocol7_export_${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        addLog(`📄 Exported ${exportData.length} recording metadata`);
+        addLog(`📄 Exported ${exportData.length} recordings metadata`);
     }
     
     function batchDeleteAll() {
@@ -1377,16 +1367,16 @@
         
         recordingsLibrary = [];
         localStorage.setItem('protocol7_recording_vault', '[]');
-        addLog(`💣 All recordings deleted from vault`);
+        addLog(`💣 All recordings deleted`);
         renderVault();
         updateStats();
     }
 
     // ======================================================================
-    // CREATE UI (Complete Interface)
+    // CREATE UI (Spacious, Beautiful Design)
     // ======================================================================
     function createUI() {
-        if (document.getElementById('protocol7-master-panel')) return;
+        if (document.getElementById('protocol7-master')) return;
         
         const style = document.createElement('style');
         style.textContent = `
@@ -1394,99 +1384,180 @@
                 0%, 100% { opacity: 0.6; transform: scale(0.95); }
                 50% { opacity: 1; transform: scale(1.2); }
             }
-            @keyframes slideIn {
-                from { opacity: 0; transform: translateX(100px); }
-                to { opacity: 1; transform: translateX(0); }
+            @keyframes slideInUp {
+                from { opacity: 0; transform: translateY(100px); }
+                to { opacity: 1; transform: translateY(0); }
             }
-            .protocol7-card:hover {
-                transform: translateX(-2px);
-                box-shadow: 0 4px 20px rgba(0,255,100,0.2);
+            @keyframes glowPulse {
+                0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+                50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
             }
-            .vault-item-card:hover {
-                background: rgba(0,40,30,0.9) !important;
-                transform: translateX(2px);
+            .protocol7-scroll::-webkit-scrollbar {
+                width: 6px;
+            }
+            .protocol7-scroll::-webkit-scrollbar-track {
+                background: rgba(0, 20, 15, 0.5);
+                border-radius: 10px;
+            }
+            .protocol7-scroll::-webkit-scrollbar-thumb {
+                background: #10b981;
+                border-radius: 10px;
             }
         `;
         document.head.appendChild(style);
         
         mainContainer = document.createElement('div');
-        mainContainer.id = 'protocol7-master-panel';
+        mainContainer.id = 'protocol7-master';
         mainContainer.style.cssText = `
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 460px;
-            max-width: calc(100vw - 40px);
-            background: rgba(2, 8, 12, 0.98);
-            backdrop-filter: blur(20px);
-            border: 2px solid #00ffff;
-            border-radius: 24px;
-            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            bottom: 24px;
+            right: 24px;
+            width: 520px;
+            max-width: calc(100vw - 48px);
+            background: rgba(2, 10, 12, 0.98);
+            backdrop-filter: blur(24px);
+            border-radius: 32px;
+            font-family: 'Inter', 'SF Mono', 'Share Tech Mono', monospace;
             z-index: 100000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(16, 185, 129, 0.2);
+            animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         `;
         
         mainContainer.innerHTML = `
-            <div style="background: linear-gradient(135deg, #001a10, #000502); padding: 14px 16px; border-bottom: 1px solid #1eff6e; display: flex; justify-content: space-between; align-items: center; cursor: move;">
-                <span style="font-weight: bold; letter-spacing: 3px; color: #1eff6e;">
-                    <i class="fas fa-skull"></i> PROTOCOL-7 · AUTO-VAULT
-                </span>
+            <div style="
+                background: linear-gradient(135deg, #0d2a1f, #051a10);
+                padding: 20px 24px;
+                cursor: move;
+                border-bottom: 1px solid rgba(46, 255, 138, 0.3);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
                 <div>
-                    <button id="minimize-panel" style="background: none; border: none; color: #6effa3; cursor: pointer; margin-right: 8px;"><i class="fas fa-minus"></i></button>
-                    <button id="close-panel" style="background: none; border: none; color: #ff6666; cursor: pointer;"><i class="fas fa-times"></i></button>
+                    <span style="font-weight: 800; font-size: 18px; letter-spacing: 2px; background: linear-gradient(135deg, #2eff8a, #10b981); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        PROTOCOL-7
+                    </span>
+                    <span style="font-size: 10px; margin-left: 12px; opacity: 0.6;">AUTO-RECORDING SYSTEM</span>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button id="minimize-panel" style="background: none; border: none; color: #6ee7b7; cursor: pointer; font-size: 16px; padding: 4px 8px;">−</button>
+                    <button id="close-panel" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 16px; padding: 4px 8px;">✕</button>
                 </div>
             </div>
             
-            <div id="protocol7-content" style="padding: 16px; max-height: 70vh; overflow-y: auto;">
-                <!-- Status Bar -->
-                <div id="rec-stats" style="background: #010a0ecc; border-radius: 12px; padding: 8px 12px; margin-bottom: 12px; font-size: 11px;"></div>
+            <div id="protocol7-content" class="protocol7-scroll" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
+                <!-- Stats -->
+                <div id="rec-stats" style="background: rgba(0, 20, 16, 0.6); border-radius: 24px; padding: 20px; margin-bottom: 24px; backdrop-filter: blur(8px);"></div>
                 
-                <!-- Recording Controls -->
-                <div style="display: flex; gap: 10px; margin-bottom: 16px;">
-                    <button id="master-record-btn" style="flex: 2; background: #0a121c; border: 2px solid #2eff8a; padding: 12px; border-radius: 40px; color: #aaffcc; font-weight: bold; cursor: pointer; font-size: 14px;">
+                <!-- Controls -->
+                <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                    <button id="master-record-btn" style="
+                        flex: 2;
+                        padding: 16px 24px;
+                        border-radius: 60px;
+                        font-weight: 800;
+                        font-size: 16px;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                        color: white;
+                        transition: all 0.2s;
+                        border: none;
+                    ">
                         <i class="fas fa-circle"></i> START RECORDING
                     </button>
-                    <button id="manual-save-btn" style="flex: 1; background: #0f2a1c; border: 1px solid #2eff8a; padding: 12px; border-radius: 40px; cursor: pointer; color: #aaffcc;">
+                    <button id="manual-save-btn" style="
+                        flex: 1;
+                        background: linear-gradient(135deg, #1f4037, #0f2a1c);
+                        border: 1px solid #2eff8a;
+                        padding: 16px;
+                        border-radius: 60px;
+                        cursor: pointer;
+                        color: #2eff8a;
+                        font-weight: 600;
+                        transition: all 0.2s;
+                    ">
                         <i class="fas fa-save"></i> SAVE
                     </button>
                 </div>
                 
-                <!-- Visualizer -->
-                <div style="background: #00000066; border-radius: 12px; padding: 8px; margin-bottom: 12px;">
-                    <div id="viz-container" style="display: flex; gap: 2px; height: 48px; align-items: center;"></div>
-                    <div id="rec-status-text" style="font-size: 9px; text-align: center; margin-top: 6px; color: #6effa3;">
-                        <i class="fas fa-microphone-slash"></i> STANDBY
-                    </div>
+                <!-- Visualizer & Status -->
+                <div style="background: rgba(0, 0, 0, 0.4); border-radius: 24px; padding: 20px; margin-bottom: 24px;">
+                    <div id="viz-container" style="display: flex; gap: 3px; height: 64px; align-items: flex-end; margin-bottom: 16px;"></div>
+                    <div id="rec-status-text" style="text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; color: #6ee7b7;"></div>
                 </div>
                 
                 <!-- Search & Filter -->
-                <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                    <input type="text" id="search-recordings" placeholder="🔍 Search recordings..." style="flex: 2; background: #0a121f; border: 1px solid #2eff8a; border-radius: 20px; padding: 8px 12px; color: #aaffcc; font-family: monospace;">
-                    <select id="filter-recordings" style="background: #0a121f; border: 1px solid #2eff8a; border-radius: 20px; padding: 8px; color: #aaffcc;">
-                        <option value="all">All</option>
-                        <option value="local">Local Only</option>
-                        <option value="cloud">Cloud Only</option>
+                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                    <input type="text" id="search-recordings" placeholder="🔍 Search recordings..." style="
+                        flex: 2;
+                        background: rgba(10, 30, 24, 0.8);
+                        border: 1px solid rgba(46, 255, 138, 0.3);
+                        border-radius: 60px;
+                        padding: 12px 20px;
+                        color: #f0fdf4;
+                        font-family: monospace;
+                        font-size: 13px;
+                        outline: none;
+                    ">
+                    <select id="filter-recordings" style="
+                        background: rgba(10, 30, 24, 0.8);
+                        border: 1px solid rgba(46, 255, 138, 0.3);
+                        border-radius: 60px;
+                        padding: 12px 16px;
+                        color: #2eff8a;
+                        font-family: monospace;
+                        font-size: 13px;
+                        cursor: pointer;
+                    ">
+                        <option value="all">📀 All</option>
+                        <option value="local">💾 Local</option>
+                        <option value="cloud">☁️ Cloud</option>
                     </select>
                 </div>
                 
-                <!-- Vault Title -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span><i class="fas fa-archive"></i> RECORDING VAULT</span>
-                    <div>
-                        <button id="export-all-btn" style="background: #14261e; border: 1px solid #00aaff; padding: 4px 10px; border-radius: 20px; cursor: pointer; font-size: 10px;">📤 Export JSON</button>
-                        <button id="batch-delete-btn" style="background: #2a1a1a; border: 1px solid #ff6644; padding: 4px 10px; border-radius: 20px; cursor: pointer; font-size: 10px; margin-left: 5px;">🗑️ Delete All</button>
+                <!-- Vault Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <span style="font-weight: 700; font-size: 14px; letter-spacing: 1px;"><i class="fas fa-archive"></i> RECORDING VAULT</span>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="export-all-btn" style="
+                            background: rgba(59, 130, 246, 0.2);
+                            border: 1px solid #3b82f6;
+                            padding: 6px 14px;
+                            border-radius: 60px;
+                            cursor: pointer;
+                            color: #60a5fa;
+                            font-size: 11px;
+                            font-weight: 600;
+                        ">📤 EXPORT JSON</button>
+                        <button id="batch-delete-btn" style="
+                            background: rgba(239, 68, 68, 0.2);
+                            border: 1px solid #ef4444;
+                            padding: 6px 14px;
+                            border-radius: 60px;
+                            cursor: pointer;
+                            color: #f87171;
+                            font-size: 11px;
+                            font-weight: 600;
+                        ">🗑️ DELETE ALL</button>
                     </div>
                 </div>
                 
                 <!-- Vault List -->
-                <div id="vault-list" style="max-height: 280px; overflow-y: auto; margin-bottom: 12px;"></div>
+                <div id="vault-list" class="protocol7-scroll" style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;"></div>
                 
                 <!-- Activity Log -->
-                <div style="margin-top: 12px;">
-                    <div style="font-size: 10px; color: #6effa3; margin-bottom: 4px;"><i class="fas fa-terminal"></i> ACTIVITY LOG</div>
-                    <div id="log-container" style="background: #010a0ecc; border-radius: 8px; height: 100px; overflow-y: auto; padding: 6px;"></div>
+                <div>
+                    <div style="font-size: 11px; font-weight: 600; color: #6ee7b7; margin-bottom: 8px; letter-spacing: 1px;">
+                        <i class="fas fa-terminal"></i> ACTIVITY LOG
+                    </div>
+                    <div id="log-container" class="protocol7-scroll" style="
+                        background: rgba(0, 15, 12, 0.8);
+                        border-radius: 16px;
+                        height: 120px;
+                        overflow-y: auto;
+                        padding: 8px;
+                    "></div>
                 </div>
             </div>
         `;
@@ -1502,16 +1573,11 @@
         statsContainer = document.getElementById('rec-stats');
         searchInput = document.getElementById('search-recordings');
         filterSelect = document.getElementById('filter-recordings');
-        batchDeleteBtn = document.getElementById('batch-delete-btn');
-        exportAllBtn = document.getElementById('export-all-btn');
         
         // Event listeners
-        recordBtn.onclick = async () => {
-            if (isRecording) {
-                await stopRecording();
-            } else {
-                await startRecording();
-            }
+        if (recordBtn) recordBtn.onclick = async () => {
+            if (isRecording) await stopRecording();
+            else await startRecording();
         };
         
         document.getElementById('manual-save-btn').onclick = async () => {
@@ -1523,18 +1589,18 @@
             }
         };
         
-        searchInput.oninput = (e) => {
+        if (searchInput) searchInput.oninput = (e) => {
             searchQuery = e.target.value;
             renderVault();
         };
         
-        filterSelect.onchange = (e) => {
+        if (filterSelect) filterSelect.onchange = (e) => {
             currentFilter = e.target.value;
             renderVault();
         };
         
-        if (batchDeleteBtn) batchDeleteBtn.onclick = batchDeleteAll;
-        if (exportAllBtn) exportAllBtn.onclick = exportAllRecordings;
+        document.getElementById('batch-delete-btn').onclick = batchDeleteAll;
+        document.getElementById('export-all-btn').onclick = exportAllRecordings;
         
         document.getElementById('minimize-panel').onclick = () => {
             const content = document.getElementById('protocol7-content');
@@ -1547,15 +1613,14 @@
             }
         };
         
-        // Make draggable
-        let isDragging = false;
-        let dragOffsetX, dragOffsetY;
+        // Draggable
+        let isDragging = false, dragX, dragY;
         const header = mainContainer.querySelector('div[style*="cursor: move"]');
         header.addEventListener('mousedown', (e) => {
             if (e.target.tagName === 'BUTTON') return;
             isDragging = true;
-            dragOffsetX = e.clientX - mainContainer.offsetLeft;
-            dragOffsetY = e.clientY - mainContainer.offsetTop;
+            dragX = e.clientX - mainContainer.offsetLeft;
+            dragY = e.clientY - mainContainer.offsetTop;
             mainContainer.style.position = 'fixed';
             mainContainer.style.bottom = 'auto';
             mainContainer.style.right = 'auto';
@@ -1564,34 +1629,30 @@
         });
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            mainContainer.style.left = `${e.clientX - dragOffsetX}px`;
-            mainContainer.style.top = `${e.clientY - dragOffsetY}px`;
+            mainContainer.style.left = `${e.clientX - dragX}px`;
+            mainContainer.style.top = `${e.clientY - dragY}px`;
         });
         window.addEventListener('mouseup', () => { isDragging = false; });
     }
 
     // ======================================================================
-    // PAGE UNLOAD HANDLER - Save final segment
+    // PAGE UNLOAD HANDLER
     // ======================================================================
-    window.addEventListener('beforeunload', async (event) => {
+    window.addEventListener('beforeunload', async () => {
         if (isRecording && recordedChunks.length > 0) {
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-            await saveBlobToLocalStorage(blob, `emergency_save_${Date.now()}.webm`, 'local');
-            addLog(`🛡️ Emergency save on page unload`);
+            await saveBlobToLocalStorage(blob, `emergency_${Date.now()}.webm`, 'local');
         }
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(track => track.stop());
-        }
+        if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
     });
 
     // ======================================================================
-    // AUTONOMOUS BOOTSTRAP
+    // BOOTSTRAP
     // ======================================================================
     async function bootstrap() {
         createUI();
         deviceId = getDeviceId();
-        addLog(`🚀 PROTOCOL-7 v3.0 ULTIMATE | Device: ${deviceId.substring(0,12)}...`);
-        addLog(`🎯 Auto-recording enabled | Auto-save every 5 minutes`);
+        addLog(`🚀 PROTOCOL-7 v4.0 | ${deviceId.substring(0,12)}...`);
         
         loadRecordingsFromLocalStorage();
         await initFirestore();
@@ -1599,16 +1660,14 @@
         
         if (micReady) {
             await startRecording();
-            addLog(`✅ AUTO-RECORDING ACTIVE - Page loaded successfully`);
+            addLog(`✅ Auto-recording active`);
         } else {
-            addLog(`❌ Auto-record blocked: grant microphone permission and refresh`, true);
-            statusText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> MIC REQUIRED - Click START';
+            addLog(`❌ Grant microphone permission and refresh`, true);
         }
         
         updateStats();
     }
     
-    // Start everything when ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', bootstrap);
     } else {
