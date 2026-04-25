@@ -107,27 +107,56 @@
     <div class="header-content"><div class="logo">COMPLIANCE CV-5</div></div>
   </header>
   
-<!-- SECTION 1 -->
-  <section class="section-card">
-    <div class="section-header">
-      <h2 class="section-title">PROTOCOL ALPHA-1 <span class="stars-rank" id="starRank"></span></h2>
-      <span class="badge">CINC / PRESIDENCY [Thato 'Hoss' Morake]</span>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>DAILY MISSION DIRECTIVE</h3>
-        <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER UPLOAD...</div>
-        <div class="btn-group"><button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button></div>
-        <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒 CLASSIFIED</div>
+<!-- ========== ENHANCED PROTOCOL ALPHA-5 MODULE ========== -->
+<!-- REPLACES SECTION 1 WITH FULL COMMAND & CONTROL + AI ASSIST + LOGS + TIMESTAMP -->
+<section class="section-card" id="alpha5CommandModule">
+  <div class="section-header">
+    <h2 class="section-title">PROTOCOL ALPHA-5 <span class="stars-rank" id="starRank"></span></h2>
+    <span class="badge">CINC / PRESIDENCY [Thato 'Hoss' Morake] • ENHANCED</span>
+    <span class="badge" id="liveTimestamp"></span>
+  </div>
+  <div class="grid-2">
+    <!-- LEFT: DAILY MISSION DIRECTIVE -->
+    <div class="card">
+      <h3><i class="fas fa-scroll"></i> DAILY MISSION DIRECTIVE</h3>
+      <div id="directiveText" style="background:#0a0000; padding:1rem; min-height:150px; white-space:pre-wrap; font-family:monospace; margin:10px 0; border-left: 3px solid #ff1a1a;">AWAITING COMMANDER UPLOAD...</div>
+      <div class="btn-group">
+        <button class="btn" id="copyDirectiveBtn"><i class="fas fa-copy"></i> COPY</button>
+        <button class="btn" id="shareDirectiveBtn"><i class="fas fa-bullhorn"></i> BROADCAST TO ALL</button>
       </div>
-      <div class="card" id="cmdPanel" style="display:none;">
-        <h3><i class="fas fa-crown"></i> COMMANDER-IN-CHIEF</h3>
-        <textarea id="newDirective" rows="4" placeholder="COMPOSE NEW MISSION DIRECTIVE..."></textarea>
-        <div class="btn-group"><button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button><button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-upload"></i> UPDATE</button><button class="btn" id="deleteMissionBtn" style="border-color:#ff4444;"><i class="fas fa-trash-alt"></i> DELETE</button></div>
-      </div>
-      <div><button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK COMMANDER</button></div>
+      <div class="protocol-status" style="font-size:0.65rem; margin-top:8px;">🔒 CLASSIFIED • DIRECTIVE ID: <span id="directiveVersion">--</span></div>
     </div>
-  </section>
+    
+    <!-- RIGHT: COMMANDER PANEL (LOCKED BY DEFAULT) -->
+    <div class="card" id="cmdPanel" style="display:none;">
+      <h3><i class="fas fa-crown"></i> COMMANDER-IN-CHIEF • ALPHA-5</h3>
+      <textarea id="newDirective" rows="4" placeholder="COMPOSE NEW MISSION DIRECTIVE..."></textarea>
+      <div class="btn-group">
+        <button class="btn" id="lockCmdBtn"><i class="fas fa-lock"></i> LOCK</button>
+        <button class="btn btn-primary" id="sendDirectiveBtn"><i class="fas fa-upload"></i> UPDATE</button>
+        <button class="btn" id="deleteMissionBtn" style="border-color:#ff4444;"><i class="fas fa-trash-alt"></i> DELETE</button>
+        <button class="btn" id="scheduleDirectiveBtn" style="border-color:#ffaa00;"><i class="fas fa-clock"></i> SCHEDULE</button>
+      </div>
+      <!-- NEW: AI ASSIST FOR DIRECTIVE -->
+      <div style="margin-top:12px;">
+        <input type="text" id="aiDirectivePrompt" placeholder="AI: Generate mission brief..." style="font-size:0.7rem;">
+        <button class="btn" id="genDirectiveAiBtn" style="width:100%; margin-top:5px;"><i class="fas fa-robot"></i> AI GENERATE</button>
+      </div>
+    </div>
+    
+    <!-- UNLOCK BUTTON + COMMAND LOGS -->
+    <div>
+      <button class="btn" id="unlockCmdBtn"><i class="fas fa-fingerprint"></i> UNLOCK COMMANDER</button>
+      <button class="btn" id="viewCommandLogsBtn" style="margin-top:8px;"><i class="fas fa-history"></i> VIEW COMMAND LOGS</button>
+    </div>
+  </div>
+  
+  <!-- NEW: COMMAND AUDIT TRAIL -->
+  <div id="commandLogPanel" style="display:none; margin-top:1rem; background:#0a000055; border:1px solid red; padding:0.8rem;">
+    <h4><i class="fas fa-clipboard-list"></i> COMMANDER AUDIT TRAIL (LAST 10)</h4>
+    <div id="commandLogList" style="max-height:150px; overflow-y:auto; font-size:0.7rem;"></div>
+  </div>
+</section>
 
   <!-- SECTION 2 -->
   <section class="section-card">
@@ -357,6 +386,216 @@
 
   const starSpan = document.getElementById('starRank');
   if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+
+  // PROTOCOL ALPHA-5
+
+  // ========== ENHANCED PROTOCOL ALPHA-5 SINGULAR FUNCTION ==========
+// FEATURES: AI-generated directives, scheduling, broadcast, version control, audit logs
+(async function enhancedAlpha5() {
+  await waitForDb();
+  
+  async function waitForDb() {
+    if (window.db) return initEnhanced();
+    const check = setInterval(() => {
+      if (window.db) { clearInterval(check); initEnhanced(); }
+    }, 200);
+  }
+  
+  async function initEnhanced() {
+    const db = window.db;
+    if (!db) return console.error("Firestore unavailable");
+    
+    // Live timestamp
+    setInterval(() => {
+      const tsSpan = document.getElementById('liveTimestamp');
+      if(tsSpan) tsSpan.innerText = new Date().toLocaleTimeString();
+    }, 1000);
+    
+    // Load directive with version
+    async function loadDirective() {
+      const ref = db.collection('cio').doc('directive_alpha5');
+      const snap = await ref.get();
+      if(snap.exists) {
+        document.getElementById('directiveText').innerText = snap.data().text || "NO DIRECTIVE";
+        document.getElementById('directiveVersion').innerText = snap.data().version || "v1";
+      } else {
+        await ref.set({ text: "PROTOCOL ALPHA-5 ACTIVE. AWAITING ORDERS.", version: "v1.0", timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        document.getElementById('directiveText').innerText = "PROTOCOL ALPHA-5 ACTIVE. AWAITING ORDERS.";
+        document.getElementById('directiveVersion').innerText = "v1.0";
+      }
+    }
+    
+    // Log command action
+    async function logCommand(action, details) {
+      if(!db) return;
+      const logRef = db.collection('commandLogs').doc();
+      await logRef.set({
+        action, details, timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        officer: "Thato 'Hoss' Morake"
+      });
+      // Keep only last 50 logs
+      const oldLogs = await db.collection('commandLogs').orderBy('timestamp', 'desc').get();
+      if(oldLogs.size > 50) {
+        let i = 0;
+        oldLogs.forEach(async doc => { if(i++ >= 50) await doc.ref.delete(); });
+      }
+    }
+    
+    // Broadcast directive to message board
+    async function broadcastDirective(text) {
+      if(!db) return;
+      await db.collection('messages').add({
+        callsign: "📡 CINC DIRECTIVE",
+        text: `🔴 PROTOCOL ALPHA-5: ${text.slice(0, 200)}`,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0
+      });
+      toast("Directive broadcast to all units", "success");
+    }
+    
+    // AI generate directive (uses existing Groq proxy)
+    async function aiGenerateDirective(promptHint) {
+      const proxyUrl = 'https://groq-proxy-tcmw.onrender.com/api/groq';
+      const systemPrompt = "Generate a military mission directive (2-3 sentences) for Protocol Alpha-5. Authoritative, urgent, redacted style.";
+      try {
+        const res = await fetch(proxyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: promptHint || "Generate daily operation" }], temperature: 0.8, max_tokens: 150 })
+        });
+        const data = await res.json();
+        return data.choices?.[0]?.message?.content || "DIRECTIVE: Maintain constant vigilance. Alpha-5 standing by.";
+      } catch(e) { return "STANDARD PROTOCOL: All units report readiness. Await further."; }
+    }
+    
+    // Load command logs
+    async function showLogs() {
+      const panel = document.getElementById('commandLogPanel');
+      const logDiv = document.getElementById('commandLogList');
+      if(panel.style.display === 'none') {
+        panel.style.display = 'block';
+        const logsSnap = await db.collection('commandLogs').orderBy('timestamp', 'desc').limit(10).get();
+        logDiv.innerHTML = '';
+        logsSnap.forEach(doc => {
+          const log = doc.data();
+          const time = log.timestamp?.toDate?.()?.toLocaleString() || "unknown";
+          logDiv.innerHTML += `<div style="border-bottom:1px solid #ff1a1a33; padding:4px;">⏱️ ${time} | <strong>${log.action}</strong> | ${log.details}</div>`;
+        });
+        if(logsSnap.empty) logDiv.innerHTML = "<div>No command logs yet.</div>";
+      } else { panel.style.display = 'none'; }
+    }
+    
+    // Event listeners with commander unlock check
+    let commanderUnlockedLocal = false;
+    document.getElementById('unlockCmdBtn').onclick = () => {
+      const pin = prompt('COMMANDER PIN (ALPHA-5)');
+      if(pin === '11111111') {
+        commanderUnlockedLocal = true;
+        document.getElementById('cmdPanel').style.display = 'block';
+        toast("Commander Alpha-5 unlocked", "success");
+        logCommand("UNLOCK", "Commander panel accessed");
+      } else { toast("Invalid clearance", "error"); }
+    };
+    
+    document.getElementById('lockCmdBtn').onclick = () => {
+      commanderUnlockedLocal = false;
+      document.getElementById('cmdPanel').style.display = 'none';
+      logCommand("LOCK", "Commander panel locked");
+      toast("Panel locked");
+    };
+    
+    document.getElementById('sendDirectiveBtn').onclick = async () => {
+      if(!commanderUnlockedLocal) return toast("Unauthorized", "error");
+      const newText = document.getElementById('newDirective').value;
+      if(!newText) return toast("Enter directive", "error");
+      const ref = db.collection('cio').doc('directive_alpha5');
+      const old = (await ref.get()).data();
+      const newVersion = old?.version ? `v${parseInt(old.version.slice(1))+1}` : "v2";
+      await ref.set({ text: newText, version: newVersion, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+      await loadDirective();
+      logCommand("UPDATE", `Directive updated to version ${newVersion}`);
+      toast(`Directive updated to ${newVersion}`, "success");
+      document.getElementById('newDirective').value = '';
+    };
+    
+    document.getElementById('deleteMissionBtn').onclick = async () => {
+      if(!commanderUnlockedLocal || !confirm("DELETE CURRENT DIRECTIVE?")) return;
+      await db.collection('cio').doc('directive_alpha5').set({ text: "MISSION DIRECTIVE DELETED — EMERGENCY PROTOCOL", version: "DELETED", timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+      await loadDirective();
+      logCommand("DELETE", "Directive erased");
+      toast("Directive deleted", "error");
+    };
+    
+    document.getElementById('copyDirectiveBtn').onclick = () => {
+      const text = document.getElementById('directiveText').innerText;
+      navigator.clipboard.writeText(text);
+      toast("Copied to clipboard");
+    };
+    
+    document.getElementById('shareDirectiveBtn').onclick = async () => {
+      if(!commanderUnlockedLocal) return toast("Commander only", "error");
+      const text = document.getElementById('directiveText').innerText;
+      await broadcastDirective(text);
+      logCommand("BROADCAST", "Directive sent to all agents");
+    };
+    
+    document.getElementById('scheduleDirectiveBtn').onclick = async () => {
+      if(!commanderUnlockedLocal) return toast("Unauthorized", "error");
+      const scheduleTime = prompt("Enter future timestamp (YYYY-MM-DD HH:MM) for auto-update");
+      if(!scheduleTime) return;
+      const targetDate = new Date(scheduleTime);
+      if(isNaN(targetDate)) return toast("Invalid format", "error");
+      const newText = document.getElementById('newDirective').value;
+      if(!newText) return toast("Compose directive first", "error");
+      const delay = targetDate.getTime() - Date.now();
+      if(delay < 0) return toast("Time must be in future", "error");
+      setTimeout(async () => {
+        const ref = db.collection('cio').doc('directive_alpha5');
+        const old = (await ref.get()).data();
+        const newVersion = old?.version ? `v${parseInt(old.version.slice(1))+1}` : "v2";
+        await ref.set({ text: newText, version: newVersion, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        await loadDirective();
+        broadcastDirective(newText);
+        toast(`⏰ Scheduled directive published at ${targetDate.toLocaleString()}`, "success");
+      }, delay);
+      toast(`Directive scheduled for ${targetDate.toLocaleString()}`, "success");
+      logCommand("SCHEDULE", `Directive queued for ${targetDate.toLocaleString()}`);
+    };
+    
+    document.getElementById('genDirectiveAiBtn').onclick = async () => {
+      if(!commanderUnlockedLocal) return toast("Commander unlock required", "error");
+      const hint = document.getElementById('aiDirectivePrompt').value || "Generate urgent security protocol";
+      showLoader(true, "AI generating directive...");
+      const aiText = await aiGenerateDirective(hint);
+      document.getElementById('newDirective').value = aiText;
+      showLoader(false);
+      toast("AI draft ready", "success");
+      logCommand("AI_GEN", "AI-generated directive draft");
+    };
+    
+    document.getElementById('viewCommandLogsBtn').onclick = showLogs;
+    
+    // Helper for loader (reuse existing or create)
+    window.showLoader = window.showLoader || function(show, text) {
+      let loader = document.getElementById('loaderOverlay');
+      if(!loader) {
+        const div = document.createElement('div');
+        div.id = 'loaderOverlay';
+        div.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.96); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; z-index:30000; flex-direction:column; gap:1rem;';
+        div.innerHTML = '<div class="spinner"></div><div id="loaderText">PROCESSING</div>';
+        document.body.appendChild(div);
+        loader = div;
+      }
+      loader.style.display = show ? 'flex' : 'none';
+      const txt = document.getElementById('loaderText');
+      if(txt && text) txt.innerText = text;
+    };
+    
+    // Initial load
+    await loadDirective();
+    console.log("ENHANCED PROTOCOL ALPHA-5 ACTIVE | AI | SCHEDULING | LOGS | BROADCAST");
+  }
+})();
   
 </script>
   
