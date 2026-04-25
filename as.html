@@ -589,6 +589,476 @@
     addLog("PROTOCOL-7 READY | CROSS-DEVICE SHARED FREQUENCY | Press INITIALIZE", false);
     
 </script>
+
+    <script>
+        
+        (function() {
+
+            const FIREBASE_CONFIG = {
+                apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+                authDomain: "eden-4a8d3.firebaseapp.com",
+                projectId: "eden-4a8d3",
+                storageBucket: "eden-4a8d3.firebasestorage.app",
+                messagingSenderId: "421147129483",
+                appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+            };
+        
+            // Core state
+            let mediaStream = null;
+            let mediaRecorder = null;
+            let recordedChunks = [];
+            let isRecording = false;
+            let autoSaveInterval = null;
+            let audioContext = null;
+            let analyser = null;
+            let animationId = null;
+            let db = null;
+            let deviceId = null;
+            let pendingUploadQueue = [];
+            let isOnline = navigator.onLine;
+        
+            // UI Elements (created dynamically)
+            let container = null;
+            let recordBtn = null;
+            let statusSpan = null;
+            let visualizerContainer = null;
+            let logArea = null;
+        
+            // ---------- HELPER: Generate Device ID ----------
+            function getDeviceId() {
+                let id = localStorage.getItem('protocol7_device_id');
+                if (!id) {
+                    id = 'dev_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now();
+                    localStorage.setItem('protocol7_device_id', id);
+                }
+                return id;
+            }
+        
+            // ---------- LOGGING ----------
+            function addLog(msg, isError = false) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logMsg = `[${timestamp}] ${msg}`;
+                console.log(logMsg);
+                if (logArea) {
+                    const entry = document.createElement('div');
+                    entry.style.color = isError ? '#ff8888' : '#aaffcc';
+                    entry.style.fontSize = '11px';
+                    entry.style.padding = '2px 0';
+                    entry.innerHTML = `<span style="color:#6effa3;">${timestamp}</span> ${msg}`;
+                    logArea.appendChild(entry);
+                    logArea.scrollTop = logArea.scrollHeight;
+                    while (logArea.children.length > 50) logArea.removeChild(logArea.firstChild);
+                }
+            }
+        
+            // ---------- UPDATE UI STATUS ----------
+            function updateStatus(text, isRecordingActive = false) {
+                if (statusSpan) {
+                    statusSpan.innerHTML = isRecordingActive ? 
+                        `<i class="fas fa-circle" style="color:#ff0044; animation: pulse 1s infinite;"></i> ${text}` : 
+                        `<i class="fas fa-microphone-alt"></i> ${text}`;
+                }
+                if (recordBtn) {
+                    if (isRecordingActive) {
+                        recordBtn.innerHTML = '<i class="fas fa-stop"></i> STOP RECORDING';
+                        recordBtn.classList.add('recording');
+                    } else {
+                        recordBtn.innerHTML = '<i class="fas fa-circle"></i> START RECORDING';
+                        recordBtn.classList.remove('recording');
+                    }
+                }
+            }
+        
+            // ---------- SAVE BLOB TO LOCALSTORAGE (offline fallback) ----------
+            async function saveBlobToLocalStorage(blob, customName = null) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        const record = {
+                            id: Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                            name: customName || `auto_rec_${new Date().toISOString().replace(/:/g, '-')}.webm`,
+                            timestamp: new Date().toISOString(),
+                            sizeKB: (blob.size / 1024).toFixed(1),
+                            base64: base64
+                        };
+                        let archive = JSON.parse(localStorage.getItem('protocol7_auto_archive') || '[]');
+                        archive.unshift(record);
+                        if (archive.length > 100) archive.pop();
+                        localStorage.setItem('protocol7_auto_archive', JSON.stringify(archive));
+                        addLog(`💾 Auto-saved to localStorage: ${record.name} (${record.sizeKB} KB)`);
+                        resolve(record);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            }
+        
+            // ---------- UPLOAD TO FIRESTORE (with offline queue) ----------
+            async function uploadToFirestore(blob, metadata = {}) {
+                if (!db) {
+                    addLog('⚠️ Firestore not initialized, saving only to localStorage', true);
+                    return saveBlobToLocalStorage(blob);
+                }
+        
+                try {
+                    // Convert blob to base64 for Firestore (small files < 1MB)
+                    const reader = new FileReader();
+                    const base64 = await new Promise((resolve, reject) => {
+                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                    
+                    const docRef = await db.collection('protocol7_recordings').add({
+                        deviceId: deviceId,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        sizeBytes: blob.size,
+                        mimeType: blob.type,
+                        base64: base64,
+                        ...metadata
+                    });
+                    addLog(`☁️ Uploaded to Firestore: ${docRef.id} (${(blob.size/1024).toFixed(1)} KB)`);
+                    return docRef;
+                } catch (err) {
+                    addLog(`❌ Firestore upload failed: ${err.message}, queuing for later`, true);
+                    pendingUploadQueue.push({ blob, metadata, timestamp: Date.now() });
+                    await saveBlobToLocalStorage(blob, metadata.customName);
+                    return null;
+                }
+            }
+        
+            // ---------- PROCESS QUEUE WHEN BACK ONLINE ----------
+            async function processUploadQueue() {
+                if (!isOnline || pendingUploadQueue.length === 0) return;
+                addLog(`🔄 Processing ${pendingUploadQueue.length} queued uploads...`);
+                const queueCopy = [...pendingUploadQueue];
+                pendingUploadQueue = [];
+                for (const item of queueCopy) {
+                    await uploadToFirestore(item.blob, item.metadata);
+                }
+                addLog(`✅ Queue processed`);
+            }
+        
+            // ---------- SAVE CURRENT RECORDING (auto-save action) ----------
+            async function saveCurrentRecording(auto = true) {
+                if (recordedChunks.length === 0) {
+                    addLog('⚠️ No audio chunks to save', true);
+                    return;
+                }
+                
+                const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                const timestamp = new Date();
+                const filename = `auto_rec_${timestamp.toISOString().replace(/:/g, '-')}.webm`;
+                
+                addLog(`💿 Saving ${(blob.size/1024).toFixed(1)} KB...`);
+                
+                // Save to localStorage always
+                await saveBlobToLocalStorage(blob, filename);
+                
+                // Try Firestore if available
+                if (db && isOnline) {
+                    await uploadToFirestore(blob, { customName: filename, autoSave: auto });
+                } else if (!isOnline) {
+                    pendingUploadQueue.push({ blob, metadata: { customName: filename, autoSave: auto }, timestamp: Date.now() });
+                    addLog(`📦 Queued for later upload (offline mode)`);
+                }
+                
+                // Clear chunks but keep recording active
+                recordedChunks = [];
+                addLog(`🔄 Recording continues, buffer cleared`);
+            }
+        
+            // ---------- AUTO-SAVE EVERY 5 MINUTES ----------
+            function startAutoSaveTimer() {
+                if (autoSaveInterval) clearInterval(autoSaveInterval);
+                autoSaveInterval = setInterval(() => {
+                    if (isRecording && recordedChunks.length > 0) {
+                        addLog(`⏰ Auto-save cycle (5 min) triggered`);
+                        saveCurrentRecording(true);
+                    }
+                }, 5 * 60 * 1000); // 5 minutes
+            }
+        
+            // ---------- STOP RECORDING ----------
+            async function stopRecording() {
+                if (!isRecording || !mediaRecorder) return;
+                
+                return new Promise((resolve) => {
+                    mediaRecorder.onstop = async () => {
+                        if (recordedChunks.length > 0) {
+                            await saveCurrentRecording(false);
+                        }
+                        isRecording = false;
+                        updateStatus('RECORDING STOPPED', false);
+                        addLog('⏹️ Recording stopped');
+                        if (autoSaveInterval) {
+                            clearInterval(autoSaveInterval);
+                            autoSaveInterval = null;
+                        }
+                        resolve();
+                    };
+                    mediaRecorder.stop();
+                });
+            }
+        
+            // ---------- START RECORDING ----------
+            async function startRecording() {
+                if (isRecording) {
+                    addLog('Already recording', true);
+                    return;
+                }
+                
+                if (!mediaStream) {
+                    addLog('❌ No media stream available. Requesting mic...', true);
+                    await initMicrophone();
+                }
+                
+                if (!mediaStream) {
+                    addLog('❌ Cannot start recording: no microphone access', true);
+                    return;
+                }
+                
+                recordedChunks = [];
+                
+                try {
+                    const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
+                    mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
+                    
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data && event.data.size > 0) {
+                            recordedChunks.push(event.data);
+                            addLog(`🎙️ Captured chunk: ${(event.data.size/1024).toFixed(1)} KB`);
+                        }
+                    };
+                    
+                    mediaRecorder.onerror = (err) => {
+                        addLog(`❌ MediaRecorder error: ${err}`, true);
+                        isRecording = false;
+                        updateStatus('RECORDING ERROR', false);
+                    };
+                    
+                    mediaRecorder.start(1000); // collect data every second
+                    isRecording = true;
+                    updateStatus('AUTO-RECORDING ACTIVE', true);
+                    addLog('🔴 AUTO-RECORDING STARTED (continuous, 5-min auto-save)');
+                    
+                    startAutoSaveTimer();
+                    
+                } catch (err) {
+                    addLog(`❌ Failed to start recording: ${err.message}`, true);
+                }
+            }
+        
+            // ---------- INITIALIZE VISUALIZER ----------
+            function initVisualizer() {
+                if (!visualizerContainer) return;
+                
+                // Clear and create bars
+                visualizerContainer.innerHTML = '';
+                for (let i = 0; i < 24; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'viz-bar';
+                    bar.style.cssText = 'flex:1; height:4px; background:#1eff6e; border-radius:2px; transition:height 0.05s ease-out;';
+                    visualizerContainer.appendChild(bar);
+                }
+                
+                if (!audioContext && mediaStream) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const source = audioContext.createMediaStreamSource(mediaStream);
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256;
+                    source.connect(analyser);
+                    
+                    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                    
+                    function updateVisualizer() {
+                        if (!analyser || !visualizerContainer) {
+                            if (animationId) cancelAnimationFrame(animationId);
+                            return;
+                        }
+                        analyser.getByteFrequencyData(dataArray);
+                        const bars = visualizerContainer.children;
+                        const avg = Array.from(dataArray).reduce((a,b) => a+b, 0) / dataArray.length;
+                        const intensity = Math.min(0.9, avg / 128);
+                        
+                        for (let i = 0; i < bars.length; i++) {
+                            const height = 4 + (intensity * 44) * (0.3 + (i / bars.length) * 0.7);
+                            bars[i].style.height = `${Math.min(48, height)}px`;
+                        }
+                        animationId = requestAnimationFrame(updateVisualizer);
+                    }
+                    updateVisualizer();
+                }
+            }
+        
+            // ---------- MICROPHONE INITIALIZATION ----------
+            async function initMicrophone() {
+                try {
+                    if (mediaStream) {
+                        mediaStream.getTracks().forEach(track => track.stop());
+                    }
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    addLog('🎤 Microphone access granted');
+                    initVisualizer();
+                    return true;
+                } catch (err) {
+                    addLog(`❌ Microphone error: ${err.message}`, true);
+                    return false;
+                }
+            }
+        
+            // ---------- INITIALIZE FIRESTORE (with offline persistence) ----------
+            async function initFirestore() {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(FIREBASE_CONFIG);
+                }
+                db = firebase.firestore();
+                
+                try {
+                    await db.enablePersistence({ synchronizeTabs: true });
+                    addLog('🔥 Firestore offline persistence enabled');
+                } catch (err) {
+                    addLog(`⚠️ Persistence error: ${err.message} (continuing anyway)`, true);
+                }
+                
+                // Online/offline detection
+                window.addEventListener('online', async () => {
+                    isOnline = true;
+                    addLog('🌐 Back online - processing upload queue');
+                    await processUploadQueue();
+                });
+                window.addEventListener('offline', () => {
+                    isOnline = false;
+                    addLog('📡 Offline mode - saving to localStorage only');
+                });
+                
+                return db;
+            }
+        
+            // ---------- CREATE UI INJECTION ----------
+            function createUI() {
+                // Create container if not exists
+                if (document.getElementById('protocol7-auto-recorder')) return;
+                
+                container = document.createElement('div');
+                container.id = 'protocol7-auto-recorder';
+                container.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    width: 320px;
+                    background: rgba(4, 10, 16, 0.96);
+                    backdrop-filter: blur(16px);
+                    border: 1px solid #00ffff;
+                    border-radius: 16px;
+                    padding: 12px;
+                    font-family: 'Share Tech Mono', monospace;
+                    z-index: 99999;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+                    color: #aaffcc;
+                    font-size: 12px;
+                `;
+                
+                container.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <span style="font-weight:bold; letter-spacing:2px;"><i class="fas fa-broadcast-tower"></i> PROTOCOL-7 · AUTO-REC</span>
+                        <button id="close-rec-panel" style="background:none; border:none; color:#ff6666; cursor:pointer;">✕</button>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <button id="rec-toggle-btn" style="width:100%; background:#0a121c; border:1px solid #2eff8a; padding:8px; border-radius:40px; color:#aaffcc; font-weight:bold; cursor:pointer;">
+                            <i class="fas fa-circle"></i> START RECORDING
+                        </button>
+                    </div>
+                    <div id="rec-status" style="font-size:10px; margin-bottom:6px; color:#6effa3;">
+                        <i class="fas fa-microphone-slash"></i> STANDBY
+                    </div>
+                    <div id="viz-container" style="display:flex; gap:3px; height:48px; margin:8px 0; align-items:center;"></div>
+                    <div id="rec-logs" style="background:#010a0ecc; border-radius:8px; height:100px; overflow-y:auto; padding:6px; font-size:10px;"></div>
+                    <div style="display:flex; gap:6px; margin-top:8px;">
+                        <button id="manual-save-btn" style="flex:1; background:#0f2a1c; border:1px solid #2eff8a; padding:5px; border-radius:20px; cursor:pointer;">💾 SAVE NOW</button>
+                        <button id="clear-vault-btn" style="flex:1; background:#1a0f0f; border:1px solid #ff6644; padding:5px; border-radius:20px; cursor:pointer;">🗑️ CLEAR</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(container);
+                
+                // Close button
+                document.getElementById('close-rec-panel').onclick = () => {
+                    container.style.display = 'none';
+                };
+                
+                // Assign UI references
+                recordBtn = document.getElementById('rec-toggle-btn');
+                statusSpan = document.getElementById('rec-status');
+                visualizerContainer = document.getElementById('viz-container');
+                logArea = document.getElementById('rec-logs');
+                
+                // Event handlers
+                recordBtn.onclick = async () => {
+                    if (isRecording) {
+                        await stopRecording();
+                    } else {
+                        await startRecording();
+                    }
+                };
+                
+                document.getElementById('manual-save-btn').onclick = async () => {
+                    if (recordedChunks.length > 0) {
+                        await saveCurrentRecording(false);
+                        addLog('💾 Manual save triggered');
+                    } else {
+                        addLog('No audio data to save', true);
+                    }
+                };
+                
+                document.getElementById('clear-vault-btn').onclick = () => {
+                    if (confirm('⚠️ Delete ALL saved recordings from localStorage?')) {
+                        localStorage.removeItem('protocol7_auto_archive');
+                        addLog('🗑️ All recordings cleared from vault');
+                    }
+                };
+            }
+        
+            // ---------- AUTO-START ON PAGE LOAD ----------
+            async function autonomousStart() {
+                createUI();
+                deviceId = getDeviceId();
+                addLog(`🚀 PROTOCOL-7 AUTONOMOUS RECORDING v2.0 | Device: ${deviceId.substring(0,12)}...`);
+                
+                await initFirestore();
+                const micOk = await initMicrophone();
+                
+                if (micOk) {
+                    await startRecording();
+                    addLog('✅ AUTO-RECORDING ACTIVE - Page loaded');
+                } else {
+                    addLog('❌ Cannot auto-record: microphone access denied', true);
+                    updateStatus('MIC ERROR - Grant permission and refresh', false);
+                }
+            }
+        
+            // ---------- HANDLE PAGE REFRESH / UNLOAD ----------
+            window.addEventListener('beforeunload', async () => {
+                if (isRecording && recordedChunks.length > 0) {
+                    // Last ditch save
+                    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                    await saveBlobToLocalStorage(blob, `final_save_${Date.now()}.webm`);
+                }
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(t => t.stop());
+                }
+            });
+        
+            // Start everything when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', autonomousStart);
+            } else {
+                autonomousStart();
+            }
+        })();
+                
+        </script>
     
 </body>
     
