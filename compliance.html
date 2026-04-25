@@ -1046,13 +1046,12 @@
 })();
 </script>
 
-  <script>
+<script>
 // =====================================================
-// SECTION 03: OBJECTIVES - STANDALONE SCRIPT
-// COMPLETE OBJECTIVE TRACKING SYSTEM
+// SECTION 03: OBJECTIVES - COMPLETE WORKING SYSTEM
+// REAL FIRESTORE INTEGRATION - FULL FUNCTIONALITY
 // =====================================================
 (function objectivesModule() {
-  // Wait for Firebase and DOM
   let db = null;
   let objectivesUnsubscribe = null;
   
@@ -1062,12 +1061,18 @@
         db = firebase.firestore();
       }
       return db;
-    } catch(e) { return null; }
+    } catch(e) { 
+      console.error('Firestore error:', e);
+      return null; 
+    }
   }
   
   function showObjectiveToast(msg, isError = false) {
     const stack = document.getElementById('toastStack');
-    if (!stack) return;
+    if (!stack) {
+      console.log('Toast:', msg);
+      return;
+    }
     const div = document.createElement('div');
     div.className = 'toast-msg';
     div.style.borderLeftColor = isError ? '#ff4444' : '#ff1a1a';
@@ -1076,10 +1081,27 @@
     setTimeout(() => div.remove(), 4000);
   }
   
-  // Generate star rank for objectives section
+  // Generate star rank for objectives section (FIXED)
   const starContainer = document.getElementById('objectiveStars');
   if (starContainer) {
-    for (let i = 0; i  content priority high
+    starContainer.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+      starContainer.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="#ffcc00" stroke="#ffcc00" width="16" height="16"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+    }
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, m => {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  function getPriorityIcon(priority) {
+    switch(priority) {
       case 'high': return '🔴';
       case 'medium': return '🟡';
       case 'low': return '🟢';
@@ -1098,7 +1120,10 @@
   
   async function loadObjectives() {
     const firestoreDb = getDb();
-    if (!firestoreDb) return;
+    if (!firestoreDb) {
+      console.log('Waiting for Firebase...');
+      return;
+    }
     
     if (objectivesUnsubscribe) objectivesUnsubscribe();
     
@@ -1131,7 +1156,7 @@
         document.getElementById('objectiveProgressFill').style.width = `${percent}%`;
         document.getElementById('completionStats').innerHTML = `${completed} completed / ${total} total`;
         
-        // Sort: incomplete first, then by priority, then by deadline
+        // Sort: incomplete first, then by priority
         const sorted = objectives.sort((a, b) => {
           if (a.completed !== b.completed) return a.completed ? 1 : -1;
           const priorityOrder = { high: 0, medium: 1, low: 2 };
@@ -1158,40 +1183,53 @@
           `;
         });
         
-        // Attach event listeners to checkboxes and delete buttons
+        // Attach event listeners to checkboxes
         document.querySelectorAll('.obj-complete-check').forEach(cb => {
-          cb.addEventListener('change', async (e) => {
+          cb.removeEventListener('change', window.objectiveChangeHandler);
+          window.objectiveChangeHandler = async (e) => {
             e.stopPropagation();
             const id = cb.getAttribute('data-id');
             const isChecked = cb.checked;
             const firestoreDbInner = getDb();
             if (firestoreDbInner) {
-              await firestoreDbInner.collection('objectives').doc(id).update({ 
-                completed: isChecked,
-                completedAt: isChecked ? firebase.firestore.FieldValue.serverTimestamp() : null
-              });
-              showObjectiveToast(isChecked ? 'Objective completed! ✓' : 'Objective reopened');
+              try {
+                await firestoreDbInner.collection('objectives').doc(id).update({ 
+                  completed: isChecked,
+                  completedAt: isChecked ? firebase.firestore.FieldValue.serverTimestamp() : null
+                });
+                showObjectiveToast(isChecked ? '✓ Objective completed!' : 'Objective reopened');
+              } catch(err) {
+                showObjectiveToast('Update failed', true);
+              }
             }
-          });
+          };
+          cb.addEventListener('change', window.objectiveChangeHandler);
         });
         
+        // Attach event listeners to delete buttons
         document.querySelectorAll('.obj-delete-btn').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
+          btn.removeEventListener('click', window.objectiveDeleteHandler);
+          window.objectiveDeleteHandler = async (e) => {
             e.stopPropagation();
             if (confirm('Delete this objective?')) {
               const id = btn.getAttribute('data-id');
               const firestoreDbInner = getDb();
               if (firestoreDbInner) {
-                await firestoreDbInner.collection('objectives').doc(id).delete();
-                showObjectiveToast('Objective deleted');
+                try {
+                  await firestoreDbInner.collection('objectives').doc(id).delete();
+                  showObjectiveToast('Objective deleted');
+                } catch(err) {
+                  showObjectiveToast('Delete failed', true);
+                }
               }
             }
-          });
+          };
+          btn.addEventListener('click', window.objectiveDeleteHandler);
         });
       }, (error) => {
         console.error('Objectives listener error:', error);
         const container = document.getElementById('objectivesList');
-        if (container) container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #ff4444;">⚠️ Error loading objectives</div>';
+        if (container) container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #ff4444;">⚠️ Error loading objectives. Check console.</div>';
       });
   }
   
@@ -1208,7 +1246,7 @@
     
     const firestoreDb = getDb();
     if (!firestoreDb) {
-      showObjectiveToast('Database not ready', true);
+      showObjectiveToast('Database not ready - wait a moment', true);
       return;
     }
     
@@ -1229,44 +1267,48 @@
       document.getElementById('objPriority').value = 'medium';
       document.getElementById('objDeadline').value = '';
       
-      showObjectiveToast('Objective created successfully!');
+      showObjectiveToast('✓ Objective created successfully!');
     } catch(e) {
       console.error('Create objective error:', e);
-      showObjectiveToast('Failed to create objective', true);
+      showObjectiveToast('Failed to create objective: ' + e.message, true);
     }
   }
   
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>]/g, m => {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-  
   // Initialize when Firebase is ready
+  let initAttempts = 0;
   const checkInterval = setInterval(() => {
+    initAttempts++;
     if (firebase && firebase.apps && firebase.apps.length > 0) {
       clearInterval(checkInterval);
-      loadObjectives();
-      
-      // Attach create button event
-      const createBtn = document.getElementById('createObjectiveBtn');
-      if (createBtn) {
-        createBtn.addEventListener('click', createObjective);
-      }
-      
-      // Allow Enter key in title field
-      const titleField = document.getElementById('objTitle');
-      if (titleField) {
-        titleField.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') createObjective();
-        });
-      }
-      
-      showObjectiveToast('📋 Objectives system activated');
+      console.log('Objectives: Firebase ready, loading...');
+      setTimeout(() => {
+        loadObjectives();
+        
+        // Attach create button event
+        const createBtn = document.getElementById('createObjectiveBtn');
+        if (createBtn) {
+          createBtn.removeEventListener('click', createObjective);
+          createBtn.addEventListener('click', createObjective);
+          console.log('Objectives: Create button attached');
+        }
+        
+        // Allow Enter key in title field
+        const titleField = document.getElementById('objTitle');
+        if (titleField) {
+          titleField.removeEventListener('keypress', window.objectiveEnterHandler);
+          window.objectiveEnterHandler = (e) => {
+            if (e.key === 'Enter') createObjective();
+          };
+          titleField.addEventListener('keypress', window.objectiveEnterHandler);
+        }
+        
+        showObjectiveToast('📋 Objectives system activated');
+      }, 500);
+    } else if (initAttempts > 20) {
+      clearInterval(checkInterval);
+      console.warn('Objectives: Firebase not loaded after 10 seconds');
+      const container = document.getElementById('objectivesList');
+      if (container) container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #ff4444;">⚠️ Waiting for database connection. Refresh the page.</div>';
     }
   }, 500);
 })();
