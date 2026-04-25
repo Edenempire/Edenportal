@@ -1,28 +1,44 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PROTOCOL-7 · TACTICAL SHARED RADIO · FIRESTORE</title>
+    
+    <title>PROTOCOL-7</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            
         }
+        
         :root {
+            
             --radio-cyan: #00ffff;
             --radio-cyan-dim: rgba(0, 255, 255, 0.15);
             --radio-red: #ff2a2a;
             --radio-green: #1eff6e;
             --bg-deep: #020408;
             --panel-bg: rgba(4, 10, 16, 0.95);
+            
         }
+        
         body {
+            
             min-height: 100vh;
             background: radial-gradient(ellipse at 30% 20%, #0a0f1a, #020408);
             font-family: 'Share Tech Mono', monospace;
@@ -31,8 +47,11 @@
             justify-content: center;
             padding: 1rem;
             position: relative;
+            
         }
+        
         body::before {
+            
             content: "";
             position: fixed;
             top: 0;
@@ -42,8 +61,11 @@
             background: repeating-linear-gradient(0deg, rgba(0,255,65,0.015) 0px, rgba(0,255,65,0.015) 2px, transparent 2px, transparent 6px);
             pointer-events: none;
             z-index: 10;
+            
         }
+        
         .protocol-7 {
+            
             max-width: 900px;
             width: 100%;
             background: var(--panel-bg);
@@ -54,7 +76,9 @@
             overflow: hidden;
             z-index: 20;
             position: relative;
+            
         }
+        
         .radio-header { background: #07100bd9; padding: 1rem 1.5rem; border-bottom: 2px solid var(--radio-cyan); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
         .callsign { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; letter-spacing: 4px; color: #aaffcc; text-shadow: 0 0 4px #00cc66; }
         .enc-level { font-size: 0.65rem; background: #000000aa; padding: 0.3rem 1rem; border-radius: 30px; border: 1px solid var(--radio-cyan); color: #bbffdd; font-family: monospace; }
@@ -102,13 +126,20 @@
         @keyframes badgePulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 4px red; } }
         footer { font-size: 0.55rem; text-align: center; padding: 0.9rem; color: #368f62; border-top: 1px solid #1c412f; background: #03090f80; }
         @media (max-width: 550px) { .ptt-btn { font-size: 1rem; padding: 0.9rem 0; } .rec-control-row { flex-direction: column; align-items: stretch; } .vault-item { flex-direction: column; align-items: flex-start; } }
+        
     </style>
+    
 </head>
+    
 <body>
+    
 <div class="protocol-7">
-    <div class="radio-header"><span class="callsign"><i class="fas fa-broadcast-tower"></i> PROTOCOL-7</span><div class="enc-level"><i class="fas fa-lock"></i> CROSS-DEVICE · SHARED FREQ · FIRESTORE</div></div>
+    <div class="radio-header"><span class="callsign"><i class="fas fa-broadcast-tower"></i> PROTOCOL-7 (South African Airspace Surveillance)</span><div class="enc-level"><i class="fas fa-lock"></i> CROSS-DEVICE · SHARED FREQ</div></div>
+    
     <div class="status-bar"><div class="live-badge"><div class="led off" id="radioLed"></div><span id="radioStatus">OFFLINE / STANDBY</span></div><div class="channel-id"><i class="fas fa-hashtag"></i> <span id="channelName">FREQ: 462.5625 MHz</span><input type="text" id="channelInput" class="channel-input" placeholder="channel #" value="4625625" maxlength="20"><button id="changeChanBtn" class="channel-btn">SET</button></div></div>
+    
     <div class="ptt-section"><button class="ptt-btn" id="pttButton" disabled><i class="fas fa-microphone-alt"></i> PTT · SHARED FREQUENCY</button><div style="text-align: center; margin-top: 8px; font-size: 0.6rem; color: #6effa3;"><i class="fas fa-info-circle"></i> SHARED CHANNEL · ONLY ONE OPERATOR TRANSMITS AT A TIME</div></div>
+    
     <div class="recording-console"><div class="rec-control-row"><button class="record-btn" id="recordBtn" disabled><i class="fas fa-circle"></i> RECORD AMBIENT</button><button class="save-btn" id="saveBtn" disabled><i class="fas fa-save"></i> SAVE TO VAULT</button></div><div class="rec-status-text" id="recordingStatus"><i class="fas fa-dot-circle"></i> RECORDER STANDBY</div><div class="surveillance-vault" id="vaultList"><div style="color:#5b8b72;"><i class="fas fa-database"></i> No recorded audio in vault</div></div></div>
     <div class="voice-eq"><div class="wave-bars" id="waveContainer"></div><div class="debug-stream" id="debugMsg"><i class="fas fa-shield-alt"></i> PROTOCOL-7 READY · INITIALIZE SECURE LINK</div></div>
     <div class="peer-panel"><div class="peer-header"><i class="fas fa-users"></i> OPERATORS ON FREQUENCY</div><div class="peer-list" id="peerList"><span style="color: #666;">No active operators</span></div></div>
@@ -116,10 +147,11 @@
     <div class="action-buttons"><button class="sec-btn" id="initBtn"><i class="fas fa-power-off"></i> INITIALIZE SECURE LINK</button><button class="sec-btn" id="muteBtn" disabled><i class="fas fa-microphone-slash"></i> MUTE MIC</button><button class="sec-btn" id="testToneBtn" disabled><i class="fas fa-waveform"></i> COMS TEST</button><button class="sec-btn" id="clearVaultBtn" disabled><i class="fas fa-trash-alt"></i> CLEAR VAULT</button></div>
     <footer><i class="fas fa-shield-haltered"></i> PROTOCOL-7 · SHARED FREQUENCY · CROSS-DEVICE · CONTINUOUS SURVEILLANCE</footer>
 </div>
+    
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script>
-    // FIRESTORE VERSION - Complete rewrite for Firestore compatibility
+
     const FIREBASE_CONFIG = {
         apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
         authDomain: "eden-4a8d3.firebaseapp.com",
@@ -129,7 +161,6 @@
         appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
     
-    // DOM elements
     const pttBtn = document.getElementById('pttButton'), initBtn = document.getElementById('initBtn'), muteBtn = document.getElementById('muteBtn'), testToneBtn = document.getElementById('testToneBtn');
     const recordBtn = document.getElementById('recordBtn'), saveBtn = document.getElementById('saveBtn'), clearVaultBtn = document.getElementById('clearVaultBtn');
     const radioLed = document.getElementById('radioLed'), radioStatus = document.getElementById('radioStatus'), recordingStatusSpan = document.getElementById('recordingStatus');
@@ -137,7 +168,6 @@
     const waveContainer = document.getElementById('waveContainer'), peerListDiv = document.getElementById('peerList'), channelInput = document.getElementById('channelInput');
     const changeChanBtn = document.getElementById('changeChanBtn'), channelNameSpan = document.getElementById('channelName');
     
-    // State
     let isChannelActive = false, isTransmitting = false, isMuted = false, mediaStream = null, audioContext = null, gainNode = null, analyser = null, animationId = null;
     let db = null, peerConnection = null, remoteAudio = null, deviceId = null, currentChannel = '4625625', displayChannel = '462.5625';
     let activePeers = new Map(), currentTransmitter = null;
@@ -169,7 +199,6 @@
     
     function updatePeerListUI(){ if(activePeers.size===0){ peerListDiv.innerHTML='<span style="color: #666;">No active operators</span>'; return; } let html=''; for(let [id] of activePeers){ let isTx=(currentTransmitter===id); html+=`<span class="peer-badge ${isTx?'transmitting-badge':''}"><i class="fas fa-user-secret"></i> ${id.substring(0,10)}... ${isTx?'🔴 TX':'🎧 RX'}</span>`; } peerListDiv.innerHTML=html; }
     
-    // FIRESTORE TRANSMIT LOCK FUNCTIONS
     async function requestTransmitLock(){ 
         if(!db) return false; 
         if(currentTransmitter===deviceId) return true; 
@@ -223,7 +252,6 @@
         return peerConnection; 
     }
     
-    // FIRESTORE SIGNALING
     function sendSignal(sig){ 
         if(!db) return; 
         const signalData = {
@@ -233,7 +261,7 @@
             channel: currentChannel
         };
         db.collection('protocol7_signals').add(signalData).then(docRef => {
-            // Auto-delete after 10 seconds
+
             setTimeout(() => docRef.delete().catch(()=>{}), 10000);
         }).catch(e => console.warn("Send signal failed:", e));
     }
@@ -241,7 +269,6 @@
     async function setupSignaling(){ 
         if(!db) return; 
         
-        // Listen for signals
         signalUnsubscribe = db.collection('protocol7_signals')
             .where('channel', '==', currentChannel)
             .orderBy('timestamp', 'desc')
@@ -266,13 +293,11 @@
                             }
                         } catch(e) { console.warn('Signal error:', e); }
                         
-                        // Delete processed signal
                         change.doc.ref.delete().catch(()=>{});
                     }
                 }
             }, error => console.error("Signal listener error:", error));
         
-        // Setup presence in Firestore
         const presenceDoc = db.collection('protocol7_presence').doc(`${currentChannel}_${deviceId}`);
         await presenceDoc.set({
             deviceId: deviceId,
@@ -281,7 +306,6 @@
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
         
-        // Listen for presence changes
         presenceUnsubscribe = db.collection('protocol7_presence')
             .where('channel', '==', currentChannel)
             .where('online', '==', true)
@@ -294,10 +318,9 @@
                     }
                 });
                 
-                // Check for new peers
                 for (const [id] of newPeers) {
                     if (!activePeers.has(id)) {
-                        // New peer joined, create offer if needed
+
                         if (peerConnection && (peerConnection.connectionState === 'new' || peerConnection.connectionState === 'closed')) {
                             createPeerConnection().then(async () => {
                                 let offer = await peerConnection.createOffer();
@@ -311,15 +334,13 @@
                 activePeers = newPeers;
                 updatePeerListUI();
             }, error => console.error("Presence listener error:", error));
-        
-        // Setup presence cleanup on disconnect
+
         if (navigator.onLine) {
             window.addEventListener('beforeunload', () => {
                 presenceDoc.delete().catch(()=>{});
             });
         }
         
-        // Listen for lock changes
         lockUnsubscribe = db.collection('protocol7_locks').doc(currentChannel)
             .onSnapshot((doc) => {
                 currentTransmitter = doc.exists ? doc.data().transmitter : null;
@@ -345,7 +366,6 @@
         }
         db = firebase.firestore();
         
-        // Enable Firestore offline persistence
         try {
             await db.enablePersistence({ synchronizeTabs: true });
         } catch(e) {
@@ -379,12 +399,10 @@
         if(peerConnection){ peerConnection.close(); peerConnection=null; } 
         if(remoteAudio) remoteAudio.srcObject=null; 
         
-        // Clean up Firestore listeners
         if(presenceUnsubscribe) presenceUnsubscribe();
         if(lockUnsubscribe) lockUnsubscribe();
         if(signalUnsubscribe) signalUnsubscribe();
         
-        // Remove presence
         if (db && deviceId) {
             try {
                 await db.collection('protocol7_presence').doc(`${currentChannel}_${deviceId}`).delete();
@@ -559,8 +577,7 @@
             addLog(`📡 Channel set to ${displayChannel}`, true); 
         } 
     }
-    
-    // Event binding
+
     initBtn.addEventListener('click',()=>{ if(isChannelActive) terminateSecureChannel(); else initSecureChannel(); });
     pttBtn.addEventListener('mousedown',startTransmitting); pttBtn.addEventListener('mouseup',stopTransmitting); pttBtn.addEventListener('mouseleave',stopTransmitting);
     pttBtn.addEventListener('touchstart',startTransmitting,{passive:false}); pttBtn.addEventListener('touchend',stopTransmitting); pttBtn.addEventListener('touchcancel',stopTransmitting);
@@ -571,6 +588,68 @@
     
     loadArchiveFromLocalStorage(); 
     addLog("PROTOCOL-7 READY | CROSS-DEVICE SHARED FREQUENCY | Press INITIALIZE", false);
+    
 </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
