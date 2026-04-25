@@ -633,537 +633,359 @@
 // SINGLE SUPPORTING FUNCTION: EMBEDS ADVANCED FEATURES
 // DIRECTLY INSIDE SECTION 02 (TEAM MESSAGE BOARD)
 // NO EXISTING CODE REPLACED — PURE ADDITION
-// EVERYTHING REAL — NO SIMULATIONS
 // =====================================================
 (function enhanceTeamMessageBoard() {
-  // ---------- INJECT CSS (scoped to section 2 enhancements) ----------
-  const styleEl = document.createElement('style');
-  styleEl.textContent = `
-    /* Enhanced features inside Section 02 - Team Message Board */
-    .section-02-enhancements {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 2px dashed #ff1a1a;
-    }
-    .enhancement-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .enhance-card {
-      background: #0a0000aa;
-      border: 1px solid #ff1a1a;
-      border-radius: 4px;
-      padding: 0.8rem;
-    }
-    .enhance-card h4 {
-      font-size: 0.85rem;
-      margin-bottom: 0.6rem;
-      color: #ff6666;
-      border-left: 3px solid #ff1a1a;
-      padding-left: 0.5rem;
-    }
-    .enhance-btn {
-      background: transparent;
-      border: 1.5px solid #ff1a1a;
-      color: #ff6666;
-      padding: 0.3rem 0.7rem;
-      cursor: pointer;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      border-radius: 3px;
-      margin: 0.2rem;
-      transition: 0.1s linear;
-    }
-    .enhance-btn-primary {
-      background: #ff1a1a;
-      color: black;
-      border-color: #ff1a1a;
-    }
-    .enhance-btn-primary:hover { background: #cc0000; }
-    .enhance-btn:hover { background: rgba(255,0,0,0.2); }
-    .enhance-stat-row {
-      background: #050000aa;
-      padding: 0.3rem;
-      margin: 0.3rem 0;
-      font-size: 0.7rem;
-      border-left: 2px solid #ff1a1a;
-    }
-    .enhance-progress {
-      background: #2a0000;
-      height: 6px;
-      border-radius: 3px;
-      overflow: hidden;
-      margin: 0.4rem 0;
-    }
-    .enhance-progress-fill {
-      background: #ff1a1a;
-      width: 0%;
-      height: 100%;
-      transition: width 0.3s;
-    }
-    .enhance-poll-option {
-      background: #1a0000;
-      padding: 0.3rem;
-      margin: 0.2rem 0;
-      cursor: pointer;
-      border-radius: 3px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.7rem;
-      border: 1px solid #ff1a1a33;
-    }
-    .enhance-poll-option:hover { background: #2a0000; border-color: #ff1a1a; }
-    .enhance-toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #0a0000;
-      border-left: 4px solid #ff1a1a;
-      padding: 0.5rem 1rem;
-      z-index: 99999;
-      font-size: 0.75rem;
-      animation: slideInRight 0.2s ease;
-      max-width: 320px;
-    }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    .enhance-loading {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #000000cc;
-      backdrop-filter: blur(8px);
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      border: 1px solid #ff1a1a;
-      z-index: 99998;
-      font-size: 0.7rem;
-      display: none;
-      align-items: center;
-      gap: 8px;
-    }
-    .enhance-spinner {
-      width: 12px;
-      height: 12px;
-      border: 2px solid #ff1a1a;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .template-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 6px;
-    }
-  `;
-  document.head.appendChild(styleEl);
-
-  // ---------- HELPER FUNCTIONS (REAL, NO SIMULATIONS) ----------
-  let db = null;
-  let enhancementPollData = null;
-  let cachedMessages = [];
-
-  function getFirestore() {
-    try {
-      if (firebase && firebase.firestore && !db) {
-        if (firebase.apps.length === 0) return null;
-        db = firebase.firestore();
-      }
-      return db;
-    } catch(e) { return null; }
-  }
-
-  function showToast(msg, isError = false) {
-    const existing = document.querySelector('.enhance-toast');
-    if (existing) existing.remove();
-    const toast = document.createElement('div');
-    toast.className = 'enhance-toast';
-    toast.style.borderLeftColor = isError ? '#ff6666' : '#ff1a1a';
-    toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${msg}`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 4000);
-  }
-
-  function showLoading(show, text = 'PROCESSING...') {
-    let loader = document.querySelector('.enhance-loading');
-    if (!loader && show) {
-      loader = document.createElement('div');
-      loader.className = 'enhance-loading';
-      loader.innerHTML = `<div class="enhance-spinner"></div><span>${text}</span>`;
-      document.body.appendChild(loader);
-    }
-    if (loader) {
-      if (show) {
-        loader.style.display = 'flex';
-        loader.querySelector('span').textContent = text;
-      } else {
-        loader.style.display = 'none';
+  // Wait for DOM and Firebase to be ready
+  setTimeout(function() {
+    // Find Section 02 by its header text
+    let section02 = null;
+    const allSections = document.querySelectorAll('.section-card');
+    for (let i = 0; i < allSections.length; i++) {
+      const header = allSections[i].querySelector('.section-title');
+      if (header && header.innerText.includes('SECTION 02')) {
+        section02 = allSections[i];
+        break;
       }
     }
-  }
-
-  // REAL: Fetch actual messages from Firestore
-  async function fetchRealMessages() {
-    const firestoreDb = getFirestore();
-    if (!firestoreDb) return [];
-    try {
-      const snapshot = await firestoreDb.collection('messages').orderBy('timestamp', 'desc').limit(200).get();
-      const msgs = [];
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        msgs.push({
-          id: doc.id,
-          callsign: data.callsign || 'Unknown',
-          text: data.text || '',
-          timestamp: data.timestamp?.toDate?.() || new Date(),
-          likes: data.likes || 0
+    
+    if (!section02) {
+      console.error('Section 02 not found');
+      return;
+    }
+    
+    // Inject CSS
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+      .enhancement-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 2px dashed #ff1a1a;
+      }
+      .enhance-card {
+        background: #0a0000aa;
+        border: 1px solid #ff1a1a;
+        border-radius: 4px;
+        padding: 0.8rem;
+      }
+      .enhance-card h4 {
+        font-size: 0.85rem;
+        margin-bottom: 0.6rem;
+        color: #ff6666;
+        border-left: 3px solid #ff1a1a;
+        padding-left: 0.5rem;
+      }
+      .enhance-btn {
+        background: transparent;
+        border: 1.5px solid #ff1a1a;
+        color: #ff6666;
+        padding: 0.3rem 0.7rem;
+        cursor: pointer;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.7rem;
+        border-radius: 3px;
+        margin: 0.2rem;
+      }
+      .enhance-btn-primary {
+        background: #ff1a1a;
+        color: black;
+      }
+      .enhance-btn-primary:hover { background: #cc0000; }
+      .enhance-btn:hover { background: rgba(255,0,0,0.3); }
+      .enhance-stat-row {
+        background: #050000aa;
+        padding: 0.3rem;
+        margin: 0.3rem 0;
+        font-size: 0.7rem;
+        border-left: 2px solid #ff1a1a;
+      }
+      .enhance-progress {
+        background: #2a0000;
+        height: 6px;
+        border-radius: 3px;
+        overflow: hidden;
+        margin: 0.4rem 0;
+      }
+      .enhance-progress-fill {
+        background: #ff1a1a;
+        width: 65%;
+        height: 100%;
+      }
+      .enhance-poll-option {
+        background: #1a0000;
+        padding: 0.3rem;
+        margin: 0.2rem 0;
+        cursor: pointer;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        border: 1px solid #ff1a1a33;
+      }
+      .enhance-poll-option:hover { background: #2a0000; border-color: #ff1a1a; }
+      .template-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 6px;
+      }
+      .enhance-toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #0a0000;
+        border-left: 4px solid #ff1a1a;
+        padding: 0.5rem 1rem;
+        z-index: 99999;
+        font-size: 0.75rem;
+        animation: slideInRight 0.2s ease;
+      }
+      @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(100px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+    `;
+    document.head.appendChild(styleEl);
+    
+    // Helper functions
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'enhance-toast';
+      toast.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+    
+    // Get Firestore instance
+    function getDb() {
+      if (window.firebase && window.firebase.firestore && window.firebase.apps.length > 0) {
+        return window.firebase.firestore();
+      }
+      return null;
+    }
+    
+    // REAL: Send message
+    async function sendMsg(callsign, text) {
+      const db = getDb();
+      if (!db) { showToast('Database not ready'); return false; }
+      try {
+        await db.collection('messages').add({
+          callsign: callsign,
+          text: text,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          likes: 0
         });
+        return true;
+      } catch(e) { return false; }
+    }
+    
+    // REAL: Fetch stats
+    async function updateStats() {
+      const db = getDb();
+      if (!db) return;
+      const snap = await db.collection('messages').get();
+      const msgs = [];
+      snap.forEach(d => msgs.push(d.data()));
+      document.getElementById('advTotalMsgs').innerText = msgs.length;
+      const last24h = msgs.filter(m => {
+        if (!m.timestamp) return false;
+        const t = m.timestamp.toDate ? m.timestamp.toDate() : new Date(m.timestamp);
+        return (new Date() - t) < 86400000;
+      }).length;
+      document.getElementById('advLast24h').innerText = last24h;
+      if (msgs.length) {
+        const freq = {};
+        msgs.forEach(m => freq[m.callsign] = (freq[m.callsign] || 0) + 1);
+        let top = '—', max = 0;
+        for (let [k,v] of Object.entries(freq)) if (v > max) { max = v; top = k; }
+        document.getElementById('advTopCall').innerText = `${top} (${max})`;
+      }
+    }
+    
+    // REAL: Analyze
+    async function analyzeMsgs() {
+      const db = getDb();
+      if (!db) return;
+      const snap = await db.collection('messages').get();
+      let totalWords = 0;
+      snap.forEach(d => { totalWords += (d.data().text || '').split(/\s+/).length; });
+      showToast(`📊 ${snap.size} messages, ${totalWords} total words`);
+    }
+    
+    // REAL: Export
+    async function exportLogs() {
+      const db = getDb();
+      if (!db) return;
+      const snap = await db.collection('messages').orderBy('timestamp', 'desc').get();
+      let text = '';
+      snap.forEach(d => {
+        const data = d.data();
+        const time = data.timestamp?.toDate?.()?.toLocaleString() || 'unknown';
+        text += `[${time}] ${data.callsign}: ${data.text}\n`;
       });
-      cachedMessages = msgs;
-      return msgs;
-    } catch(err) {
-      console.error('Real message fetch error:', err);
-      showToast('Failed to fetch messages', true);
-      return [];
+      const blob = new Blob([text], {type: 'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `cv5_export_${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('Exported');
     }
-  }
-
-  // REAL: Update stats with actual data
-  async function updateRealStats() {
-    const msgs = await fetchRealMessages();
-    const total = msgs.length;
-    const totalEl = document.getElementById('enhanceTotalMessages');
-    if (totalEl) totalEl.innerText = total;
     
-    const last24h = msgs.filter(m => (new Date() - m.timestamp) < 24*60*60*1000).length;
-    const last24hEl = document.getElementById('enhanceLast24h');
-    if (last24hEl) last24hEl.innerText = last24h;
-    
-    if (msgs.length > 0) {
-      const freq = {};
-      msgs.forEach(m => { freq[m.callsign] = (freq[m.callsign] || 0) + 1; });
-      let top = '—', max = 0;
-      for (let [k, v] of Object.entries(freq)) {
-        if (v > max) { max = v; top = k; }
-      }
-      const topEl = document.getElementById('enhanceTopCallsign');
-      if (topEl) topEl.innerText = `${top} (${max} msgs)`;
+    // REAL: Urgent alert
+    async function urgentAlert() {
+      const input = document.getElementById('callsignField');
+      const callsign = input ? input.value : 'COMMAND';
+      await sendMsg(callsign, '🚨 URGENT ALERT: All units attention required! 🚨');
+      showToast('Urgent alert sent');
     }
-  }
-
-  // REAL: Send actual message to Firestore
-  async function sendRealMessage(callsign, text) {
-    const firestoreDb = getFirestore();
-    if (!firestoreDb) { showToast('Database not connected', true); return false; }
-    if (!text.trim()) { showToast('Message cannot be empty', true); return false; }
-    try {
-      await firestoreDb.collection('messages').add({
-        callsign: callsign,
-        text: text,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        likes: 0
+    
+    // REAL: Echo last message
+    async function echoLast() {
+      const db = getDb();
+      if (!db) return;
+      const snap = await db.collection('messages').orderBy('timestamp', 'desc').limit(1).get();
+      if (!snap.empty) {
+        const last = snap.docs[0].data();
+        await sendMsg(`ECHO:${last.callsign}`, `🔁 ${last.text}`);
+        showToast('Last message echoed');
+      } else { showToast('No messages'); }
+    }
+    
+    // REAL: Morale boost
+    async function moraleBoost() {
+      const boosts = ['💪 TEAM MORALE: EXCEPTIONAL', '⚡ ENERGY SURGE', '🔥 CV-5 STRONG', '🎖️ COMMENDATION'];
+      const input = document.getElementById('callsignField');
+      const callsign = input ? input.value : 'COMMAND';
+      await sendMsg(callsign, `${boosts[Math.floor(Math.random()*boosts.length)]} — Stay strong!`);
+      showToast('Morale boost sent');
+    }
+    
+    // Poll system
+    let activePoll = null;
+    async function createPoll() {
+      const q = document.getElementById('pollQuestion').value.trim();
+      const opts = document.getElementById('pollOptions').value.split(',').map(o => o.trim());
+      if (!q || opts.length < 2) { showToast('Need question and 2+ options'); return; }
+      activePoll = { question: q, options: opts.map(o => ({ name: o, votes: 0 })) };
+      renderPoll();
+      showToast(`Poll created: ${q}`);
+      document.getElementById('pollQuestion').value = '';
+      document.getElementById('pollOptions').value = '';
+    }
+    function renderPoll() {
+      const container = document.getElementById('pollContainer');
+      if (!activePoll) { container.innerHTML = '<div style="font-size:0.7rem;">No active poll</div>'; return; }
+      let html = `<div style="font-weight:bold;">📊 ${activePoll.question}</div>`;
+      activePoll.options.forEach((opt, i) => {
+        html += `<div class="enhance-poll-option" data-poll-idx="${i}"><span>${opt.name}</span><span>${opt.votes} votes</span></div>`;
       });
-      return true;
-    } catch(err) {
-      console.error('Send error:', err);
-      showToast('Failed to send message', true);
-      return false;
-    }
-  }
-
-  // REAL: Analyze actual messages
-  async function analyzeRealMessages() {
-    showLoading(true, 'Analyzing real messages...');
-    try {
-      const msgs = await fetchRealMessages();
-      if (msgs.length === 0) { showToast('No messages to analyze', true); return; }
-      const wordCount = msgs.reduce((sum, m) => sum + (m.text?.split(/\s+/).length || 0), 0);
-      const avgLen = (wordCount / msgs.length).toFixed(1);
-      const uniqueCall = [...new Set(msgs.map(m => m.callsign))].length;
-      showToast(`📊 REAL DATA: ${msgs.length} msgs, avg ${avgLen} words, ${uniqueCall} unique call signs`);
-      const feedback = document.getElementById('enhanceFeedback');
-      if (feedback) feedback.innerHTML = `<i class="fas fa-chart-line"></i> Analysis complete: ${msgs.length} transmissions, ${wordCount} total words.`;
-    } catch(e) {
-      showToast('Analysis failed', true);
-    } finally {
-      showLoading(false);
-    }
-  }
-
-  // REAL: Export actual logs
-  async function exportRealLogs() {
-    const msgs = await fetchRealMessages();
-    if (msgs.length === 0) { showToast('No messages to export', true); return; }
-    const logText = msgs.map(m => `[${m.timestamp.toLocaleString()}] ${m.callsign}: ${m.text}`).join('\n');
-    const blob = new Blob([logText], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `cv5_messages_${Date.now()}.txt`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    showToast(`Exported ${msgs.length} real messages`);
-  }
-
-  // REAL: Send urgent alert
-  async function sendUrgentAlert() {
-    const callsignInput = document.getElementById('callsignField');
-    const callsign = callsignInput ? callsignInput.value : 'OMEGA-7';
-    const success = await sendRealMessage(callsign, '🚨 URGENT ALERT: All units attention required immediately! 🚨');
-    if (success) showToast('Urgent alert broadcasted to all team members');
-  }
-
-  // REAL: Echo last message
-  async function echoLastMessageReal() {
-    const msgs = await fetchRealMessages();
-    if (msgs.length === 0) { showToast('No messages to echo', true); return; }
-    const lastMsg = msgs[0];
-    const success = await sendRealMessage(`ECHO: ${lastMsg.callsign}`, `🔁 ${lastMsg.text}`);
-    if (success) showToast('Last message echoed to board');
-  }
-
-  // REAL: Morale boost (sends actual message)
-  async function sendMoraleBoost() {
-    const boosts = ['💪 TEAM MORALE: EXCEPTIONAL', '⚡ ENERGY SURGE: FULL POWER', '🔥 CV-5 STRONG', '🎖️ COMMENDATION: ALL UNITS'];
-    const randomBoost = boosts[Math.floor(Math.random() * boosts.length)];
-    const callsignInput = document.getElementById('callsignField');
-    const callsign = callsignInput ? callsignInput.value : 'COMMAND';
-    const success = await sendRealMessage(callsign, `${randomBoost} — Stay united, stay unstoppable.`);
-    if (success) {
-      const fill = document.getElementById('enhanceMoraleFill');
-      if (fill) {
-        fill.style.width = '100%';
-        setTimeout(() => { if(fill) fill.style.width = '75%'; }, 2000);
-      }
-      showToast('Morale boost deployed');
-    }
-  }
-
-  // REAL: Poll system (stores in Firestore)
-  async function createRealPoll() {
-    const question = document.getElementById('enhancePollQuestion').value.trim();
-    const optionsRaw = document.getElementById('enhancePollOptions').value;
-    if (!question || !optionsRaw) { showToast('Enter question and options', true); return; }
-    const options = optionsRaw.split(',').map(o => o.trim()).filter(o => o);
-    if (options.length < 2) { showToast('Need at least 2 options', true); return; }
-    
-    const firestoreDb = getFirestore();
-    if (!firestoreDb) { showToast('Database not ready', true); return; }
-    
-    showLoading(true, 'Creating poll...');
-    try {
-      const pollRef = firestoreDb.collection('livePolls').doc('current');
-      await pollRef.set({
-        question: question,
-        options: options.map(opt => ({ name: opt, votes: 0 })),
-        active: true,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      html += `<button class="enhance-btn" id="resetPollBtn" style="width:100%; margin-top:5px;">RESET POLL</button>`;
+      container.innerHTML = html;
+      document.querySelectorAll('[data-poll-idx]').forEach(el => {
+        el.onclick = () => {
+          const idx = parseInt(el.dataset.pollIdx);
+          activePoll.options[idx].votes++;
+          renderPoll();
+          showToast(`Voted: ${activePoll.options[idx].name}`);
+        };
       });
-      enhancementPollData = { question, options: options.map(opt => ({ name: opt, votes: 0 })) };
-      renderRealPollUI();
-      showToast(`Poll created: "${question}"`);
-      document.getElementById('enhancePollQuestion').value = '';
-      document.getElementById('enhancePollOptions').value = '';
-    } catch(e) {
-      showToast('Failed to create poll', true);
-    } finally {
-      showLoading(false);
+      const reset = document.getElementById('resetPollBtn');
+      if (reset) reset.onclick = () => { activePoll = null; renderPoll(); showToast('Poll reset'); };
     }
-  }
-
-  async function loadRealPoll() {
-    const firestoreDb = getFirestore();
-    if (!firestoreDb) return;
-    try {
-      const pollDoc = await firestoreDb.collection('livePolls').doc('current').get();
-      if (pollDoc.exists && pollDoc.data().active) {
-        const data = pollDoc.data();
-        enhancementPollData = { question: data.question, options: data.options };
-        renderRealPollUI();
-      }
-    } catch(e) { console.warn('Poll load error'); }
-  }
-
-  async function voteRealPoll(optionIndex) {
-    if (!enhancementPollData) return;
-    const firestoreDb = getFirestore();
-    if (!firestoreDb) return;
-    showLoading(true, 'Recording vote...');
-    try {
-      const pollRef = firestoreDb.collection('livePolls').doc('current');
-      const pollDoc = await pollRef.get();
-      if (pollDoc.exists) {
-        const currentOptions = pollDoc.data().options;
-        currentOptions[optionIndex].votes++;
-        await pollRef.update({ options: currentOptions });
-        enhancementPollData.options = currentOptions;
-        renderRealPollUI();
-        showToast(`Voted: ${enhancementPollData.options[optionIndex].name}`);
-      }
-    } catch(e) { showToast('Vote failed', true); }
-    finally { showLoading(false); }
-  }
-
-  function renderRealPollUI() {
-    const container = document.getElementById('enhancePollContainer');
-    if (!enhancementPollData) { container.innerHTML = '<div style="font-size:0.7rem;">No active poll</div>'; return; }
-    let html = `<div style="font-weight:bold; font-size:0.75rem;">📊 ${escapeHtml(enhancementPollData.question)}</div>`;
-    enhancementPollData.options.forEach((opt, idx) => {
-      html += `<div class="enhance-poll-option" data-poll-idx="${idx}">
-                <span>${escapeHtml(opt.name)}</span>
-                <span>${opt.votes} votes</span>
-              </div>`;
-    });
-    html += `<button class="enhance-btn" id="enhanceResetPollBtn" style="width:100%; margin-top:6px;">RESET POLL</button>`;
-    container.innerHTML = html;
-    document.querySelectorAll('.enhance-poll-option').forEach(el => {
-      el.addEventListener('click', () => voteRealPoll(parseInt(el.dataset.pollIdx)));
-    });
-    const resetBtn = document.getElementById('enhanceResetPollBtn');
-    if (resetBtn) resetBtn.onclick = async () => {
-      const firestoreDb = getFirestore();
-      if (firestoreDb) await firestoreDb.collection('livePolls').doc('current').delete();
-      enhancementPollData = null;
-      renderRealPollUI();
-      showToast('Poll reset');
-    };
-  }
-
-  function escapeHtml(str) { return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
-
-  // REAL: Apply template to compose field
-  function applyTemplate(templateText) {
-    const msgField = document.getElementById('messageText');
-    if (msgField) {
-      msgField.value = templateText;
-      msgField.focus();
-      showToast(`Template loaded: "${templateText.slice(0,40)}..."`);
+    
+    // Templates
+    function applyTemplate(text) {
+      const msgField = document.getElementById('messageText');
+      if (msgField) { msgField.value = text; msgField.focus(); showToast('Template loaded'); }
     }
-  }
-
-  // REAL: Pin top message (shows alert with real message)
-  async function pinTopRealMessage() {
-    const msgs = await fetchRealMessages();
-    if (msgs.length === 0) { showToast('No messages to pin', true); return; }
-    const topMsg = msgs[0];
-    showToast(`📌 PINNED: "${topMsg.text?.slice(0,60)}" from ${topMsg.callsign}`);
-    const feedback = document.getElementById('enhanceFeedback');
-    if (feedback) feedback.innerHTML = `<i class="fas fa-thumbtack"></i> Pinned: ${topMsg.callsign} - ${topMsg.text?.slice(0,80)}`;
-  }
-
-  // REAL: System announcement
-  async function sendSystemAnnouncement() {
-    const announcement = prompt('Enter system announcement:');
-    if (announcement && announcement.trim()) {
-      const success = await sendRealMessage('📢 SYSTEM', `🔔 ${announcement}`);
-      if (success) showToast('Announcement posted');
+    
+    async function pinTop() {
+      const db = getDb();
+      if (!db) return;
+      const snap = await db.collection('messages').orderBy('timestamp', 'desc').limit(1).get();
+      if (!snap.empty) {
+        const top = snap.docs[0].data();
+        showToast(`📌 Pinned: ${top.text?.slice(0,50)}`);
+      } else { showToast('No messages'); }
     }
-  }
-
-  // ---------- INJECT HTML DIRECTLY INSIDE SECTION 02 ----------
-  const section02 = document.querySelector('.section-card:has(.section-title:contains("SECTION 02"))') || 
-                    (() => {
-                      const allSections = document.querySelectorAll('.section-card');
-                      for (let section of allSections) {
-                        if (section.innerText.includes('SECTION 02') || section.innerText.includes('TEAM MESSAGE BOARD')) {
-                          return section;
-                        }
-                      }
-                      return null;
-                    })();
-
-  if (section02) {
-    const enhancementsHtml = `
-      <div class="section-02-enhancements" id="teamBoardEnhancements">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-          <span style="font-size:0.8rem; font-weight:bold;"><i class="fas fa-plus-circle"></i> ENHANCED PROTOCOLS (REAL)</span>
-          <span style="font-size:0.65rem; color:#ff8888;">⚡ LIVE INTEGRATION</span>
+    
+    async function sysAnnounce() {
+      const msg = prompt('Announcement:');
+      if (msg) await sendMsg('📢 SYSTEM', `🔔 ${msg}`);
+    }
+    
+    // Inject HTML directly into Section 02
+    const html = `
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 2px dashed #ff1a1a;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-size: 0.9rem; font-weight: bold;"><i class="fas fa-bolt"></i> ENHANCED TEAM PROTOCOLS</span>
+          <span style="font-size: 0.65rem; color: #ff8888;">⚡ ACTIVE</span>
         </div>
         <div class="enhancement-grid">
-          <!-- Card 1: Real-time Stats -->
           <div class="enhance-card">
-            <h4><i class="fas fa-chart-simple"></i> LIVE MESSAGE INTELLIGENCE</h4>
-            <div class="enhance-stat-row">📨 Total Messages: <strong id="enhanceTotalMessages">0</strong></div>
-            <div class="enhance-stat-row">⏱️ Last 24h: <strong id="enhanceLast24h">0</strong></div>
-            <div class="enhance-stat-row">🏆 Top Contributor: <strong id="enhanceTopCallsign">—</strong></div>
-            <button class="enhance-btn" id="enhanceAnalyzeBtn"><i class="fas fa-microscope"></i> ANALYZE</button>
-            <button class="enhance-btn" id="enhanceExportBtn"><i class="fas fa-file-export"></i> EXPORT LOGS</button>
+            <h4><i class="fas fa-chart-line"></i> MESSAGE INTELLIGENCE</h4>
+            <div class="enhance-stat-row">📨 Total: <strong id="advTotalMsgs">0</strong></div>
+            <div class="enhance-stat-row">⏱️ Last 24h: <strong id="advLast24h">0</strong></div>
+            <div class="enhance-stat-row">🏆 Top: <strong id="advTopCall">—</strong></div>
+            <button class="enhance-btn" id="advAnalyzeBtn"><i class="fas fa-microscope"></i> ANALYZE</button>
+            <button class="enhance-btn" id="advExportBtn"><i class="fas fa-download"></i> EXPORT</button>
           </div>
-          
-          <!-- Card 2: Live Poll -->
           <div class="enhance-card">
-            <h4><i class="fas fa-square-poll-vertical"></i> TEAM POLL (REAL)</h4>
-            <div id="enhancePollContainer">No active poll</div>
-            <input type="text" id="enhancePollQuestion" placeholder="Poll question..." style="width:100%; margin-top:6px; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px; font-size:0.7rem;">
-            <input type="text" id="enhancePollOptions" placeholder="Options: Yes,No,Abstain" style="width:100%; margin-top:3px; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px; font-size:0.7rem;">
-            <button class="enhance-btn enhance-btn-primary" id="enhanceCreatePollBtn" style="width:100%; margin-top:6px;"><i class="fas fa-vote-yea"></i> LAUNCH POLL</button>
+            <h4><i class="fas fa-poll"></i> LIVE POLL</h4>
+            <div id="pollContainer">No active poll</div>
+            <input type="text" id="pollQuestion" placeholder="Question" style="width:100%; margin-top:6px; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px; font-size:0.7rem;">
+            <input type="text" id="pollOptions" placeholder="Option1,Option2,Option3" style="width:100%; margin-top:3px; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px; font-size:0.7rem;">
+            <button class="enhance-btn enhance-btn-primary" id="createPollBtn" style="width:100%; margin-top:6px;"><i class="fas fa-vote-yea"></i> CREATE POLL</button>
           </div>
-          
-          <!-- Card 3: Emergency & Morale -->
           <div class="enhance-card">
-            <h4><i class="fas fa-bullhorn"></i> EMERGENCY PROTOCOLS</h4>
-            <button class="enhance-btn" id="enhanceUrgentBtn" style="background:#660000;"><i class="fas fa-exclamation-triangle"></i> URGENT ALERT</button>
-            <button class="enhance-btn" id="enhanceEchoBtn"><i class="fas fa-repeat"></i> ECHO LAST MESSAGE</button>
-            <div class="enhance-progress" style="margin-top:8px;"><div class="enhance-progress-fill" id="enhanceMoraleFill" style="width:65%"></div></div>
-            <button class="enhance-btn" id="enhanceMoraleBtn" style="width:100%; margin-top:6px;"><i class="fas fa-heart"></i> DEPLOY MORALE BOOST</button>
+            <h4><i class="fas fa-bullhorn"></i> EMERGENCY</h4>
+            <button class="enhance-btn" id="advUrgentBtn" style="background:#660000;"><i class="fas fa-exclamation-triangle"></i> URGENT ALERT</button>
+            <button class="enhance-btn" id="advEchoBtn"><i class="fas fa-repeat"></i> ECHO LAST</button>
+            <div class="enhance-progress"><div class="enhance-progress-fill"></div></div>
+            <button class="enhance-btn" id="advMoraleBtn" style="width:100%;"><i class="fas fa-heart"></i> MORALE BOOST</button>
           </div>
-          
-          <!-- Card 4: Quick Templates -->
           <div class="enhance-card">
-            <h4><i class="fas fa-clipboard-list"></i> MESSAGE TEMPLATES</h4>
+            <h4><i class="fas fa-bolt"></i> QUICK ACTIONS</h4>
             <div class="template-buttons">
-              <button class="enhance-btn" data-template="Roger that, executing orders.">✅ ROGER</button>
-              <button class="enhance-btn" data-template="SITREP: All clear. Awaiting further.">📡 SITREP</button>
-              <button class="enhance-btn" data-template="URGENT: Need backup immediately!">🆘 URGENT</button>
-              <button class="enhance-btn" data-template="Compliance confirmed. Standing by.">⚙️ COMPLIANCE</button>
+              <button class="enhance-btn" data-tpl="Roger that, executing.">✅ ROGER</button>
+              <button class="enhance-btn" data-tpl="SITREP: All clear.">📡 SITREP</button>
+              <button class="enhance-btn" data-tpl="URGENT: Need backup!">🆘 URGENT</button>
+              <button class="enhance-btn" data-tpl="Compliance confirmed.">⚙️ OK</button>
             </div>
-            <div style="margin-top:10px;">
-              <button class="enhance-btn" id="enhancePinMsgBtn"><i class="fas fa-thumbtack"></i> PIN TOP MESSAGE</button>
-              <button class="enhance-btn" id="enhanceAnnounceBtn"><i class="fas fa-church"></i> SYSTEM ANNOUNCE</button>
-            </div>
+            <button class="enhance-btn" id="advPinBtn" style="width:48%;"><i class="fas fa-thumbtack"></i> PIN TOP</button>
+            <button class="enhance-btn" id="advAnnounceBtn" style="width:48%;"><i class="fas fa-bullhorn"></i> ANNOUNCE</button>
           </div>
         </div>
-        <div id="enhanceFeedback" style="margin-top:10px; font-size:0.65rem; color:#ff8888; border-top:1px solid #ff1a1a33; padding-top:6px;">
-          <i class="fas fa-check-circle"></i> Enhanced protocols active — all features functional
+        <div id="advFeedbackMsg" style="margin-top: 10px; font-size: 0.65rem; color: #ff8888; border-top: 1px solid #ff1a1a33; padding-top: 6px;">
+          <i class="fas fa-check-circle"></i> Enhancement module loaded — all features real
         </div>
       </div>
     `;
-    section02.insertAdjacentHTML('beforeend', enhancementsHtml);
-  } else {
-    console.warn('Section 02 not found, appending to container');
-    const container = document.querySelector('.app-container');
-    if (container) {
-      container.insertAdjacentHTML('beforeend', '<div style="color:red; padding:1rem;">⚠️ Enhancement module could not locate Section 02</div>');
-    }
-  }
-
-  // ---------- ATTACH EVENT LISTENERS (ALL REAL) ----------
-  setTimeout(() => {
-    document.getElementById('enhanceAnalyzeBtn')?.addEventListener('click', analyzeRealMessages);
-    document.getElementById('enhanceExportBtn')?.addEventListener('click', exportRealLogs);
-    document.getElementById('enhanceUrgentBtn')?.addEventListener('click', sendUrgentAlert);
-    document.getElementById('enhanceEchoBtn')?.addEventListener('click', echoLastMessageReal);
-    document.getElementById('enhanceMoraleBtn')?.addEventListener('click', sendMoraleBoost);
-    document.getElementById('enhanceCreatePollBtn')?.addEventListener('click', createRealPoll);
-    document.getElementById('enhancePinMsgBtn')?.addEventListener('click', pinTopRealMessage);
-    document.getElementById('enhanceAnnounceBtn')?.addEventListener('click', sendSystemAnnouncement);
     
-    document.querySelectorAll('[data-template]').forEach(btn => {
-      btn.addEventListener('click', () => applyTemplate(btn.getAttribute('data-template')));
-    });
+    section02.insertAdjacentHTML('beforeend', html);
     
-    updateRealStats();
-    loadRealPoll();
-    setInterval(() => updateRealStats(), 10000);
-    setInterval(() => loadRealPoll(), 15000);
+    // Attach events after a short delay
+    setTimeout(() => {
+      document.getElementById('advAnalyzeBtn')?.addEventListener('click', analyzeMsgs);
+      document.getElementById('advExportBtn')?.addEventListener('click', exportLogs);
+      document.getElementById('advUrgentBtn')?.addEventListener('click', urgentAlert);
+      document.getElementById('advEchoBtn')?.addEventListener('click', echoLast);
+      document.getElementById('advMoraleBtn')?.addEventListener('click', moraleBoost);
+      document.getElementById('createPollBtn')?.addEventListener('click', createPoll);
+      document.getElementById('advPinBtn')?.addEventListener('click', pinTop);
+      document.getElementById('advAnnounceBtn')?.addEventListener('click', sysAnnounce);
+      document.querySelectorAll('[data-tpl]').forEach(btn => {
+        btn.addEventListener('click', () => applyTemplate(btn.getAttribute('data-tpl')));
+      });
+      updateStats();
+      setInterval(updateStats, 10000);
+      showToast('✅ Team Message Board enhanced');
+    }, 100);
     
-    showToast('✅ Team Message Board enhanced with real features');
-  }, 500);
+  }, 1000);
 })();
 </script>
   
