@@ -187,263 +187,89 @@
 </div>
 
 <script>
-  
-  const firebaseConfig = {
-    apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-    authDomain: "eden-4a8d3.firebaseapp.com",
-    projectId: "eden-4a8d3",
-    storageBucket: "eden-4a8d3.firebasestorage.app",
-    messagingSenderId: "421147129483",
-    appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-  };
+  // ==================================================
+  // COMPLIANCE CV-5 - ENHANCED PROTOCOL ALPHA-5
+  // FULLY INTEGRATED JAVASCRIPT
+  // ==================================================
 
-  let db = null;
-  let commanderUnlocked = false;
-  let replyingTo = null;
-  let messagesUnsub = null;
-  let sessionMessages = [];
-  let permanentMemory = [];
-  let memoryDocId = null;
-  let tasksUnsubscribe = null;
-  let tasksEditUnlocked = false;
-  const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
+  (function() {
+    // ---------- FIREBASE CONFIG ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+      authDomain: "eden-4a8d3.firebaseapp.com",
+      projectId: "eden-4a8d3",
+      storageBucket: "eden-4a8d3.firebasestorage.app",
+      messagingSenderId: "421147129483",
+      appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+    };
 
-  const showLoader = (show, text = "PROCESSING...") => {
-    const loader = document.getElementById('loaderOverlay');
-    const txt = document.getElementById('loaderText');
-    if (loader) loader.style.display = show ? 'flex' : 'none';
-    if (txt && text) txt.textContent = text;
-  };
-  
-  const toast = (msg, type = 'info') => {
-    const stack = document.getElementById('toastStack');
-    if (!stack) return;
-    const div = document.createElement('div');
-    div.className = 'toast-msg';
-    div.style.borderLeftColor = type === 'error' ? '#ff4444' : '#ff1a1a';
-    div.innerHTML = `<span>${type === 'error' ? '⚠' : '✓'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
-    stack.appendChild(div);
-    setTimeout(() => div.remove(), 4000);
-  };
+    // ---------- GLOBAL STATE ----------
+    let db = null;
+    let commanderUnlocked = false;
+    let replyingTo = null;
+    let messagesUnsub = null;
+    let sessionMessages = [];
+    let permanentMemory = [];
+    let memoryDocId = null;
+    let tasksUnsubscribe = null;
+    let tasksEditUnlocked = false;
 
-  const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
+    // ---------- UI ELEMENTS ----------
+    const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
 
-  async function loadMissionDirective() { 
-    if (!db) return; 
-    const ref = db.collection('cio').doc('directive'); 
-    const snap = await ref.get(); 
-    if (snap.exists && snap.data().text) { 
-      document.getElementById('directiveText').innerText = snap.data().text; 
-    } else { 
-      const defaultMsg = "ORDER: PROTOCOL ALPHA-1 ACTIVE."; 
-      document.getElementById('directiveText').innerText = defaultMsg; 
-      await ref.set({ text: defaultMsg, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
-    } 
-  }
+    // ========== HELPER FUNCTIONS ==========
+    const showLoader = (show, text = "PROCESSING...") => {
+      const loader = document.getElementById('loaderOverlay');
+      const txt = document.getElementById('loaderText');
+      if (loader) loader.style.display = show ? 'flex' : 'none';
+      if (txt && text) txt.textContent = text;
+    };
 
-  function setupMessagesListener() { 
-    if (!db) return; 
-    messagesUnsub = db.collection('messages').orderBy('timestamp', 'desc').limit(50).onSnapshot((snap) => { 
-      const board = document.getElementById('messageBoard'); 
-      if (!board) return; 
-      if (snap.empty) { board.innerHTML = '<div>No messages yet.</div>'; document.getElementById('msgCountBadge').innerHTML = '0'; return; }
-      board.innerHTML = ''; 
-      snap.forEach(docSnap => { 
-        const m = docSnap.data(); 
-        const mid = docSnap.id; 
-        const timeStr = m.timestamp?.toDate ? m.timestamp.toDate().toLocaleString() : 'just now';
-        board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${timeStr}</small></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}">💬 REPLY</button></div></div>`; 
-      }); 
-      document.getElementById('msgCountBadge').innerHTML = snap.size; 
-    });
-  }
+    const toast = (msg, type = 'info') => {
+      const stack = document.getElementById('toastStack');
+      if (!stack) return;
+      const div = document.createElement('div');
+      div.className = 'toast-msg';
+      div.style.borderLeftColor = type === 'error' ? '#ff4444' : '#ff1a1a';
+      div.innerHTML = `<span>${type === 'error' ? '⚠' : '✓'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
+      stack.appendChild(div);
+      setTimeout(() => div.remove(), 4000);
+    };
 
-  async function loadPermanentMemory() { 
-    if (!db) return []; 
-    memoryDocId = "sarah_mem_cv5"; 
-    const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
-    const snap = await ref.get(); 
-    if (snap.exists) { permanentMemory = snap.data().conversations || []; } 
-    else { permanentMemory = []; await ref.set({ conversations: [] }); }
-    document.getElementById('memoryCounter').innerHTML = `💾 ${permanentMemory.length} memories stored`;
-    return permanentMemory; 
-  }
+    const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-  async function saveToPermanentMemory(role, content) { 
-    if (!db || !memoryDocId) return; 
-    permanentMemory.push({ role, content, ts: Date.now() }); 
-    if (permanentMemory.length > 100) permanentMemory = permanentMemory.slice(-80); 
-    const ref = db.collection('sarahPermanentMemory').doc(memoryDocId); 
-    await ref.set({ conversations: permanentMemory }, { merge: true }); 
-  }
-
-  async function callGroq(userMsg, contextMemory) {
-    const messages = [ 
-      { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator. Respond concisely in 1-3 sentences. Be direct and helpful.' },
-      ...contextMemory.slice(-12).map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: userMsg }
-    ];
-    
-    const response = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages, temperature: 0.7, max_tokens: 300 })
-    });
-    
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    if (data.choices && data.choices[0]) return data.choices[0].message.content;
-    throw new Error('Invalid response');
-  }
-
-  async function askSarah(promptText) { 
-    if (!promptText.trim()) return; 
-    showLoader(true, "SARAH PROCESSING..."); 
-    try { 
-      addAIBubble('user', promptText); 
-      sessionMessages.push({ role: 'user', content: promptText }); 
-      await saveToPermanentMemory('user', promptText); 
-      const reply = await callGroq(promptText, permanentMemory); 
-      addAIBubble('ai', reply); 
-      await saveToPermanentMemory('assistant', reply); 
-      document.getElementById('aiPrompt').value = ''; 
-    } catch (err) { 
-      console.error(err);
-      addAIBubble('ai', `⚠️ Error: ${err.message}. Check proxy connection.`); 
-      toast(`Sarah error: ${err.message}`, 'error'); 
-    } finally { 
-      showLoader(false); 
-    } 
-  }
-
-  function addAIBubble(role, text) { 
-    const container = document.getElementById('aiConversation'); 
-    if (!container) return; 
-    const bubble = document.createElement('div'); 
-    bubble.className = 'ai-chat-bubble'; 
-    bubble.innerHTML = `<strong>${role === 'user' ? '👤 YOU' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`; 
-    container.appendChild(bubble); 
-    container.scrollTop = container.scrollHeight; 
-  }
-
-  async function wipePermanent() { 
-    if (!confirm('WIPE ALL PERMANENT MEMORY?')) return; 
-    permanentMemory = []; 
-    if (db && memoryDocId) await db.collection('sarahPermanentMemory').doc(memoryDocId).set({ conversations: [] });
-    document.getElementById('aiConversation').innerHTML = ''; 
-    addAIBubble('ai', '⚠️ Memory wiped.'); 
-    toast('Memory erased', 'success'); 
-  }
-
-  async function summarizeSession() { 
-    if(permanentMemory.length===0) return toast('No memory', 'info'); 
-    showLoader(true,"SUMMARIZING..."); 
-    try { 
-      const summary = await callGroq("Summarize our key conversation topics briefly.", permanentMemory.slice(-15)); 
-      toast(`📜 ${summary}`, 'success'); 
-    } catch(e){ toast('Failed','error'); } 
-    finally { showLoader(false); } 
-  }
-
-  function clearSessionOnly() { 
-    sessionMessages = []; 
-    document.getElementById('aiConversation').innerHTML = ''; 
-    addAIBubble('ai','Session cleared.'); 
-  }
-
-  document.getElementById('unlockBtn').addEventListener('click', async () => {
-    if (document.getElementById('pinInput').value === '7') {
-      document.getElementById('pinGate').style.display = 'none';
-      document.getElementById('appContainer').style.display = 'block';
-      toast('ACCESS GRANTED • CV-5 ONLINE', 'success');
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      await loadMissionDirective();
-      await loadPermanentMemory();
-      setupMessagesListener();
-      addAIBubble('ai', `✅ Neural core online. ${permanentMemory.length} memories restored. Sarah ready.`);
-    } else { toast('INVALID CODE', 'error'); }
-  });
-
-  document.getElementById('unlockCmdBtn').addEventListener('click', () => { 
-    const pin = prompt('COMMANDER PIN'); 
-    if (pin === '11111111') { commanderUnlocked = true; document.getElementById('cmdPanel').style.display = 'block'; toast('Commander unlocked'); } 
-    else toast('Access denied', 'error'); 
-  });
-  
-  document.getElementById('lockCmdBtn').addEventListener('click', () => { commanderUnlocked = false; document.getElementById('cmdPanel').style.display = 'none'; toast('Locked'); });
-  document.getElementById('sendDirectiveBtn').addEventListener('click', async () => { if(commanderUnlocked){ const newDir = document.getElementById('newDirective').value; if(newDir) await db.collection('cio').doc('directive').set({ text: newDir, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); toast('Updated'); } else toast('Unauthorized'); });
-  document.getElementById('deleteMissionBtn').addEventListener('click', async () => { if(commanderUnlocked && confirm('DELETE?')) await db.collection('cio').doc('directive').set({ text: 'MISSION DELETED', timestamp: firebase.firestore.FieldValue.serverTimestamp() }); });
-  document.getElementById('copyDirectiveBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('directiveText').innerText); toast('Copied'); });
-  document.getElementById('sendMsgBtn').addEventListener('click', async () => { const text = document.getElementById('messageText').value; if(text && db){ await db.collection('messages').add({ callsign: document.getElementById('callsignField').value, text: text, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('messageText').value = ''; toast('Sent'); } });
-  document.getElementById('clearComposeBtn').addEventListener('click', () => { document.getElementById('messageText').value = ''; replyingTo = null; document.getElementById('replyIndicatorBox').style.display = 'none'; });
-  document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Refreshing...'));
-  document.getElementById('askAiBtn').addEventListener('click', () => { const q = document.getElementById('aiPrompt').value; if(q) askSarah(q); });
-  document.getElementById('aiPrompt').addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); const q = document.getElementById('aiPrompt').value; if(q) askSarah(q); } });
-  document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
-  document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
-  document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
-
-  const starSpan = document.getElementById('starRank');
-  if(starSpan) for(let i=0;i<8;i++) starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
-
-  // PROTOCOL ALPHA-5
-
-  // ========== ENHANCED PROTOCOL ALPHA-5 SINGULAR FUNCTION ==========
-// FEATURES: AI-generated directives, scheduling, broadcast, version control, audit logs
-(async function enhancedAlpha5() {
-  await waitForDb();
-  
-  async function waitForDb() {
-    if (window.db) return initEnhanced();
-    const check = setInterval(() => {
-      if (window.db) { clearInterval(check); initEnhanced(); }
-    }, 200);
-  }
-  
-  async function initEnhanced() {
-    const db = window.db;
-    if (!db) return console.error("Firestore unavailable");
-    
-    // Live timestamp
-    setInterval(() => {
-      const tsSpan = document.getElementById('liveTimestamp');
-      if(tsSpan) tsSpan.innerText = new Date().toLocaleTimeString();
-    }, 1000);
-    
-    // Load directive with version
-    async function loadDirective() {
+    // ========== FIRESTORE OPERATIONS ==========
+    async function loadMissionDirective() {
+      if (!db) return;
       const ref = db.collection('cio').doc('directive_alpha5');
       const snap = await ref.get();
-      if(snap.exists) {
-        document.getElementById('directiveText').innerText = snap.data().text || "NO DIRECTIVE";
+      if (snap.exists && snap.data().text) {
+        document.getElementById('directiveText').innerText = snap.data().text;
         document.getElementById('directiveVersion').innerText = snap.data().version || "v1";
       } else {
-        await ref.set({ text: "PROTOCOL ALPHA-5 ACTIVE. AWAITING ORDERS.", version: "v1.0", timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('directiveText').innerText = "PROTOCOL ALPHA-5 ACTIVE. AWAITING ORDERS.";
+        const defaultMsg = "PROTOCOL ALPHA-5 ACTIVE. AWAITING ORDERS.";
+        document.getElementById('directiveText').innerText = defaultMsg;
         document.getElementById('directiveVersion').innerText = "v1.0";
+        await ref.set({ text: defaultMsg, version: "v1.0", timestamp: firebase.firestore.FieldValue.serverTimestamp() });
       }
     }
-    
-    // Log command action
+
     async function logCommand(action, details) {
-      if(!db) return;
+      if (!db) return;
       const logRef = db.collection('commandLogs').doc();
       await logRef.set({
         action, details, timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         officer: "Thato 'Hoss' Morake"
       });
-      // Keep only last 50 logs
       const oldLogs = await db.collection('commandLogs').orderBy('timestamp', 'desc').get();
-      if(oldLogs.size > 50) {
+      if (oldLogs.size > 50) {
         let i = 0;
-        oldLogs.forEach(async doc => { if(i++ >= 50) await doc.ref.delete(); });
+        oldLogs.forEach(async doc => { if (i++ >= 50) await doc.ref.delete(); });
       }
     }
-    
-    // Broadcast directive to message board
+
     async function broadcastDirective(text) {
-      if(!db) return;
+      if (!db) return;
       await db.collection('messages').add({
         callsign: "📡 CINC DIRECTIVE",
         text: `🔴 PROTOCOL ALPHA-5: ${text.slice(0, 200)}`,
@@ -452,27 +278,26 @@
       });
       toast("Directive broadcast to all units", "success");
     }
-    
-    // AI generate directive (uses existing Groq proxy)
+
     async function aiGenerateDirective(promptHint) {
-      const proxyUrl = 'https://groq-proxy-tcmw.onrender.com/api/groq';
       const systemPrompt = "Generate a military mission directive (2-3 sentences) for Protocol Alpha-5. Authoritative, urgent, redacted style.";
       try {
-        const res = await fetch(proxyUrl, {
+        const res = await fetch(PROXY_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: promptHint || "Generate daily operation" }], temperature: 0.8, max_tokens: 150 })
         });
         const data = await res.json();
         return data.choices?.[0]?.message?.content || "DIRECTIVE: Maintain constant vigilance. Alpha-5 standing by.";
-      } catch(e) { return "STANDARD PROTOCOL: All units report readiness. Await further."; }
+      } catch (e) {
+        return "STANDARD PROTOCOL: All units report readiness. Await further.";
+      }
     }
-    
-    // Load command logs
-    async function showLogs() {
+
+    async function showCommandLogs() {
       const panel = document.getElementById('commandLogPanel');
       const logDiv = document.getElementById('commandLogList');
-      if(panel.style.display === 'none') {
+      if (panel.style.display === 'none') {
         panel.style.display = 'block';
         const logsSnap = await db.collection('commandLogs').orderBy('timestamp', 'desc').limit(10).get();
         logDiv.innerHTML = '';
@@ -481,89 +306,244 @@
           const time = log.timestamp?.toDate?.()?.toLocaleString() || "unknown";
           logDiv.innerHTML += `<div style="border-bottom:1px solid #ff1a1a33; padding:4px;">⏱️ ${time} | <strong>${log.action}</strong> | ${log.details}</div>`;
         });
-        if(logsSnap.empty) logDiv.innerHTML = "<div>No command logs yet.</div>";
-      } else { panel.style.display = 'none'; }
+        if (logsSnap.empty) logDiv.innerHTML = "<div>No command logs yet.</div>";
+      } else {
+        panel.style.display = 'none';
+      }
     }
-    
-    // Event listeners with commander unlock check
+
+    function setupMessagesListener() {
+      if (!db) return;
+      messagesUnsub = db.collection('messages').orderBy('timestamp', 'desc').limit(50).onSnapshot((snap) => {
+        const board = document.getElementById('messageBoard');
+        if (!board) return;
+        if (snap.empty) {
+          board.innerHTML = '<div>No messages yet.</div>';
+          document.getElementById('msgCountBadge').innerHTML = '0';
+          return;
+        }
+        board.innerHTML = '';
+        snap.forEach(docSnap => {
+          const m = docSnap.data();
+          const mid = docSnap.id;
+          const timeStr = m.timestamp?.toDate ? m.timestamp.toDate().toLocaleString() : 'just now';
+          board.innerHTML += `<div class="message-item"><div><strong>${escapeHtml(m.callsign)}</strong> <small>${timeStr}</small></div><div>${escapeHtml(m.text || '')}</div><div class="reaction-bar"><button class="reaction-btn" data-like="${mid}">👍 ${m.likes || 0}</button><button class="reaction-btn" data-reply="${mid}" data-call="${escapeHtml(m.callsign)}">💬 REPLY</button></div></div>`;
+        });
+        document.getElementById('msgCountBadge').innerHTML = snap.size;
+      });
+    }
+
+    async function loadPermanentMemory() {
+      if (!db) return [];
+      memoryDocId = "sarah_mem_cv5";
+      const ref = db.collection('sarahPermanentMemory').doc(memoryDocId);
+      const snap = await ref.get();
+      if (snap.exists) {
+        permanentMemory = snap.data().conversations || [];
+      } else {
+        permanentMemory = [];
+        await ref.set({ conversations: [] });
+      }
+      document.getElementById('memoryCounter').innerHTML = `💾 ${permanentMemory.length} memories stored`;
+      return permanentMemory;
+    }
+
+    async function saveToPermanentMemory(role, content) {
+      if (!db || !memoryDocId) return;
+      permanentMemory.push({ role, content, ts: Date.now() });
+      if (permanentMemory.length > 100) permanentMemory = permanentMemory.slice(-80);
+      const ref = db.collection('sarahPermanentMemory').doc(memoryDocId);
+      await ref.set({ conversations: permanentMemory }, { merge: true });
+    }
+
+    async function callGroq(userMsg, contextMemory) {
+      const messages = [
+        { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator. Respond concisely in 1-3 sentences. Be direct and helpful.' },
+        ...contextMemory.slice(-12).map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: userMsg }
+      ];
+      const response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, temperature: 0.7, max_tokens: 300 })
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      if (data.choices && data.choices[0]) return data.choices[0].message.content;
+      throw new Error('Invalid response');
+    }
+
+    async function askSarah(promptText) {
+      if (!promptText.trim()) return;
+      showLoader(true, "SARAH PROCESSING...");
+      try {
+        addAIBubble('user', promptText);
+        sessionMessages.push({ role: 'user', content: promptText });
+        await saveToPermanentMemory('user', promptText);
+        const reply = await callGroq(promptText, permanentMemory);
+        addAIBubble('ai', reply);
+        await saveToPermanentMemory('assistant', reply);
+        document.getElementById('aiPrompt').value = '';
+      } catch (err) {
+        console.error(err);
+        addAIBubble('ai', `⚠️ Error: ${err.message}. Check proxy connection.`);
+        toast(`Sarah error: ${err.message}`, 'error');
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    function addAIBubble(role, text) {
+      const container = document.getElementById('aiConversation');
+      if (!container) return;
+      const bubble = document.createElement('div');
+      bubble.className = 'ai-chat-bubble';
+      bubble.innerHTML = `<strong>${role === 'user' ? '👤 YOU' : '🧠 SARAH'}:</strong> ${escapeHtml(text)}`;
+      container.appendChild(bubble);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function wipePermanent() {
+      if (!confirm('WIPE ALL PERMANENT MEMORY?')) return;
+      permanentMemory = [];
+      if (db && memoryDocId) await db.collection('sarahPermanentMemory').doc(memoryDocId).set({ conversations: [] });
+      document.getElementById('aiConversation').innerHTML = '';
+      addAIBubble('ai', '⚠️ Memory wiped.');
+      toast('Memory erased', 'success');
+    }
+
+    async function summarizeSession() {
+      if (permanentMemory.length === 0) return toast('No memory', 'info');
+      showLoader(true, "SUMMARIZING...");
+      try {
+        const summary = await callGroq("Summarize our key conversation topics briefly.", permanentMemory.slice(-15));
+        toast(`📜 ${summary}`, 'success');
+      } catch (e) {
+        toast('Failed', 'error');
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    function clearSessionOnly() {
+      sessionMessages = [];
+      document.getElementById('aiConversation').innerHTML = '';
+      addAIBubble('ai', 'Session cleared.');
+    }
+
+    // ========== EVENT LISTENERS & INITIALIZATION ==========
+    document.getElementById('unlockBtn').addEventListener('click', async () => {
+      if (document.getElementById('pinInput').value === '7') {
+        document.getElementById('pinGate').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'block';
+        toast('ACCESS GRANTED • CV-5 ONLINE', 'success');
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        await loadMissionDirective();
+        await loadPermanentMemory();
+        setupMessagesListener();
+        addAIBubble('ai', `✅ Neural core online. ${permanentMemory.length} memories restored. Sarah ready.`);
+
+        // Live timestamp
+        setInterval(() => {
+          const tsSpan = document.getElementById('liveTimestamp');
+          if (tsSpan) tsSpan.innerText = new Date().toLocaleTimeString();
+        }, 1000);
+
+        // Star rank generation
+        const starSpan = document.getElementById('starRank');
+        if (starSpan) {
+          for (let i = 0; i < 8; i++) {
+            starSpan.innerHTML += `<svg class="mil-star" viewBox="0 0 24 24" fill="gold" stroke="#ffcc00"><polygon points="12,2 15,9 22,9 16,14 19,22 12,17 5,22 8,14 2,9 9,9 12,2" /></svg>`;
+          }
+        }
+      } else {
+        toast('INVALID CODE', 'error');
+      }
+    });
+
+    // Commander panel unlock/lock
     let commanderUnlockedLocal = false;
-    document.getElementById('unlockCmdBtn').onclick = () => {
+    document.getElementById('unlockCmdBtn').addEventListener('click', () => {
       const pin = prompt('COMMANDER PIN (ALPHA-5)');
-      if(pin === '11111111') {
+      if (pin === '11111111') {
         commanderUnlockedLocal = true;
         document.getElementById('cmdPanel').style.display = 'block';
         toast("Commander Alpha-5 unlocked", "success");
         logCommand("UNLOCK", "Commander panel accessed");
-      } else { toast("Invalid clearance", "error"); }
-    };
-    
-    document.getElementById('lockCmdBtn').onclick = () => {
+      } else {
+        toast("Invalid clearance", "error");
+      }
+    });
+
+    document.getElementById('lockCmdBtn').addEventListener('click', () => {
       commanderUnlockedLocal = false;
       document.getElementById('cmdPanel').style.display = 'none';
       logCommand("LOCK", "Commander panel locked");
       toast("Panel locked");
-    };
-    
-    document.getElementById('sendDirectiveBtn').onclick = async () => {
-      if(!commanderUnlockedLocal) return toast("Unauthorized", "error");
+    });
+
+    // Directive operations
+    document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
+      if (!commanderUnlockedLocal) return toast("Unauthorized", "error");
       const newText = document.getElementById('newDirective').value;
-      if(!newText) return toast("Enter directive", "error");
+      if (!newText) return toast("Enter directive", "error");
       const ref = db.collection('cio').doc('directive_alpha5');
       const old = (await ref.get()).data();
-      const newVersion = old?.version ? `v${parseInt(old.version.slice(1))+1}` : "v2";
+      const newVersion = old?.version ? `v${parseInt(old.version.slice(1)) + 1}` : "v2";
       await ref.set({ text: newText, version: newVersion, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-      await loadDirective();
+      await loadMissionDirective();
       logCommand("UPDATE", `Directive updated to version ${newVersion}`);
       toast(`Directive updated to ${newVersion}`, "success");
       document.getElementById('newDirective').value = '';
-    };
-    
-    document.getElementById('deleteMissionBtn').onclick = async () => {
-      if(!commanderUnlockedLocal || !confirm("DELETE CURRENT DIRECTIVE?")) return;
+    });
+
+    document.getElementById('deleteMissionBtn').addEventListener('click', async () => {
+      if (!commanderUnlockedLocal || !confirm("DELETE CURRENT DIRECTIVE?")) return;
       await db.collection('cio').doc('directive_alpha5').set({ text: "MISSION DIRECTIVE DELETED — EMERGENCY PROTOCOL", version: "DELETED", timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-      await loadDirective();
+      await loadMissionDirective();
       logCommand("DELETE", "Directive erased");
       toast("Directive deleted", "error");
-    };
-    
-    document.getElementById('copyDirectiveBtn').onclick = () => {
+    });
+
+    document.getElementById('copyDirectiveBtn').addEventListener('click', () => {
       const text = document.getElementById('directiveText').innerText;
       navigator.clipboard.writeText(text);
       toast("Copied to clipboard");
-    };
-    
-    document.getElementById('shareDirectiveBtn').onclick = async () => {
-      if(!commanderUnlockedLocal) return toast("Commander only", "error");
+    });
+
+    document.getElementById('shareDirectiveBtn').addEventListener('click', async () => {
+      if (!commanderUnlockedLocal) return toast("Commander only", "error");
       const text = document.getElementById('directiveText').innerText;
       await broadcastDirective(text);
       logCommand("BROADCAST", "Directive sent to all agents");
-    };
-    
-    document.getElementById('scheduleDirectiveBtn').onclick = async () => {
-      if(!commanderUnlockedLocal) return toast("Unauthorized", "error");
+    });
+
+    document.getElementById('scheduleDirectiveBtn').addEventListener('click', async () => {
+      if (!commanderUnlockedLocal) return toast("Unauthorized", "error");
       const scheduleTime = prompt("Enter future timestamp (YYYY-MM-DD HH:MM) for auto-update");
-      if(!scheduleTime) return;
+      if (!scheduleTime) return;
       const targetDate = new Date(scheduleTime);
-      if(isNaN(targetDate)) return toast("Invalid format", "error");
+      if (isNaN(targetDate)) return toast("Invalid format", "error");
       const newText = document.getElementById('newDirective').value;
-      if(!newText) return toast("Compose directive first", "error");
+      if (!newText) return toast("Compose directive first", "error");
       const delay = targetDate.getTime() - Date.now();
-      if(delay < 0) return toast("Time must be in future", "error");
+      if (delay < 0) return toast("Time must be in future", "error");
       setTimeout(async () => {
         const ref = db.collection('cio').doc('directive_alpha5');
         const old = (await ref.get()).data();
-        const newVersion = old?.version ? `v${parseInt(old.version.slice(1))+1}` : "v2";
+        const newVersion = old?.version ? `v${parseInt(old.version.slice(1)) + 1}` : "v2";
         await ref.set({ text: newText, version: newVersion, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        await loadDirective();
+        await loadMissionDirective();
         broadcastDirective(newText);
         toast(`⏰ Scheduled directive published at ${targetDate.toLocaleString()}`, "success");
       }, delay);
       toast(`Directive scheduled for ${targetDate.toLocaleString()}`, "success");
       logCommand("SCHEDULE", `Directive queued for ${targetDate.toLocaleString()}`);
-    };
-    
-    document.getElementById('genDirectiveAiBtn').onclick = async () => {
-      if(!commanderUnlockedLocal) return toast("Commander unlock required", "error");
+    });
+
+    document.getElementById('genDirectiveAiBtn').addEventListener('click', async () => {
+      if (!commanderUnlockedLocal) return toast("Commander unlock required", "error");
       const hint = document.getElementById('aiDirectivePrompt').value || "Generate urgent security protocol";
       showLoader(true, "AI generating directive...");
       const aiText = await aiGenerateDirective(hint);
@@ -571,32 +551,81 @@
       showLoader(false);
       toast("AI draft ready", "success");
       logCommand("AI_GEN", "AI-generated directive draft");
-    };
-    
-    document.getElementById('viewCommandLogsBtn').onclick = showLogs;
-    
-    // Helper for loader (reuse existing or create)
-    window.showLoader = window.showLoader || function(show, text) {
-      let loader = document.getElementById('loaderOverlay');
-      if(!loader) {
-        const div = document.createElement('div');
-        div.id = 'loaderOverlay';
-        div.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.96); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; z-index:30000; flex-direction:column; gap:1rem;';
-        div.innerHTML = '<div class="spinner"></div><div id="loaderText">PROCESSING</div>';
-        document.body.appendChild(div);
-        loader = div;
+    });
+
+    document.getElementById('viewCommandLogsBtn').addEventListener('click', showCommandLogs);
+
+    // Message board events
+    document.getElementById('sendMsgBtn').addEventListener('click', async () => {
+      const text = document.getElementById('messageText').value;
+      if (text && db) {
+        await db.collection('messages').add({ callsign: document.getElementById('callsignField').value, text: text, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 });
+        document.getElementById('messageText').value = '';
+        toast('Sent');
       }
-      loader.style.display = show ? 'flex' : 'none';
-      const txt = document.getElementById('loaderText');
-      if(txt && text) txt.innerText = text;
-    };
-    
-    // Initial load
-    await loadDirective();
-    console.log("ENHANCED PROTOCOL ALPHA-5 ACTIVE | AI | SCHEDULING | LOGS | BROADCAST");
-  }
-})();
-  
+    });
+
+    document.getElementById('clearComposeBtn').addEventListener('click', () => {
+      document.getElementById('messageText').value = '';
+      replyingTo = null;
+      document.getElementById('replyIndicatorBox').style.display = 'none';
+    });
+
+    document.getElementById('refreshMsgBtn').addEventListener('click', () => toast('Refreshing...'));
+
+    // AI Sarah events
+    document.getElementById('askAiBtn').addEventListener('click', () => {
+      const q = document.getElementById('aiPrompt').value;
+      if (q) askSarah(q);
+    });
+    document.getElementById('aiPrompt').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const q = document.getElementById('aiPrompt').value;
+        if (q) askSarah(q);
+      }
+    });
+    document.getElementById('clearSessionBtn').addEventListener('click', clearSessionOnly);
+    document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
+    document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
+
+    // Delegate reaction buttons (likes/replies) dynamically
+    document.getElementById('messageBoard').addEventListener('click', async (e) => {
+      const likeBtn = e.target.closest('[data-like]');
+      if (likeBtn) {
+        const msgId = likeBtn.getAttribute('data-like');
+        const msgRef = db.collection('messages').doc(msgId);
+        const doc = await msgRef.get();
+        if (doc.exists) {
+          const currentLikes = doc.data().likes || 0;
+          await msgRef.update({ likes: currentLikes + 1 });
+          toast('+1 Reaction');
+        }
+        return;
+      }
+      const replyBtn = e.target.closest('[data-reply]');
+      if (replyBtn) {
+        const call = replyBtn.getAttribute('data-call');
+        replyingTo = replyBtn.getAttribute('data-reply');
+        const indicator = document.getElementById('replyIndicatorBox');
+        indicator.style.display = 'block';
+        indicator.innerHTML = `↩️ Replying to ${escapeHtml(call)} <button class="btn" id="cancelReplyBtn" style="margin-left:10px;">Cancel</button>`;
+        document.getElementById('cancelReplyBtn').onclick = () => {
+          replyingTo = null;
+          indicator.style.display = 'none';
+        };
+      }
+    });
+
+    // Quick navigation buttons
+    document.querySelectorAll('.quick-nav button').forEach((btn, idx) => {
+      btn.onclick = () => {
+        if (idx === 0) window.scrollTo({ top: 0, behavior: 'smooth' });
+        else if (idx === 1) window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
+        else if (idx === 2) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      };
+    });
+  })();
 </script>
   
 </body>
