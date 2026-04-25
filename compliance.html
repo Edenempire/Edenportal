@@ -167,16 +167,47 @@
     </div>
   </section>
 
-  <!-- SECTION 03 -->
-<section class="section-card">
+<!-- SECTION 03: OBJECTIVES -->
+<section class="section-card" id="objectivesSection">
   <div class="section-header">
-    <h2 class="section-title">SECTION 03. <span style="opacity:0.5;">COMING SOON</span></h2>
-    <span class="badge">PENDING</span>
+    <h2 class="section-title">SECTION 03. OBJECTIVES <span class="stars-rank" id="objectiveStars"></span></h2>
+    <span class="badge">ACTIVE • REAL-TIME</span>
+    <span class="badge" id="objectiveCountBadge">0/0</span>
   </div>
-  <div class="card" style="text-align: center; padding: 3rem 2rem;">
-    <i class="fas fa-cog" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem; display: block;"></i>
-    <h3 style="opacity: 0.5; letter-spacing: 2px;">SECTION 03</h3>
-    <p style="opacity: 0.4; font-size: 0.8rem; margin-top: 0.5rem;">UNDER CONSTRUCTION</p>
+  <div class="grid-2">
+    <!-- LEFT: Active Objectives -->
+    <div class="card">
+      <h3><i class="fas fa-bullseye"></i> ACTIVE OBJECTIVES</h3>
+      <div id="objectivesList" style="max-height: 400px; overflow-y: auto;">
+        <div style="padding: 1rem; text-align: center; color: #ff8888;">Loading objectives...</div>
+      </div>
+    </div>
+    
+    <!-- RIGHT: Create New Objective -->
+    <div class="card">
+      <h3><i class="fas fa-plus-circle"></i> CREATE OBJECTIVE</h3>
+      <input type="text" id="objTitle" placeholder="Objective title" style="margin-bottom: 0.5rem;">
+      <textarea id="objDescription" rows="3" placeholder="Description / details..."></textarea>
+      <div class="btn-group" style="margin-top: 0.5rem;">
+        <select id="objPriority" style="width: auto; flex: 1;">
+          <option value="high">🔴 HIGH PRIORITY</option>
+          <option value="medium">🟡 MEDIUM PRIORITY</option>
+          <option value="low">🟢 LOW PRIORITY</option>
+        </select>
+        <input type="date" id="objDeadline" style="width: auto; flex: 1;">
+      </div>
+      <button class="btn btn-primary" id="createObjectiveBtn" style="width: 100%; margin-top: 0.5rem;"><i class="fas fa-save"></i> CREATE OBJECTIVE</button>
+    </div>
+  </div>
+  
+  <!-- Progress Bar -->
+  <div style="margin-top: 1rem; background: #0a0000cc; padding: 0.8rem; border-radius: 4px;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+      <span><i class="fas fa-chart-line"></i> OVERALL PROGRESS</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="objectiveProgressFill" style="width: 0%;"></div></div>
+    <div style="font-size: 0.65rem; margin-top: 0.3rem;" id="completionStats">0 completed / 0 total</div>
   </div>
 </section>
 
@@ -1012,6 +1043,232 @@
     }, 100);
     
   }, 1000);
+})();
+</script>
+
+  <script>
+// =====================================================
+// SECTION 03: OBJECTIVES - STANDALONE SCRIPT
+// COMPLETE OBJECTIVE TRACKING SYSTEM
+// =====================================================
+(function objectivesModule() {
+  // Wait for Firebase and DOM
+  let db = null;
+  let objectivesUnsubscribe = null;
+  
+  function getDb() {
+    try {
+      if (firebase && firebase.firestore && firebase.apps.length > 0 && !db) {
+        db = firebase.firestore();
+      }
+      return db;
+    } catch(e) { return null; }
+  }
+  
+  function showObjectiveToast(msg, isError = false) {
+    const stack = document.getElementById('toastStack');
+    if (!stack) return;
+    const div = document.createElement('div');
+    div.className = 'toast-msg';
+    div.style.borderLeftColor = isError ? '#ff4444' : '#ff1a1a';
+    div.innerHTML = `<span>${isError ? '⚠' : '✓'}</span> ${msg} <button style="float:right;background:none;border:none;color:red;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
+    stack.appendChild(div);
+    setTimeout(() => div.remove(), 4000);
+  }
+  
+  // Generate star rank for objectives section
+  const starContainer = document.getElementById('objectiveStars');
+  if (starContainer) {
+    for (let i = 0; i  content priority high
+      case 'high': return '🔴';
+      case 'medium': return '🟡';
+      case 'low': return '🟢';
+      default: return '⚪';
+    }
+  }
+  
+  function getPriorityColor(priority) {
+    switch(priority) {
+      case 'high': return '#ff4444';
+      case 'medium': return '#ffaa44';
+      case 'low': return '#44ff44';
+      default: return '#ff8888';
+    }
+  }
+  
+  async function loadObjectives() {
+    const firestoreDb = getDb();
+    if (!firestoreDb) return;
+    
+    if (objectivesUnsubscribe) objectivesUnsubscribe();
+    
+    objectivesUnsubscribe = firestoreDb.collection('objectives')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot((snapshot) => {
+        const container = document.getElementById('objectivesList');
+        if (!container) return;
+        
+        if (snapshot.empty) {
+          container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #ff8888;">No objectives yet. Create one!</div>';
+          document.getElementById('objectiveCountBadge').innerHTML = '0/0';
+          document.getElementById('progressPercent').innerHTML = '0%';
+          document.getElementById('objectiveProgressFill').style.width = '0%';
+          document.getElementById('completionStats').innerHTML = '0 completed / 0 total';
+          return;
+        }
+        
+        let objectives = [];
+        snapshot.forEach(doc => {
+          objectives.push({ id: doc.id, ...doc.data() });
+        });
+        
+        const total = objectives.length;
+        const completed = objectives.filter(o => o.completed === true).length;
+        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+        
+        document.getElementById('objectiveCountBadge').innerHTML = `${completed}/${total}`;
+        document.getElementById('progressPercent').innerHTML = `${percent}%`;
+        document.getElementById('objectiveProgressFill').style.width = `${percent}%`;
+        document.getElementById('completionStats').innerHTML = `${completed} completed / ${total} total`;
+        
+        // Sort: incomplete first, then by priority, then by deadline
+        const sorted = objectives.sort((a, b) => {
+          if (a.completed !== b.completed) return a.completed ? 1 : -1;
+          const priorityOrder = { high: 0, medium: 1, low: 2 };
+          return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1);
+        });
+        
+        container.innerHTML = '';
+        sorted.forEach(obj => {
+          const deadlineStr = obj.deadline ? new Date(obj.deadline).toLocaleDateString() : 'No deadline';
+          const isOverdue = obj.deadline && !obj.completed && new Date(obj.deadline) < new Date();
+          
+          container.innerHTML += `
+            <div class="task-item" data-obj-id="${obj.id}" style="border-left-color: ${getPriorityColor(obj.priority)}; opacity: ${obj.completed ? 0.6 : 1};">
+              <input type="checkbox" class="task-check obj-complete-check" ${obj.completed ? 'checked' : ''} data-id="${obj.id}">
+              <div class="task-title" style="flex: 3; ${obj.completed ? 'text-decoration: line-through;' : ''}">
+                <strong>${getPriorityIcon(obj.priority)} ${escapeHtml(obj.title)}</strong>
+                <div style="font-size: 0.65rem; color: #ff8888; margin-top: 0.2rem;">${escapeHtml(obj.description || '')}</div>
+              </div>
+              <div class="task-deadline" style="${isOverdue ? 'background: #660000; color: #ff8888;' : ''}">
+                <i class="fas fa-calendar-alt"></i> ${deadlineStr} ${isOverdue ? '⚠️ OVERDUE' : ''}
+              </div>
+              <button class="btn obj-delete-btn" data-id="${obj.id}" style="border-color: #ff4444; padding: 0.2rem 0.5rem;"><i class="fas fa-trash"></i></button>
+            </div>
+          `;
+        });
+        
+        // Attach event listeners to checkboxes and delete buttons
+        document.querySelectorAll('.obj-complete-check').forEach(cb => {
+          cb.addEventListener('change', async (e) => {
+            e.stopPropagation();
+            const id = cb.getAttribute('data-id');
+            const isChecked = cb.checked;
+            const firestoreDbInner = getDb();
+            if (firestoreDbInner) {
+              await firestoreDbInner.collection('objectives').doc(id).update({ 
+                completed: isChecked,
+                completedAt: isChecked ? firebase.firestore.FieldValue.serverTimestamp() : null
+              });
+              showObjectiveToast(isChecked ? 'Objective completed! ✓' : 'Objective reopened');
+            }
+          });
+        });
+        
+        document.querySelectorAll('.obj-delete-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (confirm('Delete this objective?')) {
+              const id = btn.getAttribute('data-id');
+              const firestoreDbInner = getDb();
+              if (firestoreDbInner) {
+                await firestoreDbInner.collection('objectives').doc(id).delete();
+                showObjectiveToast('Objective deleted');
+              }
+            }
+          });
+        });
+      }, (error) => {
+        console.error('Objectives listener error:', error);
+        const container = document.getElementById('objectivesList');
+        if (container) container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #ff4444;">⚠️ Error loading objectives</div>';
+      });
+  }
+  
+  async function createObjective() {
+    const title = document.getElementById('objTitle')?.value.trim();
+    const description = document.getElementById('objDescription')?.value.trim() || '';
+    const priority = document.getElementById('objPriority')?.value || 'medium';
+    const deadline = document.getElementById('objDeadline')?.value || null;
+    
+    if (!title) {
+      showObjectiveToast('Please enter an objective title', true);
+      return;
+    }
+    
+    const firestoreDb = getDb();
+    if (!firestoreDb) {
+      showObjectiveToast('Database not ready', true);
+      return;
+    }
+    
+    try {
+      await firestoreDb.collection('objectives').add({
+        title: title,
+        description: description,
+        priority: priority,
+        deadline: deadline,
+        completed: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdBy: document.getElementById('callsignField')?.value || 'AGENT'
+      });
+      
+      // Clear form
+      document.getElementById('objTitle').value = '';
+      document.getElementById('objDescription').value = '';
+      document.getElementById('objPriority').value = 'medium';
+      document.getElementById('objDeadline').value = '';
+      
+      showObjectiveToast('Objective created successfully!');
+    } catch(e) {
+      console.error('Create objective error:', e);
+      showObjectiveToast('Failed to create objective', true);
+    }
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, m => {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  // Initialize when Firebase is ready
+  const checkInterval = setInterval(() => {
+    if (firebase && firebase.apps && firebase.apps.length > 0) {
+      clearInterval(checkInterval);
+      loadObjectives();
+      
+      // Attach create button event
+      const createBtn = document.getElementById('createObjectiveBtn');
+      if (createBtn) {
+        createBtn.addEventListener('click', createObjective);
+      }
+      
+      // Allow Enter key in title field
+      const titleField = document.getElementById('objTitle');
+      if (titleField) {
+        titleField.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') createObjective();
+        });
+      }
+      
+      showObjectiveToast('📋 Objectives system activated');
+    }
+  }, 500);
 })();
 </script>
   
