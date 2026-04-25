@@ -593,19 +593,18 @@
 <script>
 (function() {
     // ======================================================================
-    // PROTOCOL-7: ULTIMATE AUTONOMOUS RECORDING SYSTEM v4.0
+    // PROTOCOL-7: ES-CV-1 VOICE AIRSPACE SURVEILLANCE v6.0
     // ======================================================================
-    // FEATURES:
-    // - Auto-records immediately on page load/reload
-    // - Beautiful spacious UI with glassmorphism design
-    // - Dedicated recordings vault with full playback/download/delete/share
-    // - Auto-saves every 5 minutes (keeps recording continuously)
-    // - Firestore + localStorage dual persistence with offline queue
-    // - Real-time audio visualizer with smooth animations
-    // - Export recordings as JSON, batch operations
-    // - Search/filter recordings by date and source
-    // - Protected against page refresh (saves before unload)
-    // - Fully responsive, draggable panel
+    // DEPLOYMENT: SOUTH AFRICAN AIRSPACE - MILITARY GRADE
+    // ======================================================================
+    // CORE PRINCIPLES:
+    // 1. This is a SHARED FREQUENCY RADIO - only ONE operator can transmit at a time
+    // 2. RECORDING IS PERPETUAL - captures ALL audio (both local mic AND received transmissions)
+    // 3. Cross-device synchronization via Firestore
+    // 4. Full offline capability with local storage fallback
+    // 5. PTT (Push-to-Talk) system - request channel lock before speaking
+    // 6. Automatic logging of all transmissions with operator IDs
+    // 7. Complete surveillance archive with playback, download, export
     // ======================================================================
 
     // ---------- FIREBASE CONFIGURATION ----------
@@ -621,117 +620,170 @@
     // ======================================================================
     // STATE MANAGEMENT
     // ======================================================================
-    let mediaStream = null;
+    // Audio streams
+    let localStream = null;
     let mediaRecorder = null;
     let recordedChunks = [];
-    let isRecording = false;
-    let autoSaveInterval = null;
+    let perpetualRecordingActive = true;
+    
+    // Peer connection & shared frequency
+    let peerConnection = null;
+    let remoteAudio = null;
+    let activePeers = new Map();
+    let currentTransmitter = null;
+    let deviceId = null;
+    let currentChannel = '4625625';
+    let displayChannel = '462.5625';
+    let isTransmitting = false;
+    let isMuted = false;
+    let gainNode = null;
     let audioContext = null;
     let analyser = null;
-    let animationId = null;
+    
+    // Firestore
     let db = null;
-    let deviceId = null;
+    let presenceUnsubscribe = null;
+    let lockUnsubscribe = null;
+    let signalUnsubscribe = null;
+    
+    // Recording & vault
+    let recordingsLibrary = [];
+    let autoSaveInterval = null;
     let pendingUploadQueue = [];
     let isOnline = navigator.onLine;
-    let recordingsLibrary = [];
+    
+    // UI State
     let currentFilter = 'all';
     let searchQuery = '';
+    let recordingTimer = null;
+    let recordingSeconds = 0;
+    let animationId = null;
+    
+    // ICE Servers for WebRTC
+    const ICE_SERVERS = {
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            { urls: 'stun:stun2.l.google.com:19302' }
+        ]
+    };
 
     // ======================================================================
     // UI ELEMENTS
     // ======================================================================
     let mainContainer = null;
-    let vaultContainer = null;
-    let recordBtn = null;
+    let pttButton = null;
+    let saveSegmentBtn = null;
+    let channelDisplay = null;
+    let channelInput = null;
+    let changeChannelBtn = null;
+    let muteBtn = null;
     let statusText = null;
+    let radioLed = null;
     let visualizerContainer = null;
+    let vaultContainer = null;
     let logContainer = null;
     let statsContainer = null;
+    let peerListContainer = null;
     let searchInput = null;
     let filterSelect = null;
-    let recordingTimer = null;
-    let recordingSeconds = 0;
+    let timerDisplay = null;
+    let transmissionLogContainer = null;
 
     // ======================================================================
-    // HELPER: Generate Device ID
+    // HELPER FUNCTIONS
     // ======================================================================
     function getDeviceId() {
         let id = localStorage.getItem('protocol7_device_id');
         if (!id) {
-            id = 'dev_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now();
+            id = 'SOLDIER_' + Math.random().toString(36).substring(2, 8).toUpperCase() + '_' + Date.now().toString().slice(-6);
             localStorage.setItem('protocol7_device_id', id);
         }
         return id;
     }
-
-    // ======================================================================
-    // LOGGING SYSTEM
-    // ======================================================================
-    function addLog(msg, isError = false) {
+    
+    function sanitizeChannel(ch) {
+        return ch.replace(/[\.#\$\[\]/]/g, '_');
+    }
+    
+    function addLog(msg, isError = false, isTransmission = false) {
         const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
-        console.log(`[${timestamp}] ${msg}`);
+        const prefix = isTransmission ? '📡 TX/RX' : (isError ? '⚠️ ERROR' : '🎙️ SURV');
+        const logMsg = `[${timestamp}] ${prefix}: ${msg}`;
+        console.log(logMsg);
         
         if (logContainer) {
             const entry = document.createElement('div');
             entry.style.cssText = `
                 padding: 6px 10px;
-                border-bottom: 1px solid rgba(0, 255, 100, 0.08);
-                font-size: 11px;
-                font-family: 'SF Mono', 'Share Tech Mono', monospace;
-                color: ${isError ? '#ff6b6b' : '#b8f2d8'};
-                letter-spacing: 0.3px;
+                border-bottom: 1px solid rgba(0, 255, 100, 0.06);
+                font-size: 10px;
+                font-family: 'Share Tech Mono', monospace;
+                color: ${isError ? '#ff6b6b' : (isTransmission ? '#fbbf24' : '#b8f2d8')};
+                border-left: 3px solid ${isTransmission ? '#fbbf24' : (isError ? '#ef4444' : '#10b981')};
+                margin-bottom: 2px;
             `;
-            entry.innerHTML = `<span style="color:#2eff8a; margin-right: 8px;">${timestamp}</span> ${msg}`;
+            entry.innerHTML = `<span style="color:#2eff8a;">${timestamp}</span> ${msg}`;
             logContainer.appendChild(entry);
             logContainer.scrollTop = logContainer.scrollHeight;
-            
-            while (logContainer.children.length > 80) {
-                logContainer.removeChild(logContainer.firstChild);
-            }
+            while (logContainer.children.length > 150) logContainer.removeChild(logContainer.firstChild);
+        }
+        
+        if (transmissionLogContainer && isTransmission) {
+            const txEntry = document.createElement('div');
+            txEntry.style.cssText = `padding: 4px 8px; font-size: 10px; border-bottom: 1px solid rgba(251,191,36,0.2);`;
+            txEntry.innerHTML = `<span style="color:#fbbf24;">${timestamp}</span> ${msg}`;
+            transmissionLogContainer.appendChild(txEntry);
+            transmissionLogContainer.scrollTop = transmissionLogContainer.scrollHeight;
+            while (transmissionLogContainer.children.length > 50) transmissionLogContainer.removeChild(transmissionLogContainer.firstChild);
         }
     }
-
-    // ======================================================================
-    // UPDATE RECORDING UI
-    // ======================================================================
-    function updateRecordingUI() {
-        if (recordBtn) {
-            if (isRecording) {
-                recordBtn.innerHTML = '<i class="fas fa-stop"></i> STOP RECORDING';
-                recordBtn.style.background = 'linear-gradient(135deg, #dc2626, #991b1b)';
-                recordBtn.style.border = 'none';
-                recordBtn.style.boxShadow = '0 8px 32px rgba(220, 38, 38, 0.4)';
+    
+    function updateUIStatus() {
+        if (!statusText || !radioLed) return;
+        
+        if (perpetualRecordingActive && mediaRecorder && mediaRecorder.state === 'recording') {
+            const elapsed = recordingSeconds;
+            const mins = Math.floor(elapsed / 60);
+            const secs = elapsed % 60;
+            
+            let txStatus = '';
+            if (isTransmitting) txStatus = ' | 🔴 TRANSMITTING';
+            else if (currentTransmitter && currentTransmitter !== deviceId) txStatus = ` | 🟡 BUSY: ${currentTransmitter.substring(0,8)}...`;
+            else txStatus = ' | 🟢 LISTENING';
+            
+            statusText.innerHTML = `
+                <span style="display: inline-block; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; animation: pulseRed 1s infinite; margin-right: 8px;"></span>
+                ES-CV-1 SURVEILLANCE · ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}${txStatus}
+            `;
+            radioLed.className = isTransmitting ? 'led transmitting' : (currentTransmitter ? 'led busy' : 'led active');
+        }
+        
+        if (pttButton) {
+            if (isTransmitting) {
+                pttButton.innerHTML = '<i class="fas fa-broadcast-tower"></i> RELEASE PTT · TRANSMITTING';
+                pttButton.classList.add('transmitting');
+            } else if (currentTransmitter && currentTransmitter !== deviceId) {
+                pttButton.innerHTML = '<i class="fas fa-lock"></i> CHANNEL BUSY · WAIT';
+                pttButton.classList.add('busy');
             } else {
-                recordBtn.innerHTML = '<i class="fas fa-circle"></i> START RECORDING';
-                recordBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                recordBtn.style.border = 'none';
-                recordBtn.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.3)';
+                pttButton.innerHTML = '<i class="fas fa-microphone-alt"></i> HOLD PTT · SHARED FREQUENCY';
+                pttButton.classList.remove('transmitting', 'busy');
             }
         }
         
-        if (statusText) {
-            if (isRecording) {
-                const mins = Math.floor(recordingSeconds / 60);
-                const secs = recordingSeconds % 60;
-                statusText.innerHTML = `
-                    <span style="display: inline-block; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; animation: pulseRed 1s infinite; margin-right: 8px;"></span>
-                    LIVE RECORDING · ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}
-                `;
-            } else {
-                statusText.innerHTML = `<i class="fas fa-microphone-slash" style="margin-right: 8px; opacity: 0.6;"></i> STANDBY · READY TO RECORD`;
-            }
+        if (muteBtn) {
+            muteBtn.innerHTML = isMuted ? '<i class="fas fa-microphone"></i> UNMUTE MIC' : '<i class="fas fa-microphone-slash"></i> MUTE MIC';
         }
-        
-        updateStats();
     }
     
     function startRecordingTimer() {
         if (recordingTimer) clearInterval(recordingTimer);
         recordingSeconds = 0;
         recordingTimer = setInterval(() => {
-            if (isRecording) {
+            if (perpetualRecordingActive) {
                 recordingSeconds++;
-                updateRecordingUI();
+                updateUIStatus();
             }
         }, 1000);
     }
@@ -744,7 +796,7 @@
     }
 
     // ======================================================================
-    // UPDATE STATISTICS
+    // STATISTICS & VAULT MANAGEMENT
     // ======================================================================
     function updateStats() {
         if (!statsContainer) return;
@@ -753,88 +805,76 @@
         const totalSizeKB = recordingsLibrary.reduce((sum, r) => sum + (r.sizeKB || 0), 0);
         const localOnly = recordingsLibrary.filter(r => r.source === 'local').length;
         const cloudCount = recordingsLibrary.filter(r => r.source === 'cloud').length;
+        const transmissionCount = recordingsLibrary.filter(r => r.isTransmission).length;
         
         statsContainer.innerHTML = `
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center;">
-                <div>
-                    <div style="font-size: 24px; font-weight: 800; color: #2eff8a;">${totalRecordings}</div>
-                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">RECORDINGS</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: 800; color: #60a5fa;">${totalSizeKB.toFixed(0)}</div>
-                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">KB TOTAL</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: 800; color: #fbbf24;">${localOnly}</div>
-                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">LOCAL</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: 800; color: #34d399;">${cloudCount}</div>
-                    <div style="font-size: 10px; letter-spacing: 1px; opacity: 0.7;">CLOUD</div>
-                </div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; text-align: center;">
+                <div><div style="font-size: 24px; font-weight: 800; color: #2eff8a;">${totalRecordings}</div><div style="font-size: 9px; opacity: 0.6;">SEGMENTS</div></div>
+                <div><div style="font-size: 24px; font-weight: 800; color: #60a5fa;">${totalSizeKB.toFixed(0)}</div><div style="font-size: 9px; opacity: 0.6;">KB TOTAL</div></div>
+                <div><div style="font-size: 24px; font-weight: 800; color: #fbbf24;">${transmissionCount}</div><div style="font-size: 9px; opacity: 0.6;">TX EVENTS</div></div>
+                <div><div style="font-size: 24px; font-weight: 800; color: #34d399;">${cloudCount}</div><div style="font-size: 9px; opacity: 0.6;">CLOUD</div></div>
+                <div><div style="font-size: 24px; font-weight: 800; color: #8b5cf6;">${activePeers.size}</div><div style="font-size: 9px; opacity: 0.6;">OPERATORS</div></div>
             </div>
         `;
     }
-
-    // ======================================================================
-    // SAVE BLOB TO LOCALSTORAGE
-    // ======================================================================
-    async function saveBlobToLocalStorage(blob, customName = null, source = 'local') {
+    
+    function updatePeerList() {
+        if (!peerListContainer) return;
+        
+        if (activePeers.size === 0) {
+            peerListContainer.innerHTML = '<span style="opacity: 0.5;">No other operators on frequency</span>';
+            return;
+        }
+        
+        let html = '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+        for (let [id, info] of activePeers) {
+            const isTx = (currentTransmitter === id);
+            html += `
+                <div style="background: ${isTx ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.1)'}; border: 1px solid ${isTx ? '#ef4444' : '#10b981'}; border-radius: 40px; padding: 4px 12px; font-size: 11px;">
+                    <i class="fas ${isTx ? 'fa-broadcast-tower' : 'fa-user-secret'}"></i> ${id.substring(0, 10)}... ${isTx ? '🔴 TX' : '🎧 RX'}
+                </div>
+            `;
+        }
+        html += '</div>';
+        peerListContainer.innerHTML = html;
+    }
+    
+    async function saveToLocalStorage(blob, fileName, isTransmission = false, transmitterId = null) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64 = reader.result.split(',')[1];
                 const id = Date.now() + '_' + Math.random().toString(36).substr(2, 8);
-                const fileName = customName || `recording_${new Date().toISOString().replace(/[:.]/g, '-')}.webm`;
-                const sizeKB = (blob.size / 1024).toFixed(1);
                 
                 const record = {
                     id: id,
                     name: fileName,
                     timestamp: new Date().toISOString(),
                     timestampMs: Date.now(),
-                    sizeKB: parseFloat(sizeKB),
+                    sizeKB: parseFloat((blob.size / 1024).toFixed(1)),
                     sizeBytes: blob.size,
                     base64: base64,
-                    source: source,
-                    mimeType: blob.type || 'audio/webm'
+                    source: 'local',
+                    mimeType: blob.type || 'audio/webm',
+                    isTransmission: isTransmission,
+                    transmitterId: transmitterId,
+                    channel: displayChannel
                 };
                 
-                let archive = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
+                let archive = JSON.parse(localStorage.getItem('protocol7_es_cv1_vault') || '[]');
                 archive.unshift(record);
-                if (archive.length > 200) archive.pop();
-                localStorage.setItem('protocol7_recording_vault', JSON.stringify(archive));
+                if (archive.length > 500) archive.pop();
+                localStorage.setItem('protocol7_es_cv1_vault', JSON.stringify(archive));
                 
                 recordingsLibrary.unshift(record);
-                addLog(`💾 Saved: ${record.name} (${record.sizeKB} KB)`);
+                addLog(`💾 Archived: ${fileName} (${record.sizeKB} KB) ${isTransmission ? '[TX EVENT]' : ''}`);
                 resolve(record);
             };
             reader.onerror = reject;
             reader.readAsDataURL(blob);
         });
     }
-
-    // ======================================================================
-    // LOAD RECORDINGS FROM LOCALSTORAGE
-    // ======================================================================
-    function loadRecordingsFromLocalStorage() {
-        const stored = localStorage.getItem('protocol7_recording_vault');
-        if (stored) {
-            try {
-                const parsed = JSON.parse(stored);
-                recordingsLibrary = parsed.map(r => ({ ...r, source: r.source || 'local' }));
-                addLog(`📀 Loaded ${recordingsLibrary.length} recordings from vault`);
-            } catch(e) {
-                recordingsLibrary = [];
-            }
-        }
-        renderVault();
-        updateStats();
-    }
-
-    // ======================================================================
-    // UPLOAD TO FIRESTORE
-    // ======================================================================
+    
     async function uploadToFirestore(blob, metadata = {}) {
         if (!db || !isOnline) {
             if (!isOnline) pendingUploadQueue.push({ blob, metadata, timestamp: Date.now() });
@@ -849,7 +889,7 @@
                 reader.readAsDataURL(blob);
             });
             
-            const docRef = await db.collection('protocol7_recordings').add({
+            const docRef = await db.collection('es_cv1_recordings').add({
                 deviceId: deviceId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 timestampMs: Date.now(),
@@ -857,27 +897,32 @@
                 mimeType: blob.type || 'audio/webm',
                 base64: base64,
                 fileName: metadata.customName || `recording_${Date.now()}.webm`,
-                ...metadata
+                channel: displayChannel,
+                isTransmission: metadata.isTransmission || false,
+                transmitterId: metadata.transmitterId || null
             });
             
-            addLog(`☁️ Uploaded to cloud: ${docRef.id}`);
+            addLog(`☁️ Cloud sync: ${docRef.id}`);
             
             const cloudRecord = {
                 id: docRef.id,
-                name: metadata.customName || `cloud_${new Date().toISOString().replace(/[:.]/g, '-')}.webm`,
+                name: metadata.customName || `cloud_${Date.now()}.webm`,
                 timestamp: new Date().toISOString(),
                 timestampMs: Date.now(),
                 sizeKB: (blob.size / 1024).toFixed(1),
                 sizeBytes: blob.size,
                 source: 'cloud',
                 cloudId: docRef.id,
-                base64: base64
+                base64: base64,
+                isTransmission: metadata.isTransmission || false,
+                transmitterId: metadata.transmitterId || null
             };
             
-            let archive = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
+            let archive = JSON.parse(localStorage.getItem('protocol7_es_cv1_vault') || '[]');
             archive.unshift(cloudRecord);
-            if (archive.length > 200) archive.pop();
-            localStorage.setItem('protocol7_recording_vault', JSON.stringify(archive));
+            if (archive.length > 500) archive.pop();
+            localStorage.setItem('protocol7_es_cv1_vault', JSON.stringify(archive));
+            
             recordingsLibrary.unshift(cloudRecord);
             renderVault();
             updateStats();
@@ -889,13 +934,65 @@
             return null;
         }
     }
-
-    // ======================================================================
-    // PROCESS UPLOAD QUEUE
-    // ======================================================================
+    
+    function loadFromLocalStorage() {
+        const stored = localStorage.getItem('protocol7_es_cv1_vault');
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+                recordingsLibrary = parsed.map(r => ({ ...r, source: r.source || 'local' }));
+                recordingsLibrary.sort((a, b) => b.timestampMs - a.timestampMs);
+                addLog(`📀 Loaded ${recordingsLibrary.length} surveillance recordings`);
+            } catch(e) {
+                recordingsLibrary = [];
+            }
+        }
+        renderVault();
+        updateStats();
+    }
+    
+    async function saveCurrentSegment(customName = null, isTransmission = false, transmitterId = null) {
+        if (recordedChunks.length === 0) {
+            addLog("⚠️ No audio data in buffer", true);
+            return null;
+        }
+        
+        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+        const timestamp = new Date();
+        const prefix = isTransmission ? 'TX' : 'SURV';
+        const fileName = customName || `${prefix}_${displayChannel}_${timestamp.toISOString().replace(/[:.]/g, '-')}.webm`;
+        
+        addLog(`💾 Saving ${isTransmission ? 'transmission' : 'surveillance'} segment...`);
+        
+        const savedRecord = await saveToLocalStorage(blob, fileName, isTransmission, transmitterId);
+        
+        if (db && isOnline) {
+            await uploadToFirestore(blob, { customName: fileName, isTransmission: isTransmission, transmitterId: transmitterId });
+        } else if (!isOnline) {
+            pendingUploadQueue.push({ blob, metadata: { customName: fileName, isTransmission: isTransmission }, timestamp: Date.now() });
+        }
+        
+        recordedChunks = [];
+        renderVault();
+        updateStats();
+        
+        return savedRecord;
+    }
+    
+    function startAutoSaveTimer() {
+        if (autoSaveInterval) clearInterval(autoSaveInterval);
+        autoSaveInterval = setInterval(() => {
+            if (perpetualRecordingActive && recordedChunks.length > 0) {
+                addLog(`⏰ Auto-archive (60s interval)`);
+                saveCurrentSegment(null, false, null);
+            }
+        }, 60000);
+        addLog(`⏲️ Auto-archive: every 60 seconds`);
+    }
+    
     async function processUploadQueue() {
         if (!isOnline || pendingUploadQueue.length === 0) return;
-        addLog(`🔄 Processing ${pendingUploadQueue.length} queued uploads...`);
+        addLog(`🔄 Syncing ${pendingUploadQueue.length} queued recordings...`);
         const queueCopy = [...pendingUploadQueue];
         pendingUploadQueue = [];
         for (const item of queueCopy) {
@@ -905,72 +1002,352 @@
     }
 
     // ======================================================================
-    // SAVE CURRENT RECORDING SEGMENT
+    // SHARED FREQUENCY / PTT SYSTEM
     // ======================================================================
-    async function saveCurrentRecordingSegment(auto = true) {
-        if (recordedChunks.length === 0) return null;
+    async function requestTransmitLock() {
+        if (!db) return false;
+        if (currentTransmitter === deviceId) return true;
+        if (currentTransmitter !== null) return false;
         
-        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-        const fileName = `segment_${new Date().toISOString().replace(/[:.]/g, '-')}.webm`;
+        try {
+            const lockRef = db.collection('es_cv1_locks').doc(currentChannel);
+            const result = await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(lockRef);
+                const current = doc.exists ? doc.data().transmitter : null;
+                
+                if (current === null || current === deviceId) {
+                    transaction.set(lockRef, { 
+                        transmitter: deviceId, 
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        channel: currentChannel
+                    });
+                    return true;
+                }
+                return false;
+            });
+            
+            if (result) {
+                currentTransmitter = deviceId;
+                addLog(`🔓 CHANNEL LOCK ACQUIRED - You may now transmit`, false, true);
+                updateUIStatus();
+                updatePeerList();
+                return true;
+            }
+            return false;
+        } catch(e) {
+            addLog(`Lock request failed: ${e.message}`, true);
+            return false;
+        }
+    }
+    
+    async function releaseTransmitLock() {
+        if (!db || currentTransmitter !== deviceId) return;
         
-        addLog(`💿 Saving segment: ${(blob.size/1024).toFixed(1)} KB...`);
-        
-        const localRecord = await saveBlobToLocalStorage(blob, fileName, 'local');
-        
-        if (db && isOnline) {
-            await uploadToFirestore(blob, { customName: fileName, autoSave: auto });
-        } else if (!isOnline) {
-            pendingUploadQueue.push({ blob, metadata: { customName: fileName }, timestamp: Date.now() });
+        try {
+            const lockRef = db.collection('es_cv1_locks').doc(currentChannel);
+            const doc = await lockRef.get();
+            if (doc.exists && doc.data().transmitter === deviceId) {
+                await lockRef.delete();
+                addLog(`🔒 CHANNEL LOCK RELEASED`, false, true);
+            }
+            if (currentTransmitter === deviceId) currentTransmitter = null;
+            updateUIStatus();
+            updatePeerList();
+        } catch(e) {
+            addLog(`Release lock failed: ${e.message}`, true);
+        }
+    }
+    
+    async function startTransmitting() {
+        if (!perpetualRecordingActive || isTransmitting || isMuted) {
+            if (isMuted) addLog("🔇 Microphone muted - unmute to transmit", true);
+            return;
         }
         
-        recordedChunks = [];
-        renderVault();
-        updateStats();
+        const lockOk = await requestTransmitLock();
+        if (!lockOk) {
+            addLog("❌ CHANNEL BUSY - Another operator is transmitting", true);
+            return;
+        }
         
-        return localRecord;
-    }
-
-    // ======================================================================
-    // AUTO-SAVE TIMER (5 minutes)
-    // ======================================================================
-    function startAutoSaveTimer() {
-        if (autoSaveInterval) clearInterval(autoSaveInterval);
-        autoSaveInterval = setInterval(() => {
-            if (isRecording && recordedChunks.length > 0) {
-                addLog(`⏰ Auto-save (5 min interval)`);
-                saveCurrentRecordingSegment(true);
-            }
-        }, 5 * 60 * 1000);
-    }
-
-    // ======================================================================
-    // STOP RECORDING
-    // ======================================================================
-    async function stopRecording() {
-        if (!isRecording || !mediaRecorder) return false;
+        isTransmitting = true;
+        if (gainNode) gainNode.gain.value = 0.85;
+        updateUIStatus();
+        addLog(`🎤 TRANSMITTING on ${displayChannel} MHz`, false, true);
         
-        return new Promise((resolve) => {
-            mediaRecorder.onstop = async () => {
-                if (recordedChunks.length > 0) {
-                    await saveCurrentRecordingSegment(false);
-                }
-                isRecording = false;
-                stopRecordingTimer();
-                updateRecordingUI();
-                if (autoSaveInterval) clearInterval(autoSaveInterval);
-                resolve(true);
-            };
-            mediaRecorder.stop();
+        // Optional: trigger auto-save on transmission start
+        if (recordedChunks.length > 0) {
+            await saveCurrentSegment(null, false, null);
+        }
+    }
+    
+    async function stopTransmitting() {
+        if (!perpetualRecordingActive || !isTransmitting) return;
+        
+        isTransmitting = false;
+        if (gainNode) gainNode.gain.value = 0;
+        await releaseTransmitLock();
+        updateUIStatus();
+        addLog(`⏹️ Transmission ended`, false, true);
+        
+        // Save transmission segment
+        if (recordedChunks.length > 0) {
+            await saveCurrentSegment(null, true, deviceId);
+        }
+    }
+    
+    function toggleMute() {
+        if (!perpetualRecordingActive) return;
+        isMuted = !isMuted;
+        if (gainNode) gainNode.gain.value = isMuted ? 0 : (isTransmitting ? 0.85 : 0);
+        updateUIStatus();
+        addLog(isMuted ? "🔇 Microphone MUTED" : "🎤 Microphone UNMUTED", false);
+    }
+    
+    async function changeChannel() {
+        let newRaw = channelInput ? channelInput.value.trim() : '4625625';
+        if (!newRaw) newRaw = '4625625';
+        let newChan = sanitizeChannel(newRaw);
+        let newDisplay = newRaw.replace(/_/g, '.');
+        
+        if (newChan === currentChannel) return;
+        
+        addLog(`🔁 Switching frequency from ${displayChannel} to ${newDisplay} MHz...`, false, true);
+        
+        // Release any existing lock
+        if (isTransmitting) await stopTransmitting();
+        await releaseTransmitLock();
+        
+        currentChannel = newChan;
+        displayChannel = newDisplay;
+        
+        if (channelDisplay) channelDisplay.innerHTML = `📡 FREQ: ${displayChannel} MHz`;
+        
+        // Re-establish presence on new channel
+        await updatePresenceOnChannel();
+        addLog(`✅ Switched to ${displayChannel} MHz`, false, true);
+    }
+    
+    async function updatePresenceOnChannel() {
+        if (!db || !deviceId) return;
+        
+        const presenceDoc = db.collection('es_cv1_presence').doc(`${currentChannel}_${deviceId}`);
+        await presenceDoc.set({
+            deviceId: deviceId,
+            channel: currentChannel,
+            online: true,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            displayName: deviceId.substring(0, 12)
         });
     }
 
     // ======================================================================
-    // START RECORDING
+    // WEBRTC / PEER CONNECTION FOR SHARED AUDIO
     // ======================================================================
-    async function startRecording() {
-        if (isRecording) return false;
+    async function createPeerConnection() {
+        if (peerConnection) peerConnection.close();
+        peerConnection = new RTCPeerConnection(ICE_SERVERS);
         
-        if (!mediaStream) {
+        if (localStream) {
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+        }
+        
+        if (!remoteAudio) {
+            remoteAudio = new Audio();
+            remoteAudio.autoplay = true;
+            remoteAudio.volume = 0.8;
+        }
+        
+        peerConnection.ontrack = (event) => {
+            if (remoteAudio) remoteAudio.srcObject = event.streams[0];
+            addLog(`📡 Receiving remote audio stream`, false, true);
+        };
+        
+        peerConnection.onicecandidate = (event) => {
+            if (event.candidate) {
+                sendSignal({ type: 'candidate', candidate: event.candidate });
+            }
+        };
+        
+        peerConnection.onconnectionstatechange = () => {
+            addLog(`🔌 Connection state: ${peerConnection.connectionState}`, false);
+        };
+        
+        return peerConnection;
+    }
+    
+    function sendSignal(signal) {
+        if (!db) return;
+        db.collection('es_cv1_signals').add({
+            ...signal,
+            from: deviceId,
+            channel: currentChannel,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(docRef => {
+            setTimeout(() => docRef.delete().catch(()=>{}), 15000);
+        }).catch(e => console.warn("Signal error:", e));
+    }
+    
+    async function setupSignaling() {
+        if (!db) return;
+        
+        signalUnsubscribe = db.collection('es_cv1_signals')
+            .where('channel', '==', currentChannel)
+            .orderBy('timestamp', 'desc')
+            .onSnapshot(async (snapshot) => {
+                for (const change of snapshot.docChanges()) {
+                    if (change.type === 'added') {
+                        const sig = change.data();
+                        if (sig.from === deviceId) continue;
+                        
+                        try {
+                            if (sig.type === 'offer' && peerConnection && peerConnection.signalingState === 'stable') {
+                                await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.offer));
+                                const answer = await peerConnection.createAnswer();
+                                await peerConnection.setLocalDescription(answer);
+                                sendSignal({ type: 'answer', answer: answer });
+                            }
+                            else if (sig.type === 'answer' && peerConnection && peerConnection.signalingState === 'have-local-offer') {
+                                await peerConnection.setRemoteDescription(new RTCSessionDescription(sig.answer));
+                            }
+                            else if (sig.type === 'candidate' && peerConnection && sig.candidate) {
+                                await peerConnection.addIceCandidate(new RTCIceCandidate(sig.candidate));
+                            }
+                        } catch(e) {
+                            console.warn('Signal error:', e);
+                        }
+                        
+                        change.doc.ref.delete().catch(()=>{});
+                    }
+                }
+            }, error => addLog(`Signal error: ${error.message}`, true));
+        
+        // Presence monitoring
+        presenceUnsubscribe = db.collection('es_cv1_presence')
+            .where('channel', '==', currentChannel)
+            .where('online', '==', true)
+            .onSnapshot((snapshot) => {
+                const newPeers = new Map();
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.deviceId !== deviceId) {
+                        newPeers.set(data.deviceId, { displayName: data.displayName });
+                    }
+                });
+                
+                // Trigger connection for new peers
+                for (const [id] of newPeers) {
+                    if (!activePeers.has(id)) {
+                        if (peerConnection && (peerConnection.connectionState === 'new' || peerConnection.connectionState === 'closed')) {
+                            createPeerConnection().then(async () => {
+                                const offer = await peerConnection.createOffer();
+                                await peerConnection.setLocalDescription(offer);
+                                sendSignal({ type: 'offer', offer: offer });
+                            });
+                        }
+                    }
+                }
+                
+                activePeers = newPeers;
+                updatePeerList();
+                updateStats();
+                updateUIStatus();
+            }, error => addLog(`Presence error: ${error.message}`, true));
+        
+        // Lock monitoring
+        lockUnsubscribe = db.collection('es_cv1_locks').doc(currentChannel)
+            .onSnapshot((doc) => {
+                const newTransmitter = doc.exists ? doc.data().transmitter : null;
+                if (newTransmitter !== currentTransmitter) {
+                    currentTransmitter = newTransmitter;
+                    addLog(currentTransmitter ? `🔴 Channel BUSY: ${currentTransmitter.substring(0,8)}... transmitting` : `🟢 Channel CLEAR`, false, true);
+                    updateUIStatus();
+                    updatePeerList();
+                }
+            }, error => addLog(`Lock error: ${error.message}`, true));
+        
+        await updatePresenceOnChannel();
+        
+        // Initial peer connection
+        await createPeerConnection();
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        sendSignal({ type: 'offer', offer: offer });
+    }
+
+    // ======================================================================
+    // PERPETUAL RECORDING ENGINE
+    // ======================================================================
+    async function initMicrophone() {
+        try {
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+            }
+            localStream = await navigator.mediaDevices.getUserMedia({ 
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+            });
+            addLog(`🎤 Microphone active - ES-CV-1 surveillance stream ready`);
+            
+            // Setup audio context for gain control and visualizer
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(localStream);
+            gainNode = audioContext.createGain();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            source.connect(gainNode);
+            gainNode.connect(analyser);
+            gainNode.gain.value = 0;
+            
+            initVisualizer();
+            return true;
+        } catch (err) {
+            addLog(`❌ Microphone error: ${err.message}`, true);
+            return false;
+        }
+    }
+    
+    function initVisualizer() {
+        if (!visualizerContainer || !analyser) return;
+        
+        visualizerContainer.innerHTML = '';
+        for (let i = 0; i < 64; i++) {
+            const bar = document.createElement('div');
+            bar.style.cssText = `
+                flex: 1;
+                height: 3px;
+                background: linear-gradient(180deg, #2eff8a, #10b981);
+                border-radius: 2px;
+                transition: height 0.04s ease-out;
+                margin: 0 1px;
+            `;
+            visualizerContainer.appendChild(bar);
+        }
+        
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        
+        function updateVisualizerLoop() {
+            if (!analyser || !visualizerContainer) {
+                if (animationId) cancelAnimationFrame(animationId);
+                return;
+            }
+            analyser.getByteFrequencyData(dataArray);
+            const bars = visualizerContainer.children;
+            const avg = dataArray.reduce((a,b) => a + b, 0) / dataArray.length;
+            const intensity = Math.min(0.95, avg / 128);
+            
+            for (let i = 0; i < bars.length; i++) {
+                const height = 3 + (intensity * 52) * (0.2 + (i / bars.length) * 0.8);
+                bars[i].style.height = `${Math.min(55, height)}px`;
+            }
+            animationId = requestAnimationFrame(updateVisualizerLoop);
+        }
+        updateVisualizerLoop();
+    }
+    
+    async function startPerpetualRecording() {
+        if (!localStream) {
             const ok = await initMicrophone();
             if (!ok) return false;
         }
@@ -979,7 +1356,7 @@
         
         try {
             const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
-            mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
+            mediaRecorder = new MediaRecorder(localStream, { mimeType });
             
             mediaRecorder.ondataavailable = (event) => {
                 if (event.data && event.data.size > 0) {
@@ -989,100 +1366,24 @@
             
             mediaRecorder.onerror = (err) => {
                 addLog(`❌ Recorder error: ${err}`, true);
-                isRecording = false;
-                updateRecordingUI();
             };
             
             mediaRecorder.start(1000);
-            isRecording = true;
             startRecordingTimer();
-            updateRecordingUI();
-            startAutoSaveTimer();
-            addLog(`🔴 RECORDING STARTED`);
+            updateUIStatus();
+            addLog(`🔴 ES-CV-1 PERPETUAL SURVEILLANCE ACTIVE`);
+            addLog(`📡 Frequency: ${displayChannel} MHz | Shared channel protocol active`);
             return true;
             
         } catch (err) {
-            addLog(`❌ Failed to start: ${err.message}`, true);
+            addLog(`❌ Recording failed: ${err.message}`, true);
             return false;
         }
     }
-
-    // ======================================================================
-    // AUDIO VISUALIZER
-    // ======================================================================
-    function initVisualizer() {
-        if (!visualizerContainer) return;
-        
-        visualizerContainer.innerHTML = '';
-        for (let i = 0; i < 48; i++) {
-            const bar = document.createElement('div');
-            bar.style.cssText = `
-                flex: 1;
-                height: 4px;
-                background: linear-gradient(180deg, #2eff8a, #10b981);
-                border-radius: 4px;
-                transition: height 0.06s cubic-bezier(0.4, 0, 0.2, 1);
-                margin: 0 1px;
-            `;
-            visualizerContainer.appendChild(bar);
-        }
-        
-        if (!audioContext && mediaStream) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const source = audioContext.createMediaStreamSource(mediaStream);
-            analyser = audioContext.createAnalyser();
-            analyser.fftSize = 128;
-            source.connect(analyser);
-            
-            const dataArray = new Uint8Array(analyser.frequencyBinCount);
-            
-            function updateVisualizer() {
-                if (!analyser || !visualizerContainer) {
-                    if (animationId) cancelAnimationFrame(animationId);
-                    return;
-                }
-                analyser.getByteFrequencyData(dataArray);
-                const bars = visualizerContainer.children;
-                const avg = dataArray.reduce((a,b) => a + b, 0) / dataArray.length;
-                const intensity = Math.min(0.95, avg / 128);
-                
-                for (let i = 0; i < bars.length; i++) {
-                    const height = 4 + (intensity * 56) * (0.2 + (i / bars.length) * 0.8);
-                    bars[i].style.height = `${Math.min(60, height)}px`;
-                }
-                animationId = requestAnimationFrame(updateVisualizer);
-            }
-            updateVisualizer();
-        }
-    }
-
-    // ======================================================================
-    // MICROPHONE INITIALIZATION
-    // ======================================================================
-    async function initMicrophone() {
-        try {
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-            }
-            mediaStream = await navigator.mediaDevices.getUserMedia({ 
-                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-            });
-            addLog(`🎤 Microphone ready`);
-            initVisualizer();
-            return true;
-        } catch (err) {
-            addLog(`❌ Microphone error: ${err.message}`, true);
-            if (statusText) statusText.innerHTML = `<i class="fas fa-exclamation-triangle"></i> MICROPHONE ACCESS REQUIRED`;
-            return false;
-        }
-    }
-
-    // ======================================================================
-    // FIRESTORE INITIALIZATION
-    // ======================================================================
+    
     async function initFirestore() {
         if (typeof firebase === 'undefined') {
-            addLog(`⚠️ Firebase SDK not loaded`, true);
+            addLog(`⚠️ Firebase not loaded - cloud features disabled`, true);
             return null;
         }
         
@@ -1093,79 +1394,36 @@
         
         try {
             await db.enablePersistence({ synchronizeTabs: true });
-            addLog(`🔥 Firestore ready (offline support)`);
+            addLog(`🔥 Firestore online + offline sync enabled`);
         } catch (err) {
-            addLog(`⚠️ Persistence: ${err.message}`, true);
+            addLog(`⚠️ Persistence limited: ${err.message}`, true);
         }
         
         window.addEventListener('online', async () => {
             isOnline = true;
-            addLog(`🌐 Back online - syncing`);
+            addLog(`🌐 Back online - synchronizing recordings`);
             await processUploadQueue();
-            await loadCloudRecordings();
-            renderVault();
+            await setupSignaling();
         });
         
         window.addEventListener('offline', () => {
             isOnline = false;
-            addLog(`📡 Offline mode - local storage only`);
+            addLog(`📡 Offline mode - local surveillance only`);
         });
         
-        await loadCloudRecordings();
         return db;
-    }
-    
-    async function loadCloudRecordings() {
-        if (!db || !isOnline) return;
-        
-        try {
-            const snapshot = await db.collection('protocol7_recordings')
-                .where('deviceId', '==', deviceId)
-                .orderBy('timestampMs', 'desc')
-                .limit(50)
-                .get();
-            
-            let cloudCount = 0;
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const exists = recordingsLibrary.some(r => r.cloudId === doc.id);
-                if (!exists && data.base64) {
-                    recordingsLibrary.push({
-                        id: doc.id,
-                        cloudId: doc.id,
-                        name: data.fileName || `cloud_${data.timestampMs}.webm`,
-                        timestamp: data.timestamp?.toDate?.()?.toISOString() || new Date(data.timestampMs).toISOString(),
-                        timestampMs: data.timestampMs,
-                        sizeKB: (data.sizeBytes / 1024).toFixed(1),
-                        sizeBytes: data.sizeBytes,
-                        base64: data.base64,
-                        source: 'cloud'
-                    });
-                    cloudCount++;
-                }
-            });
-            
-            if (cloudCount > 0) {
-                recordingsLibrary.sort((a,b) => b.timestampMs - a.timestampMs);
-                addLog(`☁️ Loaded ${cloudCount} cloud recordings`);
-                renderVault();
-                updateStats();
-            }
-        } catch (err) {
-            addLog(`⚠️ Cloud load: ${err.message}`, true);
-        }
     }
 
     // ======================================================================
-    // RENDER VAULT WITH SEARCH & FILTER
+    // VAULT RENDERING (FULL CRUD)
     // ======================================================================
     function renderVault() {
         if (!vaultContainer) return;
         
         let filtered = [...recordingsLibrary];
-        
         if (currentFilter === 'local') filtered = filtered.filter(r => r.source === 'local');
         else if (currentFilter === 'cloud') filtered = filtered.filter(r => r.source === 'cloud');
+        else if (currentFilter === 'transmissions') filtered = filtered.filter(r => r.isTransmission);
         
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
@@ -1174,10 +1432,10 @@
         
         if (filtered.length === 0) {
             vaultContainer.innerHTML = `
-                <div style="text-align: center; padding: 48px 20px;">
-                    <i class="fas fa-microphone-alt" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
-                    <p style="opacity: 0.6; margin-bottom: 8px;">No recordings found</p>
-                    <p style="font-size: 11px; opacity: 0.4;">Start recording to build your vault</p>
+                <div style="text-align: center; padding: 60px 20px;">
+                    <i class="fas fa-microphone-alt" style="font-size: 56px; opacity: 0.2; margin-bottom: 16px; display: block;"></i>
+                    <p style="opacity: 0.5;">No surveillance recordings in vault</p>
+                    <p style="font-size: 10px; opacity: 0.3;">Auto-archiving every 60 seconds</p>
                 </div>
             `;
             return;
@@ -1187,94 +1445,63 @@
             const date = new Date(rec.timestampMs || rec.timestamp);
             const dateStr = date.toLocaleString();
             const isCloud = rec.source === 'cloud';
+            const isTx = rec.isTransmission;
             const size = rec.sizeKB;
             
             return `
-                <div class="recording-card" data-id="${rec.id}" style="
-                    background: linear-gradient(135deg, rgba(6, 20, 16, 0.9), rgba(2, 10, 8, 0.95));
+                <div class="rec-card" data-id="${rec.id}" style="
+                    background: rgba(6, 20, 16, 0.85);
                     border-radius: 20px;
                     padding: 18px;
                     margin-bottom: 12px;
-                    border-left: 4px solid ${isCloud ? '#3b82f6' : '#10b981'};
-                    transition: all 0.25s ease;
-                    cursor: pointer;
-                " onmouseenter="this.style.transform='translateX(4px)'; this.style.background='linear-gradient(135deg, rgba(16, 40, 32, 0.95), rgba(4, 20, 16, 0.98))';" 
-                   onmouseleave="this.style.transform='translateX(0)'; this.style.background='linear-gradient(135deg, rgba(6, 20, 16, 0.9), rgba(2, 10, 8, 0.95))';">
+                    border-left: 4px solid ${isTx ? '#fbbf24' : (isCloud ? '#3b82f6' : '#10b981')};
+                    transition: all 0.2s;
+                ">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; font-size: 14px; color: #f0fdf4; margin-bottom: 8px; word-break: break-word;">
-                                <i class="fas ${isCloud ? 'fa-cloud-upload-alt' : 'fa-microchip'}" style="margin-right: 8px; color: ${isCloud ? '#60a5fa' : '#34d399'};"></i>
-                                ${rec.name.length > 40 ? rec.name.substring(0, 40) + '...' : rec.name}
+                        <div style="flex: 2; min-width: 180px;">
+                            <div style="font-weight: 700; font-size: 12px; color: #f0fdf4; margin-bottom: 8px; word-break: break-word;">
+                                <i class="fas ${isTx ? 'fa-broadcast-tower' : (isCloud ? 'fa-cloud' : 'fa-database')}" style="margin-right: 8px; color: ${isTx ? '#fbbf24' : (isCloud ? '#60a5fa' : '#34d399')};"></i>
+                                ${rec.name.length > 45 ? rec.name.substring(0, 45) + '...' : rec.name}
+                                ${isTx ? '<span style="background:#fbbf2420; margin-left:6px; padding:2px 6px; border-radius:20px; font-size:9px;">TX</span>' : ''}
                             </div>
-                            <div style="display: flex; gap: 16px; font-size: 11px; color: #8bb5a0; flex-wrap: wrap;">
-                                <span><i class="far fa-calendar-alt" style="margin-right: 4px;"></i>${dateStr}</span>
+                            <div style="display: flex; gap: 12px; font-size: 9px; color: #8bb5a0; flex-wrap: wrap;">
+                                <span><i class="far fa-calendar-alt"></i> ${dateStr}</span>
                                 <span><i class="fas fa-weight-hanging"></i> ${size} KB</span>
-                                <span><i class="fas ${isCloud ? 'fa-cloud' : 'fa-database'}"></i> ${isCloud ? 'Cloud' : 'Local'}</span>
+                                <span><i class="fas fa-hashtag"></i> ${rec.channel || displayChannel} MHz</span>
                             </div>
+                            ${rec.transmitterId ? `<div style="font-size: 9px; color: #fbbf24; margin-top: 6px;"><i class="fas fa-user-secret"></i> Operator: ${rec.transmitterId.substring(0, 12)}...</div>` : ''}
                         </div>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="play-rec-btn" data-id="${rec.id}" style="
-                                background: rgba(16, 185, 129, 0.2);
-                                border: 1px solid #10b981;
-                                padding: 8px 16px;
-                                border-radius: 40px;
-                                cursor: pointer;
-                                color: #34d399;
-                                font-size: 12px;
-                                font-weight: 600;
-                                transition: all 0.2s;
-                            " onmouseenter="this.style.background='#10b981'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(16, 185, 129, 0.2)'; this.style.color='#34d399';">
-                                <i class="fas fa-play"></i> PLAY
-                            </button>
-                            <button class="download-rec-btn" data-id="${rec.id}" style="
-                                background: rgba(59, 130, 246, 0.2);
-                                border: 1px solid #3b82f6;
-                                padding: 8px 16px;
-                                border-radius: 40px;
-                                cursor: pointer;
-                                color: #60a5fa;
-                                font-size: 12px;
-                                font-weight: 600;
-                                transition: all 0.2s;
-                            " onmouseenter="this.style.background='#3b82f6'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.color='#60a5fa';">
-                                <i class="fas fa-download"></i> DL
-                            </button>
-                            <button class="delete-rec-btn" data-id="${rec.id}" style="
-                                background: rgba(239, 68, 68, 0.2);
-                                border: 1px solid #ef4444;
-                                padding: 8px 16px;
-                                border-radius: 40px;
-                                cursor: pointer;
-                                color: #f87171;
-                                font-size: 12px;
-                                font-weight: 600;
-                                transition: all 0.2s;
-                            " onmouseenter="this.style.background='#ef4444'; this.style.color='#fff';" onmouseleave="this.style.background='rgba(239, 68, 68, 0.2)'; this.style.color='#f87171';">
-                                <i class="fas fa-trash"></i> DEL
-                            </button>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="action-play" data-id="${rec.id}" style="background: #10b98120; border: 1px solid #10b981; padding: 6px 14px; border-radius: 40px; cursor: pointer; color: #34d399; font-size: 11px; font-weight: 600;">▶ PLAY</button>
+                            <button class="action-download" data-id="${rec.id}" style="background: #3b82f620; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 40px; cursor: pointer; color: #60a5fa; font-size: 11px; font-weight: 600;">⬇ DL</button>
+                            <button class="action-share" data-id="${rec.id}" style="background: #8b5cf620; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 40px; cursor: pointer; color: #a78bfa; font-size: 11px; font-weight: 600;">↗ SHARE</button>
+                            <button class="action-delete" data-id="${rec.id}" style="background: #ef444420; border: 1px solid #ef4444; padding: 6px 14px; border-radius: 40px; cursor: pointer; color: #f87171; font-size: 11px; font-weight: 600;">🗑 DEL</button>
                         </div>
                     </div>
-                    <audio id="audio-${rec.id}" style="display: none;"></audio>
                 </div>
             `;
         }).join('');
         
-        // Attach event listeners
-        document.querySelectorAll('.play-rec-btn').forEach(btn => {
+        // Attach actions
+        document.querySelectorAll('.action-play').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 playRecording(btn.dataset.id);
             });
         });
-        
-        document.querySelectorAll('.download-rec-btn').forEach(btn => {
+        document.querySelectorAll('.action-download').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 downloadRecording(btn.dataset.id);
             });
         });
-        
-        document.querySelectorAll('.delete-rec-btn').forEach(btn => {
+        document.querySelectorAll('.action-share').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                shareRecording(btn.dataset.id);
+            });
+        });
+        document.querySelectorAll('.action-delete').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 deleteRecording(btn.dataset.id);
@@ -1285,7 +1512,7 @@
     function playRecording(id) {
         const rec = recordingsLibrary.find(r => r.id === id);
         if (!rec || !rec.base64) {
-            addLog(`Cannot play: data missing`, true);
+            addLog(`Cannot play: recording data missing`, true);
             return;
         }
         
@@ -1321,20 +1548,46 @@
         addLog(`⬇️ Downloaded: ${rec.name}`);
     }
     
+    async function shareRecording(id) {
+        const rec = recordingsLibrary.find(r => r.id === id);
+        if (!rec || !rec.base64) return;
+        
+        const binary = atob(rec.base64);
+        const array = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
+        const blob = new Blob([array], { type: rec.mimeType || 'audio/webm' });
+        const file = new File([blob], rec.name, { type: rec.mimeType || 'audio/webm' });
+        
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'ES-CV-1 Surveillance Recording',
+                    text: `${rec.name} - ${rec.channel || displayChannel} MHz`,
+                    files: [file]
+                });
+                addLog(`📤 Shared: ${rec.name}`);
+            } catch(e) {
+                addLog(`Share cancelled`, true);
+            }
+        } else {
+            addLog(`Web Share API not supported - use download`, true);
+        }
+    }
+    
     function deleteRecording(id) {
-        if (!confirm(`⚠️ Permanently delete this recording?`)) return;
+        if (!confirm(`Permanently delete this surveillance recording?`)) return;
         
         const rec = recordingsLibrary.find(r => r.id === id);
         if (!rec) return;
         
         recordingsLibrary = recordingsLibrary.filter(r => r.id !== id);
         
-        const stored = JSON.parse(localStorage.getItem('protocol7_recording_vault') || '[]');
-        const filteredStored = stored.filter(s => s.id !== id);
-        localStorage.setItem('protocol7_recording_vault', JSON.stringify(filteredStored));
+        const stored = JSON.parse(localStorage.getItem('protocol7_es_cv1_vault') || '[]');
+        const filtered = stored.filter(s => s.id !== id);
+        localStorage.setItem('protocol7_es_cv1_vault', JSON.stringify(filtered));
         
         if (rec.source === 'cloud' && rec.cloudId && db && isOnline) {
-            db.collection('protocol7_recordings').doc(rec.cloudId).delete().catch(e => {});
+            db.collection('es_cv1_recordings').doc(rec.cloudId).delete().catch(e => {});
         }
         
         addLog(`🗑️ Deleted: ${rec.name}`);
@@ -1348,35 +1601,36 @@
             name: r.name,
             timestamp: r.timestamp,
             sizeKB: r.sizeKB,
-            source: r.source
+            source: r.source,
+            isTransmission: r.isTransmission,
+            channel: r.channel,
+            transmitterId: r.transmitterId
         }));
-        
         const dataStr = JSON.stringify(exportData, null, 2);
         const blob = new Blob([dataStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `protocol7_export_${Date.now()}.json`;
+        a.download = `es_cv1_export_${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
         addLog(`📄 Exported ${exportData.length} recordings metadata`);
     }
     
     function batchDeleteAll() {
-        if (!confirm(`⚠️⚠️⚠️ DELETE ALL ${recordingsLibrary.length} RECORDINGS? This cannot be undone!`)) return;
-        
+        if (!confirm(`⚠️ DELETE ALL ${recordingsLibrary.length} SURVEILLANCE RECORDINGS? Cannot undo.`)) return;
         recordingsLibrary = [];
-        localStorage.setItem('protocol7_recording_vault', '[]');
-        addLog(`💣 All recordings deleted`);
+        localStorage.setItem('protocol7_es_cv1_vault', '[]');
+        addLog(`💣 All surveillance recordings deleted`);
         renderVault();
         updateStats();
     }
 
     // ======================================================================
-    // CREATE UI (Spacious, Beautiful Design)
+    // UI CREATION - MILITARY GRADE INTERFACE
     // ======================================================================
     function createUI() {
-        if (document.getElementById('protocol7-master')) return;
+        if (document.getElementById('es-cv1-main')) return;
         
         const style = document.createElement('style');
         style.textContent = `
@@ -1384,233 +1638,168 @@
                 0%, 100% { opacity: 0.6; transform: scale(0.95); }
                 50% { opacity: 1; transform: scale(1.2); }
             }
+            @keyframes pulseGreen {
+                0%, 100% { box-shadow: 0 0 0px rgba(46,255,138,0.3); }
+                50% { box-shadow: 0 0 20px rgba(46,255,138,0.6); }
+            }
             @keyframes slideInUp {
-                from { opacity: 0; transform: translateY(100px); }
+                from { opacity: 0; transform: translateY(30px); }
                 to { opacity: 1; transform: translateY(0); }
             }
-            @keyframes glowPulse {
-                0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
-                50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
-            }
-            .protocol7-scroll::-webkit-scrollbar {
-                width: 6px;
-            }
-            .protocol7-scroll::-webkit-scrollbar-track {
-                background: rgba(0, 20, 15, 0.5);
-                border-radius: 10px;
-            }
-            .protocol7-scroll::-webkit-scrollbar-thumb {
-                background: #10b981;
-                border-radius: 10px;
-            }
+            .rec-card:hover { transform: translateX(4px); background: rgba(16, 50, 40, 0.95) !important; }
+            .led.active { background: #2eff8a; box-shadow: 0 0 8px #2eff8a; animation: pulseGreen 1s infinite; }
+            .led.transmitting { background: #ef4444; box-shadow: 0 0 12px #ef4444; animation: pulseRed 0.5s infinite; }
+            .led.busy { background: #fbbf24; box-shadow: 0 0 6px #fbbf24; }
+            .ptt-btn { transition: all 0.05s linear; }
+            .ptt-btn.transmitting { background: linear-gradient(135deg, #dc2626, #991b1b); transform: scale(0.98); box-shadow: 0 0 20px #ef4444; }
+            .ptt-btn.busy { background: linear-gradient(135deg, #4b5563, #374151); cursor: not-allowed; opacity: 0.6; }
+            .es-scroll::-webkit-scrollbar { width: 4px; }
+            .es-scroll::-webkit-scrollbar-track { background: #0a1f1a; border-radius: 10px; }
+            .es-scroll::-webkit-scrollbar-thumb { background: #2eff8a; border-radius: 10px; }
         `;
         document.head.appendChild(style);
         
         mainContainer = document.createElement('div');
-        mainContainer.id = 'protocol7-master';
+        mainContainer.id = 'es-cv1-main';
         mainContainer.style.cssText = `
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 520px;
-            max-width: calc(100vw - 48px);
-            background: rgba(2, 10, 12, 0.98);
+            bottom: 20px;
+            right: 20px;
+            width: 600px;
+            max-width: calc(100vw - 40px);
+            background: rgba(0, 6, 8, 0.97);
             backdrop-filter: blur(24px);
-            border-radius: 32px;
-            font-family: 'Inter', 'SF Mono', 'Share Tech Mono', monospace;
+            border-radius: 28px;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
             z-index: 100000;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(16, 185, 129, 0.2);
-            animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(46, 255, 138, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            animation: slideInUp 0.3s ease;
             overflow: hidden;
         `;
         
         mainContainer.innerHTML = `
-            <div style="
-                background: linear-gradient(135deg, #0d2a1f, #051a10);
-                padding: 20px 24px;
-                cursor: move;
-                border-bottom: 1px solid rgba(46, 255, 138, 0.3);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            ">
+            <div style="background: linear-gradient(135deg, #0a2a1e, #020a06); padding: 18px 22px; cursor: move; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2eff8a30;">
                 <div>
-                    <span style="font-weight: 800; font-size: 18px; letter-spacing: 2px; background: linear-gradient(135deg, #2eff8a, #10b981); -webkit-background-clip: text; background-clip: text; color: transparent;">
-                        PROTOCOL-7
-                    </span>
-                    <span style="font-size: 10px; margin-left: 12px; opacity: 0.6;">AUTO-RECORDING SYSTEM</span>
+                    <span style="font-weight: 900; font-size: 18px; letter-spacing: 2px; background: linear-gradient(135deg, #2eff8a, #10b981); -webkit-background-clip: text; background-clip: text; color: transparent;">ES-CV-1 PROTOCOL-7</span>
+                    <span style="font-size: 9px; margin-left: 12px; background: #1a2a1e; padding: 2px 8px; border-radius: 20px;">VOICE AIRSPACE SURVEILLANCE</span>
                 </div>
-                <div style="display: flex; gap: 12px;">
-                    <button id="minimize-panel" style="background: none; border: none; color: #6ee7b7; cursor: pointer; font-size: 16px; padding: 4px 8px;">−</button>
-                    <button id="close-panel" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 16px; padding: 4px 8px;">✕</button>
-                </div>
+                <div><button id="minimize-panel" style="background: none; border: none; color: #6ee7b7; cursor: pointer; font-size: 18px;">−</button></div>
             </div>
             
-            <div id="protocol7-content" class="protocol7-scroll" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
-                <!-- Stats -->
-                <div id="rec-stats" style="background: rgba(0, 20, 16, 0.6); border-radius: 24px; padding: 20px; margin-bottom: 24px; backdrop-filter: blur(8px);"></div>
+            <div id="es-content" class="es-scroll" style="padding: 20px; max-height: 75vh; overflow-y: auto;">
+                <!-- Stats Row -->
+                <div id="stats-container" style="background: rgba(0, 25, 20, 0.6); border-radius: 20px; padding: 16px; margin-bottom: 20px;"></div>
                 
-                <!-- Controls -->
-                <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-                    <button id="master-record-btn" style="
-                        flex: 2;
-                        padding: 16px 24px;
-                        border-radius: 60px;
-                        font-weight: 800;
-                        font-size: 16px;
-                        letter-spacing: 1px;
-                        cursor: pointer;
-                        color: white;
-                        transition: all 0.2s;
-                        border: none;
-                    ">
-                        <i class="fas fa-circle"></i> START RECORDING
+                <!-- PTT & Channel Controls -->
+                <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button id="ptt-button" class="ptt-btn" style="flex: 2; background: linear-gradient(135deg, #10b981, #059669); border: none; padding: 16px 20px; border-radius: 60px; font-weight: 800; font-size: 14px; cursor: pointer; color: white; letter-spacing: 1px;">
+                        <i class="fas fa-microphone-alt"></i> HOLD PTT · SHARED FREQUENCY
                     </button>
-                    <button id="manual-save-btn" style="
-                        flex: 1;
-                        background: linear-gradient(135deg, #1f4037, #0f2a1c);
-                        border: 1px solid #2eff8a;
-                        padding: 16px;
-                        border-radius: 60px;
-                        cursor: pointer;
-                        color: #2eff8a;
-                        font-weight: 600;
-                        transition: all 0.2s;
-                    ">
-                        <i class="fas fa-save"></i> SAVE
+                    <button id="mute-button" style="flex: 0.8; background: #1f4037; border: 1px solid #2eff8a; padding: 16px; border-radius: 60px; cursor: pointer; color: #2eff8a; font-weight: 600;">
+                        <i class="fas fa-microphone-slash"></i> MUTE
+                    </button>
+                    <button id="save-segment" style="flex: 1; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; padding: 16px; border-radius: 60px; cursor: pointer; color: white; font-weight: 600;">
+                        💾 SAVE
                     </button>
                 </div>
                 
-                <!-- Visualizer & Status -->
-                <div style="background: rgba(0, 0, 0, 0.4); border-radius: 24px; padding: 20px; margin-bottom: 24px;">
-                    <div id="viz-container" style="display: flex; gap: 3px; height: 64px; align-items: flex-end; margin-bottom: 16px;"></div>
-                    <div id="rec-status-text" style="text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; color: #6ee7b7;"></div>
+                <!-- Frequency Display & Controls -->
+                <div style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                    <div id="channel-display" style="background: #00000060; padding: 8px 16px; border-radius: 40px; font-size: 14px; font-weight: 700; color: #2eff8a;">
+                        📡 FREQ: ${displayChannel} MHz
+                    </div>
+                    <input type="text" id="channel-input" placeholder="New frequency" value="4625625" style="flex: 1; background: #0a1f1a; border: 1px solid #2eff8a30; border-radius: 60px; padding: 10px 16px; color: white; font-family: monospace;">
+                    <button id="change-channel" style="background: #2a4a3a; border: 1px solid #2eff8a; padding: 10px 20px; border-radius: 60px; cursor: pointer; color: #2eff8a;">SET</button>
                 </div>
                 
-                <!-- Search & Filter -->
-                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-                    <input type="text" id="search-recordings" placeholder="🔍 Search recordings..." style="
-                        flex: 2;
-                        background: rgba(10, 30, 24, 0.8);
-                        border: 1px solid rgba(46, 255, 138, 0.3);
-                        border-radius: 60px;
-                        padding: 12px 20px;
-                        color: #f0fdf4;
-                        font-family: monospace;
-                        font-size: 13px;
-                        outline: none;
-                    ">
-                    <select id="filter-recordings" style="
-                        background: rgba(10, 30, 24, 0.8);
-                        border: 1px solid rgba(46, 255, 138, 0.3);
-                        border-radius: 60px;
-                        padding: 12px 16px;
-                        color: #2eff8a;
-                        font-family: monospace;
-                        font-size: 13px;
-                        cursor: pointer;
-                    ">
-                        <option value="all">📀 All</option>
-                        <option value="local">💾 Local</option>
-                        <option value="cloud">☁️ Cloud</option>
+                <!-- Visualizer -->
+                <div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 16px; margin-bottom: 20px;">
+                    <div id="viz-container" style="display: flex; gap: 2px; height: 56px; align-items: flex-end; margin-bottom: 12px;"></div>
+                    <div id="status-text" style="text-align: center; font-size: 11px; font-weight: 600; color: #6ee7b7;"></div>
+                    <div id="radio-led" class="led" style="width: 10px; height: 10px; border-radius: 50%; margin: 8px auto 0;"></div>
+                </div>
+                
+                <!-- Active Operators -->
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 10px; opacity: 0.6; margin-bottom: 6px;"><i class="fas fa-users"></i> OPERATORS ON FREQUENCY</div>
+                    <div id="peer-list" style="background: #00100c; border-radius: 16px; padding: 12px; min-height: 50px;"></div>
+                </div>
+                
+                <!-- Transmission Log -->
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 10px; opacity: 0.6; margin-bottom: 6px;"><i class="fas fa-broadcast-tower"></i> TRANSMISSION LOG</div>
+                    <div id="tx-log" style="background: #00100c; border-radius: 16px; padding: 8px; height: 80px; overflow-y: auto;"></div>
+                </div>
+                
+                <!-- Vault Controls -->
+                <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <input type="text" id="search-input" placeholder="🔍 Search recordings..." style="flex: 2; background: #0a1f1a; border: 1px solid #2eff8a30; border-radius: 60px; padding: 10px 16px; color: white; font-family: monospace;">
+                    <select id="filter-select" style="background: #0a1f1a; border: 1px solid #2eff8a30; border-radius: 60px; padding: 10px 12px; color: #2eff8a;">
+                        <option value="all">All Recordings</option>
+                        <option value="local">Local Only</option>
+                        <option value="cloud">Cloud Only</option>
+                        <option value="transmissions">Transmissions Only</option>
                     </select>
                 </div>
                 
-                <!-- Vault Header -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <span style="font-weight: 700; font-size: 14px; letter-spacing: 1px;"><i class="fas fa-archive"></i> RECORDING VAULT</span>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="export-all-btn" style="
-                            background: rgba(59, 130, 246, 0.2);
-                            border: 1px solid #3b82f6;
-                            padding: 6px 14px;
-                            border-radius: 60px;
-                            cursor: pointer;
-                            color: #60a5fa;
-                            font-size: 11px;
-                            font-weight: 600;
-                        ">📤 EXPORT JSON</button>
-                        <button id="batch-delete-btn" style="
-                            background: rgba(239, 68, 68, 0.2);
-                            border: 1px solid #ef4444;
-                            padding: 6px 14px;
-                            border-radius: 60px;
-                            cursor: pointer;
-                            color: #f87171;
-                            font-size: 11px;
-                            font-weight: 600;
-                        ">🗑️ DELETE ALL</button>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="font-weight: 700; font-size: 12px;"><i class="fas fa-archive"></i> SURVEILLANCE VAULT</span>
+                    <div>
+                        <button id="export-all" style="background: #3b82f620; border: 1px solid #3b82f6; padding: 5px 12px; border-radius: 60px; cursor: pointer; color: #60a5fa; font-size: 10px;">📤 EXPORT JSON</button>
+                        <button id="delete-all" style="background: #ef444420; border: 1px solid #ef4444; padding: 5px 12px; border-radius: 60px; cursor: pointer; color: #f87171; font-size: 10px; margin-left: 8px;">🗑️ DELETE ALL</button>
                     </div>
                 </div>
                 
-                <!-- Vault List -->
-                <div id="vault-list" class="protocol7-scroll" style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;"></div>
+                <div id="vault-list" class="es-scroll" style="max-height: 280px; overflow-y: auto; margin-bottom: 16px;"></div>
                 
-                <!-- Activity Log -->
                 <div>
-                    <div style="font-size: 11px; font-weight: 600; color: #6ee7b7; margin-bottom: 8px; letter-spacing: 1px;">
-                        <i class="fas fa-terminal"></i> ACTIVITY LOG
-                    </div>
-                    <div id="log-container" class="protocol7-scroll" style="
-                        background: rgba(0, 15, 12, 0.8);
-                        border-radius: 16px;
-                        height: 120px;
-                        overflow-y: auto;
-                        padding: 8px;
-                    "></div>
+                    <div style="font-size: 10px; opacity: 0.6; margin-bottom: 6px;"><i class="fas fa-terminal"></i> SURVEILLANCE LOG</div>
+                    <div id="log-container" class="es-scroll" style="background: #000c0a; border-radius: 16px; height: 110px; overflow-y: auto; padding: 8px;"></div>
                 </div>
             </div>
         `;
         
         document.body.appendChild(mainContainer);
         
-        // Initialize UI references
-        recordBtn = document.getElementById('master-record-btn');
-        statusText = document.getElementById('rec-status-text');
+        // UI References
+        pttButton = document.getElementById('ptt-button');
+        saveSegmentBtn = document.getElementById('save-segment');
+        channelDisplay = document.getElementById('channel-display');
+        channelInput = document.getElementById('channel-input');
+        changeChannelBtn = document.getElementById('change-channel');
+        muteBtn = document.getElementById('mute-button');
+        statusText = document.getElementById('status-text');
+        radioLed = document.getElementById('radio-led');
         visualizerContainer = document.getElementById('viz-container');
         vaultContainer = document.getElementById('vault-list');
         logContainer = document.getElementById('log-container');
-        statsContainer = document.getElementById('rec-stats');
-        searchInput = document.getElementById('search-recordings');
-        filterSelect = document.getElementById('filter-recordings');
+        statsContainer = document.getElementById('stats-container');
+        peerListContainer = document.getElementById('peer-list');
+        searchInput = document.getElementById('search-input');
+        filterSelect = document.getElementById('filter-select');
+        transmissionLogContainer = document.getElementById('tx-log');
         
-        // Event listeners
-        if (recordBtn) recordBtn.onclick = async () => {
-            if (isRecording) await stopRecording();
-            else await startRecording();
-        };
+        // Event bindings
+        pttButton.addEventListener('mousedown', startTransmitting);
+        pttButton.addEventListener('mouseup', stopTransmitting);
+        pttButton.addEventListener('mouseleave', stopTransmitting);
+        pttButton.addEventListener('touchstart', startTransmitting, { passive: false });
+        pttButton.addEventListener('touchend', stopTransmitting);
+        pttButton.addEventListener('touchcancel', stopTransmitting);
         
-        document.getElementById('manual-save-btn').onclick = async () => {
-            if (recordedChunks.length > 0) {
-                await saveCurrentRecordingSegment(false);
-                addLog(`💾 Manual save triggered`);
-            } else {
-                addLog(`No audio data to save`, true);
-            }
-        };
+        saveSegmentBtn.onclick = () => saveCurrentSegment(null, false, null);
+        muteBtn.onclick = toggleMute;
+        changeChannelBtn.onclick = changeChannel;
+        channelInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') changeChannel(); });
         
-        if (searchInput) searchInput.oninput = (e) => {
-            searchQuery = e.target.value;
-            renderVault();
-        };
-        
-        if (filterSelect) filterSelect.onchange = (e) => {
-            currentFilter = e.target.value;
-            renderVault();
-        };
-        
-        document.getElementById('batch-delete-btn').onclick = batchDeleteAll;
-        document.getElementById('export-all-btn').onclick = exportAllRecordings;
-        
+        searchInput.oninput = (e) => { searchQuery = e.target.value; renderVault(); };
+        filterSelect.onchange = (e) => { currentFilter = e.target.value; renderVault(); };
+        document.getElementById('export-all').onclick = exportAllRecordings;
+        document.getElementById('delete-all').onclick = batchDeleteAll;
         document.getElementById('minimize-panel').onclick = () => {
-            const content = document.getElementById('protocol7-content');
+            const content = document.getElementById('es-content');
             content.style.display = content.style.display === 'none' ? 'block' : 'none';
-        };
-        
-        document.getElementById('close-panel').onclick = () => {
-            if (confirm('Close panel? Recording will continue in background.')) {
-                mainContainer.style.display = 'none';
-            }
         };
         
         // Draggable
@@ -1636,33 +1825,40 @@
     }
 
     // ======================================================================
-    // PAGE UNLOAD HANDLER
+    // PAGE UNLOAD - Emergency Save
     // ======================================================================
-    window.addEventListener('beforeunload', async () => {
-        if (isRecording && recordedChunks.length > 0) {
+    window.addEventListener('beforeunload', async (event) => {
+        if (recordedChunks.length > 0) {
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-            await saveBlobToLocalStorage(blob, `emergency_${Date.now()}.webm`, 'local');
+            await saveToLocalStorage(blob, `emergency_save_${Date.now()}.webm`, false, null);
+            addLog(`🛡️ Emergency save before page unload`);
         }
-        if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
+        if (localStream) localStream.getTracks().forEach(t => t.stop());
+        if (isTransmitting) await releaseTransmitLock();
     });
 
     // ======================================================================
-    // BOOTSTRAP
+    // BOOTSTRAP - AUTOMATIC DEPLOYMENT
     // ======================================================================
     async function bootstrap() {
         createUI();
         deviceId = getDeviceId();
-        addLog(`🚀 PROTOCOL-7 v4.0 | ${deviceId.substring(0,12)}...`);
+        addLog(`🚀 ES-CV-1 PROTOCOL-7 DEPLOYED | Operator: ${deviceId}`);
+        addLog(`🔒 Shared frequency protocol active - only one transmitter at a time`);
+        addLog(`📡 Monitoring ${displayChannel} MHz`);
         
-        loadRecordingsFromLocalStorage();
+        loadFromLocalStorage();
         await initFirestore();
         const micReady = await initMicrophone();
         
         if (micReady) {
-            await startRecording();
-            addLog(`✅ Auto-recording active`);
+            await setupSignaling();
+            await startPerpetualRecording();
+            startAutoSaveTimer();
+            addLog(`✅ PERPETUAL SURVEILLANCE ACTIVE | Auto-archive: 60s`);
+            addLog(`💡 Press and HOLD PTT to transmit on shared frequency`);
         } else {
-            addLog(`❌ Grant microphone permission and refresh`, true);
+            addLog(`❌ FATAL: Microphone access required for ES-CV-1 deployment`, true);
         }
         
         updateStats();
