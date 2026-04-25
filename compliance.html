@@ -627,6 +627,507 @@
     });
   })();
 </script>
+
+  <script>
+// =====================================================
+// SINGLE SUPPORTING FUNCTION: TEAM ADVANCEMENT MODULE
+// Contains ALL HTML, CSS, and JS functionality
+// NO existing code replaced — pure addition
+// =====================================================
+(function injectAdvancementModule() {
+  // ---------- CSS (injected as style element) ----------
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `
+    .adv-module-container {
+      margin-top: 2rem;
+      position: relative;
+      z-index: 20;
+    }
+    .adv-main-card {
+      background: #0a0000dd;
+      backdrop-filter: blur(8px);
+      border: 2px solid #ff4444;
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .adv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ff4444;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .adv-header h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff6666;
+      margin: 0;
+    }
+    .adv-badge {
+      background: rgba(255,0,0,0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      border: 1px solid #ff4444;
+    }
+    .adv-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .adv-panel {
+      background: #05000066;
+      padding: 0.8rem;
+      border-radius: 4px;
+    }
+    .adv-panel h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      color: #ff8888;
+    }
+    .adv-btn {
+      background: transparent;
+      border: 1.5px solid #ff4444;
+      color: #ff6666;
+      padding: 0.35rem 0.7rem;
+      cursor: pointer;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      border-radius: 4px;
+      transition: 0.1s linear;
+      margin: 0.2rem;
+    }
+    .adv-btn-primary {
+      background: #ff1a1a;
+      color: black;
+      border-color: #ff1a1a;
+      font-weight: bold;
+    }
+    .adv-btn-primary:hover { background: #cc0000; transform: scale(0.97); }
+    .adv-btn:hover { background: rgba(255,0,0,0.3); }
+    .adv-stat-box {
+      background: #050000aa;
+      border-left: 3px solid #ff4444;
+      padding: 0.4rem;
+      margin: 0.4rem 0;
+      font-size: 0.7rem;
+    }
+    .adv-progress-bar {
+      background: #2a0000;
+      border-radius: 10px;
+      height: 6px;
+      overflow: hidden;
+      margin: 0.4rem 0;
+    }
+    .adv-progress-fill {
+      background: #ff4444;
+      width: 0%;
+      height: 100%;
+      transition: width 0.3s;
+    }
+    .adv-poll-opt {
+      background: #1a0000;
+      margin: 0.25rem 0;
+      padding: 0.3rem;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      border: 1px solid #ff444433;
+    }
+    .adv-poll-opt:hover { background: #2a0000; border-color: #ff4444; }
+    .adv-template-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .adv-feedback {
+      margin-top: 10px;
+      font-size: 0.65rem;
+      color: #ff8888;
+      border-top: 1px solid #ff444433;
+      padding-top: 8px;
+    }
+    .adv-toast-custom {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0a0000;
+      border-left: 4px solid #ff4444;
+      padding: 0.5rem 1rem;
+      z-index: 99999;
+      font-size: 0.75rem;
+      animation: advSlideIn 0.2s ease;
+      max-width: 300px;
+    }
+    @keyframes advSlideIn {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .adv-loading-indicator {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #000000cc;
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ff4444;
+      z-index: 99998;
+      font-size: 0.7rem;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+    .adv-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ff4444;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: advSpin 0.6s linear infinite;
+    }
+    @keyframes advSpin { to { transform: rotate(360deg); } }
+  `;
+  document.head.appendChild(styleEl);
+
+  // ---------- HTML (injected dynamically) ----------
+  const moduleHtml = `
+    <div class="adv-module-container" id="advModuleRoot">
+      <div class="adv-main-card">
+        <div class="adv-header">
+          <h3><i class="fas fa-microchip"></i> OMEGA-7 ADVANCEMENT SUITE</h3>
+          <span class="adv-badge" id="advLiveBadge">ACTIVE</span>
+        </div>
+        <div class="adv-grid-4">
+          <!-- Panel 1: Analytics -->
+          <div class="adv-panel">
+            <h4><i class="fas fa-chart-line"></i> MESSAGE INTEL</h4>
+            <div class="adv-stat-box">📊 Total Msg: <strong id="advTotalCount">0</strong></div>
+            <div class="adv-stat-box">🔥 Top Call: <strong id="advTopCallsign">—</strong></div>
+            <div class="adv-stat-box">📈 24h Volume: <strong id="adv24hVolume">0</strong></div>
+            <button class="adv-btn" id="advAnalyzeIntelBtn"><i class="fas fa-brain"></i> ANALYZE</button>
+            <button class="adv-btn" id="advExportDataBtn"><i class="fas fa-download"></i> EXPORT</button>
+          </div>
+          <!-- Panel 2: Poll System -->
+          <div class="adv-panel">
+            <h4><i class="fas fa-poll"></i> LIVE POLL</h4>
+            <div id="advPollDisplay">⚠️ No active poll</div>
+            <input type="text" id="advPollQ" placeholder="Poll question" style="width:100%; font-size:0.7rem; margin:4px 0; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px;">
+            <input type="text" id="advPollOpts" placeholder="Options: Yes,No,Abstain" style="width:100%; font-size:0.7rem; margin:4px 0; background:#0a0000; border:1px solid red; color:#ff6666; padding:4px;">
+            <button class="adv-btn adv-btn-primary" id="advCreatePollBtn" style="width:100%;"><i class="fas fa-vote-yea"></i> CREATE POLL</button>
+          </div>
+          <!-- Panel 3: Emergency & Morale -->
+          <div class="adv-panel">
+            <h4><i class="fas fa-exclamation-triangle"></i> PROTOCOLS</h4>
+            <button class="adv-btn" id="advUrgentBroadcast" style="background:#660000;"><i class="fas fa-bell"></i> URGENT ALERT</button>
+            <button class="adv-btn" id="advEchoLastMsg"><i class="fas fa-repeat"></i> ECHO LAST MSG</button>
+            <div class="adv-progress-bar"><div class="adv-progress-fill" id="advMoraleFill"></div></div>
+            <div style="font-size:0.6rem; text-align:center;">MORALE INDEX</div>
+            <button class="adv-btn" id="advMoralBooster"><i class="fas fa-heart"></i> MORALE BOOST</button>
+          </div>
+          <!-- Panel 4: Templates & Actions -->
+          <div class="adv-panel">
+            <h4><i class="fas fa-bolt"></i> QUICK ACTIONS</h4>
+            <div class="adv-template-row" id="advTemplateButtons"></div>
+            <div style="margin-top:8px;">
+              <button class="adv-btn" id="advPinMessageBtn"><i class="fas fa-thumbtack"></i> PIN TOP MSG</button>
+              <button class="adv-btn" id="advSysAnnounceBtn"><i class="fas fa-bullhorn"></i> ANNOUNCE</button>
+            </div>
+          </div>
+        </div>
+        <div class="adv-feedback" id="advFeedbackMsg">
+          <i class="fas fa-check-circle"></i> Advancement module loaded. Extra features active.
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Find where to insert (after last section-card or before footer)
+  const insertPoint = document.querySelector('.footer-panel') || document.querySelector('.app-container');
+  if (insertPoint) {
+    insertPoint.insertAdjacentHTML('beforebegin', moduleHtml);
+  } else {
+    document.body.insertAdjacentHTML('beforeend', moduleHtml);
+  }
+
+  // ---------- Helper Functions (error handling + loading) ----------
+  let pollData = null; // { question, options: [{name, votes}] }
+  let cachedMessages = [];
+  let dbInstance = null;
+
+  function showAdvToast(msg, isError = false) {
+    const old = document.querySelector('.adv-toast-custom');
+    if (old) old.remove();
+    const toast = document.createElement('div');
+    toast.className = 'adv-toast-custom';
+    toast.style.borderLeftColor = isError ? '#ff6666' : '#ff1a1a';
+    toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3500);
+  }
+
+  function showAdvLoading(show, text = 'PROCESSING...') {
+    let loader = document.querySelector('.adv-loading-indicator');
+    if (!loader && show) {
+      loader = document.createElement('div');
+      loader.className = 'adv-loading-indicator';
+      loader.innerHTML = `<div class="adv-spinner"></div><span>${text}</span>`;
+      document.body.appendChild(loader);
+    }
+    if (loader) {
+      if (show) {
+        loader.style.display = 'flex';
+        loader.querySelector('span').textContent = text;
+      } else {
+        loader.style.display = 'none';
+      }
+    }
+  }
+
+  // Get Firestore instance safely
+  function getDb() {
+    try {
+      if (firebase && firebase.firestore && !dbInstance) {
+        if (!firebase.apps.length) return null;
+        dbInstance = firebase.firestore();
+      }
+      return dbInstance;
+    } catch(e) { return null; }
+  }
+
+  // Fetch messages for analytics
+  async function fetchMessagesForAdv() {
+    const db = getDb();
+    if (!db) return [];
+    try {
+      const snapshot = await db.collection('messages').orderBy('timestamp', 'desc').limit(200).get();
+      const msgs = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        msgs.push({
+          id: doc.id,
+          callsign: data.callsign || 'unknown',
+          text: data.text || '',
+          timestamp: data.timestamp?.toDate?.() || new Date(),
+          likes: data.likes || 0
+        });
+      });
+      cachedMessages = msgs;
+      return msgs;
+    } catch (err) {
+      console.warn("Adv module fetch error:", err);
+      return [];
+    }
+  }
+
+  async function updateMessageStats() {
+    const msgs = await fetchMessagesForAdv();
+    const total = msgs.length;
+    document.getElementById('advTotalCount').innerText = total;
+    const last24h = msgs.filter(m => (new Date() - m.timestamp) < 24*60*60*1000).length;
+    document.getElementById('adv24hVolume').innerText = last24h;
+    if (msgs.length) {
+      const freq = {};
+      msgs.forEach(m => { freq[m.callsign] = (freq[m.callsign] || 0) + 1; });
+      let top = '—', max = 0;
+      for (let [k,v] of Object.entries(freq)) if (v > max) { max = v; top = k; }
+      document.getElementById('advTopCallsign').innerText = `${top} (${max})`;
+    } else {
+      document.getElementById('advTopCallsign').innerText = '—';
+    }
+  }
+
+  async function analyzeIntel() {
+    showAdvLoading(true, 'Analyzing intel...');
+    try {
+      const msgs = await fetchMessagesForAdv();
+      const wordCount = msgs.reduce((sum, m) => sum + (m.text?.split(/\s+/).length || 0), 0);
+      const avgLen = msgs.length ? (wordCount / msgs.length).toFixed(1) : 0;
+      showAdvToast(`📊 Analysis: ${msgs.length} msgs, avg length ${avgLen} words. Most active: ${document.getElementById('advTopCallsign').innerText}`, false);
+      document.getElementById('advFeedbackMsg').innerHTML = `<i class="fas fa-chart-simple"></i> Analysis complete: ${msgs.length} transmissions processed.`;
+    } catch(e) {
+      showAdvToast('Analysis failed', true);
+    } finally {
+      showAdvLoading(false);
+    }
+  }
+
+  function exportLogs() {
+    try {
+      const logs = cachedMessages.map(m => `${m.timestamp.toLocaleString()} | ${m.callsign}: ${m.text}`).join('\n');
+      const blob = new Blob([logs], {type: 'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `cv5_logs_${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showAdvToast('Logs exported successfully');
+    } catch(e) { showAdvToast('Export error', true); }
+  }
+
+  async function urgentAlert() {
+    const db = getDb();
+    if (!db) return showAdvToast('DB not ready', true);
+    try {
+      await db.collection('messages').add({
+        callsign: '🔴 OMEGA-7 ALERT',
+        text: `🚨 URGENT: Team-wide emergency protocol activated. All units respond immediately. 🚨`,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0
+      });
+      showAdvToast('Urgent alert broadcasted!', false);
+    } catch(e) { showAdvToast('Alert failed', true); }
+  }
+
+  async function echoLastMessage() {
+    const db = getDb();
+    if (!db) return;
+    const snap = await db.collection('messages').orderBy('timestamp', 'desc').limit(1).get();
+    if (!snap.empty) {
+      const last = snap.docs[0].data();
+      await db.collection('messages').add({
+        callsign: `📢 ECHO: ${last.callsign}`,
+        text: `🔁 ${last.text}`,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0
+      });
+      showAdvToast('Last message echoed!');
+    } else { showAdvToast('No message to echo', true); }
+  }
+
+  async function moraleBoost() {
+    const db = getDb();
+    if (!db) return;
+    const boosts = ["💪 TEAM SPIRIT MAXIMUM", "⚡ MORALE BOOST ACTIVE", "🔥 UNBREAKABLE BOND"];
+    const randomMsg = boosts[Math.floor(Math.random() * boosts.length)];
+    await db.collection('messages').add({
+      callsign: '🎖️ COMMAND MORALE',
+      text: randomMsg + " — Stay strong, CV-5!",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      likes: 0
+    });
+    const fill = document.getElementById('advMoraleFill');
+    if (fill) fill.style.width = '100%';
+    setTimeout(() => { if(fill) fill.style.width = '70%'; }, 1500);
+    showAdvToast('Morale boosted! +100 cohesion');
+  }
+
+  function createPoll() {
+    const question = document.getElementById('advPollQ').value.trim();
+    const optsRaw = document.getElementById('advPollOpts').value;
+    if (!question || !optsRaw) { showAdvToast('Enter question and options', true); return; }
+    const optionsArr = optsRaw.split(',').map(s => s.trim()).filter(s => s);
+    if (optionsArr.length < 2) { showAdvToast('At least 2 options', true); return; }
+    pollData = { question, options: optionsArr.map(opt => ({ name: opt, votes: 0 })) };
+    renderPollUI();
+    showAdvToast(`Poll created: "${question}"`);
+    document.getElementById('advPollQ').value = '';
+    document.getElementById('advPollOpts').value = '';
+  }
+
+  function renderPollUI() {
+    const container = document.getElementById('advPollDisplay');
+    if (!pollData) { container.innerHTML = '⚠️ No active poll'; return; }
+    let html = `<div style="font-weight:bold; font-size:0.75rem;">📊 ${escapeHtml(pollData.question)}</div>`;
+    pollData.options.forEach((opt, idx) => {
+      html += `<div class="adv-poll-opt" data-poll-idx="${idx}">
+                <span>${escapeHtml(opt.name)}</span>
+                <span>${opt.votes} 🗳️</span>
+              </div>`;
+    });
+    html += `<button class="adv-btn" id="advResetPollBtn" style="margin-top:5px; width:100%;">RESET POLL</button>`;
+    container.innerHTML = html;
+    document.querySelectorAll('.adv-poll-opt').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const idx = parseInt(el.dataset.pollIdx);
+        if (!isNaN(idx) && pollData) {
+          pollData.options[idx].votes++;
+          renderPollUI();
+          showAdvToast(`Voted: ${pollData.options[idx].name}`);
+        }
+      });
+    });
+    const resetBtn = document.getElementById('advResetPollBtn');
+    if (resetBtn) resetBtn.onclick = () => { pollData = null; renderPollUI(); showAdvToast('Poll reset'); };
+  }
+
+  function escapeHtml(str) { return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])); }
+
+  async function pinTopMessage() {
+    const db = getDb();
+    if (!db) return;
+    const snap = await db.collection('messages').orderBy('timestamp', 'desc').limit(1).get();
+    if (!snap.empty) {
+      const top = snap.docs[0].data();
+      showAdvToast(`📌 Pinned: "${top.text?.slice(0,50)}" (simulated - check console)`);
+      document.getElementById('advFeedbackMsg').innerHTML = `<i class="fas fa-thumbtack"></i> Latest message pinned by commander.`;
+    } else { showAdvToast('No messages to pin', true); }
+  }
+
+  async function systemAnnouncement() {
+    const db = getDb();
+    if (!db) return;
+    const announceText = prompt('System announcement:');
+    if (announceText) {
+      await db.collection('messages').add({
+        callsign: '📢 SYSTEM OMEGA-7',
+        text: `🔔 ANNOUNCEMENT: ${announceText}`,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0
+      });
+      showAdvToast('Announcement posted');
+    }
+  }
+
+  function setupTemplates() {
+    const container = document.getElementById('advTemplateButtons');
+    const templates = ['Roger that, executing', 'SITREP: All clear', 'URGENT: Need backup', 'Compliance confirmed'];
+    container.innerHTML = '';
+    templates.forEach(tpl => {
+      const btn = document.createElement('button');
+      btn.className = 'adv-btn';
+      btn.innerText = tpl.slice(0,12)+'…';
+      btn.title = tpl;
+      btn.onclick = async () => {
+        const db = getDb();
+        if (db) {
+          await db.collection('messages').add({
+            callsign: document.getElementById('callsignField')?.value || 'AGENT',
+            text: tpl,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: 0
+          });
+          showAdvToast(`Template sent: ${tpl}`);
+        } else { showAdvToast('DB not ready', true); }
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  // Attach event listeners after DOM ready
+  setTimeout(() => {
+    document.getElementById('advAnalyzeIntelBtn')?.addEventListener('click', analyzeIntel);
+    document.getElementById('advExportDataBtn')?.addEventListener('click', exportLogs);
+    document.getElementById('advUrgentBroadcast')?.addEventListener('click', urgentAlert);
+    document.getElementById('advEchoLastMsg')?.addEventListener('click', echoLastMessage);
+    document.getElementById('advMoralBooster')?.addEventListener('click', moraleBoost);
+    document.getElementById('advCreatePollBtn')?.addEventListener('click', createPoll);
+    document.getElementById('advPinMessageBtn')?.addEventListener('click', pinTopMessage);
+    document.getElementById('advSysAnnounceBtn')?.addEventListener('click', systemAnnouncement);
+    setupTemplates();
+    updateMessageStats();
+    setInterval(() => updateMessageStats(), 15000);
+    showAdvToast('✅ Advancement module injected — all extra features ready');
+  }, 500);
+})();
+</script>
   
 </body>
   
