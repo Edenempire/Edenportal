@@ -1541,6 +1541,378 @@ main {
         transition: none !important;
     }
 }
+
+    /* CENTERED */
+
+    /* ============================================
+   E.S.S 2026 - GLOBAL CENTERING SYSTEM
+   Everything centered, straight, neat, tactical
+   Professional alignment across all devices
+   ============================================ */
+
+/* ----- GLOBAL CONTAINER CENTERING ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    position: relative !important;
+}
+
+/* Main wrapper centering */
+html {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+/* Center all main content containers */
+main,
+footer,
+.command-center,
+.ops-card,
+.teams-grid,
+.table-container,
+.section-command,
+.color-key,
+.footer-grid,
+.live-data,
+.copyright,
+.cmd-terminal {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Main content max-width and centering */
+main {
+    max-width: 1400px !important;
+    width: 90% !important;
+    margin: calc(var(--header-height, 180px) + 1.5rem) auto 2rem auto !important;
+    padding: 0 !important;
+}
+
+/* Center all cards */
+.ops-card {
+    width: 100% !important;
+    margin: 0 auto 1.5rem auto !important;
+    text-align: center !important;
+}
+
+/* Center card content but left-align text for readability */
+.ops-card > *:not(.section-command) {
+    text-align: left !important;
+}
+
+/* Section headers - centered layout */
+.section-command {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.section-command h2 {
+    text-align: left !important;
+}
+
+/* Teams grid centering */
+.teams-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 2rem !important;
+    width: 100% !important;
+    justify-items: center !important;
+    align-items: start !important;
+}
+
+/* Center each team card */
+.team-card {
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+}
+
+/* Table centering */
+.table-container {
+    width: 100% !important;
+    overflow-x: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+table {
+    width: 100% !important;
+    min-width: 300px !important;
+    border-collapse: collapse !important;
+}
+
+th, td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Left-align first column in tables for readability */
+th:first-child, td:first-child {
+    text-align: left !important;
+}
+
+/* Player rows centering */
+.player-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.8rem !important;
+    width: 100% !important;
+    text-align: left !important;
+}
+
+/* Footer centering */
+footer {
+    width: 100% !important;
+    margin-top: 3rem !important;
+    padding: 2rem 1rem 1rem 1rem !important;
+}
+
+.footer-grid {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 2rem !important;
+    max-width: 1200px !important;
+    width: 90% !important;
+}
+
+.live-data {
+    min-width: 200px !important;
+    text-align: center !important;
+}
+
+.live-data div {
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+.copyright {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Color key centering */
+.color-key {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+    flex-wrap: wrap !important;
+    margin: 1rem auto !important;
+}
+
+/* Champion story centering */
+#champion-story {
+    text-align: center !important;
+    width: 80% !important;
+    margin: 30px auto !important;
+}
+
+#champion-story h2 {
+    text-align: center !important;
+}
+
+#champion-story p {
+    text-align: center !important;
+}
+
+/* Button groups centering */
+.advanced-settings-grid {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex-wrap: wrap !important;
+}
+
+/* CMD Terminal centering */
+.cmd-terminal {
+    width: 100% !important;
+    max-width: 800px !important;
+    margin: 0 auto 1rem auto !important;
+}
+
+.cmd-header {
+    justify-content: space-between !important;
+}
+
+.cmd-body {
+    text-align: left !important;
+}
+
+.cmd-input-line {
+    justify-content: flex-start !important;
+}
+
+/* Header centering */
+.command-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.header-emblem {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.logo-container {
+    margin: 0 auto !important;
+}
+
+/* Navigation buttons - optimally positioned */
+.tactical-menu-permanent,
+.quick-scroll-permanent {
+    position: fixed !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Radar grid centering */
+.radar-grid {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    pointer-events: none !important;
+}
+
+.f22-radar,
+.scan-arm {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/* Spacing consistency */
+.ops-card {
+    padding: clamp(1.5rem, 4vw, 2.5rem) !important;
+}
+
+/* List and content alignment */
+ul, ol {
+    text-align: left !important;
+    display: inline-block !important;
+    width: 100% !important;
+}
+
+/* Responsive centering adjustments */
+@media (max-width: 768px) {
+    main {
+        width: 95% !important;
+    }
+    
+    #champion-story {
+        width: 95% !important;
+    }
+    
+    .footer-grid {
+        width: 95% !important;
+        gap: 1rem !important;
+    }
+    
+    .section-command {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+    
+    .section-command h2 {
+        text-align: center !important;
+    }
+    
+    .color-key {
+        gap: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        width: 98% !important;
+    }
+    
+    .ops-card {
+        padding: 1rem !important;
+    }
+    
+    th:first-child, td:first-child {
+        text-align: center !important;
+    }
+    
+    .player-row {
+        justify-content: center !important;
+    }
+    
+    .cmd-terminal {
+        width: 98% !important;
+    }
+}
+
+@media (min-width: 1920px) {
+    main {
+        max-width: 1600px !important;
+    }
+    
+    .team-card {
+        max-width: 600px !important;
+    }
+    
+    .cmd-terminal {
+        max-width: 1000px !important;
+    }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 2560px) {
+    main {
+        max-width: 2000px !important;
+    }
+    
+    .team-card {
+        max-width: 700px !important;
+    }
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) and (max-height: 600px) {
+    main {
+        margin-top: calc(var(--header-height, 140px) + 1rem) !important;
+    }
+}
+
+/* Print - keep centered */
+@media print {
+    main, footer, .ops-card {
+        margin: 0 auto !important;
+        text-align: center !important;
+    }
+}
     
   </style>
   
