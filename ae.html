@@ -1149,56 +1149,179 @@
 
 <script>
     
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let objects = [];
-    
-    function resizeCanvas() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+const jets = [];
+const bullets = [];
+const explosions = [];
+
+const MAX_JETS = 12;
+const SAFE_DISTANCE = 80;
+
+class Jet {
+    constructor() {
+        this.reset(true);
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    
-    class SpaceObject {
-        constructor(x, y, vx, vy, type) {
-            this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.type = type;
+
+    reset(firstSpawn = false) {
+        const side = Math.floor(Math.random() * 4);
+
+        // spawn from edges
+        if (side === 0) { this.x = -40; this.y = Math.random() * height; }
+        if (side === 1) { this.x = width + 40; this.y = Math.random() * height; }
+        if (side === 2) { this.x = Math.random() * width; this.y = -40; }
+        if (side === 3) { this.x = Math.random() * width; this.y = height + 40; }
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 2;
+
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+
+        this.size = 6;
+        this.cooldown = Math.random() * 100;
+        this.life = 0;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life++;
+
+        // boundary recycle
+        if (
+            this.x < -100 || this.x > width + 100 ||
+            this.y < -100 || this.y > height + 100
+        ) {
+            this.reset();
         }
-        update() {
-            this.x += this.vx; this.y += this.vy;
-            if (this.x + 40 < 0) this.x = width + 40;
-            if (this.x - 40 > width) this.x = -40;
-            if (this.y + 40 < 0) this.y = height + 40;
-            if (this.y - 40 > height) this.y = -40;
+
+        // shooting
+        this.cooldown--;
+        if (this.cooldown <= 0) {
+            this.shoot();
+            this.cooldown = 60 + Math.random() * 80;
         }
-        draw() {
-            ctx.save(); ctx.translate(this.x, this.y);
-            if (this.type === 'plane') {
-                ctx.beginPath(); ctx.moveTo(18,0); ctx.lineTo(-8,-5); ctx.lineTo(-2,0); ctx.lineTo(-8,5); ctx.closePath();
-                ctx.fillStyle = 'rgba(220,38,38,0.35)'; ctx.fill();
-            } else {
-                ctx.beginPath(); ctx.ellipse(0,0,9,5,0,0,Math.PI*2); ctx.fillStyle = 'rgba(59,130,246,0.3)'; ctx.fill();
-                ctx.beginPath(); ctx.rect(-4,-2,8,4); ctx.fillStyle = 'rgba(220,38,38,0.5)'; ctx.fill();
+
+        // separation (NO CLASH)
+        for (let j of jets) {
+            if (j === this) continue;
+            const dx = this.x - j.x;
+            const dy = this.y - j.y;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < SAFE_DISTANCE) {
+                this.vx += dx * 0.002;
+                this.vy += dy * 0.002;
             }
-            ctx.restore();
         }
     }
-    for(let i=0;i<6;i++) objects.push(new SpaceObject(Math.random()*width, Math.random()*height, (Math.random()-0.5)*0.6, (Math.random()-0.5)*0.6, 'plane'));
-    for(let i=0;i<4;i++) objects.push(new SpaceObject(Math.random()*width, Math.random()*height, (Math.random()-0.5)*0.4, (Math.random()-0.5)*0.4, 'satellite'));
-    
-    function animateCanvas() {
-        if (!ctx) return;
-        ctx.clearRect(0,0,width,height);
-        ctx.fillStyle = 'rgba(5,5,15,0.1)'; ctx.fillRect(0,0,width,height);
-        ctx.strokeStyle = 'rgba(220,38,38,0.07)'; ctx.lineWidth=0.7;
-        for(let i=0;i<width;i+=65){ ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,height); ctx.stroke(); }
-        for(let o of objects){ o.update(); o.draw(); }
-        requestAnimationFrame(animateCanvas);
+
+    shoot() {
+        bullets.push(new Bullet(this.x, this.y, this.vx, this.vy));
     }
-    animateCanvas();
+
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(Math.atan2(this.vy, this.vx));
+
+        ctx.beginPath();
+        ctx.moveTo(10, 0);
+        ctx.lineTo(-6, -4);
+        ctx.lineTo(-2, 0);
+        ctx.lineTo(-6, 4);
+        ctx.closePath();
+
+        ctx.fillStyle = "rgba(220,38,38,0.6)";
+        ctx.fill();
+
+        ctx.restore();
+    }
+}
+
+class Bullet {
+    constructor(x, y, vx, vy) {
+        const speed = 5;
+        const mag = Math.hypot(vx, vy);
+
+        this.x = x;
+        this.y = y;
+        this.vx = (vx / mag) * speed;
+        this.vy = (vy / mag) * speed;
+        this.life = 80;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life--;
+
+        if (this.life <= 0) {
+            explosions.push(new Explosion(this.x, this.y));
+        }
+    }
+
+    draw() {
+        ctx.fillStyle = "#f97316";
+        ctx.fillRect(this.x, this.y, 2, 2);
+    }
+}
+
+class Explosion {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 1;
+        this.life = 20;
+    }
+
+    update() {
+        this.radius += 1.5;
+        this.life--;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(249,115,22,${this.life / 20})`;
+        ctx.stroke();
+    }
+}
+
+// INIT
+for (let i = 0; i < MAX_JETS; i++) jets.push(new Jet());
+
+// LOOP
+function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    // fade trail
+    ctx.fillStyle = "rgba(5,5,15,0.2)";
+    ctx.fillRect(0, 0, width, height);
+
+    // update jets
+    for (let j of jets) {
+        j.update();
+        j.draw();
+    }
+
+    // update bullets
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        bullets[i].update();
+        bullets[i].draw();
+        if (bullets[i].life <= 0) bullets.splice(i, 1);
+    }
+
+    // update explosions
+    for (let i = explosions.length - 1; i >= 0; i--) {
+        explosions[i].update();
+        explosions[i].draw();
+        if (explosions[i].life <= 0) explosions.splice(i, 1);
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
     
     const audio = document.getElementById('bgAudio');
     const toggleBtn = document.getElementById('audioToggle');
