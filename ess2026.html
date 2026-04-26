@@ -3357,6 +3357,148 @@ ul, ol {
         initCmdNavigation();
     }
 })();
+
+    // OVERLAPPING ISSUE
+
+(function() {
+    // ============================================================
+    // E.S.S 2026 - PERMANENT BUTTON OVERLAP FIX
+    // Ensures navigation buttons NEVER overlap header
+    // Works on all screen sizes, orientations, and dynamic changes
+    // ============================================================
+
+    function fixButtonOverlap() {
+        // Get elements
+        const header = document.querySelector('.command-center');
+        const leftMenu = document.querySelector('.tactical-menu-permanent');
+        const rightMenu = document.querySelector('.quick-scroll-permanent');
+        
+        if (!header) return;
+        
+        // Get header height dynamically
+        function getHeaderBottom() {
+            const headerRect = header.getBoundingClientRect();
+            return headerRect.bottom;
+        }
+        
+        // Position buttons safely below header
+        function positionButtons() {
+            if (!leftMenu && !rightMenu) return;
+            
+            const headerBottom = getHeaderBottom();
+            const viewportHeight = window.innerHeight;
+            
+            // Calculate safe top position (centered in remaining space below header)
+            const remainingHeight = viewportHeight - headerBottom;
+            const centerOfRemaining = headerBottom + (remainingHeight / 2);
+            
+            // Apply positioning to left menu
+            if (leftMenu) {
+                leftMenu.style.position = 'fixed';
+                leftMenu.style.top = `${centerOfRemaining}px`;
+                leftMenu.style.transform = 'translateY(-50%)';
+                leftMenu.style.left = '0';
+                leftMenu.style.marginTop = '0';
+            }
+            
+            // Apply positioning to right menu
+            if (rightMenu) {
+                rightMenu.style.position = 'fixed';
+                rightMenu.style.top = `${centerOfRemaining}px`;
+                rightMenu.style.transform = 'translateY(-50%)';
+                rightMenu.style.right = '0';
+                rightMenu.style.marginTop = '0';
+            }
+        }
+        
+        // Also ensure main content doesn't get hidden behind buttons
+        function adjustMainContent() {
+            const main = document.querySelector('main');
+            if (main && leftMenu && rightMenu) {
+                const leftWidth = leftMenu.offsetWidth;
+                const rightWidth = rightMenu.offsetWidth;
+                main.style.marginLeft = `${leftWidth + 15}px`;
+                main.style.marginRight = `${rightWidth + 15}px`;
+            }
+        }
+        
+        // Watch for header height changes (logo loads, window resize, orientation change)
+        function initPositioning() {
+            positionButtons();
+            adjustMainContent();
+        }
+        
+        // Run on load, resize, scroll, and orientation change
+        window.addEventListener('load', initPositioning);
+        window.addEventListener('resize', initPositioning);
+        window.addEventListener('orientationchange', initPositioning);
+        window.addEventListener('scroll', function() {
+            // Only reposition on scroll if header is sticky/fixed (which it is)
+            positionButtons();
+        });
+        
+        // Watch for dynamic content changes that might affect header height
+        const observer = new MutationObserver(function() {
+            positionButtons();
+            adjustMainContent();
+        });
+        
+        observer.observe(header, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+        
+        // Also watch for logo image loading (changes header height)
+        const logo = document.querySelector('.logo-img');
+        if (logo) {
+            logo.addEventListener('load', function() {
+                setTimeout(initPositioning, 50);
+            });
+        }
+        
+        // Run immediately
+        initPositioning();
+        
+        // Also add CSS to ensure no conflicting styles
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Permanent overlap prevention overrides */
+            .tactical-menu-permanent,
+            .quick-scroll-permanent {
+                position: fixed !important;
+                transition: top 0.1s ease !important;
+                z-index: 10001 !important;
+            }
+            
+            /* Ensure header stays above buttons but buttons don't overlap */
+            .command-center {
+                z-index: 10000 !important;
+                pointer-events: auto !important;
+            }
+            
+            /* Extra safety for mobile */
+            @media (max-width: 768px) {
+                .tactical-menu-permanent,
+                .quick-scroll-permanent {
+                    top: 50% !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Debug log (can remove in production)
+        console.log('✓ Button overlap fix activated - buttons positioned below header');
+    }
+    
+    // Run when DOM is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixButtonOverlap);
+    } else {
+        fixButtonOverlap();
+    }
+})();
     
 </script>
 
