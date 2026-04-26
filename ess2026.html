@@ -760,6 +760,502 @@
       :root { --rail-width: 110px; }
       
     }
+
+    /* ============================================
+   E.S.S 2026 - TACTICAL NAVIGATION FIXES
+   Ensures quick scroll & menu buttons never conflict with header
+   Clean, compact, precise across ALL devices
+   ============================================ */
+
+/* ----- BASE FIXES - ALL DEVICES ----- */
+.tactical-menu-permanent,
+.quick-scroll-permanent {
+    position: fixed !important;
+    z-index: 10001 !important;
+    width: var(--rail-width, 70px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    pointer-events: auto !important;
+}
+
+/* Left menu positioning - NEVER touches header */
+.tactical-menu-permanent {
+    left: 0 !important;
+    top: 55% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Right quick scroll positioning - NEVER touches header */
+.quick-scroll-permanent {
+    right: 0 !important;
+    top: 55% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Button styling - compact & tactical */
+.menu-trigger-perm,
+.scroll-btn-perm {
+    width: 100% !important;
+    aspect-ratio: 1/1 !important;
+    background: rgba(0, 20, 30, 0.85) !important;
+    backdrop-filter: blur(4px) !important;
+    border: 2px solid var(--strike-blue, #1e90ff) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: clamp(1.2rem, 3vw, 2rem) !important;
+    cursor: pointer !important;
+    transition: all 0.15s cubic-bezier(0.2, 0.9, 0.4, 1) !important;
+    color: var(--strike-blue, #1e90ff) !important;
+}
+
+/* Left menu border fix */
+.menu-trigger-perm {
+    border-left: none !important;
+}
+
+/* Right menu border fix */
+.scroll-btn-perm {
+    border-right: none !important;
+}
+
+/* Hover effects */
+.menu-trigger-perm:hover,
+.scroll-btn-perm:hover {
+    background: var(--strike-blue, #1e90ff) !important;
+    color: #000 !important;
+    transform: scale(1.05) !important;
+}
+
+/* Menu panel - slides out cleanly */
+.menu-panel-perm {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) translateX(-30px) !important;
+    width: min(280px, 75vw) !important;
+    background: rgba(0, 20, 30, 0.98) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 2px solid var(--strike-blue, #1e90ff) !important;
+    border-left: none !important;
+    padding: 1rem !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: 0.2s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    z-index: 10002 !important;
+}
+
+/* Hover to reveal panel */
+.tactical-menu-permanent:hover .menu-panel-perm,
+.menu-panel-perm:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(-50%) translateX(calc(var(--rail-width, 70px) + 8px)) !important;
+}
+
+/* Menu items - compact & precise */
+.menu-item {
+    padding: 0.7rem !important;
+    margin: 0.4rem 0 !important;
+    border: 2px solid var(--strike-blue, #1e90ff) !important;
+    color: var(--strike-blue, #1e90ff) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: 0.1s ease !important;
+    background: transparent !important;
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem) !important;
+    text-align: center !important;
+    letter-spacing: 1px !important;
+}
+
+.menu-item:hover {
+    background: var(--strike-blue, #1e90ff) !important;
+    color: #000 !important;
+    transform: translateX(4px) !important;
+}
+
+/* Header protection - ensures nav never overlaps */
+.command-center {
+    z-index: 10000 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+}
+
+/* Main content spacing - accounts for both header AND side navs */
+main {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-left: calc(var(--rail-width, 70px) + 1rem) !important;
+    margin-right: calc(var(--rail-width, 70px) + 1rem) !important;
+}
+
+/* ============================================
+   RESPONSIVE MEDIA QUERIES - ALL DEVICES
+   From largest monitors to smallest watches
+   ============================================ */
+
+/* ----- 4K+ LARGE MONITORS (2560px and up) ----- */
+@media (min-width: 2560px) {
+    :root {
+        --rail-width: 100px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        gap: 1rem !important;
+    }
+    
+    .menu-panel-perm {
+        width: 380px !important;
+    }
+    
+    .menu-item {
+        padding: 1rem !important;
+        font-size: 1.1rem !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 2rem) !important;
+        margin-right: calc(var(--rail-width) + 2rem) !important;
+        max-width: 1800px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* ----- DESKTOP (1200px - 2559px) ----- */
+@media (min-width: 1200px) and (max-width: 2559px) {
+    :root {
+        --rail-width: 80px !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 1.5rem) !important;
+        margin-right: calc(var(--rail-width) + 1.5rem) !important;
+    }
+}
+
+/* ----- LAPTOP (992px - 1199px) ----- */
+@media (min-width: 992px) and (max-width: 1199px) {
+    :root {
+        --rail-width: 75px !important;
+    }
+    
+    .menu-panel-perm {
+        width: 260px !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 1.2rem) !important;
+        margin-right: calc(var(--rail-width) + 1.2rem) !important;
+    }
+}
+
+/* ----- TABLET LANDSCAPE (768px - 991px) ----- */
+@media (min-width: 768px) and (max-width: 991px) {
+    :root {
+        --rail-width: 65px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.5rem !important;
+    }
+    
+    .menu-panel-perm {
+        width: 250px !important;
+    }
+    
+    .menu-item {
+        padding: 0.6rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 1rem) !important;
+        margin-right: calc(var(--rail-width) + 1rem) !important;
+    }
+}
+
+/* ----- TABLET PORTRAIT (576px - 767px) ----- */
+@media (min-width: 576px) and (max-width: 767px) {
+    :root {
+        --rail-width: 55px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.45rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 1.3rem !important;
+    }
+    
+    .menu-panel-perm {
+        width: 240px !important;
+        padding: 0.8rem !important;
+    }
+    
+    .menu-item {
+        padding: 0.55rem !important;
+        font-size: 0.7rem !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 0.8rem) !important;
+        margin-right: calc(var(--rail-width) + 0.8rem) !important;
+    }
+}
+
+/* ----- MOBILE LARGE (425px - 575px) ----- */
+@media (min-width: 425px) and (max-width: 575px) {
+    :root {
+        --rail-width: 50px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.4rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 1.2rem !important;
+        border-width: 1.5px !important;
+    }
+    
+    .menu-panel-perm {
+        width: 220px !important;
+        padding: 0.7rem !important;
+        max-height: 70vh !important;
+    }
+    
+    .menu-item {
+        padding: 0.5rem !important;
+        font-size: 0.65rem !important;
+        margin: 0.3rem 0 !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 0.6rem) !important;
+        margin-right: calc(var(--rail-width) + 0.6rem) !important;
+    }
+    
+    .tactical-menu-permanent:hover .menu-panel-perm,
+    .menu-panel-perm:hover {
+        transform: translateY(-50%) translateX(58px) !important;
+    }
+}
+
+/* ----- MOBILE MEDIUM (375px - 424px) ----- */
+@media (min-width: 375px) and (max-width: 424px) {
+    :root {
+        --rail-width: 48px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.35rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 1.1rem !important;
+        border-width: 1.5px !important;
+    }
+    
+    .menu-panel-perm {
+        width: 200px !important;
+        padding: 0.6rem !important;
+    }
+    
+    .menu-item {
+        padding: 0.45rem !important;
+        font-size: 0.6rem !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 0.5rem) !important;
+        margin-right: calc(var(--rail-width) + 0.5rem) !important;
+    }
+}
+
+/* ----- MOBILE SMALL (320px - 374px) ----- */
+@media (min-width: 320px) and (max-width: 374px) {
+    :root {
+        --rail-width: 44px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.3rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 1rem !important;
+        border-width: 1.5px !important;
+    }
+    
+    .menu-panel-perm {
+        width: 185px !important;
+        padding: 0.5rem !important;
+        max-height: 65vh !important;
+    }
+    
+    .menu-item {
+        padding: 0.4rem !important;
+        font-size: 0.55rem !important;
+        margin: 0.25rem 0 !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 0.4rem) !important;
+        margin-right: calc(var(--rail-width) + 0.4rem) !important;
+    }
+}
+
+/* ----- VERY SMALL DEVICES (under 320px - watches, foldables) ----- */
+@media (max-width: 319px) {
+    :root {
+        --rail-width: 40px !important;
+    }
+    
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 55% !important;
+        gap: 0.25rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 0.9rem !important;
+        border-width: 1px !important;
+    }
+    
+    .menu-panel-perm {
+        width: 165px !important;
+        padding: 0.4rem !important;
+        max-height: 60vh !important;
+    }
+    
+    .menu-item {
+        padding: 0.35rem !important;
+        font-size: 0.5rem !important;
+        margin: 0.2rem 0 !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    main {
+        margin-left: calc(var(--rail-width) + 0.3rem) !important;
+        margin-right: calc(var(--rail-width) + 0.3rem) !important;
+        padding: 0 0.3rem !important;
+    }
+}
+
+/* ----- SPECIAL: SMALL HEIGHT DEVICES (max-height: 700px) ----- */
+@media (max-height: 700px) {
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+    }
+    
+    .menu-panel-perm {
+        max-height: 75vh !important;
+    }
+    
+    .menu-item {
+        padding: 0.4rem !important;
+        margin: 0.25rem 0 !important;
+    }
+}
+
+/* ----- SPECIAL: EXTRA TALL DEVICES (min-height: 1000px) ----- */
+@media (min-height: 1000px) {
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.8rem !important;
+    }
+    
+    .menu-panel-perm {
+        max-height: 70vh !important;
+    }
+}
+
+/* ----- LANDSCAPE ORIENTATION FIXES ----- */
+@media (orientation: landscape) and (max-height: 500px) {
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        top: 50% !important;
+        gap: 0.2rem !important;
+    }
+    
+    .menu-trigger-perm,
+    .scroll-btn-perm {
+        font-size: 0.9rem !important;
+    }
+    
+    .menu-panel-perm {
+        max-height: 85vh !important;
+        overflow-y: auto !important;
+    }
+    
+    .menu-item {
+        padding: 0.3rem !important;
+        font-size: 0.55rem !important;
+    }
+}
+
+/* ----- PRINT STYLES (hide navigation when printing) ----- */
+@media print {
+    .tactical-menu-permanent,
+    .quick-scroll-permanent {
+        display: none !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ----- HIGH CONTRAST / REDUCED MOTION PREFERENCE ----- */
+@media (prefers-reduced-motion: reduce) {
+    .menu-panel-perm,
+    .menu-trigger-perm,
+    .scroll-btn-perm,
+    .menu-item {
+        transition: none !important;
+    }
+    
+    .tactical-menu-permanent:hover .menu-panel-perm {
+        transition: none !important;
+    }
+}
+
+/* ----- DARK MODE ENHANCEMENT (already dark, but ensures consistency) ----- */
+@media (prefers-color-scheme: dark) {
+    .menu-panel-perm {
+        background: rgba(0, 20, 30, 0.98) !important;
+    }
+}
     
   </style>
   
