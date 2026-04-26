@@ -19,17 +19,22 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Electrolize&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="logo_tr1.png">
     
     <style>
         
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            
         }
 
         :root {
+            
             --cyan: #00ffff;
             --cyan-dim: rgba(0, 255, 255, 0.15);
             --cyan-glow: 0 0 12px rgba(0, 255, 255, 0.5);
@@ -39,27 +44,32 @@
             --font-body: 'Electrolize', sans-serif;
             --font-mono: 'VT323', monospace;
             --gold: #ffcc00;
+            
         }
 
         body {
+            
             background: radial-gradient(circle at 20% 30%, #0a0f14, #000000 85%);
             color: var(--cyan);
             font-family: var(--font-body);
             overflow-x: hidden;
             min-height: 100vh;
+            
         }
 
         .scanlines {
+            
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,255,255,0.02) 2px, transparent 2px, transparent 6px);
             pointer-events: none;
             z-index: 999;
+            
         }
 
-        /* Header */
         .vault-header {
+            
             position: sticky;
             top: 0;
             width: 100%;
@@ -73,16 +83,20 @@
             z-index: 1000;
             flex-wrap: wrap;
             gap: 15px;
+            
         }
 
         .logo-area {
+            
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            
         }
 
         .logo-icon {
+            
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -92,68 +106,86 @@
             justify-content: center;
             background: #000;
             box-shadow: var(--cyan-glow);
+            
         }
 
         .logo-icon i {
+            
             font-size: 1.8rem;
             color: var(--cyan);
+            
         }
 
         .title h1 {
+            
             font-family: var(--font-tactical);
             font-size: 1.4rem;
             letter-spacing: 3px;
+            
         }
 
         .title span {
+            
             font-family: var(--font-mono);
             font-size: 0.8rem;
             opacity: 0.7;
+            
         }
 
         .security-badge {
+            
             background: rgba(0, 255, 255, 0.1);
             border: 1px solid var(--cyan);
             padding: 8px 18px;
             border-radius: 30px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
+            
         }
 
         .security-badge i {
+            
             margin-right: 6px;
+            
         }
 
-        /* Main Container */
         .vault-container {
+            
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 5%;
+            
         }
 
-        /* Vault Header Section */
         .vault-intro {
+            
             text-align: center;
             margin-bottom: 50px;
             padding: 30px;
             background: var(--panel-bg);
             border: 1px solid var(--cyan-dim);
             border-radius: 12px;
+            
         }
 
         .vault-intro h2 {
+            
             font-family: var(--font-tactical);
             font-size: 2rem;
             margin-bottom: 15px;
+            
         }
 
         .vault-intro p {
+            
             font-family: var(--font-mono);
             font-size: 1.1rem;
             opacity: 0.8;
+            
         }
 
         .access-level {
+            
             display: inline-block;
             margin-top: 15px;
             background: rgba(255, 0, 85, 0.2);
@@ -162,41 +194,50 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
+            
         }
 
-        /* Document Grid - THE VAULT */
         .document-grid {
+            
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 28px;
             margin-bottom: 50px;
+            
         }
 
         .doc-card {
+            
             background: var(--panel-bg);
             border: 1px solid var(--cyan-dim);
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
             backdrop-filter: blur(4px);
+            
         }
 
         .doc-card:hover {
+            
             border-color: var(--cyan);
             box-shadow: var(--cyan-glow);
             transform: translateY(-5px);
+            
         }
 
         .doc-header {
+            
             padding: 20px;
             background: rgba(0, 255, 255, 0.05);
             border-bottom: 1px solid var(--cyan-dim);
             display: flex;
             align-items: center;
             gap: 15px;
+            
         }
 
         .doc-icon {
+            
             width: 55px;
             height: 55px;
             background: rgba(0, 0, 0, 0.8);
@@ -205,32 +246,42 @@
             align-items: center;
             justify-content: center;
             border: 1px solid var(--cyan);
+            
         }
 
         .doc-icon i {
+            
             font-size: 2rem;
             color: #ff4444;
+            
         }
 
         .doc-meta {
+            
             flex: 1;
+            
         }
 
         .doc-meta h3 {
+            
             font-family: var(--font-tactical);
             font-size: 1.2rem;
             color: #fff;
             margin-bottom: 5px;
+            
         }
 
         .doc-class {
+            
             font-family: var(--font-mono);
             font-size: 0.7rem;
             color: var(--gold);
             letter-spacing: 1px;
+            
         }
 
         .doc-description {
+            
             padding: 18px 20px;
             font-family: var(--font-mono);
             font-size: 0.9rem;
@@ -238,16 +289,20 @@
             color: #ccc;
             border-bottom: 1px solid var(--cyan-dim);
             min-height: 85px;
+            
         }
 
         .doc-actions {
+            
             padding: 15px 20px;
             display: flex;
             gap: 12px;
             justify-content: flex-end;
+            
         }
 
         .btn-vault {
+            
             background: transparent;
             border: 1px solid var(--cyan);
             color: var(--cyan);
@@ -260,30 +315,39 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            
         }
 
         .btn-vault:hover {
+            
             background: var(--cyan);
             color: #000;
             box-shadow: var(--cyan-glow);
+            
         }
 
         .btn-view {
+            
             border-color: #00ccff;
+            
         }
 
         .btn-download {
+            
             border-color: #ffaa00;
             color: #ffaa00;
+            
         }
 
         .btn-download:hover {
+            
             background: #ffaa00;
             color: #000;
+            
         }
 
-        /* PDF Modal Viewer */
         .modal-overlay {
+            
             display: none;
             position: fixed;
             inset: 0;
@@ -293,9 +357,11 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            
         }
 
         .modal-container {
+            
             width: 90%;
             max-width: 1000px;
             height: 85vh;
@@ -306,60 +372,74 @@
             flex-direction: column;
             overflow: hidden;
             animation: modalFadeIn 0.3s ease;
+            
         }
 
         @keyframes modalFadeIn {
+            
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
+            
         }
 
         .modal-header {
+            
             padding: 15px 20px;
             background: #000;
             border-bottom: 1px solid var(--cyan);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            
         }
 
         .modal-header h3 {
+            
             font-family: var(--font-tactical);
             color: var(--cyan);
+            
         }
 
         .close-modal {
+            
             background: transparent;
             border: none;
             color: var(--cyan);
             font-size: 1.8rem;
             cursor: pointer;
             transition: 0.2s;
+            
         }
 
         .close-modal:hover {
+            
             color: #ff0055;
             transform: scale(1.1);
+            
         }
 
         .pdf-frame {
+            
             flex: 1;
             width: 100%;
             border: none;
             background: #fff;
+            
         }
 
-        /* Footer */
         .vault-footer {
+            
             text-align: center;
             padding: 30px;
             border-top: 1px solid var(--cyan-dim);
             margin-top: 30px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
+            
         }
 
-        /* Offline Banner */
         #offline-banner {
+            
             position: fixed;
             top: 80px;
             width: 100%;
@@ -370,10 +450,11 @@
             z-index: 5000;
             font-family: var(--font-mono);
             display: none;
+            
         }
 
-        /* Responsive */
         @media (max-width: 700px) {
+            
             .document-grid {
                 grid-template-columns: 1fr;
             }
@@ -384,9 +465,11 @@
             .title h1 {
                 font-size: 1.1rem;
             }
+            
         }
 
         .toast-msg {
+            
             position: fixed;
             bottom: 30px;
             left: 50%;
@@ -400,11 +483,14 @@
             backdrop-filter: blur(8px);
             display: none;
             animation: fadeUp 0.2s ease;
+            
         }
 
         @keyframes fadeUp {
+            
             from { opacity: 0; bottom: 0; }
             to { opacity: 1; bottom: 30px; }
+            
         }
         
     </style>
@@ -418,9 +504,7 @@
 
 <header class="vault-header">
     <div class="logo-area" onclick="window.location.href='index.html'">
-        <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
         <div class="title">
-            <h1>EDEN STEALTH CV-1</h1>
             <span>DOCUMENT VAULT</span>
         </div>
     </div>
@@ -428,7 +512,7 @@
 
 <main class="vault-container">
     <div class="vault-intro">
-        <h2><i class="fas fa-database"></i> THE BLACK VAULT</h2>
+        <h2><i class="fas fa-database"></i> THE DATABASE</h2>
         <p>Official company certificates</p>
     </div>
 
@@ -686,7 +770,6 @@ startxref
         });
     }
     
-    // Offline detection and banner
     function updateOfflineStatus() {
         const banner = document.getElementById('offline-banner');
         if (!navigator.onLine) {
@@ -741,6 +824,7 @@ startxref
     setTimeout(() => {
         showToast("🔓 VAULT ACCESS GRANTED — TIER 1 OPERATOR", false);
     }, 500);
+    
 </script>
 
 </body>
