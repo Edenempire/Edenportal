@@ -2525,6 +2525,467 @@ main {
 
     console.log('✓ All styling bugs fixed - league status preserved, no data changed');
 })();
+
+// CMD ON FOOTER
+    
+(function() {
+    // ============================================================
+    // E.S.S 2026 - CMD TERMINAL NAVIGATION SYSTEM
+    // Adds a tactical command interface to footer
+    // Auto-sizes across ALL screen devices
+    // ============================================================
+
+    function initCmdNavigation() {
+        // Get footer element
+        const footer = document.querySelector('footer');
+        if (!footer) return;
+
+        // Create CMD terminal container
+        const cmdContainer = document.createElement('div');
+        cmdContainer.className = 'cmd-terminal';
+        cmdContainer.setAttribute('data-cmd-active', 'false');
+        
+        // Create terminal HTML structure
+        cmdContainer.innerHTML = `
+            <div class="cmd-header">
+                <span class="cmd-led green"></span>
+                <span class="cmd-title">◈ E.S.S TERMINAL ◈</span>
+                <span class="cmd-led red"></span>
+            </div>
+            <div class="cmd-body">
+                <div class="cmd-output" id="cmdOutput">
+                    <div class="cmd-line">> E.S.S NAVIGATION SYSTEM v2.6</div>
+                    <div class="cmd-line">> Type 'help' for commands | 'clear' to reset</div>
+                    <div class="cmd-line">> ${new Date().toLocaleTimeString()} - SYSTEM READY</div>
+                </div>
+                <div class="cmd-input-line">
+                    <span class="cmd-prompt">ESS@CMD:~$</span>
+                    <input type="text" class="cmd-input" id="cmdInput" placeholder="enter command..." autocomplete="off">
+                </div>
+            </div>
+        `;
+
+        // Insert CMD terminal at the beginning of footer
+        const footerGrid = footer.querySelector('.footer-grid');
+        if (footerGrid) {
+            footerGrid.insertBefore(cmdContainer, footerGrid.firstChild);
+        } else {
+            footer.insertBefore(cmdContainer, footer.firstChild);
+        }
+
+        // Add dynamic CSS for responsive terminal
+        const cmdStyles = document.createElement('style');
+        cmdStyles.textContent = `
+            /* CMD TERMINAL - BASE STYLES */
+            .cmd-terminal {
+                background: rgba(0, 8, 16, 0.95);
+                border: 2px solid var(--strike-blue, #1e90ff);
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                width: 100%;
+                overflow: hidden;
+                transition: all 0.3s ease;
+                font-family: 'Courier New', 'Fira Code', monospace;
+            }
+
+            .cmd-header {
+                background: linear-gradient(135deg, #0a1a2a 0%, #051015 100%);
+                padding: 8px 16px;
+                border-bottom: 2px solid var(--strike-blue, #1e90ff);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .cmd-led {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .cmd-led.green {
+                background: #1f9f2a;
+                box-shadow: 0 0 4px #1f9f2a;
+                animation: pulse 2s infinite;
+            }
+
+            .cmd-led.red {
+                background: #d32f2f;
+                box-shadow: 0 0 4px #d32f2f;
+            }
+
+            .cmd-title {
+                color: var(--strike-blue, #1e90ff);
+                font-size: clamp(0.8rem, 2vw, 1rem);
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+            .cmd-body {
+                padding: 12px;
+                transition: all 0.3s ease;
+            }
+
+            .cmd-terminal[data-cmd-active="false"] .cmd-body {
+                display: none;
+            }
+
+            .cmd-terminal[data-cmd-active="true"] .cmd-body {
+                display: block;
+            }
+
+            .cmd-output {
+                background: #000a0f;
+                border: 1px solid #1e90ff;
+                border-radius: 4px;
+                padding: 10px;
+                height: auto;
+                max-height: 200px;
+                overflow-y: auto;
+                margin-bottom: 10px;
+                font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            }
+
+            .cmd-line {
+                color: #4ade80;
+                font-family: monospace;
+                padding: 2px 0;
+                border-left: 2px solid #1e90ff;
+                padding-left: 8px;
+                margin: 4px 0;
+                word-break: break-word;
+                white-space: pre-wrap;
+            }
+
+            .cmd-line.error {
+                color: #ff4444;
+                border-left-color: #ff4444;
+            }
+
+            .cmd-line.warning {
+                color: #ffaa44;
+                border-left-color: #ffaa44;
+            }
+
+            .cmd-line.success {
+                color: #44ff44;
+                border-left-color: #44ff44;
+            }
+
+            .cmd-input-line {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                background: #000a0f;
+                border: 1px solid #1e90ff;
+                border-radius: 4px;
+                padding: 8px;
+            }
+
+            .cmd-prompt {
+                color: #1e90ff;
+                font-weight: 700;
+                font-size: clamp(0.7rem, 2vw, 0.85rem);
+                white-space: nowrap;
+            }
+
+            .cmd-input {
+                flex: 1;
+                background: transparent;
+                border: none;
+                color: #4ade80;
+                font-family: monospace;
+                font-size: clamp(0.7rem, 2vw, 0.85rem);
+                outline: none;
+                min-width: 120px;
+            }
+
+            .cmd-input::placeholder {
+                color: #2a5f6e;
+                font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+            }
+
+            /* Scrollbar styling */
+            .cmd-output::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .cmd-output::-webkit-scrollbar-track {
+                background: #000a0f;
+            }
+
+            .cmd-output::-webkit-scrollbar-thumb {
+                background: #1e90ff;
+                border-radius: 3px;
+            }
+
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
+            }
+
+            /* RESPONSIVE SIZING - ALL DEVICES */
+            @media (max-width: 768px) {
+                .cmd-header {
+                    padding: 6px 12px;
+                }
+                .cmd-led {
+                    width: 8px;
+                    height: 8px;
+                }
+                .cmd-body {
+                    padding: 8px;
+                }
+                .cmd-output {
+                    max-height: 150px;
+                    padding: 8px;
+                }
+                .cmd-input-line {
+                    padding: 6px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .cmd-header {
+                    padding: 5px 10px;
+                }
+                .cmd-title {
+                    font-size: 0.7rem;
+                    letter-spacing: 1px;
+                }
+                .cmd-body {
+                    padding: 6px;
+                }
+                .cmd-output {
+                    max-height: 120px;
+                    padding: 6px;
+                }
+                .cmd-line {
+                    font-size: 0.65rem;
+                }
+                .cmd-input-line {
+                    padding: 4px;
+                    gap: 4px;
+                }
+                .cmd-prompt {
+                    font-size: 0.65rem;
+                }
+            }
+
+            @media (max-width: 320px) {
+                .cmd-output {
+                    max-height: 100px;
+                }
+                .cmd-line {
+                    font-size: 0.55rem;
+                    padding: 1px 0 1px 4px;
+                }
+                .cmd-prompt {
+                    font-size: 0.55rem;
+                }
+                .cmd-input {
+                    font-size: 0.55rem;
+                    min-width: 80px;
+                }
+            }
+
+            @media (min-width: 1920px) {
+                .cmd-output {
+                    max-height: 280px;
+                }
+                .cmd-line {
+                    font-size: 0.95rem;
+                }
+            }
+
+            /* Landscape orientation */
+            @media (orientation: landscape) and (max-height: 500px) {
+                .cmd-output {
+                    max-height: 80px;
+                }
+                .cmd-body {
+                    padding: 4px;
+                }
+                .cmd-line {
+                    font-size: 0.6rem;
+                    margin: 2px 0;
+                }
+            }
+
+            /* Ensure footer adjusts with CMD */
+            footer {
+                padding-bottom: 1rem !important;
+            }
+
+            .footer-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        `;
+        document.head.appendChild(cmdStyles);
+
+        // CMD commands handler
+        const cmdInput = document.getElementById('cmdInput');
+        const cmdOutput = document.getElementById('cmdOutput');
+        const cmdTerminal = cmdContainer;
+
+        // Available commands
+        const commands = {
+            help: () => {
+                return [
+                    '╔════════════════════════════════════════╗',
+                    '║  AVAILABLE COMMANDS                    ║',
+                    '╠════════════════════════════════════════╣',
+                    '║  help     - Show this help menu        ║',
+                    '║  clear    - Clear terminal output      ║',
+                    '║  home     - Scroll to top              ║',
+                    '║  teams    - Scroll to teams section    ║',
+                    '║  table    - Scroll to league table     ║',
+                    '║  schedule - Scroll to schedule         ║',
+                    '║  summary  - Scroll to match summary    ║',
+                    '║  scorers  - Scroll to top scorers      ║',
+                    '║  awards   - Scroll to awards section   ║',
+                    '║  status   - Show system status         ║',
+                    '║  time     - Show current match time    ║',
+                    '╚════════════════════════════════════════╝'
+                ];
+            },
+            clear: () => {
+                cmdOutput.innerHTML = '';
+                return ['> Terminal cleared.'];
+            },
+            home: () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return ['> Navigating to HOME...', '> TOP OF PAGE'];
+            },
+            teams: () => {
+                const section = document.getElementById('teams');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to TEAMS section...', '> ALPHA & DELTA FORCE ROSTERS'];
+            },
+            table: () => {
+                const section = document.getElementById('league-table');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to LEAGUE TABLE...', '> CURRENT STANDINGS'];
+            },
+            schedule: () => {
+                const section = document.getElementById('schedule');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to SCHEDULE...', '> UPCOMING DIRECT ACTIONS'];
+            },
+            summary: () => {
+                const section = document.getElementById('match-summary');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to MATCH SUMMARY...', '> OPERATION REPORTS'];
+            },
+            scorers: () => {
+                const section = document.getElementById('scorers');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to TOP SNIPERS...', '> GOAL SCORERS LEADERBOARD'];
+            },
+            awards: () => {
+                const section = document.getElementById('awards');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+                return ['> Navigating to AWARDS...', '> END OF OPERATION HONORS'];
+            },
+            status: () => {
+                const now = new Date();
+                const cdElem = document.getElementById('mainCountdown');
+                const countdown = cdElem ? cdElem.innerText : 'UNKNOWN';
+                const liveTime = document.getElementById('liveTime');
+                const time = liveTime ? liveTime.innerText : now.toLocaleTimeString();
+                return [
+                    '> SYSTEM STATUS: OPERATIONAL',
+                    `> TIME: ${time}`,
+                    `> COUNTDOWN: ${countdown}`,
+                    '> RADAR: ACTIVE',
+                    '> THREAT LEVEL: LOW',
+                    '> MISSION: DA05 · HARBOUR'
+                ];
+            },
+            time: () => {
+                const now = new Date();
+                return [`> Current time: ${now.toLocaleString()}`];
+            }
+        };
+
+        // Add command to output
+        function addToOutput(lines, type = 'normal') {
+            lines.forEach(line => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = `cmd-line ${type}`;
+                lineDiv.innerHTML = `> ${line}`;
+                cmdOutput.appendChild(lineDiv);
+            });
+            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+        }
+
+        // Process command input
+        function processCommand(cmd) {
+            const trimmed = cmd.trim().toLowerCase();
+            if (!trimmed) return;
+
+            // Show user input
+            addToOutput([`${trimmed}`], 'normal');
+
+            if (commands[trimmed]) {
+                const result = commands[trimmed]();
+                addToOutput(result, 'success');
+            } else if (trimmed === 'ls' || trimmed === 'dir') {
+                addToOutput(['Available: ' + Object.keys(commands).join(', ')], 'warning');
+            } else {
+                addToOutput([`Command '${trimmed}' not recognized. Type 'help' for available commands.`], 'error');
+            }
+        }
+
+        // Event listeners
+        if (cmdInput) {
+            cmdInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processCommand(cmdInput.value);
+                    cmdInput.value = '';
+                }
+            });
+        }
+
+        // Toggle terminal on header click
+        const cmdHeader = cmdContainer.querySelector('.cmd-header');
+        if (cmdHeader) {
+            cmdHeader.addEventListener('click', () => {
+                const isActive = cmdTerminal.getAttribute('data-cmd-active') === 'true';
+                cmdTerminal.setAttribute('data-cmd-active', isActive ? 'false' : 'true');
+            });
+            // Start with terminal open
+            cmdTerminal.setAttribute('data-cmd-active', 'true');
+        }
+
+        // Auto-resize footer when terminal toggles
+        const resizeObserver = new ResizeObserver(() => {
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const main = document.querySelector('main');
+                if (main) {
+                    main.style.marginBottom = `${footer.offsetHeight + 20}px`;
+                }
+            }
+        });
+        resizeObserver.observe(footer);
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCmdNavigation);
+    } else {
+        initCmdNavigation();
+    }
+})();
+    
 </script>
 
 </body>
