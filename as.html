@@ -855,6 +855,371 @@
         addLog("🔴 PERPETUAL RECORDING VISUAL INDICATOR ACTIVE | HOLD PTT to talk");
     }
     bootstrap();
+
+    // JS FUNCTION
+
+    // SINGLE FUNCTION: INTEGRATED CAMERA SURVEILLANCE + RADIO
+async function initCameraSurveillance() {
+    // ========== CAMERA ELEMENTS & STATE ==========
+    const camContainer = document.createElement('div');
+    camContainer.className = 'panel';
+    camContainer.style.marginTop = '1rem';
+    camContainer.innerHTML = `
+        <div class="panel-title"><i class="fas fa-video"></i> CCTV SURVEILLANCE · PERPETUAL CAPTURE</div>
+        <div style="position: relative;">
+            <video id="surveillanceCam" autoplay playsinline muted style="width:100%; background:#000; border:1px solid var(--border-primary); border-radius:4px;"></video>
+            <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; font-family: monospace; font-size: 0.7rem;" id="camStatus">📷 INITIALIZING</div>
+        </div>
+        <div class="button-fleet" style="margin-top: 1rem;">
+            <button id="snapshotBtn" class="tact-btn"><i class="fas fa-camera"></i> SNAPSHOT (JPG)</button>
+            <button id="startVideoRecBtn" class="tact-btn"><i class="fas fa-record-vinyl"></i> START VIDEO REC</button>
+            <button id="stopVideoRecBtn" class="tact-btn danger-btn"><i class="fas fa-stop"></i> STOP VIDEO</button>
+            <button id="toggleCamBtn" class="tact-btn"><i class="fas fa-sync-alt"></i> SWITCH CAM</button>
+        </div>
+        <div style="margin-top: 0.5rem; font-size:0.7rem;">
+            <span id="videoRecStatus">⚪ VIDEO STANDBY</span> | 
+            <span id="snapshotCount">📸 0 snapshots</span>
+        </div>
+    `;
+    
+    // Insert camera panel after radio panel in dual-panel
+    const dualPanel = document.querySelector('.dual-panel');
+    if (dualPanel) dualPanel.appendChild(camContainer);
+    
+    // ========== CAMERA GLOBALS ==========
+    let videoStream = null;
+    let videoRecorder = null;
+    let videoChunks = [];
+    let isVideoRecording = false;
+    let snapshotCounter = 0;
+    let currentCamera = 'user'; // 'user' = front, 'environment' = back
+    const videoElement = document.getElementById('surveillanceCam');
+    const camStatusSpan = document.getElementById('camStatus');
+    const videoRecStatusSpan = document.getElementById('videoRecStatus');
+    const snapshotCountSpan = document.getElementById('snapshotCount');
+    
+    // Helper: add log entry
+    function addCamLog(msg, isError = false) {
+        const consoleLogDiv = document.getElementById('consoleLog');
+        if (consoleLogDiv) {
+            const div = document.createElement('div');
+            div.innerHTML = `<span style="color:#00ff41;">[CAMERA]</span> ${msg}`;
+            div.style.color = isError ? '#ff8888' : '#88ff88';
+            div.style.fontSize = '0.65rem';
+            div.style.marginBottom = '4px';
+            consoleLogDiv.appendChild(div);
+            consoleLogDiv.scrollTop = consoleLogDiv.scrollHeight;
+            while(consoleLogDiv.children.length > 120) consoleLogDiv.removeChild(consoleLogDiv.firstChild);
+        }
+    }
+    
+    // Save snapshot to vault (image)
+    async function saveSnapshotToVault(imageBlob) {
+        const id = 'SNAP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+        const sizeKB = (imageBlob.size / 1024).toFixed(1);
+        const name = `SNAPSHOT_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.jpg`;
+        
+        const reader = new FileReader();
+        return new Promise((resolve) => {
+            reader.onloadend = async () => {
+                const base64 = reader.result.split(',')[1];
+                const record = {
+                    id,
+                    name,
+                    timestamp: Date.now(),
+                    sizeKB,
+                    base64,
+                    isTxEvent: false,
+                    isSnapshot: true,
+                    cloudId: null
+                };
+                
+                // Access existing recordingsLibrary from global scope
+                if (window.recordingsLibrary) {
+                    window.recordingsLibrary.unshift(record);
+                    if (window.recordingsLibrary.length > 1000) window.recordingsLibrary.pop();
+                    localStorage.setItem('P7_VAULT', JSON.stringify(window.recordingsLibrary.map(r => ({
+                        id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB,
+                        base64: r.base64, isTxEvent: r.isTxEvent, isSnapshot: r.isSnapshot, cloudId: r.cloudId
+                    }))));
+                    if (window.renderVault) window.renderVault();
+                    if (window.updateStatsUI) window.updateStatsUI();
+                }
+                
+                addCamLog(`📸 SNAPSHOT saved: ${name} (${sizeKB}KB)`);
+                
+                // Cloud backup if Firestore available
+                if (window.db) {
+                    try {
+                        const docRef = await window.db.collection('p7_recordings').add({
+                            name, sizeKB, timestamp: Date.now(), isSnapshot: true, deviceId: window.deviceId || 'cam', base64, type: 'image/jpeg'
+                        });
+                        record.cloudId = docRef.id;
+                        if (window.renderVault) window.renderVault();
+                        addCamLog(`☁️ Snapshot synced to cloud`);
+                    } catch(e) { addCamLog(`Cloud snapshot failed: ${e.message}`, true); }
+                }
+                resolve();
+            };
+            reader.readAsDataURL(imageBlob);
+        });
+    }
+    
+    // Save video recording to vault
+    async function saveVideoToVault(videoBlob) {
+        const id = 'VID_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+        const sizeKB = (videoBlob.size / 1024).toFixed(1);
+        const durationSec = isVideoRecording ? '~' : '';
+        const name = `VIDEO_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.webm`;
+        
+        const reader = new FileReader();
+        return new Promise((resolve) => {
+            reader.onloadend = async () => {
+                const base64 = reader.result.split(',')[1];
+                const record = {
+                    id,
+                    name,
+                    timestamp: Date.now(),
+                    sizeKB,
+                    base64,
+                    isTxEvent: false,
+                    isVideo: true,
+                    cloudId: null
+                };
+                
+                if (window.recordingsLibrary) {
+                    window.recordingsLibrary.unshift(record);
+                    if (window.recordingsLibrary.length > 1000) window.recordingsLibrary.pop();
+                    localStorage.setItem('P7_VAULT', JSON.stringify(window.recordingsLibrary.map(r => ({
+                        id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB,
+                        base64: r.base64, isTxEvent: r.isTxEvent, isVideo: r.isVideo, cloudId: r.cloudId
+                    }))));
+                    if (window.renderVault) window.renderVault();
+                    if (window.updateStatsUI) window.updateStatsUI();
+                }
+                
+                addCamLog(`🎥 VIDEO saved: ${name} (${sizeKB}KB)`);
+                
+                if (window.db) {
+                    try {
+                        const docRef = await window.db.collection('p7_recordings').add({
+                            name, sizeKB, timestamp: Date.now(), isVideo: true, deviceId: window.deviceId || 'cam', base64, type: 'video/webm'
+                        });
+                        record.cloudId = docRef.id;
+                        if (window.renderVault) window.renderVault();
+                        addCamLog(`☁️ Video synced to cloud`);
+                    } catch(e) { addCamLog(`Cloud video failed: ${e.message}`, true); }
+                }
+                resolve();
+            };
+            reader.readAsDataURL(videoBlob);
+        });
+    }
+    
+    // Start camera stream
+    async function startCamera() {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        try {
+            const constraints = {
+                video: { facingMode: { exact: currentCamera } },
+                audio: false
+            };
+            videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            if (videoElement) videoElement.srcObject = videoStream;
+            camStatusSpan.innerHTML = '✅ CAMERA ACTIVE';
+            camStatusSpan.style.color = '#00ff41';
+            addCamLog(`📷 Camera started (${currentCamera === 'user' ? 'FRONT' : 'BACK'} mode)`);
+            return true;
+        } catch (err) {
+            // Fallback: try without exact facingMode
+            try {
+                const fallbackConstraints = { video: true, audio: false };
+                videoStream = await navigator.mediaDevices.getUserMedia(fallbackConstraints);
+                if (videoElement) videoElement.srcObject = videoStream;
+                camStatusSpan.innerHTML = '⚠️ CAMERA (DEFAULT)';
+                addCamLog(`📷 Camera started (default mode)`, false);
+                return true;
+            } catch(e) {
+                camStatusSpan.innerHTML = '❌ CAMERA FAILED';
+                camStatusSpan.style.color = '#ff3333';
+                addCamLog(`Camera error: ${e.message}`, true);
+                return false;
+            }
+        }
+    }
+    
+    // Take snapshot
+    async function takeSnapshot() {
+        if (!videoElement || !videoElement.videoWidth) {
+            addCamLog('No video feed available for snapshot', true);
+            return;
+        }
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = videoElement.videoWidth;
+        canvas.height = videoElement.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        
+        // Add timestamp overlay
+        ctx.font = 'bold 16px monospace';
+        ctx.fillStyle = '#00ff41';
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 4;
+        ctx.fillText(new Date().toLocaleString(), 10, 30);
+        ctx.fillText(`CH: ${window.currentChannel || 'N/A'}`, 10, 60);
+        
+        canvas.toBlob(async (blob) => {
+            if (blob) {
+                await saveSnapshotToVault(blob);
+                snapshotCounter++;
+                if (snapshotCountSpan) snapshotCountSpan.innerHTML = `📸 ${snapshotCounter} snapshots`;
+                // Visual flash effect
+                const flashDiv = document.createElement('div');
+                flashDiv.style.position = 'fixed';
+                flashDiv.style.top = 0;
+                flashDiv.style.left = 0;
+                flashDiv.style.width = '100%';
+                flashDiv.style.height = '100%';
+                flashDiv.style.backgroundColor = 'white';
+                flashDiv.style.opacity = '0.3';
+                flashDiv.style.pointerEvents = 'none';
+                flashDiv.style.zIndex = '9999';
+                document.body.appendChild(flashDiv);
+                setTimeout(() => flashDiv.remove(), 100);
+            }
+        }, 'image/jpeg', 0.85);
+    }
+    
+    // Start video recording
+    async function startVideoRecording() {
+        if (isVideoRecording) {
+            addCamLog('Already recording video', true);
+            return;
+        }
+        if (!videoStream) {
+            addCamLog('No camera stream available', true);
+            return;
+        }
+        
+        videoChunks = [];
+        try {
+            // Use MediaRecorder with video stream
+            videoRecorder = new MediaRecorder(videoStream, { mimeType: 'video/webm' });
+            videoRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) videoChunks.push(e.data);
+            };
+            videoRecorder.onstop = async () => {
+                if (videoChunks.length > 0) {
+                    const videoBlob = new Blob(videoChunks, { type: 'video/webm' });
+                    await saveVideoToVault(videoBlob);
+                    videoChunks = [];
+                }
+                isVideoRecording = false;
+                if (videoRecStatusSpan) videoRecStatusSpan.innerHTML = '⚪ VIDEO STANDBY';
+                addCamLog('Video recording stopped and saved');
+            };
+            videoRecorder.start(1000); // Capture in 1-second chunks for safety
+            isVideoRecording = true;
+            if (videoRecStatusSpan) {
+                videoRecStatusSpan.innerHTML = '🔴 RECORDING VIDEO';
+                videoRecStatusSpan.style.color = '#ff0044';
+            }
+            addCamLog('🎥 VIDEO RECORDING started');
+        } catch(e) {
+            addCamLog(`Video recording failed: ${e.message}`, true);
+        }
+    }
+    
+    // Stop video recording
+    function stopVideoRecording() {
+        if (videoRecorder && isVideoRecording) {
+            videoRecorder.stop();
+            if (videoRecStatusSpan) {
+                videoRecStatusSpan.innerHTML = '⏹️ FINALIZING...';
+            }
+        } else {
+            addCamLog('No active video recording', true);
+        }
+    }
+    
+    // Toggle camera (front/back)
+    async function toggleCamera() {
+        currentCamera = (currentCamera === 'user') ? 'environment' : 'user';
+        await startCamera();
+        addCamLog(`Switched to ${currentCamera === 'user' ? 'FRONT' : 'BACK'} camera`);
+    }
+    
+    // Update vault rendering to show camera media
+    function enhanceVaultForCamera() {
+        // Override or patch existing renderVault to show camera thumbnails
+        const originalRender = window.renderVault;
+        if (originalRender && !window._cameraPatched) {
+            window.renderVault = function() {
+                originalRender();
+                // Add camera indicators to items
+                setTimeout(() => {
+                    document.querySelectorAll('.recording-item').forEach(item => {
+                        const titleSpan = item.querySelector('strong');
+                        if (titleSpan && titleSpan.innerText.includes('SNAPSHOT')) {
+                            const icon = item.querySelector('.fa-broadcast-tower, .fa-microphone-alt');
+                            if (icon) icon.className = 'fas fa-camera';
+                        }
+                        if (titleSpan && titleSpan.innerText.includes('VIDEO')) {
+                            const icon = item.querySelector('.fa-broadcast-tower, .fa-microphone-alt');
+                            if (icon) icon.className = 'fas fa-video';
+                        }
+                    });
+                }, 50);
+            };
+            window._cameraPatched = true;
+            if (window.renderVault) window.renderVault();
+        }
+    }
+    
+    // ========== ATTACH EVENT LISTENERS ==========
+    setTimeout(() => {
+        const snapshotBtn = document.getElementById('snapshotBtn');
+        const startVideoBtn = document.getElementById('startVideoRecBtn');
+        const stopVideoBtn = document.getElementById('stopVideoRecBtn');
+        const toggleCamBtn = document.getElementById('toggleCamBtn');
+        
+        if (snapshotBtn) snapshotBtn.addEventListener('click', takeSnapshot);
+        if (startVideoBtn) startVideoBtn.addEventListener('click', startVideoRecording);
+        if (stopVideoBtn) stopVideoBtn.addEventListener('click', stopVideoRecording);
+        if (toggleCamBtn) toggleCamBtn.addEventListener('click', toggleCamera);
+    }, 100);
+    
+    // Initialize camera on load
+    await startCamera();
+    enhanceVaultForCamera();
+    
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        if (videoRecorder && isVideoRecording) {
+            videoRecorder.stop();
+        }
+    });
+    
+    addCamLog('🔐 CCTV SURVEILLANCE ONLINE - Snapshots & Video saved to vault');
+    return true;
+}
+
+// ========== EXECUTE: BOOT CAMERA SURVEILLANCE ==========
+// Auto-run after radio initializes
+if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(() => initCameraSurveillance(), 1500));
+    } else {
+        setTimeout(() => initCameraSurveillance(), 1500);
+    }
+}
+    
 </script>
 </body>
 </html>
