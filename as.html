@@ -7,12 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ============================================
-           PROTOCOL-7: TACTICAL SURVEILLANCE SUITE
-           BLACK + NEON GREEN · NO GLOWS · FLAT
-           RESPONSIVE: 280px → 4K
-           PRODUCTION-READY · FULL AUDIO CAPTURE
-        ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -31,7 +25,6 @@
             --border-subtle: #1a3a1a;
             --alert-red: #ff3333;
             --alert-yellow: #ffcc00;
-            --alert-blue: #3399ff;
             --font-mono: 'Share Tech Mono', monospace;
             --font-body: 'Inter', system-ui, sans-serif;
         }
@@ -44,7 +37,6 @@
             min-height: 100vh;
         }
 
-        /* Main Grid */
         .protocol-grid {
             max-width: 1600px;
             width: 100%;
@@ -53,7 +45,6 @@
             border: 1px solid var(--border-primary);
         }
 
-        /* Lockdown Banner */
         .lockdown-banner {
             background: #1a0505;
             border-bottom: 2px solid var(--alert-red);
@@ -69,7 +60,6 @@
             flex-wrap: wrap;
         }
 
-        /* Header */
         .surveillance-header {
             padding: 1rem 1.5rem;
             background: var(--bg-card);
@@ -80,6 +70,7 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
+
         .rec-led-permanent {
             width: 14px;
             height: 14px;
@@ -87,43 +78,46 @@
             border-radius: 50%;
             animation: pulseRedBlink 0.8s step-end infinite;
         }
+
         @keyframes pulseRedBlink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
 
-        /* Stats Dashboard */
         .stats-dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border-subtle);
         }
+
         .stat-tile {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             padding: 0.7rem;
             text-align: center;
         }
+
         .stat-number-big {
             font-size: 1.8rem;
             font-weight: 900;
             font-family: var(--font-mono);
         }
 
-        /* 3-Column Layout */
         .tri-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.2rem;
             padding: 1.5rem;
         }
+
         .panel {
             background: var(--bg-card);
             border: 1px solid var(--border-primary);
             padding: 1rem;
         }
+
         .panel-title {
             font-family: var(--font-mono);
             font-weight: bold;
@@ -132,7 +126,6 @@
             margin-bottom: 1rem;
         }
 
-        /* PTT Monster */
         .ptt-giant {
             width: 100%;
             background: #0a1a0a;
@@ -143,18 +136,18 @@
             font-weight: bold;
             color: var(--fg-neon);
             cursor: pointer;
-            transition: 0.02s linear;
         }
+
         .ptt-giant:active { background: #1a3a1a; transform: scale(0.98); }
         .ptt-giant.tx-active { background: #330000; border-color: var(--alert-red); color: var(--alert-red); }
 
-        /* Button Fleet */
         .button-fleet {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin: 0.8rem 0;
         }
+
         .tact-btn {
             background: var(--bg-surface);
             border: 1px solid var(--border-primary);
@@ -164,15 +157,17 @@
             font-size: 0.7rem;
             cursor: pointer;
         }
+
         .danger-btn { border-color: var(--alert-red); color: var(--alert-red); }
         .warning-btn { border-color: var(--alert-yellow); color: var(--alert-yellow); }
 
-        /* RECORDING VAULT SECTION - ALL RECORDINGS DISPLAYED HERE */
+        /* VAULT MASTER - RECORDINGS DISPLAY */
         .vault-master {
             margin: 0 1.5rem 1.5rem 1.5rem;
             background: var(--bg-card);
             border: 2px solid var(--border-primary);
         }
+
         .vault-toolbar {
             padding: 1rem;
             border-bottom: 1px solid var(--border-primary);
@@ -182,11 +177,13 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .search-filter {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
+
         .search-filter input, .search-filter select {
             background: black;
             border: 1px solid var(--border-primary);
@@ -194,32 +191,37 @@
             color: var(--fg-neon);
             font-family: var(--font-mono);
         }
+
         .recordings-grid-vault {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 0.8rem;
             padding: 1rem;
-            max-height: 500px;
+            max-height: 550px;
             overflow-y: auto;
         }
+
         .recording-item {
             background: #050a05;
             border: 1px solid var(--border-subtle);
             padding: 0.8rem;
-            transition: 0.1s;
         }
+
         .recording-item:hover { border-color: var(--fg-neon); }
+
         .rec-meta-row {
             font-size: 0.65rem;
             color: var(--fg-muted);
             margin: 5px 0;
         }
+
         .rec-actions-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
             margin-top: 0.6rem;
         }
+
         .mini-control {
             background: black;
             border: 1px solid var(--border-primary);
@@ -228,17 +230,17 @@
             cursor: pointer;
         }
 
-        /* Live Audio Console */
         .audio-console {
             margin: 1rem 1.5rem;
             background: #010501;
             border: 1px solid var(--border-primary);
             padding: 0.8rem;
-            height: 150px;
+            height: 140px;
             overflow-y: auto;
             font-family: var(--font-mono);
             font-size: 0.65rem;
         }
+
         footer {
             background: var(--bg-card);
             border-top: 1px solid var(--border-subtle);
@@ -251,9 +253,7 @@
             .tri-panel { grid-template-columns: 1fr; }
             .vault-master { margin: 0 0.8rem 1rem 0.8rem; }
         }
-        @media (min-width: 1920px) {
-            .recordings-grid-vault { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); }
-        }
+
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--fg-neon); }
@@ -261,7 +261,6 @@
 </head>
 <body>
 <div class="protocol-grid">
-    <!-- LOCKDOWN BANNER -->
     <div class="lockdown-banner">
         <i class="fas fa-skull-crosswalk"></i>
         <span>⚠️ PROTOCOL-7 PERPETUAL SURVEILLANCE · RECORDING LOCKED ⚠️</span>
@@ -269,25 +268,20 @@
         <span>NO STOP · FULL SPECTRUM CAPTURE</span>
     </div>
 
-    <!-- HEADER -->
     <div class="surveillance-header">
         <div><i class="fas fa-broadcast-tower"></i> <strong>PROTOCOL-7 · RSA AIRSPACE</strong><br><span style="font-size:0.65rem;">ES-CV-1 | PERPETUAL AUDIT CORE</span></div>
         <div style="display:flex; align-items:center; gap:10px;"><div class="rec-led-permanent"></div><span id="liveStatusText">🔴 RECORDING · INFINITE LOOP</span></div>
     </div>
 
-    <!-- STATS -->
     <div class="stats-dashboard">
         <div class="stat-tile"><div class="stat-number-big" id="totalRecs">0</div><div>TOTAL RECORDINGS</div></div>
         <div class="stat-tile"><div class="stat-number-big" id="cloudRecs">0</div><div>CLOUD SYNCED</div></div>
         <div class="stat-tile"><div class="stat-number-big" id="localRecs">0</div><div>LOCAL VAULT</div></div>
         <div class="stat-tile"><div class="stat-number-big" id="sessionTime">0</div><div>MINUTES ACTIVE</div></div>
         <div class="stat-tile"><div class="stat-number-big" id="txCounter">0</div><div>PTT EVENTS</div></div>
-        <div class="stat-tile"><div class="stat-number-big" id="internalCapture">ON</div><div>INTERNAL AUDIO</div></div>
     </div>
 
-    <!-- TRI-PANEL: PTT + AUDIO WORKSHOP + DEVICE CONTROL -->
     <div class="tri-panel">
-        <!-- PTT + PHYSICAL BUTTON -->
         <div class="panel">
             <div class="panel-title"><i class="fas fa-microphone-alt"></i> TACTICAL PTT · SHARED FREQ</div>
             <button class="ptt-giant" id="pttMainBtn"><i class="fas fa-bolt"></i> HOLD TO TALK</button>
@@ -296,44 +290,29 @@
                 <button id="unmuteMicPhysical" class="tact-btn"><i class="fas fa-microphone"></i> UNMUTE</button>
                 <button id="forceSegmentSave" class="tact-btn warning-btn"><i class="fas fa-save"></i> FORCE SAVE SEGMENT</button>
             </div>
-            <div id="pttFeedback" style="font-size:0.65rem; margin-top:10px; border-top:1px solid #1a3a1a; padding-top:8px;"></div>
+            <div id="pttFeedback" style="font-size:0.65rem; margin-top:10px;"></div>
         </div>
 
-        <!-- ADVANCED AUDIO CONTROL ROOM -->
         <div class="panel">
             <div class="panel-title"><i class="fas fa-sliders-h"></i> AUDIO DOMINION · FULL CONTROL</div>
             <div class="button-fleet">
                 <button id="playAllRecordings" class="tact-btn"><i class="fas fa-play-circle"></i> PLAY ALL</button>
                 <button id="stopAllAudio" class="tact-btn"><i class="fas fa-stop-circle"></i> STOP ALL</button>
                 <button id="exportAllZip" class="tact-btn"><i class="fas fa-file-archive"></i> EXPORT ZIP</button>
-                <button id="normalizeAll" class="tact-btn"><i class="fas fa-waveform"></i> NORMALIZE</button>
-                <button id="mergeLastTen" class="tact-btn"><i class="fas fa-code-branch"></i> MERGE LAST 10</button>
-                <button id="spectrumAnalyzer" class="tact-btn"><i class="fas fa-chart-line"></i> SPECTRUM</button>
-            </div>
-            <div class="button-fleet">
                 <button id="cloudBackupAllRecs" class="tact-btn"><i class="fas fa-cloud-upload-alt"></i> CLOUD BACKUP ALL</button>
-                <button id="restoreFromCloud" class="tact-btn"><i class="fas fa-database"></i> RESTORE CLOUD</button>
-                <button id="generateSurvReport" class="tact-btn"><i class="fas fa-file-alt"></i> SURVEILLANCE REPORT</button>
                 <button id="deleteOldWeek" class="tact-btn danger-btn"><i class="fas fa-trash-alt"></i> PURGE >7 DAYS</button>
             </div>
-            <div><i class="fas fa-volume-up"></i> MASTER VOL <input type="range" id="masterVolumeKnob" min="0" max="100" value="75" style="width:120px; background:#000;"></div>
+            <div><i class="fas fa-volume-up"></i> MASTER VOL <input type="range" id="masterVolumeKnob" min="0" max="100" value="75" style="width:120px;"></div>
         </div>
 
-        <!-- DEVICE CAPTURE STATUS + PHYSICAL BUTTON HANDLER -->
         <div class="panel">
-            <div class="panel-title"><i class="fas fa-head-side-headset"></i> PHYSICAL CONTROLS & CAPTURE</div>
-            <div><i class="fas fa-ear-listen"></i> EARPHONE BUTTON: <span id="physicalBtnStatus">LISTENING</span></div>
-            <div class="button-fleet">
-                <button id="enableInternalAudio" class="tact-btn"><i class="fas fa-desktop"></i> CAPTURE INTERNAL</button>
-                <button id="enableExternalMic" class="tact-btn"><i class="fas fa-microphone"></i> EXT MIC PRIORITY</button>
-                <button id="toggleLoopback" class="tact-btn warning-btn"><i class="fas fa-sync-alt"></i> LOOPBACK MODE</button>
-            </div>
+            <div class="panel-title"><i class="fas fa-head-side-headset"></i> PHYSICAL CONTROLS</div>
+            <div><i class="fas fa-ear-listen"></i> EARPHONE BUTTON: <span id="physicalBtnStatus">ACTIVE (PLAY/PAUSE = PTT)</span></div>
             <div id="deviceCapStatus" style="font-size:0.65rem; margin-top:8px;">🎧 FULL DUPLEX CAPTURE ACTIVE</div>
         </div>
     </div>
 
-    <!-- ======= RECORDING VAULT SECTION ======= -->
-    <!-- ALL SAVED RECORDINGS ARE DISPLAYED HERE AUTOMATICALLY -->
+    <!-- ===== SURVEILLANCE VAULT - ALL RECORDINGS APPEAR HERE ===== -->
     <div class="vault-master">
         <div class="vault-toolbar">
             <span><i class="fas fa-database"></i> SURVEILLANCE VAULT · PERPETUAL ARCHIVE</span>
@@ -343,35 +322,32 @@
                     <option value="all">ALL</option>
                     <option value="tx">PTT TRANSMISSIONS</option>
                     <option value="auto">AUTO SEGMENTS</option>
-                    <option value="cloud">CLOUD SYNCED</option>
                 </select>
                 <button id="refreshVaultBtn" class="tact-btn"><i class="fas fa-sync-alt"></i> REFRESH</button>
             </div>
         </div>
         <div id="recordingsGridMaster" class="recordings-grid-vault">
-            <div style="grid-column:1/-1; text-align:center; padding:2rem;">⏳ LOADING PERPETUAL VAULT...</div>
+            <div style="grid-column:1/-1; text-align:center; padding:2rem; color:#00cc33;">⏳ INITIALIZING VAULT...</div>
         </div>
     </div>
 
-    <!-- LIVE AUDIO CONSOLE LOG -->
     <div class="audio-console" id="liveConsole">
         <i class="fas fa-terminal"></i> [PROTOCOL-7] Perpetual engine online · recording never stops<br>
     </div>
     <footer>
-        <i class="fas fa-shield-virus"></i> RSA AIRSPACE DEFENSE · FULL SPECTRUM CAPTURE · AUTONOMOUS DUAL BACKUP · ES-CV-1
+        <i class="fas fa-shield-virus"></i> RSA AIRSPACE DEFENSE · FULL SPECTRUM CAPTURE · AUTONOMOUS DUAL BACKUP
     </footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script>
-    // =====================================================
-    // PROTOCOL-7: PERPETUAL RECORDING ENGINE (PRODUCTION)
-    // FULL MICROPHONE CONTROL · INTERNAL AUDIO · PHYSICAL BTN
-    // ALL RECORDINGS VISIBLE IN VAULT · DUAL CLOUD/LOCAL
-    // =====================================================
+    // ==============================================
+    // PROTOCOL-7: FIXED RECORDING VAULT
+    // AUTO-SAVE EVERY 15 SECONDS - IMMEDIATE DISPLAY
+    // MANUAL SAVE, PTT SAVE - ALL VISIBLE IN VAULT
+    // ==============================================
 
-    // Firebase Config
     const FIREBASE_CONFIG = {
         apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
         authDomain: "eden-4a8d3.firebaseapp.com",
@@ -393,13 +369,20 @@
     const filterSelect = document.getElementById('filterVaultSelect');
     const masterVolumeSlider = document.getElementById('masterVolumeKnob');
     const liveConsole = document.getElementById('liveConsole');
-    const physicalStatusSpan = document.getElementById('physicalBtnStatus');
+    const forceSaveBtn = document.getElementById('forceSegmentSave');
+    const muteBtn = document.getElementById('muteMicPhysical');
+    const unmuteBtn = document.getElementById('unmuteMicPhysical');
+    const playAllBtn = document.getElementById('playAllRecordings');
+    const stopAllBtn = document.getElementById('stopAllAudio');
+    const cloudBackupAll = document.getElementById('cloudBackupAllRecs');
+    const deleteOldBtn = document.getElementById('deleteOldWeek');
+    const refreshBtn = document.getElementById('refreshVaultBtn');
 
     // Core State
     let mediaStream = null;
     let mediaRecorder = null;
-    let recordedChunks = [];        // rolling buffer
-    let recordingsLibrary = [];      // { id, name, timestamp, sizeKB, base64, isTxEvent, cloudId }
+    let recordedChunks = [];
+    let recordingsLibrary = [];      // ALL RECORDINGS STORED HERE
     let sessionStart = Date.now();
     let isTxActive = false;
     let isMuted = false;
@@ -407,10 +390,8 @@
     let deviceId = 'P7-' + Math.random().toString(36).substr(2, 8).toUpperCase();
     let db = null;
     let activeAudios = [];
-    let internalCaptureActive = true;
-    let audioContext = null;
-    let sourceNode = null;
     let gainNode = null;
+    let audioContext = null;
 
     // Helper: Log to console
     function addLog(msg, isError = false) {
@@ -421,81 +402,47 @@
         div.style.marginBottom = '4px';
         liveConsole.appendChild(div);
         liveConsole.scrollTop = liveConsole.scrollHeight;
-        while(liveConsole.children.length > 80) liveConsole.removeChild(liveConsole.firstChild);
-        console.log(msg);
+        while(liveConsole.children.length > 60) liveConsole.removeChild(liveConsole.firstChild);
     }
 
-    // ========== PERPETUAL RECORDER - NEVER STOPS ==========
-    async function initPerpetualRecorder() {
-        try {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            // Request full mic access
-            mediaStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
-            sourceNode = audioContext.createMediaStreamSource(mediaStream);
-            gainNode = audioContext.createGain();
-            gainNode.gain.value = 1.0;
-            sourceNode.connect(gainNode);
-            gainNode.connect(audioContext.destination); // optional monitoring
-            
-            // Start MediaRecorder (perpetual)
-            mediaRecorder = new MediaRecorder(mediaStream, { mimeType: 'audio/webm' });
-            mediaRecorder.ondataavailable = (e) => {
-                if (e.data.size > 0) {
-                    recordedChunks.push(e.data);
-                }
-            };
-            mediaRecorder.start(1000); // collect every second
-            addLog("🔴 PERPETUAL RECORDING ACTIVE · FULL SPECTRUM CAPTURE");
-            
-            // Auto-save every 60 seconds (autonomous)
-            setInterval(async () => {
-                if (recordedChunks.length > 0) {
-                    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-                    await saveRecordingToAllStores(blob, `AUTO_${Date.now()}.webm`, false);
-                    recordedChunks = []; // buffer flushed but recording continues
-                }
-            }, 60000);
-            
-            // Session timer
-            setInterval(() => {
-                let mins = Math.floor((Date.now() - sessionStart) / 60000);
-                sessionSpan.innerText = mins;
-            }, 10000);
-            
-            return true;
-        } catch(e) {
-            addLog("❌ CRITICAL: Unable to access microphone", true);
-            return false;
-        }
-    }
-
-    // Save recording to LOCAL + CLOUD (Firestore)
-    async function saveRecordingToAllStores(blob, customName, isTxEvent = false) {
+    // SAVE RECORDING TO VAULT (IMMEDIATELY DISPLAYS)
+    async function saveRecordingToVault(blob, customName, isTxEvent = false) {
         const id = Date.now() + '_' + Math.random().toString(36).substr(2, 8);
         const sizeKB = (blob.size / 1024).toFixed(1);
-        const name = customName || `${isTxEvent ? 'TX' : 'SURV'}_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.webm`;
+        const name = customName || `${isTxEvent ? 'TX' : 'AUTO'}_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.webm`;
+        
         const reader = new FileReader();
         return new Promise((resolve) => {
             reader.onloadend = async () => {
                 const base64 = reader.result.split(',')[1];
-                const record = { id, name, timestamp: Date.now(), sizeKB, base64, isTxEvent, cloudId: null };
-                recordingsLibrary.unshift(record);
-                if (recordingsLibrary.length > 300) recordingsLibrary.pop();
-                // Save to LocalStorage
-                localStorage.setItem('P7_MASTER_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ ...r, base64: r.base64 }))));
+                const record = { 
+                    id, name, timestamp: Date.now(), sizeKB, base64, 
+                    isTxEvent: isTxEvent, cloudId: null 
+                };
+                recordingsLibrary.unshift(record);  // newest first
+                if (recordingsLibrary.length > 500) recordingsLibrary.pop();
+                
+                // Save to localStorage immediately
+                localStorage.setItem('P7_VAULT_MASTER', JSON.stringify(recordingsLibrary.map(r => ({ 
+                    id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
+                }))));
+                
+                // Update UI immediately
                 renderVault();
                 updateStats();
-                addLog(`💾 LOCAL SAVE: ${name} (${sizeKB}KB)`);
+                addLog(`✅ SAVED: ${name} (${sizeKB}KB) - ${isTxEvent ? 'TX EVENT' : 'AUTO SEGMENT'}`);
                 
-                // Cloud Sync attempt (fail-safe)
+                // Cloud sync attempt (non-blocking)
                 if (db) {
                     try {
-                        const docRef = await db.collection('p7_perpetual_recordings').add({
-                            name, sizeKB, timestamp: Date.now(), isTxEvent, deviceId, base64, channel: "RSA-AIR"
+                        const docRef = await db.collection('p7_recordings').add({
+                            name, sizeKB, timestamp: Date.now(), isTxEvent, deviceId, base64
                         });
                         record.cloudId = docRef.id;
-                        localStorage.setItem('P7_MASTER_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ ...r, base64: r.base64 }))));
-                        addLog(`☁️ CLOUD SYNC: ${name}`, false);
+                        localStorage.setItem('P7_VAULT_MASTER', JSON.stringify(recordingsLibrary.map(r => ({ 
+                            id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
+                        }))));
+                        addLog(`☁️ CLOUD SYNC: ${name}`);
                     } catch(e) { addLog(`⚠️ Cloud offline - local only`, true); }
                 }
                 resolve();
@@ -504,14 +451,14 @@
         });
     }
 
-    // Render VAULT with all recordings + extensive controls
+    // RENDER VAULT - ALL RECORDINGS WITH FULL CONTROLS
     function renderVault() {
         let filtered = [...recordingsLibrary];
         const query = searchInput.value.toLowerCase();
         const filterVal = filterSelect.value;
+        
         if (filterVal === 'tx') filtered = filtered.filter(r => r.isTxEvent === true);
-        if (filterVal === 'auto') filtered = filtered.filter(r => r.name.includes('AUTO'));
-        if (filterVal === 'cloud') filtered = filtered.filter(r => r.cloudId);
+        if (filterVal === 'auto') filtered = filtered.filter(r => !r.isTxEvent);
         if (query) filtered = filtered.filter(r => r.name.toLowerCase().includes(query));
         
         if (filtered.length === 0) {
@@ -521,27 +468,47 @@
         
         recordingsGrid.innerHTML = filtered.map(rec => `
             <div class="recording-item" data-id="${rec.id}">
-                <div><i class="fas ${rec.isTxEvent ? 'fa-broadcast-tower' : 'fa-microphone-alt'}"></i> <strong>${rec.name.length > 40 ? rec.name.slice(0,37)+'...' : rec.name}</strong></div>
-                <div class="rec-meta-row">${rec.sizeKB} KB · ${new Date(rec.timestamp).toLocaleString()} ${rec.cloudId ? '☁️ CLOUD' : '💾 LOCAL'}</div>
+                <div><i class="fas ${rec.isTxEvent ? 'fa-broadcast-tower' : 'fa-microphone-alt'}"></i> <strong>${rec.name.length > 45 ? rec.name.slice(0,42)+'...' : rec.name}</strong></div>
+                <div class="rec-meta-row">📁 ${rec.sizeKB} KB · 📅 ${new Date(rec.timestamp).toLocaleString()} ${rec.cloudId ? '☁️ CLOUD' : '💾 LOCAL'}</div>
                 <div class="rec-actions-buttons">
                     <button class="mini-control play-single" data-id="${rec.id}"><i class="fas fa-play"></i> PLAY</button>
                     <button class="mini-control stop-single" data-id="${rec.id}"><i class="fas fa-stop"></i> STOP</button>
-                    <button class="mini-control dl-single" data-id="${rec.id}"><i class="fas fa-download"></i> DL</button>
+                    <button class="mini-control dl-single" data-id="${rec.id}"><i class="fas fa-download"></i> DOWNLOAD</button>
                     <button class="mini-control cloud-single" data-id="${rec.id}"><i class="fas fa-cloud-upload-alt"></i> SYNC</button>
-                    <button class="mini-control share-single" data-id="${rec.id}"><i class="fas fa-share-alt"></i> SHARE</button>
-                    <button class="mini-control delete-single" data-id="${rec.id}"><i class="fas fa-trash"></i> DEL</button>
+                    <button class="mini-control delete-single" data-id="${rec.id}"><i class="fas fa-trash"></i> DELETE</button>
                     <input type="range" class="rec-vol-control" data-id="${rec.id}" min="0" max="100" value="70" style="width:70px;">
                 </div>
             </div>
         `).join('');
         
-        // Attach events
-        document.querySelectorAll('.play-single').forEach(btn => btn.addEventListener('click', (e) => playRecordingById(btn.dataset.id)));
-        document.querySelectorAll('.stop-single').forEach(btn => btn.addEventListener('click', () => stopAllAudioNow()));
-        document.querySelectorAll('.dl-single').forEach(btn => btn.addEventListener('click', (e) => downloadRecordingById(btn.dataset.id)));
-        document.querySelectorAll('.cloud-single').forEach(btn => btn.addEventListener('click', async (e) => await cloudSyncSingle(btn.dataset.id)));
-        document.querySelectorAll('.delete-single').forEach(btn => btn.addEventListener('click', (e) => deleteRecordingById(btn.dataset.id)));
-        document.querySelectorAll('.rec-vol-control').forEach(slider => slider.addEventListener('input', (e) => { /* per-volume handled dynamically */ }));
+        // Attach event listeners
+        document.querySelectorAll('.play-single').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.dataset.id;
+                playRecordingById(id);
+            });
+        });
+        document.querySelectorAll('.stop-single').forEach(btn => {
+            btn.addEventListener('click', () => stopAllAudioNow());
+        });
+        document.querySelectorAll('.dl-single').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.dataset.id;
+                downloadRecordingById(id);
+            });
+        });
+        document.querySelectorAll('.cloud-single').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = btn.dataset.id;
+                await cloudSyncSingle(id);
+            });
+        });
+        document.querySelectorAll('.delete-single').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.dataset.id;
+                deleteRecordingById(id);
+            });
+        });
     }
     
     function playRecordingById(id) {
@@ -560,33 +527,48 @@
         audio.onended = () => { URL.revokeObjectURL(url); activeAudios = activeAudios.filter(a => a !== audio); };
         addLog(`▶️ Playing: ${rec.name}`);
     }
-    function stopAllAudioNow() { activeAudios.forEach(a => { a.pause(); a.currentTime = 0; }); activeAudios = []; addLog(`⏹️ All audio stopped`); }
+    
+    function stopAllAudioNow() {
+        activeAudios.forEach(a => { a.pause(); a.currentTime = 0; });
+        activeAudios = [];
+        addLog(`⏹️ All audio stopped`);
+    }
+    
     function downloadRecordingById(id) {
         const rec = recordingsLibrary.find(r => r.id === id);
-        if (!rec?.base64) return;
+        if (!rec || !rec.base64) return;
         const binary = atob(rec.base64);
         const arr = new Uint8Array(binary.length);
-        for (let i=0;i<binary.length;i++) arr[i]=binary.charCodeAt(i);
+        for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([arr], { type: 'audio/webm' }));
         a.download = rec.name;
         a.click();
         addLog(`⬇️ Downloaded ${rec.name}`);
     }
+    
     async function cloudSyncSingle(id) {
         const rec = recordingsLibrary.find(r => r.id === id);
         if (!rec || !rec.base64 || !db) return;
         try {
-            await db.collection('p7_perpetual_recordings').add({ name: rec.name, sizeKB: rec.sizeKB, timestamp: rec.timestamp, isTxEvent: rec.isTxEvent, deviceId, base64: rec.base64 });
+            await db.collection('p7_recordings').add({
+                name: rec.name, sizeKB: rec.sizeKB, timestamp: rec.timestamp, 
+                isTxEvent: rec.isTxEvent, deviceId, base64: rec.base64
+            });
             rec.cloudId = 'synced';
-            localStorage.setItem('P7_MASTER_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ ...r, base64: r.base64 }))));
+            localStorage.setItem('P7_VAULT_MASTER', JSON.stringify(recordingsLibrary.map(r => ({ 
+                id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
+            }))));
             renderVault();
             addLog(`☁️ Synced: ${rec.name}`);
         } catch(e) { addLog(`Cloud sync failed`, true); }
     }
+    
     function deleteRecordingById(id) {
         recordingsLibrary = recordingsLibrary.filter(r => r.id !== id);
-        localStorage.setItem('P7_MASTER_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ ...r, base64: r.base64 }))));
+        localStorage.setItem('P7_VAULT_MASTER', JSON.stringify(recordingsLibrary.map(r => ({ 
+            id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
+        }))));
         renderVault();
         updateStats();
         addLog(`🗑️ Deleted recording`);
@@ -599,85 +581,166 @@
         txCounterSpan.innerText = txEventCounter;
     }
     
-    // Load existing vault
+    // Load existing vault from localStorage
     function loadLocalVault() {
-        const stored = localStorage.getItem('P7_MASTER_VAULT');
+        const stored = localStorage.getItem('P7_VAULT_MASTER');
         if (stored) {
             try {
                 recordingsLibrary = JSON.parse(stored);
                 renderVault();
                 updateStats();
-                addLog(`📀 Loaded ${recordingsLibrary.length} recordings from persistent vault`);
-            } catch(e) { addLog("Vault load warning", true); }
+                addLog(`📀 Loaded ${recordingsLibrary.length} recordings from vault`);
+            } catch(e) { addLog("Vault load error", true); }
+        } else {
+            renderVault();
         }
     }
     
-    // PTT: Hold to talk (TX segment)
-    pttBtn.addEventListener('mousedown', async () => {
-        if (isMuted) { addLog("🔇 Mic muted - cannot TX", true); return; }
+    // === PERPETUAL RECORDER - AUTO SAVE EVERY 15 SECONDS ===
+    async function initPerpetualRecorder() {
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const source = audioContext.createMediaStreamSource(mediaStream);
+            gainNode = audioContext.createGain();
+            gainNode.gain.value = 1.0;
+            source.connect(gainNode);
+            
+            mediaRecorder = new MediaRecorder(mediaStream);
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) {
+                    recordedChunks.push(e.data);
+                }
+            };
+            mediaRecorder.start(2000); // collect every 2 seconds
+            
+            addLog("🔴 PERPETUAL RECORDING ACTIVE");
+            
+            // AUTO-SAVE EVERY 15 SECONDS - IMMEDIATELY SHOWS IN VAULT
+            setInterval(async () => {
+                if (recordedChunks.length > 0) {
+                    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                    await saveRecordingToVault(blob, `AUTO_${Date.now()}.webm`, false);
+                    recordedChunks = []; // clear buffer after saving
+                }
+            }, 15000); // 15 seconds auto-save
+            
+            // Session timer
+            setInterval(() => {
+                let mins = Math.floor((Date.now() - sessionStart) / 60000);
+                sessionSpan.innerText = mins;
+            }, 10000);
+            
+            return true;
+        } catch(e) {
+            addLog("❌ MICROPHONE ACCESS DENIED - PERPETUAL RECORDING FAILED", true);
+            return false;
+        }
+    }
+    
+    // PTT: Hold to talk
+    pttBtn.addEventListener('mousedown', () => {
+        if (isMuted) { addLog("🔇 Mic muted", true); return; }
         isTxActive = true;
         pttBtn.classList.add('tx-active');
         pttBtn.innerHTML = '<i class="fas fa-broadcast-tower"></i> TRANSMITTING...';
-        addLog("🎙️ PTT ACTIVE · recording TX segment");
-        document.getElementById('pttFeedback').innerHTML = '<span style="color:#ff6666;">🔴 TRANSMITTING ON SHARED FREQ</span>';
+        addLog("🎙️ PTT ACTIVE - recording TX segment");
+        document.getElementById('pttFeedback').innerHTML = '<span style="color:#ff6666;">🔴 TRANSMITTING</span>';
     });
+    
     pttBtn.addEventListener('mouseup', async () => {
         if (!isTxActive) return;
         isTxActive = false;
         pttBtn.classList.remove('tx-active');
         pttBtn.innerHTML = '<i class="fas fa-microphone-alt"></i> HOLD TO TALK';
-        addLog("⏹️ TX ended · saving transmission");
+        addLog("⏹️ TX ended - saving transmission");
         document.getElementById('pttFeedback').innerHTML = '';
+        
         if (recordedChunks.length > 0) {
-            const blob = new Blob(recordedChunks.slice(-8), { type: 'audio/webm' });
-            await saveRecordingToAllStores(blob, `TX_${Date.now()}.webm`, true);
+            const blob = new Blob(recordedChunks.slice(-6), { type: 'audio/webm' });
+            await saveRecordingToVault(blob, `TX_${Date.now()}.webm`, true);
             txEventCounter++;
             updateStats();
         }
     });
-    // Physical earphone button support (MediaSession API)
+    
+    // Touch events for mobile
+    pttBtn.addEventListener('touchstart', (e) => { e.preventDefault(); pttBtn.dispatchEvent(new Event('mousedown')); });
+    pttBtn.addEventListener('touchend', (e) => { e.preventDefault(); pttBtn.dispatchEvent(new Event('mouseup')); });
+    
+    // Physical earphone button support
     if ('mediaSession' in navigator) {
-        navigator.mediaSession.setActionHandler('play', () => { pttBtn.dispatchEvent(new Event('mousedown')); physicalStatusSpan.innerText = "BUTTON PRESSED (TX)"; setTimeout(()=>physicalStatusSpan.innerText="LISTENING",1000); });
+        navigator.mediaSession.setActionHandler('play', () => { pttBtn.dispatchEvent(new Event('mousedown')); });
         navigator.mediaSession.setActionHandler('pause', () => { pttBtn.dispatchEvent(new Event('mouseup')); });
-        addLog("🎧 Physical earphone button registered (play/pause = PTT)");
+        addLog("🎧 Physical earphone button registered");
     }
     
-    // Mute/Unmute
-    document.getElementById('muteMicPhysical').addEventListener('click', () => { isMuted = true; if(gainNode) gainNode.gain.value = 0; addLog("🔇 MIC MUTED"); });
-    document.getElementById('unmuteMicPhysical').addEventListener('click', () => { isMuted = false; if(gainNode) gainNode.gain.value = 1; addLog("🎤 MIC UNMUTED"); });
-    document.getElementById('forceSegmentSave').addEventListener('click', async () => { if(recordedChunks.length){ const blob = new Blob(recordedChunks, {type:'audio/webm'}); await saveRecordingToAllStores(blob, `FORCE_${Date.now()}.webm`, false); addLog("💾 Force save complete"); } });
+    // UI Button Events
+    muteBtn.addEventListener('click', () => { isMuted = true; if(gainNode) gainNode.gain.value = 0; addLog("🔇 MIC MUTED"); });
+    unmuteBtn.addEventListener('click', () => { isMuted = false; if(gainNode) gainNode.gain.value = 1; addLog("🎤 MIC UNMUTED"); });
     
-    // Audio Workshop controls
-    document.getElementById('playAllRecordings').addEventListener('click', () => { recordingsLibrary.slice(0,8).forEach(r => playRecordingById(r.id)); });
-    document.getElementById('stopAllAudio').addEventListener('click', stopAllAudioNow);
-    document.getElementById('cloudBackupAllRecs').addEventListener('click', async () => { for(let r of recordingsLibrary) if(!r.cloudId) await cloudSyncSingle(r.id); addLog("☁️ Bulk cloud backup executed"); });
-    document.getElementById('deleteOldWeek').addEventListener('click', () => { let weekAgo = Date.now() - 7*86400000; recordingsLibrary = recordingsLibrary.filter(r => r.timestamp > weekAgo); localStorage.setItem('P7_MASTER_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ ...r, base64: r.base64 })))); renderVault(); updateStats(); addLog("🗑️ Purged recordings older than 7 days"); });
-    masterVolumeSlider.addEventListener('input', (e) => { let vol = e.target.value/100; activeAudios.forEach(a => a.volume = vol); });
-    document.getElementById('refreshVaultBtn').addEventListener('click', () => { renderVault(); addLog("Vault refreshed"); });
+    forceSaveBtn.addEventListener('click', async () => {
+        if (recordedChunks.length > 0) {
+            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+            await saveRecordingToVault(blob, `MANUAL_${Date.now()}.webm`, false);
+            addLog("💾 Manual force save complete");
+        } else {
+            addLog("No audio buffer to save", true);
+        }
+    });
+    
+    playAllBtn.addEventListener('click', () => {
+        recordingsLibrary.slice(0, 5).forEach(r => playRecordingById(r.id));
+    });
+    
+    stopAllBtn.addEventListener('click', stopAllAudioNow);
+    
+    cloudBackupAll.addEventListener('click', async () => {
+        for (let r of recordingsLibrary) {
+            if (!r.cloudId) await cloudSyncSingle(r.id);
+        }
+        addLog("☁️ Bulk cloud backup complete");
+    });
+    
+    deleteOldBtn.addEventListener('click', () => {
+        let weekAgo = Date.now() - (7 * 86400000);
+        let before = recordingsLibrary.length;
+        recordingsLibrary = recordingsLibrary.filter(r => r.timestamp > weekAgo);
+        localStorage.setItem('P7_VAULT_MASTER', JSON.stringify(recordingsLibrary.map(r => ({ 
+            id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
+        }))));
+        renderVault();
+        updateStats();
+        addLog(`🗑️ Purged ${before - recordingsLibrary.length} old recordings (>7 days)`);
+    });
+    
+    refreshBtn.addEventListener('click', () => {
+        renderVault();
+        addLog("Vault refreshed");
+    });
+    
     searchInput.addEventListener('input', () => renderVault());
     filterSelect.addEventListener('change', () => renderVault());
+    masterVolumeSlider.addEventListener('input', (e) => {
+        let vol = e.target.value / 100;
+        activeAudios.forEach(a => a.volume = vol);
+    });
     
-    // Internal / External audio capture status
-    document.getElementById('enableInternalAudio').addEventListener('click', () => { addLog("🎧 Internal audio capture prioritized (system audio)"); });
-    document.getElementById('toggleLoopback').addEventListener('click', () => { addLog("🔄 Loopback mode toggled - full duplex active"); });
-    
-    // Firestore
+    // Firestore Setup
     async function setupFirestore() {
         if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
         db = firebase.firestore();
         await db.enablePersistence({ synchronizeTabs: true }).catch(()=>{});
-        addLog("🔥 Firestore connected · Cross-device sync ready");
-        setInterval(async () => { if(db) await db.collection('p7_presence').doc(deviceId).set({ online: true, ts: Date.now() }); }, 20000);
+        addLog("🔥 Firestore connected");
     }
     
-    // Bootstrap (everything starts automatically)
+    // Boot Sequence
     (async function bootstrap() {
-        addLog("🚀 PROTOCOL-7 BOOT · PERPETUAL RECORDING LOCKED");
+        addLog("🚀 PROTOCOL-7 BOOTING...");
         await initPerpetualRecorder();
         await setupFirestore();
         loadLocalVault();
-        addLog("✅ SYSTEM ONLINE · FULL MIC CONTROL · VAULT ACTIVE");
-        setInterval(() => updateStats(), 5000);
+        addLog("✅ SYSTEM ONLINE - RECORDINGS WILL APPEAR IN VAULT EVERY 15 SECONDS");
     })();
 </script>
 </body>
