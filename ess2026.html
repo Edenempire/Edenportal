@@ -893,18 +893,14 @@
         pointer-events: auto !important;
     }
     
-    /* Main content spacing - accounts for both header AND side navs */
     main {
+      
         position: relative !important;
         z-index: 10 !important;
         margin-left: calc(var(--rail-width, 70px) + 1rem) !important;
         margin-right: calc(var(--rail-width, 70px) + 1rem) !important;
+      
     }
-    
-    /* ============================================
-       RESPONSIVE MEDIA QUERIES - ALL DEVICES
-       From largest monitors to smallest watches
-       ============================================ */
     
     /* ----- 4K+ LARGE MONITORS (2560px and up) ----- */
     @media (min-width: 2560px) {
@@ -981,7 +977,7 @@
         
         .menu-item {
             padding: 0.6rem !important;
-            font-size: 0.75rem !important;
+            font-size: 0.70rem !important;
         }
         
         main {
@@ -1004,7 +1000,7 @@
         
         .menu-trigger-perm,
         .scroll-btn-perm {
-            font-size: 1.3rem !important;
+            font-size: 1rem !important;
         }
         
         .menu-panel-perm {
@@ -1014,7 +1010,7 @@
         
         .menu-item {
             padding: 0.55rem !important;
-            font-size: 0.7rem !important;
+            font-size: 0.5rem !important;
         }
         
         main {
@@ -1037,7 +1033,7 @@
         
         .menu-trigger-perm,
         .scroll-btn-perm {
-            font-size: 1.2rem !important;
+            font-size: 1rem !important;
             border-width: 1.5px !important;
         }
         
@@ -1212,7 +1208,7 @@
         
         .menu-trigger-perm,
         .scroll-btn-perm {
-            font-size: 0.9rem !important;
+            font-size: 0.6rem !important;
         }
         
         .menu-panel-perm {
@@ -1222,7 +1218,7 @@
         
         .menu-item {
             padding: 0.3rem !important;
-            font-size: 0.55rem !important;
+            font-size: 0.50rem !important;
         }
     }
     
@@ -1259,12 +1255,6 @@
             background: rgba(0, 20, 30, 0.98) !important;
         }
     }
-    
-    /* ============================================
-       E.S.S 2026 - HEADER & NAVIGATION OVERLAP PROTECTION
-       Buttons shifted down to clear header completely
-       Header height reduced from bottom by 10px
-       ============================================ */
     
     /* ----- HEADER BOTTOM REDUCTION (-10px from bottom) ----- */
     .command-center {
@@ -1544,14 +1534,6 @@
             transition: none !important;
         }
     }
-    
-        /* CENTERED */
-    
-        /* ============================================
-       E.S.S 2026 - GLOBAL CENTERING SYSTEM
-       Everything centered, straight, neat, tactical
-       Professional alignment across all devices
-       ============================================ */
     
     /* ----- GLOBAL CONTAINER CENTERING ----- */
     * {
