@@ -556,204 +556,206 @@
 
     @media (max-width: 480px) {
       
-  :root {
-    
-    --header-height: clamp(200px, 30vh, 250px);
-    --rail-width: 50px;
-    
-  }
+      :root {
+        
+        --header-height: clamp(200px, 30vh, 250px);
+        --rail-width: 50px;
+        
+      }
 
-  .command-center {
+      .command-center {
+        
+        padding: 0.3rem clamp(0.5rem, 3vw, 1rem);
+        
+      }
     
-    padding: 0.3rem clamp(0.5rem, 3vw, 1rem);
-    
-  }
+      .header-emblem {
+        
+        gap: clamp(0.5rem, 3vw, 1rem);
+        
+      }
 
-  .header-emblem {
-    
-    gap: clamp(0.5rem, 3vw, 1rem);
-    
-  }
+      .logo-container {
+        
+        height: clamp(60px, 10vh, 80px);
+        width: clamp(65px, 10vh, 80px);
+        
+      }
 
-  .logo-container {
-    
-    height: clamp(65px, 14vh, 90px);
-    width: clamp(65px, 14vh, 90px);
-    
-  }
+      .countdown-timer {
+        
+        letter-spacing: 2px;
+        font-size: clamp(1rem, 2.7vw, 1.5rem);
+        
+      }
 
-  .countdown-timer {
+      .tactical-menu-permanent,
+      .quick-scroll-permanent {
+        
+        top: 50vh;
+        
+      }
     
-    letter-spacing: 2px;
-    font-size: clamp(1rem, 2.7vw, 1.5rem);
-    
-  }
+      .menu-panel-perm {
+        
+        width: 260px;
+        max-height: 70vh;
+        
+      }
 
-  .tactical-menu-permanent,
-  .quick-scroll-permanent {
+      .tactical-menu-permanent:hover .menu-panel-perm,
+      .menu-panel-perm:hover {
+        
+        transform: translateY(-50%) translateX(58px);
+        
+      }
     
-    top: 50vh;
-    
-  }
+      .menu-item {
+        
+        padding: 0.6rem;
+        font-size: 0.75rem;
+        
+      }
 
-  .menu-panel-perm {
+      .scroll-btn-perm,
+      .menu-trigger-perm {
+        
+        font-size: 1.2rem;
+        
+      }
     
-    width: 260px;
-    max-height: 70vh;
+      main {
+        
+        margin: calc(var(--header-height) + 1rem) 0 1rem 0;
+        padding: 0 clamp(0.5rem, 2vw, 1rem);
+        gap: 1.5rem;
+        
+      }
     
-  }
+      .ops-card {
+        
+        padding: clamp(0.8rem, 2vw, 1rem);
+        
+      }
 
-  .tactical-menu-permanent:hover .menu-panel-perm,
-  .menu-panel-perm:hover {
+      .section-command {
+        
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+        
+      }
     
-    transform: translateY(-50%) translateX(58px);
+      .section-command h2 {
+        
+        font-size: 1.2rem;
+        
+      }
     
-  }
+      #champion-story {
+        
+        width: 70%;
+        font-size: 16px;
+        
+      }
 
-  .menu-item {
+      .teams-grid {
+        
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        
+      }
     
-    padding: 0.6rem;
-    font-size: 0.75rem;
+      .team-card {
+        
+        padding: 0.8rem;
+        
+      }
     
-  }
+      .team-role {
+        
+        font-size: 1.3rem;
+        
+      }
 
-  .scroll-btn-perm,
-  .menu-trigger-perm {
+      .player-row {
+        
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+        padding: 0.5rem;
+        
+      }
     
-    font-size: 1.2rem;
-    
-  }
+      .player-captain {
+        
+        align-self: flex-start;
+        
+      }
 
-  main {
+      .table-container {
+        
+        font-size: 0.75rem;
+        
+      }
     
-    margin: calc(var(--header-height) + 1rem) 0 1rem 0;
-    padding: 0 clamp(0.5rem, 2vw, 1rem);
-    gap: 1.5rem;
+      th, td {
+        
+        padding: 0.4rem;
+        font-size: 1rem;
+        
+      }
     
-  }
+      .color-key {
+        
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        
+      }
 
-  .ops-card {
+      .footer-grid {
+        
+        flex-direction: column;
+        gap: 0.8rem;
+        
+      }
     
-    padding: clamp(0.8rem, 2vw, 1rem);
+      .live-data {
+        
+        width: 90%;
+        padding: 0.5rem 0.8rem;
+        
+      }
     
-  }
+      .live-data div {
+        
+        font-size: 0.7rem;
+        
+      }
 
-  .section-command {
+      .copyright {
+        
+        font-size: 0.6rem;
+        padding-top: 1rem;
+        
+      }
     
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.3rem;
+      .advanced-settings-grid {
+        
+        gap: 0.8rem;
+        
+      }
     
-  }
+      .audio-btn {
+        
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+        
+      }
+        
+      }
 
-  .section-command h2 {
-    
-    font-size: 1.2rem;
-    
-  }
-
-  #champion-story {
-    
-    width: 70%;
-    font-size: 16px;
-    
-  }
-
-  .teams-grid {
-    
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    
-  }
-
-  .team-card {
-    
-    padding: 0.8rem;
-    
-  }
-
-  .team-role {
-    
-    font-size: 1.3rem;
-    
-  }
-
-  .player-row {
-    
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-    padding: 0.5rem;
-    
-  }
-
-  .player-captain {
-    
-    align-self: flex-start;
-    
-  }
-
-  .table-container {
-    
-    font-size: 0.75rem;
-    
-  }
-
-  th, td {
-    
-    padding: 0.4rem;
-    font-size: 1rem;
-    
-  }
-
-  .color-key {
-    
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    
-  }
-
-  .footer-grid {
-    
-    flex-direction: column;
-    gap: 0.8rem;
-    
-  }
-
-  .live-data {
-    
-    width: 90%;
-    padding: 0.5rem 0.8rem;
-    
-  }
-
-  .live-data div {
-    
-    font-size: 0.7rem;
-    
-  }
-
-  .copyright {
-    
-    font-size: 0.6rem;
-    padding-top: 1rem;
-    
-  }
-
-  .advanced-settings-grid {
-    
-    gap: 0.8rem;
-    
-  }
-
-  .audio-btn {
-    
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
-    
-  }
-      
-}
+    /* BREAK - QUESTION */
     
     @media (min-width: 2000px) {
       
@@ -1280,8 +1282,8 @@
     }
     
     .logo-container {
-        height: clamp(95px, 18vh, 125px) !important;
-        width: clamp(95px, 18vh, 125px) !important;
+        height: clamp(90px, 16vh, 120px) !important;
+        width: clamp(90px, 16vh, 120px) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
