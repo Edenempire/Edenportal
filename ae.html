@@ -1338,6 +1338,55 @@ animate();
             element.scrollIntoView({ behavior: 'smooth' });
         }
     }
+
+    function playInfiniteBackgroundAudio(videoId) {
+  // Create hidden YouTube player container
+  const container = document.createElement('div');
+  container.id = 'youtube-audio-container';
+  container.style.cssText = 'position:fixed; top:-9999px; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;';
+  document.body.appendChild(container);
+
+  // Load YouTube API
+  const script = document.createElement('script');
+  script.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(script);
+
+  // Initialize player when API ready
+  window.onYouTubeIframeAPIReady = function() {
+    new YT.Player('youtube-audio-container', {
+      videoId: videoId,
+      playerVars: {
+        autoplay: 1,
+        loop: 1,
+        playlist: videoId,
+        controls: 0,
+        disablekb: 1,
+        modestbranding: 1
+      },
+      events: {
+        onReady: (event) => {
+          event.target.setVolume(30);
+          event.target.playVideo();
+        },
+        onStateChange: (event) => {
+          if (event.data === YT.PlayerState.ENDED) {
+            event.target.playVideo(); // infinite loop
+          }
+        }
+      }
+    });
+  };
+
+  // Handle browser autoplay restrictions
+  document.body.addEventListener('click', () => {
+    if (window.player && window.player.playVideo) {
+      window.player.playVideo();
+    }
+  }, { once: true });
+}
+
+// USAGE - call this anywhere:
+playInfiniteBackgroundAudio('Mfh_b4ZPkKs');
     
 </script>
     
