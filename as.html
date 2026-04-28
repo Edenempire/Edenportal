@@ -1,20 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>PROTOCOL-7 · RADIO + SURVEILLANCE · RSA DEFENSE NET</title>
+    
+    <title>PROTOCOL-7 · RADIO + SURVEILLANCE</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        
         * {
+            
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            
         }
 
         :root {
+            
             --bg-deep: #000000;
             --bg-surface: #050805;
             --bg-card: #0a100a;
@@ -28,18 +40,21 @@
             --recording-red: #ff0044;
             --font-mono: 'Share Tech Mono', monospace;
             --font-body: 'Inter', system-ui, sans-serif;
+            
         }
 
         body {
+            
             background: var(--bg-deep);
             color: var(--fg-neon);
             font-family: var(--font-body);
             padding: 0.8rem;
             min-height: 100vh;
+            
         }
 
-        /* PERMANENT RECORDING BANNER */
         .recording-banner {
+            
             position: fixed;
             top: 0;
             left: 0;
@@ -58,24 +73,29 @@
             gap: 1rem;
             backdrop-filter: blur(8px);
             flex-wrap: wrap;
+            
         }
         
         .rec-badge {
+            
             display: flex;
             align-items: center;
             gap: 8px;
             background: rgba(255,0,68,0.2);
             padding: 0.3rem 1rem;
             border-radius: 40px;
+            
         }
         
         .pulse-red {
+            
             width: 14px;
             height: 14px;
             background: var(--recording-red);
             border-radius: 50%;
             animation: pulseRedBlink 0.8s step-end infinite;
             box-shadow: 0 0 8px #ff0044;
+            
         }
         
         @keyframes pulseRedBlink {
@@ -83,8 +103,8 @@
             50% { opacity: 0.2; }
         }
 
-        /* SCROLL NAV */
         .scroll-nav {
+            
             position: fixed;
             right: 1.5rem;
             top: 80px;
@@ -96,8 +116,11 @@
             border: 1px solid var(--border-primary);
             border-radius: 32px;
             padding: 0.8rem 0.5rem;
+            
         }
+        
         .scroll-btn {
+            
             background: #000;
             border: 1px solid var(--fg-neon);
             color: var(--fg-neon);
@@ -110,53 +133,69 @@
             cursor: pointer;
             font-size: 1.4rem;
             transition: 0.1s;
+            
         }
+        
         .scroll-btn:hover { background: var(--fg-neon); color: black; }
 
         .protocol-grid {
+            
             max-width: 1600px;
             margin: 60px auto 0 auto;
             background: var(--bg-surface);
             border: 1px solid var(--border-primary);
+            
         }
 
         .stats-dashboard {
+            
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border-subtle);
             background: var(--bg-card);
+            
         }
 
         .stat-tile {
+            
             border: 1px solid var(--border-subtle);
             padding: 0.7rem;
             text-align: center;
+            
         }
+        
         .stat-number-big { font-size: 1.8rem; font-weight: 900; font-family: var(--font-mono); }
 
         .dual-panel {
+            
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.2rem;
             padding: 1.5rem;
+            
         }
 
         .panel {
+            
             background: var(--bg-card);
             border: 1px solid var(--border-primary);
             padding: 1rem;
+            
         }
 
         .panel-title {
+            
             font-family: var(--font-mono);
             border-bottom: 1px solid var(--border-primary);
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
+            
         }
 
         .ptt-giant {
+            
             width: 100%;
             background: #0a1a0a;
             border: 2px solid var(--border-primary);
@@ -168,17 +207,23 @@
             cursor: pointer;
             transition: 0.05s linear;
             border-radius: 8px;
+            
         }
+        
         .ptt-giant:active { transform: scale(0.98); background: #1a3a1a; }
         .ptt-giant.tx-active { background: #330000; border-color: var(--alert-red); color: var(--alert-red); box-shadow: 0 0 20px red; }
 
         .button-fleet {
+            
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
             margin: 1rem 0;
+            
         }
+        
         .tact-btn {
+            
             background: var(--bg-surface);
             border: 1px solid var(--border-primary);
             padding: 0.6rem 1rem;
@@ -187,31 +232,42 @@
             font-size: 0.75rem;
             cursor: pointer;
             transition: 0.1s;
+            
         }
+        
         .tact-btn:hover { background: #1a3a1a; }
         .danger-btn { border-color: var(--alert-red); color: var(--alert-red); }
 
         .channel-row {
+            
             display: flex;
             gap: 0.5rem;
             align-items: center;
             margin-top: 1rem;
             flex-wrap: wrap;
+            
         }
+        
         .channel-input {
+            
             background: black;
             border: 1px solid var(--border-primary);
             padding: 0.5rem;
             color: var(--fg-neon);
             font-family: monospace;
+            
         }
 
         .vault-master {
+            
             margin: 0 1.5rem 1.5rem 1.5rem;
             background: var(--bg-card);
             border: 2px solid var(--border-primary);
+            
         }
+        
         .vault-toolbar {
+            
             padding: 1rem;
             border-bottom: 1px solid var(--border-primary);
             display: flex;
@@ -219,48 +275,69 @@
             gap: 0.8rem;
             justify-content: space-between;
             align-items: center;
+            
         }
+        
         .recordings-grid-vault {
+            
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 0.8rem;
             padding: 1rem;
             max-height: 550px;
             overflow-y: auto;
+            
         }
+        
         .recording-item {
+            
             background: #050a05;
             border: 1px solid var(--border-subtle);
             padding: 0.8rem;
+            
         }
+        
         .rec-meta-row { font-size: 0.7rem; color: var(--fg-muted); margin: 5px 0; }
         .rec-actions-buttons {
+            
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
             margin-top: 0.6rem;
+            
         }
+        
         .mini-control {
+            
             background: black;
             border: 1px solid var(--border-primary);
             padding: 0.3rem 0.6rem;
             font-size: 0.65rem;
             cursor: pointer;
+            
         }
+        
         .peer-list {
+            
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 0.8rem;
+            
         }
+        
         .peer-badge {
+            
             background: #0a2a1a;
             border: 1px solid var(--fg-neon);
             padding: 0.3rem 0.8rem;
             font-size: 0.7rem;
             border-radius: 20px;
+            
         }
+        
         .console-log {
+            
             margin: 1rem 1.5rem;
             background: #010501;
             border: 1px solid var(--border-primary);
@@ -269,18 +346,24 @@
             overflow-y: auto;
             font-family: var(--font-mono);
             font-size: 0.65rem;
+            
         }
+        
         footer { background: var(--bg-card); border-top: 1px solid var(--border-subtle); padding: 0.8rem; text-align: center; font-size: 0.6rem; }
         @media (max-width: 800px) { .dual-panel { grid-template-columns: 1fr; } .scroll-nav { right: 0.5rem; top: 70px; } .recording-banner { font-size: 0.65rem; gap: 0.3rem; } }
+        
     </style>
+    
 </head>
+    
 <body>
 
-<!-- PERMANENT RECORDING INDICATOR - VISUAL WARNING -->
 <div class="recording-banner">
     <div class="rec-badge">
         <div class="pulse-red"></div>
-        <span>🔴 PERPETUAL AUDIO CAPTURE ACTIVE</span>
+        <span>🟢 Protocol-7: South African Airspace Surveillance</span>
+        <br>
+        <span>PERPETUAL AUDIO CAPTURE ACTIVE</span>
     </div>
     <span>⚠️ ALL AUDIO IS BEING RECORDED & SAVED LOCALLY + CLOUD</span>
     <div class="rec-badge">
@@ -365,13 +448,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
 <script>
-    // ============================================================
-    // PROTOCOL-7: COMPLETE RADIO + PERPETUAL RECORDING (60s auto)
-    // FIRESTORE + LOCALSTORAGE DUAL BACKUP
-    // VISUAL RECORDING INDICATOR
-    // NO AUTO-DELETE | FULL DUPLEX SIGNALING
-    // ============================================================
 
     const FIREBASE_CONFIG = {
         apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
@@ -382,7 +460,6 @@
         appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
 
-    // DOM Elements
     const recordingsGrid = document.getElementById('recordingsGrid');
     const pttBtn = document.getElementById('pttBtn');
     const muteMic = document.getElementById('muteMicBtn');
@@ -401,7 +478,6 @@
     const txStatusSpan = document.getElementById('txStatus');
     const consoleLog = document.getElementById('consoleLog');
 
-    // Stats spans
     const totalRecsSpan = document.getElementById('totalRecs');
     const localCountSpan = document.getElementById('localCount');
     const cloudCountSpan = document.getElementById('cloudCount');
@@ -409,11 +485,10 @@
     const txEventsSpan = document.getElementById('txEvents');
     const peerCountSpan = document.getElementById('peerCount');
 
-    // ========== CORE STATE ==========
     let mediaStream = null;
     let mediaRecorder = null;
     let recordedChunks = [];
-    let recordingsLibrary = [];     // Full archive (max 1000)
+    let recordingsLibrary = [];    
     let sessionStart = Date.now();
     let isPTTActive = false;
     let isMuted = false;
@@ -427,7 +502,6 @@
     let currentChannel = '4625625';
     let displayChannel = '462.5625';
     
-    // WebRTC State
     let peerConnection = null;
     let remoteAudio = null;
     let activePeers = new Map();
@@ -436,7 +510,6 @@
     let heartbeatInterval = null;
     const ICE_SERVERS = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] };
 
-    // ========== HELPER FUNCTIONS ==========
     function addLog(msg, isError = false) {
         const div = document.createElement('div');
         div.innerHTML = `<span style="color:#00ff41;">[${new Date().toLocaleTimeString()}]</span> ${msg}`;
@@ -458,7 +531,6 @@
         peerCountSpan.innerText = activePeers.size;
     }
 
-    // Save to both localStorage + Firestore
     async function saveRecordingToVault(blob, customName, isTxEvent = false) {
         const id = Date.now() + '_' + Math.random().toString(36).substr(2, 8);
         const sizeKB = (blob.size / 1024).toFixed(1);
@@ -472,7 +544,6 @@
                 recordingsLibrary.unshift(record);
                 if (recordingsLibrary.length > 1000) recordingsLibrary.pop();
                 
-                // LOCALSTORAGE SAVE
                 localStorage.setItem('P7_VAULT', JSON.stringify(recordingsLibrary.map(r => ({ 
                     id: r.id, name: r.name, timestamp: r.timestamp, sizeKB: r.sizeKB, base64: r.base64, isTxEvent: r.isTxEvent, cloudId: r.cloudId 
                 }))));
@@ -481,7 +552,6 @@
                 updateStatsUI();
                 addLog(`✅ SAVED: ${name} (${sizeKB}KB) - ${isTxEvent ? 'TX EVENT' : 'AUTO SEGMENT'}`);
                 
-                // FIRESTORE SAVE (optional but robust)
                 if (db) {
                     try {
                         const docRef = await db.collection('p7_recordings').add({
@@ -602,7 +672,6 @@
         } else { renderVault(); }
     }
 
-    // ========== PERPETUAL RECORDER (60s auto-save) ==========
     async function initPerpetualRecorder() {
         try {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -624,7 +693,7 @@
                     await saveRecordingToVault(blob, `AUTO_${Date.now()}.webm`, false);
                     recordedChunks = [];
                 }
-            }, 60000); // 60 seconds
+            }, 60000);
             
             setInterval(() => updateStatsUI(), 5000);
             return true;
@@ -634,7 +703,6 @@
         }
     }
 
-    // ========== WEBRTC RADIO (Firestore Signaling) ==========
     function sanitizeChannel(ch) { return ch.replace(/[\.#\$\[\]/]/g, '_'); }
     
     async function requestTxLock() {
@@ -759,7 +827,6 @@
         addLog(`📡 RADIO TERMINATED`);
     }
 
-    // ========== CHANNEL CHANGE ==========
     async function changeChannel() {
         let newRaw = channelInput.value.trim();
         if(!newRaw) newRaw = '4625625';
@@ -774,7 +841,6 @@
         addLog(`📡 Now on FREQ: ${displayChannel}`);
     }
 
-    // ========== PTT CONTROLS ==========
     pttBtn.addEventListener('mousedown', async () => {
         if(isMuted) { addLog("🔇 Muted, cannot TX", true); return; }
         if(!mediaStream) { addLog("❌ No audio stream", true); return; }
@@ -837,12 +903,10 @@
         addLog("🎧 Earphone button = PTT");
     }
 
-    // Scroll helpers
     document.getElementById('scrollTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     document.getElementById('scrollMidBtn').addEventListener('click', () => document.getElementById('vaultAnchor').scrollIntoView({ behavior: 'smooth' }));
     document.getElementById('scrollDownBtn').addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
 
-    // ========== BOOTSTRAP ==========
     async function bootstrap() {
         addLog("🚀 PROTOCOL-7 BOOTING | RADIO + SURVEILLANCE");
         await initPerpetualRecorder();
@@ -856,11 +920,8 @@
     }
     bootstrap();
 
-    // JS FUNCTION
-
-    // SINGLE FUNCTION: INTEGRATED CAMERA SURVEILLANCE + RADIO
 async function initCameraSurveillance() {
-    // ========== CAMERA ELEMENTS & STATE ==========
+
     const camContainer = document.createElement('div');
     camContainer.className = 'panel';
     camContainer.style.marginTop = '1rem';
@@ -882,11 +943,9 @@ async function initCameraSurveillance() {
         </div>
     `;
     
-    // Insert camera panel after radio panel in dual-panel
     const dualPanel = document.querySelector('.dual-panel');
     if (dualPanel) dualPanel.appendChild(camContainer);
     
-    // ========== CAMERA GLOBALS ==========
     let videoStream = null;
     let videoRecorder = null;
     let videoChunks = [];
@@ -898,7 +957,6 @@ async function initCameraSurveillance() {
     const videoRecStatusSpan = document.getElementById('videoRecStatus');
     const snapshotCountSpan = document.getElementById('snapshotCount');
     
-    // Helper: add log entry
     function addCamLog(msg, isError = false) {
         const consoleLogDiv = document.getElementById('consoleLog');
         if (consoleLogDiv) {
@@ -913,7 +971,6 @@ async function initCameraSurveillance() {
         }
     }
     
-    // Save snapshot to vault (image)
     async function saveSnapshotToVault(imageBlob) {
         const id = 'SNAP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
         const sizeKB = (imageBlob.size / 1024).toFixed(1);
@@ -934,7 +991,6 @@ async function initCameraSurveillance() {
                     cloudId: null
                 };
                 
-                // Access existing recordingsLibrary from global scope
                 if (window.recordingsLibrary) {
                     window.recordingsLibrary.unshift(record);
                     if (window.recordingsLibrary.length > 1000) window.recordingsLibrary.pop();
@@ -947,8 +1003,7 @@ async function initCameraSurveillance() {
                 }
                 
                 addCamLog(`📸 SNAPSHOT saved: ${name} (${sizeKB}KB)`);
-                
-                // Cloud backup if Firestore available
+
                 if (window.db) {
                     try {
                         const docRef = await window.db.collection('p7_recordings').add({
@@ -965,7 +1020,6 @@ async function initCameraSurveillance() {
         });
     }
     
-    // Save video recording to vault
     async function saveVideoToVault(videoBlob) {
         const id = 'VID_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
         const sizeKB = (videoBlob.size / 1024).toFixed(1);
@@ -1015,8 +1069,7 @@ async function initCameraSurveillance() {
             reader.readAsDataURL(videoBlob);
         });
     }
-    
-    // Start camera stream
+
     async function startCamera() {
         if (videoStream) {
             videoStream.getTracks().forEach(track => track.stop());
@@ -1033,7 +1086,7 @@ async function initCameraSurveillance() {
             addCamLog(`📷 Camera started (${currentCamera === 'user' ? 'FRONT' : 'BACK'} mode)`);
             return true;
         } catch (err) {
-            // Fallback: try without exact facingMode
+
             try {
                 const fallbackConstraints = { video: true, audio: false };
                 videoStream = await navigator.mediaDevices.getUserMedia(fallbackConstraints);
@@ -1050,7 +1103,6 @@ async function initCameraSurveillance() {
         }
     }
     
-    // Take snapshot
     async function takeSnapshot() {
         if (!videoElement || !videoElement.videoWidth) {
             addCamLog('No video feed available for snapshot', true);
@@ -1063,7 +1115,6 @@ async function initCameraSurveillance() {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
         
-        // Add timestamp overlay
         ctx.font = 'bold 16px monospace';
         ctx.fillStyle = '#00ff41';
         ctx.shadowColor = 'black';
@@ -1076,7 +1127,7 @@ async function initCameraSurveillance() {
                 await saveSnapshotToVault(blob);
                 snapshotCounter++;
                 if (snapshotCountSpan) snapshotCountSpan.innerHTML = `📸 ${snapshotCounter} snapshots`;
-                // Visual flash effect
+
                 const flashDiv = document.createElement('div');
                 flashDiv.style.position = 'fixed';
                 flashDiv.style.top = 0;
@@ -1093,7 +1144,6 @@ async function initCameraSurveillance() {
         }, 'image/jpeg', 0.85);
     }
     
-    // Start video recording
     async function startVideoRecording() {
         if (isVideoRecording) {
             addCamLog('Already recording video', true);
@@ -1106,7 +1156,7 @@ async function initCameraSurveillance() {
         
         videoChunks = [];
         try {
-            // Use MediaRecorder with video stream
+
             videoRecorder = new MediaRecorder(videoStream, { mimeType: 'video/webm' });
             videoRecorder.ondataavailable = (e) => {
                 if (e.data.size > 0) videoChunks.push(e.data);
@@ -1121,7 +1171,7 @@ async function initCameraSurveillance() {
                 if (videoRecStatusSpan) videoRecStatusSpan.innerHTML = '⚪ VIDEO STANDBY';
                 addCamLog('Video recording stopped and saved');
             };
-            videoRecorder.start(1000); // Capture in 1-second chunks for safety
+            videoRecorder.start(1000);
             isVideoRecording = true;
             if (videoRecStatusSpan) {
                 videoRecStatusSpan.innerHTML = '🔴 RECORDING VIDEO';
@@ -1133,7 +1183,6 @@ async function initCameraSurveillance() {
         }
     }
     
-    // Stop video recording
     function stopVideoRecording() {
         if (videoRecorder && isVideoRecording) {
             videoRecorder.stop();
@@ -1144,22 +1193,20 @@ async function initCameraSurveillance() {
             addCamLog('No active video recording', true);
         }
     }
-    
-    // Toggle camera (front/back)
+
     async function toggleCamera() {
         currentCamera = (currentCamera === 'user') ? 'environment' : 'user';
         await startCamera();
         addCamLog(`Switched to ${currentCamera === 'user' ? 'FRONT' : 'BACK'} camera`);
     }
-    
-    // Update vault rendering to show camera media
+
     function enhanceVaultForCamera() {
-        // Override or patch existing renderVault to show camera thumbnails
+
         const originalRender = window.renderVault;
         if (originalRender && !window._cameraPatched) {
             window.renderVault = function() {
                 originalRender();
-                // Add camera indicators to items
+
                 setTimeout(() => {
                     document.querySelectorAll('.recording-item').forEach(item => {
                         const titleSpan = item.querySelector('strong');
@@ -1178,8 +1225,7 @@ async function initCameraSurveillance() {
             if (window.renderVault) window.renderVault();
         }
     }
-    
-    // ========== ATTACH EVENT LISTENERS ==========
+
     setTimeout(() => {
         const snapshotBtn = document.getElementById('snapshotBtn');
         const startVideoBtn = document.getElementById('startVideoRecBtn');
@@ -1191,12 +1237,10 @@ async function initCameraSurveillance() {
         if (stopVideoBtn) stopVideoBtn.addEventListener('click', stopVideoRecording);
         if (toggleCamBtn) toggleCamBtn.addEventListener('click', toggleCamera);
     }, 100);
-    
-    // Initialize camera on load
+
     await startCamera();
     enhanceVaultForCamera();
     
-    // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
         if (videoStream) {
             videoStream.getTracks().forEach(track => track.stop());
@@ -1210,8 +1254,6 @@ async function initCameraSurveillance() {
     return true;
 }
 
-// ========== EXECUTE: BOOT CAMERA SURVEILLANCE ==========
-// Auto-run after radio initializes
 if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => setTimeout(() => initCameraSurveillance(), 1500));
@@ -1221,5 +1263,90 @@ if (typeof window !== 'undefined') {
 }
     
 </script>
+    
 </body>
+    
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
