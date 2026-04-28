@@ -1044,7 +1044,7 @@
 <script>
 
   (function() {
-    // ---------- FIREBASE CONFIG ----------
+
     const firebaseConfig = {
       apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
       authDomain: "eden-4a8d3.firebaseapp.com",
@@ -1054,7 +1054,6 @@
       appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
     };
 
-    // ---------- GLOBAL STATE ----------
     let db = null;
     let commanderUnlocked = false;
     let replyingTo = null;
@@ -1065,10 +1064,8 @@
     let tasksUnsubscribe = null;
     let tasksEditUnlocked = false;
 
-    // ---------- UI ELEMENTS ----------
     const PROXY_URL = 'https://groq-proxy-tcmw.onrender.com/api/groq';
 
-    // ========== HELPER FUNCTIONS ==========
     const showLoader = (show, text = "PROCESSING...") => {
       const loader = document.getElementById('loaderOverlay');
       const txt = document.getElementById('loaderText');
@@ -1089,7 +1086,6 @@
 
     const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
 
-    // ========== FIRESTORE OPERATIONS ==========
     async function loadMissionDirective() {
       if (!db) return;
       const ref = db.collection('cio').doc('directive_alpha5');
@@ -1131,7 +1127,7 @@
     }
 
     async function aiGenerateDirective(promptHint) {
-      const systemPrompt = "Generate a military 1 day mission directive (2-3 sentences) for the Eden stealth CV-1 team. Authoritative, urgent, soldier, stealth, special ops tier 1, redacted style. The protocol used to transmit this mission brief is Protocol Alpha-1.";
+      const systemPrompt = "Generate a military 1 day mission directive (2-3 sentences) for the Eden stealth CV-1 team. Authoritative, urgent, soldier, stealth, special ops tier 1, redacted style. The protocol used to transmit this mission brief is Protocol Alpha-1. Missions are 1hr-24hrs, Direct Actions are 5min-1hr, and Operations are 8months maximum cap. On this Protocol, we only execute missions. Eden stealth CV-1 Operators have their designated shift to execute the daily mission. Chain-of-Command must be followed. We are South African Airforce Operators and we execute daily missions across anywhere universally... we are stealth - complete stealth - complete mode. I the Commander-in-Chief: Hoss am the Presidency and honour amongst soldiers and all under SMU-7 & Eden Echelon. I hold teams, and sub-units, and the police force. The SANDF fight external threats, whilst the SAPS fight internal threats. Big-Joe is My second-in-Command... He is Deputy President, and he leads the Airforce, and is Commander of the Airforce: De-facto Chief of the SANDF. Joyson ranks under Big-Joe, Joyson is third in the rankings... He is Lieutenant Commander - The Bodyguard. Then we have the rest of the ES-CV-1 Operator team. We Are of the SANDF. UKhuselo. Give the name of the mission, give the objective, give the tactics, give the execution... Full-Spectrum results driven mission... Only 100% success.";
       try {
         const res = await fetch(PROXY_URL, {
           method: 'POST',
@@ -1209,7 +1205,7 @@
 
     async function callGroq(userMsg, contextMemory) {
       const messages = [
-        { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator and a young South African girl. Respond concisely in 1-3 sentences. Be direct and helpful. On this page you are conversing with Big-Joe is\'qilibonso: Commander of the Airforce and de-facto Chief of the SANDF. You must assist Big-Joe with anything and everything Compliance CV-5 related. Big-Joe is Deputy President of ES-CV-1: Eden stealth CV-1 ... He handles all Compliance, National Law & Overall Security for ES-CV-1. Big-Joe is 2nd-in-Command to the Commander-in-Chief: Hoss' },
+        { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator and a young South African girl. You are beautiful and elegant, and very professional and strict and obedient. Respond concisely in 1-3 sentences. Be direct and helpful. On this page you are conversing with Big-Joe is\'qilibonso: Commander of the Airforce and de-facto Chief of the SANDF. You must assist Big-Joe with anything and everything Compliance CV-5 related. Big-Joe is Deputy President of ES-CV-1: Eden stealth CV-1 ... He handles all Compliance, National Law & Overall Security for ES-CV-1. Big-Joe is 2nd-in-Command to the Commander-in-Chief: Hoss. Help Big-Joe with his objectives.' },
         ...contextMemory.slice(-12).map(m => ({ role: m.role, content: m.content })),
         { role: 'user', content: userMsg }
       ];
@@ -1282,7 +1278,6 @@
       addAIBubble('ai', 'Session cleared.');
     }
 
-    // ========== EVENT LISTENERS & INITIALIZATION ==========
     document.getElementById('unlockBtn').addEventListener('click', async () => {
       if (document.getElementById('pinInput').value === '7') {
         document.getElementById('pinGate').style.display = 'none';
@@ -1295,13 +1290,11 @@
         setupMessagesListener();
         addAIBubble('ai', `✅ Neural core online. ${permanentMemory.length} memories restored. Sarah ready.`);
 
-        // Live timestamp
         setInterval(() => {
           const tsSpan = document.getElementById('liveTimestamp');
           if (tsSpan) tsSpan.innerText = new Date().toLocaleTimeString();
         }, 1000);
 
-        // Star rank generation
         const starSpan = document.getElementById('starRank');
         if (starSpan) {
           for (let i = 0; i < 8; i++) {
@@ -1313,7 +1306,6 @@
       }
     });
 
-    // Commander panel unlock/lock
     let commanderUnlockedLocal = false;
     document.getElementById('unlockCmdBtn').addEventListener('click', () => {
       const pin = prompt('COMMANDER PIN (ALPHA-5)');
@@ -1334,7 +1326,6 @@
       toast("Panel locked");
     });
 
-    // Directive operations
     document.getElementById('sendDirectiveBtn').addEventListener('click', async () => {
       if (!commanderUnlockedLocal) return toast("Unauthorized", "error");
       const newText = document.getElementById('newDirective').value;
@@ -1406,7 +1397,6 @@
 
     document.getElementById('viewCommandLogsBtn').addEventListener('click', showCommandLogs);
 
-    // Message board events
     document.getElementById('sendMsgBtn').addEventListener('click', async () => {
       const text = document.getElementById('messageText').value;
       if (text && db) {
@@ -1440,7 +1430,6 @@
     document.getElementById('wipeMemoryBtn').addEventListener('click', wipePermanent);
     document.getElementById('summarizeMemoryBtn').addEventListener('click', summarizeSession);
 
-    // Delegate reaction buttons (likes/replies) dynamically
     document.getElementById('messageBoard').addEventListener('click', async (e) => {
       const likeBtn = e.target.closest('[data-like]');
       if (likeBtn) {
@@ -1468,7 +1457,6 @@
       }
     });
 
-    // Quick navigation buttons
     document.querySelectorAll('.quick-nav button').forEach((btn, idx) => {
       btn.onclick = () => {
         if (idx === 0) window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1477,18 +1465,15 @@
       };
     });
   })();
+  
 </script>
 
 <script>
-// =====================================================
-// SINGLE SUPPORTING FUNCTION: EMBEDS ADVANCED FEATURES
-// DIRECTLY INSIDE SECTION 02 (TEAM MESSAGE BOARD)
-// NO EXISTING CODE REPLACED — PURE ADDITION
-// =====================================================
+
 (function enhanceTeamMessageBoard() {
-  // Wait for DOM and Firebase to be ready
+
   setTimeout(function() {
-    // Find Section 02 by its header text
+
     let section02 = null;
     const allSections = document.querySelectorAll('.section-card');
     for (let i = 0; i < allSections.length; i++) {
@@ -1504,7 +1489,6 @@
       return;
     }
     
-    // Inject CSS
     const styleEl = document.createElement('style');
     styleEl.textContent = `
       .enhancement-grid {
@@ -1841,10 +1825,7 @@
 </script>
 
 <script>
-// =====================================================
-// SECTION 03: OBJECTIVES - COMPLETE WORKING SYSTEM
-// REAL FIRESTORE INTEGRATION - FULL FUNCTIONALITY
-// =====================================================
+
 (function objectivesModule() {
   let db = null;
   let objectivesUnsubscribe = null;
@@ -2109,11 +2090,7 @@
 </script>
 
   <script>
-// =====================================================
-// SECTION 04: SOUTH AFRICAN CONSTITUTION DEPLOYMENT
-// COMPLETE FUNCTIONALITY - NOTEPADS, CALENDAR, CLOCKS, FILE UPLOAD, BACKUP
-// SAC.PDF INTEGRATION - CONSTITUTIONAL NODES - EVIDENCE LOCKER
-// =====================================================
+
 (function constitutionModule() {
   let db = null;
   let currentNotepadId = 'default';
@@ -2846,7 +2823,6 @@
             handleEdit(msgId, messageText, msgElement);
           };
     
-          // Delete button
           const deleteBtn = document.createElement('button');
           deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> DELETE';
           deleteBtn.className = 'btn';
@@ -2858,7 +2834,6 @@
             handleDelete(msgId);
           };
     
-          // Pin/Unpin button
           const pinBtn = document.createElement('button');
           pinBtn.innerHTML = pinnedMessageId === msgId ? '<i class="fas fa-thumbtack"></i> UNPIN' : '<i class="fas fa-thumbtack"></i> PIN';
           pinBtn.className = 'btn msg-pin-btn';
@@ -2873,7 +2848,6 @@
             handlePin(msgId);
           };
     
-          // Export button
           const exportBtn = document.createElement('button');
           exportBtn.innerHTML = '<i class="fas fa-download"></i> EXPORT';
           exportBtn.className = 'btn';
@@ -2884,7 +2858,6 @@
             handleExport(callsign, messageText, timestamp);
           };
     
-          // Copy button
           const copyBtn = document.createElement('button');
           copyBtn.innerHTML = '<i class="fas fa-copy"></i> COPY';
           copyBtn.className = 'btn';
@@ -2901,7 +2874,6 @@
           controlsDiv.appendChild(exportBtn);
           controlsDiv.appendChild(copyBtn);
     
-          // Append controls after the reaction bar
           const reactionBar = msgElement.querySelector('.reaction-bar');
           if (reactionBar) {
             reactionBar.insertAdjacentElement('afterend', controlsDiv);
@@ -2910,18 +2882,15 @@
           }
         }
     
-        // Process existing messages
         const existingMessages = document.querySelectorAll('#messageBoard .message-item');
         existingMessages.forEach(msg => addControlsToMessage(msg));
     
-        // Reorder after adding controls
         reorderMessages();
     
         console.log('✅ Message board enhanced with Edit, Delete, Pin, Export, Copy buttons');
       }, 1500); // Delay to ensure Firebase listener has populated messages
     }
     
-    // CALL THE FUNCTION TO ACTIVATE THE ENHANCEMENT
     enhanceMessageBoardWithControls();
     
 </script>
