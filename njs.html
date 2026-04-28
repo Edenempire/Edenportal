@@ -951,93 +951,103 @@ console.log("http module is available in Node.js core.");`
 
         function showEventDrivenPopup() {
             
-            let existingBtn = document.getElementById('eventDrivenTriggerBtn');
-            if (!existingBtn) {
-                const btn = document.createElement('button');
-                btn.id = 'eventDrivenTriggerBtn';
-                btn.className = 'btn btn-secondary';
-                btn.style.marginLeft = '10px';
-                btn.innerHTML = '<i class="fas fa-bolt"></i> What is Event-Driven?';
-                
-                const heroP = document.querySelector('.hero p');
-                if (heroP) {
-                    heroP.appendChild(btn);
-                } else {
-                    document.querySelector('.hero')?.appendChild(btn);
-                }
-                existingBtn = btn;
-            }
-            
-            const oldPopup = document.getElementById('eventDrivenModal');
-            if (oldPopup) oldPopup.remove();
+            // Remove any existing modal first to prevent duplicates
+            const existingModal = document.getElementById('eventDrivenModal');
+            if (existingModal) existingModal.remove();
             
             const modal = document.createElement('div');
             modal.id = 'eventDrivenModal';
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '60%';
-            modal.style.height = '60%';
-            modal.style.backgroundColor = 'rgba(0,0,0,0.85)';
-            modal.style.zIndex = '10000';
-            modal.style.display = 'flex';
-            modal.style.justifyContent = 'center';
-            modal.style.alignItems = 'center';
-            modal.style.fontFamily = "'Inter', sans-serif";
-
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.85);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Inter', sans-serif;
+                padding: 16px;
+                box-sizing: border-box;
+            `;
+        
             const popup = document.createElement('div');
-            popup.style.backgroundColor = '#0f1724';
-            popup.style.borderRadius = '2rem';
-            popup.style.border = '1px solid #4caf6e';
-            popup.style.maxWidth = '550px';
-            popup.style.width = '80%';
-            popup.style.padding = '2rem';
-            popup.style.boxShadow = '0 25px 45px -12px rgba(0,0,0,0.6)';
-            popup.style.position = 'relative';
+            popup.style.cssText = `
+                background-color: #0f1724;
+                border-radius: 2rem;
+                border: 1px solid #4caf6e;
+                max-width: 600px;
+                width: 100%;
+                max-height: 90vh;
+                padding: 2rem;
+                box-shadow: 0 25px 45px -12px rgba(0,0,0,0.6);
+                position: relative;
+                overflow-y: auto;
+                box-sizing: border-box;
+            `;
             
             const closeBtn = document.createElement('button');
             closeBtn.innerHTML = '&times;';
-            closeBtn.style.position = 'absolute';
-            closeBtn.style.top = '1rem';
-            closeBtn.style.right = '1.2rem';
-            closeBtn.style.background = 'none';
-            closeBtn.style.border = 'none';
-            closeBtn.style.fontSize = '1.8rem';
-            closeBtn.style.cursor = 'pointer';
-            closeBtn.style.color = '#9aaebf';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 1rem;
+                right: 1.2rem;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                cursor: pointer;
+                color: #9aaebf;
+                z-index: 10;
+                transition: color 0.2s;
+            `;
+            closeBtn.onmouseenter = () => closeBtn.style.color = '#fff';
+            closeBtn.onmouseleave = () => closeBtn.style.color = '#9aaebf';
             
             const icon = document.createElement('div');
-            icon.style.textAlign = 'center';
-            icon.style.marginBottom = '1rem';
+            icon.style.cssText = `
+                text-align: center;
+                margin-bottom: 1rem;
+            `;
             icon.innerHTML = '<i class="fas fa-bolt" style="font-size: 3rem; color: #8fef9b;"></i>';
-
+        
             const title = document.createElement('h2');
-            title.style.fontSize = '1.8rem';
-            title.style.fontWeight = '700';
-            title.style.background = 'linear-gradient(135deg, #8bcb6e, #3b9e5c)';
-            title.style.backgroundClip = 'text';
-            title.style.webkitBackgroundClip = 'text';
-            title.style.color = 'transparent';
-            title.style.marginBottom = '1rem';
-            title.style.textAlign = 'center';
+            title.style.cssText = `
+                font-size: clamp(1.4rem, 5vw, 1.8rem);
+                font-weight: 700;
+                background: linear-gradient(135deg, #8bcb6e, #3b9e5c);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                margin-bottom: 1rem;
+                text-align: center;
+            `;
             title.innerText = '⚡ Event-Driven Architecture';
             
             const text = document.createElement('p');
-            text.style.color = '#cbdde9';
-            text.style.fontSize = '1rem';
-            text.style.lineHeight = '1.5';
-            text.style.marginBottom = '1rem';
-            text.style.textAlign = 'center';
+            text.style.cssText = `
+                color: #cbdde9;
+                font-size: clamp(0.875rem, 4vw, 1rem);
+                line-height: 1.5;
+                margin-bottom: 1rem;
+                text-align: center;
+            `;
             text.innerHTML = 'Node.js is <strong style="color:#8fef9b">event-driven</strong> — it waits for events (clicks, requests, file reads) and reacts immediately, without blocking.';
-
+        
             const codeBox = document.createElement('div');
-            codeBox.style.backgroundColor = '#07121c';
-            codeBox.style.borderRadius = '1rem';
-            codeBox.style.padding = '1rem';
-            codeBox.style.margin = '1rem 0';
-            codeBox.style.fontFamily = 'monospace';
-            codeBox.style.fontSize = '0.8rem';
-            codeBox.style.borderLeft = '3px solid #4caf6e';
+            codeBox.style.cssText = `
+                background-color: #07121c;
+                border-radius: 1rem;
+                padding: 1rem;
+                margin: 1rem 0;
+                font-family: 'Menlo', 'Fira Code', 'Courier New', monospace;
+                font-size: clamp(0.7rem, 3.5vw, 0.8rem);
+                border-left: 3px solid #4caf6e;
+                overflow-x: auto;
+                white-space: pre-wrap;
+                word-break: break-word;
+            `;
             codeBox.innerHTML = `
                 <span style="color:#8fef9b">// EventEmitter — heart of Node.js events</span><br>
                 const EventEmitter = require(<span style="color:#b3d9ff">'events'</span>);<br>
@@ -1047,27 +1057,31 @@ console.log("http module is available in Node.js core.");`
                 });<br>
                 emitter.emit(<span style="color:#b3d9ff">'data'</span>, <span style="color:#b3d9ff">'Hello Event-Driven World!'</span>);
             `;
-
+        
             const bullets = document.createElement('ul');
-            bullets.style.margin = '1rem 0';
-            bullets.style.paddingLeft = '1.5rem';
-            bullets.style.color = '#b8cee4';
-            bullets.style.fontSize = '0.9rem';
-            bullets.style.lineHeight = '1.6';
+            bullets.style.cssText = `
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+                color: #b8cee4;
+                font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+                line-height: 1.6;
+            `;
             bullets.innerHTML = `
-                <li><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Non-blocking I/O</strong> — handles thousands of concurrent connections</li>
-                <li><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Event Loop</strong> — continuously checks for events and executes callbacks</li>
-                <li><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Real examples</strong>: HTTP requests, file watchers, streams, WebSockets</li>
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Non-blocking I/O</strong> — handles thousands of concurrent connections</li>
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Event Loop</strong> — continuously checks for events and executes callbacks</li>
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Real examples</strong>: HTTP requests, file watchers, streams, WebSockets</li>
             `;
             
             const footer = document.createElement('div');
-            footer.style.backgroundColor = '#1a2a2f';
-            footer.style.borderRadius = '0.8rem';
-            footer.style.padding = '0.7rem';
-            footer.style.marginTop = '1rem';
-            footer.style.fontSize = '0.8rem';
-            footer.style.textAlign = 'center';
-            footer.style.color = '#b9e6b3';
+            footer.style.cssText = `
+                background-color: #1a2a2f;
+                border-radius: 0.8rem;
+                padding: 0.7rem;
+                margin-top: 1rem;
+                font-size: clamp(0.7rem, 3vw, 0.8rem);
+                text-align: center;
+                color: #b9e6b3;
+            `;
             footer.innerHTML = '<i class="fas fa-microchip"></i> "Event-Driven" = Your code sleeps until something interesting happens.';
             
             popup.appendChild(closeBtn);
@@ -1080,18 +1094,20 @@ console.log("http module is available in Node.js core.");`
             modal.appendChild(popup);
             document.body.appendChild(modal);
             
+            // Close modal when clicking outside
             const closeModal = () => modal.remove();
             closeBtn.onclick = closeModal;
             modal.onclick = (e) => { if (e.target === modal) closeModal(); };
-
-            existingBtn.onclick = (e) => {
-                e.preventDefault();
-                showEventDrivenPopup(); 
+            
+            // Close on Escape key
+            const handleEscape = (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', handleEscape);
+                }
             };
+            document.addEventListener('keydown', handleEscape);
         }
-        
-        showEventDrivenPopup();
-        
                 
         </script>
          
