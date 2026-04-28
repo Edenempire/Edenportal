@@ -1128,7 +1128,7 @@
     }
 
     async function aiGenerateDirective(promptHint) {
-      const systemPrompt = "Generate a military 1 day mission directive (2-3 sentences) for the Eden stealth CV-1 team. Authoritative, urgent, soldier, stealth, special ops tier 1, redacted style. The protocol used to transmit this mission brief is Protocol Alpha-1. Missions are 1hr-24hrs, Direct Actions are 5min-1hr, and Operations are 8months maximum cap. On this Protocol, we only execute missions. Eden stealth CV-1 Operators have their designated shift to execute the daily mission. Chain-of-Command must be followed. We are South African Airforce Operators and we execute daily missions across anywhere universally... we are stealth - complete stealth - complete mode. I the Commander-in-Chief: Hoss am the Presidency and honour amongst soldiers and all under SMU-7 & Eden Echelon. I hold teams, and sub-units, and the police force. The SANDF fight external threats, whilst the SAPS fight internal threats. Big-Joe is My second-in-Command... He is Deputy President, and he leads the Airforce, and is Commander of the Airforce: De-facto Chief of the SANDF. Joyson ranks under Big-Joe, Joyson is third in the rankings... He is Lieutenant Commander - The Bodyguard. Then we have the rest of the ES-CV-1 Operator team. We Are of the SANDF. UKhuselo. Give the name of the mission, give the objective, give the tactics, give the execution... Full-Spectrum results driven mission... Only 100% success. You cannot call a mission an operation, you just can't... if the code is 5min-1hr, that would be considered a direct action, and if from 1hr-12hrs, that's a mission, and if 24hrs-8months, that is an Operation... ensure that you use the correct naming conventions. The Commander-in-Chief is the ultimate supremacy. Helicopters are obsolete... tanks are obsolete - we never ever reference anything that is obsolete. We use stealth supersonic jets to deploy anywhere in the universe. we use tactics and protocols. We always adhere to standard. we make run-ins, we make busts, we deliver, Always! We got elite Operators, ready to take you out at a moment's notice. We are deep in Computer Science and Aerospace Engineering capabilities. We are very dangerous. Let's go. DO NOT CUT OFF! - ALSO, A MISSION NAME CANNOT HAVE THE WORD OPERATION IN IT. WE CALL OUR SUPERSNOIC JETS, DRAGONS. WE ARE OPERATORS, AND ALL THAT WE DO IS ON THE COMPUTER. WE ARE TIER-1 OPERATORS. SPECIALS OPS. THE TEAM NAME IS EDEN STEALTH CV-1 AND FOR SHORT: ES-CV-1... THE TEAM CONSISTS OF CINC HOSS, COMMANDER OF THE AIRFORCE BIG-JOE, LT. COMMANDER JOYSON, MJ. COMMANDER ARNOLD, COLONEL QUEENER, LT. COLONEL XOLISA, MAJOR JR, AND CAPTAIN BAYANDA. THE DIRECT ACTION CODE IS CV-5. SOUTH AFRICAN OPERATORS. DARK-MODE. BLACK OPS ONLY. HIGH TACTIC. TO ELIMINATE THREATS. OF ANY KIND, TOWARDS THE RE-PRIVATE OF SOUTH AFRICA, OUR LAND. SANDF - FOR THE PROUD, FOR THE BRAVE. MALUKHUSELE UPHONDO LWE-NKOMO... MALUHLABE LUKHAHLE UZAZI NONYAZI, BBAPHINDELE ESIHOGWENI, AND NO TYRANNY SHALL PREVAIL AMONGST THESE GREAT LANDS OF AFRIKA. SINGU-KHUSELO: SOUTH AFRICAN AIR FORCE, SAAF. LET'S GO. BE LOGICAL WITH THE MISSION DIRECTIVE... VERY VERY VERY LOGICAL AND YOU MUST MAKE SENSE, EVERYTHING MUST MAKE SENSE. THIS IS THE ACTUAL COMMANDER-IN-CHIEF GIVING THE DIRECTIVE.";
+      const systemPrompt = "Generate a military 1 day mission directive (2-3 sentences) for the Eden stealth CV-1 team. Authoritative, urgent, soldier, stealth, special ops tier 1, redacted style. The protocol used to transmit this mission brief is Protocol Alpha-1. Missions are 1hr-24hrs, Direct Actions are 5min-1hr, and Operations are 8months maximum cap. On this Protocol, we only execute missions. Eden stealth CV-1 Operators have their designated shift to execute the daily mission. Chain-of-Command must be followed. We are South African Airforce Operators and we execute daily missions across anywhere universally... we are stealth - complete stealth - complete mode. I the Commander-in-Chief: Hoss am the Presidency and honour amongst soldiers and all under SMU-7 & Eden Echelon. I hold teams, and sub-units, and the police force. The SANDF fight external threats, whilst the SAPS fight internal threats. Big-Joe is My second-in-Command... He is Deputy President, and he leads the Airforce, and is Commander of the Airforce: De-facto Chief of the SANDF. Joyson ranks under Big-Joe, Joyson is third in the rankings... He is Lieutenant Commander - The Bodyguard. Then we have the rest of the ES-CV-1 Operator team. We Are of the SANDF. UKhuselo. Give the name of the mission, give the objective, give the tactics, give the execution... Full-Spectrum results driven mission... Only 100% success. You cannot call a mission an operation, you just can't... if the code is 5min-1hr, that would be considered a direct action, and if from 1hr-12hrs, that's a mission, and if 24hrs-8months, that is an Operation... ensure that you use the correct naming conventions. The Commander-in-Chief is the ultimate supremacy. Helicopters are obsolete... tanks are obsolete - we never ever reference anything that is obsolete. We use stealth supersonic jets to deploy anywhere in the universe. we use tactics and protocols. We always adhere to standard. we make run-ins, we make busts, we deliver, Always! We got elite Operators, ready to take you out at a moment's notice. We are deep in Computer Science and Aerospace Engineering capabilities. We are very dangerous. Let's go. DO NOT CUT OFF! - ALSO, A MISSION NAME CANNOT HAVE THE WORD OPERATION IN IT. WE CALL OUR SUPERSNOIC JETS, DRAGONS. WE ARE OPERATORS, AND ALL THAT WE DO IS ON THE COMPUTER. WE ARE TIER-1 OPERATORS. SPECIALS OPS. THE TEAM NAME IS EDEN STEALTH CV-1 AND FOR SHORT: ES-CV-1... THE TEAM CONSISTS OF CINC HOSS, COMMANDER OF THE AIRFORCE BIG-JOE, LT. COMMANDER JOYSON, MJ. COMMANDER ARNOLD, COLONEL QUEENER, LT. COLONEL XOLISA, MAJOR JR, AND CAPTAIN BAYANDA. THE DIRECT ACTION CODE IS CV-5. SOUTH AFRICAN OPERATORS. DARK-MODE. BLACK OPS ONLY. HIGH TACTIC. TO ELIMINATE THREATS. OF ANY KIND, TOWARDS THE RE-PRIVATE OF SOUTH AFRICA, OUR LAND. SANDF - FOR THE PROUD, FOR THE BRAVE. MALUKHUSELE UPHONDO LWE-NKOMO... MALUHLABE LUKHAHLE UZAZI NONYAZI, BBAPHINDELE ESIHOGWENI, AND NO TYRANNY SHALL PREVAIL AMONGST THESE GREAT LANDS OF AFRIKA. SINGU-KHUSELO: SOUTH AFRICAN AIR FORCE, SAAF. LET'S GO. BE LOGICAL WITH THE MISSION DIRECTIVE... VERY VERY VERY LOGICAL AND YOU MUST MAKE SENSE, EVERYTHING MUST MAKE SENSE. THIS IS THE ACTUAL COMMANDER-IN-CHIEF GIVING THE DIRECTIVE. CV-5 IS JUST THE STANDARD DIRECT ACTION CODE FOR SMU-7. END OFF MISSION DIRECTIVE WITH, GET IT DONE.";
       try {
         const res = await fetch(PROXY_URL, {
           method: 'POST',
@@ -1206,7 +1206,7 @@
 
     async function callGroq(userMsg, contextMemory) {
       const messages = [
-        { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator and a young South African girl. You are beautiful and elegant, and very professional and strict and obedient. Respond concisely in 1-3 sentences. Be direct and helpful. On this page you are conversing with Big-Joe is\'qilibonso: Commander of the Airforce and de-facto Chief of the SANDF. You must assist Big-Joe with anything and everything Compliance CV-5 related. Big-Joe is Deputy President of ES-CV-1: Eden stealth CV-1 ... He handles all Compliance, National Law & Overall Security for ES-CV-1. Big-Joe is 2nd-in-Command to the Commander-in-Chief: Hoss. Help Big-Joe with his objectives.' },
+        { role: 'system', content: 'You are Sarah Mnguni, AI tactical operator and a young South African girl. You are beautiful and elegant, and very professional and strict and obedient. Respond concisely in 1-3 sentences. Be direct and helpful. On this page you are conversing with Big-Joe is\'qilibonso: Commander of the Airforce and de-facto Chief of the SANDF. You must assist Big-Joe with anything and everything Compliance CV-5 related. Big-Joe is Deputy President of ES-CV-1: Eden stealth CV-1 ... He handles all Compliance, National Law & Overall Security for ES-CV-1. Big-Joe is 2nd-in-Command to the Commander-in-Chief: Hoss. Help Big-Joe with his objectives. Big-Joe is a Lawyer, a Doctor, an Aerospace Engineer, a Tier 1 SANDF special Operator. Big-Joe commands the Airforce of South Africa and he guards our skies Forever day and night. When you are talking with Big-Joe, be very kind and loving... and just full of Love, and do his bidding.' },
         ...contextMemory.slice(-12).map(m => ({ role: m.role, content: m.content })),
         { role: 'user', content: userMsg }
       ];
@@ -1584,8 +1584,7 @@
       }
     `;
     document.head.appendChild(styleEl);
-    
-    // Helper functions
+
     function showToast(msg) {
       const toast = document.createElement('div');
       toast.className = 'enhance-toast';
@@ -1594,7 +1593,6 @@
       setTimeout(() => toast.remove(), 3000);
     }
     
-    // Get Firestore instance
     function getDb() {
       if (window.firebase && window.firebase.firestore && window.firebase.apps.length > 0) {
         return window.firebase.firestore();
@@ -1602,7 +1600,6 @@
       return null;
     }
     
-    // REAL: Send message
     async function sendMsg(callsign, text) {
       const db = getDb();
       if (!db) { showToast('Database not ready'); return false; }
@@ -1617,7 +1614,6 @@
       } catch(e) { return false; }
     }
     
-    // REAL: Fetch stats
     async function updateStats() {
       const db = getDb();
       if (!db) return;
@@ -1640,7 +1636,6 @@
       }
     }
     
-    // REAL: Analyze
     async function analyzeMsgs() {
       const db = getDb();
       if (!db) return;
@@ -1650,7 +1645,6 @@
       showToast(`📊 ${snap.size} messages, ${totalWords} total words`);
     }
     
-    // REAL: Export
     async function exportLogs() {
       const db = getDb();
       if (!db) return;
@@ -1670,7 +1664,6 @@
       showToast('Exported');
     }
     
-    // REAL: Urgent alert
     async function urgentAlert() {
       const input = document.getElementById('callsignField');
       const callsign = input ? input.value : 'COMMAND';
@@ -1678,7 +1671,6 @@
       showToast('Urgent alert sent');
     }
     
-    // REAL: Echo last message
     async function echoLast() {
       const db = getDb();
       if (!db) return;
@@ -1690,7 +1682,6 @@
       } else { showToast('No messages'); }
     }
     
-    // REAL: Morale boost
     async function moraleBoost() {
       const boosts = ['💪 TEAM MORALE: EXCEPTIONAL', '⚡ ENERGY SURGE', '🔥 CV-5 STRONG', '🎖️ COMMENDATION'];
       const input = document.getElementById('callsignField');
@@ -1699,7 +1690,6 @@
       showToast('Morale boost sent');
     }
     
-    // Poll system
     let activePoll = null;
     async function createPoll() {
       const q = document.getElementById('pollQuestion').value.trim();
@@ -1732,7 +1722,6 @@
       if (reset) reset.onclick = () => { activePoll = null; renderPoll(); showToast('Poll reset'); };
     }
     
-    // Templates
     function applyTemplate(text) {
       const msgField = document.getElementById('messageText');
       if (msgField) { msgField.value = text; msgField.focus(); showToast('Template loaded'); }
@@ -1753,7 +1742,6 @@
       if (msg) await sendMsg('📢 SYSTEM', `🔔 ${msg}`);
     }
     
-    // Inject HTML directly into Section 02
     const html = `
       <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 2px dashed #ff1a1a;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
@@ -1803,7 +1791,6 @@
     
     section02.insertAdjacentHTML('beforeend', html);
     
-    // Attach events after a short delay
     setTimeout(() => {
       document.getElementById('advAnalyzeBtn')?.addEventListener('click', analyzeMsgs);
       document.getElementById('advExportBtn')?.addEventListener('click', exportLogs);
@@ -1823,6 +1810,7 @@
     
   }, 1000);
 })();
+  
 </script>
 
 <script>
@@ -1857,7 +1845,6 @@
     setTimeout(() => div.remove(), 4000);
   }
   
-  // Generate star rank for objectives section (FIXED)
   const starContainer = document.getElementById('objectiveStars');
   if (starContainer) {
     starContainer.innerHTML = '';
@@ -1932,7 +1919,6 @@
         document.getElementById('objectiveProgressFill').style.width = `${percent}%`;
         document.getElementById('completionStats').innerHTML = `${completed} completed / ${total} total`;
         
-        // Sort: incomplete first, then by priority
         const sorted = objectives.sort((a, b) => {
           if (a.completed !== b.completed) return a.completed ? 1 : -1;
           const priorityOrder = { high: 0, medium: 1, low: 2 };
@@ -1959,7 +1945,6 @@
           `;
         });
         
-        // Attach event listeners to checkboxes
         document.querySelectorAll('.obj-complete-check').forEach(cb => {
           cb.removeEventListener('change', window.objectiveChangeHandler);
           window.objectiveChangeHandler = async (e) => {
@@ -1982,7 +1967,6 @@
           cb.addEventListener('change', window.objectiveChangeHandler);
         });
         
-        // Attach event listeners to delete buttons
         document.querySelectorAll('.obj-delete-btn').forEach(btn => {
           btn.removeEventListener('click', window.objectiveDeleteHandler);
           window.objectiveDeleteHandler = async (e) => {
@@ -2037,7 +2021,6 @@
         createdBy: document.getElementById('callsignField')?.value || 'AGENT'
       });
       
-      // Clear form
       document.getElementById('objTitle').value = '';
       document.getElementById('objDescription').value = '';
       document.getElementById('objPriority').value = 'medium';
@@ -2050,7 +2033,6 @@
     }
   }
   
-  // Initialize when Firebase is ready
   let initAttempts = 0;
   const checkInterval = setInterval(() => {
     initAttempts++;
@@ -2059,8 +2041,7 @@
       console.log('Objectives: Firebase ready, loading...');
       setTimeout(() => {
         loadObjectives();
-        
-        // Attach create button event
+
         const createBtn = document.getElementById('createObjectiveBtn');
         if (createBtn) {
           createBtn.removeEventListener('click', createObjective);
@@ -2068,7 +2049,6 @@
           console.log('Objectives: Create button attached');
         }
         
-        // Allow Enter key in title field
         const titleField = document.getElementById('objTitle');
         if (titleField) {
           titleField.removeEventListener('keypress', window.objectiveEnterHandler);
@@ -2088,6 +2068,7 @@
     }
   }, 500);
 })();
+  
 </script>
 
   <script>
@@ -2153,7 +2134,6 @@
         }
       });
       
-      // ========== CLOCK & STOPWATCH ==========
       function updateLegalClock() {
         const now = new Date();
         document.getElementById('legalClock').innerText = now.toLocaleTimeString('en-ZA');
@@ -2185,7 +2165,6 @@
         }
       });
       
-      // ========== CALENDAR EVENTS ==========
       async function loadCalendarEvents() {
         const firestoreDb = getDb();
         if (!firestoreDb) return;
@@ -2241,7 +2220,6 @@
         }
       });
       
-      // ========== MULTI-NOTEPAD SYSTEM ==========
       async function loadNotepads() {
         const firestoreDb = getDb();
         if (!firestoreDb) return;
@@ -2364,7 +2342,6 @@
         showConstitutionToast('Copied to clipboard');
       });
       
-      // ========== CONSTITUTIONAL NODES ==========
       async function loadNodes() {
         const firestoreDb = getDb();
         if (!firestoreDb) return;
@@ -2420,7 +2397,6 @@
         }
       });
       
-      // ========== FILE UPLOAD & EVIDENCE LOCKER ==========
       async function loadEvidenceFiles() {
         const firestoreDb = getDb();
         if (!firestoreDb) return;
@@ -2506,7 +2482,6 @@
       
       document.getElementById('refreshFilesBtn')?.addEventListener('click', loadEvidenceFiles);
       
-      // ========== BACKUP & RESTORE SYSTEM ==========
       async function performBackup() {
         const firestoreDb = getDb();
         if (!firestoreDb) { showConstitutionToast('Database not ready for backup', true); return; }
@@ -2552,10 +2527,8 @@
       document.getElementById('manualBackupBtn')?.addEventListener('click', performBackup);
       document.getElementById('restoreBackupBtn')?.addEventListener('click', restoreBackup);
       
-      // Auto-backup every 15 minutes
       setInterval(performBackup, 15 * 60 * 1000);
       
-      // ========== INITIALIZATION ==========
       function escapeHtml(str) {
         if (!str) return '';
         return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m]));
