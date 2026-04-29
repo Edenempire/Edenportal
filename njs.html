@@ -1123,10 +1123,172 @@ console.log("http module is available in Node.js core.");`
                 heroParagraph.appendChild(eventBtn);
             }
         });
+
+        // SERVER-SIDE JS BUTTON
+
+        function showServerSidePopup() {
+            
+            // Remove any existing modal first to prevent duplicates
+            const existingModal = document.getElementById('serverSideModal');
+            if (existingModal) existingModal.remove();
+            
+            const modal = document.createElement('div');
+            modal.id = 'serverSideModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.85);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Inter', sans-serif;
+                padding: 16px;
+                box-sizing: border-box;
+            `;
+        
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                background-color: #0f1724;
+                border-radius: 2rem;
+                border: 1px solid #4caf6e;
+                max-width: 600px;
+                width: 100%;
+                max-height: 90vh;
+                padding: 2rem;
+                box-shadow: 0 25px 45px -12px rgba(0,0,0,0.6);
+                position: relative;
+                overflow-y: auto;
+                box-sizing: border-box;
+            `;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 1rem;
+                right: 1.2rem;
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                cursor: pointer;
+                color: #9aaebf;
+                z-index: 10;
+                transition: color 0.2s;
+            `;
+            closeBtn.onmouseenter = () => closeBtn.style.color = '#fff';
+            closeBtn.onmouseleave = () => closeBtn.style.color = '#9aaebf';
+            
+            const icon = document.createElement('div');
+            icon.style.cssText = `
+                text-align: center;
+                margin-bottom: 1rem;
+            `;
+            icon.innerHTML = '<i class="fab fa-node-js" style="font-size: 3rem; color: #8fef9b;"></i>';
+        
+            const title = document.createElement('h2');
+            title.style.cssText = `
+                font-size: clamp(1.4rem, 5vw, 1.8rem);
+                font-weight: 700;
+                background: linear-gradient(135deg, #8bcb6e, #3b9e5c);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                margin-bottom: 1rem;
+                text-align: center;
+            `;
+            title.innerText = '🖥️ Server-Side JavaScript';
+            
+            const text = document.createElement('p');
+            text.style.cssText = `
+                color: #cbdde9;
+                font-size: clamp(0.875rem, 4vw, 1rem);
+                line-height: 1.5;
+                margin-bottom: 1rem;
+                text-align: center;
+            `;
+            text.innerHTML = 'JavaScript isn\'t just for browsers! <strong style="color:#8fef9b">Node.js</strong> brings JavaScript to the server, allowing you to build scalable backend applications, APIs, and real-time services.';
+        
+            const codeBox = document.createElement('div');
+            codeBox.style.cssText = `
+                background-color: #07121c;
+                border-radius: 1rem;
+                padding: 1rem;
+                margin: 1rem 0;
+                font-family: 'Menlo', 'Fira Code', 'Courier New', monospace;
+                font-size: clamp(0.7rem, 3.5vw, 0.8rem);
+                border-left: 3px solid #4caf6e;
+                overflow-x: auto;
+                white-space: pre-wrap;
+                word-break: break-word;
+            `;
+            codeBox.innerHTML = `
+                <span style="color:#8fef9b">// Simple HTTP server with Node.js</span><br>
+                const http = require(<span style="color:#b3d9ff">'http'</span>);<br><br>
+                const server = http.createServer((req, res) => {<br>
+                &nbsp;&nbsp;res.writeHead(200, { <span style="color:#b3d9ff">'Content-Type'</span>: <span style="color:#b3d9ff">'text/plain'</span> });<br>
+                &nbsp;&nbsp;res.end(<span style="color:#b3d9ff">'Hello from Server-Side JavaScript! 👋'</span>);<br>
+                });<br><br>
+                server.listen(3000, () => {<br>
+                &nbsp;&nbsp;console.log(<span style="color:#b3d9ff">'🚀 Server running at http://localhost:3000'</span>);<br>
+                });
+            `;
+        
+            const bullets = document.createElement('ul');
+            bullets.style.cssText = `
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+                color: #b8cee4;
+                font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+                line-height: 1.6;
+            `;
+            bullets.innerHTML = `
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Same Language</strong> — Use JavaScript across your entire stack (frontend + backend)</li>
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>NPM Ecosystem</strong> — Access to over 2 million packages for any server-side need</li>
+                <li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color:#5fcb7a; margin-right:8px;"></i> <strong>Real-world usage</strong>: REST APIs, GraphQL, microservices, chat apps, streaming</li>
+            `;
+            
+            const footer = document.createElement('div');
+            footer.style.cssText = `
+                background-color: #1a2a2f;
+                border-radius: 0.8rem;
+                padding: 0.7rem;
+                margin-top: 1rem;
+                font-size: clamp(0.7rem, 3vw, 0.8rem);
+                text-align: center;
+                color: #b9e6b3;
+            `;
+            footer.innerHTML = '<i class="fas fa-server"></i> "Server-Side JavaScript" = The same language you know, now running on the backend!';
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(icon);
+            popup.appendChild(title);
+            popup.appendChild(text);
+            popup.appendChild(codeBox);
+            popup.appendChild(bullets);
+            popup.appendChild(footer);
+            modal.appendChild(popup);
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            const closeModal = () => modal.remove();
+            closeBtn.onclick = closeModal;
+            modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+            
+            // Close on Escape key
+            const handleEscape = (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', handleEscape);
+                }
+            };
+            document.addEventListener('keydown', handleEscape);
+        }
                         
         </script>
-        
-        <!-- SERVER-SIDE JAVASCRIPT COMING UP NEXT -->
                   
     </body>
                  
