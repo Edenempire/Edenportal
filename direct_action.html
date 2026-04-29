@@ -16,7 +16,7 @@
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <link rel="icon" type="image/png" href="logo_tr_1.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="logo_tr1.png" sizes="16x16">
   
   <style>
     
@@ -29,6 +29,7 @@
     }
 
     :root {
+      
       --bg: #01030a;
       --panel: #071821;
       --accent: #00f0ff;
@@ -42,38 +43,48 @@
       --header-h: 70px;
       --chip-border: rgba(0, 255, 255, 0.15);
       --glow-subtle: 0 0 15px rgba(0, 255, 255, 0.15);
+      
     }
 
     html, body {
+      
       height: 100%;
       font-family: var(--mono);
       background: var(--bg);
       color: var(--accent);
       overflow-x: hidden;
-      overflow-y: auto;  /* normal scroll restored */
+      overflow-y: auto; 
       scroll-behavior: smooth;
       scroll-padding-top: var(--header-h);
+      
     }
 
     body.fade-out {
+      
       opacity: 0;
       transition: opacity 0.5s ease;
+      
     }
 
     canvas, img, video {
+      
       display: block;
       max-width: 100%;
+      
     }
 
     #matrixCanvas {
+      
       position: fixed;
       inset: 0;
       z-index: 0;
       opacity: 0.08;
       pointer-events: none;
+      
     }
 
     body::after {
+      
       content: "";
       position: fixed;
       inset: 0;
@@ -81,10 +92,11 @@
       pointer-events: none;
       z-index: 9999;
       opacity: 0.5;
+      
     }
 
-    /* ----- header (compact) ----- */
     header {
+      
       position: fixed;
       top: 0;
       left: 0;
@@ -96,16 +108,18 @@
       background: rgba(0, 0, 0, 0.95);
       border-bottom: 1px solid var(--accent);
       z-index: 1000;
+      
     }
 
     header h1 {
+      
       font-family: var(--header-font);
       letter-spacing: 4px;
       font-size: clamp(1rem, 2vw, 1.5rem);
       color: var(--accent);
+      
     }
 
-    /* ----- hero / chip (tightened) ----- */
     #hero {
       min-height: 70vh;
       display: flex;
@@ -433,7 +447,7 @@
   <script>
     
     (function() {
-      // --- matrix rain (minimal) ---
+
       const canvas = document.getElementById('matrixCanvas');
       const ctx = canvas.getContext('2d');
       let width, height;
@@ -477,11 +491,11 @@
 
       const DEPARTMENTS = [
         { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIO01', file: 'innovations.html' },
-        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-suit', code: 'CEO02', file: 'ceo.html' },
+        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-sunglasses', code: 'CEO02', file: 'ceo.html' },
         { id: 'sc', name: '03. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SCT03', file: 'scl.html' },
         { id: 'cs', name: '04. COMPUTER SCIENCE', icon: 'fa-code', code: 'ZA32', file: 'compsci.html' },
-        { id: 'br', name: '05. BRANDING', icon: 'fa-design', code: 'BR11', file: 'branding.html' },
-        { id: 'comp', name: '06. COMPLIANCE', icon: 'fa-law', code: 'LAW33', file: 'compliance.html' }
+        { id: 'br', name: '05. BRANDING', icon: 'fa-palette', code: 'BR11', file: 'branding.html' },
+        { id: 'comp', name: '06. COMPLIANCE', icon: 'fa-gavel', code: 'LAW33', file: 'compliance.html' }
       ];
 
       let activeDept = null;
@@ -499,7 +513,6 @@
       }
       renderDepts();
 
-      // --- auth functions (exposed globally) ---
       window.openAuth = (id) => {
         activeDept = DEPARTMENTS.find(d => d.id === id);
         document.getElementById('authDept').innerText = activeDept.name;
@@ -539,7 +552,6 @@
         }
       };
 
-      // --- keyboard controls ---
       document.addEventListener('keydown', (e) => {
         const overlay = document.getElementById('authOverlay');
         if (e.key === 'Escape' && overlay.style.display === 'flex') {
@@ -550,12 +562,10 @@
         }
       });
 
-      // --- click outside to close modal ---
       document.getElementById('authOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'authOverlay') closeAuth();
       });
 
-      // --- clock ---
       function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString();
@@ -563,11 +573,7 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // --- right click disabled ---
       document.addEventListener('contextmenu', e => e.preventDefault());
-
-      // --- normal scrolling (restored) ---
-      // No custom wheel handler - using native scroll
 
     })();
     
@@ -576,3 +582,39 @@
 </body>
   
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
