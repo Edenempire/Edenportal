@@ -121,6 +121,7 @@
     }
 
     #hero {
+      
       min-height: 70vh;
       display: flex;
       align-items: center;
@@ -129,9 +130,11 @@
       z-index: 2;
       padding: var(--header-h) 15px 30px;
       margin-top: 50px;
+      
     }
 
     #chip-container {
+      
       position: relative;
       width: 400px;
       max-width: 80vw;
@@ -144,9 +147,11 @@
       justify-content: center;
       flex-direction: column;
       overflow: hidden;
+      
     }
 
     #binary-code {
+      
       font-family: var(--header-font);
       font-size: clamp(1.5rem, 5vw, 3rem);
       letter-spacing: 4px;
@@ -154,33 +159,39 @@
       text-align: center;
       word-break: break-word;
       opacity: 0.9;
+      
     }
 
     .chip-circuit {
+      
       position: absolute;
       inset: 8px;
       border: 1px dashed var(--chip-border);
       pointer-events: none;
       border-radius: 20px;
+      
     }
 
     .chip-circuit::before {
+      
       content: "";
       position: absolute;
       inset: 0;
       border: 1px dashed rgba(0, 255, 255, 0.05);
       transform: rotate(45deg);
       border-radius: 20px;
+      
     }
 
-    /* ----- section titles (compact) ----- */
     .section-title {
+      
       text-align: center;
       font-family: var(--header-font);
       letter-spacing: 6px;
       margin: 30px 0 25px;
       font-size: clamp(1.2rem, 3vw, 1.8rem);
       scroll-margin-top: var(--header-h);
+      
     }
 
     .section-title::before,
@@ -191,17 +202,19 @@
       font-size: 1.2rem;
     }
 
-    /* ----- grid cards (compact) ----- */
     .grid {
+      
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
       padding: 0 20px 80px;
       max-width: 1200px;
       margin: 0 auto;
+      
     }
 
     .card {
+      
       position: relative;
       background: rgba(7, 24, 33, 0.95);
       border: 1px solid rgba(0, 255, 255, 0.1);
@@ -210,34 +223,44 @@
       transition: all 0.2s ease;
       cursor: pointer;
       border-radius: 12px;
+      
     }
 
     .card:hover {
+      
       transform: translateY(-4px);
       border-color: var(--accent);
       background: rgba(10, 30, 38, 0.98);
+      
     }
 
     .card i {
+      
       font-size: 2.2rem;
       margin-bottom: 12px;
       color: var(--accent);
+      
     }
 
     .card h3 {
+      
       font-family: var(--header-font);
       letter-spacing: 2px;
       font-size: 1.1rem;
       margin-bottom: 6px;
+      
     }
 
     .card p {
+      
       font-size: 0.85rem;
       opacity: 0.7;
       margin-bottom: 15px;
+      
     }
 
     .enter-btn {
+      
       padding: 8px 20px;
       background: transparent;
       border: 1px solid var(--accent);
@@ -248,15 +271,18 @@
       font-size: 0.8rem;
       transition: 0.2s;
       border-radius: 5px;
+      
     }
 
     .enter-btn:hover {
+      
       background: var(--accent);
       color: #000;
+      
     }
 
-    /* ----- auth modal (compact) ----- */
     #authOverlay {
+      
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.98);
@@ -264,9 +290,11 @@
       align-items: center;
       justify-content: center;
       z-index: 2000;
+      
     }
 
     #authBox {
+      
       background: #040b10;
       border: 1px solid var(--accent);
       padding: 40px 30px;
@@ -274,22 +302,28 @@
       width: 90%;
       text-align: center;
       border-radius: 15px;
+      
     }
 
     #authBox h3 {
+      
       font-family: var(--header-font);
       letter-spacing: 3px;
       font-size: 1.4rem;
       margin-bottom: 15px;
+      
     }
 
     #authDept {
+      
       font-size: 1rem;
       opacity: 0.8;
       margin-bottom: 20px;
+      
     }
 
     #codeInput {
+      
       width: 100%;
       padding: 15px;
       background: #000;
@@ -301,32 +335,41 @@
       margin: 20px 0;
       font-family: var(--header-font);
       border-radius: 8px;
+      
     }
 
     #codeInput:focus {
+      
       outline: none;
       border-color: var(--accent);
+      
     }
 
     #authStatus {
+      
       height: 24px;
       margin-bottom: 15px;
       font-size: 1rem;
+      
     }
 
     .auth-buttons {
+      
       display: flex;
       gap: 10px;
       justify-content: center;
+      
     }
 
     .auth-buttons .enter-btn {
+      
       min-width: 100px;
       padding: 10px;
+      
     }
 
-    /* ----- footer HUD (compact) ----- */
     #data-footer {
+      
       position: fixed;
       bottom: 0;
       width: 100%;
@@ -338,12 +381,12 @@
       font-size: 0.75rem;
       z-index: 100;
       font-family: var(--ui);
+      
     }
 
     .threat-low { color: var(--ok); }
     .threat-high { color: var(--danger); }
 
-    /* ----- responsive breakpoints (tight) ----- */
     @media (max-width: 768px) {
       :root { --header-h: 60px; }
       
@@ -395,7 +438,6 @@
       #codeInput { font-size: 1.2rem; padding: 12px; }
     }
 
-    /* ----- reduced motion ----- */
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
       body::after { display: none; }
@@ -491,7 +533,7 @@
 
       const DEPARTMENTS = [
         { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIO01', file: 'innovations.html' },
-        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-sunglasses', code: 'CEO02', file: 'ceo.html' },
+        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-glasses', code: 'CEO02', file: 'ceo.html' },
         { id: 'sc', name: '03. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SCT03', file: 'scl.html' },
         { id: 'cs', name: '04. COMPUTER SCIENCE', icon: 'fa-code', code: 'ZA32', file: 'compsci.html' },
         { id: 'br', name: '05. BRANDING', icon: 'fa-palette', code: 'BR11', file: 'branding.html' },
