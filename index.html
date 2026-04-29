@@ -2894,373 +2894,210 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.webkitUserSelect = 'none';
         document.body.style.msUserSelect = 'none';
         
-        console.log("✅ Source protection active | view-source blocked");
+        console.log("✅ source protection active | view-source blocked");
     })();
 
-    function createAnalyticsContainer() {
-        let container = document.getElementById('liveAnalyticsContainer');
-        if (!container) {
-            const footer = document.getElementById('main-footer');
-            if (footer) {
-                container = document.createElement('div');
-                container.id = 'liveAnalyticsContainer';
-                container.style.cssText = `
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 30px auto 20px auto;
-                    padding: 0;
-                `;
+    // LIVE-ANALYTICS FUNCTION
+
+    async function initLiveAnalytics() {
+        // CONFIGURATION
+        const CONFIG = {
+            apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
+            authDomain: "eden-4a8d3.firebaseapp.com",
+            projectId: "eden-4a8d3",
+            storageBucket: "eden-4a8d3.firebasestorage.app",
+            messagingSenderId: "421147129483",
+            appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
+        };
+        const STATS_DOC = "visitorStats/siteAnalytics";
+        const SESSIONS_COLL = "visitorSessions";
+    
+        // Helper: session ID (unique per browser instance)
+        const sessionId = (() => {
+            let hash = 0;
+            const str = `${screen.width}x${screen.height}|${navigator.language}|${navigator.platform}|${Date.now()}|${Math.random()}`;
+            for (let i = 0; i < str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i), hash |= 0;
+            return Math.abs(hash).toString(16);
+        })();
+    
+        const today = () => new Date().toISOString().split('T')[0];
+    
+        // Create/update UI container
+        const updateUI = (data) => {
+            let container = document.getElementById('edenLiveStats');
+            if (!container) {
+                const footer = document.getElementById('main-footer') || document.body;
+                const div = document.createElement('div');
+                div.id = 'edenLiveStats';
+                div.style.cssText = 'width:100%; max-width:600px; margin:30px auto 20px; padding:0;';
                 const installBtn = document.getElementById('installBtn');
-                if (installBtn) {
-                    footer.insertBefore(container, installBtn);
-                } else {
-                    footer.appendChild(container);
-                }
+                installBtn ? footer.insertBefore(div, installBtn) : footer.appendChild(div);
+                container = div;
             }
-        }
-        return container;
-    }
-    
-    const FIREBASE_CONFIG = {
-        apiKey: "AIzaSyD-hhoLpddOoMq1tUlA4SqnwncFnVpaHIQ",
-        authDomain: "eden-4a8d3.firebaseapp.com",
-        projectId: "eden-4a8d3",
-        storageBucket: "eden-4a8d3.firebasestorage.app",
-        messagingSenderId: "421147129483",
-        appId: "1:421147129483:web:9495dfb813fe6195f2c68e"
-    };
-    
-    let db = null;
-    let analyticsUnsubscribe = null;
-    let analyticsInitialized = false;
-    
-    function loadFirebaseForAnalytics() {
-        return new Promise((resolve, reject) => {
-            if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
-                resolve(firebase);
-                return;
-            }
-            
-            const firebaseAppScript = document.createElement('script');
-            firebaseAppScript.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-            firebaseAppScript.onload = () => {
-                const firestoreScript = document.createElement('script');
-                firestoreScript.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-                firestoreScript.onload = () => {
-                    if (typeof firebase !== 'undefined') {
-                        resolve(firebase);
-                    } else {
-                        reject(new Error('Firebase not loaded'));
-                    }
-                };
-                firestoreScript.onerror = reject;
-                document.head.appendChild(firestoreScript);
-            };
-            firebaseAppScript.onerror = reject;
-            document.head.appendChild(firebaseAppScript);
-        });
-    }
-    
-    async function initFirebaseAnalytics() {
-        try {
-            const firebaseModule = await loadFirebaseForAnalytics();
-            
-            if (!firebaseModule.apps.length) {
-                window.firebaseApp = firebaseModule.initializeApp(FIREBASE_CONFIG);
-            } else {
-                window.firebaseApp = firebaseModule.apps[0];
-            }
-            
-            db = window.firebaseApp.firestore ? window.firebaseApp.firestore() : firebaseModule.getFirestore(window.firebaseApp);
-            
-            console.log("✅ connected for live analytics");
-            return true;
-        } catch (error) {
-            console.error("❌ connection failed:", error);
-            return false;
-        }
-    }
-    
-    function showAnalyticsLoading() {
-        const container = createAnalyticsContainer();
-        if (!container) return;
-        
-        let analyticsDiv = document.getElementById('liveAnalytics');
-        if (!analyticsDiv) {
-            analyticsDiv = document.createElement('div');
-            analyticsDiv.id = 'liveAnalytics';
-            analyticsDiv.style.cssText = `
-                background: rgba(0, 255, 255, 0.08);
-                padding: 20px;
-                border: 2px solid var(--cyan);
-                border-radius: 4px;
-                font-family: var(--font-mono);
-                text-align: center;
-                transition: all 0.3s ease;
+            const dailyCount = (data.dailyVisits && data.dailyVisits[today()]) || 0;
+            container.innerHTML = `
+                <div style="background:rgba(0,255,255,0.08); border:2px solid var(--cyan,#00ffff); border-radius:4px; padding:18px 15px; font-family:'VT323',monospace;">
+                    <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:15px;">
+                        <i class="fas fa-shield-alt" style="color:var(--cyan,#00ffff);"></i>
+                        <span style="font-family:'Orbitron',sans-serif; font-size:0.85rem; letter-spacing:2px;">🔴 LIVE CROSS-DEVICE ANALYTICS</span>
+                        <i class="fas fa-chart-line" style="color:var(--cyan,#00ffff);"></i>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; text-align:center;">
+                        <div><div style="font-size:0.6rem; opacity:0.6;">TODAY</div><div style="font-size:1.8rem; font-weight:800; color:var(--cyan,#00ffff);">${dailyCount.toLocaleString()}</div></div>
+                        <div><div style="font-size:0.6rem; opacity:0.6;">TOTAL</div><div style="font-size:1.8rem; font-weight:800; color:var(--cyan,#00ffff);">${(data.totalVisits || 0).toLocaleString()}</div></div>
+                        <div><div style="font-size:0.6rem; opacity:0.6;">UNIQUE</div><div style="font-size:1.8rem; font-weight:800; color:var(--cyan,#00ffff);">${(data.uniqueVisitors || 0).toLocaleString()}</div></div>
+                    </div>
+                    <div style="margin-top:12px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.6rem; opacity:0.7;">
+                        <span style="display:inline-block; width:8px; height:8px; background:#00ff00; border-radius:50%; animation:pulseLive 1s infinite;"></span>
+                        <span>FIRESTORE LIVE · REAL-TIME SYNC</span>
+                    </div>
+                    <style>@keyframes pulseLive{0%{opacity:0.4;}100%{opacity:1;transform:scale(1.2);}}</style>
+                </div>
             `;
-            container.appendChild(analyticsDiv);
-        }
-        
-        analyticsDiv.innerHTML = `
-            <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <i class="fas fa-shield-alt"></i> 
-                <span style="font-family: var(--font-tactical); font-size: 0.9rem;">LIVE ANALYTICS</span>
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; padding: 20px;">
-                <i class="fas fa-sync-alt fa-spin"></i>
-                <span style="font-size: 0.8rem;">CONNECTING TO SECURE NODE...</span>
-            </div>
-        `;
-    }
+        };
     
-    async function trackVisitor() {
-        if (!db) return false;
-        
-        try {
-            const today = new Date().toISOString().split('T')[0];
-            const sessionId = generateSessionId();
-            const statsDocRef = db.collection("visitorStats").doc("siteAnalytics");
-            const sessionRef = db.collection("visitorSessions").doc(sessionId);
-            
-            const sessionSnap = await sessionRef.get();
-            if (sessionSnap.exists && sessionSnap.data().tracked === true) {
-                return true;
+        const showError = (errMsg) => {
+            let container = document.getElementById('edenLiveStats');
+            if (!container) {
+                const footer = document.getElementById('main-footer') || document.body;
+                const div = document.createElement('div');
+                div.id = 'edenLiveStats';
+                div.style.cssText = 'width:100%; max-width:600px; margin:30px auto 20px;';
+                footer.appendChild(div);
+                container = div;
             }
-            
-            const docSnap = await statsDocRef.get();
-            
+            container.innerHTML = `
+                <div style="background:rgba(255,0,0,0.15); border:2px solid #ff4444; border-radius:4px; padding:20px; text-align:center; font-family:'VT323',monospace;">
+                    <i class="fas fa-broadcast-tower" style="color:#ff4444; font-size:1.8rem;"></i>
+                    <div style="color:#ff8888; margin:10px 0 5px; font-weight:bold;">⚠️ LIVE ANALYTICS FAILURE</div>
+                    <div style="font-size:0.75rem; opacity:0.8;">${errMsg}</div>
+                    <div style="font-size:0.65rem; margin-top:12px;"><i class="fas fa-redo-alt"></i> Retrying connection...</div>
+                </div>
+            `;
+        };
+    
+        // Load Firebase SDK dynamically
+        const loadFirebase = () => {
+            return new Promise((resolve, reject) => {
+                if (window.firebase && window.firebase.apps && window.firebase.apps.length) {
+                    resolve(window.firebase);
+                    return;
+                }
+                const scriptApp = document.createElement('script');
+                scriptApp.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+                scriptApp.onload = () => {
+                    const scriptFirestore = document.createElement('script');
+                    scriptFirestore.src = 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+                    scriptFirestore.onload = () => resolve(window.firebase);
+                    scriptFirestore.onerror = reject;
+                    document.head.appendChild(scriptFirestore);
+                };
+                scriptApp.onerror = reject;
+                document.head.appendChild(scriptApp);
+            });
+        };
+    
+        // Track current visitor (once per session)
+        const trackVisit = async (db) => {
+            const sessionRef = db.collection(SESSIONS_COLL).doc(sessionId);
+            const sessionSnap = await sessionRef.get();
+            if (sessionSnap.exists && sessionSnap.data().tracked === true) return true; // already counted
+    
+            const docRef = db.doc(STATS_DOC);
+            const docSnap = await docRef.get();
+            const todayStr = today();
+    
             if (docSnap.exists) {
                 const data = docSnap.data();
                 const updates = {
-                    totalVisits: (data.totalVisits || 0) + 1
+                    totalVisits: (data.totalVisits || 0) + 1,
+                    uniqueVisitors: (data.uniqueVisitors || 0) + 1,
+                    lastUpdated: new Date().toISOString()
                 };
-                
                 const dailyVisits = data.dailyVisits || {};
-                dailyVisits[today] = (dailyVisits[today] || 0) + 1;
+                dailyVisits[todayStr] = (dailyVisits[todayStr] || 0) + 1;
                 updates.dailyVisits = dailyVisits;
-                
-                updates.uniqueVisitors = (data.uniqueVisitors || 0) + 1;
-                updates.lastUpdated = new Date().toISOString();
-                
-                await statsDocRef.update(updates);
+                await docRef.update(updates);
             } else {
-                await statsDocRef.set({
+                await docRef.set({
                     totalVisits: 1,
-                    dailyVisits: { [today]: 1 },
                     uniqueVisitors: 1,
-                    lastUpdated: new Date().toISOString(),
-                    createdAt: new Date().toISOString()
+                    dailyVisits: { [todayStr]: 1 },
+                    createdAt: new Date().toISOString(),
+                    lastUpdated: new Date().toISOString()
                 });
             }
-            
-            await sessionRef.set({
-                tracked: true,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent.substring(0, 100)
-            });
-            
+    
+            await sessionRef.set({ tracked: true, timestamp: new Date().toISOString() });
             return true;
-        } catch (error) {
-            console.error("Track visitor error:", error);
-            return false;
-        }
-    }
+        };
     
-    async function updateAnalyticsDisplay() {
-        if (!db) return;
-        
+        // MAIN ENTRY
         try {
-            const statsDocRef = db.collection("visitorStats").doc("siteAnalytics");
-            const docSnap = await statsDocRef.get();
-            
-            const analyticsDiv = document.getElementById('liveAnalytics');
-            if (!analyticsDiv) return;
-            
-            if (docSnap.exists) {
-                const data = docSnap.data();
-                const today = new Date().toISOString().split('T')[0];
-                const dailyCount = (data.dailyVisits && data.dailyVisits[today]) || 0;
-                const totalCount = data.totalVisits || 0;
-                const uniqueCount = data.uniqueVisitors || 0;
-                
-                analyticsDiv.innerHTML = `
-                    <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <i class="fas fa-shield-alt"></i> 
-                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">LIVE ANALYTICS</span>
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Today</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);" id="analyticsToday">${dailyCount.toLocaleString()}</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Total</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);" id="analyticsTotal">${totalCount.toLocaleString()}</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Unique</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);" id="analyticsUnique">${uniqueCount.toLocaleString()}</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.6rem; opacity: 0.5;">
-                        <i class="fas fa-lock"></i> Encrypted • Live • Real-time
-                    </div>
-                    <div style="margin-top: 8px; font-size: 0.55rem; opacity: 0.4;">
-                        <i class="fas fa-fire"></i> Firestore Connected
-                    </div>
-                `;
+            // Load Firebase
+            const firebaseModule = await loadFirebase();
+            let app;
+            if (!firebaseModule.apps.length) {
+                app = firebaseModule.initializeApp(CONFIG);
             } else {
-                analyticsDiv.innerHTML = `
-                    <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <i class="fas fa-shield-alt"></i> 
-                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">LIVE ANALYTICS</span>
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Today</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">0</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Total</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">0</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Unique</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">0</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.6rem; opacity: 0.5;">
-                        <i class="fas fa-chart-simple"></i> Initializing...
-                    </div>
-                `;
+                app = firebaseModule.apps[0];
             }
-        } catch (error) {
-            console.error("Update display error:", error);
-        }
-    }
+            const db = firebaseModule.getFirestore(app);
     
-    // Set up real-time listener for analytics
-    function setupAnalyticsListener() {
-        if (!db || analyticsUnsubscribe) return;
-        
-        const statsDocRef = db.collection("visitorStats").doc("siteAnalytics");
-        analyticsUnsubscribe = statsDocRef.onSnapshot((docSnap) => {
-            if (docSnap.exists && document.getElementById('liveAnalytics')) {
-                const data = docSnap.data();
-                const today = new Date().toISOString().split('T')[0];
-                const dailyCount = (data.dailyVisits && data.dailyVisits[today]) || 0;
-                const totalCount = data.totalVisits || 0;
-                const uniqueCount = data.uniqueVisitors || 0;
-                
-                const todayEl = document.getElementById('analyticsToday');
-                const totalEl = document.getElementById('analyticsTotal');
-                const uniqueEl = document.getElementById('analyticsUnique');
-                
-                if (todayEl) todayEl.textContent = dailyCount.toLocaleString();
-                if (totalEl) totalEl.textContent = totalCount.toLocaleString();
-                if (uniqueEl) uniqueEl.textContent = uniqueCount.toLocaleString();
-            }
-        }, (error) => {
-            console.error("Analytics listener error:", error);
-        });
-    }
+            // Test connection first (optional but good)
+            const testRef = db.collection(SESSIONS_COLL).limit(1);
+            await testRef.get();
     
-    function generateSessionId() {
-        let hash = 0;
-        const str = `${screen.width}x${screen.height}|${navigator.language}|${navigator.platform}|${Date.now()}|${Math.random()}`;
-        for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) - hash) + str.charCodeAt(i);
-            hash |= 0;
-        }
-        return Math.abs(hash).toString(16);
-    }
+            // Register this visit (cross-device)
+            await trackVisit(db);
     
-    async function initializeAnalytics() {
-        showAnalyticsLoading();
-        
-        const connected = await initFirebaseAnalytics();
-        
-        if (connected && db) {
-            await trackVisitor();
-            await updateAnalyticsDisplay();
-            setupAnalyticsListener();
-            
-            setInterval(async () => {
-                if (db) {
-                    await updateAnalyticsDisplay();
-                }
-            }, 30000);
-            
-            console.log("✅ Live analytics active with Firestore");
-        } else {
-
-            const analyticsDiv = document.getElementById('liveAnalytics');
-            if (analyticsDiv) {
-                let stats = localStorage.getItem('edenAnalytics');
-                if (!stats) {
-                    stats = {
-                        todayVisits: 1,
-                        totalVisits: 1,
-                        uniqueVisitors: 1,
-                        lastDate: new Date().toDateString()
-                    };
-                    localStorage.setItem('edenAnalytics', JSON.stringify(stats));
+            // Set up REAL-TIME listener for live updates across all devices
+            const docRef = db.doc(STATS_DOC);
+            const unsubscribe = docRef.onSnapshot((docSnap) => {
+                if (docSnap.exists) {
+                    updateUI(docSnap.data());
                 } else {
-                    stats = JSON.parse(stats);
-                    const today = new Date().toDateString();
-                    if (stats.lastDate !== today) {
-                        stats.todayVisits = (stats.todayVisits || 0) + 1;
-                        stats.totalVisits = (stats.totalVisits || 0) + 1;
-                        stats.lastDate = today;
-                        localStorage.setItem('edenAnalytics', JSON.stringify(stats));
-                    }
+                    // Document doesn't exist yet, show zero-initialized but connected
+                    updateUI({ totalVisits: 0, uniqueVisitors: 0, dailyVisits: {} });
                 }
-                
-                analyticsDiv.innerHTML = `
-                    <div style="margin-bottom: 12px; font-weight: bold; color: var(--cyan); letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <i class="fas fa-shield-alt"></i> 
-                        <span style="font-family: var(--font-tactical); font-size: 0.9rem;">ANALYTICS</span>
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Today</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${stats.todayVisits}</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Total</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${stats.totalVisits}</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase;">Unique</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">${stats.uniqueVisitors}</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.6rem; opacity: 0.5;">
-                        <i class="fas fa-database"></i> Local Mode • Offline
-                    </div>
-                `;
-            }
+            }, (listenerError) => {
+                console.error("Firestore listener error:", listenerError);
+                showError(`LIVE SYNC ERROR: ${listenerError.message || 'connection lost'}`);
+                // Attempt reconnection after 5s
+                setTimeout(() => {
+                    if (window.location && document.body) initLiveAnalytics();
+                }, 5000);
+            });
+    
+            // Store unsubscribe in case of page refresh (optional cleanup, but fine)
+            window.__edenAnalyticsUnsub = unsubscribe;
+            
+            // Optional: force update on visibility change
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && db) {
+                    docRef.get().then(snap => snap.exists && updateUI(snap.data())).catch(() => {});
+                }
+            });
+    
+        } catch (error) {
+            console.error("Live analytics fatal:", error);
+            showError(`FIRESTORE CONNECTION FAILED: ${error.message || 'network/ config error'}`);
+            // Retry after 8 seconds (clean retry)
+            setTimeout(() => {
+                if (document.getElementById('edenLiveStats')) {
+                    initLiveAnalytics();
+                }
+            }, 8000);
         }
     }
     
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            initializeAnalytics();
-        }, 1500);
-    });
-    
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden && db) {
-            updateAnalyticsDisplay();
-        }
-    });
-    
-    console.log("✅ Live analytics system ready");
-    
+    // AUTO-START when DOM ready (or load)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initLiveAnalytics());
+    } else {
+        initLiveAnalytics();
+    }
+
 </script>
     
 </body>
