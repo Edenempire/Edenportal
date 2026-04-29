@@ -2107,7 +2107,7 @@
       window.handlePdfError = function() {
         const viewer = document.getElementById('sacPdfViewer');
         if (viewer) {
-          viewer.srcdoc = '<html><body style="background:#000; color:#0f0; padding:2rem; text-align:center;"><h2>SAC.pdf Not Found</h2><p>Place SAC.pdf in the root directory of your server.</p><p>Constitution of RSA, 1996 - Download from <a href="sac.pdf" target="_blank" style="color:#0f0;">official source</a></p></body></html>';
+          viewer.srcdoc = '<html><body style="background:#000; color:#0f0; padding:2rem; text-align:center;"><h2>sac.pdf not found</h2><p>place sac.pdf in the root directory of your server.</p><p>Constitution of RSA, 1996 - Download from <a href="sac.pdf" target="sac.pdf" style="color:#0f0;">official source</a></p></body></html>';
         }
       };
       
@@ -2118,7 +2118,7 @@
       });
       
       document.getElementById('pdfDownloadBtn')?.addEventListener('click', () => {
-        window.open('/sac.pdf', '_blank');
+        window.open('sac.pdf', 'sac.pdf');
         showConstitutionToast('Downloading sac.pdf');
       });
       
