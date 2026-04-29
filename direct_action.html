@@ -388,6 +388,7 @@
     .threat-high { color: var(--danger); }
 
     @media (max-width: 768px) {
+      
       :root { --header-h: 60px; }
       
       header h1 { letter-spacing: 2px; }
@@ -414,9 +415,11 @@
         content: "";
         margin: 0 5px;
       }
+      
     }
 
     @media (max-width: 480px) {
+      
       .grid { grid-template-columns: 1fr; }
       
       #chip-container {
@@ -436,11 +439,14 @@
       
       #authBox { padding: 25px 20px; }
       #codeInput { font-size: 1.2rem; padding: 12px; }
+      
     }
 
     @media (prefers-reduced-motion: reduce) {
+      
       * { animation: none !important; transition: none !important; }
       body::after { display: none; }
+      
     }
     
   </style>
@@ -532,12 +538,15 @@
       });
 
       const DEPARTMENTS = [
+        
         { id: 'io', name: '01. INNOVATIONS', icon: 'fa-microchip', code: 'CIO01', file: 'innovations.html' },
-        { id: 'ceo', name: '02. EXECUTIVE', icon: 'fa-glasses', code: 'CEO02', file: 'ceo.html' },
-        { id: 'sc', name: '03. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SCT03', file: 'scl.html' },
-        { id: 'cs', name: '04. COMPUTER SCIENCE', icon: 'fa-code', code: 'ZA32', file: 'compsci.html' },
-        { id: 'br', name: '05. BRANDING', icon: 'fa-palette', code: 'BR11', file: 'branding.html' },
-        { id: 'comp', name: '06. COMPLIANCE', icon: 'fa-gavel', code: 'LAW33', file: 'compliance.html' }
+        { id: 'comp', name: '02. COMPLIANCE', icon: 'fa-gavel', code: 'LAW02', file: 'compliance.html' },
+        { id: 'ceo', name: '03. EXECUTIVE', icon: 'fa-briefcase', code: 'CEO8', file: 'ceo.html' },
+        { id: 'sc', name: '04. SUPPLY CHAIN', icon: 'fa-truck-fast', code: 'SC03', file: 'scl.html' },
+        { id: 'coo', name: '05. OPERATIONS', icon: 'fa-gears', code: 'COO05', file: 'operations.html' },
+        { id: 'cs', name: '06. COMPUTER SCIENCE', icon: 'fa-code', code: 'ZA7', file: 'compsci.html' },
+        { id: 'br', name: '07. BRANDING', icon: 'fa-palette', code: 'BR10', file: 'branding.html' }
+        
       ];
 
       let activeDept = null;
