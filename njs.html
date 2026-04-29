@@ -1287,6 +1287,25 @@ console.log("http module is available in Node.js core.");`
             };
             document.addEventListener('keydown', handleEscape);
         }
+        
+        // Add the button next to the Event-Driven button
+        const serverSideBtn = document.createElement('button');
+        serverSideBtn.className = 'async-popup-btn';
+        serverSideBtn.id = 'serverSideBtn';
+        serverSideBtn.innerHTML = '<i class="fas fa-server"></i> Server-Side JS';
+        serverSideBtn.onclick = showServerSidePopup;
+        serverSideBtn.style.marginLeft = '8px';
+        
+        // Find the hero paragraph and add the button
+        const heroDiv = document.querySelector('.hero');
+        if (heroDiv) {
+            const badgeDiv = heroDiv.querySelector('.badge');
+            if (badgeDiv) {
+                badgeDiv.insertAdjacentElement('beforebegin', serverSideBtn);
+            } else {
+                heroDiv.appendChild(serverSideBtn);
+            }
+        }
                         
         </script>
                   
